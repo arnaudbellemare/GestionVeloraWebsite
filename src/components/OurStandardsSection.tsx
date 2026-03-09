@@ -17,14 +17,19 @@ export function OurStandardsSection() {
 
   return (
     <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 bg-neutral-950 -mt-px">
-      {/* Background */}
-      <motion.div className="absolute inset-0" style={{ y: bgY }}>
-        <img
-          src={BG_IMAGE}
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ objectPosition: "center 30%" }}
-        />
+      {/* Background: oversized to avoid black bars when parallax shifts */}
+      <motion.div
+        className="absolute inset-0 overflow-hidden"
+        style={{ y: bgY }}
+      >
+        <div className="absolute -inset-[15%] w-[130%] h-[130%]">
+          <img
+            src={BG_IMAGE}
+            alt=""
+            className="w-full h-full object-cover"
+            style={{ objectPosition: "center 30%" }}
+          />
+        </div>
         <div
           className="absolute inset-0 dark:hidden"
           style={{
