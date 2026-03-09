@@ -35,7 +35,7 @@ export function ValueLabelsSection() {
     <section className="pt-24 pb-40 lg:py-32 px-6 lg:px-16 bg-[#191818] dark:bg-[#0a0a0a] overflow-x-hidden">
       <div className="max-w-[90rem] mx-auto relative">
         <ScrollReveal>
-          <h2 className="font-playfair text-4xl lg:text-5xl text-white leading-tight mb-16">
+          <h2 className="font-playfair text-4xl lg:text-5xl text-white font-bold leading-tight mb-16">
             Débloquer le potentiel dans le monde réel.
           </h2>
         </ScrollReveal>
@@ -44,7 +44,7 @@ export function ValueLabelsSection() {
           {/* Labels with sliding accent */}
           <div className="relative flex gap-6 lg:flex-col lg:pr-6">
             <motion.div
-              className="absolute left-0 top-0 w-0.5 h-5 bg-velora-gold rounded-full hidden lg:block"
+              className="absolute left-0 top-0 w-0.5 h-5 bg-amber-300 rounded-full hidden lg:block"
               initial={false}
               animate={{ y: active * 44 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -57,8 +57,8 @@ export function ValueLabelsSection() {
                   whileHover={{ x: 4 }}
                   className={`font-sans text-sm uppercase tracking-widest transition-colors duration-300 text-left ${
                     active === i
-                      ? "text-velora-gold"
-                      : "text-white/50 hover:text-white"
+                      ? "text-amber-300"
+                      : "text-white/80 hover:text-white"
                   }`}
                 >
                   {v.label}
@@ -68,15 +68,15 @@ export function ValueLabelsSection() {
           </div>
 
           {/* Description text */}
-          <div className="flex-1 min-h-[120px] relative overflow-hidden">
-            <AnimatePresence initial={false} mode="popLayout">
+          <div className="flex-1 min-h-[140px] relative">
+            <AnimatePresence initial={false} mode="wait">
               <motion.p
                 key={active}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="font-sans text-xl lg:text-2xl text-white/80 max-w-2xl absolute inset-0"
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="font-sans text-xl lg:text-2xl text-white max-w-2xl"
               >
                 {values[active].text}
               </motion.p>
@@ -107,7 +107,7 @@ export function ValueLabelsSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-16 h-px bg-gradient-to-r from-transparent via-velora-gold/40 to-transparent"
+          className="mt-16 h-px bg-gradient-to-r from-transparent via-amber-300/60 to-transparent"
         />
       </div>
     </section>
