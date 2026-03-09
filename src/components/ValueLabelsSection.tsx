@@ -18,9 +18,9 @@ const values = [
 ];
 
 const valueGradients = [
-  { from: "rgba(72,92,17,0.25)", to: "rgba(72,92,17,0)" },
-  { from: "rgba(142,156,120,0.2)", to: "rgba(142,156,120,0)" },
-  { from: "rgba(212,168,83,0.3)", to: "rgba(212,168,83,0)" },
+  { from: "rgba(72,92,17,0.35)", to: "rgba(72,92,17,0)" },
+  { from: "rgba(142,156,120,0.3)", to: "rgba(142,156,120,0)" },
+  { from: "rgba(212,168,83,0.4)", to: "rgba(212,168,83,0)" },
 ];
 
 export function ValueLabelsSection() {
@@ -84,22 +84,24 @@ export function ValueLabelsSection() {
           </div>
         </div>
 
-        {/* Right/bottom: dynamic gradient orb - visible on mobile and desktop, keep circular */}
-        <ScrollReveal delay={0.2} direction="right" className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-4 lg:-translate-x-8 pointer-events-none w-48 h-48 min-w-[12rem] min-h-[12rem] lg:w-64 lg:h-64 lg:min-w-[16rem] lg:min-h-[16rem] shrink-0 rounded-full overflow-visible">
+        {/* Right/bottom: dynamic gradient orb - soft glow from corner */}
+        <div className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-2 lg:-translate-x-4 pointer-events-none w-56 h-56 lg:w-72 lg:h-72 shrink-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
-              initial={{ opacity: 0, scale: 0.85 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.45, ease: "easeOut" }}
-              className="absolute inset-0 rounded-full blur-3xl opacity-70 dark:opacity-60 lg:opacity-80 aspect-square"
+              className="absolute inset-0 rounded-full"
               style={{
-                background: `radial-gradient(circle at 50% 50%, ${valueGradients[active].from}, ${valueGradients[active].to})`,
+                background: `radial-gradient(circle at 70% 70%, ${valueGradients[active].from} 0%, ${valueGradients[active].to} 70%)`,
+                filter: "blur(60px)",
+                opacity: 0.85,
               }}
             />
           </AnimatePresence>
-        </ScrollReveal>
+        </div>
 
         {/* Bottom accent line */}
         <motion.div
