@@ -108,43 +108,62 @@ export function ContactSection() {
             </ScrollReveal>
           </div>
 
-          {/* Right: Overlapping stacked images - fan out on hover */}
+          {/* Right: Overlapping stacked images - fan out on hover (simple grid on mobile) */}
           <div
-            className="relative w-full lg:w-1/2 h-[400px] lg:h-[480px] flex-shrink-0"
+            className="relative w-full lg:w-1/2 flex-shrink-0"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
-            {GALLERY_IMAGES.map((src, i) => {
-              const spread = hovered ? (i + 1) * 12 : 0;
-              const lift = hovered ? -i * 4 : 0;
-              return (
+            {/* Mobile: simple 2-col grid */}
+            <div className="lg:hidden grid grid-cols-2 gap-3 sm:gap-4">
+              {GALLERY_IMAGES.map((src, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  animate={{
-                    x: spread,
-                    y: lift,
-                    rotate: (i - 2) * 3,
-                  }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="absolute rounded-xl overflow-hidden shadow-xl"
-                  style={{
-                    left: `${i * 8}%`,
-                    top: `${i % 2 === 0 ? 0 : 12}%`,
-                    width: i === 2 ? "38%" : "32%",
-                    zIndex: GALLERY_IMAGES.length - i,
-                  }}
+                  className={`rounded-xl overflow-hidden shadow-lg aspect-[4/3] ${
+                    i === 0 ? "col-span-2" : ""
+                  }`}
                 >
-                  <img
-                    src={src}
-                    alt=""
-                    className="w-full h-full object-cover min-h-[280px]"
-                  />
+                  <img src={src} alt="" className="w-full h-full object-cover" />
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
+            {/* Desktop: overlapping collage */}
+            <div className="hidden lg:block relative h-[480px]">
+              {GALLERY_IMAGES.map((src, i) => {
+                const spread = hovered ? (i + 1) * 12 : 0;
+                const lift = hovered ? -i * 4 : 0;
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    animate={{
+                      x: spread,
+                      y: lift,
+                      rotate: (i - 2) * 3,
+                    }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="absolute rounded-xl overflow-hidden shadow-xl"
+                    style={{
+                      left: `${i * 8}%`,
+                      top: `${i % 2 === 0 ? 0 : 12}%`,
+                      width: i === 2 ? "38%" : "32%",
+                      zIndex: GALLERY_IMAGES.length - i,
+                    }}
+                  >
+                    <img
+                      src={src}
+                      alt=""
+                      className="w-full h-full object-cover min-h-[280px]"
+                    />
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

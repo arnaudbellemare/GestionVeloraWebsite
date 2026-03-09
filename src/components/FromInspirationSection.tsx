@@ -83,7 +83,10 @@ function ArchiveMockup() {
     return () => clearInterval(t);
   }, []);
 
-  const items = ["Résidence Saint-Denis", "Immeuble Papineau"];
+  const items = [
+    { name: "Résidence Saint-Denis", image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=96&q=85" },
+    { name: "Immeuble Papineau", image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=96&q=85" },
+  ];
 
   return (
     <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-lg overflow-hidden">
@@ -95,9 +98,9 @@ function ArchiveMockup() {
           <span className="text-lg">+</span>
           <span className="font-sans text-sm">Nouveau dossier</span>
         </div>
-        {items.map((name, i) => (
+        {items.map((item, i) => (
           <motion.div
-            key={name}
+            key={item.name}
             layout
             className={`flex items-center justify-between gap-2 px-3 py-2 rounded-lg cursor-default ${
               selected === i
@@ -107,8 +110,8 @@ function ArchiveMockup() {
             onClick={() => setSelected(i)}
           >
             <div className="flex items-center gap-2 min-w-0">
-              <div className="h-8 w-8 rounded bg-neutral-200 dark:bg-neutral-700 shrink-0" />
-              <span className="font-sans text-sm text-neutral-900 dark:text-white truncate">{name}</span>
+              <img src={item.image} alt="" className="h-8 w-8 rounded object-cover shrink-0 bg-neutral-200 dark:bg-neutral-700" />
+              <span className="font-sans text-sm text-neutral-900 dark:text-white truncate">{item.name}</span>
             </div>
             {selected === i && (
               <motion.span
@@ -142,7 +145,11 @@ function CommentMockup() {
     <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-lg overflow-hidden">
       <div className="p-4 space-y-3">
         <div className="flex gap-2">
-          <div className="h-7 w-7 rounded-full bg-neutral-300 dark:bg-neutral-600 shrink-0" />
+          <div className="h-7 w-7 rounded-full bg-neutral-300 dark:bg-neutral-500 flex items-center justify-center shrink-0" title="Profil par défaut">
+            <svg className="h-4 w-4 text-neutral-500 dark:text-neutral-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+          </div>
           <div>
             <p className="font-sans text-xs text-neutral-500 dark:text-neutral-400">Vous · il y a 2h</p>
             <p className="font-sans text-sm text-neutral-800 dark:text-neutral-200">

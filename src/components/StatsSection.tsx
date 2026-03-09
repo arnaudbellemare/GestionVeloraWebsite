@@ -2,7 +2,7 @@ import { ScrollReveal } from "./ScrollReveal";
 import { CountUp } from "./CountUp";
 
 const stats = [
-  { value: "35+", label: "Immeubles sous gestion" },
+  { value: "10+", label: "Immeubles sous gestion" },
   { value: "98%", label: "Taux d'occupation" },
   { value: "24/7", label: "Équipe de réponse" },
   { value: "100%", label: "Transparence financière" },

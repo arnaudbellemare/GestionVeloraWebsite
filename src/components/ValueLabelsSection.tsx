@@ -84,8 +84,8 @@ export function ValueLabelsSection() {
           </div>
         </div>
 
-        {/* Right: dynamic gradient orb - fills whitespace */}
-        <ScrollReveal delay={0.2} direction="right" className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 -translate-x-8 pointer-events-none w-64 h-64">
+        {/* Right/bottom: dynamic gradient orb - visible on mobile and desktop */}
+        <ScrollReveal delay={0.2} direction="right" className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-4 lg:-translate-x-8 pointer-events-none w-48 h-48 lg:w-64 lg:h-64">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -93,7 +93,7 @@ export function ValueLabelsSection() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.45, ease: "easeOut" }}
-              className="absolute inset-0 rounded-full blur-3xl opacity-80 dark:opacity-60"
+              className="absolute inset-0 rounded-full blur-3xl opacity-70 dark:opacity-60 lg:opacity-80"
               style={{
                 background: `radial-gradient(circle at 50% 50%, ${valueGradients[active].from}, ${valueGradients[active].to})`,
               }}
