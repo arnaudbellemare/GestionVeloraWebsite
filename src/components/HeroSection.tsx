@@ -94,7 +94,7 @@ export function HeroSection() {
           whileTap={{ scale: 0.98 }}
           className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-white/95 text-black font-sans font-semibold text-base hover:bg-white transition-colors duration-300 shadow-lg shadow-black/20"
         >
-          Parlez-nous
+          Contactez-nous
           <span className="text-sm" aria-hidden="true">→</span>
         </motion.a>
       </div>
