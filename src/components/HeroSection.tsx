@@ -23,8 +23,7 @@ export function HeroSection() {
         muted
         playsInline
         preload="auto"
-        poster="/hero-gestion-velora.jpg"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover bg-[#0a0a0a]"
         aria-hidden
       >
         <source src={HERO_VIDEO} type="video/mp4" />

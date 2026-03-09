@@ -68,15 +68,15 @@ export function ValueLabelsSection() {
           </div>
 
           {/* Description text */}
-          <div className="flex-1 min-h-[120px] relative">
-            <AnimatePresence mode="wait">
+          <div className="flex-1 min-h-[120px] relative overflow-hidden">
+            <AnimatePresence initial={false} mode="popLayout">
               <motion.p
                 key={active}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="font-sans text-xl lg:text-2xl text-white/80 max-w-2xl"
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="font-sans text-xl lg:text-2xl text-white/80 max-w-2xl absolute inset-0"
               >
                 {values[active].text}
               </motion.p>
@@ -84,23 +84,21 @@ export function ValueLabelsSection() {
           </div>
         </div>
 
-        {/* Right/bottom: dynamic gradient orb - soft glow from corner */}
+        {/* Right/bottom: dynamic gradient orb - smooth crossfade */}
         <div className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-2 lg:-translate-x-4 pointer-events-none w-56 h-56 lg:w-72 lg:h-72 shrink-0">
-          <AnimatePresence mode="wait">
+          {valueGradients.map((grad, i) => (
             <motion.div
-              key={active}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
+              key={i}
+              initial={false}
+              animate={{ opacity: active === i ? 0.85 : 0 }}
+              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="absolute inset-0 rounded-full"
               style={{
-                background: `radial-gradient(circle at 70% 70%, ${valueGradients[active].from} 0%, ${valueGradients[active].to} 70%)`,
+                background: `radial-gradient(circle at 70% 70%, ${grad.from} 0%, ${grad.to} 70%)`,
                 filter: "blur(60px)",
-                opacity: 0.85,
               }}
             />
-          </AnimatePresence>
+          ))}
         </div>
 
         {/* Bottom accent line */}
