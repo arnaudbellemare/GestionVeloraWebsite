@@ -159,7 +159,7 @@ export const FooterSection = (): JSX.Element => {
             whileHover={{ scale: 1.05, opacity: 1, y: -4 }}
             whileTap={{ scale: 1.02 }}
             style={{ transformOrigin: "right bottom" }}
-            className="h-28 w-auto sm:h-36 lg:h-48 xl:h-56 flex-shrink-0 -translate-y-8 lg:-translate-y-10 ml-auto"
+            className="h-36 w-auto sm:h-44 lg:h-56 xl:h-64 flex-shrink-0 -translate-y-8 lg:-translate-y-10 ml-auto"
           />
         </div>
       </div>
