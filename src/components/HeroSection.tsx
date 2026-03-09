@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const HERO_VIDEO = "/videos/hero-bg.mp4";
+const HERO_VIDEO = "/videos/hero-bg-720.mp4"; // 26MB 720p — good quality, fast load
+const HERO_POSTER = "/hero-poster.jpg"; // 351KB — shows while video buffers
+
+// Tiny 32px base64 blur placeholder — renders instantly, zero network request
+const BLUR_PLACEHOLDER =
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAARACADASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAIDBQT/xAAiEAACAQMEAgMAAAAAAAAAAAABAgADERIEITFRIkETMsH/xAAWAQEBAQAAAAAAAAAAAAAAAAABAAL/xAAXEQEBAQEAAAAAAAAAAAAAAAAAIQER/9oADAMBAAIRAxEAPwDiDgqp4a+3U1qGuZlJqKMQLePczxTX4sVwPu45MFSqqEAHE9G+8weO6tqXKB1bHfgR01l0BZfI9cTPuxTGxB23I/ZJmdRsbW6jTFElafMIRGH9xNT9YQkn/9k=";
 
 const partnerLogos = [
   "Groupe Velora",
@@ -12,28 +18,68 @@ const partnerLogos = [
 ];
 
 export function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+  const [posterLoaded, setPosterLoaded] = useState(false);
+
+  // Preload poster image eagerly
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setPosterLoaded(true);
+    img.src = HERO_POSTER;
+  }, []);
+
+  const handleCanPlay = useCallback(() => {
+    setVideoReady(true);
+  }, []);
+
   return (
     <section
       className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden"
-      style={{
-        background: "radial-gradient(ellipse 80% 60% at 50% 40%, #1a1a1a 0%, #0f0f0f 50%, #0a0a0a 100%)",
-      }}
       aria-label="Hero"
     >
+      {/* Layer 1: Instant blur placeholder (base64 inline, zero latency) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${BLUR_PLACEHOLDER})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "blur(20px)",
+          transform: "scale(1.1)",
+        }}
+        aria-hidden
+      />
+
+      {/* Layer 2: Poster image (351KB, loads in <1s) */}
+      <div
+        className="absolute inset-0 transition-opacity duration-700"
+        style={{
+          backgroundImage: posterLoaded ? `url(${HERO_POSTER})` : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: posterLoaded ? 1 : 0,
+        }}
+        aria-hidden
+      />
+
+      {/* Layer 3: Video (720p, 26MB — fades in when ready to play) */}
       <video
+        ref={videoRef}
         autoPlay
         loop
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
-          background: "radial-gradient(ellipse 80% 60% at 50% 40%, #1a1a1a 0%, #0f0f0f 50%, #0a0a0a 100%)",
-        }}
+        onCanPlay={handleCanPlay}
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+        style={{ opacity: videoReady ? 1 : 0 }}
         aria-hidden
       >
         <source src={HERO_VIDEO} type="video/mp4" />
       </video>
+
+      {/* Gradient overlay */}
       <div
         className="absolute inset-0 z-[1]"
         style={{

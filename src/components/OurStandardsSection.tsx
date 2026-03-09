@@ -10,26 +10,23 @@ export function OurStandardsSection() {
     target: ref,
     offset: ["start end", "end start"],
   });
-  const bgY = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "8%", "0%"]);
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.8, 1], [0.3, 0.7, 1, 0.7, 0.3]);
   const leftY = useTransform(scrollYProgress, [0, 0.25, 0.5], [40, 0, -20]);
   const rightY = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [30, 0, -15]);
 
   return (
-    <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px" style={{ background: "#0f0f0f" }}>
-      {/* Background: oversized to avoid black bars when parallax shifts */}
-      <motion.div
-        className="absolute inset-0 overflow-hidden"
-        style={{ y: bgY }}
-      >
-        <div className="absolute -top-[30%] -left-[15%] -right-[15%] -bottom-[15%] w-[130%] h-[160%]">
-          <img
-            src={BG_IMAGE}
-            alt=""
-            className="w-full h-full object-cover"
-            style={{ objectPosition: "center 30%" }}
-          />
-        </div>
+    <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px">
+      {/* Fixed background container - never moves, always covers section */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Parallax image - moves inside the fixed container */}
+        <motion.img
+          src={BG_IMAGE}
+          alt=""
+          className="absolute inset-0 w-full h-[120%] object-cover"
+          style={{ y: bgY, objectPosition: "center 30%", top: "-10%" }}
+        />
+        {/* Overlay gradients */}
         <div
           className="absolute inset-0 dark:hidden"
           style={{
@@ -44,7 +41,7 @@ export function OurStandardsSection() {
               "linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.55) 100%)",
           }}
         />
-        {/* Fade vers la section suivante pour éviter la coupure nette */}
+        {/* Bottom fade for smooth transition to next section */}
         <div
           className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none dark:hidden"
           style={{
@@ -57,7 +54,7 @@ export function OurStandardsSection() {
             background: "linear-gradient(to bottom, transparent 0%, rgba(18,18,18,0.6) 60%, #121212 100%)",
           }}
         />
-      </motion.div>
+      </div>
 
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-[90rem] mx-auto px-6 lg:px-16 py-24 items-center gap-16">
         <motion.div className="flex-1" style={{ opacity, y: leftY }}>
