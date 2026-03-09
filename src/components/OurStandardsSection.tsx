@@ -44,6 +44,19 @@ export function OurStandardsSection() {
               "linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.55) 100%)",
           }}
         />
+        {/* Fade vers la section suivante pour éviter la coupure nette */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none dark:hidden"
+          style={{
+            background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.3) 70%, #fff 100%)",
+          }}
+        />
+        <div
+          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none hidden dark:block"
+          style={{
+            background: "linear-gradient(to bottom, transparent 0%, rgba(18,18,18,0.6) 60%, #121212 100%)",
+          }}
+        />
       </motion.div>
 
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-[90rem] mx-auto px-6 lg:px-16 py-24 items-center gap-16">
