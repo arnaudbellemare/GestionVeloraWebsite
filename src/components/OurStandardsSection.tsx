@@ -29,7 +29,7 @@ export function OurStandardsSection() {
           className="absolute inset-0 dark:hidden"
           style={{
             background:
-              "linear-gradient(to right, rgba(250,249,247,0.6) 0%, rgba(250,249,247,0.45) 50%, rgba(0,0,0,0.25) 100%)",
+              "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.6) 100%)",
           }}
         />
         <div
@@ -43,7 +43,7 @@ export function OurStandardsSection() {
 
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-[90rem] mx-auto px-6 lg:px-16 py-24 items-center gap-16">
         <motion.div className="flex-1" style={{ opacity, y: leftY }}>
-          <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-velora-charcoal dark:text-white leading-tight mb-8">
+          <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-white leading-tight mb-8">
             Établir de nouveaux standards en gestion immobilière.
           </h2>
           <motion.a
@@ -52,14 +52,14 @@ export function OurStandardsSection() {
             target="_blank"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-velora-charcoal text-velora-charcoal dark:border-white dark:text-white font-sans font-semibold text-sm hover:bg-velora-charcoal hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white text-white font-sans font-semibold text-sm hover:bg-white hover:text-black transition-colors duration-300"
           >
             Notre approche
             <span className="text-xs" aria-hidden="true">→</span>
           </motion.a>
         </motion.div>
         <motion.div className="flex-1" style={{ opacity, y: rightY }}>
-          <p className="font-sans text-lg text-velora-charcoal/90 dark:text-white/90 leading-relaxed max-w-xl">
+          <p className="font-sans text-lg text-white/90 leading-relaxed max-w-xl">
             Pour nous, la gestion immobilière n&apos;est pas une case à cocher —
             c&apos;est un engagement que nous renforçons au quotidien avec une
             maintenance proactive, des rapports transparents et une culture où
