@@ -14,7 +14,10 @@ const partnerLogos = [
 export function HeroSection() {
   return (
     <section
-      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-[#0a0a0a]"
+      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden"
+      style={{
+        background: "radial-gradient(ellipse 80% 60% at 50% 40%, #1a1a1a 0%, #0f0f0f 50%, #0a0a0a 100%)",
+      }}
       aria-label="Hero"
     >
       <video
@@ -23,7 +26,10 @@ export function HeroSection() {
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover bg-[#0a0a0a]"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{
+          background: "radial-gradient(ellipse 80% 60% at 50% 40%, #1a1a1a 0%, #0f0f0f 50%, #0a0a0a 100%)",
+        }}
         aria-hidden
       >
         <source src={HERO_VIDEO} type="video/mp4" />

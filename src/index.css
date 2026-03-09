@@ -6,6 +6,7 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    scroll-padding-top: 6rem; /* équivalent à scroll-mt-24, pour l’ancrage sous le header fixe */
   }
   body {
     font-family: "DM Sans", system-ui, sans-serif;

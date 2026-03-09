@@ -16,7 +16,7 @@ export function OurStandardsSection() {
   const rightY = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [30, 0, -15]);
 
   return (
-    <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden scroll-mt-24 pt-24 lg:pt-24 bg-neutral-950 -mt-px">
+    <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 bg-neutral-950 -mt-px">
       {/* Background */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <img
