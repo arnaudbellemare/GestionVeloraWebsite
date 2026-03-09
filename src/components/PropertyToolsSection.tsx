@@ -26,7 +26,7 @@ const gridImages = [
     lottieSrc: undefined as string | undefined,
   },
   {
-    src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&q=90",
+    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=90",
     alt: "Tableau de bord",
     lottieSrc: LOTTIE_DASHBOARD_TILE || undefined,
   },
