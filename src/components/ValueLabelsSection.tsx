@@ -32,7 +32,7 @@ export function ValueLabelsSection() {
   }, []);
 
   return (
-    <section className="py-24 lg:py-32 px-6 lg:px-16 bg-[#191818] dark:bg-[#0a0a0a] overflow-hidden">
+    <section className="pt-24 pb-40 lg:py-32 px-6 lg:px-16 bg-[#191818] dark:bg-[#0a0a0a] overflow-x-hidden">
       <div className="max-w-[90rem] mx-auto relative">
         <ScrollReveal>
           <h2 className="font-playfair text-4xl lg:text-5xl text-white leading-tight mb-16">
@@ -84,8 +84,8 @@ export function ValueLabelsSection() {
           </div>
         </div>
 
-        {/* Right/bottom: dynamic gradient orb - visible on mobile and desktop */}
-        <ScrollReveal delay={0.2} direction="right" className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-4 lg:-translate-x-8 pointer-events-none w-48 h-48 lg:w-64 lg:h-64">
+        {/* Right/bottom: dynamic gradient orb - visible on mobile and desktop, keep circular */}
+        <ScrollReveal delay={0.2} direction="right" className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-4 lg:-translate-x-8 pointer-events-none w-48 h-48 min-w-[12rem] min-h-[12rem] lg:w-64 lg:h-64 lg:min-w-[16rem] lg:min-h-[16rem] shrink-0 rounded-full overflow-visible">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -93,7 +93,7 @@ export function ValueLabelsSection() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.45, ease: "easeOut" }}
-              className="absolute inset-0 rounded-full blur-3xl opacity-70 dark:opacity-60 lg:opacity-80"
+              className="absolute inset-0 rounded-full blur-3xl opacity-70 dark:opacity-60 lg:opacity-80 aspect-square"
               style={{
                 background: `radial-gradient(circle at 50% 50%, ${valueGradients[active].from}, ${valueGradients[active].to})`,
               }}
