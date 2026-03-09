@@ -22,6 +22,8 @@ export function HeroSection() {
         loop
         muted
         playsInline
+        preload="auto"
+        poster="/hero-gestion-velora.jpg"
         className="absolute inset-0 w-full h-full object-cover"
         aria-hidden
       >

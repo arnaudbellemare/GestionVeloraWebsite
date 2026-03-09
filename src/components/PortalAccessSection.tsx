@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
-import { PORTAL_URLS, SOFTWARE_SITE_URL } from "../config";
+import { PORTAL_URLS } from "../config";
 
 export function PortalAccessSection() {
   return (
@@ -94,9 +94,9 @@ export function PortalAccessSection() {
         </div>
         <ScrollReveal delay={0.3}>
           <p className="mt-8 font-sans text-sm text-white/50">
-            Découvrez le logiciel ManagerSyndicat et ServiceSyndicat :{" "}
+            Apprenez-en plus sur Nestreva, la plateforme de gestion pour gestionnaire ou propriétaire :{" "}
             <a
-              href={SOFTWARE_SITE_URL}
+              href="https://nestreva.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white/80 hover:text-white underline transition-colors"
