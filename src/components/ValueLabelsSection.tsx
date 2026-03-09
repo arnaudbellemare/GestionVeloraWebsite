@@ -32,24 +32,24 @@ export function ValueLabelsSection() {
   }, []);
 
   return (
-    <section className="pt-24 pb-40 lg:py-32 px-6 lg:px-16 bg-[#191818] dark:bg-[#0a0a0a] overflow-x-hidden">
+    <section className="pt-16 pb-24 sm:pt-24 sm:pb-32 lg:py-32 px-5 sm:px-6 lg:px-16 bg-[#191818] dark:bg-[#0a0a0a] overflow-x-hidden">
       <div className="max-w-[90rem] mx-auto relative">
         <ScrollReveal>
-          <h2 className="font-playfair text-4xl lg:text-5xl text-white font-bold leading-tight mb-16">
+          <h2 className="font-playfair text-2xl sm:text-3xl lg:text-5xl text-white font-bold leading-tight mb-10 sm:mb-16 max-w-2xl">
             Débloquer le potentiel dans le monde réel.
           </h2>
         </ScrollReveal>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
+        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-16 items-start">
           {/* Labels with sliding accent */}
-          <div className="relative flex gap-6 lg:flex-col lg:pr-6">
+          <div className="relative flex flex-wrap gap-4 sm:gap-6 lg:flex-col lg:pr-6 shrink-0">
             <motion.div
               className="absolute left-0 top-0 w-0.5 h-5 bg-amber-300 rounded-full hidden lg:block"
               initial={false}
               animate={{ y: active * 44 }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
             />
-            <div className="flex gap-6 lg:flex-col pl-4 sm:pl-0 sm:ml-2">
+            <div className="flex flex-wrap gap-4 sm:gap-6 lg:flex-col lg:pl-4 lg:ml-2">
               {values.map((v, i) => (
                 <motion.button
                   key={v.label}
@@ -68,7 +68,7 @@ export function ValueLabelsSection() {
           </div>
 
           {/* Description text */}
-          <div className="flex-1 min-h-[140px] relative">
+          <div className="flex-1 min-h-[100px] sm:min-h-[120px] lg:min-h-[140px] relative min-w-0">
             <AnimatePresence initial={false} mode="wait">
               <motion.p
                 key={active}
@@ -76,7 +76,7 @@ export function ValueLabelsSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="font-sans text-xl lg:text-2xl text-white max-w-2xl"
+                className="font-sans text-base sm:text-lg lg:text-2xl text-white max-w-2xl leading-relaxed"
               >
                 {values[active].text}
               </motion.p>
@@ -85,7 +85,7 @@ export function ValueLabelsSection() {
         </div>
 
         {/* Right/bottom: dynamic gradient orb - smooth crossfade */}
-        <div className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-2 lg:-translate-x-4 pointer-events-none w-56 h-56 lg:w-72 lg:h-72 shrink-0">
+        <div className="absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-4 sm:-translate-x-2 lg:-translate-x-4 pointer-events-none w-40 h-40 sm:w-48 sm:h-48 lg:w-72 lg:h-72 shrink-0 opacity-80 sm:opacity-100">
           {valueGradients.map((grad, i) => (
             <motion.div
               key={i}
@@ -107,7 +107,7 @@ export function ValueLabelsSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-16 h-px bg-gradient-to-r from-transparent via-amber-300/60 to-transparent"
+          className="mt-10 sm:mt-12 lg:mt-16 h-px bg-gradient-to-r from-transparent via-amber-300/60 to-transparent w-full max-w-[90rem]"
         />
       </div>
     </section>

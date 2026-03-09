@@ -16,7 +16,7 @@ export function OurStandardsSection() {
   const rightY = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [30, 0, -15]);
 
   return (
-    <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px" style={{ background: "#0f0f0f" }}>
+    <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px bg-[#faf9f7] dark:bg-[#0f0f0f]">
       {/* Background: oversized to avoid black bars when parallax shifts */}
       <motion.div
         className="absolute inset-0 overflow-hidden"
