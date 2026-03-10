@@ -15,11 +15,10 @@ export function WhoWeAreSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           <ScrollReveal>
             <p className="font-sans text-lg text-velora-charcoal/80 dark:text-white/80 leading-relaxed">
-              Gestion Velora est née d&apos;une conviction simple : les propriétaires
-              et syndics méritent mieux. Pas de meilleures promesses — une
-              meilleure exécution. Chaque décision, de la planification des
-              travaux à la relation locataires, est guidée par les données et
-              réalisée avec soin.
+              <strong className="text-velora-charcoal dark:text-white">Gestion Velora est une entreprise de gestion immobilière à Montréal</strong> qui offre des services de syndicat de copropriété, gestion Airbnb et location longue durée. Nous combinons expertise immobilière, technologie et transparence pour une gestion proactive et centrée sur la valorisation de votre actif.
+            </p>
+            <p className="font-sans text-lg text-velora-charcoal/80 dark:text-white/80 leading-relaxed mt-6">
+              Les propriétaires et syndics méritent mieux : pas de promesses vides, une exécution rigoureuse. Chaque décision — planification des travaux, relation locataires — est guidée par les données et réalisée avec soin.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
