@@ -33,10 +33,10 @@ export const FooterSection = (): JSX.Element => {
               Contact
             </h4>
             <a
-              href="tel:+15149001234"
+              href="tel:+15147771731"
               className="font-sans text-white/90 hover:text-white transition-colors duration-300 block mb-2"
             >
-              (514) 900-1234
+              (514) 777-1731
             </a>
             <a
               href="mailto:info@gestionvelora.com"
@@ -45,9 +45,7 @@ export const FooterSection = (): JSX.Element => {
               info@gestionvelora.com
             </a>
             <p className="font-sans text-sm text-white/60 leading-relaxed">
-              1250, boul. René-Lévesque O.<br />
-              Bureau 800<br />
-              Montréal, QC H3B 4W8
+              Montréal, QC
             </p>
           </motion.div>
 
