@@ -73,7 +73,7 @@ export const fr = {
   nav: {
     home: "Accueil",
     services: "Services",
-    insights: "Insights",
+    insights: "Conseils",
     login: "Connexion",
     syndicat: "Syndicat de copropriété",
     syndicatDesc: "Administration complète et transparence pour chaque copropriété.",
@@ -170,7 +170,7 @@ export const fr = {
 
   // Insights
   insights: {
-    title: "Insights.",
+    title: "Conseils.",
     subtitle: "Réflexions et actualités sur la gestion immobilière.",
     seeAll: "Voir tout",
     prev: "Précédent",
@@ -241,7 +241,7 @@ export const fr = {
     home: "Accueil",
     standards: "Nos standards",
     faq: "FAQ",
-    insights: "Insights",
+    insights: "Conseils",
     contactLink: "Contact",
     privacy: "Politique de confidentialité",
     madeWith: "Conçu avec soin →",
@@ -265,11 +265,11 @@ export const fr = {
 
   // Blog
   blog: {
-    title: "Insights",
+    title: "Conseils",
     subtitle: "Réflexions et actualités sur la gestion immobilière à Montréal par Gestion Velora.",
-    backToInsights: "← Tous les insights",
+    backToInsights: "← Tous les conseils",
     notFound: "Article non trouvé",
-    backToInsightsLink: "Retour aux insights",
+    backToInsightsLink: "Retour aux conseils",
     contactQuestion: "Des questions sur la gestion immobilière ? Contactez Gestion Velora.",
     planifyCall: "Planifiez un appel",
   },

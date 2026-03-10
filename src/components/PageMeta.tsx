@@ -51,7 +51,7 @@ export function PageMeta() {
           description = post.excerpt;
         }
       } else {
-        title = isEn ? "Insights | Gestion Velora" : "Insights | Gestion Velora";
+        title = isEn ? "Insights | Gestion Velora" : "Conseils | Gestion Velora";
         description = isEn
           ? "Thoughts and news on property management in Montreal."
           : "Réflexions et actualités sur la gestion immobilière.";
