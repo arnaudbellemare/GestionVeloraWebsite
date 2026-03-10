@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { InternalLink } from "../components/InternalLink";
@@ -13,15 +14,25 @@ export function BlogPostPage() {
 
   if (!post) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 pt-24">
+      <motion.div
+        className="min-h-screen flex flex-col items-center justify-center px-6 pt-24"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.35 }}
+      >
         <h1 className="font-playfair text-2xl text-black dark:text-white mb-4">{t("blog.notFound")}</h1>
         <InternalLink to="/blog" className="font-sans text-waabi-pink hover:underline">{t("blog.backToInsightsLink")}</InternalLink>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <article className="pt-24 lg:pt-32 pb-24 lg:pb-32">
+    <motion.article
+      className="pt-24 lg:pt-32 pb-24 lg:pb-32"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+    >
       <div className="max-w-[48rem] mx-auto px-6 lg:px-16">
         <InternalLink
           to="/blog"
@@ -75,6 +86,6 @@ export function BlogPostPage() {
           </div>
         </ScrollReveal>
       </div>
-    </article>
+    </motion.article>
   );
 }
