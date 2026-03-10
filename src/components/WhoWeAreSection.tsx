@@ -23,7 +23,7 @@ export function WhoWeAreSection() {
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
             <p className="font-sans text-lg text-velora-charcoal/80 dark:text-white/80 leading-relaxed">
-              Notre équipe combine des décennies d&apos;expertise immobilière avec une
+              Notre équipe combine des années d&apos;expertise immobilière avec une
               technologie moderne pour créer une expérience de gestion transparente,
               proactive et réellement centrée sur la valorisation de votre actif.
             </p>
