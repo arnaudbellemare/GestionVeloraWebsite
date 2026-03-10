@@ -1,29 +1,15 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 
-const cards = [
-  {
-    title: "Télécharger en un clic",
-    description:
-      "Exportez vos rapports financiers et assemblées en PDF ou consultez-les directement dans le portail propriétaires.",
-    mockup: "download",
-  },
-  {
-    title: "Archiver par immeuble",
-    description:
-      "Organisez vos documents par copropriété, exercice et type. Retrouvez chaque pièce en quelques secondes.",
-    mockup: "archive",
-  },
-  {
-    title: "Annoter et collaborer",
-    description:
-      "Posez des questions ou des notes sur un devis, un rapport ou une décision. Le contexte reste à portée de main.",
-    mockup: "comment",
-  },
+const cardKeys = [
+  { titleKey: "fromInspiration.download", descKey: "fromInspiration.downloadDesc", mockup: "download" as const },
+  { titleKey: "fromInspiration.archive", descKey: "fromInspiration.archiveDesc", mockup: "archive" as const },
+  { titleKey: "fromInspiration.comment", descKey: "fromInspiration.commentDesc", mockup: "comment" as const },
 ];
 
-function DownloadMockup() {
+function DownloadMockup({ t }: { t: (k: string) => string }) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -59,7 +45,7 @@ function DownloadMockup() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
             >
-              Téléchargé
+              {t("fromInspiration.downloaded")}
             </motion.span>
           </>
         ) : (
@@ -67,7 +53,7 @@ function DownloadMockup() {
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            <span>Exporter le rapport</span>
+            <span>{t("fromInspiration.exportReport")}</span>
           </>
         )}
       </motion.div>
@@ -75,7 +61,7 @@ function DownloadMockup() {
   );
 }
 
-function ArchiveMockup() {
+function ArchiveMockup({ t }: { t: (k: string) => string }) {
   const [selected, setSelected] = useState(0);
 
   useEffect(() => {
@@ -91,12 +77,12 @@ function ArchiveMockup() {
   return (
     <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-lg overflow-hidden">
       <div className="px-4 py-3 border-b border-neutral-200 dark:border-neutral-700">
-        <p className="font-sans text-xs font-medium text-neutral-600 dark:text-neutral-400">Archiver dans</p>
+        <p className="font-sans text-xs font-medium text-neutral-600 dark:text-neutral-400">{t("fromInspiration.archiveIn")}</p>
       </div>
       <div className="p-2 space-y-1">
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 cursor-default">
           <span className="text-lg">+</span>
-          <span className="font-sans text-sm">Nouveau dossier</span>
+          <span className="font-sans text-sm">{t("fromInspiration.newFolder")}</span>
         </div>
         {items.map((item, i) => (
           <motion.div
@@ -133,7 +119,7 @@ function ArchiveMockup() {
 
 const TYPING_PHASES = ["", "A", "Aj", "Ajo", "Ajou", "Ajout", "Ajoute", "Ajouté", "Ajouté.", "Ajouté. "];
 
-function CommentMockup() {
+function CommentMockup({ t }: { t: (k: string) => string }) {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
@@ -151,9 +137,9 @@ function CommentMockup() {
             </svg>
           </div>
           <div>
-            <p className="font-sans text-xs text-neutral-500 dark:text-neutral-400">Vous · il y a 2h</p>
+            <p className="font-sans text-xs text-neutral-500 dark:text-neutral-400">{t("fromInspiration.you2h")}</p>
             <p className="font-sans text-sm text-neutral-800 dark:text-neutral-200">
-              Ce devis semble correct pour les travaux.
+              {t("fromInspiration.quotePlaceholder")}
             </p>
           </div>
         </div>
@@ -181,32 +167,33 @@ function CommentMockup() {
 }
 
 export function FromInspirationSection() {
+  const { t } = useTranslation();
   return (
     <section className="py-24 lg:py-32 px-6 lg:px-16 bg-white dark:bg-velora-darker">
       <div className="max-w-[90rem] mx-auto">
         <ScrollReveal scale>
           <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-velora-charcoal dark:text-white text-center leading-tight mb-16">
-            De l&apos;administration au pilotage.
+            {t("fromInspiration.title")}
           </h2>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {cards.map((card, i) => (
-            <ScrollReveal key={card.title} delay={i * 0.1}>
+          {cardKeys.map((card, i) => (
+            <ScrollReveal key={card.titleKey} delay={i * 0.1}>
               <motion.div
                 className="flex flex-col h-full rounded-2xl bg-[#f9f6f3] dark:bg-velora-charcoal p-6 lg:p-8 shadow-sm ring-1 ring-black/5 dark:ring-white/5"
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
               >
                 <div className="min-h-[140px] flex items-center justify-center mb-6">
-                  {card.mockup === "download" && <DownloadMockup />}
-                  {card.mockup === "archive" && <ArchiveMockup />}
-                  {card.mockup === "comment" && <CommentMockup />}
+                  {card.mockup === "download" && <DownloadMockup t={t} />}
+                  {card.mockup === "archive" && <ArchiveMockup t={t} />}
+                  {card.mockup === "comment" && <CommentMockup t={t} />}
                 </div>
                 <h3 className="font-sans font-bold text-lg text-velora-charcoal dark:text-white mb-2">
-                  {card.title}
+                  {t(card.titleKey)}
                 </h3>
                 <p className="font-sans text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                  {card.description}
+                  {t(card.descKey)}
                 </p>
               </motion.div>
             </ScrollReveal>

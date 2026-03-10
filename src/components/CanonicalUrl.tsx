@@ -4,10 +4,10 @@ import { useLocation } from "react-router-dom";
 const SITE_URL = "https://www.gestionvelora.com";
 
 export function CanonicalUrl() {
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const path = SITE_URL + (location.pathname === "/" ? "/" : location.pathname);
+    const path = SITE_URL + (pathname === "/" ? "/" : pathname);
 
     let el = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (!el) {
@@ -16,7 +16,7 @@ export function CanonicalUrl() {
       document.head.appendChild(el);
     }
     el.href = path;
-  }, [location.pathname]);
+  }, [pathname]);
 
   return null;
 }

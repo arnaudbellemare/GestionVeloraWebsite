@@ -1,8 +1,8 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
 import { getPostBySlug } from "../data/blog";
-import { faqItems } from "../data/faq";
-import { services, type ServiceSlug } from "../data/services";
+import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
 const SITE_URL = "https://www.gestionvelora.com";
 
@@ -23,15 +23,19 @@ function removePageSchema() {
 }
 
 export function SchemaOrg() {
-  const location = useLocation();
+  const { t } = useTranslation();
+  const { pathname } = useLocation();
   const { slug } = useParams<{ slug: string }>();
-  const path = location.pathname;
+  const path = pathname;
+  const locale = path.startsWith("/en") ? "en-CA" : "fr-CA";
 
   useEffect(() => {
-    if (path === "/") {
+    if (path === "/" || path === "/en" || path === "/en/") {
+      const faqItems = t("faqItems", { returnObjects: true }) as { question: string; answer: string }[];
       injectSchema({
         "@context": "https://schema.org",
         "@type": "FAQPage",
+        inLanguage: locale,
         mainEntity: faqItems.map((item) => ({
           "@type": "Question",
           name: item.question,
@@ -44,22 +48,23 @@ export function SchemaOrg() {
       return () => removePageSchema();
     }
 
-    if (path.startsWith("/services/") && slug && slug in services) {
-      const service = services[slug as ServiceSlug];
+    if ((path.startsWith("/services/") || path.startsWith("/en/services/")) && slug && SERVICE_SLUGS.includes(slug as ServiceSlug)) {
+      const service = getLocalizedService(slug as ServiceSlug, t);
       injectSchema({
         "@context": "https://schema.org",
         "@type": "Service",
         name: service.title,
         description: service.description,
         provider: { "@id": `${SITE_URL}/#organization` },
-        url: `${SITE_URL}/services/${service.slug}`,
+        url: `${SITE_URL}${path.startsWith("/en") ? "/en" : ""}/services/${service.slug}`,
         image: service.image,
       });
       return () => removePageSchema();
     }
 
-    if (path.startsWith("/blog/") && slug) {
-      const post = getPostBySlug(slug);
+    if ((path.startsWith("/blog/") || path.startsWith("/en/blog/")) && slug) {
+      const blogLocale = path.startsWith("/en") ? "en" : "fr";
+      const post = getPostBySlug(slug, blogLocale);
       if (post) {
         const months: Record<string, number> = { Janvier: 0, Février: 1, Mars: 2, Avril: 3, Mai: 4, Juin: 5, Juillet: 6, Août: 7, Septembre: 8, Octobre: 9, Novembre: 10, Décembre: 11 };
         const dateMatch = post.date.match(/(\w+)\s+(\d{4})/);
@@ -78,7 +83,7 @@ export function SchemaOrg() {
           publisher: { "@id": `${SITE_URL}/#organization` },
           mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": `${SITE_URL}/blog/${post.slug}`,
+            "@id": `${SITE_URL}${path.startsWith("/en") ? "/en" : ""}/blog/${post.slug}`,
           },
         });
         return () => removePageSchema();
@@ -86,7 +91,7 @@ export function SchemaOrg() {
     }
 
     removePageSchema();
-  }, [path, slug]);
+  }, [path, slug, t]);
 
   return null;
 }

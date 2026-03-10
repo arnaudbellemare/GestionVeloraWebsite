@@ -1,8 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
+import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
-import { services, type ServiceSlug } from "../data/services";
+import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
 function toAnchorId(title: string) {
   const slug = title
@@ -25,14 +27,18 @@ function scrollToBlock(e: React.MouseEvent, blockTitle: string) {
 
 export function ServicePage() {
   const { slug } = useParams<{ slug: string }>();
+  const { t } = useTranslation();
   const [expandedDetail, setExpandedDetail] = useState<number | null>(null);
-  const service = slug && slug in services ? services[slug as ServiceSlug] : null;
+  const service =
+    slug && SERVICE_SLUGS.includes(slug as ServiceSlug)
+      ? getLocalizedService(slug as ServiceSlug, t)
+      : null;
 
   if (!service) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 pt-24">
-        <h1 className="font-playfair text-2xl text-black dark:text-white mb-4">Service non trouvé</h1>
-        <Link to="/" className="font-sans text-waabi-pink hover:underline">Retour à l'accueil</Link>
+        <h1 className="font-playfair text-2xl text-black dark:text-white mb-4">{t("servicePage.notFound")}</h1>
+        <Link to="/" className="font-sans text-waabi-pink hover:underline">{t("servicePage.backHome")}</Link>
       </div>
     );
   }
@@ -56,12 +62,12 @@ export function ServicePage() {
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-16 w-full">
-          <Link
+          <InternalLink
             to="/#specification"
             className="font-sans text-sm text-white/80 hover:text-white mb-6 inline-block"
           >
-            ← Tous les services
-          </Link>
+            {t("servicePage.backToServices")}
+          </InternalLink>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -83,7 +89,7 @@ export function ServicePage() {
       {/* Browse by - Category pills like Waabi */}
       <section className="py-12 lg:py-16 bg-white dark:bg-velora-charcoal border-b border-black/5 dark:border-white/5">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
-          <p className="font-sans text-sm text-black/60 dark:text-white/60 mb-4">Parcourir par :</p>
+          <p className="font-sans text-sm text-black/60 dark:text-white/60 mb-4">{t("servicePage.browseBy")}</p>
           <div className="flex flex-wrap gap-3">
             {service.offerings.map((block) => (
               <a
@@ -104,7 +110,7 @@ export function ServicePage() {
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
             <h2 className="font-playfair font-bold text-2xl lg:text-3xl text-black dark:text-white mb-12">
-              Nos services
+              {t("servicePage.ourServices")}
             </h2>
           </ScrollReveal>
 
@@ -144,7 +150,7 @@ export function ServicePage() {
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
             <h2 className="font-playfair font-bold text-2xl lg:text-3xl text-black dark:text-white mb-12">
-              En détail
+              {t("servicePage.inDetail")}
             </h2>
           </ScrollReveal>
 
@@ -164,7 +170,7 @@ export function ServicePage() {
                       </h4>
                       <div className="flex items-center gap-2">
                         <span className="font-sans text-sm text-black/50 dark:text-white/50">
-                          {block.items.length} éléments
+                          {block.items.length} {t("servicePage.items")}
                         </span>
                         <motion.span
                           animate={{ rotate: isExpanded ? 90 : 0 }}
@@ -211,18 +217,18 @@ export function ServicePage() {
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
             <h2 className="font-playfair font-bold text-3xl lg:text-4xl text-black dark:text-white mb-4">
-              Nous n&apos;avons que commencé
+              {t("servicePage.ctaTitle")}
             </h2>
             <p className="font-sans text-black/70 dark:text-white/70 mb-8 max-w-xl">
-              Suivez-nous ou contactez-nous directement à info@gestionvelora.com
+              {t("servicePage.ctaText")}
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link
+              <InternalLink
                 to="/#contact"
                 className="inline-flex px-6 py-3 rounded-full bg-waabi-pink text-white font-sans font-bold text-sm hover:bg-waabi-pink/90 transition-colors"
               >
-                Planifiez un appel
-              </Link>
+                {t("servicePage.planifyCall")}
+              </InternalLink>
               <a
                 href="mailto:info@gestionvelora.com"
                 className="inline-flex px-6 py-3 rounded-full border-2 border-black/20 dark:border-white/20 text-black dark:text-white font-sans font-semibold text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"

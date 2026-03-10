@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
-import { faqItems } from "../data/faq";
 
 export function FAQSection() {
+  const { t } = useTranslation();
+  const faqItems = t("faqItems", { returnObjects: true }) as {
+    question: string;
+    answer: string;
+  }[];
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -14,10 +19,10 @@ export function FAQSection() {
       <div className="max-w-[48rem] mx-auto">
         <ScrollReveal>
           <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-black dark:text-white leading-tight mb-4">
-            Questions fréquentes
+            {t("faq.title")}
           </h2>
           <p className="font-sans text-base lg:text-lg text-black/60 dark:text-white/60 mb-12">
-            Réponses aux questions les plus posées sur la gestion immobilière à Montréal
+            {t("faq.subtitle")}
           </p>
         </ScrollReveal>
 

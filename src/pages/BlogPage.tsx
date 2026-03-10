@@ -1,22 +1,28 @@
+import { useTranslation } from "react-i18next";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { useLocale } from "../context/LocaleContext";
 import { blogPosts } from "../data/blog";
 
 export function BlogPage() {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   return (
     <div className="pt-24 lg:pt-32 pb-24 lg:pb-32">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
         <ScrollReveal>
           <h1 className="font-playfair font-bold text-4xl lg:text-6xl text-black dark:text-white leading-tight mb-4">
-            Insights
+            {t("blog.title")}
           </h1>
           <p className="font-sans text-lg text-black/60 dark:text-white/60 max-w-2xl">
-            Réflexions et actualités sur la gestion immobilière à Montréal par Gestion Velora.
+            {t("blog.subtitle")}
           </p>
         </ScrollReveal>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post, i) => (
+          {blogPosts.map((post, i) => {
+            const loc = post[locale];
+            return (
             <ScrollReveal key={post.slug} delay={i * 0.05}>
               <InternalLink
                 to={`/blog/${post.slug}`}
@@ -32,20 +38,20 @@ export function BlogPage() {
                 <div className="p-6">
                   <div className="flex flex-wrap gap-2 mb-3">
                     <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white font-sans text-xs font-medium">
-                      {post.category}
+                      {loc.category}
                     </span>
-                    <span className="font-sans text-xs text-black/50 dark:text-white/50">{post.date}</span>
+                    <span className="font-sans text-xs text-black/50 dark:text-white/50">{loc.date}</span>
                   </div>
                   <h2 className="font-sans font-bold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
-                    {post.title}
+                    {loc.title}
                   </h2>
                   <p className="font-sans text-sm text-black/60 dark:text-white/60 mt-2 line-clamp-2">
-                    {post.excerpt}
+                    {loc.excerpt}
                   </p>
                 </div>
               </InternalLink>
             </ScrollReveal>
-          ))}
+          );})}
         </div>
       </div>
     </div>

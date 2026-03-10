@@ -1,37 +1,7 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
-
-const partners = [
-  {
-    id: "volvo",
-    name: "Volvo",
-    quote: "Gestion Velora a complètement transformé notre façon de gérer cette propriété.",
-    author: "John Smith",
-    role: "Président du syndicat de copropriété",
-  },
-  {
-    id: "atlas",
-    name: "Atlas Immobilier",
-    quote: "La transparence et les rapports que nous recevons sont sans précédent.",
-    author: "Marie Dubois",
-    role: "Directrice",
-  },
-  {
-    id: "crown",
-    name: "Crown Properties",
-    quote: "Nos taux d'occupation sont passés de 91% à 98,5% la première année.",
-    author: "Élise Villeneuve",
-    role: "Associée",
-  },
-  {
-    id: "pinnacle",
-    name: "Pinnacle Gestion",
-    quote: "Une équipe réactive et des processus éprouvés qui font la différence.",
-    author: "Pierre Martin",
-    role: "Directeur général",
-  },
-];
 
 const partnerLogos = [
   "Groupe Velora",
@@ -43,6 +13,13 @@ const partnerLogos = [
 ];
 
 export function TrustedPartnersSection() {
+  const { t } = useTranslation();
+  const partners = t("trustedPartners.partners", { returnObjects: true }) as {
+    name: string;
+    quote: string;
+    author: string;
+    role: string;
+  }[];
   const [activeIndex, setActiveIndex] = useState(0);
   const active = partners[activeIndex];
 
@@ -52,19 +29,19 @@ export function TrustedPartnersSection() {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-16 -mt-4">
           <ScrollReveal>
             <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-black dark:text-white leading-tight max-w-2xl">
-              Approuvé par les meilleurs du secteur.
+              {t("trustedPartners.title")}
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={0.1} className="flex flex-col items-start sm:items-end gap-2">
             <p className="font-serif text-base lg:text-lg text-black/70 dark:text-white/70 max-w-md text-left sm:text-right">
-              Des syndicats aux investisseurs, les meilleurs font confiance à Gestion&nbsp;Velora.
+              {t("trustedPartners.subtitle")}
             </p>
             <motion.a
               href="#contact"
               whileHover={{ x: 4 }}
               className="font-serif text-sm font-medium text-black/70 dark:text-white/70 hover:text-waabi-pink dark:hover:text-waabi-pink transition-colors underline underline-offset-2 inline-flex items-center gap-1"
             >
-              Voir plus de témoignages
+              {t("trustedPartners.seeMore")}
               <span aria-hidden>→</span>
             </motion.a>
           </ScrollReveal>
@@ -76,7 +53,7 @@ export function TrustedPartnersSection() {
             <div className="flex flex-row lg:flex-col gap-4 lg:gap-6 flex-wrap lg:flex-nowrap">
               {partners.map((p, i) => (
                 <button
-                  key={p.id}
+                  key={p.name}
                   onClick={() => setActiveIndex(i)}
                   className={`font-sans font-bold text-xl lg:text-2xl text-left transition-colors ${
                     activeIndex === i
@@ -97,7 +74,7 @@ export function TrustedPartnersSection() {
               <div className="flex flex-wrap gap-2 mb-8">
                 {partners.map((p, i) => (
                 <motion.button
-                  key={p.id}
+                  key={p.name}
                   onClick={() => setActiveIndex(i)}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}

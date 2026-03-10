@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { PORTAL_URLS } from "../config";
 
 export function PortalAccessSection() {
+  const { t } = useTranslation();
   return (
     <section
       id="portails"
@@ -11,10 +13,10 @@ export function PortalAccessSection() {
       <div className="max-w-[90rem] mx-auto">
         <ScrollReveal>
           <h2 className="font-playfair font-bold text-3xl lg:text-4xl text-white leading-tight mb-4">
-            Accédez à vos portails
+            {t("portalAccess.title")}
           </h2>
           <p className="font-sans text-white/70 mb-12 max-w-xl">
-            Connectez-vous à l&apos;espace gestionnaire ou copropriétaire selon votre profil.
+            {t("portalAccess.subtitle")}
           </p>
         </ScrollReveal>
         <div className="flex flex-col sm:flex-row gap-6">
@@ -37,10 +39,10 @@ export function PortalAccessSection() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </motion.div>
-                <span className="font-sans font-semibold text-xl text-white">Espace syndic / Gestionnaire</span>
+                <span className="font-sans font-semibold text-xl text-white">{t("portalAccess.manager")}</span>
               </div>
               <p className="font-sans text-sm text-white/60">
-                Comptabilité, documents, demandes, approbations et rapports.
+                {t("portalAccess.managerDesc")}
               </p>
               <span className="inline-flex items-center gap-2 mt-4 font-sans text-sm text-white/80 group-hover:text-white transition-colors">
                 Accéder au portail
@@ -73,10 +75,10 @@ export function PortalAccessSection() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </motion.div>
-                <span className="font-sans font-semibold text-xl text-white">Espace copropriétaire</span>
+                <span className="font-sans font-semibold text-xl text-white">{t("portalAccess.owner")}</span>
               </div>
               <p className="font-sans text-sm text-white/60">
-                Consultez vos frais, documents, demandes et assemblées.
+                {t("portalAccess.ownerDesc")}
               </p>
               <span className="inline-flex items-center gap-2 mt-4 font-sans text-sm text-white/80 group-hover:text-white transition-colors">
                 Accéder au portail
@@ -94,14 +96,14 @@ export function PortalAccessSection() {
         </div>
         <ScrollReveal delay={0.3}>
           <p className="mt-8 font-sans text-sm text-white/50">
-            Apprenez-en plus sur Nestreva, la plateforme de gestion pour gestionnaire ou propriétaire :{" "}
+            {t("portalAccess.learnMore")}{" "}
             <a
               href="https://nestreva.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white/80 hover:text-white underline transition-colors"
             >
-              en savoir plus
+              {t("portalAccess.more")}
             </a>
           </p>
         </ScrollReveal>

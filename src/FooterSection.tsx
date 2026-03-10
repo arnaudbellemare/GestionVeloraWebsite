@@ -1,16 +1,18 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { InternalLink } from "./components/InternalLink";
 import { PORTAL_URLS } from "./config";
 
 export const FooterSection = (): JSX.Element => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const navigationLinks = [
-    { label: "Accueil", to: "/" },
-    { label: "Nos standards", to: "/#standards" },
-    { label: "FAQ", to: "/#faq" },
-    { label: "Insights", to: "/blog" },
-    { label: "Contact", to: "/#contact" },
+    { label: t("footer.home"), to: "/" },
+    { label: t("footer.standards"), to: "/#standards" },
+    { label: t("footer.faq"), to: "/#faq" },
+    { label: t("footer.insights"), to: "/blog" },
+    { label: t("footer.contactLink"), to: "/#contact" },
   ];
 
   return (
@@ -31,7 +33,7 @@ export const FooterSection = (): JSX.Element => {
             transition={{ duration: 0.5, delay: 0 }}
           >
             <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
-              Contact
+              {t("footer.contact")}
             </h4>
             <a
               href="tel:+15147771731"
@@ -58,7 +60,7 @@ export const FooterSection = (): JSX.Element => {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
-              Portails
+              {t("footer.portals")}
             </h4>
             <div className="flex flex-col gap-2">
               <a
@@ -67,7 +69,7 @@ export const FooterSection = (): JSX.Element => {
                 rel="noopener noreferrer"
                 className="font-sans text-white/90 hover:text-white transition-colors duration-300"
               >
-                Espace syndic
+                {t("footer.managerPortal")}
               </a>
               <a
                 href={PORTAL_URLS.service}
@@ -75,7 +77,7 @@ export const FooterSection = (): JSX.Element => {
                 rel="noopener noreferrer"
                 className="font-sans text-white/90 hover:text-white transition-colors duration-300"
               >
-                Espace copropriétaire
+                {t("footer.ownerPortal")}
               </a>
             </div>
           </motion.div>
@@ -88,7 +90,7 @@ export const FooterSection = (): JSX.Element => {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
-              Navigation
+              {t("footer.navigation")}
             </h4>
             <nav className="flex flex-col gap-2" aria-label="Footer navigation">
               {navigationLinks.map((link) => (
@@ -112,7 +114,7 @@ export const FooterSection = (): JSX.Element => {
             className="md:ml-auto"
           >
             <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
-              Infolettre
+              {t("footer.newsletter")}
             </h4>
             <form
               onSubmit={(e) => e.preventDefault()}
@@ -120,14 +122,14 @@ export const FooterSection = (): JSX.Element => {
             >
               <input
                 type="email"
-                placeholder="Courriel"
+                placeholder={t("footer.emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="flex-1 min-w-0 bg-transparent text-white placeholder-white/50 font-sans text-sm focus:outline-none transition-colors duration-300"
               />
               <button
                 type="submit"
-                aria-label="S'inscrire"
+                aria-label={t("footer.subscribe")}
                 className="text-white/70 hover:text-white transition-colors duration-300"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,10 +170,10 @@ export const FooterSection = (): JSX.Element => {
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/60">
           <span>©{new Date().getFullYear()} Gestion Velora</span>
           <InternalLink to="/privacy" className="hover:text-white transition-colors duration-300">
-            Politique de confidentialité
+            {t("footer.privacy")}
           </InternalLink>
           <a href="#" className="hover:text-white transition-colors duration-300">
-            Conçu avec soin →
+            {t("footer.madeWith")}
           </a>
         </div>
       </div>

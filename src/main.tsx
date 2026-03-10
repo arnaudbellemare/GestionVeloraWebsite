@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { ReactLenis } from "lenis/react";
 import App from "./App";
 import { ThemeProvider } from "./context/ThemeContext";
+import "./i18n";
 import "./index.css";
 
 if ("scrollRestoration" in history) {

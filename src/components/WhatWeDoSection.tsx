@@ -1,39 +1,29 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { InternalLink } from "./InternalLink";
 import { ScrollReveal } from "./ScrollReveal";
 
-const serviceTags = [
-  { label: "Syndicat de copropriété", dot: "#3b82f6" },
-  { label: "Airbnb", dot: "#f97316" },
-  { label: "Location", dot: "#8b5cf6" },
+const serviceTagKeys = [
+  { labelKey: "whatWeDo.syndicat", dot: "#3b82f6" },
+  { labelKey: "whatWeDo.airbnb", dot: "#f97316" },
+  { labelKey: "whatWeDo.location", dot: "#8b5cf6" },
 ];
 
-const services = [
-  {
-    slug: "syndicat-copropriete",
-    label: "Syndicat de copropriété",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85",
-    details:
-      "Administration complète, assemblées générales, gestion des fonds de prévoyance et des travaux majeurs. Transparence et rigueur pour chaque copropriété.",
-  },
-  {
-    slug: "airbnb",
-    label: "Airbnb",
-    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=85",
-    details:
-      "Gestion des réservations, coordination des entrées et sorties, ménage et maintenance. Maximisez vos revenus en toute sérénité.",
-  },
-  {
-    slug: "location",
-    label: "Location",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=85",
-    details:
-      "Sélection des locataires, rédaction des baux, suivi des loyers et des entretiens. Une gestion locative professionnelle et humaine.",
-  },
+const serviceData = [
+  { slug: "syndicat-copropriete", labelKey: "whatWeDo.syndicat", detailsKey: "whatWeDo.syndicatDetails" },
+  { slug: "airbnb", labelKey: "whatWeDo.airbnb", detailsKey: "whatWeDo.airbnbDetails" },
+  { slug: "location", labelKey: "whatWeDo.location", detailsKey: "whatWeDo.locationDetails" },
+];
+
+const serviceImages = [
+  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85",
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=85",
+  "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=85",
 ];
 
 export function WhatWeDoSection() {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState<number | null>(null);
 
   return (
@@ -43,15 +33,15 @@ export function WhatWeDoSection() {
     >
       <ScrollReveal className="text-center px-6 mb-16 lg:mb-20">
         <h2 className="font-playfair font-bold text-4xl lg:text-5xl xl:text-6xl text-black dark:text-white leading-tight max-w-4xl mx-auto mb-4">
-          Une gestion adaptée à <span className="italic">chaque type.</span>
+          {t("whatWeDo.title")} <span className="italic">{t("whatWeDo.titleItalic")}</span>
         </h2>
         <p className="font-sans text-base lg:text-lg text-black/60 dark:text-white/60 mb-8">
-          syndicats, Airbnb, locations longue durée — une approche sur mesure pour chaque bien
+          {t("whatWeDo.subtitle")}
         </p>
         <div className="flex flex-wrap justify-center gap-3">
-          {serviceTags.map((tag, i) => (
+          {serviceTagKeys.map((tag, i) => (
             <motion.span
-              key={tag.label}
+              key={tag.labelKey}
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -63,14 +53,14 @@ export function WhatWeDoSection() {
                 className="w-2 h-2 rounded-full shrink-0"
                 style={{ backgroundColor: tag.dot }}
               />
-              {tag.label}
+              {t(tag.labelKey)}
             </motion.span>
           ))}
         </div>
       </ScrollReveal>
 
       <div className="flex flex-col sm:flex-row justify-center items-center gap-6 lg:gap-8 px-6 lg:px-12 xl:px-16 max-w-[90rem] mx-auto">
-        {services.map((s, i) => {
+        {serviceData.map((s, i) => {
           const isExpanded = expanded === i;
           return (
             <InternalLink
@@ -90,8 +80,8 @@ export function WhatWeDoSection() {
               >
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
                   <img
-                    src={s.image}
-                    alt={s.label}
+                    src={serviceImages[i]}
+                    alt={t(s.labelKey)}
                     className="w-full h-full object-cover transition-transform duration-500"
                     style={{ transform: isExpanded ? "scale(1.05)" : "scale(1)" }}
                   />
@@ -105,7 +95,7 @@ export function WhatWeDoSection() {
                     }}
                   >
                     <span className="font-sans font-bold text-white text-lg lg:text-xl">
-                      {s.label}
+                      {t(s.labelKey)}
                     </span>
                   </div>
 
@@ -127,13 +117,13 @@ export function WhatWeDoSection() {
                           className="space-y-2"
                         >
                           <span className="font-sans font-bold text-white text-lg block">
-                            {s.label}
+                            {t(s.labelKey)}
                           </span>
                           <p className="font-sans text-sm lg:text-base text-white/95 leading-relaxed">
-                            {s.details}
+                            {t(s.detailsKey)}
                           </p>
                           <span className="inline-block font-sans text-sm text-waabi-pink font-semibold mt-2">
-                            Voir la page →
+                            {t("whatWeDo.viewPage")}
                           </span>
                         </motion.div>
                       </motion.div>
@@ -147,7 +137,7 @@ export function WhatWeDoSection() {
       </div>
 
       <p className="font-sans text-center text-sm text-black/50 dark:text-white/50 px-6 mt-10 lg:mt-12">
-        Cliquez sur une carte ou survolez pour voir les détails
+        {t("whatWeDo.hint")}
       </p>
     </section>
   );

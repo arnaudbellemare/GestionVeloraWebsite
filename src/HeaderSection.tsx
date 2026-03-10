@@ -1,16 +1,20 @@
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { InternalLink } from "./components/InternalLink";
 import { ThemeToggle } from "./components/ThemeToggle";
+import { useLocale } from "./context/LocaleContext";
 import { PORTAL_URLS } from "./config";
 
-const serviceLinks = [
-  { to: "/services/syndicat-copropriete", label: "Syndicat de copropriété", desc: "Administration complète et transparence pour chaque copropriété." },
-  { to: "/services/airbnb", label: "Airbnb", desc: "Gestion des réservations et maximisation des revenus en toute sérénité." },
-  { to: "/services/location", label: "Location", desc: "Sélection des locataires, baux et suivi professionnel." },
+const serviceLinkKeys = [
+  { to: "/services/syndicat-copropriete", labelKey: "nav.syndicat", descKey: "nav.syndicatDesc" },
+  { to: "/services/airbnb", labelKey: "nav.airbnb", descKey: "nav.airbnbDesc" },
+  { to: "/services/location", labelKey: "nav.location", descKey: "nav.locationDesc" },
 ];
 
 export const HeaderSection = (): JSX.Element => {
+  const { t } = useTranslation();
+  const { locale, setLocale } = useLocale();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -44,7 +48,7 @@ export const HeaderSection = (): JSX.Element => {
           </InternalLink>
           <nav className="hidden md:flex items-center gap-0.5 ml-2 pl-2 border-l border-white/20">
             <InternalLink to="/" className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300">
-              Accueil
+              {t("nav.home")}
             </InternalLink>
             <div
               className="relative"
@@ -55,7 +59,7 @@ export const HeaderSection = (): JSX.Element => {
                 type="button"
                 className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300 inline-flex items-center gap-1"
               >
-                Services
+                {t("nav.services")}
                 <svg className={`w-3.5 h-3.5 transition-transform ${servicesOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -66,22 +70,22 @@ export const HeaderSection = (): JSX.Element => {
                   animate={{ opacity: 1, y: 0 }}
                   className="absolute top-full left-0 mt-0.5 py-3 min-w-[280px] rounded-xl bg-neutral-900 text-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)]"
                 >
-                  {serviceLinks.map((s) => (
+                  {serviceLinkKeys.map((s) => (
                     <InternalLink
                       key={s.to}
                       to={s.to}
                       className="block px-4 py-3 hover:bg-white/5 transition-colors duration-300 first:rounded-t-lg last:rounded-b-lg"
                       onClick={() => setServicesOpen(false)}
                     >
-                      <span className="font-sans font-semibold text-white block">{s.label}</span>
-                      <span className="font-sans text-xs text-white/60 mt-0.5 block">{s.desc}</span>
+                      <span className="font-sans font-semibold text-white block">{t(s.labelKey)}</span>
+                      <span className="font-sans text-xs text-white/60 mt-0.5 block">{t(s.descKey)}</span>
                     </InternalLink>
                   ))}
                 </motion.div>
               )}
             </div>
             <InternalLink to="/blog" className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300">
-              Insights
+              {t("nav.insights")}
             </InternalLink>
           </nav>
           <button
@@ -103,8 +107,30 @@ export const HeaderSection = (): JSX.Element => {
           </button>
         </div>
 
-        {/* Right pill: actions */}
+        {/* Right pill: actions + lang switcher */}
         <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-neutral-600/95 dark:bg-neutral-700/95 backdrop-blur-sm shadow-lg">
+          <div className="flex items-center gap-0.5 border-r border-white/20 pr-2 mr-1">
+            <button
+              type="button"
+              onClick={() => setLocale("fr")}
+              className={`font-sans text-xs px-2 py-1 rounded transition-colors ${
+                locale === "fr" ? "bg-white/20 text-white" : "text-white/70 hover:text-white"
+              }`}
+              aria-label="Français"
+            >
+              FR
+            </button>
+            <button
+              type="button"
+              onClick={() => setLocale("en")}
+              className={`font-sans text-xs px-2 py-1 rounded transition-colors ${
+                locale === "en" ? "bg-white/20 text-white" : "text-white/70 hover:text-white"
+              }`}
+              aria-label="English"
+            >
+              EN
+            </button>
+          </div>
           <ThemeToggle lightModeOverWhite={false} />
           <a
             href={PORTAL_URLS.service}
@@ -112,7 +138,7 @@ export const HeaderSection = (): JSX.Element => {
             rel="noopener noreferrer"
             className="hidden sm:inline-flex items-center px-4 py-2 rounded-full bg-white text-neutral-800 font-sans font-semibold text-sm hover:bg-white/95 transition-colors duration-300"
           >
-            Connexion
+            {t("nav.login")}
           </a>
         </div>
       </div>
@@ -123,19 +149,19 @@ export const HeaderSection = (): JSX.Element => {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden mt-2 ml-4 py-4 px-4 rounded-2xl bg-neutral-600/95 dark:bg-neutral-700/95 backdrop-blur-sm shadow-lg w-[calc(100%-2rem)] max-w-sm flex flex-col gap-1"
         >
-          <InternalLink to="/" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>Accueil</InternalLink>
+          <InternalLink to="/" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>{t("nav.home")}</InternalLink>
           <div className="py-2">
-            <span className="font-sans text-white/70 text-sm block mb-2">Services</span>
+            <span className="font-sans text-white/70 text-sm block mb-2">{t("nav.services")}</span>
             <div className="flex flex-col gap-1 pl-3">
-              {serviceLinks.map((s) => (
+              {serviceLinkKeys.map((s) => (
                 <InternalLink key={s.to} to={s.to} className="font-sans text-white/90 py-1.5 text-sm" onClick={() => setMobileOpen(false)}>
-                  {s.label}
+                  {t(s.labelKey)}
                 </InternalLink>
               ))}
             </div>
           </div>
-          <InternalLink to="/blog" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>Insights</InternalLink>
-          <a href={PORTAL_URLS.service} target="_blank" rel="noopener noreferrer" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>Connexion</a>
+          <InternalLink to="/blog" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>{t("nav.insights")}</InternalLink>
+          <a href={PORTAL_URLS.service} target="_blank" rel="noopener noreferrer" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>{t("nav.login")}</a>
         </motion.div>
       )}
     </motion.header>

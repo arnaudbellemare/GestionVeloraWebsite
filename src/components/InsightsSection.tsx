@@ -1,4 +1,6 @@
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { useLocale } from "../context/LocaleContext";
 import { motion } from "framer-motion";
 import { InternalLink } from "./InternalLink";
 import { ScrollReveal } from "./ScrollReveal";
@@ -7,6 +9,8 @@ import { blogPosts } from "../data/blog";
 const featuredPosts = blogPosts.slice(0, 4);
 
 export function InsightsSection() {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: "left" | "right") => {
@@ -25,10 +29,10 @@ export function InsightsSection() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <ScrollReveal>
             <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-black dark:text-white leading-tight">
-              Insights.
+              {t("insights.title")}
             </h2>
             <p className="font-sans text-black/60 dark:text-white/60 mt-2">
-              Réflexions et actualités sur la gestion immobilière.
+              {t("insights.subtitle")}
             </p>
           </ScrollReveal>
           <div className="flex items-center gap-3">
@@ -36,12 +40,12 @@ export function InsightsSection() {
               to="/blog"
               className="px-6 py-3 rounded-full bg-waabi-pink text-white font-sans font-bold text-sm hover:bg-waabi-pink/90 transition-colors shrink-0"
             >
-              Voir tout
+              {t("insights.seeAll")}
             </InternalLink>
             <div className="flex gap-2">
               <motion.button
                 onClick={() => scroll("left")}
-                aria-label="Précédent"
+                aria-label={t("insights.prev")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-10 h-10 rounded-full border-2 border-black/20 dark:border-white/20 flex items-center justify-center text-black dark:text-white hover:border-waabi-pink hover:text-waabi-pink transition-colors"
@@ -52,7 +56,7 @@ export function InsightsSection() {
               </motion.button>
               <motion.button
                 onClick={() => scroll("right")}
-                aria-label="Suivant"
+                aria-label={t("insights.next")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-10 h-10 rounded-full border-2 border-black/20 dark:border-white/20 flex items-center justify-center text-black dark:text-white hover:border-waabi-pink hover:text-waabi-pink transition-colors"
@@ -70,7 +74,9 @@ export function InsightsSection() {
           className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide"
           style={{ scrollSnapType: "x mandatory" }}
         >
-          {featuredPosts.map((post, i) => (
+          {featuredPosts.map((post, i) => {
+            const loc = post[locale];
+            return (
             <InternalLink
               key={post.slug}
               to={`/blog/${post.slug}`}
@@ -94,17 +100,17 @@ export function InsightsSection() {
                 <div className="p-6">
                   <div className="flex flex-wrap gap-2 mb-3">
                     <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white font-sans text-xs font-medium">
-                      {post.category}
+                      {loc.category}
                     </span>
-                    <span className="font-sans text-xs text-black/50 dark:text-white/50">{post.date}</span>
+                    <span className="font-sans text-xs text-black/50 dark:text-white/50">{loc.date}</span>
                   </div>
                   <h3 className="font-sans font-bold text-black dark:text-white leading-snug group-hover:text-waabi-pink transition-colors">
-                    {post.title}
+                    {loc.title}
                   </h3>
                 </div>
               </motion.article>
             </InternalLink>
-          ))}
+          );})}
         </div>
       </div>
     </section>

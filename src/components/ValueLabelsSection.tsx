@@ -1,21 +1,13 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 
-const values = [
-  {
-    label: "Transparent",
-    text: "Rapports financiers clairs, données en temps réel, et une visibilité totale sur chaque décision.",
-  },
-  {
-    label: "Proactif",
-    text: "Maintenance préventive et détection des problèmes avant qu'ils ne s'aggravent.",
-  },
-  {
-    label: "Fiable",
-    text: "Une équipe disponible 24/7, des processus éprouvés et un engagement sans faille.",
-  },
-];
+const valueKeys = [
+  { labelKey: "valueLabels.transparent", textKey: "valueLabels.transparentText" },
+  { labelKey: "valueLabels.proactive", textKey: "valueLabels.proactiveText" },
+  { labelKey: "valueLabels.reliable", textKey: "valueLabels.reliableText" },
+] as const;
 
 const valueGradients = [
   { from: "rgba(72,92,17,0.35)", to: "rgba(72,92,17,0)" },
@@ -24,11 +16,12 @@ const valueGradients = [
 ];
 
 export function ValueLabelsSection() {
+  const { t } = useTranslation();
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setActive((a) => (a + 1) % values.length), 4000);
-    return () => clearInterval(t);
+    const ti = setInterval(() => setActive((a) => (a + 1) % valueKeys.length), 4000);
+    return () => clearInterval(ti);
   }, []);
 
   return (
@@ -36,7 +29,7 @@ export function ValueLabelsSection() {
       <div className="max-w-[90rem] mx-auto relative">
         <ScrollReveal>
           <h2 className="font-playfair text-2xl sm:text-3xl lg:text-5xl text-white font-bold leading-tight mb-10 sm:mb-16 max-w-2xl">
-            Débloquer le potentiel dans le monde réel.
+            {t("valueLabels.title")}
           </h2>
         </ScrollReveal>
 
@@ -50,9 +43,9 @@ export function ValueLabelsSection() {
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
             />
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 lg:flex-col lg:pl-4 lg:ml-2">
-              {values.map((v, i) => (
+              {valueKeys.map((v, i) => (
                 <motion.button
-                  key={v.label}
+                  key={v.labelKey}
                   onClick={() => setActive(i)}
                   whileHover={{ x: 4 }}
                   className={`font-sans text-sm uppercase tracking-wide sm:tracking-widest transition-colors duration-300 text-left ${
@@ -61,7 +54,7 @@ export function ValueLabelsSection() {
                       : "text-white/80 hover:text-white"
                   }`}
                 >
-                  {v.label}
+                  {t(v.labelKey)}
                 </motion.button>
               ))}
             </div>
@@ -78,7 +71,7 @@ export function ValueLabelsSection() {
                 transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="font-sans text-base sm:text-lg lg:text-2xl text-white max-w-2xl leading-relaxed"
               >
-                {values[active].text}
+                {t(valueKeys[active].textKey)}
               </motion.p>
             </AnimatePresence>
           </div>

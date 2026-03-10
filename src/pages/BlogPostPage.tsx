@@ -1,16 +1,21 @@
-import { Link, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { useLocale } from "../context/LocaleContext";
 import { getPostBySlug } from "../data/blog";
 
 export function BlogPostPage() {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getPostBySlug(slug) : null;
+  const post = slug ? getPostBySlug(slug, locale) : null;
 
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 pt-24">
-        <h1 className="font-playfair text-2xl text-black dark:text-white mb-4">Article non trouvé</h1>
-        <Link to="/blog" className="font-sans text-waabi-pink hover:underline">Retour aux insights</Link>
+        <h1 className="font-playfair text-2xl text-black dark:text-white mb-4">{t("blog.notFound")}</h1>
+        <InternalLink to="/blog" className="font-sans text-waabi-pink hover:underline">{t("blog.backToInsightsLink")}</InternalLink>
       </div>
     );
   }
@@ -18,12 +23,12 @@ export function BlogPostPage() {
   return (
     <article className="pt-24 lg:pt-32 pb-24 lg:pb-32">
       <div className="max-w-[48rem] mx-auto px-6 lg:px-16">
-        <Link
+        <InternalLink
           to="/blog"
           className="font-sans text-sm text-black/60 dark:text-white/60 hover:text-waabi-pink mb-8 inline-block"
         >
-          ← Tous les insights
-        </Link>
+          {t("blog.backToInsights")}
+        </InternalLink>
 
         <ScrollReveal>
           <div className="flex flex-wrap gap-2 mb-6">
@@ -59,14 +64,14 @@ export function BlogPostPage() {
         <ScrollReveal delay={0.2}>
           <div className="mt-16 pt-12 border-t border-black/10 dark:border-white/10">
             <p className="font-sans text-black/70 dark:text-white/70 mb-4">
-              Des questions sur la gestion immobilière ? Contactez Gestion Velora.
+              {t("blog.contactQuestion")}
             </p>
-            <Link
+            <InternalLink
               to="/#contact"
               className="inline-flex px-6 py-3 rounded-full bg-waabi-pink text-white font-sans font-semibold text-sm hover:bg-waabi-pink/90 transition-colors"
             >
-              Planifiez un appel
-            </Link>
+              {t("blog.planifyCall")}
+            </InternalLink>
           </div>
         </ScrollReveal>
       </div>

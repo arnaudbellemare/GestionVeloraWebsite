@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 
@@ -11,6 +12,7 @@ const GALLERY_IMAGES = [
 ];
 
 export function ContactSection() {
+  const { t } = useTranslation();
   const [hovered, setHovered] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -38,7 +40,7 @@ export function ContactSection() {
           <div className="lg:flex-1 lg:max-w-xl">
             <ScrollReveal scale>
               <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-black dark:text-white leading-tight mb-6">
-                Gérez quelque chose d&apos;extraordinaire.
+                {t("contact.title")}
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.1}>
@@ -48,7 +50,7 @@ export function ContactSection() {
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex px-8 py-4 rounded-full bg-waabi-pink text-white font-sans font-bold text-sm hover:bg-waabi-pink/90 transition-colors duration-300"
               >
-                Planifiez un appel
+                {t("contact.cta")}
               </motion.a>
             </ScrollReveal>
 
@@ -62,7 +64,7 @@ export function ContactSection() {
                 <div className="space-y-4">
                   <motion.input
                     type="text"
-                    placeholder="Votre nom"
+                    placeholder={t("contact.namePlaceholder")}
                     value={formData.name}
                     onChange={(e) =>
                       setFormData((p) => ({ ...p, name: e.target.value }))
@@ -74,7 +76,7 @@ export function ContactSection() {
                   />
                   <motion.input
                     type="email"
-                    placeholder="Votre courriel"
+                    placeholder={t("contact.emailPlaceholder")}
                     value={formData.email}
                     onChange={(e) =>
                       setFormData((p) => ({ ...p, email: e.target.value }))
@@ -85,7 +87,7 @@ export function ContactSection() {
                     className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300"
                   />
                   <motion.textarea
-                    placeholder="Votre message"
+                    placeholder={t("contact.messagePlaceholder")}
                     value={formData.message}
                     onChange={(e) =>
                       setFormData((p) => ({ ...p, message: e.target.value }))
@@ -102,7 +104,7 @@ export function ContactSection() {
                   whileTap={{ scale: 0.98 }}
                   className="mt-6 px-8 py-4 rounded-full border-2 border-black/20 dark:border-white/30 text-black dark:text-white font-sans font-semibold text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300"
                 >
-                  Envoyer
+                  {t("contact.send")}
                 </motion.button>
               </form>
             </ScrollReveal>

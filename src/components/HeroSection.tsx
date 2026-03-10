@@ -1,17 +1,12 @@
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 
 const HERO_VIDEO = "/videos/hero-bg.mp4";
 
-const partnerLogos = [
-  "Groupe Velora",
-  "Atlas Immobilier",
-  "Crown Properties",
-  "Pinnacle Gestion",
-  "Vertex Capital",
-  "Sendoso",
-];
-
 export function HeroSection() {
+  const { t } = useTranslation();
+  const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
+
   return (
     <section
       className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden"
@@ -55,7 +50,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
           >
-            Votre tranquillité.
+            {t("hero.line1")}
           </motion.span>
           <motion.span
             className="block"
@@ -63,7 +58,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            Notre affaire.
+            {t("hero.line2")}
           </motion.span>
         </motion.h1>
 
@@ -73,7 +68,7 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.65 }}
           className="font-sans text-lg lg:text-xl text-white/75 max-w-xl mb-8 mx-auto"
         >
-          Syndicat de copropriété et gestion locative à Montréal
+          {t("hero.subtitle")}
         </motion.p>
 
         <motion.a
@@ -87,7 +82,7 @@ export function HeroSection() {
         >
           <span className="w-1.5 h-1.5 rounded-full shrink-0 animate-flash-green bg-velora-green" aria-hidden />
           <span className="font-sans text-xs font-medium uppercase tracking-wider">
-            Découvrez nos services
+            {t("hero.ctaDiscover")}
           </span>
           <span className="text-white text-sm" aria-hidden>→</span>
         </motion.a>
@@ -101,14 +96,14 @@ export function HeroSection() {
           whileTap={{ scale: 0.98 }}
           className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-white/95 text-black font-sans font-semibold text-base hover:bg-white transition-colors duration-300 shadow-lg shadow-black/20"
         >
-          Contactez-nous
+          {t("hero.ctaContact")}
           <span className="text-sm" aria-hidden="true">→</span>
         </motion.a>
       </div>
 
       <div className="relative z-[2] w-full pb-12 lg:pb-16 px-6 lg:px-16">
         <div className="max-w-[90rem] mx-auto flex flex-wrap justify-center items-center gap-8 lg:gap-12 opacity-80">
-          {partnerLogos.map((name, i) => (
+          {heroPartners.map((name, i) => (
             <motion.span
               key={name}
               initial={{ opacity: 0, y: 8 }}
