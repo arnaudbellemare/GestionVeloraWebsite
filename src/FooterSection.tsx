@@ -8,6 +8,7 @@ export const FooterSection = (): JSX.Element => {
   const navigationLinks = [
     { label: "Accueil", to: "/" },
     { label: "Nos standards", to: "/#standards" },
+    { label: "FAQ", to: "/#faq" },
     { label: "Insights", to: "/blog" },
     { label: "Contact", to: "/#contact" },
   ];

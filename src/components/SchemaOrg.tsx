@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getPostBySlug } from "../data/blog";
+import { faqItems } from "../data/faq";
 import { services, type ServiceSlug } from "../data/services";
 
 const SITE_URL = "https://gestionvelora.com";
@@ -27,6 +28,22 @@ export function SchemaOrg() {
   const path = location.pathname;
 
   useEffect(() => {
+    if (path === "/") {
+      injectSchema({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      });
+      return () => removePageSchema();
+    }
+
     if (path.startsWith("/services/") && slug && slug in services) {
       const service = services[slug as ServiceSlug];
       injectSchema({

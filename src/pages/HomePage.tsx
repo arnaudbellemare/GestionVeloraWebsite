@@ -1,4 +1,5 @@
 import { ContactSection } from "../components/ContactSection";
+import { FAQSection } from "../components/FAQSection";
 import { FromInspirationSection } from "../components/FromInspirationSection";
 import { HeroSection } from "../components/HeroSection";
 import { InsightsSection } from "../components/InsightsSection";
@@ -25,6 +26,7 @@ export function HomePage() {
       <PropertyToolsSection />
       <PortalAccessSection />
       <InsightsSection />
+      <FAQSection />
       <ContactSection />
     </>
   );
