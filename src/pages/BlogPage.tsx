@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
@@ -9,12 +8,7 @@ export function BlogPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   return (
-    <motion.div
-      className="pt-24 lg:pt-32 pb-24 lg:pb-32"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-    >
+    <div className="pt-24 lg:pt-32 pb-24 lg:pb-32">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
         <ScrollReveal>
           <h1 className="font-playfair font-bold text-4xl lg:text-6xl text-black dark:text-white leading-tight mb-4">
@@ -60,6 +54,6 @@ export function BlogPage() {
           );})}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

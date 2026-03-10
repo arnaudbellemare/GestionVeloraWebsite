@@ -6,6 +6,11 @@ type InternalLinkProps = React.ComponentProps<typeof Link> & {
   to: string;
 };
 
+function isBlogPath(path: string) {
+  const normalized = path.replace(/^\/en/, "") || "/";
+  return normalized === "/blog" || normalized.startsWith("/blog/");
+}
+
 export function InternalLink({ to, onClick, children, ...rest }: InternalLinkProps) {
   const navigate = useNavigate();
   const { startTransition } = useTransition();
@@ -17,11 +22,16 @@ export function InternalLink({ to, onClick, children, ...rest }: InternalLinkPro
     const targetPath = localizedTo.split("#")[0] || "/";
     const currentPath = window.location.pathname;
     if (targetPath !== currentPath) {
-      e.preventDefault();
-      startTransition();
-      setTimeout(() => {
+      const useInstantNav = isBlogPath(targetPath) || isBlogPath(currentPath);
+      if (useInstantNav) {
+        // Blog/conseils: instant navigation, no overlay
+        e.preventDefault();
         navigate(localizedTo);
-      }, 260);
+      } else {
+        e.preventDefault();
+        startTransition();
+        setTimeout(() => navigate(localizedTo), 260);
+      }
     }
     onClick?.(e);
   };
