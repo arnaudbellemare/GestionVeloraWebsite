@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 
-const BARS = [
-  { label: "Mois", value: 72, color: "rgb(59, 130, 246)" },
-  { label: "Trim.", value: 85, color: "rgb(34, 197, 94)" },
-  { label: "Année", value: 62, color: "rgb(236, 72, 153)" },
-  { label: "Budg.", value: 90, color: "rgb(168, 85, 247)" },
-  { label: "Prév.", value: 55, color: "rgb(34, 211, 238)" },
+const TABS = [
+  { label: "Mois" },
+  { label: "Trim." },
+  { label: "Année" },
+  { label: "Budg." },
+  { label: "Prév." },
 ];
 
 export function DashboardMockup() {
@@ -31,80 +31,76 @@ export function DashboardMockup() {
   }, []);
 
   return (
-    <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-lg overflow-hidden">
+    <div className="rounded-xl bg-white dark:bg-neutral-900 shadow-lg border border-neutral-200/80 dark:border-neutral-700/80 overflow-hidden w-full max-w-[340px] mx-auto">
       {/* Header */}
-      <div className="px-4 py-3 border-b border-neutral-200 dark:border-neutral-700">
-        <p className="font-sans text-xs font-medium text-neutral-700 dark:text-neutral-300 truncate">
+      <div className="px-4 py-3 border-b border-neutral-100 dark:border-white/[0.06]">
+        <p className="font-sans text-xs font-medium text-neutral-600 dark:text-neutral-300 truncate">
           {t("fromInspiration.reportLabel")}
         </p>
       </div>
 
-      {/* Chart area */}
-      <div className="px-4 py-2 space-y-1">
-        <div className="flex items-end gap-1.5 h-14">
-          {BARS.map((bar, i) => (
-            <motion.div
-              key={bar.label}
-              className="flex-1 flex flex-col items-center gap-1"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: chartMounted ? 1 : 0 }}
-              transition={{ duration: 0.2, delay: i * 0.08 }}
+      {/* Filter tabs */}
+      <div className="px-4 py-3 border-b border-neutral-100 dark:border-white/[0.06]">
+        <div className="flex items-end justify-between gap-1">
+          {TABS.map((tab, i) => (
+            <motion.button
+              key={tab.label}
+              type="button"
+              className="flex flex-col items-center gap-1.5 shrink-0"
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: chartMounted ? 1 : 0, y: chartMounted ? 0 : 4 }}
+              transition={{ type: "spring", stiffness: 400, damping: 30, delay: i * 0.04 }}
             >
-              <motion.div
-                className="w-full rounded-t min-h-[4px]"
-                style={{ backgroundColor: bar.color }}
-                initial={{ height: 0 }}
-                animate={chartMounted ? { height: bar.value + "%", opacity: 1 } : { height: 0, opacity: 0.5 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 120,
-                  damping: 20,
-                  delay: 0.2 + i * 0.06,
-                }}
-              />
-              <span className="text-[10px] font-sans text-neutral-500 dark:text-neutral-400">
-                {bar.label}
+              <span className={`text-[11px] font-sans font-medium ${i === 1 ? "text-velora-charcoal dark:text-white" : "text-neutral-400 dark:text-neutral-500"}`}>
+                {tab.label}
               </span>
-            </motion.div>
+              <motion.span
+                className={`block h-[2px] rounded-full min-w-[20px] ${i === 1 ? "bg-velora-green" : "bg-neutral-200 dark:bg-white/10"}`}
+                style={{ transformOrigin: "left" }}
+                initial={{ scaleX: 0 }}
+                animate={chartMounted ? { scaleX: 1 } : { scaleX: 0 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.15 + i * 0.05 }}
+              />
+            </motion.button>
           ))}
         </div>
       </div>
 
       {/* Activity feed */}
-      <div className="px-4 pb-2 space-y-1.5">
+      <div className="px-4 py-3 space-y-3">
         <motion.div
-          className="flex gap-2"
+          className="flex gap-3"
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: msg1Visible ? 1 : 0, x: msg1Visible ? 0 : -8 }}
-          transition={{ duration: 0.3 }}
+          transition={{ type: "spring", stiffness: 320, damping: 26 }}
         >
-          <div className="h-6 w-6 rounded-full bg-blue-500/80 shrink-0 flex items-center justify-center text-white text-[10px] font-sans font-medium">
+          <div className="h-7 w-7 rounded-full bg-velora-green/80 dark:bg-velora-green shrink-0 flex items-center justify-center text-white text-[10px] font-sans font-semibold">
             M
           </div>
-          <div>
-            <p className="font-sans text-[10px] text-neutral-500 dark:text-neutral-400">
+          <div className="flex-1 min-w-0">
+            <p className="font-sans text-[10px] text-neutral-500 dark:text-neutral-400 mb-0.5">
               24/08/2024, 14h · {t("fromInspiration.msg1Author")}
             </p>
-            <p className="font-sans text-xs text-neutral-800 dark:text-neutral-200">
+            <p className="font-sans text-xs font-medium text-neutral-800 dark:text-neutral-100 leading-snug">
               {t("fromInspiration.msg1Text")}
             </p>
           </div>
         </motion.div>
 
         <motion.div
-          className="flex gap-2"
+          className="flex gap-3"
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: msg2Visible ? 1 : 0, x: msg2Visible ? 0 : -8 }}
-          transition={{ duration: 0.3 }}
+          transition={{ type: "spring", stiffness: 320, damping: 26 }}
         >
-          <div className="h-6 w-6 rounded-full bg-emerald-500/80 shrink-0 flex items-center justify-center text-white text-[10px] font-sans font-medium">
+          <div className="h-7 w-7 rounded-full bg-neutral-600 dark:bg-neutral-500 shrink-0 flex items-center justify-center text-white text-[10px] font-sans font-semibold">
             P
           </div>
-          <div>
-            <p className="font-sans text-[10px] text-neutral-500 dark:text-neutral-400">
+          <div className="flex-1 min-w-0">
+            <p className="font-sans text-[10px] text-neutral-500 dark:text-neutral-400 mb-0.5">
               24/08/2024, 15h · {t("fromInspiration.msg2Author")}
             </p>
-            <p className="font-sans text-xs text-neutral-800 dark:text-neutral-200">
+            <p className="font-sans text-xs text-neutral-600 dark:text-neutral-300 leading-snug">
               {t("fromInspiration.msg2Text")}
             </p>
           </div>
@@ -115,35 +111,35 @@ export function DashboardMockup() {
           className="flex gap-2 items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: typingVisible ? 1 : 0 }}
-          transition={{ duration: 0.25 }}
+          transition={{ type: "spring", stiffness: 400, damping: 30 }}
         >
-          <div className="flex gap-0.5">
+          <div className="flex gap-1">
             {[0, 1, 2].map((i) => (
               <motion.span
                 key={i}
-                className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-500"
+                className="w-1.5 h-1.5 rounded-full bg-velora-green/70 dark:bg-velora-green"
                 animate={{
-                  y: [0, -4, 0],
+                  y: [0, -3, 0],
                   opacity: [0.5, 1, 0.5],
                 }}
                 transition={{
-                  duration: 0.6,
+                  duration: 0.5,
                   repeat: Infinity,
-                  delay: i * 0.15,
+                  delay: i * 0.12,
                 }}
               />
             ))}
           </div>
-          <span className="font-sans text-[10px] text-neutral-500 dark:text-neutral-400">
+          <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400">
             {t("fromInspiration.marieWriting")}
           </span>
         </motion.div>
 
         {/* Reply button */}
         <motion.button
-          whileHover={{ scale: 1.02, x: 2 }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="w-full mt-1.5 py-1.5 rounded-lg bg-velora-green/15 dark:bg-velora-green/25 text-velora-green font-sans text-xs font-semibold hover:bg-velora-green/25 dark:hover:bg-velora-green/35 transition-colors"
+          className="w-full mt-3 py-2.5 rounded-lg bg-velora-green/15 dark:bg-velora-green/20 text-velora-charcoal dark:text-white font-sans text-xs font-semibold hover:bg-velora-green/25 dark:hover:bg-velora-green/30 transition-colors duration-200"
         >
           {t("fromInspiration.reply")}
         </motion.button>

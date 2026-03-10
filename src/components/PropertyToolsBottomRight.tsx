@@ -44,62 +44,61 @@ export function PropertyToolsBottomRight() {
   return (
     <motion.div
       ref={ref}
-      className="group relative rounded-2xl bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm p-5 lg:p-6 shadow-xl shadow-black/5 dark:shadow-black/20 ring-1 ring-black/[0.04] dark:ring-white/[0.06] overflow-hidden"
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-      transition={{ ...spring, delay: 0.1 }}
-      whileHover={{ y: -2 }}
-      style={{ transition: "box-shadow 0.4s ease" }}
+      className="group relative rounded-2xl bg-white dark:bg-neutral-900 p-6 lg:p-7 shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_24px_-4px_rgba(0,0,0,0.35)] overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ ...spring, delay: 0.08 }}
+      whileHover={{ y: -1 }}
     >
       {/* Ambient glow */}
       <motion.div
-        className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-velora-green/8 dark:bg-velora-green/12 blur-3xl"
-        animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.15, 1] }}
-        transition={{ duration: 5, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
+        className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-velora-green/[0.06] dark:bg-velora-green/[0.08] blur-3xl"
+        animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.1, 1] }}
+        transition={{ duration: 6, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
       />
       <div className="relative">
         {/* Header with live indicator */}
         <motion.div
-          className="flex items-center gap-2 mb-4"
+          className="flex items-center gap-2 mb-5"
           initial={{ opacity: 0, y: 8 }}
           animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-          transition={{ ...spring, delay: 0.15 }}
+          transition={{ ...spring, delay: 0.12 }}
         >
-          <p className="font-sans text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+          <p className="font-sans text-[11px] font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-widest">
             {t("propertyTools.livePortfolio")}
           </p>
           <motion.span
-            className="relative w-2 h-2 rounded-full bg-emerald-500"
-            animate={{ opacity: [1, 0.5, 1], boxShadow: ["0 0 0 0 rgba(16,185,129,0.4)", "0 0 0 6px rgba(16,185,129,0)", "0 0 0 0 rgba(16,185,129,0.4)"] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+            className="relative w-1.5 h-1.5 rounded-full bg-emerald-500"
+            animate={{ opacity: [1, 0.6, 1], scale: [1, 0.9, 1] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
           />
         </motion.div>
 
         {/* Metric cards */}
-        <div className="grid grid-cols-3 gap-2 mb-5">
+        <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { labelKey: "propertyTools.occupancy", value: occupancy, suffix: "%", color: "text-blue-600 dark:text-blue-400", delay: 0.2, useVisible: undefined },
-            { labelKey: "propertyTools.budgetOnTrack", value: 1, suffix: "/1", color: "text-emerald-600 dark:text-emerald-400", delay: 0.32, useVisible: budgetVisible },
-            { labelKey: "propertyTools.tasksDue", value: tasks, suffix: "", color: "text-amber-600 dark:text-amber-400", delay: 0.28, useVisible: undefined },
+            { labelKey: "propertyTools.occupancy", value: occupancy, suffix: "%", color: "text-neutral-800 dark:text-white", delay: 0.18, useVisible: undefined },
+            { labelKey: "propertyTools.budgetOnTrack", value: 1, suffix: "/1", color: "text-neutral-800 dark:text-white", delay: 0.3, useVisible: budgetVisible },
+            { labelKey: "propertyTools.tasksDue", value: tasks, suffix: "", color: "text-neutral-800 dark:text-white", delay: 0.24, useVisible: undefined },
           ].map((m) => (
             <motion.div
               key={m.labelKey}
-              className="relative rounded-xl bg-neutral-50/80 dark:bg-neutral-800/60 p-3 cursor-default overflow-hidden border border-black/[0.03] dark:border-white/[0.04]"
-              initial={{ opacity: 0, scale: 0.92, y: 12 }}
+              className="relative rounded-2xl bg-neutral-100/80 dark:bg-white/[0.06] p-4 cursor-default overflow-hidden"
+              initial={{ opacity: 0, scale: 0.96, y: 8 }}
               animate={{
                 opacity: show && (m.useVisible === undefined || m.useVisible) ? 1 : 0,
-                scale: show && (m.useVisible === undefined || m.useVisible) ? 1 : 0.92,
-                y: show && (m.useVisible === undefined || m.useVisible) ? 0 : 12,
+                scale: show && (m.useVisible === undefined || m.useVisible) ? 1 : 0.96,
+                y: show && (m.useVisible === undefined || m.useVisible) ? 0 : 8,
               }}
               transition={{ ...spring, delay: m.delay }}
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
             >
-              <p className="font-sans text-[10px] text-neutral-500 dark:text-neutral-400 truncate mb-0.5">
+              <p className="font-sans text-[11px] text-neutral-500 dark:text-neutral-400 truncate mb-1">
                 {t(m.labelKey)}
               </p>
               <motion.p
-                className={`font-sans text-lg font-bold tabular-nums ${m.color}`}
+                className={`font-sans text-[17px] font-semibold tabular-nums tracking-[-0.02em] ${m.color}`}
                 layout
                 transition={springBounce}
               >
@@ -118,19 +117,19 @@ export function PropertyToolsBottomRight() {
           ].map((row, i) => (
             <motion.div
               key={row.key}
-              className="flex items-center justify-between gap-2 py-2.5 px-3 rounded-xl bg-neutral-50/70 dark:bg-neutral-800/40 border border-black/[0.02] dark:border-white/[0.03]"
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: show ? 1 : 0, x: show ? 0 : -16 }}
-              transition={{ ...spring, delay: 0.4 + i * 0.1 }}
+              className="flex items-center justify-between gap-3 py-3 px-4 rounded-2xl bg-neutral-100/60 dark:bg-white/[0.04]"
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: show ? 1 : 0, x: show ? 0 : -12 }}
+              transition={{ ...spring, delay: 0.36 + i * 0.08 }}
             >
-              <span className="font-sans text-sm text-neutral-800 dark:text-neutral-200 truncate">
+              <span className="font-sans text-[13px] font-medium text-neutral-800 dark:text-neutral-100 truncate">
                 {t(row.key)}
               </span>
               <motion.span
-                className={`shrink-0 px-2.5 py-0.5 rounded-full font-sans text-[10px] font-semibold ${
+                className={`shrink-0 px-2.5 py-1 rounded-full font-sans text-[11px] font-medium ${
                   row.ok
-                    ? "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400"
-                    : "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400"
+                    ? "bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400"
+                    : "bg-amber-500/10 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400"
                 }`}
                 animate={
                   row.ok
@@ -148,24 +147,24 @@ export function PropertyToolsBottomRight() {
           ))}
         </div>
 
-        {/* Animated pulse line */}
+        {/* Progress indicator */}
         <motion.div
-          className="mt-5 relative h-1 rounded-full overflow-hidden bg-neutral-100/80 dark:bg-neutral-800/80"
+          className="mt-6 relative h-[2px] rounded-full overflow-hidden bg-neutral-200/80 dark:bg-white/10"
           initial={{ opacity: 0 }}
           animate={{ opacity: show ? 1 : 0 }}
-          transition={{ ...spring, delay: 0.6 }}
+          transition={{ ...spring, delay: 0.5 }}
         >
           <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-velora-green/20 via-velora-green/80 to-velora-green/20"
+            className="absolute inset-0 rounded-full bg-velora-green/60"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: show ? 1 : 0 }}
             transition={{ ...spring, delay: 0.7 }}
             style={{ originX: 0 }}
           />
           <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/50 to-transparent w-1/3 pointer-events-none"
-            animate={{ x: ["0%", "200%"] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: [0.4, 0, 0.6, 1], repeatDelay: 0.8 }}
+            className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent w-1/4 pointer-events-none"
+            animate={{ x: ["0%", "300%"] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: [0.4, 0, 0.6, 1], repeatDelay: 1 }}
           />
         </motion.div>
       </div>

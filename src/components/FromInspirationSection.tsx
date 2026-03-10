@@ -183,10 +183,10 @@ export function FromInspirationSection() {
           {cardKeys.map((card, i) => (
             <ScrollReveal key={card.titleKey} delay={i * 0.1}>
               <motion.div
-                className="flex flex-col h-full rounded-2xl bg-[#f9f6f3] dark:bg-velora-charcoal p-6 lg:p-8 shadow-sm ring-1 ring-black/5 dark:ring-white/5"
+                className="flex flex-col justify-center h-full rounded-2xl bg-[#f9f6f3] dark:bg-velora-charcoal p-6 lg:p-8 shadow-sm ring-1 ring-black/5 dark:ring-white/5"
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
               >
-                <div className={`flex items-center justify-center mb-6 ${card.mockup === "dashboard" ? "min-h-[220px]" : "min-h-[140px]"}`}>
+                <div className="flex items-center justify-center mb-6 min-h-[140px]">
                   {card.mockup === "download" && <DownloadMockup t={t} />}
                   {card.mockup === "archive" && <ArchiveMockup t={t} />}
                   {card.mockup === "comment" && <CommentMockup t={t} />}
