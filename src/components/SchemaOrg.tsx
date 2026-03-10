@@ -4,7 +4,7 @@ import { getPostBySlug } from "../data/blog";
 import { faqItems } from "../data/faq";
 import { services, type ServiceSlug } from "../data/services";
 
-const SITE_URL = "https://gestionvelora.com";
+const SITE_URL = "https://www.gestionvelora.com";
 
 function injectSchema(data: object) {
   const id = "schema-org-page";
