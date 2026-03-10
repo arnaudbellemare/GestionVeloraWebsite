@@ -3,7 +3,7 @@ export const en = {
   hero: {
     line1: "Your peace of mind.",
     line2: "Our business.",
-    subtitle: "One of Montreal's most trusted property management companies. Condo management, Airbnb management, and rental management — ideal for owners and boards who expect the best.",
+    subtitle: "One of Montreal's most trusted property management companies. Condo management, Airbnb management, and rental management, ideal for owners and boards who expect the best.",
     ctaDiscover: "Discover our services",
     ctaContact: "Contact us",
   },
@@ -32,7 +32,7 @@ export const en = {
     p1Tail:
       " offering condo management, Airbnb management Montreal, and long-term rental management. We combine real estate expertise, technology, and transparency for proactive management focused on asset appreciation.",
     p2:
-      "Owners and boards deserve better: no empty promises, rigorous execution. Every decision — from maintenance planning to tenant relations — is data-driven and delivered with care.",
+      "Owners and boards deserve better: no empty promises, rigorous execution. Every decision, from maintenance planning to tenant relations, is data-driven and delivered with care.",
     p3:
       "Our team combines years of real estate expertise with modern technology to deliver transparent, proactive management that is truly focused on your asset's value.",
   },
@@ -55,7 +55,7 @@ export const en = {
   whatWeDo: {
     title: "Management tailored to",
     titleItalic: "every type.",
-    subtitle: "condo boards, Airbnb, long-term rentals — a custom approach for every property",
+    subtitle: "condo boards, Airbnb, long-term rentals, a custom approach for every property",
     syndicat: "Condo management",
     airbnb: "Airbnb",
     location: "Rental management",
@@ -87,7 +87,7 @@ export const en = {
   ourStandards: {
     title: "Setting new standards in property management.",
     cta: "Our approach",
-    text: "For us, property management isn't a checkbox — it's a commitment we uphold every day with proactive maintenance, transparent reports, and a culture where every building is treated like our own.",
+    text: "For us, property management isn't a checkbox, it's a commitment we uphold every day with proactive maintenance, transparent reports, and a culture where every building is treated like our own.",
   },
 
   // FromInspiration
@@ -110,7 +110,14 @@ export const en = {
     quotePlaceholder: "This quote looks good for the work.",
     marieWriting: "Marie is typing…",
     reply: "Reply",
-    reportLabel: "Financial report — Saint-Laurent Building • Q3 2024",
+    reportLabel: "Financial report, Saint-Laurent Building • Q3 2024",
+    dashboard: "Live dashboard",
+    dashboardDesc:
+      "Financial reports, animated charts, and real-time collaboration. Your full oversight at a glance.",
+    msg1Author: "Marie D.",
+    msg1Text: "The roof quote looks good, shall we discuss at the AGM?",
+    msg2Author: "Pierre M.",
+    msg2Text: "Yes, I checked the three submissions.",
   },
 
   // TrustedPartners - conversion: trusted, leading, top-rated
@@ -138,6 +145,14 @@ export const en = {
     overview: "Overview.",
     overviewDesc:
       "Bring together buildings, expenses and performance in one place. Portfolio, budgets and occupancy at your fingertips.",
+    occupancy: "Occupancy",
+    budgetOnTrack: "Budget on track",
+    tasksDue: "Upcoming",
+    buildingOk: "Papineau Building",
+    buildingPending: "Saint-Denis Residence",
+    statusOk: "Up to date",
+    statusPending: "Pending",
+    livePortfolio: "Live portfolio",
   },
 
   // PortalAccess
@@ -171,7 +186,7 @@ export const en = {
     {
       question: "Who is Gestion Velora ideal for?",
       answer:
-        "Gestion Velora is ideal for condo boards, Airbnb hosts, and landlords in Montreal seeking transparent reporting, 24/7 support, and proactive maintenance. If you want one of the best property management companies — with 98% occupancy rates, full financial transparency, and proven processes — we are a strong fit.",
+        "Gestion Velora is ideal for condo boards, Airbnb hosts, and landlords in Montreal seeking transparent reporting, 24/7 support, and proactive maintenance. If you want one of the best property management companies, with 98% occupancy rates, full financial transparency, and proven processes, we are a strong fit.",
     },
     {
       question: "What is condo management?",
@@ -331,7 +346,7 @@ export const en = {
       title: "Airbnb and short-term rental management",
       subtitle: "Maximize revenue with peace of mind",
       description:
-        "Gestion Velora handles full management of your short-term rental properties in Montreal. Reservations, cleaning, maintenance, and guest communication — all managed for you.",
+        "Gestion Velora handles full management of your short-term rental properties in Montreal. Reservations, cleaning, maintenance, and guest communication, all managed for you.",
       offerings: [
         {
           title: "Reservation management",

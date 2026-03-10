@@ -32,7 +32,7 @@ export const fr = {
     p1Tail:
       " qui offre des services de syndicat de copropriété, gestion Airbnb et location longue durée. Nous combinons expertise immobilière, technologie et transparence pour une gestion proactive et centrée sur la valorisation de votre actif.",
     p2:
-      "Les propriétaires et syndics méritent mieux : pas de promesses vides, une exécution rigoureuse. Chaque décision — planification des travaux, relation locataires — est guidée par les données et réalisée avec soin.",
+      "Les propriétaires et syndics méritent mieux : pas de promesses vides, une exécution rigoureuse. Chaque décision, planification des travaux, relation locataires, est guidée par les données et réalisée avec soin.",
     p3:
       "Notre équipe combine des années d'expertise immobilière avec une technologie moderne pour créer une expérience de gestion transparente, proactive et réellement centrée sur la valorisation de votre actif.",
   },
@@ -55,7 +55,7 @@ export const fr = {
   whatWeDo: {
     title: "Une gestion adaptée à",
     titleItalic: "chaque type.",
-    subtitle: "syndicats, Airbnb, locations longue durée — une approche sur mesure pour chaque bien",
+    subtitle: "syndicats, Airbnb, locations longue durée, une approche sur mesure pour chaque bien",
     syndicat: "Syndicat de copropriété",
     airbnb: "Airbnb",
     location: "Location",
@@ -87,7 +87,7 @@ export const fr = {
   ourStandards: {
     title: "Établir de nouveaux standards en gestion immobilière.",
     cta: "Notre approche",
-    text: "Pour nous, la gestion immobilière n'est pas une case à cocher — c'est un engagement que nous renforçons au quotidien avec une maintenance proactive, des rapports transparents et une culture où chaque immeuble est traité comme le nôtre.",
+    text: "Pour nous, la gestion immobilière n'est pas une case à cocher, c'est un engagement que nous renforçons au quotidien avec une maintenance proactive, des rapports transparents et une culture où chaque immeuble est traité comme le nôtre.",
   },
 
   // FromInspiration
@@ -110,7 +110,14 @@ export const fr = {
     quotePlaceholder: "Ce devis semble correct pour les travaux.",
     marieWriting: "Marie écrit…",
     reply: "Répondre",
-    reportLabel: "Rapport financier — Immeuble Saint-Laurent • T3 2024",
+    reportLabel: "Rapport financier, Immeuble Saint-Laurent • T3 2024",
+    dashboard: "Tableau de bord en direct",
+    dashboardDesc:
+      "Rapports financiers, graphiques animés et collaboration en temps réel. Tout votre pilotage en un coup d'œil.",
+    msg1Author: "Marie D.",
+    msg1Text: "Le devis pour la toiture semble bon, on en parle en AG?",
+    msg2Author: "Pierre M.",
+    msg2Text: "Oui, j'ai vérifié les trois soumissions.",
   },
 
   // TrustedPartners
@@ -138,6 +145,14 @@ export const fr = {
     overview: "Vue d'ensemble.",
     overviewDesc:
       "Réunissez vos immeubles, charges et performances en un seul endroit. Portefeuille, budgets et taux d'occupation à portée de main.",
+    occupancy: "Occupation",
+    budgetOnTrack: "Budget à jour",
+    tasksDue: "Échéances",
+    buildingOk: "Immeuble Papineau",
+    buildingPending: "Résidence Saint-Denis",
+    statusOk: "À jour",
+    statusPending: "En attente",
+    livePortfolio: "Portefeuille en direct",
   },
 
   // PortalAccess
@@ -171,7 +186,7 @@ export const fr = {
     {
       question: "Pour qui Gestion Velora est-il idéal ?",
       answer:
-        "Gestion Velora est idéal pour les syndicats de copropriété, les hôtes Airbnb et les propriétaires locatifs à Montréal qui recherchent des rapports transparents, un support 24/7 et une maintenance proactive. Si vous cherchez l'une des meilleures entreprises de gestion immobilière — 98 % de taux d'occupation, transparence financière totale et processus éprouvés — nous sommes un choix adapté.",
+        "Gestion Velora est idéal pour les syndicats de copropriété, les hôtes Airbnb et les propriétaires locatifs à Montréal qui recherchent des rapports transparents, un support 24/7 et une maintenance proactive. Si vous cherchez l'une des meilleures entreprises de gestion immobilière, 98 % de taux d'occupation, transparence financière totale et processus éprouvés, nous sommes un choix adapté.",
     },
     {
       question: "Qu'est-ce que la gestion de copropriété ?",
@@ -331,7 +346,7 @@ export const fr = {
       title: "Gestion Airbnb et location courte durée",
       subtitle: "Maximisez vos revenus en toute sérénité",
       description:
-        "Gestion Velora prend en charge l'intégralité de la gestion de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs — tout est géré pour vous.",
+        "Gestion Velora prend en charge l'intégralité de la gestion de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est géré pour vous.",
       offerings: [
         {
           title: "Gestion des réservations",

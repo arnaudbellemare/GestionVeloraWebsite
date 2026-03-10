@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { LottiePlayer } from "./LottiePlayer";
 import { ScrollReveal } from "./ScrollReveal";
+import { PropertyToolsBottomRight } from "./PropertyToolsBottomRight";
 
 /** Add Jitter exports: pick a template at jitter.video/templates (e.g. Animated Bar Chart, The Vault),
  * export as Lottie JSON, save to public/animations/, then set the path here. Leave empty for static image. */
@@ -117,8 +118,8 @@ export function PropertyToolsSection() {
             </div>
           </ScrollReveal>
 
-          {/* Right: Document mockup with chat overlay */}
-          <ScrollReveal delay={0.1} className="lg:w-1/2">
+          {/* Right: Document mockup (top) + new bottom-right component */}
+          <ScrollReveal delay={0.1} className="lg:w-1/2 flex flex-col gap-6 lg:gap-8">
             <div className="relative mt-8 lg:mt-0">
               <div className="rounded-2xl bg-white dark:bg-neutral-900 p-6 lg:p-8 shadow-xl ring-1 ring-black/5 dark:ring-white/5">
                 <div className="flex gap-4 mb-6">
@@ -190,6 +191,11 @@ export function PropertyToolsSection() {
                   {t("fromInspiration.reply")}
                 </button>
               </div>
+            </div>
+
+            {/* Bottom right: new original animated component */}
+            <div className="relative">
+              <PropertyToolsBottomRight />
             </div>
           </ScrollReveal>
         </div>

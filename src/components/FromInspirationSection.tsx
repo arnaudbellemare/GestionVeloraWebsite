@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
+import { DashboardMockup } from "./DashboardMockup";
 
 const cardKeys = [
   { titleKey: "fromInspiration.download", descKey: "fromInspiration.downloadDesc", mockup: "download" as const },
   { titleKey: "fromInspiration.archive", descKey: "fromInspiration.archiveDesc", mockup: "archive" as const },
   { titleKey: "fromInspiration.comment", descKey: "fromInspiration.commentDesc", mockup: "comment" as const },
+  { titleKey: "fromInspiration.dashboard", descKey: "fromInspiration.dashboardDesc", mockup: "dashboard" as const },
 ];
 
 function DownloadMockup({ t }: { t: (k: string) => string }) {
@@ -177,17 +179,18 @@ export function FromInspirationSection() {
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {cardKeys.map((card, i) => (
             <ScrollReveal key={card.titleKey} delay={i * 0.1}>
               <motion.div
                 className="flex flex-col h-full rounded-2xl bg-[#f9f6f3] dark:bg-velora-charcoal p-6 lg:p-8 shadow-sm ring-1 ring-black/5 dark:ring-white/5"
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
               >
-                <div className="min-h-[140px] flex items-center justify-center mb-6">
+                <div className={`flex items-center justify-center mb-6 ${card.mockup === "dashboard" ? "min-h-[220px]" : "min-h-[140px]"}`}>
                   {card.mockup === "download" && <DownloadMockup t={t} />}
                   {card.mockup === "archive" && <ArchiveMockup t={t} />}
                   {card.mockup === "comment" && <CommentMockup t={t} />}
+                  {card.mockup === "dashboard" && <DashboardMockup />}
                 </div>
                 <h3 className="font-sans font-bold text-lg text-velora-charcoal dark:text-white mb-2">
                   {t(card.titleKey)}

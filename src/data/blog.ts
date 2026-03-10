@@ -81,7 +81,7 @@ For condo boards, a well-structured reserve fund and long-term capital planning 
         "Comment l'analyse des données aide les propriétaires et syndicats à optimiser le revenu net d'exploitation.",
       content: `Le NOI (Net Operating Income) est un indicateur clé de la performance immobilière. Gestion Velora utilise des rapports détaillés et des tableaux de bord pour aider les propriétaires et syndicats à suivre les revenus et dépenses.
 
-En analysant les tendances — taux d'occupation, délais de location, coûts d'entretien — on identifie les leviers d'optimisation. Une tarification dynamique pour les Airbnb, une sélection rigoureuse des locataires en longue durée, et une gestion serrée des charges en copropriété contribuent à maximiser le NOI.
+En analysant les tendances, taux d'occupation, délais de location, coûts d'entretien, on identifie les leviers d'optimisation. Une tarification dynamique pour les Airbnb, une sélection rigoureuse des locataires en longue durée, et une gestion serrée des charges en copropriété contribuent à maximiser le NOI.
 
 La transparence et la rigueur sont au cœur de notre approche. Chaque dollar est justifié, chaque décision s'appuie sur des données fiables.`,
     },
@@ -93,7 +93,7 @@ La transparence et la rigueur sont au cœur de notre approche. Chaque dollar est
         "How data analysis helps owners and condo boards optimize net operating income.",
       content: `NOI (Net Operating Income) is a key indicator of real estate performance. Gestion Velora uses detailed reports and dashboards to help owners and condo boards track revenue and expenses.
 
-By analyzing trends — occupancy rates, time to lease, maintenance costs — we identify optimization levers. Dynamic pricing for Airbnb, rigorous tenant screening for long-term rentals, and tight management of condo fees all contribute to maximizing NOI.
+By analyzing trends, occupancy rates, time to lease, maintenance costs, we identify optimization levers. Dynamic pricing for Airbnb, rigorous tenant screening for long-term rentals, and tight management of condo fees all contribute to maximizing NOI.
 
 Transparency and rigour are at the heart of our approach. Every dollar is accounted for; every decision is based on reliable data.`,
     },
