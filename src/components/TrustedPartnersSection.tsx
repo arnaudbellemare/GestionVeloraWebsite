@@ -24,22 +24,39 @@ export function TrustedPartnersSection() {
   const active = partners[activeIndex];
 
   return (
-    <section className="py-24 lg:py-32 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-darker">
-      <div className="max-w-[90rem] mx-auto">
+    <section className="relative py-24 lg:py-32 px-6 lg:px-16 overflow-hidden">
+      {/* Halftone stadium (Montreal Olympic) — 4K 3840×2160 */}
+      <div className="absolute inset-0 overflow-hidden" aria-hidden>
+        <img
+          src="/images/trusted-partners-halftone.png"
+          alt=""
+          width={3840}
+          height={2160}
+          className="absolute inset-0 w-full h-full object-cover object-[center_42%]"
+          fetchPriority="high"
+          decoding="async"
+        />
+      </div>
+      {/* Overlay: same dark look in light and dark mode for this section */}
+      <div
+        className="absolute inset-0 bg-velora-darker/35 pointer-events-none"
+        aria-hidden
+      />
+      <div className="relative z-10 max-w-[90rem] mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-16 -mt-4">
           <ScrollReveal>
-            <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-black dark:text-white leading-tight max-w-2xl">
+            <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-white leading-tight max-w-2xl">
               {t("trustedPartners.title")}
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={0.1} className="flex flex-col items-start sm:items-end gap-2">
-            <p className="font-serif text-base lg:text-lg text-black/70 dark:text-white/70 max-w-md text-left sm:text-right">
+            <p className="font-serif text-base lg:text-lg max-w-md text-left sm:text-right text-white/90 [text-shadow:0_1px_3px_rgba(0,0,0,.6)]">
               {t("trustedPartners.subtitle")}
             </p>
             <motion.a
               href="#contact"
               whileHover={{ x: 4 }}
-              className="font-serif text-sm font-medium text-black/70 dark:text-white/70 hover:text-waabi-pink dark:hover:text-waabi-pink transition-colors underline underline-offset-2 inline-flex items-center gap-1"
+              className="font-serif text-sm font-medium text-white/90 hover:text-waabi-pink transition-colors underline underline-offset-2 inline-flex items-center gap-1 [text-shadow:0_1px_2px_rgba(0,0,0,.5)]"
             >
               {t("trustedPartners.seeMore")}
               <span aria-hidden>→</span>
@@ -57,8 +74,8 @@ export function TrustedPartnersSection() {
                   onClick={() => setActiveIndex(i)}
                   className={`font-sans font-bold text-xl lg:text-2xl text-left transition-colors ${
                     activeIndex === i
-                      ? "text-black dark:text-white"
-                      : "text-black/40 dark:text-white/40 hover:text-black/60 dark:hover:text-white/60"
+                      ? "text-white"
+                      : "text-white/40 hover:text-white/60"
                   }`}
                 >
                   {p.name}
@@ -115,10 +132,8 @@ export function TrustedPartnersSection() {
           </ScrollReveal>
         </div>
 
-        {/* Bottom: Partner logos marquee - scrolling animation */}
-        <div className="mt-24 lg:mt-32 overflow-hidden relative">
-          <div className="absolute left-0 top-0 bottom-0 w-20 lg:w-32 z-10 pointer-events-none bg-gradient-to-r from-[#f5f5f4] to-transparent dark:from-velora-darker dark:to-transparent" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 lg:w-32 z-10 pointer-events-none bg-gradient-to-l from-[#f5f5f4] to-transparent dark:from-velora-darker dark:to-transparent" />
+        {/* Bottom: Partner logos marquee — high contrast, no side overlays */}
+        <div className="mt-24 lg:mt-32 overflow-hidden">
           <motion.div
             className="flex gap-12 lg:gap-20 py-4"
             animate={{ x: [0, -1200] }}
@@ -127,7 +142,7 @@ export function TrustedPartnersSection() {
             {[...partnerLogos, ...partnerLogos, ...partnerLogos].map((name, i) => (
               <span
                 key={`${name}-${i}`}
-                className="font-sans text-lg lg:text-2xl font-bold text-black/30 dark:text-white/25 shrink-0 whitespace-nowrap"
+                className="font-sans text-lg lg:text-2xl font-bold shrink-0 whitespace-nowrap text-white/95 [text-shadow:0_1px_3px_rgba(0,0,0,.6)]"
               >
                 {name}
               </span>

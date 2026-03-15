@@ -2,8 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-const BG_IMAGE =
-  "https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?w=1920&q=80";
+const BG_IMAGE = "/images/our-standards-bg-clean.png";
 
 export function OurStandardsSection() {
   const { t } = useTranslation();
