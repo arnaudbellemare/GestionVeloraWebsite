@@ -1,7 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
+
+const MOBILE_BREAKPOINT = 1024;
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    setIsMobile(mq.matches);
+    const fn = () => setIsMobile(mq.matches);
+    mq.addEventListener("change", fn);
+    return () => mq.removeEventListener("change", fn);
+  }, []);
+  return isMobile;
+}
 
 const partnerLogos = [
   "Groupe Velora",
@@ -14,6 +28,7 @@ const partnerLogos = [
 
 export function TrustedPartnersSection() {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   const partners = t("trustedPartners.partners", { returnObjects: true }) as {
     name: string;
     quote: string;
@@ -24,24 +39,34 @@ export function TrustedPartnersSection() {
   const active = partners[activeIndex];
 
   return (
-    <section className="relative py-24 lg:py-32 px-6 lg:px-16 overflow-hidden">
-      {/* Halftone stadium (Montreal Olympic) — 4K 3840×2160 */}
-      <div className="absolute inset-0 overflow-hidden" aria-hidden>
-        <img
-          src="/images/trusted-partners-halftone.png"
-          alt=""
-          width={3840}
-          height={2160}
-          className="absolute inset-0 w-full h-full object-cover object-[center_42%]"
-          fetchPriority="high"
-          decoding="async"
+    <section className="relative py-24 lg:py-32 px-6 lg:px-16 overflow-hidden isolate">
+      {/* Background layer: isolated so switching partners doesn’t repaint or change it */}
+      <div
+        className="absolute inset-0 z-0 overflow-hidden [transform:translateZ(0)] [contain:paint]"
+        aria-hidden
+      >
+        {/* Mobile: 1280×720 sharp; desktop: 4K. Add trusted-partners-halftone-mobile.png (1280×720) for crisp mobile. */}
+        <picture>
+          <source
+            media="(max-width: 1023px)"
+            srcSet="/images/trusted-partners-halftone-mobile.png"
+          />
+          <img
+            src="/images/trusted-partners-halftone.png"
+            alt=""
+            width={3840}
+            height={2160}
+            className="absolute inset-0 w-full h-full object-cover object-[center_42%] [transform:translateZ(0)]"
+            fetchPriority="high"
+            decoding="async"
+            sizes="100vw"
+          />
+        </picture>
+        <div
+          className="absolute inset-0 bg-velora-darker/35 pointer-events-none"
+          aria-hidden
         />
       </div>
-      {/* Overlay: same dark look in light and dark mode for this section */}
-      <div
-        className="absolute inset-0 bg-velora-darker/35 pointer-events-none"
-        aria-hidden
-      />
       <div className="relative z-10 max-w-[90rem] mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-16 -mt-4">
           <ScrollReveal>
@@ -72,10 +97,11 @@ export function TrustedPartnersSection() {
                 <button
                   key={p.name}
                   onClick={() => setActiveIndex(i)}
-                  className={`font-sans font-bold text-xl lg:text-2xl text-left transition-colors ${
+                  type="button"
+                  className={`font-sans font-bold text-xl lg:text-2xl text-left transition-colors [touch-action:manipulation] [text-shadow:0_1px_2px_rgba(0,0,0,.4)] ${
                     activeIndex === i
                       ? "text-white"
-                      : "text-white/40 hover:text-white/60"
+                      : "text-white/80 sm:text-white/70 lg:text-white/40 hover:text-white/90 lg:hover:text-white/60"
                   }`}
                 >
                   {p.name}
@@ -93,9 +119,7 @@ export function TrustedPartnersSection() {
                 <motion.button
                   key={p.name}
                   onClick={() => setActiveIndex(i)}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`font-sans text-sm px-4 py-2 rounded-full transition-all ${
+                  className={`font-sans text-sm px-4 py-2 rounded-full transition-all [touch-action:manipulation] ${
                       activeIndex === i
                         ? "bg-white text-neutral-900"
                         : "text-white/60 hover:text-white/90 hover:bg-white/10"
@@ -106,15 +130,8 @@ export function TrustedPartnersSection() {
                 ))}
               </div>
 
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex-1 flex flex-col justify-center"
-                >
+              {isMobile ? (
+                <div key={activeIndex} className="flex-1 flex flex-col justify-center">
                   <blockquote className="font-sans text-xl lg:text-2xl text-white leading-relaxed mb-8">
                     « {active.quote} »
                   </blockquote>
@@ -126,8 +143,31 @@ export function TrustedPartnersSection() {
                       {active.role}
                     </p>
                   </footer>
-                </motion.div>
-              </AnimatePresence>
+                </div>
+              ) : (
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIndex}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex-1 flex flex-col justify-center"
+                  >
+                    <blockquote className="font-sans text-xl lg:text-2xl text-white leading-relaxed mb-8">
+                      « {active.quote} »
+                    </blockquote>
+                    <footer>
+                      <cite className="font-sans font-bold text-white not-italic block">
+                        {active.author}
+                      </cite>
+                      <p className="font-sans text-sm text-white/60 mt-1">
+                        {active.role}
+                      </p>
+                    </footer>
+                  </motion.div>
+                </AnimatePresence>
+              )}
             </div>
           </ScrollReveal>
         </div>
