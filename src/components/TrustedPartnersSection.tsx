@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
+import { TextWaveBackground } from "./TextWaveBackground";
 
 const MOBILE_BREAKPOINT = 1024;
 
@@ -45,14 +46,10 @@ export function TrustedPartnersSection() {
         className="absolute inset-0 z-0 overflow-hidden [transform:translateZ(0)] [contain:paint]"
         aria-hidden
       >
-        {/* Video background: dither-text-wave */}
-        <video
-          src="/videos/dither-text-wave.webm"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover object-center [transform:translateZ(0)]"
+        {/* Canvas text-wave background: seamless loop, retina quality */}
+        <TextWaveBackground
+          text="Gestion Velora"
+          className="[transform:translateZ(0)]"
         />
         <div
           className="absolute inset-0 bg-velora-darker/35 pointer-events-none"
