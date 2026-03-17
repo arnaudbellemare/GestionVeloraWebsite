@@ -45,23 +45,15 @@ export function TrustedPartnersSection() {
         className="absolute inset-0 z-0 overflow-hidden [transform:translateZ(0)] [contain:paint]"
         aria-hidden
       >
-        {/* Mobile: 1280×720 sharp; desktop: 4K. Add trusted-partners-halftone-mobile.png (1280×720) for crisp mobile. */}
-        <picture>
-          <source
-            media="(max-width: 1023px)"
-            srcSet="/images/trusted-partners-halftone-mobile.png"
-          />
-          <img
-            src="/images/trusted-partners-halftone.png"
-            alt=""
-            width={3840}
-            height={2160}
-            className="absolute inset-0 w-full h-full object-cover object-[center_42%] [transform:translateZ(0)]"
-            fetchPriority="high"
-            decoding="async"
-            sizes="100vw"
-          />
-        </picture>
+        {/* Video background: dither-text-wave */}
+        <video
+          src="/videos/dither-text-wave.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover object-center [transform:translateZ(0)]"
+        />
         <div
           className="absolute inset-0 bg-velora-darker/35 pointer-events-none"
           aria-hidden
