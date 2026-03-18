@@ -47,10 +47,7 @@ export function TrustedPartnersSection() {
         aria-hidden
       >
         {/* Canvas text-wave background: seamless loop, retina quality */}
-        <TextWaveBackground
-          text="Gestion Velora"
-          className="[transform:translateZ(0)]"
-        />
+        <TextWaveBackground className="[transform:translateZ(0)]" />
         <div
           className="absolute inset-0 bg-velora-darker/35 pointer-events-none"
           aria-hidden
