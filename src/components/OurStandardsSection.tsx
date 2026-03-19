@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useCallback } from "react";
 
 const BG_VIDEO = "/videos/our-standards-bg.mp4";
 const BG_IMAGE = "/images/our-standards-bg-clean.png";
@@ -8,6 +8,8 @@ const BG_IMAGE = "/images/our-standards-bg-clean.png";
 export function OurStandardsSection() {
   const { t } = useTranslation();
   const ref = useRef<HTMLElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -17,22 +19,38 @@ export function OurStandardsSection() {
   const leftY = useTransform(scrollYProgress, [0, 0.25, 0.5], [40, 0, -20]);
   const rightY = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [30, 0, -15]);
 
+  const handleCanPlay = useCallback(() => {
+    setVideoReady(true);
+  }, []);
+
   return (
     <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px bg-[#faf9f7] dark:bg-[#0f0f0f]">
-      {/* Background: video with parallax */}
+      {/* Background: poster image + video with smooth crossfade */}
       <motion.div
         className="absolute inset-0 overflow-hidden"
         style={{ y: bgY }}
       >
         <div className="absolute inset-0 w-full h-full">
+          {/* Poster image — always visible behind */}
+          <img
+            src={BG_IMAGE}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: "center 60%" }}
+          />
+          {/* Video — fades in over poster once loaded */}
           <video
             autoPlay
             loop
             muted
             playsInline
-            poster={BG_IMAGE}
-            className="w-full h-full object-cover"
-            style={{ objectPosition: "center 60%" }}
+            preload="auto"
+            onCanPlayThrough={handleCanPlay}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out"
+            style={{
+              objectPosition: "center 60%",
+              opacity: videoReady ? 1 : 0,
+            }}
           >
             <source src={BG_VIDEO} type="video/mp4" />
           </video>
