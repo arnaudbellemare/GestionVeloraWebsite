@@ -1,56 +1,31 @@
-import { motion } from "framer-motion";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useTransition } from "../context/TransitionContext";
+/*
+ * ═══════════════════════════════════════════════════════════════
+ *  PAGE TRANSITION — Framer-style scale + fade
+ * ───────────────────────────────────────────────────────────────
+ *  Replicates the exact feel from Framer's Page Effects panel:
+ *
+ *  EXIT  (outgoing page):
+ *    opacity  100% → 0%
+ *    scale    100% → 96%     (subtle shrink)
+ *    duration 0.65s
+ *    ease     [0.23, 1, 0.32, 1]  (smooth "out" from easing.dev)
+ *
+ *  ENTER (incoming page):
+ *    opacity  0% → 100%
+ *    scale    104% → 100%    (slight overshoot grow → settle)
+ *    duration 0.75s
+ *    ease     [0.23, 1, 0.32, 1]
+ *
+ *  Header/footer are EXCLUDED (not wrapped in the animated div).
+ *  No overlay, no circle, no shapes — just pure motion.
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+// This file is intentionally empty of a React component.
+// The transition logic lives entirely in Layout.tsx using
+// AnimatePresence + motion.div around the <Outlet />.
+// This file is kept for backwards compatibility of imports.
 
 export function PageTransition() {
-  const { pathname } = useLocation();
-  const { isTransitioning, endTransition } = useTransition();
-  const [shouldFade, setShouldFade] = useState(false);
-  const pathWhenStarted = useRef<string | null>(null);
-
-  useLayoutEffect(() => {
-    if (isTransitioning && pathname !== pathWhenStarted.current) {
-      const html = document.documentElement;
-      const prevBehavior = html.style.scrollBehavior;
-      html.style.scrollBehavior = "auto";
-      window.scrollTo(0, 0);
-      html.style.scrollBehavior = prevBehavior;
-    }
-  }, [isTransitioning, pathname]);
-
-  useEffect(() => {
-    if (isTransitioning) {
-      if (pathWhenStarted.current === null) {
-        pathWhenStarted.current = pathname;
-      }
-      if (pathname !== pathWhenStarted.current) {
-        setShouldFade(true);
-      }
-    } else {
-      pathWhenStarted.current = null;
-      setShouldFade(false);
-    }
-  }, [isTransitioning, pathname]);
-
-  const handleAnimationComplete = () => {
-    endTransition();
-  };
-
-  if (!isTransitioning) return null;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: shouldFade ? 0 : 1 }}
-      transition={{
-        duration: shouldFade ? 0.45 : 0.22,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
-      onAnimationComplete={handleAnimationComplete}
-      className="fixed inset-0 z-[9999] w-full h-full min-h-screen bg-white dark:bg-velora-charcoal pointer-events-none"
-      style={{ top: 0, left: 0 }}
-      aria-hidden="true"
-    />
-  );
+  return null;
 }

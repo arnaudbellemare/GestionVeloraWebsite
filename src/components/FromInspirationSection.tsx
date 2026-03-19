@@ -174,7 +174,7 @@ export function FromInspirationSection() {
     <section className="py-24 lg:py-32 px-6 lg:px-16 bg-white dark:bg-velora-darker">
       <div className="max-w-[90rem] mx-auto">
         <ScrollReveal scale>
-          <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-velora-charcoal dark:text-white text-center leading-tight mb-16">
+          <h2 className="font-sans font-bold text-3xl sm:text-4xl lg:text-[2.75rem] text-velora-charcoal dark:text-white text-center leading-tight mb-16">
             {t("fromInspiration.title")}
           </h2>
         </ScrollReveal>

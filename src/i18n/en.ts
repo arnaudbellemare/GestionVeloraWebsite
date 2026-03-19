@@ -120,11 +120,63 @@ export const en = {
     msg2Text: "Yes, I checked the three submissions.",
   },
 
-  // TrustedPartners - conversion: trusted, leading, top-rated
+  ourProcess: {
+    label: "Our process",
+    title: "An end-to-end approach to property management.",
+    cta: "Get started",
+    steps: [
+      {
+        step: "Step 01",
+        title: "We understand your needs.",
+        body:
+          "Before any recommendation, we take time to understand your situation, goals, and constraints. Condo board, long-term rental, or short-term — every mandate is unique.",
+      },
+      {
+        step: "Step 02",
+        title: "We plan the strategy.",
+        body:
+          "We define a clear plan: maintenance, finances, tenants, and communication. No vague promises — a roadmap aligned with your objectives.",
+      },
+      {
+        step: "Step 03",
+        title: "We execute.",
+        body:
+          "We roll out tools, processes, and team. Transparent reporting, 24/7 responsiveness, and rigorous day-to-day execution.",
+      },
+      {
+        step: "Step 04",
+        title: "We monitor and adjust.",
+        body:
+          "Regular reviews, cost and occupancy optimization. Your portfolio evolves — so does our support.",
+      },
+    ],
+  },
+
+  teamSection: {
+    label: "Our team",
+    title: "Meet the experts.",
+    intro:
+      "Years of property management experience in Montreal. A team committed to transparency, rigor, and human relationships with every client.",
+    members: [
+      {
+        name: "Leadership",
+        role: "FOUNDER",
+        bio: "Strategic vision and commitment to proactive, transparent management focused on maximizing every building’s value.",
+      },
+      {
+        name: "Operations",
+        role: "MANAGEMENT",
+        bio: "Coordination of mandates, maintenance, and relationships with owners and tenants. Responsiveness and proven processes every day.",
+      },
+    ],
+  },
+
   trustedPartners: {
+    label: "Testimonials",
     title: "Trusted by the best in the industry.",
     subtitle: "From condo boards to investors, top owners trust Gestion Velora.",
     seeMore: "See more testimonials",
+    ctaJourney: "Contact us",
     partners: [
       { name: "Volvo", quote: "Gestion Velora completely transformed how we manage this property.", author: "John Smith", role: "Condo board president" },
       { name: "Atlas Immobilier", quote: "The transparency and reports we receive are unprecedented.", author: "Marie Dubois", role: "Director" },
@@ -222,7 +274,7 @@ export const en = {
 
   // Contact
   contact: {
-    title: "Manage something extraordinary.",
+    title: "Let us help you manage simply and efficiently.",
     cta: "Schedule a call",
     namePlaceholder: "Your name",
     emailPlaceholder: "Your email",

@@ -140,27 +140,19 @@ export const FooterSection = (): JSX.Element => {
           </motion.div>
         </div>
 
-        {/* Brand and logo */}
-        <div className="mb-12 flex items-end min-h-[7rem] lg:min-h-[9rem]">
-          <span className="font-sans font-bold text-6xl lg:text-8xl text-white/20">
-            Gestion Velora
-          </span>
-          <motion.img
-            src="/logo.png"
-            alt="Gestion Velora"
-            initial={{ opacity: 0, x: 24, scale: 0.94 }}
-            whileInView={{ opacity: 0.9, x: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              type: "spring",
-              stiffness: 280,
-              damping: 28,
-              delay: 0.35,
-            }}
-            whileHover={{ scale: 1.05, opacity: 1, y: -4 }}
-            whileTap={{ scale: 1.02 }}
-            style={{ transformOrigin: "right bottom" }}
-            className="h-36 w-auto sm:h-44 lg:h-56 xl:h-64 flex-shrink-0 -translate-y-8 lg:-translate-y-10 ml-auto"
+        {/* 3D City Brand Image — light/dark mode */}
+        <div className="mt-8 mb-0 -mx-6 lg:-mx-16 relative overflow-hidden">
+          {/* Gradient fade from footer content into image */}
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#1C1C1C] to-transparent z-10 pointer-events-none" />
+          <img
+            src="/images/footer-city-light.png?v=2"
+            alt="Gestion Velora - 3D City"
+            className="w-full h-auto object-cover dark:hidden"
+          />
+          <img
+            src="/images/footer-city-dark.png?v=2"
+            alt="Gestion Velora - 3D City"
+            className="w-full h-auto object-cover hidden dark:block"
           />
         </div>
       </div>

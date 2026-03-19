@@ -5,6 +5,8 @@ import { HeroSection } from "./components/HeroSection";
 import { InsightsSection } from "./components/InsightsSection";
 import { OurStandardsSection } from "./components/OurStandardsSection";
 import { StatsSection } from "./components/StatsSection";
+import { OurProcessSection } from "./components/OurProcessSection";
+import { TeamSection } from "./components/TeamSection";
 import { TrustedPartnersSection } from "./components/TrustedPartnersSection";
 import { ValueLabelsSection } from "./components/ValueLabelsSection";
 import { WhatWeDoSection } from "./components/WhatWeDoSection";
@@ -21,7 +23,9 @@ export const Fr = (): JSX.Element => {
       <ValueLabelsSection />
       <WhatWeDoSection />
       <OurStandardsSection />
+      <OurProcessSection />
       <TrustedPartnersSection />
+      <TeamSection />
       <InsightsSection />
       <ContactSection />
 

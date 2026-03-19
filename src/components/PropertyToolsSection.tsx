@@ -4,42 +4,15 @@ import { LottiePlayer } from "./LottiePlayer";
 import { ScrollReveal } from "./ScrollReveal";
 import { PropertyToolsBottomRight } from "./PropertyToolsBottomRight";
 
-/** Add Jitter exports: pick a template at jitter.video/templates (e.g. Animated Bar Chart, The Vault),
- * export as Lottie JSON, save to public/animations/, then set the path here. Leave empty for static image. */
-const LOTTIE_DASHBOARD_TILE = ""; // e.g. "/animations/bar-chart.json"
 const LOTTIE_REPORT_CHART = "/animations/chart-bars.json";
 const LOTTIE_CHAT_TYPING = "/animations/typing-dots.json";
-
-/** 4K-ready Unsplash URLs: w=1920 for sharp display on retina/4K, q=90 for quality */
-const gridImages = [
-  {
-    src: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=90",
-    alt: "Immeuble en copropriété",
-    lottieSrc: undefined as string | undefined,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=90",
-    alt: "Immeuble et gestion locative",
-    lottieSrc: undefined as string | undefined,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&q=90",
-    alt: "Documents financiers",
-    lottieSrc: undefined as string | undefined,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=90",
-    alt: "Tableau de bord",
-    lottieSrc: LOTTIE_DASHBOARD_TILE || undefined,
-  },
-];
 
 const featureKeys = [
   {
     titleKey: "propertyTools.follow",
     descKey: "propertyTools.followDesc",
     icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
       </svg>
     ),
@@ -48,7 +21,7 @@ const featureKeys = [
     titleKey: "propertyTools.communicate",
     descKey: "propertyTools.communicateDesc",
     icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
       </svg>
     ),
@@ -57,17 +30,40 @@ const featureKeys = [
     titleKey: "propertyTools.overview",
     descKey: "propertyTools.overviewDesc",
     icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
       </svg>
     ),
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 260,
+      damping: 24,
+      delay: i * 0.12,
+    },
+  }),
+};
+
+const floatVariants = {
+  float: {
+    y: [-4, 4, -4],
+    transition: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+  },
+};
+
 export function PropertyToolsSection() {
   const { t } = useTranslation();
   return (
-    <section className="relative py-24 lg:py-32 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-charcoal overflow-hidden">
+    <section className="relative py-28 lg:py-36 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-charcoal overflow-hidden">
+      {/* Subtle dot pattern */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.02]"
         style={{
@@ -75,145 +71,192 @@ export function PropertyToolsSection() {
           backgroundSize: "24px 24px",
         }}
       />
+
+      {/* Ambient gradient blobs */}
+      <motion.div
+        className="absolute top-20 -left-32 w-96 h-96 rounded-full bg-velora-green/[0.04] dark:bg-velora-green/[0.06] blur-[100px] pointer-events-none"
+        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-10 -right-24 w-80 h-80 rounded-full bg-waabi-pink/[0.03] dark:bg-waabi-pink/[0.05] blur-[80px] pointer-events-none"
+        animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.7, 0.4] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+
       <div className="max-w-[90rem] mx-auto relative">
-        {/* Upper: Two columns */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 mb-20 lg:mb-28">
-          {/* Left: Image grid */}
-          <ScrollReveal className="lg:w-1/2">
-            <h2 className="font-playfair font-bold text-3xl lg:text-4xl text-black dark:text-white leading-tight mb-8">
-              {t("propertyTools.title")}
-            </h2>
-            <div className="relative grid grid-cols-2 gap-3 sm:gap-4 py-6 sm:py-8">
-              {gridImages.map((img, i) => {
-                const isLeft = i % 2 === 0;
-                const row = Math.floor(i / 2);
-                const baseRotate = isLeft ? -2 : 1.5;
-                const baseX = isLeft ? -2 : 2;
-                const baseY = row === 0 ? -3 : 3;
-                return (
+        {/* Bento grid layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 mb-20 lg:mb-28">
+          {/* Document mockup — large card */}
+          <ScrollReveal className="lg:col-span-7">
+            <motion.div
+              className="relative rounded-3xl bg-white dark:bg-neutral-900 p-7 lg:p-10 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_40px_-12px_rgba(0,0,0,0.4)] ring-1 ring-black/[0.04] dark:ring-white/[0.06] overflow-hidden h-full"
+              whileHover={{ y: -3, transition: { type: "spring", stiffness: 400, damping: 30 } }}
+            >
+              {/* Decorative glow */}
+              <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-velora-green/[0.04] dark:bg-velora-green/[0.08] blur-[60px] pointer-events-none" />
+
+              {/* Toolbar skeleton */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className="flex gap-1.5">
+                  <div className="h-2.5 w-2.5 rounded-full bg-neutral-300 dark:bg-neutral-600" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-neutral-300 dark:bg-neutral-600" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-neutral-300 dark:bg-neutral-600" />
+                </div>
+                <div className="flex gap-3 ml-4">
+                  <div className="h-2 w-14 rounded bg-neutral-200 dark:bg-neutral-700" />
+                  <div className="h-2 w-20 rounded bg-neutral-200 dark:bg-neutral-700" />
+                  <div className="h-2 w-16 rounded bg-neutral-200 dark:bg-neutral-700" />
+                </div>
+              </div>
+
+              {/* Report label */}
+              <motion.p
+                className="font-sans text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-5"
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+              >
+                {t("fromInspiration.reportLabel")}
+              </motion.p>
+
+              {/* Text skeleton lines with staggered reveal */}
+              <div className="space-y-3 mb-7">
+                {[100, 88, 94].map((w, i) => (
                   <motion.div
-                    key={img.alt}
-                    className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-200 dark:bg-neutral-800 shadow-lg ring-1 ring-black/5 dark:ring-white/5 cursor-pointer will-change-transform"
-                    initial={{ rotate: baseRotate, x: baseX, y: baseY }}
-                    whileHover={{
-                      rotate: 0,
-                      x: 0,
-                      y: 0,
-                      scale: 1.03,
-                      zIndex: 10,
-                      transition: { type: "spring", stiffness: 400, damping: 30 },
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    key={i}
+                    className="h-2.5 rounded-full bg-neutral-100 dark:bg-neutral-800"
+                    style={{ width: `${w}%` }}
+                    initial={{ opacity: 0, scaleX: 0 }}
+                    whileInView={{ opacity: 1, scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.1, duration: 0.5, ease: "easeOut" }}
+                  />
+                ))}
+              </div>
+
+              {/* Charts */}
+              <div className="flex gap-5 mb-5">
+                {[0, 1].map((i) => (
+                  <motion.div
+                    key={i}
+                    className="flex-1 h-24 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 overflow-hidden flex items-center justify-center ring-1 ring-black/[0.03] dark:ring-white/[0.04]"
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 + i * 0.15, type: "spring", stiffness: 260, damping: 24 }}
                   >
-                    {img.lottieSrc ? (
-                      <div className="absolute inset-0 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800">
-                        <LottiePlayer src={img.lottieSrc} className="w-full h-full" loop />
-                      </div>
+                    {LOTTIE_REPORT_CHART ? (
+                      <LottiePlayer src={LOTTIE_REPORT_CHART} className="w-full h-24" loop />
                     ) : (
-                      <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+                      <div className="w-full h-full" />
                     )}
                   </motion.div>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+
+              {/* Bottom bar */}
+              <motion.div
+                className="h-14 rounded-xl bg-neutral-50 dark:bg-neutral-800/60 ring-1 ring-black/[0.03] dark:ring-white/[0.04]"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.7, duration: 0.4 }}
+              />
+
+              {/* Chat overlay — floating */}
+              <motion.div
+                className="absolute right-3 lg:right-6 top-1/2 -translate-y-1/2 w-56 sm:w-64 lg:w-72 rounded-2xl bg-white dark:bg-neutral-800 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.12)] dark:shadow-[0_12px_40px_-8px_rgba(0,0,0,0.5)] ring-1 ring-black/[0.06] dark:ring-white/[0.08] p-5 backdrop-blur-sm"
+                variants={floatVariants}
+                animate="float"
+              >
+                <div className="space-y-3.5">
+                  <div>
+                    <p className="font-sans text-[10px] text-neutral-400 dark:text-neutral-500 mb-1">
+                      24/08/2024, 14h
+                    </p>
+                    <p className="font-sans text-xs font-semibold text-black dark:text-white">
+                      Marie D.
+                    </p>
+                    <p className="font-sans text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                      Le devis pour la toiture semble bon, on en parle en AG ?
+                    </p>
+                  </div>
+                  <div className="h-px bg-neutral-100 dark:bg-neutral-700" />
+                  <div>
+                    <p className="font-sans text-[10px] text-neutral-400 dark:text-neutral-500 mb-1">
+                      24/08/2024, 15h
+                    </p>
+                    <p className="font-sans text-xs font-semibold text-black dark:text-white">
+                      Pierre M.
+                    </p>
+                    <p className="font-sans text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                      Oui, j&apos;ai vérifié les trois soumissions.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 pt-1">
+                    <LottiePlayer src={LOTTIE_CHAT_TYPING} className="h-4 w-14" loop />
+                    <span className="font-sans text-[10px] text-neutral-400 dark:text-neutral-500">
+                      {t("fromInspiration.marieWriting")}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="font-sans text-xs font-medium text-waabi-pink hover:text-waabi-pink/80 transition-colors"
+                  >
+                    {t("fromInspiration.reply")} →
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
           </ScrollReveal>
 
-          {/* Right: Document mockup (top) + new bottom-right component */}
-          <ScrollReveal delay={0.1} className="lg:w-1/2 flex flex-col gap-6 lg:gap-8">
-            <div className="relative mt-8 lg:mt-0">
-              <div className="rounded-2xl bg-white dark:bg-neutral-900 p-6 lg:p-8 shadow-xl ring-1 ring-black/5 dark:ring-white/5">
-                <div className="flex gap-4 mb-6">
-                  <div className="h-2 w-16 rounded bg-neutral-200 dark:bg-neutral-700" />
-                  <div className="h-2 w-24 rounded bg-neutral-200 dark:bg-neutral-700" />
-                  <div className="h-2 w-20 rounded bg-neutral-200 dark:bg-neutral-700" />
-                </div>
-                <p className="font-sans text-sm text-neutral-600 dark:text-neutral-400 mb-4">
-                  {t("fromInspiration.reportLabel")}
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="h-3 w-full rounded bg-neutral-100 dark:bg-neutral-800" />
-                  <div className="h-3 w-[90%] rounded bg-neutral-100 dark:bg-neutral-800" />
-                  <div className="h-3 w-[95%] rounded bg-neutral-100 dark:bg-neutral-800" />
-                </div>
-                <div className="flex gap-8 mb-4">
-                  <div className="flex-1 h-20 rounded-lg bg-neutral-100 dark:bg-neutral-800 overflow-hidden flex items-center justify-center">
-                    {LOTTIE_REPORT_CHART ? (
-                      <LottiePlayer src={LOTTIE_REPORT_CHART} className="w-full h-20" loop />
-                    ) : (
-                      <div className="w-full h-full" />
-                    )}
-                  </div>
-                  <div className="flex-1 h-20 rounded-lg bg-neutral-100 dark:bg-neutral-800 overflow-hidden flex items-center justify-center">
-                    {LOTTIE_REPORT_CHART ? (
-                      <LottiePlayer src={LOTTIE_REPORT_CHART} className="w-full h-20" loop />
-                    ) : (
-                      <div className="w-full h-full" />
-                    )}
-                  </div>
-                </div>
-                <div className="h-16 rounded-lg bg-neutral-100 dark:bg-neutral-800" />
-              </div>
-
-              {/* Chat overlay */}
-              <div className="absolute right-4 lg:right-0 top-1/2 -translate-y-1/2 w-56 sm:w-64 lg:w-72 rounded-xl bg-white dark:bg-neutral-800 shadow-xl ring-1 ring-black/10 dark:ring-white/10 p-4">
-                <p className="font-sans text-xs text-neutral-500 dark:text-neutral-400 mb-2">
-                  24/08/2024, 14h
-                </p>
-                <p className="font-sans text-sm text-black dark:text-white mb-1">
-                  Marie D.
-                </p>
-                <p className="font-sans text-sm text-neutral-700 dark:text-neutral-300 mb-3">
-                  Le devis pour la toiture semble bon, on en parle en AG ?
-                </p>
-                <p className="font-sans text-xs text-neutral-500 dark:text-neutral-400 mb-1">
-                  24/08/2024, 15h
-                </p>
-                <p className="font-sans text-sm text-black dark:text-white mb-1">
-                  Pierre M.
-                </p>
-                <p className="font-sans text-sm text-neutral-700 dark:text-neutral-300 mb-3">
-                  Oui, j&apos;ai vérifié les trois soumissions.
-                </p>
-                <div className="flex items-center gap-2 mb-2">
-                  <LottiePlayer
-                    src={LOTTIE_CHAT_TYPING}
-                    className="h-5 w-16"
-                    loop
-                  />
-                  <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400">
-                    {t("fromInspiration.marieWriting")}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  className="font-sans text-xs text-waabi-pink hover:underline"
-                >
-                  {t("fromInspiration.reply")}
-                </button>
-              </div>
-            </div>
-
-            {/* Bottom right: new original animated component */}
-            <div className="relative">
+          {/* Portfolio dashboard — right card */}
+          <ScrollReveal delay={0.15} className="lg:col-span-5">
+            <motion.div
+              whileHover={{ y: -3, transition: { type: "spring", stiffness: 400, damping: 30 } }}
+              className="h-full"
+            >
               <PropertyToolsBottomRight />
-            </div>
+            </motion.div>
           </ScrollReveal>
         </div>
 
         {/* Lower: Three feature blocks */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {featureKeys.map((f, i) => (
-            <ScrollReveal key={f.titleKey} delay={i * 0.1}>
-              <div className="flex flex-col">
-                <div className="text-waabi-pink mb-4">{f.icon}</div>
-                <h3 className="font-sans font-bold text-lg text-black dark:text-white mb-2">
+            <motion.div
+              key={f.titleKey}
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{
+                y: -6,
+                transition: { type: "spring", stiffness: 400, damping: 25 },
+              }}
+              className="group relative rounded-2xl bg-white dark:bg-neutral-900/60 p-7 lg:p-8 shadow-[0_2px_20px_-6px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_20px_-6px_rgba(0,0,0,0.3)] ring-1 ring-black/[0.04] dark:ring-white/[0.06] overflow-hidden cursor-default"
+            >
+              {/* Hover glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-velora-green/[0.03] to-transparent dark:from-velora-green/[0.06] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+              <div className="relative">
+                <motion.div
+                  className="w-12 h-12 rounded-xl bg-velora-green/10 dark:bg-velora-green/15 flex items-center justify-center text-velora-green dark:text-velora-light mb-5"
+                  whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.5 } }}
+                >
+                  {f.icon}
+                </motion.div>
+                <h3 className="font-sans font-bold text-lg text-black dark:text-white mb-2.5">
                   {t(f.titleKey)}
                 </h3>
-                <p className="font-sans text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                <p className="font-sans text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
                   {t(f.descKey)}
                 </p>
               </div>
-            </ScrollReveal>
+            </motion.div>
           ))}
         </div>
       </div>

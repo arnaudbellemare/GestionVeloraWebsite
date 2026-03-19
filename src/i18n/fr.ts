@@ -120,11 +120,66 @@ export const fr = {
     msg2Text: "Oui, j'ai vérifié les trois soumissions.",
   },
 
+  // OurProcess
+  ourProcess: {
+    label: "Notre processus",
+    title: "Une approche complète pour votre gestion immobilière.",
+    cta: "Commencer",
+    steps: [
+      {
+        step: "Étape 01",
+        title: "Nous comprenons vos besoins.",
+        body:
+          "Avant toute recommandation, nous prenons le temps de comprendre votre situation, vos objectifs et vos contraintes. Syndicat, location ou courte durée : chaque mandat est unique.",
+      },
+      {
+        step: "Étape 02",
+        title: "Nous planifions la stratégie.",
+        body:
+          "Nous définissons un plan clair : maintenance, finances, locataires et communication. Pas de promesses vagues — une feuille de route alignée sur vos objectifs.",
+      },
+      {
+        step: "Étape 03",
+        title: "Nous mettons en œuvre.",
+        body:
+          "Mise en place des outils, des processus et de l’équipe. Rapports transparents, réactivité 24/7 et exécution rigoureuse au quotidien.",
+      },
+      {
+        step: "Étape 04",
+        title: "Nous suivons et ajustons.",
+        body:
+          "Révisions régulières, optimisation des coûts et de l’occupation. Votre patrimoine évolue — notre accompagnement aussi.",
+      },
+    ],
+  },
+
+  // TeamSection
+  teamSection: {
+    label: "Notre équipe",
+    title: "Rencontrez l’équipe.",
+    intro:
+      "Des années d’expérience en gestion immobilière à Montréal. Une équipe dédiée à la transparence, à la rigueur et à la relation humaine avec chaque client.",
+    members: [
+      {
+        name: "Direction",
+        role: "FONDATEUR",
+        bio: "Vision stratégique et engagement envers une gestion proactive, transparente et centrée sur la valorisation de chaque immeuble.",
+      },
+      {
+        name: "Opérations",
+        role: "GESTION",
+        bio: "Coordination des mandats, maintenance et relation copropriétaires et locataires. Réactivité et processus éprouvés au quotidien.",
+      },
+    ],
+  },
+
   // TrustedPartners
   trustedPartners: {
+    label: "Témoignages",
     title: "Approuvé par les meilleurs du secteur.",
     subtitle: "Des syndicats aux investisseurs, les meilleurs font confiance à Gestion Velora.",
     seeMore: "Voir plus de témoignages",
+    ctaJourney: "Nous contacter",
     partners: [
       { name: "Volvo", quote: "Gestion Velora a complètement transformé notre façon de gérer cette propriété.", author: "John Smith", role: "Président du syndicat de copropriété" },
       { name: "Atlas Immobilier", quote: "La transparence et les rapports que nous recevons sont sans précédent.", author: "Marie Dubois", role: "Directrice" },
@@ -222,7 +277,7 @@ export const fr = {
 
   // Contact
   contact: {
-    title: "Gérez quelque chose d'extraordinaire.",
+    title: "Laissez-nous vous aider à gérer de façon simple et efficace.",
     cta: "Planifiez un appel",
     namePlaceholder: "Votre nom",
     emailPlaceholder: "Votre courriel",
