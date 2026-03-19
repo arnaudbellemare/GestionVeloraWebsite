@@ -28,6 +28,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, theme);
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(theme);
+
+    // Swap favicon based on theme
+    const v = "11";
+    const d = theme === "dark" ? "dark" : "light";
+    const f32 = document.getElementById("favicon-32") as HTMLLinkElement | null;
+    const f16 = document.getElementById("favicon-16") as HTMLLinkElement | null;
+    const fMain = document.getElementById("favicon-main") as HTMLLinkElement | null;
+    if (f32) f32.href = `/favicon-${d}-32.png?v=${v}`;
+    if (f16) f16.href = `/favicon-${d}-16.png?v=${v}`;
+    if (fMain) fMain.href = `/favicon-${d}.png?v=${v}`;
   }, [theme]);
 
   const toggleTheme = () => {

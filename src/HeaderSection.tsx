@@ -42,9 +42,9 @@ export const HeaderSection = (): JSX.Element => {
       <div className="max-w-[90rem] mx-auto flex items-center justify-between gap-4">
         {/* Left pill: logo + nav */}
         <div className="flex items-center gap-1 px-4 py-2.5 rounded-2xl bg-neutral-600/95 dark:bg-neutral-700/95 backdrop-blur-sm shadow-lg">
-          <InternalLink to="/" className="flex items-center gap-1 shrink-0 -m-1 p-1 rounded-lg">
-            <img src="/logo.png" alt="Gestion Velora" className="h-11 w-auto" />
-            <span className="font-sans font-semibold text-white text-lg hidden sm:inline tracking-tight">Gestion Velora</span>
+          <InternalLink to="/" className="flex items-center gap-2 shrink-0 -m-1 p-1 rounded-lg">
+            <img src="/logo.png" alt="Gestion Velora" className="h-8 w-auto opacity-90" />
+            <span className="font-sans font-medium text-white/95 text-[15px] hidden sm:inline tracking-normal">Gestion Velora</span>
           </InternalLink>
           <nav className="hidden md:flex items-center gap-0.5 ml-2 pl-2 border-l border-white/20">
             <InternalLink to="/" className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300">
