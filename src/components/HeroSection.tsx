@@ -71,34 +71,6 @@ export function HeroSection() {
           {t("hero.subtitle")}
         </motion.p>
 
-        <motion.a
-          href="#specification"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-neutral-700 text-white mb-10 transition-colors duration-300"
-        >
-          <span className="w-1.5 h-1.5 rounded-full shrink-0 animate-flash-green bg-velora-green" aria-hidden />
-          <span className="font-sans text-xs font-medium uppercase tracking-wider">
-            {t("hero.ctaDiscover")}
-          </span>
-          <span className="text-white text-sm" aria-hidden>→</span>
-        </motion.a>
-
-        <motion.a
-          href="#contact"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.98 }}
-          className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-white/95 text-black font-sans font-semibold text-base hover:bg-white transition-colors duration-300 shadow-lg shadow-black/20"
-        >
-          {t("hero.ctaContact")}
-          <span className="text-sm" aria-hidden="true">→</span>
-        </motion.a>
       </div>
 
       <div className="relative z-[2] w-full pb-12 lg:pb-16 px-6 lg:px-16">
