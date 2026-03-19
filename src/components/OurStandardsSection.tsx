@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+const BG_VIDEO = "/videos/our-standards-bg.mp4";
 const BG_IMAGE = "/images/our-standards-bg-clean.png";
 
 export function OurStandardsSection() {
@@ -18,18 +19,23 @@ export function OurStandardsSection() {
 
   return (
     <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px bg-[#faf9f7] dark:bg-[#0f0f0f]">
-      {/* Background: oversized to avoid black bars when parallax shifts */}
+      {/* Background: video with parallax */}
       <motion.div
         className="absolute inset-0 overflow-hidden"
         style={{ y: bgY }}
       >
-        <div className="absolute -top-[30%] -left-[15%] -right-[15%] -bottom-[15%] w-[130%] h-[160%]">
-          <img
-            src={BG_IMAGE}
-            alt=""
+        <div className="absolute inset-0 w-full h-full">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster={BG_IMAGE}
             className="w-full h-full object-cover"
-            style={{ objectPosition: "center 30%" }}
-          />
+            style={{ objectPosition: "center 60%" }}
+          >
+            <source src={BG_VIDEO} type="video/mp4" />
+          </video>
         </div>
         <div
           className="absolute inset-0 dark:hidden"
@@ -45,7 +51,7 @@ export function OurStandardsSection() {
               "linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.55) 100%)",
           }}
         />
-        {/* Fade vers la section suivante pour éviter la coupure nette */}
+        {/* Fade vers la section suivante */}
         <div
           className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none dark:hidden"
           style={{
@@ -62,7 +68,9 @@ export function OurStandardsSection() {
 
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-[90rem] mx-auto px-6 lg:px-16 py-24 items-center gap-16">
         <motion.div className="flex-1" style={{ opacity, y: leftY }}>
-          <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-white leading-tight mb-8">
+          <h2
+            className="font-playfair font-bold text-4xl lg:text-6xl text-white leading-[1.1] mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
+          >
             {t("ourStandards.title")}
           </h2>
           <motion.a
@@ -71,14 +79,14 @@ export function OurStandardsSection() {
             target="_blank"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white text-white font-sans font-semibold text-sm hover:bg-white hover:text-black transition-colors duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white text-white font-sans font-semibold text-sm hover:bg-white hover:text-black transition-colors duration-300 shadow-[0_2px_16px_rgba(0,0,0,0.3)]"
           >
             {t("ourStandards.cta")}
             <span className="text-xs" aria-hidden="true">→</span>
           </motion.a>
         </motion.div>
         <motion.div className="flex-1" style={{ opacity, y: rightY }}>
-          <p className="font-sans text-lg text-white/90 leading-relaxed max-w-xl">
+          <p className="font-sans text-lg text-white leading-relaxed max-w-xl drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
             {t("ourStandards.text")}
           </p>
         </motion.div>

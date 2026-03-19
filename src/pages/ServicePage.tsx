@@ -64,7 +64,7 @@ export function ServicePage() {
         <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-16 w-full">
           <InternalLink
             to="/#specification"
-            className="font-sans text-sm text-white/80 hover:text-white mb-6 inline-block"
+            className="font-sans text-sm text-white/80 hover:text-white mb-6 inline-flex items-center gap-1.5 backdrop-blur-sm bg-black/20 px-4 py-2 rounded-full transition-colors duration-200 hover:bg-black/30"
           >
             {t("servicePage.backToServices")}
           </InternalLink>
