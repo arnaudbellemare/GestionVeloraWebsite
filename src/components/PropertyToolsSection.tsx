@@ -62,7 +62,7 @@ const floatVariants = {
 export function PropertyToolsSection() {
   const { t } = useTranslation();
   return (
-    <section className="relative py-28 lg:py-36 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-charcoal overflow-hidden">
+    <section className="relative py-20 lg:py-28 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-charcoal overflow-hidden">
       {/* Subtle dot pattern */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.02]"

@@ -140,21 +140,22 @@ export const FooterSection = (): JSX.Element => {
           </motion.div>
         </div>
 
-        {/* 3D City Brand Image — light/dark mode */}
-        <div className="mt-8 mb-0 -mx-6 lg:-mx-16 relative overflow-hidden">
-          {/* Gradient fade from footer content into image */}
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#1C1C1C] to-transparent z-10 pointer-events-none" />
-          <img
-            src="/images/footer-city-light.png?v=2"
-            alt="Gestion Velora - 3D City"
-            className="w-full h-auto object-cover dark:hidden"
-          />
-          <img
-            src="/images/footer-city-dark.png?v=2"
-            alt="Gestion Velora - 3D City"
-            className="w-full h-auto object-cover hidden dark:block"
-          />
-        </div>
+      </div>
+
+      {/* 3D City Brand Image — light/dark mode, flush with bottom bar */}
+      <div className="relative overflow-hidden">
+        {/* Gradient fade from footer content into image */}
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#1C1C1C] to-transparent z-10 pointer-events-none" />
+        <img
+          src="/images/footer-city-light.png?v=4"
+          alt="Gestion Velora - 3D City"
+          className="w-full h-auto block dark:hidden"
+        />
+        <img
+          src="/images/footer-city-dark.png?v=4"
+          alt="Gestion Velora - 3D City"
+          className="w-full h-auto hidden dark:block"
+        />
       </div>
 
       {/* Bottom bar: copyright, privacy, etc. */}

@@ -4,6 +4,8 @@ import { useRef } from "react";
 interface SectionBlendProps {
   from: string;
   to: string;
+  darkFrom?: string;
+  darkTo?: string;
   height?: number;
   blobs?: boolean;
   blobColor?: string;
@@ -16,7 +18,6 @@ interface SectionBlendProps {
  * (no visible banding). Uses an ease-in-out curve.
  */
 function easedGradient(from: string, to: string): string {
-  // 12-stop eased gradient using cubic ease-in-out curve
   const stops = [
     [0, 0],
     [8, 0.02],
@@ -45,6 +46,8 @@ function easedGradient(from: string, to: string): string {
 export function SectionBlend({
   from,
   to,
+  darkFrom,
+  darkTo,
   height = 160,
   blobs = false,
   blobColor = "rgba(72,92,17,0.06)",
@@ -60,6 +63,8 @@ export function SectionBlend({
   const blobScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.15, 0.9]);
   const blobOpacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0, 1, 1, 0]);
 
+  const hasDarkVariant = darkFrom && darkTo;
+
   return (
     <div
       ref={ref}
@@ -67,10 +72,19 @@ export function SectionBlend({
       style={{ height }}
       aria-hidden="true"
     >
+      {/* Light mode gradient */}
       <div
-        className="absolute inset-0"
+        className={`absolute inset-0 ${hasDarkVariant ? "dark:hidden" : ""}`}
         style={{ background: easedGradient(from, to) }}
       />
+
+      {/* Dark mode gradient (if different colors provided) */}
+      {hasDarkVariant && (
+        <div
+          className="absolute inset-0 hidden dark:block"
+          style={{ background: easedGradient(darkFrom, darkTo) }}
+        />
+      )}
 
       {blobs && (
         <>

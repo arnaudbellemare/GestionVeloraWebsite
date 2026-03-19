@@ -26,12 +26,14 @@ export function HomePage() {
       <OurStandardsSection />
       <FromInspirationSection />
       {/* FromInspiration (light) → OurProcess (grain) */}
-      <SectionBlend from="#f9f6f3" to="#f2f0ed" height={80} />
+      <SectionBlend from="#f9f6f3" to="#f2f0ed" darkFrom="#191818" darkTo="#191818" height={80} />
       <OurProcessSection />
       {/* OurProcess (light grain) → TrustedPartners (dark) — dramatic */}
       <SectionBlend
         from="#f2f0ed"
         to="#121212"
+        darkFrom="#191818"
+        darkTo="#121212"
         height={160}
         blobs
         blobColor="rgba(255,255,255,0.04)"
@@ -42,18 +44,22 @@ export function HomePage() {
       <SectionBlend
         from="#121212"
         to="#f2f0ed"
+        darkFrom="#121212"
+        darkTo="#191818"
         height={140}
         blobs
         blobColor="rgba(72,92,17,0.06)"
       />
       <TeamSection />
       {/* Team (grain) → PropertyTools (cream) — subtle */}
-      <SectionBlend from="#f2f0ed" to="#f9f6f3" height={80} />
+      <SectionBlend from="#f2f0ed" to="#f9f6f3" darkFrom="#191818" darkTo="#191818" height={48} />
       <PropertyToolsSection />
       {/* PropertyTools (cream) → Portal (dark) */}
       <SectionBlend
         from="#f9f6f3"
         to="#1C1C1C"
+        darkFrom="#191818"
+        darkTo="#1C1C1C"
         height={140}
         blobs
         blobColor="rgba(255,255,255,0.03)"

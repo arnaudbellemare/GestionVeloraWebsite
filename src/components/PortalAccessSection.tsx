@@ -8,7 +8,7 @@ export function PortalAccessSection() {
   return (
     <section
       id="portails"
-      className="py-24 lg:py-32 px-6 lg:px-16 bg-[#1C1C1C] dark:bg-black overflow-hidden"
+      className="py-24 lg:py-32 px-6 lg:px-16 bg-[#1C1C1C] dark:bg-[#1C1C1C] overflow-hidden"
     >
       <div className="max-w-[90rem] mx-auto">
         <ScrollReveal>
