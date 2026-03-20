@@ -25,15 +25,30 @@ export const en = {
 
   // WhoWeAre - SEO: property management Montreal, condo management, Airbnb management Montreal
   whoWeAre: {
-    label: "Who we are",
-    title: "We've built our approach.",
-    p1Lead: "Gestion Velora is one of Montreal's top property management companies and a trusted choice for owners and boards",
-    p1Tail:
-      " offering condo management, Airbnb management Montreal, and long-term rental management. We combine real estate expertise, technology, and transparency for proactive management focused on asset appreciation.",
-    p2:
-      "Owners and boards deserve better: no empty promises, rigorous execution. Every decision, from maintenance planning to tenant relations, is data-driven and delivered with care.",
-    p3:
-      "Our team combines years of real estate expertise with modern technology to deliver transparent, proactive management that is truly focused on your asset's value.",
+    title: "Strategic Asset Selection.",
+    description:
+      "We target high-yielding properties with strong tenant profiles and value-add potential across Greater Montreal.",
+    cta: "View full portfolio",
+    projects: [
+      {
+        category: "Condo",
+        location: "Montreal",
+        name: "Le Beaumont",
+        image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80",
+      },
+      {
+        category: "Rental",
+        location: "Laval",
+        name: "Résidences du Parc",
+        image: "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&q=80",
+      },
+      {
+        category: "Airbnb",
+        location: "Old Montreal",
+        name: "Loft Saint-Paul",
+        image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+      },
+    ],
   },
 
   // ValueLabels
@@ -161,11 +176,6 @@ export const en = {
         name: "Leadership",
         role: "FOUNDER",
         bio: "Strategic vision and commitment to proactive, transparent management focused on maximizing every building’s value.",
-      },
-      {
-        name: "Operations",
-        role: "MANAGEMENT",
-        bio: "Coordination of mandates, maintenance, and relationships with owners and tenants. Responsiveness and proven processes every day.",
       },
     ],
   },

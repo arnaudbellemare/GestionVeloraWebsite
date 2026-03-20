@@ -80,9 +80,7 @@ export function OurStandardsSection() {
             {t("ourStandards.title")}
           </h2>
           <motion.a
-            href="mailto:info@gestionvelora.com"
-            rel="noopener noreferrer"
-            target="_blank"
+            href="#contact"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white text-white font-sans font-semibold text-sm hover:bg-white hover:text-black transition-colors duration-300 shadow-[0_2px_16px_rgba(0,0,0,0.3)]"

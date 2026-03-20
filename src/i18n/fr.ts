@@ -25,15 +25,30 @@ export const fr = {
 
   // WhoWeAre
   whoWeAre: {
-    label: "Qui sommes-nous",
-    title: "Nous avons construit notre approche.",
-    p1Lead: "Gestion Velora est une entreprise de gestion immobilière à Montréal",
-    p1Tail:
-      " qui offre des services de syndicat de copropriété, gestion Airbnb et location longue durée. Nous combinons expertise immobilière, technologie et transparence pour une gestion proactive et centrée sur la valorisation de votre actif.",
-    p2:
-      "Les propriétaires et syndics méritent mieux : pas de promesses vides, une exécution rigoureuse. Chaque décision, planification des travaux, relation locataires, est guidée par les données et réalisée avec soin.",
-    p3:
-      "Notre équipe combine des années d'expertise immobilière avec une technologie moderne pour créer une expérience de gestion transparente, proactive et réellement centrée sur la valorisation de votre actif.",
+    title: "Sélection stratégique d'actifs.",
+    description:
+      "Nous ciblons des propriétés à haut rendement avec des profils locataires solides et un potentiel de valorisation à travers le Grand Montréal.",
+    cta: "Voir le portfolio",
+    projects: [
+      {
+        category: "Copropriété",
+        location: "Montréal",
+        name: "Le Beaumont",
+        image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80",
+      },
+      {
+        category: "Locatif",
+        location: "Laval",
+        name: "Résidences du Parc",
+        image: "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&q=80",
+      },
+      {
+        category: "Airbnb",
+        location: "Vieux-Montréal",
+        name: "Loft Saint-Paul",
+        image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+      },
+    ],
   },
 
   // ValueLabels
@@ -163,11 +178,6 @@ export const fr = {
         name: "Direction",
         role: "FONDATEUR",
         bio: "Vision stratégique et engagement envers une gestion proactive, transparente et centrée sur la valorisation de chaque immeuble.",
-      },
-      {
-        name: "Opérations",
-        role: "GESTION",
-        bio: "Coordination des mandats, maintenance et relation copropriétaires et locataires. Réactivité et processus éprouvés au quotidien.",
       },
     ],
   },
