@@ -55,6 +55,8 @@ export function OurStandardsSection() {
             <source src={BG_VIDEO} type="video/mp4" />
           </video>
         </div>
+        {/* Subtle dark overlay for text readability */}
+        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.20)" }} />
         {/* Fade vers la section suivante */}
         <div
           className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none dark:hidden"
