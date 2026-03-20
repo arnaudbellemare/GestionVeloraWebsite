@@ -55,20 +55,6 @@ export function OurStandardsSection() {
             <source src={BG_VIDEO} type="video/mp4" />
           </video>
         </div>
-        <div
-          className="absolute inset-0 dark:hidden"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.6) 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 hidden dark:block"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.55) 100%)",
-          }}
-        />
         {/* Fade vers la section suivante */}
         <div
           className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none dark:hidden"
