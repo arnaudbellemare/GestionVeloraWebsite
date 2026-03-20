@@ -26,7 +26,7 @@ export function TeamSection() {
         <div className="max-w-sm mx-auto">
           {members.map((m) => (
             <article key={m.role + m.name}>
-              <div className="aspect-[4/5] max-h-[420px] rounded-2xl bg-gradient-to-br from-neutral-300 to-neutral-400 dark:from-neutral-700 dark:to-neutral-800 mb-5" />
+              <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-neutral-300 to-neutral-400 dark:from-neutral-700 dark:to-neutral-800 mb-5" />
               <p className="font-sans text-[11px] tracking-[0.15em] uppercase text-black dark:text-white mb-2">
                 {m.name} <span className="text-black/40 dark:text-white/40"> / </span> {m.role}
               </p>
