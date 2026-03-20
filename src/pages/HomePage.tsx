@@ -5,7 +5,6 @@ import { HeroSection } from "../components/HeroSection";
 import { InsightsSection } from "../components/InsightsSection";
 import { OurStandardsSection } from "../components/OurStandardsSection";
 import { PortalAccessSection } from "../components/PortalAccessSection";
-import { PropertyToolsSection } from "../components/PropertyToolsSection";
 import { StatsSection } from "../components/StatsSection";
 import { OurProcessSection } from "../components/OurProcessSection";
 import { TeamSection } from "../components/TeamSection";
@@ -51,12 +50,9 @@ export function HomePage() {
         blobColor="rgba(72,92,17,0.06)"
       />
       <TeamSection />
-      {/* Team (grain) → PropertyTools (cream) — subtle */}
-      <SectionBlend from="#f2f0ed" to="#f9f6f3" darkFrom="#191818" darkTo="#191818" height={48} />
-      <PropertyToolsSection />
-      {/* PropertyTools (cream) → Portal (dark) */}
+      {/* Team (grain) → Portal (dark) */}
       <SectionBlend
-        from="#f9f6f3"
+        from="#f2f0ed"
         to="#1C1C1C"
         darkFrom="#191818"
         darkTo="#1C1C1C"

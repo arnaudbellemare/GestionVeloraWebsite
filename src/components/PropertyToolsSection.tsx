@@ -62,7 +62,7 @@ const floatVariants = {
 export function PropertyToolsSection() {
   const { t } = useTranslation();
   return (
-    <section className="relative py-20 lg:py-28 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-charcoal overflow-hidden">
+    <section className="relative pt-12 pb-16 lg:pt-16 lg:pb-20 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-charcoal overflow-hidden">
       {/* Subtle dot pattern */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.02]"
@@ -86,7 +86,7 @@ export function PropertyToolsSection() {
 
       <div className="max-w-[90rem] mx-auto relative">
         {/* Bento grid layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 mb-20 lg:mb-28">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
           {/* Document mockup — large card */}
           <ScrollReveal className="lg:col-span-7">
             <motion.div
@@ -223,42 +223,6 @@ export function PropertyToolsSection() {
           </ScrollReveal>
         </div>
 
-        {/* Lower: Three feature blocks */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {featureKeys.map((f, i) => (
-            <motion.div
-              key={f.titleKey}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              whileHover={{
-                y: -6,
-                transition: { type: "spring", stiffness: 400, damping: 25 },
-              }}
-              className="group relative rounded-2xl bg-white dark:bg-neutral-900/60 p-7 lg:p-8 shadow-[0_2px_20px_-6px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_20px_-6px_rgba(0,0,0,0.3)] ring-1 ring-black/[0.04] dark:ring-white/[0.06] overflow-hidden cursor-default"
-            >
-              {/* Hover glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-velora-green/[0.03] to-transparent dark:from-velora-green/[0.06] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-              <div className="relative">
-                <motion.div
-                  className="w-12 h-12 rounded-xl bg-velora-green/10 dark:bg-velora-green/15 flex items-center justify-center text-velora-green dark:text-velora-light mb-5"
-                  whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.5 } }}
-                >
-                  {f.icon}
-                </motion.div>
-                <h3 className="font-sans font-bold text-lg text-black dark:text-white mb-2.5">
-                  {t(f.titleKey)}
-                </h3>
-                <p className="font-sans text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                  {t(f.descKey)}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

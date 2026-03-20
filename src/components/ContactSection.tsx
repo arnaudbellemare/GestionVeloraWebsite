@@ -23,7 +23,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative pt-28 pb-24 lg:pt-32 lg:pb-32 px-6 lg:px-16 bg-white dark:bg-[#1C1C1C] overflow-hidden scroll-mt-24"
+      className="relative pt-16 pb-24 lg:pt-20 lg:pb-32 px-6 lg:px-16 bg-white dark:bg-[#1C1C1C] overflow-hidden scroll-mt-24"
     >
       <div className="max-w-[90rem] mx-auto relative z-10">
         <div className="max-w-2xl">

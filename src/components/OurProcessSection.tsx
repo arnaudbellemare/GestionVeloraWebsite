@@ -17,7 +17,7 @@ export function OurProcessSection() {
   return (
     <section
       id="process"
-      className="relative py-20 lg:py-28 px-6 lg:px-12 bg-[#f2f0ed] dark:bg-[#1a1a1a] bg-grain bg-grain-light scroll-mt-24"
+      className="relative pt-12 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-12 bg-[#f2f0ed] dark:bg-[#1a1a1a] bg-grain bg-grain-light scroll-mt-24"
     >
       <div className="max-w-[90rem] mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 lg:mb-14">
