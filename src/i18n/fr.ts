@@ -169,10 +169,10 @@ export const fr = {
 
   // TeamSection
   teamSection: {
-    label: "Notre équipe",
-    title: "Rencontrez l’équipe.",
+    label: "Direction",
+    title: "Derrière Velora.",
     intro:
-      "Des années d’expérience en gestion immobilière à Montréal. Une équipe dédiée à la transparence, à la rigueur et à la relation humaine avec chaque client.",
+      "Des années d’expérience en gestion immobilière à Montréal. Une vision fondée sur la transparence, la rigueur et la relation humaine avec chaque client.",
     members: [
       {
         name: "Direction",

@@ -167,10 +167,10 @@ export const en = {
   },
 
   teamSection: {
-    label: "Our team",
-    title: "Meet the experts.",
+    label: "Leadership",
+    title: "Behind Velora.",
     intro:
-      "Years of property management experience in Montreal. A team committed to transparency, rigor, and human relationships with every client.",
+      "Years of property management experience in Montreal. A vision built on transparency, rigor, and genuine relationships with every client.",
     members: [
       {
         name: "Leadership",
