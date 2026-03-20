@@ -23,7 +23,7 @@ export function InsightsSection() {
   return (
     <section
       id="insights"
-      className="py-24 lg:py-32 px-6 lg:px-16 bg-white dark:bg-[#1C1C1C]"
+      className="pt-24 pb-12 lg:pt-32 lg:pb-16 px-6 lg:px-16 bg-white dark:bg-[#1C1C1C]"
     >
       <div className="max-w-[90rem] mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">

@@ -14,7 +14,7 @@ export function FAQSection() {
   return (
     <section
       id="faq"
-      className="py-24 lg:py-32 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-[#1C1C1C] overflow-hidden scroll-mt-24"
+      className="pt-12 pb-24 lg:pt-16 lg:pb-32 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-[#1C1C1C] overflow-hidden scroll-mt-24"
     >
       <div className="max-w-[48rem] mx-auto">
         <ScrollReveal>
