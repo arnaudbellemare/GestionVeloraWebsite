@@ -3,7 +3,7 @@ export const en = {
   hero: {
     line1: "Your peace of mind.",
     line2: "Our business.",
-    subtitle: "One of Montreal's most trusted property management companies. Condo management, Airbnb management, and rental management, ideal for owners and boards who expect the best.",
+    subtitle: "Condo, Airbnb & rental management for owners and boards who expect the best.",
     ctaDiscover: "Discover our services",
     ctaContact: "Contact us",
   },
@@ -13,7 +13,6 @@ export const en = {
     "Crown Properties",
     "Pinnacle Gestion",
     "Vertex Capital",
-    "Sendoso",
   ],
 
   // Stats - conversion language: 98% occupancy, 24/7, transparent

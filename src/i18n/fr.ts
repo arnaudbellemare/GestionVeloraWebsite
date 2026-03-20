@@ -13,7 +13,6 @@ export const fr = {
     "Crown Properties",
     "Pinnacle Gestion",
     "Vertex Capital",
-    "Sendoso",
   ],
 
   // Stats
