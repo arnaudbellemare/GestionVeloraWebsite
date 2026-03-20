@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
+import { RotatingSymbol3D } from "./RotatingSymbol3D";
 
 const valueKeys = [
   { labelKey: "valueLabels.transparent", textKey: "valueLabels.transparentText" },
@@ -25,8 +26,13 @@ export function ValueLabelsSection() {
   }, []);
 
   return (
-    <section className="pt-16 pb-24 sm:pt-24 sm:pb-32 lg:py-32 px-5 sm:px-6 lg:px-16 bg-[#191818] dark:bg-[#0a0a0a] overflow-x-hidden">
-      <div className="max-w-[90rem] mx-auto relative">
+    <section className="relative pt-16 pb-24 sm:pt-24 sm:pb-32 lg:py-32 px-5 sm:px-6 lg:px-16 bg-[#191818] dark:bg-[#0a0a0a] overflow-hidden">
+      {/* 3D rotating symbol — behind all content */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 lg:opacity-40">
+        <RotatingSymbol3D className="w-[400px] h-[400px] lg:w-[600px] lg:h-[600px]" />
+      </div>
+
+      <div className="max-w-[90rem] mx-auto relative z-10">
         <ScrollReveal>
           <h2 className="font-playfair text-2xl sm:text-3xl lg:text-5xl text-white font-bold leading-tight mb-10 sm:mb-16 max-w-2xl">
             {t("valueLabels.title")}
@@ -75,23 +81,6 @@ export function ValueLabelsSection() {
               </motion.p>
             </AnimatePresence>
           </div>
-        </div>
-
-        {/* Right/bottom: dynamic gradient orb - hidden on mobile to avoid overlap */}
-        <div className="hidden sm:block absolute right-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 -translate-x-2 lg:-translate-x-4 pointer-events-none w-48 h-48 lg:w-72 lg:h-72 shrink-0">
-          {valueGradients.map((grad, i) => (
-            <motion.div
-              key={i}
-              initial={false}
-              animate={{ opacity: active === i ? 0.85 : 0 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: `radial-gradient(circle at 70% 70%, ${grad.from} 0%, ${grad.to} 70%)`,
-                filter: "blur(60px)",
-              }}
-            />
-          ))}
         </div>
 
         {/* Bottom accent line */}
