@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useCallback } from "react";
 
-const BG_VIDEO = "/videos/our-standards-bg.mov";
+const BG_VIDEO = "/videos/our-standards-bg.mp4";
 const BG_IMAGE = "/images/our-standards-bg-clean.png";
 
 export function OurStandardsSection() {
