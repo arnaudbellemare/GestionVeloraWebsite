@@ -10,12 +10,6 @@ const valueKeys = [
   { labelKey: "valueLabels.reliable", textKey: "valueLabels.reliableText" },
 ] as const;
 
-const valueGradients = [
-  { from: "rgba(72,92,17,0.35)", to: "rgba(72,92,17,0)" },
-  { from: "rgba(142,156,120,0.3)", to: "rgba(142,156,120,0)" },
-  { from: "rgba(212,168,83,0.4)", to: "rgba(212,168,83,0)" },
-];
-
 export function ValueLabelsSection() {
   const { t } = useTranslation();
   const [active, setActive] = useState(0);
