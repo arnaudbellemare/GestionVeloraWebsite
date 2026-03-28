@@ -3,6 +3,17 @@ import * as THREE from "three";
 // @ts-ignore
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
+/** World-units size of the largest bbox axis after fit (matches prior symbol framing). */
+const TARGET_MAX_DIM = 2.5;
+
+/**
+ * Extruded / image-to-3D GLBs often lie in XZ with thin Y; tilt so the broad face reads like the old mark.
+ * Flip sign if the mesh reads upside-down or edge-on.
+ */
+const ORIENT_X = -Math.PI / 2;
+const ORIENT_Y = 0;
+const ORIENT_Z = 0;
+
 export function RotatingSymbol3D({ className = "" }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -36,11 +47,14 @@ export function RotatingSymbol3D({ className = "" }: { className?: string }) {
     rimLight.position.set(0, -3, -5);
     scene.add(rimLight);
 
-    let model: THREE.Group | null = null;
+    /** Spins on Y; inner root holds scale/center/orientation so the mark stays visually centered. */
+    const turntable = new THREE.Group();
+    scene.add(turntable);
+
     const loader = new GLTFLoader();
     loader.load("/models/symbl-3d.glb", (gltf: { scene: THREE.Group }) => {
-      model = gltf.scene;
-      model.traverse((child: THREE.Object3D) => {
+      const root = gltf.scene;
+      root.traverse((child: THREE.Object3D) => {
         if ((child as THREE.Mesh).isMesh) {
           (child as THREE.Mesh).material = new THREE.MeshStandardMaterial({
             color: new THREE.Color("#d4a853"),
@@ -49,19 +63,26 @@ export function RotatingSymbol3D({ className = "" }: { className?: string }) {
           });
         }
       });
-      const box = new THREE.Box3().setFromObject(model);
+
+      root.rotation.set(ORIENT_X, ORIENT_Y, ORIENT_Z, "XYZ");
+      root.updateMatrixWorld(true);
+
+      const box = new THREE.Box3().setFromObject(root);
       const center = box.getCenter(new THREE.Vector3());
-      model.position.sub(center);
       const size = box.getSize(new THREE.Vector3());
-      const maxDim = Math.max(size.x, size.y, size.z);
-      model.scale.setScalar(2.5 / maxDim);
-      scene.add(model);
+      const maxDim = Math.max(size.x, size.y, size.z, 1e-6);
+      const s = TARGET_MAX_DIM / maxDim;
+
+      root.scale.setScalar(s);
+      root.position.copy(center).multiplyScalar(-s);
+
+      turntable.add(root);
     });
 
     let animationId: number;
     const animate = () => {
       animationId = requestAnimationFrame(animate);
-      if (model) model.rotation.y += 0.008;
+      turntable.rotation.y += 0.008;
       renderer.render(scene, camera);
     };
     animate();
