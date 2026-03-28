@@ -7,12 +7,12 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 const TARGET_MAX_DIM = 2.5;
 
 /**
- * Extruded / image-to-3D GLBs often lie in XZ with thin Y; tilt so the broad face reads like the old mark.
- * Z = π flips an upside-down mark after the X tilt; tweak X/Y if edge-on or mirrored.
+ * Extruded / image-to-3D GLBs often lie in XZ with thin Y; tilt so the broad face reads toward the camera.
+ * Use +π/2 or −π/2 on X depending on export; avoid stacking Z flips unless the mark is mirrored.
  */
-const ORIENT_X = -Math.PI / 2;
+const ORIENT_X = Math.PI / 2;
 const ORIENT_Y = 0;
-const ORIENT_Z = Math.PI;
+const ORIENT_Z = 0;
 
 export function RotatingSymbol3D({ className = "" }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
