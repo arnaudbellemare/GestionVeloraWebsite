@@ -34,13 +34,13 @@ export const fr = {
         category: "Copropriété",
         location: "Montréal",
         name: "Le Beaumont",
-        image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80",
+        image: "/images/portfolio/le-beaumont.png",
       },
       {
-        category: "Locatif",
-        location: "Laval",
-        name: "Résidences du Parc",
-        image: "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&q=80",
+        category: "Copropriété",
+        location: "Montréal",
+        name: "Syndicat de copropriété Enticy",
+        image: "/images/portfolio/syndicat-enticy.png",
       },
       {
         category: "Airbnb",
