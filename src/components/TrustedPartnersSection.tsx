@@ -117,7 +117,7 @@ export function TrustedPartnersSection() {
                   <motion.div key={p.name} variants={listItem}>
                     <motion.button
                       onClick={() => setActiveIndex(i)}
-                      className={`relative font-sans font-bold text-xl lg:text-2xl text-left pl-4 transition-colors duration-300 ${
+                      className={`flex w-full items-center gap-3 text-left font-sans font-bold text-xl lg:text-2xl transition-colors duration-300 ${
                         activeIndex === i
                           ? "text-white"
                           : "text-white/40 hover:text-white/65"
@@ -125,18 +125,24 @@ export function TrustedPartnersSection() {
                       whileHover={reduceMotion ? undefined : { x: 4 }}
                       whileTap={reduceMotion ? undefined : { scale: 0.99 }}
                     >
-                      {activeIndex === i && (
-                        <motion.span
-                          layoutId="trustedPartnerListAccent"
-                          className="absolute left-0 top-1/2 h-8 w-0.5 -translate-y-1/2 rounded-full bg-gradient-to-b from-amber-200 to-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.35)]"
-                          transition={{
-                            type: "spring",
-                            stiffness: 380,
-                            damping: 30,
-                          }}
-                        />
-                      )}
-                      <span className="relative">{p.name}</span>
+                      {/* Fixed-width rail so labels line up whether the bar is visible */}
+                      <span
+                        className="flex h-8 w-3 shrink-0 items-center justify-center"
+                        aria-hidden
+                      >
+                        {activeIndex === i ? (
+                          <motion.span
+                            layoutId="trustedPartnerListAccent"
+                            className="h-8 w-0.5 rounded-full bg-gradient-to-b from-amber-200 to-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.35)]"
+                            transition={{
+                              type: "spring",
+                              stiffness: 380,
+                              damping: 30,
+                            }}
+                          />
+                        ) : null}
+                      </span>
+                      <span className="relative min-w-0">{p.name}</span>
                     </motion.button>
                   </motion.div>
                 ))}
