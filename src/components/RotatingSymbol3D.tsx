@@ -8,11 +8,11 @@ const TARGET_MAX_DIM = 2.5;
 
 /**
  * Extruded / image-to-3D GLBs often lie in XZ with thin Y; tilt so the broad face reads like the old mark.
- * Flip sign if the mesh reads upside-down or edge-on.
+ * Z = π flips an upside-down mark after the X tilt; tweak X/Y if edge-on or mirrored.
  */
 const ORIENT_X = -Math.PI / 2;
 const ORIENT_Y = 0;
-const ORIENT_Z = 0;
+const ORIENT_Z = Math.PI;
 
 export function RotatingSymbol3D({ className = "" }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
