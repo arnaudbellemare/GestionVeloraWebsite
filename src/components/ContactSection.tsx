@@ -5,7 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { CONTACT_FORM_USE_API, WEB3FORMS_ACCESS_KEY } from "../config";
 
+const NOTIFICATION_EMAIL = "info@gestionvelora.com";
+
 type Inquiry = "" | "syndic" | "landlord" | "airbnb" | "other";
+type Topic = "general" | "demo" | "communication";
 
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
@@ -24,10 +27,39 @@ function inquiryLabel(t: TFunction, inquiry: Inquiry): string {
   }
 }
 
+function topicLine(t: TFunction, topic: Topic): string {
+  switch (topic) {
+    case "general":
+      return t("contact.topicGeneral");
+    case "demo":
+      return t("contact.topicDemo");
+    case "communication":
+      return t("contact.topicCommunication");
+  }
+}
+
+function emailSubject(topic: Topic, lang: string): string {
+  const isEn = lang.startsWith("en");
+  if (topic === "demo") {
+    return isEn
+      ? `[Demo] Gestion Velora — Website contact`
+      : `[Démo] Gestion Velora — Contact site web`;
+  }
+  if (topic === "communication") {
+    return isEn
+      ? `[Communication] Gestion Velora — Website contact`
+      : `[Communication] Gestion Velora — Contact site web`;
+  }
+  return isEn
+    ? `Gestion Velora — Website contact`
+    : `Gestion Velora — Contact site web`;
+}
+
 export function ContactSection() {
   const { t, i18n } = useTranslation();
 
   const [formData, setFormData] = useState({
+    topic: "general" as Topic,
     name: "",
     email: "",
     message: "",
@@ -35,14 +67,20 @@ export function ContactSection() {
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  const submitMailto = () => {
+  const buildMessageBody = (): string => {
+    const tl = topicLine(t, formData.topic);
     const il = inquiryLabel(t, formData.inquiry);
-    const profile = il === "" ? "" : `\n${t("contact.inquiryLabel")}: ${il}\n`;
-    const mailto = `mailto:info@gestionvelora.com?subject=${encodeURIComponent(
-      i18n.language === "en" ? "Website contact — Gestion Velora" : "Contact site web — Gestion Velora"
-    )}&body=${encodeURIComponent(
-      `Nom / Name: ${formData.name}\nCourriel / Email: ${formData.email}${profile}\n\nMessage:\n${formData.message}`
-    )}`;
+    const header = `${t("contact.topicLabel")}: ${tl}`;
+    const profile =
+      il === "" ? "" : `\n${t("contact.inquiryLabel")}: ${il}`;
+    return `${header}${profile}\n\n${formData.message}`;
+  };
+
+  const submitMailto = () => {
+    const subject = emailSubject(formData.topic, i18n.language);
+    const mailto = `mailto:${NOTIFICATION_EMAIL}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(buildMessageBody() + `\n\n—\n${formData.name}\n${formData.email}`)}`;
     window.location.href = mailto;
   };
 
@@ -56,16 +94,8 @@ export function ContactSection() {
     }
 
     setStatus("submitting");
-    const il = inquiryLabel(t, formData.inquiry);
-    const messageBody =
-      il !== ""
-        ? `${t("contact.inquiryLabel")}: ${il}\n\n${formData.message}`
-        : formData.message;
-
-    const subject =
-      i18n.language === "en"
-        ? "Gestion Velora — Website contact"
-        : "Gestion Velora — Contact site web";
+    const messageBody = buildMessageBody();
+    const subject = emailSubject(formData.topic, i18n.language);
 
     try {
       const res = await fetch(WEB3FORMS_URL, {
@@ -85,7 +115,13 @@ export function ContactSection() {
 
       if (data.success) {
         setStatus("success");
-        setFormData({ name: "", email: "", message: "", inquiry: "" });
+        setFormData({
+          topic: "general",
+          name: "",
+          email: "",
+          message: "",
+          inquiry: "",
+        });
       } else {
         setStatus("error");
         if (import.meta.env.DEV && data.message) {
@@ -169,6 +205,33 @@ export function ContactSection() {
                     )}
                     <div className="space-y-4">
                       <div>
+                        <label
+                          htmlFor="contact-topic"
+                          className="mb-2 block font-sans text-xs font-medium uppercase tracking-wider text-black/55 dark:text-white/50"
+                        >
+                          {t("contact.topicLabel")}
+                        </label>
+                        <select
+                          id="contact-topic"
+                          value={formData.topic}
+                          onChange={(e) =>
+                            setFormData((p) => ({
+                              ...p,
+                              topic: e.target.value as Topic,
+                            }))
+                          }
+                          required
+                          className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300 appearance-none cursor-pointer bg-[length:1rem] bg-[right_1.25rem_center] bg-no-repeat dark:bg-[#1C1C1C]"
+                          style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
+                          }}
+                        >
+                          <option value="general">{t("contact.topicGeneral")}</option>
+                          <option value="demo">{t("contact.topicDemo")}</option>
+                          <option value="communication">{t("contact.topicCommunication")}</option>
+                        </select>
+                      </div>
+                      <div>
                         <label htmlFor="contact-inquiry" className="sr-only">
                           {t("contact.inquiryLabel")}
                         </label>
@@ -244,7 +307,8 @@ export function ContactSection() {
                     {!CONTACT_FORM_USE_API && import.meta.env.DEV && (
                       <p className="mt-4 font-sans text-xs text-black/45 dark:text-white/40">
                         Dev: set <code className="font-mono">VITE_WEB3FORMS_ACCESS_KEY</code> in{" "}
-                        <code className="font-mono">.env.local</code> for API submit; otherwise mailto opens.
+                        <code className="font-mono">.env.local</code> for API submit; otherwise mailto opens to{" "}
+                        {NOTIFICATION_EMAIL}.
                       </p>
                     )}
                   </motion.form>

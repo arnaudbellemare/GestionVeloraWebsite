@@ -294,6 +294,10 @@ export const fr = {
   contact: {
     title: "Laissez-nous vous aider à gérer de façon simple et efficace.",
     cta: "Parler à un conseiller",
+    topicLabel: "Objet du message",
+    topicGeneral: "Gestion immobilière / question générale",
+    topicDemo: "Demander une démo",
+    topicCommunication: "Communication (partenariat, médias, autre)",
     namePlaceholder: "Votre nom",
     emailPlaceholder: "Votre courriel",
     messagePlaceholder: "Votre message",

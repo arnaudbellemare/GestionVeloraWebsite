@@ -291,6 +291,10 @@ export const en = {
   contact: {
     title: "Let us help you manage simply and efficiently.",
     cta: "Talk to an advisor",
+    topicLabel: "What is this about?",
+    topicGeneral: "Property management / general question",
+    topicDemo: "Request a demo",
+    topicCommunication: "Communication (partnership, media, other)",
     namePlaceholder: "Your name",
     emailPlaceholder: "Your email",
     messagePlaceholder: "Your message",

@@ -1,10 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { CountUp } from "./CountUp";
-import { useLocale } from "../context/LocaleContext";
-import { EN_PREFIX } from "../i18n";
+import { useGoToContact } from "../hooks/useGoToContact";
 
 const statKeys = [
   { value: "10+", key: "buildings" },
@@ -15,11 +13,7 @@ const statKeys = [
 
 export function StatsSection() {
   const { t } = useTranslation();
-  const { locale } = useLocale();
-  const contactTo =
-    locale === "fr"
-      ? { pathname: "/" as const, hash: "contact" }
-      : { pathname: EN_PREFIX, hash: "contact" };
+  const { contactHref, goToContact } = useGoToContact();
 
   return (
     <section className="pt-24 lg:pt-32 pb-12 lg:pb-16 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-charcoal">
@@ -49,12 +43,13 @@ export function StatsSection() {
               {t("stats.afterLead")}
             </p>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Link
-                to={contactTo}
+              <a
+                href={contactHref}
+                onClick={goToContact}
                 className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-velora-charcoal text-white dark:bg-white dark:text-neutral-900 font-sans font-semibold text-sm hover:opacity-90 transition-opacity whitespace-nowrap min-h-[44px]"
               >
                 {t("stats.afterCta")}
-              </Link>
+              </a>
             </motion.div>
           </div>
         </ScrollReveal>

@@ -14,7 +14,10 @@ export const PORTAL_URLS = {
 export const SOFTWARE_SITE_URL =
   import.meta.env.VITE_SOFTWARE_SITE_URL ?? "http://localhost:5181";
 
-/** https://web3forms.com — set `VITE_WEB3FORMS_ACCESS_KEY` for server-side email delivery; otherwise contact falls back to mailto. */
+/**
+ * https://web3forms.com — set `VITE_WEB3FORMS_ACCESS_KEY` for server-side email delivery; otherwise contact falls back to mailto.
+ * In the Web3Forms dashboard, set the form’s destination inbox to info@gestionvelora.com so demo/communication requests land there.
+ */
 export const WEB3FORMS_ACCESS_KEY =
   import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim() ?? "";
 
