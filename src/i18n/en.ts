@@ -3,7 +3,10 @@ export const en = {
   hero: {
     line1: "Your peace of mind.",
     line2: "Our business.",
-    subtitle: "Condo, Airbnb & rental management for owners and boards who expect the best.",
+    subtitle:
+      "Transparency, rigor, and a 24/7 team for condo boards and owners in Montreal.",
+    trustLine: "They trust us.",
+    trustLink: "Read testimonials",
     ctaDiscover: "Discover our services",
     ctaContact: "Contact us",
   },
@@ -21,6 +24,8 @@ export const en = {
     occupancy: "Occupancy rate",
     response: "24/7 response team",
     transparency: "100% financial transparency",
+    afterLead: "Your building deserves the same rigor.",
+    afterCta: "Request a proposal",
   },
 
   // WhoWeAre - SEO: property management Montreal, condo management, Airbnb management Montreal
@@ -88,6 +93,7 @@ export const en = {
     home: "Home",
     services: "Services",
     insights: "Insights",
+    contact: "Contact",
     login: "Log in",
     syndicat: "Condo management",
     syndicatDesc: "Full administration and transparency for every condo board.",
@@ -284,11 +290,24 @@ export const en = {
   // Contact
   contact: {
     title: "Let us help you manage simply and efficiently.",
-    cta: "Schedule a call",
+    cta: "Talk to an advisor",
     namePlaceholder: "Your name",
     emailPlaceholder: "Your email",
     messagePlaceholder: "Your message",
+    inquiryLabel: "I am",
+    inquiryPlaceholder: "Select an option (optional)",
+    inquirySyndic: "Condo board / syndicate",
+    inquiryLandlord: "Landlord / property owner",
+    inquiryAirbnb: "Short-term rental (Airbnb)",
+    inquiryOther: "Other",
     send: "Send",
+    sending: "Sending…",
+    successTitle: "Message sent",
+    successBody:
+      "Thank you for reaching out. Our team will get back to you shortly.",
+    errorBody:
+      "Something went wrong. Please try again or email us at info@gestionvelora.com.",
+    sendAnother: "Send another message",
   },
 
   // Footer

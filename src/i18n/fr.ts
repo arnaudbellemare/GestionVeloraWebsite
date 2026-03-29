@@ -3,7 +3,10 @@ export const fr = {
   hero: {
     line1: "Votre tranquillité.",
     line2: "Notre affaire.",
-    subtitle: "Syndicat de copropriété et gestion locative à Montréal",
+    subtitle:
+      "Transparence, rigueur et équipe disponible 24/7 pour syndics et propriétaires à Montréal.",
+    trustLine: "Ils nous font confiance.",
+    trustLink: "Voir les témoignages",
     ctaDiscover: "Découvrez nos services",
     ctaContact: "Contactez-nous",
   },
@@ -21,6 +24,8 @@ export const fr = {
     occupancy: "Taux d'occupation",
     response: "Équipe de réponse",
     transparency: "Transparence financière",
+    afterLead: "Votre immeuble mérite la même rigueur.",
+    afterCta: "Demander une proposition",
   },
 
   // WhoWeAre
@@ -88,6 +93,7 @@ export const fr = {
     home: "Accueil",
     services: "Services",
     insights: "Conseils",
+    contact: "Contact",
     login: "Connexion",
     syndicat: "Syndicat de copropriété",
     syndicatDesc: "Administration complète et transparence pour chaque copropriété.",
@@ -287,11 +293,24 @@ export const fr = {
   // Contact
   contact: {
     title: "Laissez-nous vous aider à gérer de façon simple et efficace.",
-    cta: "Planifiez un appel",
+    cta: "Parler à un conseiller",
     namePlaceholder: "Votre nom",
     emailPlaceholder: "Votre courriel",
     messagePlaceholder: "Votre message",
+    inquiryLabel: "Vous êtes",
+    inquiryPlaceholder: "Choisir une option (optionnel)",
+    inquirySyndic: "Syndic de copropriété",
+    inquiryLandlord: "Propriétaire / locateur",
+    inquiryAirbnb: "Location courte durée (Airbnb)",
+    inquiryOther: "Autre",
     send: "Envoyer",
+    sending: "Envoi en cours…",
+    successTitle: "Message envoyé",
+    successBody:
+      "Merci pour votre message. Notre équipe vous répondra dans les meilleurs délais.",
+    errorBody:
+      "L’envoi n’a pas fonctionné. Réessayez ou écrivez-nous directement à info@gestionvelora.com.",
+    sendAnother: "Envoyer un autre message",
   },
 
   // Footer

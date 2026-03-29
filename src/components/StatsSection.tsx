@@ -1,6 +1,10 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { CountUp } from "./CountUp";
+import { useLocale } from "../context/LocaleContext";
+import { EN_PREFIX } from "../i18n";
 
 const statKeys = [
   { value: "10+", key: "buildings" },
@@ -11,6 +15,12 @@ const statKeys = [
 
 export function StatsSection() {
   const { t } = useTranslation();
+  const { locale } = useLocale();
+  const contactTo =
+    locale === "fr"
+      ? { pathname: "/" as const, hash: "contact" }
+      : { pathname: EN_PREFIX, hash: "contact" };
+
   return (
     <section className="pt-24 lg:pt-32 pb-12 lg:pb-16 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-velora-charcoal">
       <div className="max-w-[90rem] mx-auto">
@@ -32,6 +42,22 @@ export function StatsSection() {
             </ScrollReveal>
           ))}
         </div>
+
+        <ScrollReveal delay={0.25} amount={0.2}>
+          <div className="mt-12 lg:mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center px-2">
+            <p className="font-sans text-base lg:text-lg text-velora-charcoal/80 dark:text-white/70 max-w-md">
+              {t("stats.afterLead")}
+            </p>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Link
+                to={contactTo}
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-velora-charcoal text-white dark:bg-white dark:text-neutral-900 font-sans font-semibold text-sm hover:opacity-90 transition-opacity whitespace-nowrap min-h-[44px]"
+              >
+                {t("stats.afterCta")}
+              </Link>
+            </motion.div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

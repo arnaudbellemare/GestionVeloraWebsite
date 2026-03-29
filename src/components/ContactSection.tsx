@@ -1,24 +1,103 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import type { TFunction } from "i18next";
+import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
+import { CONTACT_FORM_USE_API, WEB3FORMS_ACCESS_KEY } from "../config";
+
+type Inquiry = "" | "syndic" | "landlord" | "airbnb" | "other";
+
+const WEB3FORMS_URL = "https://api.web3forms.com/submit";
+
+function inquiryLabel(t: TFunction, inquiry: Inquiry): string {
+  switch (inquiry) {
+    case "syndic":
+      return t("contact.inquirySyndic");
+    case "landlord":
+      return t("contact.inquiryLandlord");
+    case "airbnb":
+      return t("contact.inquiryAirbnb");
+    case "other":
+      return t("contact.inquiryOther");
+    default:
+      return "";
+  }
+}
 
 export function ContactSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
+    inquiry: "" as Inquiry,
   });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const mailto = `mailto:info@gestionvelora.com?subject=Contact depuis le site&body=${encodeURIComponent(
-      `Nom: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+  const submitMailto = () => {
+    const il = inquiryLabel(t, formData.inquiry);
+    const profile = il === "" ? "" : `\n${t("contact.inquiryLabel")}: ${il}\n`;
+    const mailto = `mailto:info@gestionvelora.com?subject=${encodeURIComponent(
+      i18n.language === "en" ? "Website contact — Gestion Velora" : "Contact site web — Gestion Velora"
+    )}&body=${encodeURIComponent(
+      `Nom / Name: ${formData.name}\nCourriel / Email: ${formData.email}${profile}\n\nMessage:\n${formData.message}`
     )}`;
     window.location.href = mailto;
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (status === "submitting") return;
+
+    if (!CONTACT_FORM_USE_API) {
+      submitMailto();
+      return;
+    }
+
+    setStatus("submitting");
+    const il = inquiryLabel(t, formData.inquiry);
+    const messageBody =
+      il !== ""
+        ? `${t("contact.inquiryLabel")}: ${il}\n\n${formData.message}`
+        : formData.message;
+
+    const subject =
+      i18n.language === "en"
+        ? "Gestion Velora — Website contact"
+        : "Gestion Velora — Contact site web";
+
+    try {
+      const res = await fetch(WEB3FORMS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject,
+          name: formData.name,
+          email: formData.email,
+          message: messageBody,
+          from_name: formData.name,
+          botcheck: "",
+        }),
+      });
+      const data = (await res.json()) as { success?: boolean; message?: string };
+
+      if (data.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "", inquiry: "" });
+      } else {
+        setStatus("error");
+        if (import.meta.env.DEV && data.message) {
+          console.warn("[Web3Forms]", data.message);
+        }
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const resetToForm = () => setStatus("idle");
 
   return (
     <section
@@ -43,59 +122,135 @@ export function ContactSection() {
             </motion.a>
           </ScrollReveal>
 
-          {/* Contact form */}
           <ScrollReveal delay={0.2}>
-            <form
-              id="contact-form"
-              onSubmit={handleSubmit}
-              className="mt-12 max-w-md scroll-mt-24"
-            >
-              <div className="space-y-4">
-                <motion.input
-                  type="text"
-                  placeholder={t("contact.namePlaceholder")}
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData((p) => ({ ...p, name: e.target.value }))
-                  }
-                  required
-                  whileFocus={{ scale: 1.01 }}
-                  transition={{ duration: 0.2 }}
-                  className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300"
-                />
-                <motion.input
-                  type="email"
-                  placeholder={t("contact.emailPlaceholder")}
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData((p) => ({ ...p, email: e.target.value }))
-                  }
-                  required
-                  whileFocus={{ scale: 1.01 }}
-                  transition={{ duration: 0.2 }}
-                  className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300"
-                />
-                <motion.textarea
-                  placeholder={t("contact.messagePlaceholder")}
-                  value={formData.message}
-                  onChange={(e) =>
-                    setFormData((p) => ({ ...p, message: e.target.value }))
-                  }
-                  rows={3}
-                  whileFocus={{ scale: 1.01 }}
-                  transition={{ duration: 0.2 }}
-                  className="w-full px-6 py-4 rounded-2xl bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none resize-none transition-colors duration-300"
-                />
-              </div>
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="mt-6 px-8 py-4 rounded-full border-2 border-black/20 dark:border-white/30 text-black dark:text-white font-sans font-semibold text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300"
-              >
-                {t("contact.send")}
-              </motion.button>
-            </form>
+            <div className="mt-12 max-w-md scroll-mt-24" id="contact-form">
+              <AnimatePresence mode="wait">
+                {status === "success" ? (
+                  <motion.div
+                    key="success"
+                    role="status"
+                    aria-live="polite"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.25 }}
+                    className="rounded-2xl border-2 border-black/10 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.04] p-8"
+                  >
+                    <p className="font-playfair font-semibold text-xl text-black dark:text-white mb-2">
+                      {t("contact.successTitle")}
+                    </p>
+                    <p className="font-sans text-black/75 dark:text-white/70 mb-6">
+                      {t("contact.successBody")}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={resetToForm}
+                      className="font-sans font-semibold text-sm text-waabi-pink hover:underline underline-offset-2"
+                    >
+                      {t("contact.sendAnother")}
+                    </button>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    onSubmit={handleSubmit}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {status === "error" && (
+                      <p
+                        role="alert"
+                        className="mb-4 font-sans text-sm text-red-600 dark:text-red-400"
+                      >
+                        {t("contact.errorBody")}
+                      </p>
+                    )}
+                    <div className="space-y-4">
+                      <div>
+                        <label htmlFor="contact-inquiry" className="sr-only">
+                          {t("contact.inquiryLabel")}
+                        </label>
+                        <select
+                          id="contact-inquiry"
+                          value={formData.inquiry}
+                          onChange={(e) =>
+                            setFormData((p) => ({
+                              ...p,
+                              inquiry: e.target.value as Inquiry,
+                            }))
+                          }
+                          className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300 appearance-none cursor-pointer bg-[length:1rem] bg-[right_1.25rem_center] bg-no-repeat dark:bg-[#1C1C1C]"
+                          style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
+                          }}
+                        >
+                          <option value="">{t("contact.inquiryPlaceholder")}</option>
+                          <option value="syndic">{t("contact.inquirySyndic")}</option>
+                          <option value="landlord">{t("contact.inquiryLandlord")}</option>
+                          <option value="airbnb">{t("contact.inquiryAirbnb")}</option>
+                          <option value="other">{t("contact.inquiryOther")}</option>
+                        </select>
+                      </div>
+                      <motion.input
+                        type="text"
+                        placeholder={t("contact.namePlaceholder")}
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData((p) => ({ ...p, name: e.target.value }))
+                        }
+                        required
+                        autoComplete="name"
+                        whileFocus={{ scale: 1.01 }}
+                        transition={{ duration: 0.2 }}
+                        className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300"
+                      />
+                      <motion.input
+                        type="email"
+                        placeholder={t("contact.emailPlaceholder")}
+                        value={formData.email}
+                        onChange={(e) =>
+                          setFormData((p) => ({ ...p, email: e.target.value }))
+                        }
+                        required
+                        autoComplete="email"
+                        whileFocus={{ scale: 1.01 }}
+                        transition={{ duration: 0.2 }}
+                        className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300"
+                      />
+                      <motion.textarea
+                        placeholder={t("contact.messagePlaceholder")}
+                        value={formData.message}
+                        onChange={(e) =>
+                          setFormData((p) => ({ ...p, message: e.target.value }))
+                        }
+                        rows={4}
+                        required
+                        whileFocus={{ scale: 1.01 }}
+                        transition={{ duration: 0.2 }}
+                        className="w-full px-6 py-4 rounded-2xl bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none resize-none transition-colors duration-300"
+                      />
+                    </div>
+                    <motion.button
+                      type="submit"
+                      disabled={status === "submitting"}
+                      whileHover={status === "submitting" ? undefined : { scale: 1.02 }}
+                      whileTap={status === "submitting" ? undefined : { scale: 0.98 }}
+                      className="mt-6 px-8 py-4 rounded-full border-2 border-black/20 dark:border-white/30 text-black dark:text-white font-sans font-semibold text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300 disabled:opacity-60 disabled:pointer-events-none"
+                    >
+                      {status === "submitting" ? t("contact.sending") : t("contact.send")}
+                    </motion.button>
+                    {!CONTACT_FORM_USE_API && import.meta.env.DEV && (
+                      <p className="mt-4 font-sans text-xs text-black/45 dark:text-white/40">
+                        Dev: set <code className="font-mono">VITE_WEB3FORMS_ACCESS_KEY</code> in{" "}
+                        <code className="font-mono">.env.local</code> for API submit; otherwise mailto opens.
+                      </p>
+                    )}
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </div>
           </ScrollReveal>
         </div>
       </div>

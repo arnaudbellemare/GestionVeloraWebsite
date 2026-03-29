@@ -66,11 +66,49 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.65 }}
-          className="font-sans text-lg lg:text-xl text-white/75 max-w-xl mb-8 mx-auto"
+          className="font-sans text-lg lg:text-xl text-white/75 max-w-xl mb-5 mx-auto"
         >
           {t("hero.subtitle")}
         </motion.p>
 
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.72 }}
+          className="font-sans text-sm text-white/55 max-w-xl mb-8 mx-auto"
+        >
+          <span>{t("hero.trustLine")}</span>{" "}
+          <a
+            href="#testimonials"
+            className="text-white/85 underline underline-offset-2 decoration-white/30 hover:text-white hover:decoration-white/60 transition-colors"
+          >
+            {t("hero.trustLink")}
+          </a>
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.78 }}
+          className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 w-full max-w-lg"
+        >
+          <motion.a
+            href="#contact"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-neutral-900 font-sans font-semibold text-sm shadow-lg shadow-black/20 hover:bg-white/95 transition-colors w-full sm:w-auto min-h-[44px]"
+          >
+            {t("hero.ctaContact")}
+          </motion.a>
+          <motion.a
+            href="#specification"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border-2 border-white/45 text-white font-sans font-semibold text-sm hover:bg-white/10 transition-colors w-full sm:w-auto min-h-[44px]"
+          >
+            {t("hero.ctaDiscover")}
+          </motion.a>
+        </motion.div>
       </div>
 
       <div className="relative z-[2] w-full pb-12 lg:pb-16 px-6 lg:px-16">
@@ -80,7 +118,7 @@ export function HeroSection() {
               key={name}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 0.9, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 + i * 0.05 }}
+              transition={{ duration: 0.5, delay: 0.85 + i * 0.05 }}
               className="font-sans text-sm lg:text-base font-semibold text-white/90 tracking-wide"
             >
               {name}

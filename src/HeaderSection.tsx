@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { InternalLink } from "./components/InternalLink";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { useLocale } from "./context/LocaleContext";
 import { PORTAL_URLS } from "./config";
+import { EN_PREFIX } from "./i18n";
 
 const serviceLinkKeys = [
   { to: "/services/syndicat-copropriete", labelKey: "nav.syndicat", descKey: "nav.syndicatDesc" },
@@ -28,6 +30,11 @@ export const HeaderSection = (): JSX.Element => {
       closeTimerRef.current = null;
     }
   };
+
+  const contactTo =
+    locale === "fr"
+      ? { pathname: "/" as const, hash: "contact" }
+      : { pathname: EN_PREFIX, hash: "contact" };
 
   return (
     <motion.header
@@ -87,6 +94,12 @@ export const HeaderSection = (): JSX.Element => {
             <InternalLink to="/blog" className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300">
               {t("nav.insights")}
             </InternalLink>
+            <Link
+              to={contactTo}
+              className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300"
+            >
+              {t("nav.contact")}
+            </Link>
           </nav>
           <button
             type="button"
@@ -132,6 +145,12 @@ export const HeaderSection = (): JSX.Element => {
             </button>
           </div>
           <ThemeToggle lightModeOverWhite={false} />
+          <Link
+            to={contactTo}
+            className="hidden sm:inline-flex items-center px-4 py-2 rounded-full border border-white/35 text-white font-sans font-semibold text-sm hover:bg-white/10 transition-colors duration-300"
+          >
+            {t("nav.contact")}
+          </Link>
           <a
             href={PORTAL_URLS.service}
             target="_blank"
@@ -161,6 +180,9 @@ export const HeaderSection = (): JSX.Element => {
             </div>
           </div>
           <InternalLink to="/blog" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>{t("nav.insights")}</InternalLink>
+          <Link to={contactTo} className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>
+            {t("nav.contact")}
+          </Link>
           <a href={PORTAL_URLS.service} target="_blank" rel="noopener noreferrer" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>{t("nav.login")}</a>
         </motion.div>
       )}

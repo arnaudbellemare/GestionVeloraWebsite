@@ -13,3 +13,9 @@ export const PORTAL_URLS = {
  */
 export const SOFTWARE_SITE_URL =
   import.meta.env.VITE_SOFTWARE_SITE_URL ?? "http://localhost:5181";
+
+/** https://web3forms.com — set `VITE_WEB3FORMS_ACCESS_KEY` for server-side email delivery; otherwise contact falls back to mailto. */
+export const WEB3FORMS_ACCESS_KEY =
+  import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim() ?? "";
+
+export const CONTACT_FORM_USE_API = WEB3FORMS_ACCESS_KEY.length > 0;
