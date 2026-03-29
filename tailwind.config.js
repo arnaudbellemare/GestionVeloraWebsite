@@ -17,6 +17,9 @@ export default {
         "velora-charcoal": "#191818",
         "velora-darker": "#121212",
         "waabi-pink": "#FF0066",
+        /** Primary CTA accent — ocean blue (contact, trust) */
+        "velora-ocean": "#0c7b9c",
+        "velora-ocean-hover": "#0a6580",
       },
       fontFamily: {
         serif: ["Instrument Serif", "Georgia", "serif"],

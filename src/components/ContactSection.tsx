@@ -152,7 +152,7 @@ export function ContactSection() {
               href="#contact-form"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex px-8 py-4 rounded-full bg-waabi-pink text-white font-sans font-bold text-sm hover:bg-waabi-pink/90 transition-colors duration-300"
+              className="inline-flex px-8 py-4 rounded-full bg-velora-ocean text-white font-sans font-bold text-sm hover:bg-velora-ocean-hover transition-colors duration-300 shadow-sm shadow-velora-ocean/25"
             >
               {t("contact.cta")}
             </motion.a>
@@ -181,7 +181,7 @@ export function ContactSection() {
                     <button
                       type="button"
                       onClick={resetToForm}
-                      className="font-sans font-semibold text-sm text-waabi-pink hover:underline underline-offset-2"
+                      className="font-sans font-semibold text-sm text-velora-ocean dark:text-sky-400 hover:underline underline-offset-2"
                     >
                       {t("contact.sendAnother")}
                     </button>
@@ -221,7 +221,7 @@ export function ContactSection() {
                             }))
                           }
                           required
-                          className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300 appearance-none cursor-pointer bg-[length:1rem] bg-[right_1.25rem_center] bg-no-repeat dark:bg-[#1C1C1C]"
+                          className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none transition-colors duration-300 appearance-none cursor-pointer bg-[length:1rem] bg-[right_1.25rem_center] bg-no-repeat dark:bg-[#1C1C1C]"
                           style={{
                             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
                           }}
@@ -244,7 +244,7 @@ export function ContactSection() {
                               inquiry: e.target.value as Inquiry,
                             }))
                           }
-                          className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300 appearance-none cursor-pointer bg-[length:1rem] bg-[right_1.25rem_center] bg-no-repeat dark:bg-[#1C1C1C]"
+                          className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none transition-colors duration-300 appearance-none cursor-pointer bg-[length:1rem] bg-[right_1.25rem_center] bg-no-repeat dark:bg-[#1C1C1C]"
                           style={{
                             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
                           }}
@@ -267,7 +267,7 @@ export function ContactSection() {
                         autoComplete="name"
                         whileFocus={{ scale: 1.01 }}
                         transition={{ duration: 0.2 }}
-                        className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300"
+                        className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none transition-colors duration-300"
                       />
                       <motion.input
                         type="email"
@@ -280,7 +280,7 @@ export function ContactSection() {
                         autoComplete="email"
                         whileFocus={{ scale: 1.01 }}
                         transition={{ duration: 0.2 }}
-                        className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none transition-colors duration-300"
+                        className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none transition-colors duration-300"
                       />
                       <motion.textarea
                         placeholder={t("contact.messagePlaceholder")}
@@ -292,7 +292,7 @@ export function ContactSection() {
                         required
                         whileFocus={{ scale: 1.01 }}
                         transition={{ duration: 0.2 }}
-                        className="w-full px-6 py-4 rounded-2xl bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-waabi-pink focus:outline-none resize-none transition-colors duration-300"
+                        className="w-full px-6 py-4 rounded-2xl bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none resize-none transition-colors duration-300"
                       />
                     </div>
                     <motion.button

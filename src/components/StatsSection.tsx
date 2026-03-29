@@ -42,15 +42,15 @@ export function StatsSection() {
             <p className="font-sans text-base lg:text-lg text-velora-charcoal/80 dark:text-white/70 max-w-md">
               {t("stats.afterLead")}
             </p>
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <a
-                href={contactHref}
-                onClick={goToContact}
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-velora-charcoal text-white dark:bg-white dark:text-neutral-900 font-sans font-semibold text-sm hover:opacity-90 transition-opacity whitespace-nowrap min-h-[44px]"
-              >
-                {t("stats.afterCta")}
-              </a>
-            </motion.div>
+            <motion.a
+              href={contactHref}
+              onClick={goToContact}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-velora-charcoal text-white dark:bg-white dark:text-neutral-900 font-sans font-semibold text-sm hover:opacity-90 transition-opacity whitespace-nowrap min-h-[44px]"
+            >
+              {t("stats.afterCta")}
+            </motion.a>
           </div>
         </ScrollReveal>
       </div>

@@ -7,6 +7,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
+import { useGoToContact } from "../hooks/useGoToContact";
 
 const partnerLogos = [
   "Groupe Velora",
@@ -35,6 +36,7 @@ const listItem = {
 
 export function TrustedPartnersSection() {
   const { t } = useTranslation();
+  const { contactHref, goToContact } = useGoToContact();
   const reduceMotion = useReducedMotion();
   const partners = t("trustedPartners.partners", { returnObjects: true }) as {
     name: string;
@@ -75,7 +77,8 @@ export function TrustedPartnersSection() {
                 {t("trustedPartners.subtitle")}
               </p>
               <motion.a
-                href="#contact"
+                href={contactHref}
+                onClick={goToContact}
                 className="font-serif text-sm font-medium text-white/70 hover:text-white transition-colors underline underline-offset-2 inline-flex items-center gap-1"
                 whileHover={reduceMotion ? undefined : { x: 3 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}

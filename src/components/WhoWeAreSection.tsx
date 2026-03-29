@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { ScrollReveal } from "./ScrollReveal";
+import { useGoToContact } from "../hooks/useGoToContact";
 
 export function WhoWeAreSection() {
   const { t } = useTranslation();
+  const { contactHref, goToContact } = useGoToContact();
   const projects = t("whoWeAre.projects", { returnObjects: true }) as {
     category: string;
     location: string;
@@ -29,7 +31,8 @@ export function WhoWeAreSection() {
           </div>
           <ScrollReveal delay={0.1}>
             <a
-              href="#contact"
+              href={contactHref}
+              onClick={goToContact}
               className="inline-flex items-center gap-2 border border-velora-charcoal dark:border-white text-velora-charcoal dark:text-white px-5 py-3 text-[11px] tracking-[0.15em] uppercase font-sans font-semibold hover:bg-velora-charcoal hover:text-white dark:hover:bg-white dark:hover:text-velora-charcoal transition-colors whitespace-nowrap"
             >
               {t("whoWeAre.cta")}

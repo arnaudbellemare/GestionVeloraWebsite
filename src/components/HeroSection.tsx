@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO = "/videos/hero-bg.mp4";
 
 export function HeroSection() {
   const { t } = useTranslation();
+  const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
 
   return (
@@ -93,7 +95,8 @@ export function HeroSection() {
           className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 w-full max-w-lg"
         >
           <motion.a
-            href="#contact"
+            href={contactHref}
+            onClick={goToContact}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-neutral-900 font-sans font-semibold text-sm shadow-lg shadow-black/20 hover:bg-white/95 transition-colors w-full sm:w-auto min-h-[44px]"

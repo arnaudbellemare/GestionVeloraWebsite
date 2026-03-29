@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
+import { useGoToContact } from "../hooks/useGoToContact";
 
 export function OurProcessSection() {
   const { t } = useTranslation();
+  const { contactHref, goToContact } = useGoToContact();
   const steps = t("ourProcess.steps", { returnObjects: true }) as {
     step: string;
     title: string;
@@ -30,7 +32,8 @@ export function OurProcessSection() {
             </h2>
           </div>
           <a
-            href="#contact"
+            href={contactHref}
+            onClick={goToContact}
             className="inline-flex items-center gap-2 self-start lg:self-auto border border-black dark:border-white text-black dark:text-white px-5 py-3 text-[11px] tracking-[0.15em] uppercase font-sans font-semibold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
           >
             <span className="text-sm" aria-hidden>

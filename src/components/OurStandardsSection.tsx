@@ -1,12 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useCallback } from "react";
+import { useGoToContact } from "../hooks/useGoToContact";
 
 const BG_VIDEO = "/videos/our-standards-bg.mp4";
 const BG_IMAGE = "/images/our-standards-bg-clean.png";
 
 export function OurStandardsSection() {
   const { t } = useTranslation();
+  const { contactHref, goToContact } = useGoToContact();
   const ref = useRef<HTMLElement>(null);
   const [videoReady, setVideoReady] = useState(false);
 
@@ -80,7 +82,8 @@ export function OurStandardsSection() {
             {t("ourStandards.title")}
           </h2>
           <motion.a
-            href="#contact"
+            href={contactHref}
+            onClick={goToContact}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white text-white font-sans font-semibold text-sm hover:bg-white hover:text-black transition-colors duration-300 shadow-[0_2px_16px_rgba(0,0,0,0.3)]"
