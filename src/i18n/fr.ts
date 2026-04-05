@@ -334,6 +334,12 @@ export const fr = {
     madeWith: "Conçu avec soin →",
     managerPortal: "Espace syndic",
     ownerPortal: "Espace copropriétaire",
+    ourSite: "Code QR",
+    qrIframeTitle: "Code QR animé menant à Gestion Velora",
+    qrViewToggle: "Mode d’affichage du QR",
+    qrView2d: "QR",
+    qrView3d: "3D",
+    qrScanAria: "Ouvrir gestionvelora.com — flasher le code ou toucher",
   },
 
   // Service page

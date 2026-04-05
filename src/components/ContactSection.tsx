@@ -152,7 +152,7 @@ export function ContactSection() {
               href="#contact-form"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex px-8 py-4 rounded-full bg-velora-ocean text-white font-sans font-bold text-sm hover:bg-velora-ocean-hover transition-colors duration-300 shadow-sm shadow-velora-ocean/25"
+              className="inline-flex px-8 py-4 rounded-full bg-neutral-950 text-white font-sans font-bold text-sm tracking-wide hover:bg-black transition-colors duration-300 shadow-md shadow-neutral-950/15 dark:bg-[#ebe8e3] dark:text-[#1C1C1C] dark:hover:bg-[#f5f3f0] dark:shadow-lg dark:shadow-black/35"
             >
               {t("contact.cta")}
             </motion.a>

@@ -1,12 +1,43 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FooterVoxelQr2D } from "./components/FooterVoxelQr2D";
 import { InternalLink } from "./components/InternalLink";
 import { PORTAL_URLS } from "./config";
+
+const QR_SITE_URL = "https://www.gestionvelora.com";
+
+const QR_MSG = { channel: "gv-qr-montreal", type: "setView" } as const;
 
 export const FooterSection = (): JSX.Element => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
+  /** Default 3D in footer; "QR" = scannable 2D; "3D" = decorative WebGL only. */
+  const [qrView, setQrView] = useState<"2d" | "3d">("3d");
+  const qrViewRef = useRef(qrView);
+  qrViewRef.current = qrView;
+  const qrIframeRef = useRef<HTMLIFrameElement>(null);
+
+  const postQrView = useCallback((mode: "2d" | "3d") => {
+    qrIframeRef.current?.contentWindow?.postMessage(
+      { ...QR_MSG, mode },
+      window.location.origin
+    );
+  }, []);
+
+  const setFooterQrView = useCallback(
+    (mode: "2d" | "3d") => {
+      setQrView(mode);
+      if (mode === "3d") {
+        requestAnimationFrame(() => postQrView("3d"));
+      }
+    },
+    [postQrView]
+  );
+
+  const onQrIframeLoad = useCallback(() => {
+    postQrView(qrViewRef.current);
+  }, [postQrView]);
   const navigationLinks = [
     { label: t("footer.home"), to: "/" },
     { label: t("footer.standards"), to: "/#standards" },
@@ -24,7 +55,7 @@ export const FooterSection = (): JSX.Element => {
     >
       <div className="max-w-[90rem] mx-auto relative z-10 px-6 lg:px-16 pt-16 lg:pt-20 pb-8">
         {/* Top: Contact, Connect, Subscribe columns */}
-        <div className="flex flex-col md:flex-row gap-12 lg:gap-16 mb-8 lg:mb-12">
+        <div className="flex flex-col md:flex-row md:flex-wrap xl:flex-nowrap gap-12 lg:gap-16 xl:justify-between mb-8 lg:mb-12">
           {/* Contact */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -105,13 +136,70 @@ export const FooterSection = (): JSX.Element => {
             </nav>
           </motion.div>
 
+          {/* QR: classic 2D code (scannable) vs 3D scene (display only) */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="shrink-0 md:min-w-[10rem] xl:max-w-[11rem] w-full max-w-[11rem] sm:max-w-none sm:w-auto"
+          >
+            <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-2">
+              {t("footer.ourSite")}
+            </h4>
+            <div className="flex flex-col gap-2 max-w-[10.5rem] w-full">
+              <div className="relative aspect-[10/11] w-full overflow-hidden bg-[#1C1C1C]">
+                {qrView === "2d" ? (
+                  <FooterVoxelQr2D url={QR_SITE_URL} ariaLabel={t("footer.qrScanAria")} />
+                ) : (
+                  <iframe
+                    ref={qrIframeRef}
+                    title={t("footer.qrIframeTitle")}
+                    src={`/static/qr-montreal-city.html?embed=1&q=${encodeURIComponent(QR_SITE_URL)}`}
+                    className="absolute inset-0 h-full w-full border-0 bg-[#1C1C1C] block pointer-events-none"
+                    loading="lazy"
+                    onLoad={onQrIframeLoad}
+                  />
+                )}
+              </div>
+              <div
+                role="group"
+                aria-label={t("footer.qrViewToggle")}
+                className="flex rounded-sm overflow-hidden border border-white/14 w-full"
+              >
+                <button
+                  type="button"
+                  onClick={() => setFooterQrView("2d")}
+                  className={`flex-1 min-w-0 font-sans text-xs py-2 px-2 transition-colors duration-200 border-r border-white/10 ${
+                    qrView === "2d"
+                      ? "bg-[rgba(200,80,120,0.28)] text-white"
+                      : "bg-white/[0.06] text-white/60 hover:bg-white/10 hover:text-white/85"
+                  }`}
+                >
+                  {t("footer.qrView2d")}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFooterQrView("3d")}
+                  className={`flex-1 min-w-0 font-sans text-xs py-2 px-2 transition-colors duration-200 ${
+                    qrView === "3d"
+                      ? "bg-[rgba(200,80,120,0.28)] text-white"
+                      : "bg-white/[0.06] text-white/60 hover:bg-white/10 hover:text-white/85"
+                  }`}
+                >
+                  {t("footer.qrView3d")}
+                </button>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Subscribe */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="md:ml-auto"
+            className="md:flex-1 xl:max-w-xs"
           >
             <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
               {t("footer.newsletter")}

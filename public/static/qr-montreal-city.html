@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR → Montréal — voxel morph</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0d12; font-family: ui-sans-serif, system-ui, sans-serif; }
+    body.embed { background: #1c1c1c; }
+    #bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      background: linear-gradient(180deg, rgba(12,13,18,0.97), rgba(12,13,18,0.88));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+    }
+    body.embed #bar { display: none; }
+    #bar label { color: #8b8fa3; font-size: 12px; white-space: nowrap; }
+    #url {
+      flex: 1; min-width: 0;
+      font-size: 15px; padding: 10px 14px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
+      color: #e8eaef; outline: none;
+    }
+    #url:focus { border-color: rgba(200, 80, 120, 0.45); box-shadow: 0 0 0 3px rgba(200, 80, 120, 0.12); }
+    #hint {
+      font-size: 11px; color: #5c6170; max-width: 200px; line-height: 1.35;
+    }
+    .seg {
+      display: flex; border-radius: 10px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.14); flex-shrink: 0;
+    }
+    .seg button {
+      margin: 0; border: none; padding: 9px 16px; font-size: 13px; cursor: pointer;
+      background: rgba(255,255,255,0.06); color: #9aa0b0;
+      transition: background 0.15s, color 0.15s;
+    }
+    .seg button + button { border-left: 1px solid rgba(255,255,255,0.1); }
+    .seg button:hover { background: rgba(255,255,255,0.1); color: #c8ccd8; }
+    .seg button.on { background: rgba(200, 80, 120, 0.28); color: #fff; }
+    #canvas-wrap {
+      position: fixed; inset: 0; top: 56px;
+    }
+    body.embed #canvas-wrap { top: 0; }
+    canvas { display: block; width: 100%; height: 100%; }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.172.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body>
+  <div id="bar">
+    <label for="url">URL / text</label>
+    <input id="url" type="text" spellcheck="false" placeholder="https://www.gestionvelora.com — type to morph the code…" autocomplete="off" />
+    <div class="seg" role="group" aria-label="View mode">
+      <button type="button" id="btn-2d">QR</button>
+      <button type="button" id="btn-3d" class="on">3D</button>
+    </div>
+    <span id="hint">Island layout: fleuve south, montagne north, downtown &amp; towers between — toggle QR / 3D anytime.</span>
+  </div>
+  <div id="canvas-wrap"><canvas id="c"></canvas></div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const DEFAULT_URL = 'https://www.gestionvelora.com';
+    const params = new URLSearchParams(location.search);
+    const embedParam = params.get('embed');
+    const isEmbed =
+      embedParam === '1' ||
+      embedParam === 'true' ||
+      (params.has('embed') && embedParam !== '0' && embedParam !== 'false');
+    if (isEmbed) document.body.classList.add('embed');
+
+    const N = 29;
+    const CELL = 0.42;
+    const QR_EXTRUDE_BASE = 0.12;
+    const QR_EXTRUDE_MAX = 0.85;
+    const MORPH_CHARS = 56;
+    /** Extra height on dark QR modules so the pattern stays visible on top of the city (m → 1). */
+    const QR_ON_CITY_BUMP = 0.45;
+    const tmpM = new THREE.Matrix4();
+    const tmpP = new THREE.Vector3();
+    const tmpQ = new THREE.Quaternion();
+    const tmpS = new THREE.Vector3();
+    const tmpC = new THREE.Color();
+    const tmpOffset = new THREE.Vector3();
+
+    /** @returns {Promise<{ size: number, get: (c:number,r:number)=>boolean }>} */
+    function qrModules(text) {
+      return new Promise((resolve, reject) => {
+        const QR = globalThis.QRCode;
+        if (!QR || typeof QR.create !== 'function') {
+          reject(new Error('QRCode library missing'));
+          return;
+        }
+        QR.create(String(text || '\u00a0'), { errorCorrectionLevel: 'M' }, (err, qr) => {
+          if (err) { reject(err); return; }
+          const size = qr.modules.size;
+          resolve({
+            size,
+            get(c, r) {
+              if (c < 0 || r < 0 || c >= size || r >= size) return false;
+              return !!qr.modules.get(c, r);
+            },
+          });
+        });
+      });
+    }
+
+    /** Pad QR bitmap into N×N (centered). */
+    function paddedGrid(qr) {
+      const g = new Uint8Array(N * N);
+      const off = Math.floor((N - qr.size) / 2);
+      for (let r = 0; r < N; r++) {
+        for (let c = 0; c < N; c++) {
+          const qc = c - off;
+          const qr_ = r - off;
+          g[r * N + c] = qr.get(qc, qr_) ? 1 : 0;
+        }
+      }
+      return g;
+    }
+
+    function hash01(i, j, seed) {
+      let x = Math.sin(i * 12.9898 + j * 78.233 + seed) * 43758.5453;
+      return x - Math.floor(x);
+    }
+
+    /**
+     * Stylized île de Montréal from above (not GIS-accurate):
+     * −bz = north (montagne), +bz = south (fleuve / Vieux-Port), bx+ = east.
+     * St-Laurent corridor west of core, towers south-east of the mountain foot.
+     */
+    function buildMontrealMaps() {
+      const occ = new Uint8Array(N * N);
+      const h = new Float32Array(N * N);
+      const col = new Float32Array(N * N * 3);
+      const cx = (N - 1) / 2;
+      const cy = (N - 1) / 2;
+      const clamp01 = (t) => Math.min(1, Math.max(0, t));
+
+      for (let j = 0; j < N; j++) {
+        for (let i = 0; i < N; i++) {
+          const k = j * N + i;
+          const bx = i - cx;
+          const bz = j - cy;
+          const n = hash01(i, j, 41);
+
+          const stLaurent = Math.abs(bx + 3.4) < 1.2;
+          const peelAxis = Math.abs(bx - 2.4) < 1.05;
+          const sherbrooke = Math.abs(bz + 2.1) < 0.65;
+          const reneLevesque = Math.abs(bz - 3.2) < 0.65;
+          const minorBlock = (i + 2) % 5 === 0 || (j + 1) % 5 === 0;
+          const isArtery = stLaurent || peelAxis || sherbrooke || reneLevesque;
+          const isStreet = isArtery || minorBlock;
+
+          const mx = (bx + 2.2) / 6.4;
+          const mz = (bz + 6.4) / 8.2;
+          const dMount = Math.hypot(mx, mz);
+          let mountain = clamp01(1.15 - dMount);
+          mountain *= bz < 2 ? 1 : 0.25 + 0.75 * clamp01(1 - (bz - 2) / 5);
+
+          const southness = clamp01((bz - 5.5) / 4);
+          const waterfront = southness;
+
+          const cbdDx = bx - 5.2;
+          const cbdDz = bz - 0.9;
+          const dCbd = Math.hypot(cbdDx / 5.4, cbdDz / 4.6);
+          const cbd = Math.exp(-dCbd * dCbd * 1.35);
+
+          const plateau = Math.exp(-((bx - 6.8) ** 2 / 20 + (bz + 3.2) ** 2 / 24));
+
+          let height = 0.08;
+          let r = 0.44, g = 0.46, b = 0.5;
+
+          if (mountain > 0.12) {
+            const peak = mountain * mountain;
+            height = 0.4 + peak * (2.9 + n * 1.15);
+            r = 0.16 + n * 0.1;
+            g = 0.34 + n * 0.14;
+            b = 0.22 + n * 0.08;
+          } else if (waterfront > 0.45 && bz > 4) {
+            height = 0.22 + n * 0.75 + (1 - southness) * 0.35;
+            r = 0.56 + n * 0.06;
+            g = 0.48 + n * 0.05;
+            b = 0.42 + n * 0.06;
+          } else if (isStreet) {
+            height = 0.07 + n * 0.06;
+            r = 0.26;
+            g = 0.28;
+            b = 0.33;
+            if (stLaurent) {
+              r = 0.3;
+              g = 0.32;
+              b = 0.37;
+            }
+          } else {
+            const towers = cbd * (4.4 + n * 5.2);
+            const brickBase = 0.42 + n * 1.05 + plateau * (1.15 + n * 1.25) * (1 - waterfront * 0.9);
+            height = brickBase + towers;
+            if (cbd > 0.2) {
+              r = 0.34 + n * 0.1;
+              g = 0.38 + n * 0.12;
+              b = 0.4 + n * 0.08;
+            } else if (plateau > 0.22) {
+              r = 0.52 + n * 0.1;
+              g = 0.35 + n * 0.08;
+              b = 0.3 + n * 0.06;
+            } else {
+              r = 0.47 + n * 0.1;
+              g = 0.39 + n * 0.08;
+              b = 0.36 + n * 0.06;
+            }
+          }
+
+          if (isArtery && mountain < 0.12) height *= 0.2;
+          if (bz > 9) {
+            height *= 0.32;
+            r = r * 0.65 + 0.12;
+            g = g * 0.72 + 0.16;
+            b = b * 0.85 + 0.22;
+          }
+
+          occ[k] = height > 0.028 ? 1 : 0;
+          h[k] = Math.max(0.001, height);
+          col[k * 3] = r;
+          col[k * 3 + 1] = g;
+          col[k * 3 + 2] = b;
+        }
+      }
+      return { occ, h, col };
+    }
+
+    const city = buildMontrealMaps();
+
+    const canvas = document.getElementById('c');
+    const input = document.getElementById('url');
+
+    const scene = new THREE.Scene();
+    const bgColor = isEmbed ? 0x1c1c1c : 0x0c0d12;
+    scene.background = new THREE.Color(bgColor);
+    /** Standalone uses fog; embed keeps fog off so the slab matches #1c1c1c (see frame loop guard). */
+    scene.fog = isEmbed ? null : new THREE.FogExp2(bgColor, 0.045);
+
+    const CAM_FOV = 42;
+    const camera = new THREE.PerspectiveCamera(CAM_FOV, 2, 0.1, 200);
+    camera.position.set(10, 9, 14);
+
+    /** Half-width on X/Z of the instanced grid (outer voxel edge + tiny pad) — ortho frustum fits this to the viewport. */
+    const gridExtentHalf = ((N - 1) * 0.5) * CELL * 1.03 + CELL * 0.5;
+    const orthoCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 120);
+    orthoCam.position.set(0, 32, 0);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.55;
+    controls.target.set(0, 1.2, 0);
+    controls.maxPolarAngle = Math.PI * 0.48;
+    controls.minPolarAngle = 0.08;
+    controls.minDistance = 6;
+    controls.maxDistance = 32;
+    if (isEmbed) {
+      controls.enableZoom = false;
+      controls.enablePan = false;
+    }
+
+    let viewTarget3D = true;
+    let viewBlend = 1;
+    const VIEW_BLEND_SPEED = 12;
+    const spSaved = new THREE.Spherical();
+    /** Top-down perspective path (blend / non-ortho): still used while vb crosses mid blend. */
+    const dist2d = (gridExtentHalf * 1.08) / Math.tan((CAM_FOV * Math.PI) / 180 / 2);
+    const sp2D = new THREE.Spherical(dist2d, 0.006, 0);
+    const spWorking = new THREE.Spherical();
+
+    function updateSavedOrbitFromCamera() {
+      tmpOffset.subVectors(camera.position, controls.target);
+      spSaved.setFromVector3(tmpOffset);
+    }
+    updateSavedOrbitFromCamera();
+
+    const btn2d = document.getElementById('btn-2d');
+    const btn3d = document.getElementById('btn-3d');
+    function syncSegButtons() {
+      btn2d.classList.toggle('on', !viewTarget3D);
+      btn3d.classList.toggle('on', viewTarget3D);
+    }
+    /** @param {boolean} on — true = 3D city view, false = 2D map (top-down QR) */
+    function setView3D(on) {
+      if (on) {
+        viewTarget3D = true;
+      } else {
+        if (viewTarget3D) {
+          updateSavedOrbitFromCamera();
+          if (controls._sphericalDelta) controls._sphericalDelta.set(0, 0, 0);
+          if (controls._panOffset) controls._panOffset.set(0, 0, 0);
+        }
+        viewTarget3D = false;
+      }
+      syncSegButtons();
+    }
+    btn2d.addEventListener('click', () => setView3D(false));
+    btn3d.addEventListener('click', () => setView3D(true));
+
+    const MSG_CHANNEL = 'gv-qr-montreal';
+    window.addEventListener('message', (e) => {
+      if (e.origin !== window.location.origin) return;
+      const d = e.data;
+      if (!d || d.channel !== MSG_CHANNEL || d.type !== 'setView') return;
+      if (d.mode === '2d') setView3D(false);
+      else if (d.mode === '3d') setView3D(true);
+    });
+
+    scene.add(new THREE.AmbientLight(0x6a7a9a, 0.35));
+    const hemi = new THREE.HemisphereLight(0xd4e0ff, 0x1a1520, 0.55);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xfff5e8, 1.35);
+    key.position.set(14, 22, 10);
+    key.castShadow = true;
+    key.shadow.mapSize.set(2048, 2048);
+    key.shadow.camera.near = 2;
+    key.shadow.camera.far = 60;
+    key.shadow.camera.left = -18;
+    key.shadow.camera.right = 18;
+    key.shadow.camera.top = 18;
+    key.shadow.camera.bottom = -18;
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0x4466aa, 0.45);
+    rim.position.set(-12, 8, -16);
+    scene.add(rim);
+
+    /** Footer embed: no ground plane — bars read as floating on the page’s solid #1c1c1c (no slab, no contact shadows). */
+    if (!isEmbed) {
+      const ground = new THREE.Mesh(
+        new THREE.PlaneGeometry(80, 80),
+        new THREE.MeshStandardMaterial({
+          color: 0x151822,
+          metalness: 0.15,
+          roughness: 0.92,
+        })
+      );
+      ground.rotation.x = -Math.PI / 2;
+      ground.position.y = -0.02;
+      ground.receiveShadow = true;
+      scene.add(ground);
+    }
+
+    const geom = new THREE.BoxGeometry(CELL * 0.92, 1, CELL * 0.92);
+    geom.translate(0, 0.5, 0);
+    const mat = new THREE.MeshStandardMaterial({
+      metalness: 0.18,
+      roughness: 0.62,
+    });
+    const count = N * N;
+    const mesh = new THREE.InstancedMesh(geom, mat, count);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+
+    /** Dark QR modules — blue (fleuve tone) instead of gray; river plane removed */
+    /** Dark “ink” modules — brick / mountain tones (match city mesh, not blue QR). */
+    const qrColor = new THREE.Color(0x2a3228);
+    const qrHi = new THREE.Color(0x4a463c);
+
+    const qrOn = new Uint8Array(count);
+    const qrHVar = new Float32Array(count);
+    let gridQr = new Uint8Array(count);
+
+    function smoothstep(t) {
+      const x = Math.min(1, Math.max(0, t));
+      return x * x * (3 - 2 * x);
+    }
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
+    }
+
+    let morph = 0;
+    let morphTarget = 0;
+    let qrRequestId = 0;
+
+    async function syncQr(text) {
+      const myId = ++qrRequestId;
+      try {
+        const qr = await qrModules(text);
+        if (myId !== qrRequestId) return;
+        gridQr = paddedGrid(qr);
+        const len = String(text).length;
+        for (let k = 0; k < count; k++) {
+          qrOn[k] = gridQr[k];
+          const i = k % N;
+          const j = (k / N) | 0;
+          qrHVar[k] = QR_EXTRUDE_BASE + hash01(i, j, len * 0.1) * (QR_EXTRUDE_MAX - QR_EXTRUDE_BASE);
+        }
+      } catch {
+        if (myId !== qrRequestId) return;
+        for (let k = 0; k < count; k++) qrOn[k] = 0;
+      }
+    }
+
+    function resize() {
+      const wrap = canvas.parentElement;
+      const w = wrap.clientWidth;
+      const h = wrap.clientHeight;
+      const aspect = w / Math.max(h, 1);
+      camera.aspect = aspect;
+      camera.updateProjectionMatrix();
+      const gh = gridExtentHalf;
+      orthoCam.left = -gh * aspect;
+      orthoCam.right = gh * aspect;
+      orthoCam.top = gh;
+      orthoCam.bottom = -gh;
+      orthoCam.updateProjectionMatrix();
+      renderer.setSize(w, h, false);
+    }
+    resize();
+    new ResizeObserver(resize).observe(canvas.parentElement);
+
+    input.addEventListener('input', () => {
+      const t = input.value;
+      morphTarget = Math.min(1, t.length / MORPH_CHARS);
+      syncQr(t);
+    });
+
+    // Share / embed: ?q=… or ?url=… — optional ?embed=1 for footer iframe
+    let fromQuery = (params.get('q') || params.get('url') || '').trim();
+    if (fromQuery) {
+      try {
+        fromQuery = decodeURIComponent(fromQuery);
+      } catch {
+        /* keep raw */
+      }
+    }
+    input.value = fromQuery || DEFAULT_URL;
+    morphTarget = Math.min(1, input.value.length / MORPH_CHARS);
+    await syncQr(input.value);
+
+    const clock = new THREE.Clock();
+
+    function frame() {
+      const dt = Math.min(clock.getDelta(), 0.05);
+      morph += (morphTarget - morph) * (1 - Math.pow(0.001, dt * 60));
+      const m = easeOutCubic(morph);
+      const mPos = smoothstep(m);
+
+      const targetVB = viewTarget3D ? 1 : 0;
+      viewBlend += (targetVB - viewBlend) * (1 - Math.exp(-VIEW_BLEND_SPEED * dt));
+      const vb = smoothstep(viewBlend);
+      const heightViewMul = THREE.MathUtils.lerp(0.065, 1, vb);
+
+      controls.target.y = THREE.MathUtils.lerp(0, 1.2, vb);
+
+      /** Ortho top-down once we’re committed to QR view (use viewBlend, not smoothstep(vb), so we don’t sit mid-blend in tiny perspective). */
+      const useOrtho2D = !viewTarget3D && viewBlend < 0.52;
+
+      if (!useOrtho2D) {
+        if (viewBlend < 0.992) {
+          controls.enabled = false;
+          controls.autoRotate = false;
+          spWorking.radius = THREE.MathUtils.lerp(sp2D.radius, spSaved.radius, vb);
+          spWorking.phi = THREE.MathUtils.lerp(sp2D.phi, spSaved.phi, vb);
+          spWorking.theta = THREE.MathUtils.lerp(sp2D.theta, spSaved.theta, vb);
+          camera.position.setFromSpherical(spWorking).add(controls.target);
+          camera.lookAt(controls.target);
+        } else {
+          controls.enabled = true;
+          controls.autoRotate = true;
+          controls.autoRotateSpeed = 0.45 + m * 0.65;
+          controls.update();
+          const sway = clock.elapsedTime;
+          const wobble = vb * m;
+          camera.position.y += Math.sin(sway * 0.31) * 0.002 * wobble;
+          camera.position.x += Math.cos(sway * 0.27) * 0.002 * wobble;
+        }
+      }
+
+      if (scene.fog) scene.fog.density = THREE.MathUtils.lerp(0.014, 0.042, vb);
+
+      const half = (N - 1) * 0.5;
+
+      for (let j = 0; j < N; j++) {
+        for (let i = 0; i < N; i++) {
+          const k = j * N + i;
+          const qx = (i - half) * CELL;
+          const qz = (j - half) * CELL;
+          const cx = (i - half) * CELL * 1.02;
+          const cz = (j - half) * CELL * 1.02;
+
+          const px = THREE.MathUtils.lerp(qx, cx, mPos);
+          const pz = THREE.MathUtils.lerp(qz, cz, mPos);
+          const py = Math.sin(mPos * Math.PI) * 0.35 * (qrOn[k] || city.occ[k] ? 1 : 0);
+
+          const qrH = qrOn[k] ? qrHVar[k] : 0;
+          const cH = city.occ[k] ? city.h[k] : 0;
+          let height = THREE.MathUtils.lerp(qrH, cH, m);
+          if (qrOn[k]) height += m * QR_ON_CITY_BUMP;
+          if (height < 0.02) height = 0.001;
+
+          const wq = CELL * 0.92 * (1 - m * 0.08);
+          const wc = CELL * (0.88 + hash01(i, j, 2) * 0.1);
+          const w = THREE.MathUtils.lerp(wq, wc, m);
+          const d = THREE.MathUtils.lerp(CELL * 0.92, w, m);
+
+          tmpP.set(px, py, pz);
+          tmpQ.identity();
+          tmpS.set(d, height * heightViewMul, d);
+          tmpM.compose(tmpP, tmpQ, tmpS);
+          mesh.setMatrixAt(k, tmpM);
+
+          tmpC.copy(qrColor);
+          if (qrOn[k]) tmpC.lerp(qrHi, hash01(i, j, 3) * 0.35);
+          const cr = city.col[k * 3];
+          const cg = city.col[k * 3 + 1];
+          const cb = city.col[k * 3 + 2];
+          tmpC.r = THREE.MathUtils.lerp(tmpC.r, cr, m);
+          tmpC.g = THREE.MathUtils.lerp(tmpC.g, cg, m);
+          tmpC.b = THREE.MathUtils.lerp(tmpC.b, cb, m);
+          if (qrOn[k] && m > 0.08) {
+            const kImprint = (m - 0.08) / 0.92;
+            tmpC.multiplyScalar(THREE.MathUtils.lerp(1, 0.74, kImprint));
+          }
+          mesh.setColorAt(k, tmpC);
+        }
+      }
+      mesh.instanceMatrix.needsUpdate = true;
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+
+      if (useOrtho2D) {
+        orthoCam.position.set(0, 40, 0);
+        orthoCam.up.set(0, 0, 1);
+        orthoCam.lookAt(0, 0, 0);
+        /** 180° in the map plane (other side / upside-down vs default top-down). */
+        orthoCam.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+        renderer.render(scene, orthoCam);
+      } else {
+        renderer.render(scene, camera);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>

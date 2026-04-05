@@ -331,6 +331,12 @@ export const en = {
     madeWith: "Crafted with care →",
     managerPortal: "Manager portal",
     ownerPortal: "Owner portal",
+    ourSite: "QR code",
+    qrIframeTitle: "Animated QR code linking to Gestion Velora",
+    qrViewToggle: "QR view mode",
+    qrView2d: "QR",
+    qrView3d: "3D",
+    qrScanAria: "Open gestionvelora.com — scan QR or tap",
   },
 
   // Service page
