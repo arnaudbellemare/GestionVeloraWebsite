@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
+import { useLoadWhenInView } from "../hooks/useDeferredMedia";
 
 const BG_VIDEO = "/videos/our-standards-bg.mp4";
 const BG_IMAGE = "/images/our-standards-bg-clean.png";
@@ -10,7 +11,14 @@ export function OurStandardsSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
+  const loadVideo = useLoadWhenInView(ref);
+
+  useEffect(() => {
+    if (!loadVideo) return;
+    videoRef.current?.load();
+  }, [loadVideo]);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -37,16 +45,20 @@ export function OurStandardsSection() {
           <img
             src={BG_IMAGE}
             alt=""
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: "center 60%" }}
           />
           {/* Video — fades in over poster once loaded */}
           <video
+            ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
-            preload="auto"
+            preload="none"
             onCanPlayThrough={handleCanPlay}
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out"
             style={{
@@ -54,7 +66,7 @@ export function OurStandardsSection() {
               opacity: videoReady ? 1 : 0,
             }}
           >
-            <source src={BG_VIDEO} type="video/mp4" />
+            {loadVideo ? <source src={BG_VIDEO} type="video/mp4" /> : null}
           </video>
         </div>
         {/* Subtle dark overlay for text readability */}

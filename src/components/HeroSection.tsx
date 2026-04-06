@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
+import { useIdleReady } from "../hooks/useDeferredMedia";
 
 const HERO_VIDEO = "/videos/hero-bg.mp4";
 
@@ -8,6 +10,13 @@ export function HeroSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const idleReady = useIdleReady(2800);
+
+  useEffect(() => {
+    if (!idleReady) return;
+    videoRef.current?.load();
+  }, [idleReady]);
 
   return (
     <section
@@ -18,18 +27,19 @@ export function HeroSection() {
       aria-label="Hero"
     >
       <video
+        ref={videoRef}
         autoPlay
         loop
         muted
         playsInline
-        preload="auto"
+        preload="none"
         className="absolute inset-0 w-full h-full object-cover"
         style={{
           background: "radial-gradient(ellipse 80% 60% at 50% 40%, #1a1a1a 0%, #0f0f0f 50%, #0a0a0a 100%)",
         }}
         aria-hidden
       >
-        <source src={HERO_VIDEO} type="video/mp4" />
+        {idleReady ? <source src={HERO_VIDEO} type="video/mp4" /> : null}
       </video>
       <div
         className="absolute inset-0 z-[1]"
