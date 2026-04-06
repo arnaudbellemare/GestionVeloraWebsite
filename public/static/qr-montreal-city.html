@@ -15,7 +15,11 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
       backdrop-filter: blur(10px);
     }
-    body.embed #bar { display: none; }
+    body.embed #bar {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
     #bar label { color: #8b8fa3; font-size: 12px; white-space: nowrap; }
     #url {
       flex: 1; min-width: 0;
@@ -56,6 +60,21 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 </head>
 <body>
+  <script>
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search);
+        var e = p.get("embed");
+        if (
+          e === "1" ||
+          e === "true" ||
+          (p.has("embed") && e !== "0" && e !== "false")
+        ) {
+          document.body.classList.add("embed");
+        }
+      } catch (_) {}
+    })();
+  </script>
   <div id="bar">
     <label for="url">URL / text</label>
     <input id="url" type="text" spellcheck="false" placeholder="https://www.gestionvelora.com — type to morph the code…" autocomplete="off" />
