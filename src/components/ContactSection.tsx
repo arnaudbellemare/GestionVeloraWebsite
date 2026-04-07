@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
+import { ContactCustomSelect } from "./ContactCustomSelect";
 import { CONTACT_FORM_USE_API, WEB3FORMS_ACCESS_KEY } from "../config";
 
 const NOTIFICATION_EMAIL = "info@gestionvelora.com";
@@ -203,58 +204,56 @@ export function ContactSection() {
                         {t("contact.errorBody")}
                       </p>
                     )}
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div>
                         <label
+                          id="contact-topic-label"
                           htmlFor="contact-topic"
-                          className="mb-2 block font-sans text-xs font-medium uppercase tracking-wider text-black/55 dark:text-white/50"
+                          className="mb-2 block font-sans text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/55"
                         >
                           {t("contact.topicLabel")}
                         </label>
-                        <select
+                        <ContactCustomSelect
                           id="contact-topic"
+                          labelId="contact-topic-label"
                           value={formData.topic}
-                          onChange={(e) =>
-                            setFormData((p) => ({
-                              ...p,
-                              topic: e.target.value as Topic,
-                            }))
+                          onChange={(v) =>
+                            setFormData((p) => ({ ...p, topic: v as Topic }))
                           }
-                          required
-                          className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none transition-colors duration-300 appearance-none cursor-pointer bg-[length:1rem] bg-[right_1.25rem_center] bg-no-repeat dark:bg-[#1C1C1C]"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
-                          }}
-                        >
-                          <option value="general">{t("contact.topicGeneral")}</option>
-                          <option value="demo">{t("contact.topicDemo")}</option>
-                          <option value="communication">{t("contact.topicCommunication")}</option>
-                        </select>
+                          options={[
+                            { value: "general", label: t("contact.topicGeneral") },
+                            { value: "demo", label: t("contact.topicDemo") },
+                            {
+                              value: "communication",
+                              label: t("contact.topicCommunication"),
+                            },
+                          ]}
+                        />
                       </div>
                       <div>
-                        <label htmlFor="contact-inquiry" className="sr-only">
+                        <label
+                          id="contact-inquiry-label"
+                          htmlFor="contact-inquiry"
+                          className="mb-2 block font-sans text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/55"
+                        >
                           {t("contact.inquiryLabel")}
                         </label>
-                        <select
+                        <ContactCustomSelect
                           id="contact-inquiry"
+                          labelId="contact-inquiry-label"
                           value={formData.inquiry}
-                          onChange={(e) =>
-                            setFormData((p) => ({
-                              ...p,
-                              inquiry: e.target.value as Inquiry,
-                            }))
+                          onChange={(v) =>
+                            setFormData((p) => ({ ...p, inquiry: v as Inquiry }))
                           }
-                          className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none transition-colors duration-300 appearance-none cursor-pointer bg-[length:1rem] bg-[right_1.25rem_center] bg-no-repeat dark:bg-[#1C1C1C]"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23717171'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
-                          }}
-                        >
-                          <option value="">{t("contact.inquiryPlaceholder")}</option>
-                          <option value="syndic">{t("contact.inquirySyndic")}</option>
-                          <option value="landlord">{t("contact.inquiryLandlord")}</option>
-                          <option value="airbnb">{t("contact.inquiryAirbnb")}</option>
-                          <option value="other">{t("contact.inquiryOther")}</option>
-                        </select>
+                          placeholder={t("contact.inquiryPlaceholder")}
+                          options={[
+                            { value: "", label: t("contact.inquiryPlaceholder") },
+                            { value: "syndic", label: t("contact.inquirySyndic") },
+                            { value: "landlord", label: t("contact.inquiryLandlord") },
+                            { value: "airbnb", label: t("contact.inquiryAirbnb") },
+                            { value: "other", label: t("contact.inquiryOther") },
+                          ]}
+                        />
                       </div>
                       <motion.input
                         type="text"
@@ -265,9 +264,7 @@ export function ContactSection() {
                         }
                         required
                         autoComplete="name"
-                        whileFocus={{ scale: 1.01 }}
-                        transition={{ duration: 0.2 }}
-                        className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none transition-colors duration-300"
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 font-sans text-base text-black placeholder:text-black/45 transition-shadow transition-colors focus:border-velora-ocean focus:outline-none focus:ring-2 focus:ring-velora-ocean/25 dark:border-white/25 dark:bg-[#252525] dark:text-white dark:placeholder:text-white/45 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
                       />
                       <motion.input
                         type="email"
@@ -278,9 +275,7 @@ export function ContactSection() {
                         }
                         required
                         autoComplete="email"
-                        whileFocus={{ scale: 1.01 }}
-                        transition={{ duration: 0.2 }}
-                        className="w-full px-6 py-4 rounded-full bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none transition-colors duration-300"
+                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 font-sans text-base text-black placeholder:text-black/45 transition-shadow transition-colors focus:border-velora-ocean focus:outline-none focus:ring-2 focus:ring-velora-ocean/25 dark:border-white/25 dark:bg-[#252525] dark:text-white dark:placeholder:text-white/45 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
                       />
                       <motion.textarea
                         placeholder={t("contact.messagePlaceholder")}
@@ -288,19 +283,17 @@ export function ContactSection() {
                         onChange={(e) =>
                           setFormData((p) => ({ ...p, message: e.target.value }))
                         }
-                        rows={4}
+                        rows={5}
                         required
-                        whileFocus={{ scale: 1.01 }}
-                        transition={{ duration: 0.2 }}
-                        className="w-full px-6 py-4 rounded-2xl bg-transparent border-2 border-black/15 dark:border-white/20 text-black dark:text-white placeholder-black/50 dark:placeholder-white/50 font-sans text-base focus:border-velora-ocean dark:focus:border-sky-400 focus:outline-none resize-none transition-colors duration-300"
+                        className="min-h-[8.5rem] w-full resize-none rounded-xl border border-black/20 bg-white px-4 py-3.5 font-sans text-base text-black placeholder:text-black/45 transition-shadow transition-colors focus:border-velora-ocean focus:outline-none focus:ring-2 focus:ring-velora-ocean/25 dark:border-white/25 dark:bg-[#252525] dark:text-white dark:placeholder:text-white/45 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
                       />
                     </div>
                     <motion.button
                       type="submit"
                       disabled={status === "submitting"}
-                      whileHover={status === "submitting" ? undefined : { scale: 1.02 }}
-                      whileTap={status === "submitting" ? undefined : { scale: 0.98 }}
-                      className="mt-6 px-8 py-4 rounded-full border-2 border-black/20 dark:border-white/30 text-black dark:text-white font-sans font-semibold text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300 disabled:opacity-60 disabled:pointer-events-none"
+                      whileHover={status === "submitting" ? undefined : { scale: 1.01 }}
+                      whileTap={status === "submitting" ? undefined : { scale: 0.99 }}
+                      className="mt-8 w-full min-h-[48px] rounded-xl bg-neutral-950 px-6 py-3.5 font-sans text-base font-semibold text-white shadow-md shadow-neutral-950/20 transition-colors hover:bg-black disabled:pointer-events-none disabled:opacity-55 dark:bg-[#ebe8e3] dark:text-[#1C1C1C] dark:shadow-lg dark:shadow-black/30 dark:hover:bg-[#f5f3f0]"
                     >
                       {status === "submitting" ? t("contact.sending") : t("contact.send")}
                     </motion.button>

@@ -4,7 +4,7 @@ export const fr = {
     line1: "Votre tranquillité.",
     line2: "Notre affaire.",
     subtitle:
-      "Transparence, rigueur et équipe disponible 24/7 pour syndics et propriétaires à Montréal.",
+      "Transparence, rigueur et équipe disponible 24/7 pour syndicats et propriétaires à Montréal.",
     trustLine: "Ils nous font confiance.",
     trustLink: "Voir les témoignages",
     ctaDiscover: "Découvrez nos services",
