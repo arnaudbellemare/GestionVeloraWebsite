@@ -1,43 +1,36 @@
 import { motion } from "framer-motion";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FooterVoxelQr2D } from "./components/FooterVoxelQr2D";
 import { InternalLink } from "./components/InternalLink";
 import { PORTAL_URLS } from "./config";
 
-const QR_SITE_URL = "https://www.gestionvelora.com";
+/** Encoded in the iframe bundle’s QR; opens the marketing site when scanned. */
+const QR_SITE_URL = "https://www.gestionvelora.com/";
 
-const QR_MSG = { channel: "gv-qr-montreal", type: "setView" } as const;
+const QR_TREE_MSG = { channel: "gv-qr-tree", type: "setSeason" } as const;
+
+/** Standalone bundle (`public/static/qr-tree-standalone.*`): WebGPU tree, tap/QR↔3D toggle — same as shipped JS. */
+function qrTreeStandaloneIframeSrc(): string {
+  return `/static/qr-tree-standalone.html?embed=1&q=${encodeURIComponent(QR_SITE_URL)}`;
+}
 
 export const FooterSection = (): JSX.Element => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
-  /** Default 3D in footer; "QR" = scannable 2D; "3D" = decorative WebGL only. */
-  const [qrView, setQrView] = useState<"2d" | "3d">("3d");
-  const qrViewRef = useRef(qrView);
-  qrViewRef.current = qrView;
-  const qrIframeRef = useRef<HTMLIFrameElement>(null);
+  const qrTreeIframeRef = useRef<HTMLIFrameElement>(null);
+  /** Synced with bundle via postMessage (0–3). */
+  const [qrSeason, setQrSeason] = useState(0);
 
-  const postQrView = useCallback((mode: "2d" | "3d") => {
-    qrIframeRef.current?.contentWindow?.postMessage(
-      { ...QR_MSG, mode },
+  const postSeasonToQrTree = useCallback((season: number) => {
+    qrTreeIframeRef.current?.contentWindow?.postMessage(
+      { ...QR_TREE_MSG, season },
       window.location.origin
     );
   }, []);
 
-  const setFooterQrView = useCallback(
-    (mode: "2d" | "3d") => {
-      setQrView(mode);
-      if (mode === "3d") {
-        requestAnimationFrame(() => postQrView("3d"));
-      }
-    },
-    [postQrView]
-  );
-
-  const onQrIframeLoad = useCallback(() => {
-    postQrView(qrViewRef.current);
-  }, [postQrView]);
+  useEffect(() => {
+    postSeasonToQrTree(qrSeason);
+  }, [qrSeason, postSeasonToQrTree]);
   const navigationLinks = [
     { label: t("footer.home"), to: "/" },
     { label: t("footer.standards"), to: "/#standards" },
@@ -136,60 +129,61 @@ export const FooterSection = (): JSX.Element => {
             </nav>
           </motion.div>
 
-          {/* QR: classic 2D code (scannable) vs 3D scene (display only) */}
+          {/* QR: standalone WebGPU bundle (3D tree ↔ flat QR; QR encodes QR_SITE_URL) */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.25 }}
-            className="shrink-0 md:min-w-[10rem] xl:max-w-[11rem] w-full max-w-[11rem] sm:max-w-none sm:w-auto"
+            className="shrink-0 w-full max-w-[10.5rem] self-start text-left"
           >
-            <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-2">
-              {t("footer.ourSite")}
-            </h4>
-            <div className="flex flex-col gap-2 max-w-[10.5rem] w-full">
-              <div className="relative aspect-[10/11] w-full overflow-hidden bg-[#1C1C1C]">
-                {qrView === "2d" ? (
-                  <FooterVoxelQr2D url={QR_SITE_URL} ariaLabel={t("footer.qrScanAria")} />
-                ) : (
-                  <iframe
-                    ref={qrIframeRef}
-                    title={t("footer.qrIframeTitle")}
-                    src={`/static/qr-montreal-city.html?embed=1&q=${encodeURIComponent(QR_SITE_URL)}`}
-                    className="absolute inset-0 h-full w-full border-0 bg-[#1C1C1C] block pointer-events-none"
-                    loading="lazy"
-                    onLoad={onQrIframeLoad}
-                  />
-                )}
-              </div>
-              <div
-                role="group"
-                aria-label={t("footer.qrViewToggle")}
-                className="flex rounded-sm overflow-hidden border border-white/14 w-full"
-              >
+            <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-2">
+              <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 whitespace-nowrap">
+                {t("footer.ourSite")}
+              </h4>
+              <p className="font-serif text-[10px] font-light italic tracking-[0.06em] text-white/50 leading-none whitespace-nowrap">
+                {t("footer.qrClickMe")}
+              </p>
+            </div>
+            <div className="relative aspect-square w-full max-w-[10.5rem] overflow-hidden rounded-sm bg-[#1C1C1C]">
+              <iframe
+                ref={qrTreeIframeRef}
+                title={t("footer.qrIframeTitle")}
+                src={qrTreeStandaloneIframeSrc()}
+                className="absolute inset-0 h-full w-full border-0 bg-[#1C1C1C] block pointer-events-auto"
+                loading="lazy"
+                onLoad={() => postSeasonToQrTree(qrSeason)}
+              />
+            </div>
+            <div
+              role="group"
+              aria-label={t("footer.qrSeasonGroup")}
+              className="grid grid-cols-2 gap-1 w-full mt-2 sm:grid-cols-4"
+            >
+              {(
+                [
+                  { key: 0, label: t("footer.qrSeasonSpring") },
+                  { key: 1, label: t("footer.qrSeasonSummer") },
+                  { key: 2, label: t("footer.qrSeasonAutumn") },
+                  { key: 3, label: t("footer.qrSeasonWinter") },
+                ] as const
+              ).map(({ key, label }) => (
                 <button
+                  key={key}
                   type="button"
-                  onClick={() => setFooterQrView("2d")}
-                  className={`flex-1 min-w-0 font-sans text-xs py-2 px-2 transition-colors duration-200 border-r border-white/10 ${
-                    qrView === "2d"
-                      ? "bg-[rgba(200,80,120,0.28)] text-white"
-                      : "bg-white/[0.06] text-white/60 hover:bg-white/10 hover:text-white/85"
+                  title={label}
+                  aria-label={label}
+                  aria-pressed={qrSeason === key}
+                  onClick={() => setQrSeason(key)}
+                  className={`font-sans text-[10px] leading-tight py-1.5 px-1 rounded-sm border text-center transition-colors duration-200 ${
+                    qrSeason === key
+                      ? "border-[rgba(200,80,120,0.45)] bg-[rgba(200,80,120,0.22)] text-white"
+                      : "border-white/12 bg-white/[0.05] text-white/55 hover:bg-white/10 hover:text-white/80"
                   }`}
                 >
-                  {t("footer.qrView2d")}
+                  {label}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setFooterQrView("3d")}
-                  className={`flex-1 min-w-0 font-sans text-xs py-2 px-2 transition-colors duration-200 ${
-                    qrView === "3d"
-                      ? "bg-[rgba(200,80,120,0.28)] text-white"
-                      : "bg-white/[0.06] text-white/60 hover:bg-white/10 hover:text-white/85"
-                  }`}
-                >
-                  {t("footer.qrView3d")}
-                </button>
-              </div>
+              ))}
             </div>
           </motion.div>
 

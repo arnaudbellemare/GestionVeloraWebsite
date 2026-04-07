@@ -22,7 +22,7 @@ export function FooterVoxelQr2D({ url, ariaLabel }: Props): JSX.Element {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="aspect-square w-[80%] max-w-[9rem] min-w-0 translate-y-1 overflow-hidden rounded-sm bg-white p-[3px] touch-manipulation"
+        className="aspect-square w-[62%] max-w-[7.25rem] min-w-0 translate-y-1 overflow-hidden rounded-sm bg-white p-1.5 touch-manipulation"
         aria-label={ariaLabel}
         whileHover={reduce ? undefined : { scale: 1.03 }}
         whileTap={reduce ? undefined : { scale: 0.98 }}
