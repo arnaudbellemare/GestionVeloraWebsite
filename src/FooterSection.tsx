@@ -135,7 +135,7 @@ export const FooterSection = (): JSX.Element => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.25 }}
-            className="shrink-0 w-full max-w-[10.5rem] self-start text-left"
+            className="shrink-0 w-full min-w-0 max-w-[13rem] self-start text-left"
           >
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-2">
               <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 whitespace-nowrap">
@@ -145,7 +145,7 @@ export const FooterSection = (): JSX.Element => {
                 {t("footer.qrClickMe")}
               </p>
             </div>
-            <div className="relative aspect-square w-full max-w-[10.5rem] overflow-hidden rounded-sm bg-[#1C1C1C]">
+            <div className="relative aspect-square w-full max-w-[13rem] overflow-hidden rounded-sm bg-[#1C1C1C]">
               <iframe
                 ref={qrTreeIframeRef}
                 title={t("footer.qrIframeTitle")}
@@ -158,7 +158,7 @@ export const FooterSection = (): JSX.Element => {
             <div
               role="group"
               aria-label={t("footer.qrSeasonGroup")}
-              className="grid grid-cols-2 gap-1 w-full mt-2 sm:grid-cols-4"
+              className="mt-2 grid w-full grid-cols-2 gap-x-2 gap-y-2 [grid-template-columns:minmax(0,1fr)_minmax(0,1fr)]"
             >
               {(
                 [
@@ -175,7 +175,7 @@ export const FooterSection = (): JSX.Element => {
                   aria-label={label}
                   aria-pressed={qrSeason === key}
                   onClick={() => setQrSeason(key)}
-                  className={`font-sans text-[10px] leading-tight py-1.5 px-1 rounded-sm border text-center transition-colors duration-200 ${
+                  className={`min-h-[2.5rem] min-w-0 w-full px-1.5 py-1.5 font-sans text-[9px] leading-snug rounded-sm border text-center transition-colors duration-200 ${
                     qrSeason === key
                       ? "border-[rgba(200,80,120,0.45)] bg-[rgba(200,80,120,0.22)] text-white"
                       : "border-white/12 bg-white/[0.05] text-white/55 hover:bg-white/10 hover:text-white/80"
