@@ -23,7 +23,7 @@ export const en = {
     buildings: "Buildings under management",
     occupancy: "Occupancy rate",
     response: "24/7 response team",
-    transparency: "100% financial transparency",
+    transparency: "Financial transparency",
     afterLead: "Your building deserves the same rigor.",
     afterCta: "Request a proposal",
   },
