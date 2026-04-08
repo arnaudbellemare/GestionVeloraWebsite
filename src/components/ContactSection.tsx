@@ -13,6 +13,12 @@ type Topic = "general" | "demo" | "communication";
 
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
+/** Shared field chrome: readable borders, clear placeholder vs value, stable vertical metrics */
+const contactFieldBorder =
+  "border border-black/[0.22] dark:border-white/[0.22] focus:border-[#5B9BF6] focus:ring-2 focus:ring-[#5B9BF6]/25 focus:outline-none";
+const contactInputClass = `w-full min-h-12 h-12 box-border rounded-lg bg-nd-surface px-4 py-0 text-base leading-[3rem] font-sans text-nd-primary placeholder:text-nd-secondary/75 transition-colors ${contactFieldBorder}`;
+const contactTextareaClass = `min-h-[8.5rem] w-full resize-none rounded-lg bg-nd-surface px-4 py-3 text-base leading-relaxed font-sans text-nd-primary placeholder:text-nd-secondary/75 transition-colors ${contactFieldBorder}`;
+
 function inquiryLabel(t: TFunction, inquiry: Inquiry): string {
   switch (inquiry) {
     case "syndic":
@@ -139,28 +145,32 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative pt-16 pb-24 lg:pt-20 lg:pb-32 px-6 lg:px-16 bg-white dark:bg-[#1C1C1C] overflow-hidden scroll-mt-24"
+      className="relative pt-16 pb-24 lg:pt-20 lg:pb-32 px-6 lg:px-16 bg-nd-surface overflow-x-hidden scroll-mt-24 border-t border-nd-border"
     >
       <div className="max-w-[90rem] mx-auto relative z-10">
         <div className="max-w-2xl">
-          <ScrollReveal scale>
-            <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-black dark:text-white leading-tight mb-6">
+          <ScrollReveal>
+            <h2 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em] mb-6">
               {t("contact.title")}
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <motion.a
+            <a
               href="#contact-form"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex px-8 py-4 rounded-full bg-neutral-950 text-white font-sans font-bold text-sm tracking-wide hover:bg-black transition-colors duration-300 shadow-md shadow-neutral-950/15 dark:bg-[#ebe8e3] dark:text-[#1C1C1C] dark:hover:bg-[#f5f3f0] dark:shadow-lg dark:shadow-black/35"
+              className="inline-flex items-center justify-center min-h-[44px] px-8 rounded-full bg-black text-white font-sans font-medium text-sm leading-normal hover:opacity-90 dark:bg-white dark:text-black border border-nd-border-visible"
             >
               {t("contact.cta")}
-            </motion.a>
+            </a>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.15}>
+            <p className="mt-8 max-w-md font-sans text-sm text-nd-secondary leading-relaxed">
+              {t("contact.trustLine")}
+            </p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <div className="mt-12 max-w-md scroll-mt-24" id="contact-form">
+            <div className="mt-8 max-w-md scroll-mt-24" id="contact-form">
               <AnimatePresence mode="wait">
                 {status === "success" ? (
                   <motion.div
@@ -171,18 +181,21 @@ export function ContactSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.25 }}
-                    className="rounded-2xl border-2 border-black/10 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.04] p-8"
+                    className="rounded-2xl border border-nd-border-visible bg-nd-canvas p-8"
                   >
-                    <p className="font-playfair font-semibold text-xl text-black dark:text-white mb-2">
+                    <p className="font-sans font-medium text-xl text-nd-primary mb-2">
                       {t("contact.successTitle")}
                     </p>
-                    <p className="font-sans text-black/75 dark:text-white/70 mb-6">
+                    <p className="font-sans text-nd-secondary mb-2">
                       {t("contact.successBody")}
+                    </p>
+                    <p className="font-sans text-sm text-nd-secondary mb-6">
+                      {t("contact.successExpectation")}
                     </p>
                     <button
                       type="button"
                       onClick={resetToForm}
-                      className="font-sans font-semibold text-sm text-velora-ocean dark:text-sky-400 hover:underline underline-offset-2"
+                      className="font-sans font-medium text-sm text-[#5B9BF6] hover:underline underline-offset-2"
                     >
                       {t("contact.sendAnother")}
                     </button>
@@ -199,7 +212,7 @@ export function ContactSection() {
                     {status === "error" && (
                       <p
                         role="alert"
-                        className="mb-4 font-sans text-sm text-red-600 dark:text-red-400"
+                        className="mb-4 font-mono text-xs uppercase tracking-wider text-[#D71921]"
                       >
                         {t("contact.errorBody")}
                       </p>
@@ -209,7 +222,7 @@ export function ContactSection() {
                         <label
                           id="contact-topic-label"
                           htmlFor="contact-topic"
-                          className="mb-2 block font-sans text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/55"
+                          className="mb-2 block font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary"
                         >
                           {t("contact.topicLabel")}
                         </label>
@@ -234,7 +247,7 @@ export function ContactSection() {
                         <label
                           id="contact-inquiry-label"
                           htmlFor="contact-inquiry"
-                          className="mb-2 block font-sans text-xs font-medium uppercase tracking-wider text-black/60 dark:text-white/55"
+                          className="mb-2 block font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary"
                         >
                           {t("contact.inquiryLabel")}
                         </label>
@@ -264,7 +277,7 @@ export function ContactSection() {
                         }
                         required
                         autoComplete="name"
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 font-sans text-base text-black placeholder:text-black/45 transition-shadow transition-colors focus:border-velora-ocean focus:outline-none focus:ring-2 focus:ring-velora-ocean/25 dark:border-white/25 dark:bg-[#252525] dark:text-white dark:placeholder:text-white/45 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
+                        className={contactInputClass}
                       />
                       <motion.input
                         type="email"
@@ -275,7 +288,7 @@ export function ContactSection() {
                         }
                         required
                         autoComplete="email"
-                        className="w-full rounded-xl border border-black/20 bg-white px-4 py-3.5 font-sans text-base text-black placeholder:text-black/45 transition-shadow transition-colors focus:border-velora-ocean focus:outline-none focus:ring-2 focus:ring-velora-ocean/25 dark:border-white/25 dark:bg-[#252525] dark:text-white dark:placeholder:text-white/45 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
+                        className={contactInputClass}
                       />
                       <motion.textarea
                         placeholder={t("contact.messagePlaceholder")}
@@ -285,15 +298,13 @@ export function ContactSection() {
                         }
                         rows={5}
                         required
-                        className="min-h-[8.5rem] w-full resize-none rounded-xl border border-black/20 bg-white px-4 py-3.5 font-sans text-base text-black placeholder:text-black/45 transition-shadow transition-colors focus:border-velora-ocean focus:outline-none focus:ring-2 focus:ring-velora-ocean/25 dark:border-white/25 dark:bg-[#252525] dark:text-white dark:placeholder:text-white/45 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
+                        className={contactTextareaClass}
                       />
                     </div>
                     <motion.button
                       type="submit"
                       disabled={status === "submitting"}
-                      whileHover={status === "submitting" ? undefined : { scale: 1.01 }}
-                      whileTap={status === "submitting" ? undefined : { scale: 0.99 }}
-                      className="mt-8 w-full min-h-[48px] rounded-xl bg-neutral-950 px-6 py-3.5 font-sans text-base font-semibold text-white shadow-md shadow-neutral-950/20 transition-colors hover:bg-black disabled:pointer-events-none disabled:opacity-55 dark:bg-[#ebe8e3] dark:text-[#1C1C1C] dark:shadow-lg dark:shadow-black/30 dark:hover:bg-[#f5f3f0]"
+                      className="mt-8 inline-flex self-start items-center justify-center min-h-[44px] px-5 py-2.5 rounded-none bg-transparent font-sans text-sm font-medium text-nd-primary border border-black dark:border-white transition-colors hover:bg-nd-canvas dark:hover:bg-nd-raised disabled:pointer-events-none disabled:opacity-55"
                     >
                       {status === "submitting" ? t("contact.sending") : t("contact.send")}
                     </motion.button>

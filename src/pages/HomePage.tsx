@@ -12,7 +12,10 @@ import { TrustedPartnersSection } from "../components/TrustedPartnersSection";
 import { ValueLabelsSection } from "../components/ValueLabelsSection";
 import { WhatWeDoSection } from "../components/WhatWeDoSection";
 import { WhoWeAreSection } from "../components/WhoWeAreSection";
-import { SectionBlend } from "../components/SectionBlend";
+
+function SectionSpacer() {
+  return <div className="h-px bg-nd-border" aria-hidden />;
+}
 
 export function HomePage() {
   return (
@@ -24,43 +27,13 @@ export function HomePage() {
       <WhatWeDoSection />
       <OurStandardsSection />
       <FromInspirationSection />
-      {/* FromInspiration (light) → OurProcess (grain) */}
-      <SectionBlend from="#f9f6f3" to="#f2f0ed" darkFrom="#191818" darkTo="#191818" height={80} />
+      <SectionSpacer />
       <OurProcessSection />
-      {/* OurProcess (light grain) → TrustedPartners (dark) — dramatic */}
-      <SectionBlend
-        from="#f2f0ed"
-        to="#121212"
-        darkFrom="#191818"
-        darkTo="#121212"
-        height={160}
-        blobs
-        blobColor="rgba(255,255,255,0.04)"
-        flipBlobs
-      />
+      <SectionSpacer />
       <TrustedPartnersSection />
-      {/* TrustedPartners (dark) → Team (light grain) */}
-      <SectionBlend
-        from="#121212"
-        to="#f2f0ed"
-        darkFrom="#121212"
-        darkTo="#191818"
-        height={140}
-        blobs
-        blobColor="rgba(72,92,17,0.06)"
-      />
+      <SectionSpacer />
       <TeamSection />
-      {/* Team (grain) → Portal (dark) */}
-      <SectionBlend
-        from="#f2f0ed"
-        to="#1C1C1C"
-        darkFrom="#191818"
-        darkTo="#1C1C1C"
-        height={140}
-        blobs
-        blobColor="rgba(255,255,255,0.03)"
-        flipBlobs
-      />
+      <SectionSpacer />
       <PortalAccessSection />
       <InsightsSection />
       <FAQSection />

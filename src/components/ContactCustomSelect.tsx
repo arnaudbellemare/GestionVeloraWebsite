@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 export type ContactSelectOption = { value: string; label: string };
 
@@ -15,7 +15,7 @@ type Props = {
 };
 
 const chevron = (
-  <svg className="h-4 w-4 shrink-0 text-black/45 dark:text-white/45" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+  <svg className="h-4 w-4 shrink-0 text-nd-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
   </svg>
 );
@@ -28,6 +28,7 @@ export function ContactCustomSelect({
   onChange,
   placeholder,
 }: Props): JSX.Element {
+  const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [highlighted, setHighlighted] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -95,7 +96,10 @@ export function ContactCustomSelect({
   const toggle = () => setOpen((o) => !o);
 
   return (
-    <div ref={rootRef} className="relative">
+    <div
+      ref={rootRef}
+      className={`relative ${open ? "z-50" : "z-0"}`}
+    >
       <button
         type="button"
         id={id}
@@ -116,62 +120,76 @@ export function ContactCustomSelect({
             setOpen(true);
           }
         }}
-        className="flex w-full items-center justify-between gap-2 rounded-xl border border-black/20 bg-white px-4 py-3.5 text-left font-sans text-base text-black transition-shadow transition-colors hover:border-black/30 focus:border-velora-ocean focus:outline-none focus:ring-2 focus:ring-velora-ocean/25 dark:border-white/25 dark:bg-[#252525] dark:text-white dark:hover:border-white/35 dark:focus:border-sky-400 dark:focus:ring-sky-400/20"
+        className={`flex min-h-12 h-12 w-full items-center justify-between gap-2 rounded-lg border border-black/[0.22] px-4 text-left font-sans text-base text-nd-primary hover:border-black/35 dark:border-white/[0.22] dark:hover:border-white/35 focus:border-[#5B9BF6] focus:outline-none focus:ring-2 focus:ring-[#5B9BF6]/25 bg-white dark:bg-[#111111] ${reduceMotion ? "transition-colors" : "transition-[border-radius,colors,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]"} ${open ? "relative z-[1] rounded-b-none border-b-0 ring-0" : ""}`}
       >
-        <span className={showPlaceholder ? "text-black/45 dark:text-white/45" : ""}>
+        <span className={showPlaceholder ? "text-nd-muted" : ""}>
           {showPlaceholder ? placeholder : selectedLabel || placeholder}
         </span>
-        <span className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}>{chevron}</span>
+        <span
+          className={`${reduceMotion ? "" : "transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]"} ${open ? "rotate-180" : ""}`}
+        >
+          {chevron}
+        </span>
       </button>
 
       <AnimatePresence>
         {open ? (
-          <motion.ul
-            id={listId}
-            role="listbox"
-            aria-labelledby={labelId}
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.15 }}
-            className="absolute z-[60] mt-1 max-h-56 w-full overflow-auto rounded-xl border border-black/15 bg-white py-1 shadow-xl shadow-black/10 dark:border-white/15 dark:bg-[#2c2c2c] dark:shadow-black/40"
+          <motion.div
+            key="contact-select-panel"
+            layout={false}
+            /** Clip-path keeps the panel opaque (no opacity fade) while opening/closing smoothly. */
+            initial={reduceMotion ? { clipPath: "inset(0 0 0% 0)" } : { clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={reduceMotion ? { clipPath: "inset(0 0 0% 0)" } : { clipPath: "inset(0 0 100% 0)" }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.26,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="absolute left-0 right-0 top-full z-[2] isolate w-full overflow-hidden rounded-b-lg border border-t-0 border-black/[0.22] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.14)] dark:border-white/[0.22] dark:bg-[#111111] dark:shadow-[0_16px_48px_rgba(0,0,0,0.55)]"
           >
-            {options.map((opt, i) => {
-              const selected = opt.value === value;
-              const active = i === highlighted;
-              return (
-                <li key={opt.value === "" ? "__empty__" : opt.value} role="presentation" className="px-1">
-                  <button
-                    type="button"
-                    role="option"
-                    aria-selected={selected}
-                    ref={(el) => {
-                      optionRefs.current[i] = el;
-                    }}
-                    className={`flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
-                      active
-                        ? "bg-velora-ocean/12 text-black dark:bg-sky-400/15 dark:text-white"
-                        : "text-black/90 hover:bg-black/[0.06] dark:text-white/90 dark:hover:bg-white/[0.08]"
-                    } ${selected ? "font-medium" : "font-normal"}`}
-                    onMouseEnter={() => setHighlighted(i)}
-                    onClick={() => {
-                      onChange(opt.value);
-                      close();
-                    }}
-                  >
-                    {selected ? (
-                      <span className="text-velora-ocean dark:text-sky-400" aria-hidden>
-                        ✓
-                      </span>
-                    ) : (
-                      <span className="w-4 shrink-0" aria-hidden />
-                    )}
-                    <span className="min-w-0 flex-1 leading-snug">{opt.label}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </motion.ul>
+            <ul
+              id={listId}
+              role="listbox"
+              aria-labelledby={labelId}
+              className="max-h-56 w-full overflow-y-auto py-1"
+            >
+              {options.map((opt, i) => {
+                const selected = opt.value === value;
+                const active = i === highlighted;
+                return (
+                  <li key={opt.value === "" ? "__empty__" : opt.value} role="presentation" className="px-1">
+                    <button
+                      type="button"
+                      role="option"
+                      aria-selected={selected}
+                      ref={(el) => {
+                        optionRefs.current[i] = el;
+                      }}
+                      className={`flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-left text-sm transition-colors ${
+                        active
+                          ? "bg-[#f0f0f0] text-nd-primary dark:bg-[#1a1a1a]"
+                          : "text-nd-primary hover:bg-[#f0f0f0] dark:hover:bg-[#1a1a1a]"
+                      } ${selected ? "font-medium" : "font-normal"}`}
+                      onMouseEnter={() => setHighlighted(i)}
+                      onClick={() => {
+                        onChange(opt.value);
+                        close();
+                      }}
+                    >
+                      {selected ? (
+                        <span className="text-[#5B9BF6]" aria-hidden>
+                          ✓
+                        </span>
+                      ) : (
+                        <span className="w-4 shrink-0" aria-hidden />
+                      )}
+                      <span className="min-w-0 flex-1 leading-snug">{opt.label}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </motion.div>
         ) : null}
       </AnimatePresence>
     </div>

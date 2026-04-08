@@ -23,20 +23,20 @@ function DownloadMockup({ t }: { t: (k: string) => string }) {
     <div className="flex justify-center py-6">
       <motion.div
         layout
-        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 bg-neutral-800 dark:bg-neutral-800 text-white font-sans text-sm cursor-default select-none"
+        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-white font-sans text-sm cursor-default select-none shadow-[0_2px_12px_rgba(72,92,17,0.25)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)]"
         initial={false}
         animate={{
-          backgroundColor: copied ? "rgb(72, 92, 17)" : "rgb(38, 38, 38)",
+          backgroundColor: copied ? "rgb(90, 112, 38)" : "rgb(72, 92, 17)",
         }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
       >
         {copied ? (
           <>
             <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="flex h-4 w-4 items-center justify-center rounded-full bg-white/20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              className="flex h-4 w-4 items-center justify-center rounded-full bg-white/25"
             >
               <svg className="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -77,12 +77,12 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
   ];
 
   return (
-    <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-lg overflow-hidden">
-      <div className="px-4 py-3 border-b border-neutral-200 dark:border-neutral-700">
+    <div className="rounded-2xl border border-nd-border bg-nd-canvas shadow-sm dark:border-nd-border dark:bg-nd-raised dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)] overflow-hidden">
+      <div className="px-4 py-3 border-b border-nd-border">
         <p className="font-sans text-xs font-medium text-neutral-600 dark:text-neutral-400">{t("fromInspiration.archiveIn")}</p>
       </div>
       <div className="p-2 space-y-1">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 cursor-default">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-neutral-500 dark:text-neutral-400 hover:bg-nd-surface/80 dark:hover:bg-black/20 cursor-default">
           <span className="text-lg">+</span>
           <span className="font-sans text-sm">{t("fromInspiration.newFolder")}</span>
         </div>
@@ -92,8 +92,8 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
             layout
             className={`flex items-center justify-between gap-2 px-3 py-2 rounded-lg cursor-default ${
               selected === i
-                ? "bg-velora-green/10 dark:bg-velora-green/20"
-                : "hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
+                ? "bg-[#e8efe4] dark:bg-[#2a3328]"
+                : "hover:bg-nd-surface/80 dark:hover:bg-black/20"
             }`}
             onClick={() => setSelected(i)}
           >
@@ -105,7 +105,7 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
               <motion.span
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-velora-green text-white"
+                className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#485c11] text-white"
               >
                 <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -130,7 +130,7 @@ function CommentMockup({ t }: { t: (k: string) => string }) {
   }, []);
 
   return (
-    <div className="rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-lg overflow-hidden">
+    <div className="rounded-2xl border border-nd-border bg-nd-canvas shadow-sm dark:border-nd-border dark:bg-nd-raised dark:shadow-none overflow-hidden">
       <div className="p-4 space-y-3">
         <div className="flex gap-2">
           <div className="h-7 w-7 rounded-full bg-neutral-300 dark:bg-neutral-500 flex items-center justify-center shrink-0" title="Profil par défaut">
@@ -145,7 +145,7 @@ function CommentMockup({ t }: { t: (k: string) => string }) {
             </p>
           </div>
         </div>
-        <div className="flex gap-2 items-center rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/50 px-3 py-2">
+        <div className="flex gap-2 items-center rounded-lg border border-nd-border bg-nd-surface dark:bg-black/25 px-3 py-2">
           <input
             type="text"
             readOnly
@@ -154,9 +154,8 @@ function CommentMockup({ t }: { t: (k: string) => string }) {
           />
           <span className="inline-block w-0.5 h-4 bg-neutral-400 dark:bg-neutral-500 animate-pulse" />
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-velora-green text-white shrink-0"
+            type="button"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#485c11] text-white dark:bg-[#5a7226] dark:text-white shrink-0"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -171,10 +170,10 @@ function CommentMockup({ t }: { t: (k: string) => string }) {
 export function FromInspirationSection() {
   const { t } = useTranslation();
   return (
-    <section className="py-24 lg:py-32 px-6 lg:px-16 bg-white dark:bg-velora-darker">
+    <section className="py-24 lg:py-32 px-6 lg:px-16 bg-nd-canvas">
       <div className="max-w-[90rem] mx-auto">
-        <ScrollReveal scale>
-          <h2 className="font-sans font-bold text-3xl sm:text-4xl lg:text-[2.75rem] text-velora-charcoal dark:text-white text-center leading-tight mb-16">
+        <ScrollReveal>
+          <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] text-nd-display text-center leading-[1.1] tracking-[-0.02em] mb-16">
             {t("fromInspiration.title")}
           </h2>
         </ScrollReveal>
@@ -182,23 +181,20 @@ export function FromInspirationSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {cardKeys.map((card, i) => (
             <ScrollReveal key={card.titleKey} delay={i * 0.1}>
-              <motion.div
-                className="flex flex-col justify-center h-full rounded-2xl bg-[#f9f6f3] dark:bg-velora-charcoal p-6 lg:p-8 shadow-sm ring-1 ring-black/5 dark:ring-white/5"
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              >
+              <div className="flex flex-col justify-center h-full rounded-[1.35rem] bg-nd-surface border border-nd-border shadow-sm dark:bg-nd-surface dark:border-nd-border dark:shadow-[0_8px_32px_rgba(0,0,0,0.45)] p-6 lg:p-8">
                 <div className="flex items-center justify-center mb-6 min-h-[140px]">
                   {card.mockup === "download" && <DownloadMockup t={t} />}
                   {card.mockup === "archive" && <ArchiveMockup t={t} />}
                   {card.mockup === "comment" && <CommentMockup t={t} />}
                   {card.mockup === "dashboard" && <DashboardMockup />}
                 </div>
-                <h3 className="font-sans font-bold text-lg text-velora-charcoal dark:text-white mb-2">
+                <h3 className="font-sans font-medium text-lg text-nd-primary mb-2">
                   {t(card.titleKey)}
                 </h3>
-                <p className="font-sans text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                <p className="font-sans text-sm text-nd-secondary leading-relaxed">
                   {t(card.descKey)}
                 </p>
-              </motion.div>
+              </div>
             </ScrollReveal>
           ))}
         </div>

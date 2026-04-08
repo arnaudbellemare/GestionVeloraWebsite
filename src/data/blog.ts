@@ -230,3 +230,29 @@ export function getPostBySlug(slug: string, locale: "fr" | "en" = "fr"): (BlogPo
   const loc = post[locale];
   return { ...post, ...loc };
 }
+
+export type BlogPostCard = {
+  slug: string;
+  image: string;
+  title: string;
+  category: string;
+  date: string;
+  excerpt: string;
+};
+
+export function getRelatedPosts(slug: string, locale: "fr" | "en", limit = 3): BlogPostCard[] {
+  return blogPosts
+    .filter((p) => p.slug !== slug)
+    .slice(0, limit)
+    .map((p) => {
+      const loc = p[locale];
+      return {
+        slug: p.slug,
+        image: p.image,
+        title: loc.title,
+        category: loc.category,
+        date: loc.date,
+        excerpt: loc.excerpt,
+      };
+    });
+}

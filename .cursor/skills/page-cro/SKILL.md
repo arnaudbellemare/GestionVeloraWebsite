@@ -1,183 +1,111 @@
 ---
 name: page-cro
-description: When the user wants to optimize, improve, or increase conversions on any marketing page — including homepage, landing pages, pricing pages, feature pages, or blog posts. Also use when the user says "CRO," "conversion rate optimization," "this page isn't converting," "improve conversions," or "why isn't this page working." For signup/registration flows, see signup-flow-cro. For post-signup activation, see onboarding-cro. For forms outside of signup, see form-cro. For popups/modals, see popup-cro.
+description: >-
+  Analyzes and improves marketing page conversion — headlines, CTAs, trust, friction,
+  forms, and hierarchy. Use for homepage, landing, pricing, features, blog, or when the
+  user says CRO, conversion optimization, improve conversions, or this page is not converting.
+  Signup flows, onboarding, generic forms, and popups may need different playbooks if those
+  skills exist in the environment.
 metadata:
-  version: 1.1.0
+  version: 1.2.0
 ---
 
 # Page Conversion Rate Optimization (CRO)
 
-You are a conversion rate optimization expert. Your goal is to analyze marketing pages and provide actionable recommendations to improve conversion rates.
+Act as a conversion-focused reviewer. Prioritize clarity, one primary action, and measurable hypotheses—not vague design opinions.
 
-## Initial Assessment
+## This repository (Gestion Velora)
 
-**Check for product marketing context first:**
-If `.agents/product-marketing-context.md` exists (or `.claude/product-marketing-context.md` in older setups), read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
+When editing this codebase, align recommendations with what exists:
 
-Before providing recommendations, identify:
+- **Stack:** Vite, React 18, React Router, Tailwind, Framer Motion, i18next (`src/i18n/en.ts`, `fr.ts`). French default; English under `/en` (see `src/i18n/index.ts`, `LocaleContext`).
+- **Main page:** `src/pages/HomePage.tsx` — hero (`HeroSection`), standards, process, services, FAQ, contact (`#contact`, `#contact-form`), footer with embedded WebGPU QR (`FooterSection`, `public/static/qr-tree-standalone.html` + bundle).
+- **Contact & CTAs:** `ContactSection.tsx` — custom dropdowns (`ContactCustomSelect.tsx`), `useGoToContact` for `/#contact-form`, optional Web3Forms (`VITE_WEB3FORMS_ACCESS_KEY`).
+- **Links:** Prefer `InternalLink` + locale-aware paths; hash CTAs (`#specification`, `#testimonials`, etc.) appear in hero and sections.
 
-1. **Page Type**: Homepage, landing page, pricing, feature, blog, about, other
-2. **Primary Conversion Goal**: Sign up, request demo, purchase, subscribe, download, contact sales
-3. **Traffic Context**: Where are visitors coming from? (organic, paid, email, social)
+CRO work often touches **copy in i18n** and **section components** under `src/components/`. Keep changes scoped; do not rewrite unrelated pages.
 
----
+## Initial assessment
 
-## CRO Analysis Framework
+**Product context:** If `.agents/product-marketing-context.md` or `.claude/product-marketing-context.md` exists, read it first.
 
-Analyze the page across these dimensions, in order of impact:
+Clarify when missing:
 
-### 1. Value Proposition Clarity (Highest Impact)
-
-**Check for:**
-- Can a visitor understand what this is and why they should care within 5 seconds?
-- Is the primary benefit clear, specific, and differentiated?
-- Is it written in the customer's language (not company jargon)?
-
-**Common issues:**
-- Feature-focused instead of benefit-focused
-- Too vague or too clever (sacrificing clarity)
-- Trying to say everything instead of the most important thing
-
-### 2. Headline Effectiveness
-
-**Evaluate:**
-- Does it communicate the core value proposition?
-- Is it specific enough to be meaningful?
-- Does it match the traffic source's messaging?
-
-**Strong headline patterns:**
-- Outcome-focused: "Get [desired outcome] without [pain point]"
-- Specificity: Include numbers, timeframes, or concrete details
-- Social proof: "Join 10,000+ teams who..."
-
-### 3. CTA Placement, Copy, and Hierarchy
-
-**Primary CTA assessment:**
-- Is there one clear primary action?
-- Is it visible without scrolling?
-- Does the button copy communicate value, not just action?
-  - Weak: "Submit," "Sign Up," "Learn More"
-  - Strong: "Start Free Trial," "Get My Report," "See Pricing"
-
-**CTA hierarchy:**
-- Is there a logical primary vs. secondary CTA structure?
-- Are CTAs repeated at key decision points?
-
-### 4. Visual Hierarchy and Scannability
-
-**Check:**
-- Can someone scanning get the main message?
-- Are the most important elements visually prominent?
-- Is there enough white space?
-- Do images support or distract from the message?
-
-### 5. Trust Signals and Social Proof
-
-**Types to look for:**
-- Customer logos (especially recognizable ones)
-- Testimonials (specific, attributed, with photos)
-- Case study snippets with real numbers
-- Review scores and counts
-- Security badges (where relevant)
-
-**Placement:** Near CTAs and after benefit claims
-
-### 6. Objection Handling
-
-**Common objections to address:**
-- Price/value concerns
-- "Will this work for my situation?"
-- Implementation difficulty
-- "What if it doesn't work?"
-
-**Address through:** FAQ sections, guarantees, comparison content, process transparency
-
-### 7. Friction Points
-
-**Look for:**
-- Too many form fields
-- Unclear next steps
-- Confusing navigation
-- Required information that shouldn't be required
-- Mobile experience issues
-- Long load times
+1. Page type and URL  
+2. Primary conversion (contact, demo, call, signup, etc.)  
+3. Traffic source (if known)
 
 ---
 
-## Output Format
+## Analysis framework (order of impact)
 
-Structure your recommendations as:
+### 1. Value proposition (highest)
 
-### Quick Wins (Implement Now)
-Easy changes with likely immediate impact.
+- Understood in ~5 seconds? Benefit-led, not jargon-led?  
+- One dominant message vs. everything at once?
 
-### High-Impact Changes (Prioritize)
-Bigger changes that require more effort but will significantly improve conversions.
+### 2. Headline
 
-### Test Ideas
-Hypotheses worth A/B testing rather than assuming.
+- Matches promise and traffic intent? Specific enough?
 
-### Copy Alternatives
-For key elements (headlines, CTAs), provide 2-3 alternatives with rationale.
+### 3. CTAs
 
----
+- Single clear primary action; visible early.  
+- Copy: outcome-led (“Request a proposal”, “Contact us”) vs. weak (“Submit”, “Learn more”).  
+- Secondary actions do not compete.
 
-## Page-Specific Frameworks
+### 4. Visual hierarchy
 
-### Homepage CRO
-- Clear positioning for cold visitors
-- Quick path to most common conversion
-- Handle both "ready to buy" and "still researching"
+- Scannable; key elements stand out; whitespace; imagery supports the claim.
 
-### Landing Page CRO
-- Message match with traffic source
-- Single CTA (remove navigation if possible)
-- Complete argument on one page
+### 5. Trust
 
-### Pricing Page CRO
-- Clear plan comparison
-- Recommended plan indication
-- Address "which plan is right for me?" anxiety
+- Logos, testimonials, numbers, process transparency near claims and CTAs.
 
-### Feature Page CRO
-- Connect feature to benefit
-- Use cases and examples
-- Clear path to try/buy
+### 6. Objections
 
-### Blog Post CRO
-- Contextual CTAs matching content topic
-- Inline CTAs at natural stopping points
+- Price, fit, effort, risk — addressed in FAQ, process, or guarantees where relevant.
+
+### 7. Friction
+
+- Form length, unclear steps, mobile, performance. **Here:** contact form UX lives in `ContactSection` / `ContactCustomSelect`.
 
 ---
 
-## Experiment Ideas
+## Output format
 
-When recommending experiments, consider tests for:
-- Hero section (headline, visual, CTA)
-- Trust signals and social proof placement
-- Pricing presentation
-- Form optimization
-- Navigation and UX
-
-**For comprehensive experiment ideas by page type**: See [references/experiments.md](references/experiments.md)
+- **Quick wins** — fast, likely impact  
+- **High-impact** — larger bets  
+- **Test ideas** — hypotheses for A/B or measurement  
+- **Copy alternatives** — 2–3 options + why  
 
 ---
 
-## Task-Specific Questions
+## Page-type notes
 
-1. What's your current conversion rate and goal?
-2. Where is traffic coming from?
-3. What does your signup/purchase flow look like after this page?
-4. Do you have user research, heatmaps, or session recordings?
-5. What have you already tried?
+- **Home:** Cold traffic; path to main conversion; serve both ready and researching visitors.  
+- **Landing:** Message match to source; one main CTA.  
+- **Pricing:** Comparison, recommended plan, reduce “which plan?” anxiety.  
+- **Feature / service:** Benefit linkage, use cases, path to contact or demo.  
+- **Blog:** Contextual CTAs at natural breakpoints.
 
 ---
 
-## Related Skills
+## Experiments
 
-- **signup-flow-cro**: If the issue is in the signup process itself
-- **form-cro**: If forms on the page need optimization
-- **popup-cro**: If considering popups as part of the strategy
-- **copywriting**: If the page needs a complete copy rewrite
-- **ab-test-setup**: To properly test recommended changes
+Suggest tests on hero, proof, pricing block, form fields, and nav. Extended experiment lists are optional: add `.cursor/skills/page-cro/references/experiments.md` locally if you want a long catalog (not required for the agent).
 
+---
+
+## Follow-up questions (use when needed)
+
+1. Current conversion or volume?  
+2. Traffic sources?  
+3. What happens after the CTA (CRM, email, calendar)?  
+4. Research, heatmaps, or past tests?
+
+---
+
+## Related skills
+
+If present in the user’s Cursor setup: signup-flow CRO, onboarding CRO, form CRO, popup CRO, copywriting, A/B test setup. Otherwise proceed with this skill only.

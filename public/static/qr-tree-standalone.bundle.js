@@ -12349,7 +12349,7 @@ Error generating stack: ` + e.message + `
   , _ = c(u(), 1)
   , v = g()
   , y = {
-    background: `#1C1C1C`
+    background: `#000000`
 }.background
   , b = (function(){try{var q=new URLSearchParams(location.search).get(`q`);if(q)return decodeURIComponent(q);}catch(e){}return `https://www.gestionvelora.com/`;})()
   , x = {
@@ -13099,7 +13099,7 @@ ${A}
 
 @fragment
 fn main(@location(0) uv: vec2f) -> @location(0) vec4f {
-  return vec4f(0.109804, 0.109804, 0.109804, 1.0);
+  return vec4f(0.0, 0.0, 0.0, 1.0);
 }
 `
   , de = `

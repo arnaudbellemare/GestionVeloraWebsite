@@ -11,7 +11,7 @@ export function BlogPage() {
     <div className="pt-24 lg:pt-32 pb-24 lg:pb-32">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
         <ScrollReveal>
-          <h1 className="font-playfair font-bold text-4xl lg:text-6xl text-black dark:text-white leading-tight mb-4">
+          <h1 className="font-sans font-medium text-4xl lg:text-6xl text-nd-display leading-[1.05] tracking-[-0.02em] mb-4">
             {t("blog.title")}
           </h1>
           <p className="font-sans text-lg text-black/60 dark:text-white/60 max-w-2xl">

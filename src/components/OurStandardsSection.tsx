@@ -1,11 +1,13 @@
 import { useTranslation } from "react-i18next";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { useLoadWhenInView } from "../hooks/useDeferredMedia";
 
 const BG_VIDEO = "/videos/our-standards-bg.mp4";
 const BG_IMAGE = "/images/our-standards-bg-clean.png";
+
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
 export function OurStandardsSection() {
   const { t } = useTranslation();
@@ -20,28 +22,18 @@ export function OurStandardsSection() {
     videoRef.current?.load();
   }, [loadVideo]);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const bgY = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "8%", "0%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.5, 0.8, 1], [0.3, 0.7, 1, 0.7, 0.3]);
-  const leftY = useTransform(scrollYProgress, [0, 0.25, 0.5], [40, 0, -20]);
-  const rightY = useTransform(scrollYProgress, [0.1, 0.3, 0.5], [30, 0, -15]);
-
   const handleCanPlay = useCallback(() => {
     setVideoReady(true);
   }, []);
 
   return (
-    <section ref={ref} id="standards" className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px bg-[#faf9f7] dark:bg-[#0f0f0f]">
-      {/* Background: poster image + video with smooth crossfade */}
-      <motion.div
-        className="absolute inset-0 overflow-hidden"
-        style={{ y: bgY }}
-      >
+    <section
+      ref={ref}
+      id="standards"
+      className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px bg-black"
+    >
+      <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
-          {/* Poster image — always visible behind */}
           <img
             src={BG_IMAGE}
             alt=""
@@ -51,7 +43,6 @@ export function OurStandardsSection() {
             className="absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: "center 60%" }}
           />
-          {/* Video — fades in over poster once loaded */}
           <video
             ref={videoRef}
             autoPlay
@@ -60,7 +51,7 @@ export function OurStandardsSection() {
             playsInline
             preload="none"
             onCanPlayThrough={handleCanPlay}
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out"
             style={{
               objectPosition: "center 60%",
               opacity: videoReady ? 1 : 0,
@@ -69,45 +60,39 @@ export function OurStandardsSection() {
             {loadVideo ? <source src={BG_VIDEO} type="video/mp4" /> : null}
           </video>
         </div>
-        {/* Subtle dark overlay for text readability */}
-        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.20)" }} />
-        {/* Fade vers la section suivante */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none dark:hidden"
-          style={{
-            background: "linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.3) 70%, #fff 100%)",
-          }}
-        />
-        <div
-          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none hidden dark:block"
-          style={{
-            background: "linear-gradient(to bottom, transparent 0%, rgba(18,18,18,0.6) 60%, #121212 100%)",
-          }}
-        />
-      </motion.div>
+        <div className="absolute inset-0 bg-black/28" aria-hidden />
+      </div>
 
-      <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-[90rem] mx-auto px-6 lg:px-16 py-24 items-center gap-16">
-        <motion.div className="flex-1" style={{ opacity, y: leftY }}>
-          <h2
-            className="font-playfair font-bold text-4xl lg:text-6xl text-white leading-[1.1] mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]"
-          >
+      <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-[90rem] mx-auto px-6 lg:px-16 py-24 items-center gap-16 border-b border-[#333333]">
+        <motion.div
+          className="flex-1"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.4, ease }}
+        >
+          <h2 className="font-sans font-medium text-4xl lg:text-6xl text-white leading-[1.08] tracking-[-0.02em] mb-8">
             {t("ourStandards.title")}
           </h2>
-          <motion.a
+          <a
             href={contactHref}
             onClick={goToContact}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white text-white font-sans font-semibold text-sm hover:bg-white hover:text-black transition-colors duration-300 shadow-[0_2px_16px_rgba(0,0,0,0.3)]"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-white text-white font-sans font-medium text-sm hover:bg-white hover:text-black transition-colors"
           >
             {t("ourStandards.cta")}
-            <span className="text-xs" aria-hidden="true">→</span>
-          </motion.a>
+            <span className="text-xs" aria-hidden="true">
+              →
+            </span>
+          </a>
         </motion.div>
-        <motion.div className="flex-1" style={{ opacity, y: rightY }}>
-          <p className="font-sans text-lg text-white leading-relaxed max-w-xl drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
-            {t("ourStandards.text")}
-          </p>
+        <motion.div
+          className="flex-1"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.4, delay: 0.08, ease }}
+        >
+          <p className="font-sans text-lg text-white/85 leading-relaxed max-w-xl">{t("ourStandards.text")}</p>
         </motion.div>
       </div>
     </section>

@@ -11,6 +11,11 @@
       min-height: 100%;
       background: #1c1c1c;
     }
+    /* Footer iframe: match site canvas (#000) and drop the gray “card” look */
+    html.embed,
+    body.embed {
+      background: #000000;
+    }
     body.embed {
       overflow: hidden;
       height: 100%;
@@ -25,15 +30,18 @@
       height: 100%;
       min-height: 0;
       overflow: hidden;
+      background-color: #000000;
     }
     /*
       Footer iframe is a small square; bundle uses inline 100vw/100vh — override so the scene fills the frame.
+      Root may be StrictMode + one real div; paint #000 everywhere the bundle used #1c1c1c.
     */
-    body.embed #root > div:first-child {
+    body.embed #root > * {
       width: 100% !important;
       height: 100% !important;
       max-width: 100% !important;
       min-height: 0 !important;
+      background-color: #000000 !important;
     }
   </style>
   <script>

@@ -23,16 +23,22 @@ export function InsightsSection() {
   return (
     <section
       id="insights"
-      className="pt-24 pb-12 lg:pt-32 lg:pb-16 px-6 lg:px-16 bg-white dark:bg-[#1C1C1C]"
+      className="pt-24 pb-12 lg:pt-32 lg:pb-16 px-6 lg:px-16 bg-nd-surface"
     >
       <div className="max-w-[90rem] mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <ScrollReveal>
-            <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-black dark:text-white leading-tight">
+            <h2 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em]">
               {t("insights.title")}
             </h2>
             <p className="font-sans text-black/60 dark:text-white/60 mt-2">
-              {t("insights.subtitle")}
+              {t("insights.subtitle")}{" "}
+              <InternalLink
+                to="/services"
+                className="text-waabi-pink hover:underline underline-offset-2 whitespace-nowrap"
+              >
+                {t("insights.viewServices")}
+              </InternalLink>
             </p>
           </ScrollReveal>
           <div className="flex items-center gap-3">

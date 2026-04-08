@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
 import { getPostBySlug } from "../data/blog";
-import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
+import { getLocalizedService, getLocalizedServices, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
 const SITE_URL = "https://www.gestionvelora.com";
 
@@ -30,6 +30,32 @@ export function SchemaOrg() {
   const locale = path.startsWith("/en") ? "en-CA" : "fr-CA";
 
   useEffect(() => {
+    const isServicesHub =
+      path === "/services" || path === "/en/services" || path === "/en/services/";
+
+    if (isServicesHub) {
+      const services = getLocalizedServices(t);
+      const base = path.startsWith("/en") ? `${SITE_URL}/en` : SITE_URL;
+      injectSchema({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: t("servicesHub.schemaName"),
+        description: t("servicesHub.metaDescription"),
+        inLanguage: locale,
+        itemListElement: services.map((svc, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item: {
+            "@type": "Service",
+            name: svc.title,
+            description: svc.description,
+            url: `${base}/services/${svc.slug}`,
+          },
+        })),
+      });
+      return () => removePageSchema();
+    }
+
     if (path === "/" || path === "/en" || path === "/en/") {
       const faqItems = t("faqItems", { returnObjects: true }) as { question: string; answer: string }[];
       injectSchema({

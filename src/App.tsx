@@ -9,6 +9,7 @@ import { HomePage } from "./pages/HomePage";
 import { Layout } from "./pages/Layout";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import { ServicePage } from "./pages/ServicePage";
+import { ServicesIndexPage } from "./pages/ServicesIndexPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
+                <Route path="services" element={<ServicesIndexPage />} />
                 <Route path="services/:slug" element={<ServicePage />} />
                 <Route path="blog" element={<BlogPage />} />
                 <Route path="blog/:slug" element={<BlogPostPage />} />
@@ -27,6 +29,7 @@ function App() {
               </Route>
               <Route path="/en" element={<Layout />}>
                 <Route index element={<HomePage />} />
+                <Route path="services" element={<ServicesIndexPage />} />
                 <Route path="services/:slug" element={<ServicePage />} />
                 <Route path="blog" element={<BlogPage />} />
                 <Route path="blog/:slug" element={<BlogPostPage />} />

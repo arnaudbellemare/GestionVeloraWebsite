@@ -14,11 +14,11 @@ export function FAQSection() {
   return (
     <section
       id="faq"
-      className="pt-12 pb-24 lg:pt-16 lg:pb-32 px-6 lg:px-16 bg-[#f9f6f3] dark:bg-[#1C1C1C] overflow-hidden scroll-mt-24"
+      className="pt-12 pb-24 lg:pt-16 lg:pb-32 px-6 lg:px-16 bg-nd-canvas overflow-hidden scroll-mt-24"
     >
       <div className="max-w-[48rem] mx-auto">
         <ScrollReveal>
-          <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-black dark:text-white leading-tight mb-4">
+          <h2 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em] mb-4">
             {t("faq.title")}
           </h2>
           <p className="font-sans text-base lg:text-lg text-black/60 dark:text-white/60 mb-12">

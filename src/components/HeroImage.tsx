@@ -12,7 +12,7 @@ export function HeroImage({ src, alt, className = "" }: HeroImageProps) {
   if (errored) {
     return (
       <div
-        className={`w-full h-full bg-gradient-to-br from-velora-green/30 via-velora-dark to-velora-green/20 ${className}`}
+        className={`w-full h-full bg-nd-raised border border-nd-border ${className}`}
         role="img"
         aria-label={alt}
       />

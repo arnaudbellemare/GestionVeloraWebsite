@@ -44,18 +44,11 @@ export function PropertyToolsBottomRight() {
   return (
     <motion.div
       ref={ref}
-      className="group relative rounded-2xl bg-white dark:bg-neutral-900 p-6 lg:p-7 shadow-[0_2px_20px_-4px_rgba(0,0,0,0.06),0_4px_12px_-2px_rgba(0,0,0,0.04)] dark:shadow-[0_2px_24px_-4px_rgba(0,0,0,0.35)] overflow-hidden"
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      className="group relative rounded-2xl bg-white dark:bg-neutral-900 p-6 lg:p-7 border border-neutral-200 dark:border-neutral-700 overflow-hidden"
+      initial={{ opacity: 0, y: 12 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
       transition={{ ...spring, delay: 0.08 }}
-      whileHover={{ y: -1 }}
     >
-      {/* Ambient glow */}
-      <motion.div
-        className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-velora-green/[0.06] dark:bg-velora-green/[0.08] blur-3xl"
-        animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.1, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: [0.4, 0, 0.6, 1] }}
-      />
       <div className="relative">
         {/* Header with live indicator */}
         <motion.div
@@ -91,8 +84,6 @@ export function PropertyToolsBottomRight() {
                 y: show && (m.useVisible === undefined || m.useVisible) ? 0 : 8,
               }}
               transition={{ ...spring, delay: m.delay }}
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
             >
               <p className="font-sans text-[11px] text-neutral-500 dark:text-neutral-400 truncate mb-1">
                 {t(m.labelKey)}
@@ -155,16 +146,11 @@ export function PropertyToolsBottomRight() {
           transition={{ ...spring, delay: 0.5 }}
         >
           <motion.div
-            className="absolute inset-0 rounded-full bg-velora-green/60"
+            className="absolute inset-0 rounded-full bg-neutral-800 dark:bg-neutral-200"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: show ? 1 : 0 }}
             transition={{ ...spring, delay: 0.7 }}
             style={{ originX: 0 }}
-          />
-          <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent w-1/4 pointer-events-none"
-            animate={{ x: ["0%", "300%"] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: [0.4, 0, 0.6, 1], repeatDelay: 1 }}
           />
         </motion.div>
       </div>

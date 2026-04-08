@@ -30,7 +30,7 @@ const listItem = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
@@ -49,57 +49,41 @@ export function TrustedPartnersSection() {
 
   const contentTransition = reduceMotion
     ? { duration: 0.2 }
-    : { type: "spring" as const, stiffness: 320, damping: 32, mass: 0.85 };
+    : { duration: 0.28, ease: [0.25, 0.1, 0.25, 1] };
 
   return (
     <section
       id="testimonials"
-      className="py-24 lg:py-32 px-6 lg:px-16 bg-velora-darker scroll-mt-24 overflow-hidden"
+      className="py-24 lg:py-32 px-6 lg:px-16 bg-nd-surface border-y border-nd-border scroll-mt-24 overflow-hidden"
     >
       <div className="max-w-[90rem] mx-auto">
         {/* Header row */}
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-16">
           <div className="max-w-2xl space-y-4">
             <ScrollReveal amount={0.3}>
-              <span className="inline-block font-sans text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-amber-300/90">
+              <span className="inline-block font-mono text-[10px] tracking-[0.12em] uppercase text-nd-secondary">
                 {t("trustedPartners.label")}
               </span>
             </ScrollReveal>
-            <ScrollReveal delay={0.06} amount={0.25} scale>
-              <h2 className="font-playfair font-bold text-4xl lg:text-5xl text-white leading-tight">
+            <ScrollReveal delay={0.06} amount={0.25}>
+              <h2 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em]">
                 {t("trustedPartners.title")}
               </h2>
             </ScrollReveal>
           </div>
           <ScrollReveal delay={0.12} direction="right" amount={0.25}>
             <div className="flex flex-col items-start sm:items-end gap-2">
-              <p className="font-serif text-base lg:text-lg text-white/70 max-w-md text-left sm:text-right">
+              <p className="font-sans max-w-md text-left text-base font-normal leading-relaxed tracking-[-0.015em] text-nd-primary sm:text-right lg:text-xl">
                 {t("trustedPartners.subtitle")}
               </p>
-              <motion.a
+              <a
                 href={contactHref}
                 onClick={goToContact}
-                className="font-serif text-sm font-medium text-white/70 hover:text-white transition-colors underline underline-offset-2 inline-flex items-center gap-1"
-                whileHover={reduceMotion ? undefined : { x: 3 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="font-sans text-sm font-medium text-nd-secondary hover:text-nd-display dark:hover:text-white underline underline-offset-2 inline-flex items-center gap-1"
               >
                 {t("trustedPartners.seeMore")}
-                {reduceMotion ? (
-                  <span aria-hidden>→</span>
-                ) : (
-                  <motion.span
-                    aria-hidden
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{
-                      duration: 2.4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    →
-                  </motion.span>
-                )}
-              </motion.a>
+                <span aria-hidden>→</span>
+              </a>
             </div>
           </ScrollReveal>
         </div>
@@ -120,32 +104,26 @@ export function TrustedPartnersSection() {
                   <motion.div key={p.name} variants={listItem}>
                     <motion.button
                       onClick={() => setActiveIndex(i)}
-                      className={`flex w-full items-center gap-3 text-left font-sans font-bold text-xl lg:text-2xl transition-colors duration-300 ${
+                      className={`flex w-full items-stretch gap-3 text-left font-sans font-bold text-xl lg:text-2xl leading-tight transition-colors duration-300 ${
                         activeIndex === i
-                          ? "text-white"
-                          : "text-white/40 hover:text-white/65"
+                          ? "text-nd-display"
+                          : "text-nd-muted hover:text-nd-secondary dark:text-white/40 dark:hover:text-white/65"
                       }`}
-                      whileHover={reduceMotion ? undefined : { x: 4 }}
-                      whileTap={reduceMotion ? undefined : { scale: 0.99 }}
                     >
-                      {/* Fixed-width rail so labels line up whether the bar is visible */}
+                      {/* Rail height follows the title line box; bar fills it when selected */}
                       <span
-                        className="flex h-8 w-3 shrink-0 items-center justify-center"
+                        className="flex w-4 shrink-0 justify-center"
                         aria-hidden
                       >
                         {activeIndex === i ? (
                           <motion.span
                             layoutId="trustedPartnerListAccent"
-                            className="h-8 w-0.5 rounded-full bg-gradient-to-b from-amber-200 to-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.35)]"
-                            transition={{
-                              type: "spring",
-                              stiffness: 380,
-                              damping: 30,
-                            }}
+                            className="w-[3px] shrink-0 self-stretch rounded-none bg-black dark:bg-white"
+                            transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
                           />
                         ) : null}
                       </span>
-                      <span className="relative min-w-0">{p.name}</span>
+                      <span className="relative min-w-0 flex items-center">{p.name}</span>
                     </motion.button>
                   </motion.div>
                 ))}
@@ -159,28 +137,12 @@ export function TrustedPartnersSection() {
               whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{
-                duration: 0.65,
-                delay: 0.08,
-                ease: [0.25, 0.46, 0.45, 0.94],
+                duration: 0.4,
+                delay: 0.06,
+                ease: [0.25, 0.1, 0.25, 1],
               }}
             >
-              <div className="relative rounded-2xl bg-neutral-900 p-8 lg:p-12 min-h-[320px] flex flex-col shadow-[0_25px_50px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.06]">
-                {!reduceMotion && (
-                  <motion.div
-                    aria-hidden
-                    className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-amber-400/[0.07] blur-3xl"
-                    animate={{
-                      scale: [1, 1.08, 1],
-                      opacity: [0.5, 0.75, 0.5],
-                    }}
-                    transition={{
-                      duration: 8,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                )}
-
+              <div className="relative rounded-2xl bg-[#111111] p-8 lg:p-12 min-h-[320px] flex flex-col border border-[#333333]">
                 {/* Tabs */}
                 <div className="relative z-10 flex flex-wrap gap-2 mb-8">
                   {partners.map((p, i) => (
@@ -192,18 +154,12 @@ export function TrustedPartnersSection() {
                           ? "text-neutral-900"
                           : "text-white/60 hover:text-white/90"
                       }`}
-                      whileHover={reduceMotion ? undefined : { scale: 1.04 }}
-                      whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                     >
                       {activeIndex === i && (
                         <motion.span
                           layoutId="trustedPartnerTab"
-                          className="absolute inset-0 rounded-full bg-white shadow-[0_4px_20px_rgba(255,255,255,0.12)]"
-                          transition={{
-                            type: "spring",
-                            stiffness: 420,
-                            damping: 34,
-                          }}
+                          className="absolute inset-0 rounded-full bg-white"
+                          transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
                         />
                       )}
                       <span className="relative z-10">{p.name}</span>
@@ -214,34 +170,20 @@ export function TrustedPartnersSection() {
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={activeIndex}
-                    initial={
-                      reduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, y: 14, filter: "blur(6px)" }
-                    }
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={
-                      reduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, y: -10, filter: "blur(4px)" }
-                    }
+                    initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
                     transition={contentTransition}
                     className="relative z-10 flex flex-1 flex-col justify-center"
                   >
                     <div className="relative mb-8">
                       {!reduceMotion && (
-                        <motion.span
+                        <span
                           aria-hidden
-                          className="pointer-events-none absolute -left-1 -top-4 font-playfair text-7xl leading-none text-white/[0.06] sm:text-8xl"
-                          initial={{ opacity: 0, scale: 0.85 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{
-                            ...contentTransition,
-                            delay: 0.04,
-                          }}
+                          className="pointer-events-none absolute -left-1 -top-4 font-playfair italic text-7xl leading-none text-white/[0.08] sm:text-8xl"
                         >
                           &ldquo;
-                        </motion.span>
+                        </span>
                       )}
                       <blockquote className="relative font-sans text-xl lg:text-2xl text-white leading-relaxed">
                         &laquo; {active.quote} &raquo;
@@ -274,10 +216,8 @@ export function TrustedPartnersSection() {
           </LayoutGroup>
         </div>
 
-        {/* Bottom: Partner logos marquee */}
-        <div className="mt-24 lg:mt-32 overflow-hidden relative">
-          <div className="absolute left-0 top-0 bottom-0 w-20 lg:w-32 z-10 pointer-events-none bg-gradient-to-r from-velora-darker to-transparent" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 lg:w-32 z-10 pointer-events-none bg-gradient-to-l from-velora-darker to-transparent" />
+        {/* Bottom: Partner logos marquee — high contrast on dark + light */}
+        <div className="mt-24 lg:mt-32 overflow-hidden relative rounded-xl border border-nd-border bg-nd-canvas/80 py-6 dark:border-white/[0.08] dark:bg-black/50">
           <motion.div
             className="flex w-max animate-marquee"
             initial={{ opacity: 0 }}
@@ -288,21 +228,15 @@ export function TrustedPartnersSection() {
             {[0, 1].map((dup) => (
               <div
                 key={dup}
-                className="flex gap-12 lg:gap-20 py-4 pr-12 lg:pr-20 shrink-0"
+                className="flex gap-12 lg:gap-20 py-1 pr-12 lg:pr-20 shrink-0 items-center"
               >
                 {partnerLogos.map((name) => (
-                  <motion.span
+                  <span
                     key={`${name}-${dup}`}
-                    className="inline-block font-sans text-lg lg:text-2xl font-bold text-white/25 shrink-0 whitespace-nowrap cursor-default"
-                    whileHover={
-                      reduceMotion
-                        ? undefined
-                        : { color: "rgba(255,255,255,0.45)", y: -2 }
-                    }
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    className="inline-block font-sans text-lg lg:text-2xl font-semibold tracking-tight text-nd-primary hover:text-nd-display shrink-0 whitespace-nowrap cursor-default dark:text-zinc-300 dark:hover:text-white transition-colors"
                   >
                     {name}
-                  </motion.span>
+                  </span>
                 ))}
               </div>
             ))}

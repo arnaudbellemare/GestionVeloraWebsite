@@ -8,10 +8,13 @@ import { PORTAL_URLS } from "./config";
 import { useGoToContact } from "./hooks/useGoToContact";
 
 const serviceLinkKeys = [
+  { to: "/services", labelKey: "nav.allServices", descKey: "nav.allServicesDesc" },
   { to: "/services/syndicat-copropriete", labelKey: "nav.syndicat", descKey: "nav.syndicatDesc" },
   { to: "/services/airbnb", labelKey: "nav.airbnb", descKey: "nav.airbnbDesc" },
   { to: "/services/location", labelKey: "nav.location", descKey: "nav.locationDesc" },
 ];
+
+const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
 export const HeaderSection = (): JSX.Element => {
   const { t } = useTranslation();
@@ -41,60 +44,77 @@ export const HeaderSection = (): JSX.Element => {
 
   return (
     <motion.header
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.35, ease }}
       className="fixed top-0 left-0 right-0 z-50 px-4 pt-2 sm:pt-4"
     >
-      {/* Thin dark strip at top */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-neutral-900 dark:bg-black" aria-hidden />
+      <div className="absolute top-0 left-0 right-0 h-px bg-[#333333] opacity-90" aria-hidden />
 
       <div className="max-w-[90rem] mx-auto flex items-center justify-between gap-4">
-        {/* Left pill: logo + nav */}
-        <div className="flex items-center gap-1 px-4 py-2.5 rounded-2xl bg-neutral-600/95 dark:bg-neutral-700/95 backdrop-blur-sm shadow-lg">
+        <div className="flex items-center gap-1 px-4 py-2.5 rounded-2xl bg-[#111111] border border-[#333333]">
           <InternalLink to="/" className="flex items-center gap-0.5 shrink-0 -m-1 p-1 rounded-lg">
             <img src="/logo.png" alt="Gestion Velora" className="h-10 w-10 object-contain" />
-            <span className="font-sans font-medium text-white/95 text-[15px] hidden sm:inline tracking-normal">Gestion Velora</span>
+            <span className="font-sans font-medium text-[#E8E8E8] text-[15px] hidden sm:inline tracking-tight">
+              Gestion Velora
+            </span>
           </InternalLink>
-          <nav className="hidden md:flex items-center gap-0.5 ml-2 pl-2 border-l border-white/20">
-            <InternalLink to="/" className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300">
+          <nav className="hidden md:flex items-center gap-0.5 ml-2 pl-2 border-l border-[#333333]">
+            <InternalLink
+              to="/"
+              className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
+            >
               {t("nav.home")}
             </InternalLink>
             <div
               className="relative"
-              onMouseEnter={() => { cancelClose(); setServicesOpen(true); }}
+              onMouseEnter={() => {
+                cancelClose();
+                setServicesOpen(true);
+              }}
               onMouseLeave={scheduleClose}
             >
               <button
                 type="button"
-                className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300 inline-flex items-center gap-1"
+                className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg inline-flex items-center gap-1"
               >
                 {t("nav.services")}
-                <svg className={`w-3.5 h-3.5 transition-transform ${servicesOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${servicesOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               {servicesOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: -8 }}
+                  initial={{ opacity: 0, y: -4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="absolute top-full left-0 mt-0.5 py-3 min-w-[280px] rounded-xl bg-neutral-900 text-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)]"
+                  transition={{ duration: 0.2, ease }}
+                  className="absolute top-full left-0 mt-1 py-2 min-w-[280px] rounded-xl bg-[#111111] border border-[#333333]"
                 >
                   {serviceLinkKeys.map((s) => (
                     <InternalLink
                       key={s.to}
                       to={s.to}
-                      className="block px-4 py-3 hover:bg-white/5 transition-colors duration-300 first:rounded-t-lg last:rounded-b-lg"
+                      className="block px-4 py-3 hover:bg-[#1A1A1A] transition-colors first:rounded-t-lg last:rounded-b-lg border-b border-[#222222] last:border-0"
                       onClick={() => setServicesOpen(false)}
                     >
-                      <span className="font-sans font-semibold text-white block">{t(s.labelKey)}</span>
-                      <span className="font-sans text-xs text-white/60 mt-0.5 block">{t(s.descKey)}</span>
+                      <span className="font-sans font-medium text-white block">{t(s.labelKey)}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
+                        {t(s.descKey)}
+                      </span>
                     </InternalLink>
                   ))}
                 </motion.div>
               )}
             </div>
-            <InternalLink to="/blog" className="font-sans text-sm text-white/90 hover:text-white px-2.5 py-1.5 rounded-lg transition-colors duration-300">
+            <InternalLink
+              to="/blog"
+              className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
+            >
               {t("nav.insights")}
             </InternalLink>
           </nav>
@@ -117,14 +137,13 @@ export const HeaderSection = (): JSX.Element => {
           </button>
         </div>
 
-        {/* Right pill: actions + lang switcher */}
-        <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-neutral-600/95 dark:bg-neutral-700/95 backdrop-blur-sm shadow-lg">
-          <div className="flex items-center gap-0.5 border-r border-white/20 pr-2 mr-1">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[#111111] border border-[#333333]">
+          <div className="flex items-center gap-0.5 border-r border-[#333333] pr-2 mr-1">
             <button
               type="button"
               onClick={() => setLocale("fr")}
-              className={`font-sans text-xs px-2 py-1 rounded transition-colors ${
-                locale === "fr" ? "bg-white/20 text-white" : "text-white/70 hover:text-white"
+              className={`font-mono text-[10px] uppercase tracking-wider px-2 py-1 rounded-md transition-colors ${
+                locale === "fr" ? "bg-[#1A1A1A] text-white" : "text-[#999999] hover:text-white"
               }`}
               aria-label="Français"
             >
@@ -133,8 +152,8 @@ export const HeaderSection = (): JSX.Element => {
             <button
               type="button"
               onClick={() => setLocale("en")}
-              className={`font-sans text-xs px-2 py-1 rounded transition-colors ${
-                locale === "en" ? "bg-white/20 text-white" : "text-white/70 hover:text-white"
+              className={`font-mono text-[10px] uppercase tracking-wider px-2 py-1 rounded-md transition-colors ${
+                locale === "en" ? "bg-[#1A1A1A] text-white" : "text-[#999999] hover:text-white"
               }`}
               aria-label="English"
             >
@@ -145,7 +164,7 @@ export const HeaderSection = (): JSX.Element => {
           <a
             href={contactHref}
             onClick={goToContact}
-            className="hidden sm:inline-flex items-center px-4 py-2 rounded-full border border-white/35 text-white font-sans font-semibold text-sm hover:bg-white/10 transition-colors duration-300"
+            className="hidden sm:inline-flex items-center px-4 py-2 rounded-full border border-[#444444] text-[#E8E8E8] font-sans font-medium text-sm hover:bg-[#1A1A1A]"
           >
             {t("nav.contact")}
           </a>
@@ -153,7 +172,7 @@ export const HeaderSection = (): JSX.Element => {
             href={PORTAL_URLS.service}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center px-4 py-2 rounded-full bg-white text-neutral-800 font-sans font-semibold text-sm hover:bg-white/95 transition-colors duration-300"
+            className="hidden sm:inline-flex items-center px-4 py-2 rounded-full bg-white text-black font-sans font-medium text-sm hover:bg-white/90"
           >
             {t("nav.login")}
           </a>
@@ -162,26 +181,46 @@ export const HeaderSection = (): JSX.Element => {
 
       {mobileOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden mt-2 ml-4 py-4 px-4 rounded-2xl bg-neutral-600/95 dark:bg-neutral-700/95 backdrop-blur-sm shadow-lg w-[calc(100%-2rem)] max-w-sm flex flex-col gap-1"
+          transition={{ duration: 0.2, ease }}
+          className="md:hidden mt-2 ml-4 py-4 px-4 rounded-2xl bg-[#111111] border border-[#333333] w-[calc(100%-2rem)] max-w-sm flex flex-col gap-1"
         >
-          <InternalLink to="/" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>{t("nav.home")}</InternalLink>
+          <InternalLink to="/" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+            {t("nav.home")}
+          </InternalLink>
           <div className="py-2">
-            <span className="font-sans text-white/70 text-sm block mb-2">{t("nav.services")}</span>
-            <div className="flex flex-col gap-1 pl-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#999999] block mb-2">
+              {t("nav.services")}
+            </span>
+            <div className="flex flex-col gap-1 pl-2">
               {serviceLinkKeys.map((s) => (
-                <InternalLink key={s.to} to={s.to} className="font-sans text-white/90 py-1.5 text-sm" onClick={() => setMobileOpen(false)}>
+                <InternalLink
+                  key={s.to}
+                  to={s.to}
+                  className="font-sans text-[#E8E8E8] py-1.5 text-sm"
+                  onClick={() => setMobileOpen(false)}
+                >
                   {t(s.labelKey)}
                 </InternalLink>
               ))}
             </div>
           </div>
-          <InternalLink to="/blog" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>{t("nav.insights")}</InternalLink>
-          <a href={contactHref} onClick={goToContact} className="font-sans text-white py-2">
+          <InternalLink to="/blog" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+            {t("nav.insights")}
+          </InternalLink>
+          <a href={contactHref} onClick={goToContact} className="font-sans text-[#E8E8E8] py-2">
             {t("nav.contact")}
           </a>
-          <a href={PORTAL_URLS.service} target="_blank" rel="noopener noreferrer" className="font-sans text-white py-2" onClick={() => setMobileOpen(false)}>{t("nav.login")}</a>
+          <a
+            href={PORTAL_URLS.service}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-sans text-[#E8E8E8] py-2"
+            onClick={() => setMobileOpen(false)}
+          >
+            {t("nav.login")}
+          </a>
         </motion.div>
       )}
     </motion.header>

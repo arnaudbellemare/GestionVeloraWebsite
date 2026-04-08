@@ -19,22 +19,22 @@ export function OurProcessSection() {
   return (
     <section
       id="process"
-      className="relative pt-12 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-12 bg-[#f2f0ed] dark:bg-[#1a1a1a] bg-grain bg-grain-light scroll-mt-24"
+      className="relative pt-12 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-12 bg-nd-canvas nd-dot-grid scroll-mt-24"
     >
       <div className="max-w-[90rem] mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 lg:mb-14">
           <div>
-            <p className="text-[11px] tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-4 font-sans">
-              ◆ {t("ourProcess.label")}
+            <p className="font-mono text-[10px] tracking-[0.12em] uppercase text-nd-secondary mb-4">
+              {t("ourProcess.label")}
             </p>
-            <h2 className="font-sans font-bold text-3xl sm:text-4xl lg:text-[2.75rem] leading-tight text-black dark:text-white max-w-3xl">
+            <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-[-0.02em] text-nd-display max-w-3xl">
               {t("ourProcess.title")}
             </h2>
           </div>
           <a
             href={contactHref}
             onClick={goToContact}
-            className="inline-flex items-center gap-2 self-start lg:self-auto border border-black dark:border-white text-black dark:text-white px-5 py-3 text-[11px] tracking-[0.15em] uppercase font-sans font-semibold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+            className="inline-flex items-center gap-2 self-start lg:self-auto border-2 border-nd-border-visible text-nd-primary px-5 py-3 text-[10px] tracking-[0.12em] uppercase font-mono hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
           >
             <span className="text-sm" aria-hidden>
               ↗
@@ -43,7 +43,7 @@ export function OurProcessSection() {
           </a>
         </div>
 
-        <div className="rounded-2xl overflow-hidden flex flex-col lg:flex-row bg-black text-white min-h-[min(520px,70vh)] shadow-xl">
+        <div className="rounded-2xl overflow-hidden flex flex-col lg:flex-row bg-black text-white min-h-[min(520px,70vh)] border border-[#333333]">
           <div className="lg:w-[min(52%,520px)] flex flex-col justify-between p-8 lg:p-12 lg:pr-8 shrink-0">
             <AnimatePresence mode="wait">
               <motion.div
@@ -51,15 +51,15 @@ export function OurProcessSection() {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 12 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
               >
-                <p className="text-[11px] tracking-[0.2em] uppercase text-white/50 mb-3 font-sans">
+                <p className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#999999] mb-3">
                   {steps[i].step}
                 </p>
-                <h3 className="font-sans font-bold text-xl sm:text-2xl lg:text-3xl mb-5 leading-snug">
+                <h3 className="font-sans font-medium text-xl sm:text-2xl lg:text-3xl mb-5 leading-snug tracking-[-0.02em]">
                   {steps[i].title}
                 </h3>
-                <p className="font-sans text-sm sm:text-base text-white/75 leading-relaxed max-w-lg">
+                <p className="font-sans text-sm sm:text-base text-[#E8E8E8] leading-relaxed max-w-lg">
                   {steps[i].body}
                 </p>
               </motion.div>
@@ -104,10 +104,7 @@ export function OurProcessSection() {
               alt=""
               className="absolute inset-0 w-full h-full object-cover object-center opacity-90 grayscale contrast-[1.05] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%,0_32%)]"
             />
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent lg:bg-gradient-to-r lg:from-black/70 pointer-events-none"
-              aria-hidden
-            />
+            <div className="absolute inset-0 bg-black/45 pointer-events-none" aria-hidden />
           </div>
         </div>
       </div>

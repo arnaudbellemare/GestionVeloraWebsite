@@ -5,13 +5,13 @@ import { ScrollReveal } from "../components/ScrollReveal";
 export function PrivacyPage() {
   const { t } = useTranslation();
   return (
-    <div className="pt-24 lg:pt-32 pb-24 lg:pb-32 bg-white dark:bg-velora-charcoal">
+    <div className="pt-24 lg:pt-32 pb-24 lg:pb-32 bg-nd-surface">
       <div className="max-w-3xl mx-auto px-6 lg:px-16">
         <InternalLink to="/" className="font-sans text-sm text-black/60 dark:text-white/60 hover:text-waabi-pink mb-8 inline-block">
           {t("privacy.backHome")}
         </InternalLink>
         <ScrollReveal>
-          <h1 className="font-playfair font-bold text-4xl text-black dark:text-white mb-8">
+          <h1 className="font-sans font-medium text-4xl text-nd-display mb-8 tracking-[-0.02em]">
             {t("privacy.title")}
           </h1>
           <div className="font-sans text-black/80 dark:text-white/80 leading-relaxed space-y-6">

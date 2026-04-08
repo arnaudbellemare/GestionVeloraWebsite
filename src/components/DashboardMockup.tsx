@@ -31,7 +31,7 @@ export function DashboardMockup() {
   }, []);
 
   return (
-    <div className="rounded-xl bg-white dark:bg-neutral-900 shadow-lg border border-neutral-200/80 dark:border-neutral-700/80 overflow-hidden w-full max-w-[340px] mx-auto">
+    <div className="rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 overflow-hidden w-full max-w-[340px] mx-auto">
       {/* Header */}
       <div className="px-4 py-3 border-b border-neutral-100 dark:border-white/[0.06]">
         <p className="font-sans text-xs font-medium text-neutral-600 dark:text-neutral-300 truncate">
@@ -49,17 +49,17 @@ export function DashboardMockup() {
               className="flex flex-col items-center gap-1.5 shrink-0"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: chartMounted ? 1 : 0, y: chartMounted ? 0 : 4 }}
-              transition={{ type: "spring", stiffness: 400, damping: 30, delay: i * 0.04 }}
+              transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.04 }}
             >
-              <span className={`text-[11px] font-sans font-medium ${i === 1 ? "text-velora-charcoal dark:text-white" : "text-neutral-400 dark:text-neutral-500"}`}>
+              <span className={`text-[11px] font-sans font-medium ${i === 1 ? "text-neutral-900 dark:text-white" : "text-neutral-400 dark:text-neutral-500"}`}>
                 {tab.label}
               </span>
               <motion.span
-                className={`block h-[2px] rounded-full min-w-[20px] ${i === 1 ? "bg-velora-green" : "bg-neutral-200 dark:bg-white/10"}`}
+                className={`block h-[2px] rounded-full min-w-[20px] ${i === 1 ? "bg-neutral-900 dark:bg-white" : "bg-neutral-200 dark:bg-white/10"}`}
                 style={{ transformOrigin: "left" }}
                 initial={{ scaleX: 0 }}
                 animate={chartMounted ? { scaleX: 1 } : { scaleX: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.15 + i * 0.05 }}
+                transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1], delay: 0.12 + i * 0.04 }}
               />
             </motion.button>
           ))}
@@ -72,9 +72,9 @@ export function DashboardMockup() {
           className="flex gap-3"
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: msg1Visible ? 1 : 0, x: msg1Visible ? 0 : -8 }}
-          transition={{ type: "spring", stiffness: 320, damping: 26 }}
+          transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <div className="h-7 w-7 rounded-full bg-velora-green/80 dark:bg-velora-green shrink-0 flex items-center justify-center text-white text-[10px] font-sans font-semibold">
+          <div className="h-7 w-7 rounded-full bg-neutral-800 dark:bg-neutral-200 shrink-0 flex items-center justify-center text-white dark:text-neutral-900 text-[10px] font-sans font-semibold">
             M
           </div>
           <div className="flex-1 min-w-0">
@@ -91,7 +91,7 @@ export function DashboardMockup() {
           className="flex gap-3"
           initial={{ opacity: 0, x: -8 }}
           animate={{ opacity: msg2Visible ? 1 : 0, x: msg2Visible ? 0 : -8 }}
-          transition={{ type: "spring", stiffness: 320, damping: 26 }}
+          transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <div className="h-7 w-7 rounded-full bg-neutral-600 dark:bg-neutral-500 shrink-0 flex items-center justify-center text-white text-[10px] font-sans font-semibold">
             P
@@ -111,20 +111,20 @@ export function DashboardMockup() {
           className="flex gap-2 items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: typingVisible ? 1 : 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <div className="flex gap-1">
             {[0, 1, 2].map((i) => (
               <motion.span
                 key={i}
-                className="w-1.5 h-1.5 rounded-full bg-velora-green/70 dark:bg-velora-green"
+                className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-500"
                 animate={{
-                  y: [0, -3, 0],
-                  opacity: [0.5, 1, 0.5],
+                  opacity: [0.35, 1, 0.35],
                 }}
                 transition={{
-                  duration: 0.5,
+                  duration: 0.55,
                   repeat: Infinity,
+                  ease: [0.25, 0.1, 0.25, 1],
                   delay: i * 0.12,
                 }}
               />
@@ -137,9 +137,8 @@ export function DashboardMockup() {
 
         {/* Reply button */}
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full mt-3 py-2.5 rounded-lg bg-velora-green/15 dark:bg-velora-green/20 text-velora-charcoal dark:text-white font-sans text-xs font-semibold hover:bg-velora-green/25 dark:hover:bg-velora-green/30 transition-colors duration-200"
+          type="button"
+          className="w-full mt-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-600 text-neutral-800 dark:text-neutral-100 font-sans text-xs font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors"
         >
           {t("fromInspiration.reply")}
         </motion.button>

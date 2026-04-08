@@ -13,7 +13,7 @@ if ("scrollRestoration" in history) {
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
-      <ReactLenis root options={{ lerp: 0.08, duration: 1.2, smoothWheel: true }}>
+      <ReactLenis root options={{ lerp: 0.14, duration: 0.85, smoothWheel: true }}>
         <App />
       </ReactLenis>
     </ThemeProvider>

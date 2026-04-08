@@ -37,12 +37,25 @@ export function PageMeta() {
     let description = baseDesc;
     const url = SITE_URL + (pathname === "/" || pathname === "/en" || pathname === "/en/" ? "/" : pathname);
 
-    if (pathname.startsWith("/services/") || pathname.startsWith("/en/services/")) {
+    const isServicesHub =
+      pathname === "/services" ||
+      pathname === "/en/services" ||
+      pathname === "/en/services/";
+
+    if (isServicesHub) {
+      title = t("servicesHub.metaTitle");
+      description = t("servicesHub.metaDescription");
+    } else if (pathname.startsWith("/services/") || pathname.startsWith("/en/services/")) {
       if (slug && SERVICE_SLUGS.includes(slug as ServiceSlug)) {
         const service = getLocalizedService(slug as ServiceSlug, t);
         title = isEn ? `${service.title} | Gestion Velora` : `${service.title} | Gestion Velora`;
         description = service.description;
       }
+    } else if (pathname === "/blog" || pathname === "/en/blog" || pathname === "/en/blog/") {
+      title = isEn ? "Insights | Gestion Velora" : "Conseils | Gestion Velora";
+      description = isEn
+        ? "Thoughts and news on property management in Montreal."
+        : "Réflexions et actualités sur la gestion immobilière.";
     } else if (pathname.startsWith("/blog/") || pathname.startsWith("/en/blog/")) {
       if (slug) {
         const post = getPostBySlug(slug, locale);

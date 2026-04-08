@@ -15,6 +15,20 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/services</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/services"/>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/services"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/services"/>
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/services"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/services/syndicat-copropriete</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/services/syndicat-copropriete"/>
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/services/syndicat-copropriete"/>

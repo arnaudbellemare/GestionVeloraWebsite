@@ -4,10 +4,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { InternalLink } from "./InternalLink";
 import { ScrollReveal } from "./ScrollReveal";
 
+/** Three gray steps: light → mid → dark (readable on nd-canvas in both themes). */
 const serviceTagKeys = [
-  { labelKey: "whatWeDo.syndicat", dot: "#3b82f6" },
-  { labelKey: "whatWeDo.airbnb", dot: "#f97316" },
-  { labelKey: "whatWeDo.location", dot: "#8b5cf6" },
+  {
+    labelKey: "whatWeDo.syndicat",
+    dotClass: "bg-[#a1a1aa] dark:bg-[#d4d4d4]",
+  },
+  {
+    labelKey: "whatWeDo.airbnb",
+    dotClass: "bg-[#71717a] dark:bg-[#a1a1aa]",
+  },
+  {
+    labelKey: "whatWeDo.location",
+    dotClass: "bg-[#3f3f46] dark:bg-[#71717a]",
+  },
 ];
 
 const serviceData = [
@@ -29,13 +39,14 @@ export function WhatWeDoSection() {
   return (
     <section
       id="specification"
-      className="pt-28 pb-24 lg:pt-32 lg:pb-32 bg-white dark:bg-velora-charcoal overflow-hidden scroll-mt-24"
+      className="pt-28 pb-24 lg:pt-32 lg:pb-32 bg-nd-surface overflow-hidden scroll-mt-24"
     >
       <ScrollReveal className="text-center px-6 mb-16 lg:mb-20">
-        <h2 className="font-playfair font-bold text-4xl lg:text-5xl xl:text-6xl text-black dark:text-white leading-tight max-w-4xl mx-auto mb-4">
-          {t("whatWeDo.title")} <span className="italic">{t("whatWeDo.titleItalic")}</span>
+        <h2 className="font-sans font-medium text-4xl lg:text-5xl xl:text-6xl text-nd-display leading-[1.05] tracking-[-0.02em] max-w-4xl mx-auto mb-4">
+          {t("whatWeDo.title")}{" "}
+          <span className="text-nd-secondary font-normal">{t("whatWeDo.titleItalic")}</span>
         </h2>
-        <p className="font-sans text-base lg:text-lg text-black/60 dark:text-white/60 mb-8">
+        <p className="font-sans text-base lg:text-lg text-nd-secondary mb-8">
           {t("whatWeDo.subtitle")}
         </p>
         <div className="flex flex-wrap justify-center gap-3">
@@ -45,14 +56,10 @@ export function WhatWeDoSection() {
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
-              whileHover={{ scale: 1.05, y: -2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-100 dark:bg-white/10 text-black dark:text-white font-sans text-sm cursor-default"
+              transition={{ duration: 0.3, delay: 0.2 + i * 0.08 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-nd-border bg-nd-canvas text-nd-primary font-sans text-sm cursor-default"
             >
-              <span
-                className="w-2 h-2 rounded-full shrink-0"
-                style={{ backgroundColor: tag.dot }}
-              />
+              <span className={`h-2 w-2 shrink-0 rounded-full ${tag.dotClass}`} aria-hidden />
               {t(tag.labelKey)}
             </motion.span>
           ))}
@@ -70,31 +77,25 @@ export function WhatWeDoSection() {
               style={{ zIndex: isExpanded ? 10 : 1 }}
             >
               <motion.article
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
+                transition={{ duration: 0.35, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
                 onMouseEnter={() => setExpanded(i)}
                 onMouseLeave={() => setExpanded(null)}
                 className="h-full"
               >
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-lg">
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-nd-border-visible">
                   <img
                     src={serviceImages[i]}
                     alt={t(s.labelKey)}
-                    className="w-full h-full object-cover transition-transform duration-500"
-                    style={{ transform: isExpanded ? "scale(1.05)" : "scale(1)" }}
+                    className="w-full h-full object-cover transition-opacity duration-200"
+                    style={{ opacity: isExpanded ? 0.35 : 1 }}
                   />
 
                   {/* Label - always visible at bottom */}
-                  <div
-                    className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8 pointer-events-none"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%)",
-                    }}
-                  >
-                    <span className="font-sans font-bold text-white text-lg lg:text-xl">
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8 pointer-events-none bg-black/55">
+                    <span className="font-sans font-medium text-white text-lg lg:text-xl">
                       {t(s.labelKey)}
                     </span>
                   </div>
@@ -110,19 +111,19 @@ export function WhatWeDoSection() {
                         className="absolute inset-0 bg-black/90 flex flex-col justify-start p-6 lg:p-8"
                       >
 <motion.div
-                        initial={{ y: -20 }}
-                        animate={{ y: 0 }}
-                        exit={{ y: -20 }}
-                        transition={{ duration: 0.25 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
                           className="space-y-2"
                         >
-                          <span className="font-sans font-bold text-white text-lg block">
+                          <span className="font-sans font-medium text-white text-lg block">
                             {t(s.labelKey)}
                           </span>
-                          <p className="font-sans text-sm lg:text-base text-white/95 leading-relaxed">
+                          <p className="font-sans text-sm lg:text-base text-[#E8E8E8] leading-relaxed">
                             {t(s.detailsKey)}
                           </p>
-                          <span className="inline-block font-sans text-sm text-waabi-pink font-semibold mt-2">
+                          <span className="inline-block font-sans text-sm text-[#5B9BF6] font-medium mt-2">
                             {t("whatWeDo.viewPage")}
                           </span>
                         </motion.div>
@@ -136,7 +137,7 @@ export function WhatWeDoSection() {
         })}
       </div>
 
-      <p className="font-sans text-center text-sm text-black/50 dark:text-white/50 px-6 mt-10 lg:mt-12">
+      <p className="font-mono text-center text-[10px] uppercase tracking-[0.1em] text-nd-secondary px-6 mt-10 lg:mt-12">
         {t("whatWeDo.hint")}
       </p>
     </section>

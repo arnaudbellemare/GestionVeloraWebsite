@@ -4,11 +4,11 @@ export const fr = {
     line1: "Votre tranquillité.",
     line2: "Notre affaire.",
     subtitle:
-      "Transparence, rigueur et équipe disponible 24/7 pour syndicats et propriétaires à Montréal.",
+      "Syndicats, Airbnb et location : une équipe disponible 24/7, rapports clairs et processus rigoureux.",
     trustLine: "Ils nous font confiance.",
     trustLink: "Voir les témoignages",
-    ctaDiscover: "Découvrez nos services",
-    ctaContact: "Contactez-nous",
+    ctaDiscover: "Voir ce que nous faisons",
+    ctaContact: "Parler à l'équipe",
   },
   heroPartners: [
     "Groupe Velora",
@@ -58,7 +58,7 @@ export const fr = {
 
   // ValueLabels
   valueLabels: {
-    title: "Débloquer le potentiel dans le monde réel.",
+    title: "Votre tranquillité, dans le monde réel.",
     transparent: "Transparent",
     transparentText:
       "Rapports financiers clairs, données en temps réel, et une visibilité totale sur chaque décision.",
@@ -92,6 +92,8 @@ export const fr = {
   nav: {
     home: "Accueil",
     services: "Services",
+    allServices: "Tous les services",
+    allServicesDesc: "Vue d’ensemble : syndic, Airbnb et location.",
     insights: "Conseils",
     contact: "Contact",
     login: "Connexion",
@@ -242,6 +244,7 @@ export const fr = {
   insights: {
     title: "Conseils.",
     subtitle: "Réflexions et actualités sur la gestion immobilière.",
+    viewServices: "Voir nos services →",
     seeAll: "Voir tout",
     prev: "Précédent",
     next: "Suivant",
@@ -290,9 +293,28 @@ export const fr = {
     },
   ],
 
+  breadcrumb: {
+    home: "Accueil",
+    services: "Services",
+    insights: "Conseils",
+  },
+
+  servicesHub: {
+    title: "Nos services",
+    subtitle:
+      "Trois façons d’accompagner votre actif à Montréal : copropriété, courte durée et location longue durée.",
+    ctaLearn: "En savoir plus",
+    metaTitle: "Services | Gestion Velora",
+    metaDescription:
+      "Syndic de copropriété, gestion Airbnb et location résidentielle à Montréal — transparence, maintenance proactive et équipe réactive.",
+    schemaName: "Services Gestion Velora",
+  },
+
   // Contact
   contact: {
     title: "Laissez-nous vous aider à gérer de façon simple et efficace.",
+    trustLine:
+      "Après l’envoi, un membre de l’équipe vous répond en jours ouvrables — pas de boîte noire, pas de file d’attente interminable.",
     cta: "Parler à un conseiller",
     topicLabel: "Objet du message",
     topicGeneral: "Gestion immobilière / question générale",
@@ -312,6 +334,7 @@ export const fr = {
     successTitle: "Message envoyé",
     successBody:
       "Merci pour votre message. Notre équipe vous répondra dans les meilleurs délais.",
+    successExpectation: "Délai habituel de réponse : 1 à 2 jours ouvrables.",
     errorBody:
       "L’envoi n’a pas fonctionné. Réessayez ou écrivez-nous directement à info@gestionvelora.com.",
     sendAnother: "Envoyer un autre message",
@@ -326,7 +349,11 @@ export const fr = {
     emailPlaceholder: "Courriel",
     subscribe: "S'inscrire",
     home: "Accueil",
+    allServices: "Services",
     standards: "Nos standards",
+    process: "Notre processus",
+    testimonials: "Témoignages",
+    portailsSection: "Accès portails",
     faq: "FAQ",
     insights: "Conseils",
     contactLink: "Contact",
@@ -355,9 +382,15 @@ export const fr = {
     ourServices: "Nos services",
     inDetail: "En détail",
     items: "éléments",
+    introLead:
+      "Vous cherchez moins d’imprévus, plus de clarté et une équipe qui répond ? Nous structurons l’administration, la maintenance et la relation avec les parties prenantes.",
+    relatedInsightsLink: "Lire nos conseils sur la gestion immobilière →",
+    nextStepTitle: "Prochaine étape",
+    nextStepText:
+      "Expliquez-nous votre contexte : nous vous proposons un échange court pour valider l’ajustement et les priorités.",
     ctaTitle: "Nous n'avons que commencé",
     ctaText: "Suivez-nous ou contactez-nous directement à info@gestionvelora.com",
-    planifyCall: "Planifiez un appel",
+    planifyCall: "Demander une soumission",
     notFound: "Service non trouvé",
     backHome: "Retour à l'accueil",
   },
@@ -369,8 +402,10 @@ export const fr = {
     backToInsights: "← Tous les conseils",
     notFound: "Article non trouvé",
     backToInsightsLink: "Retour aux conseils",
+    relatedPostsTitle: "À lire aussi",
+    exploreServicesIntro: "Besoin d’accompagnement concret ? Nos services :",
     contactQuestion: "Des questions sur la gestion immobilière ? Contactez Gestion Velora.",
-    planifyCall: "Planifiez un appel",
+    planifyCall: "Demander une soumission",
   },
 
   // Privacy

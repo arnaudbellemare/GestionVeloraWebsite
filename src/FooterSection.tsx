@@ -33,10 +33,14 @@ export const FooterSection = (): JSX.Element => {
   }, [qrSeason, postSeasonToQrTree]);
   const navigationLinks = [
     { label: t("footer.home"), to: "/" },
+    { label: t("footer.allServices"), to: "/services" },
     { label: t("footer.standards"), to: "/#standards" },
+    { label: t("footer.process"), to: "/#process" },
+    { label: t("footer.testimonials"), to: "/#testimonials" },
+    { label: t("footer.portailsSection"), to: "/#portails" },
     { label: t("footer.faq"), to: "/#faq" },
     { label: t("footer.insights"), to: "/blog" },
-    { label: t("footer.contactLink"), to: "/#contact" },
+    { label: t("footer.contactLink"), to: "/#contact-form" },
   ];
 
   return (
@@ -44,7 +48,7 @@ export const FooterSection = (): JSX.Element => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="relative bg-[#1C1C1C] overflow-hidden"
+      className="relative bg-black overflow-hidden border-t border-[#222222]"
     >
       <div className="max-w-[90rem] mx-auto relative z-10 px-6 lg:px-16 pt-16 lg:pt-20 pb-8">
         {/* Top: Contact, Connect, Subscribe columns */}
@@ -56,22 +60,22 @@ export const FooterSection = (): JSX.Element => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0 }}
           >
-            <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.contact")}
             </h4>
             <a
               href="tel:+15147771731"
-              className="font-sans text-white/90 hover:text-white transition-colors duration-300 block mb-2"
+              className="font-sans text-[#E8E8E8] hover:text-white transition-colors block mb-2"
             >
               (514) 777-1731
             </a>
             <a
               href="mailto:info@gestionvelora.com"
-              className="font-sans text-white/90 hover:text-white transition-colors duration-300 block mb-4"
+              className="font-sans text-[#E8E8E8] hover:text-white transition-colors block mb-4"
             >
               info@gestionvelora.com
             </a>
-            <p className="font-sans text-sm text-white/60 leading-relaxed">
+            <p className="font-sans text-sm text-[#999999] leading-relaxed">
               Montréal, QC
             </p>
           </motion.div>
@@ -83,7 +87,7 @@ export const FooterSection = (): JSX.Element => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.portals")}
             </h4>
             <div className="flex flex-col gap-2">
@@ -91,7 +95,7 @@ export const FooterSection = (): JSX.Element => {
                 href={PORTAL_URLS.manager}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-sans text-white/90 hover:text-white transition-colors duration-300"
+                className="font-sans text-[#E8E8E8] hover:text-white transition-colors"
               >
                 {t("footer.managerPortal")}
               </a>
@@ -99,7 +103,7 @@ export const FooterSection = (): JSX.Element => {
                 href={PORTAL_URLS.service}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-sans text-white/90 hover:text-white transition-colors duration-300"
+                className="font-sans text-[#E8E8E8] hover:text-white transition-colors"
               >
                 {t("footer.ownerPortal")}
               </a>
@@ -113,15 +117,15 @@ export const FooterSection = (): JSX.Element => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.navigation")}
             </h4>
             <nav className="flex flex-col gap-2" aria-label="Footer navigation">
               {navigationLinks.map((link) => (
                 <InternalLink
-                  key={link.to}
+                  key={`${link.to}-${link.label}`}
                   to={link.to}
-                  className="font-sans text-white/90 hover:text-white transition-colors duration-300"
+                  className="font-sans text-[#E8E8E8] hover:text-white transition-colors"
                 >
                   {link.label}
                 </InternalLink>
@@ -138,19 +142,19 @@ export const FooterSection = (): JSX.Element => {
             className="shrink-0 w-full min-w-0 max-w-[16rem] self-start text-left"
           >
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-2">
-              <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 whitespace-nowrap">
+              <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] whitespace-nowrap">
                 {t("footer.ourSite")}
               </h4>
-              <p className="font-serif text-[10px] font-light italic tracking-[0.06em] text-white/50 leading-none whitespace-nowrap">
+              <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-[#666666] leading-none whitespace-nowrap">
                 {t("footer.qrClickMe")}
               </p>
             </div>
-            <div className="relative aspect-square w-full max-w-[16rem] overflow-hidden rounded-sm bg-[#1C1C1C]">
+            <div className="relative aspect-square w-full max-w-[16rem] overflow-hidden rounded-sm bg-black">
               <iframe
                 ref={qrTreeIframeRef}
                 title={t("footer.qrIframeTitle")}
                 src={qrTreeStandaloneIframeSrc()}
-                className="absolute inset-0 h-full w-full border-0 bg-[#1C1C1C] block pointer-events-auto"
+                className="absolute inset-0 h-full w-full border-0 bg-black block pointer-events-auto"
                 loading="lazy"
                 onLoad={() => postSeasonToQrTree(qrSeason)}
               />
@@ -175,10 +179,10 @@ export const FooterSection = (): JSX.Element => {
                   aria-label={label}
                   aria-pressed={qrSeason === key}
                   onClick={() => setQrSeason(key)}
-                  className={`box-border min-w-0 w-full max-w-full px-1.5 py-1 font-sans text-[10px] leading-tight rounded-sm border text-center transition-colors duration-200 ${
+                  className={`box-border min-w-0 w-full max-w-full px-1.5 py-1 font-mono text-[9px] uppercase tracking-wider leading-tight rounded-sm border text-center transition-colors ${
                     qrSeason === key
-                      ? "border-[rgba(200,80,120,0.45)] bg-[rgba(200,80,120,0.22)] text-white"
-                      : "border-white/12 bg-white/[0.05] text-white/55 hover:bg-white/10 hover:text-white/80"
+                      ? "border-[#D71921] bg-[rgba(215,25,33,0.15)] text-white"
+                      : "border-[#333333] bg-transparent text-[#999999] hover:text-white hover:border-[#444444]"
                   }`}
                 >
                   {label}
@@ -195,7 +199,7 @@ export const FooterSection = (): JSX.Element => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="md:flex-1 xl:max-w-xs"
           >
-            <h4 className="font-sans text-xs uppercase tracking-widest text-white/70 mb-4">
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.newsletter")}
             </h4>
             <form
@@ -224,10 +228,8 @@ export const FooterSection = (): JSX.Element => {
 
       </div>
 
-      {/* 3D City Brand Image — light/dark mode, flush with bottom bar */}
+      {/* 3D City Brand Image — top scrim fades footer black into the skyline */}
       <div className="relative overflow-hidden">
-        {/* Gradient fade from footer content into image */}
-        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#1C1C1C] to-transparent z-10 pointer-events-none" />
         <img
           src="/images/footer-city-light.png?v=4"
           alt="Gestion Velora - 3D City"
@@ -238,11 +240,19 @@ export const FooterSection = (): JSX.Element => {
           alt="Gestion Velora - 3D City"
           className="w-full h-auto hidden dark:block"
         />
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-16 sm:h-[5.25rem]"
+          style={{
+            background:
+              "linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.52) 22%, rgba(0,0,0,0.22) 48%, rgba(0,0,0,0.06) 72%, transparent 100%)",
+          }}
+          aria-hidden
+        />
       </div>
 
       {/* Bottom bar: copyright, privacy, etc. */}
-      <div className="border-t border-white/10">
-        <div className="max-w-[90rem] mx-auto px-6 lg:px-16 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/60">
+      <div className="border-t border-[#222222]">
+        <div className="max-w-[90rem] mx-auto px-6 lg:px-16 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#999999]">
           <span>©{new Date().getFullYear()} Gestion Velora</span>
           <InternalLink to="/privacy" className="hover:text-white transition-colors duration-300">
             {t("footer.privacy")}

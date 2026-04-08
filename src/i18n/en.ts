@@ -1,14 +1,14 @@
 export const en = {
   // Hero
   hero: {
-    line1: "Your peace of mind.",
-    line2: "Our business.",
+    line1: "Your property,",
+    line2: "in all tranquility.",
     subtitle:
-      "Transparency, rigor, and a 24/7 team for condo boards and owners in Montreal.",
+      "Condo boards, Airbnb hosts, and landlords — 24/7 support, clear reporting, and rigorous processes.",
     trustLine: "They trust us.",
     trustLink: "Read testimonials",
-    ctaDiscover: "Discover our services",
-    ctaContact: "Contact us",
+    ctaDiscover: "See how we work",
+    ctaContact: "Talk to the team",
   },
   heroPartners: [
     "Groupe Velora",
@@ -58,7 +58,7 @@ export const en = {
 
   // ValueLabels
   valueLabels: {
-    title: "Unlocking potential in the real world.",
+    title: "Your peace of mind, in the real world.",
     transparent: "Transparent",
     transparentText:
       "Clear financial reports, real-time data, and full visibility on every decision.",
@@ -92,6 +92,8 @@ export const en = {
   nav: {
     home: "Home",
     services: "Services",
+    allServices: "All services",
+    allServicesDesc: "Overview: condo, Airbnb, and rentals.",
     insights: "Insights",
     contact: "Contact",
     login: "Log in",
@@ -239,6 +241,7 @@ export const en = {
   insights: {
     title: "Insights.",
     subtitle: "Thoughts and news on property management.",
+    viewServices: "Explore our services →",
     seeAll: "See all",
     prev: "Previous",
     next: "Next",
@@ -287,9 +290,28 @@ export const en = {
     },
   ],
 
+  breadcrumb: {
+    home: "Home",
+    services: "Services",
+    insights: "Insights",
+  },
+
+  servicesHub: {
+    title: "Our services",
+    subtitle:
+      "Three ways we support your asset in Montreal: condo boards, short-term rentals, and long-term leases.",
+    ctaLearn: "Learn more",
+    metaTitle: "Services | Gestion Velora",
+    metaDescription:
+      "Condo management, Airbnb management, and residential leasing in Montreal — transparency, proactive maintenance, and a responsive team.",
+    schemaName: "Gestion Velora services",
+  },
+
   // Contact
   contact: {
     title: "Let us help you manage simply and efficiently.",
+    trustLine:
+      "After you submit, a team member replies on business days — no black box, no endless queue.",
     cta: "Talk to an advisor",
     topicLabel: "What is this about?",
     topicGeneral: "Property management / general question",
@@ -309,6 +331,7 @@ export const en = {
     successTitle: "Message sent",
     successBody:
       "Thank you for reaching out. Our team will get back to you shortly.",
+    successExpectation: "Typical reply time: 1–2 business days.",
     errorBody:
       "Something went wrong. Please try again or email us at info@gestionvelora.com.",
     sendAnother: "Send another message",
@@ -323,7 +346,11 @@ export const en = {
     emailPlaceholder: "Email",
     subscribe: "Subscribe",
     home: "Home",
+    allServices: "Services",
     standards: "Our standards",
+    process: "Our process",
+    testimonials: "Testimonials",
+    portailsSection: "Portal access",
     faq: "FAQ",
     insights: "Insights",
     contactLink: "Contact",
@@ -352,9 +379,15 @@ export const en = {
     ourServices: "Our services",
     inDetail: "In detail",
     items: "items",
+    introLead:
+      "Fewer surprises, clearer operations, and a team that answers. We structure administration, maintenance, and stakeholder communication.",
+    relatedInsightsLink: "Read our property management insights →",
+    nextStepTitle: "Next step",
+    nextStepText:
+      "Tell us your context — we’ll suggest a short call to align on fit and priorities.",
     ctaTitle: "We're just getting started",
     ctaText: "Follow us or contact us directly at info@gestionvelora.com",
-    planifyCall: "Schedule a call",
+    planifyCall: "Request a proposal",
     notFound: "Service not found",
     backHome: "Back to home",
   },
@@ -366,8 +399,10 @@ export const en = {
     backToInsights: "← All insights",
     notFound: "Article not found",
     backToInsightsLink: "Back to insights",
+    relatedPostsTitle: "Related reading",
+    exploreServicesIntro: "Want hands-on support? Our services:",
     contactQuestion: "Questions about property management? Contact Gestion Velora.",
-    planifyCall: "Schedule a call",
+    planifyCall: "Request a proposal",
   },
 
   // Privacy

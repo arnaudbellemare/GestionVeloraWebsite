@@ -1,9 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { useGoToContact } from "../hooks/useGoToContact";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
 function toAnchorId(title: string) {
@@ -28,6 +30,7 @@ function scrollToBlock(e: React.MouseEvent, blockTitle: string) {
 export function ServicePage() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
+  const { contactHref, goToContact } = useGoToContact();
   const [expandedDetail, setExpandedDetail] = useState<number | null>(null);
   const service =
     slug && SERVICE_SLUGS.includes(slug as ServiceSlug)
@@ -37,11 +40,15 @@ export function ServicePage() {
   if (!service) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 pt-24">
-        <h1 className="font-playfair text-2xl text-black dark:text-white mb-4">{t("servicePage.notFound")}</h1>
-        <Link to="/" className="font-sans text-waabi-pink hover:underline">{t("servicePage.backHome")}</Link>
+        <h1 className="font-sans font-medium text-2xl text-nd-display mb-4">{t("servicePage.notFound")}</h1>
+        <InternalLink to="/services" className="font-sans text-waabi-pink hover:underline">
+          {t("servicePage.backToServices")}
+        </InternalLink>
       </div>
     );
   }
+
+  const otherServices = SERVICE_SLUGS.filter((s) => s !== service.slug).map((s) => getLocalizedService(s, t));
 
   return (
     <motion.div
@@ -62,16 +69,18 @@ export function ServicePage() {
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-16 w-full">
-          <InternalLink
-            to="/#specification"
-            className="font-sans text-sm text-white/80 hover:text-white mb-6 inline-flex items-center gap-1.5 backdrop-blur-sm bg-black/20 px-4 py-2 rounded-full transition-colors duration-200 hover:bg-black/30"
-          >
-            {t("servicePage.backToServices")}
-          </InternalLink>
+          <Breadcrumbs
+            theme="onDark"
+            items={[
+              { label: t("breadcrumb.home"), to: "/" },
+              { label: t("breadcrumb.services"), to: "/services" },
+              { label: service.title },
+            ]}
+          />
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-playfair font-bold text-4xl lg:text-6xl text-white leading-tight mb-4"
+            className="font-sans font-medium text-4xl lg:text-6xl text-white leading-[1.05] tracking-[-0.02em] mb-4"
           >
             {service.subtitle}
           </motion.h1>
@@ -86,8 +95,38 @@ export function ServicePage() {
         </div>
       </section>
 
+      <section className="py-10 lg:py-12 bg-nd-canvas border-b border-nd-border">
+        <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
+          <p className="font-sans text-base lg:text-lg text-black/80 dark:text-white/80 max-w-3xl mb-8">
+            {t("servicePage.introLead")}
+          </p>
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:gap-6 sm:items-center">
+            <InternalLink
+              to="/blog"
+              className="font-sans text-sm font-medium text-waabi-pink hover:underline underline-offset-2"
+            >
+              {t("servicePage.relatedInsightsLink")}
+            </InternalLink>
+            <span className="hidden sm:inline text-black/25 dark:text-white/25" aria-hidden>
+              |
+            </span>
+            <div className="flex flex-wrap gap-3">
+              {otherServices.map((s) => (
+                <InternalLink
+                  key={s.slug}
+                  to={`/services/${s.slug}`}
+                  className="px-4 py-2 rounded-full border border-black/15 dark:border-white/15 text-black dark:text-white font-sans text-sm hover:border-waabi-pink/40 transition-colors"
+                >
+                  {s.title}
+                </InternalLink>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Browse by - Category pills like Waabi */}
-      <section className="py-12 lg:py-16 bg-white dark:bg-velora-charcoal border-b border-black/5 dark:border-white/5">
+      <section className="py-12 lg:py-16 bg-nd-surface border-b border-nd-border">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <p className="font-sans text-sm text-black/60 dark:text-white/60 mb-4">{t("servicePage.browseBy")}</p>
           <div className="flex flex-wrap gap-3">
@@ -106,10 +145,10 @@ export function ServicePage() {
       </section>
 
       {/* Featured - Cards like Waabi research */}
-      <section className="py-16 lg:py-24 bg-white dark:bg-velora-charcoal">
+      <section className="py-16 lg:py-24 bg-nd-surface">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
-            <h2 className="font-playfair font-bold text-2xl lg:text-3xl text-black dark:text-white mb-12">
+            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-12 tracking-[-0.02em]">
               {t("servicePage.ourServices")}
             </h2>
           </ScrollReveal>
@@ -124,7 +163,7 @@ export function ServicePage() {
                   <span className="inline-block px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white font-sans text-xs font-medium mb-4">
                     {block.title}
                   </span>
-                  <h3 className="font-playfair font-bold text-xl lg:text-2xl text-black dark:text-white mb-6">
+                  <h3 className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-6">
                     {block.title}
                   </h3>
                   <ul className="space-y-3">
@@ -149,7 +188,7 @@ export function ServicePage() {
       <section className="py-16 lg:py-24 bg-black/[0.02] dark:bg-white/[0.02]">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
-            <h2 className="font-playfair font-bold text-2xl lg:text-3xl text-black dark:text-white mb-12">
+            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-12 tracking-[-0.02em]">
               {t("servicePage.inDetail")}
             </h2>
           </ScrollReveal>
@@ -212,26 +251,43 @@ export function ServicePage() {
         </div>
       </section>
 
+      <section className="py-10 lg:py-12 border-y border-nd-border lg:sticky lg:top-20 z-20 backdrop-blur-md bg-nd-surface/95 dark:bg-nd-surface/95 supports-[backdrop-filter]:bg-nd-surface/90">
+        <div className="max-w-[90rem] mx-auto px-6 lg:px-16 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <p className="font-sans font-medium text-nd-display mb-1">{t("servicePage.nextStepTitle")}</p>
+            <p className="font-sans text-sm text-black/65 dark:text-white/65 max-w-xl">{t("servicePage.nextStepText")}</p>
+          </div>
+          <a
+            href={contactHref}
+            onClick={goToContact}
+            className="inline-flex shrink-0 items-center justify-center px-6 py-3 rounded-full bg-waabi-pink text-white font-sans font-bold text-sm hover:bg-waabi-pink/90 transition-colors min-h-[44px]"
+          >
+            {t("servicePage.planifyCall")}
+          </a>
+        </div>
+      </section>
+
       {/* CTA - "We're just getting started" */}
-      <section className="py-24 lg:py-32 bg-white dark:bg-velora-charcoal">
+      <section className="py-24 lg:py-32 bg-nd-surface">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
-            <h2 className="font-playfair font-bold text-3xl lg:text-4xl text-black dark:text-white mb-4">
+            <h2 className="font-sans font-medium text-3xl lg:text-4xl text-nd-display mb-4 tracking-[-0.02em]">
               {t("servicePage.ctaTitle")}
             </h2>
             <p className="font-sans text-black/70 dark:text-white/70 mb-8 max-w-xl">
               {t("servicePage.ctaText")}
             </p>
             <div className="flex flex-wrap gap-4">
-              <InternalLink
-                to="/#contact"
+              <a
+                href={contactHref}
+                onClick={goToContact}
                 className="inline-flex px-6 py-3 rounded-full bg-waabi-pink text-white font-sans font-bold text-sm hover:bg-waabi-pink/90 transition-colors"
               >
                 {t("servicePage.planifyCall")}
-              </InternalLink>
+              </a>
               <a
                 href="mailto:info@gestionvelora.com"
-                className="inline-flex px-6 py-3 rounded-full border-2 border-black/20 dark:border-white/20 text-black dark:text-white font-sans font-semibold text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                className="inline-flex px-6 py-3 rounded-full border border-black/20 dark:border-white/20 text-black/80 dark:text-white/80 font-sans text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               >
                 info@gestionvelora.com
               </a>
