@@ -1,6 +1,7 @@
 import type { TFunction } from "i18next";
 
 export type ServiceSlug = "syndicat-copropriete" | "airbnb" | "location";
+type ServiceOffering = { title: string; items: string[]; detailItems?: string[] };
 
 const SERVICE_IMAGES: Record<ServiceSlug, string> = {
   "syndicat-copropriete":
@@ -19,7 +20,7 @@ export function getLocalizedService(slug: ServiceSlug, t: TFunction) {
   const base = `services.${slug}`;
   const offerings = (t(`${base}.offerings`, {
     returnObjects: true,
-  }) as { title: string; items: string[] }[]) || [];
+  }) as ServiceOffering[]) || [];
   return {
     slug,
     title: t(`${base}.title`),

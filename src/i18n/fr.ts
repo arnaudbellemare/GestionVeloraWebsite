@@ -58,7 +58,7 @@ export const fr = {
 
   // ValueLabels
   valueLabels: {
-    title: "Votre tranquillité,\ndans le monde réel.",
+    title: "La paix d'esprit,\nconcrète au quotidien.",
     transparent: "Transparent",
     transparentText:
       "Rapports financiers clairs, données en temps réel, et une visibilité totale sur chaque décision.",
@@ -446,6 +446,12 @@ export const fr = {
             "Gestion des décisions du conseil d'administration",
             "Respect des dispositions de la Loi sur la copropriété",
           ],
+          detailItems: [
+            "Calendrier annuel des obligations (AGA, budget, assurances, contrats) partagé avec le CA.",
+            "Préparation des ordres du jour, collecte des pièces et envoi des convocations selon les délais légaux.",
+            "Procès-verbaux structurés avec décisions, responsables et échéances de suivi.",
+            "Mise en application des résolutions (fournisseurs, communications, documents de gouvernance).",
+          ],
         },
         {
           title: "Fonds de prévoyance et finances",
@@ -454,6 +460,12 @@ export const fr = {
             "Élaboration des budgets prévisionnels",
             "Suivi des comptes et rapports financiers",
             "Perception des charges communes",
+          ],
+          detailItems: [
+            "Budget détaillé par poste avec hypothèses claires et comparaison à l'exercice précédent.",
+            "Suivi mensuel des écarts (budget vs réel) avec mesures correctives proposées.",
+            "Tableau de bord des encaissements, retards et interventions de recouvrement graduelles.",
+            "Planification du fonds de prévoyance alignée avec l'état de l'immeuble et les travaux à venir.",
           ],
         },
         {
@@ -464,6 +476,12 @@ export const fr = {
             "Suivi des contrats d'entretien",
             "Gestion des urgences et sinistres",
           ],
+          detailItems: [
+            "Priorisation des travaux par risque, impact sur les occupants et coût total de possession.",
+            "Appels d'offres cadrés (portée, échéancier, critères) pour comparer des soumissions équitables.",
+            "Suivi de chantier avec points d'étape, validations et traçabilité des décisions.",
+            "Protocoles d'urgence et coordination des sinistres avec assureur, experts et copropriétaires.",
+          ],
         },
         {
           title: "Communication et relations",
@@ -472,6 +490,12 @@ export const fr = {
             "Gestion des plaintes et demandes",
             "Transparence dans tous les rapports",
             "Support administratif continu",
+          ],
+          detailItems: [
+            "Canal de communication unique pour réduire les délais et éviter les informations contradictoires.",
+            "Traitement des demandes avec accusé, niveau de priorité et délai de résolution cible.",
+            "Communications préventives avant interventions (travaux, accès, nuisances, échéances).",
+            "Documentation centralisée accessible au CA pour garder l'historique décisionnel.",
           ],
         },
       ],
@@ -490,6 +514,12 @@ export const fr = {
             "Coordination des arrivées et départs",
             "Suivi des avis et de la réputation",
           ],
+          detailItems: [
+            "Ajustement dynamique des prix selon saisonnalité, événements locaux et taux d'occupation.",
+            "Réponses voyageurs standardisées mais personnalisées pour maintenir un taux de conversion élevé.",
+            "Processus d'arrivée autonome ou assistée avec instructions claires et rappels automatiques.",
+            "Suivi des évaluations et plan d'action qualité pour améliorer la note globale.",
+          ],
         },
         {
           title: "Opérations au quotidien",
@@ -499,6 +529,12 @@ export const fr = {
             "Maintenance et réparations",
             "Gestion des urgences 24/7",
           ],
+          detailItems: [
+            "Checklists ménage par type d'unité et contrôle qualité avant chaque check-in.",
+            "Coordination des équipes terrain avec fenêtres d'intervention courtes entre deux séjours.",
+            "Maintenance préventive pour réduire les pannes et les annulations de dernière minute.",
+            "Escalade 24/7 selon gravité (équipement, accès, sécurité) avec suivi jusqu'à résolution.",
+          ],
         },
         {
           title: "Conformité et réglementation",
@@ -507,6 +543,12 @@ export const fr = {
             "Enregistrement et permis requis",
             "Assurances et responsabilité",
             "Conformité fiscale",
+          ],
+          detailItems: [
+            "Validation continue des règles applicables (zonage, copropriété, exigences municipales).",
+            "Suivi des permis et renouvellements pour éviter les interruptions d'exploitation.",
+            "Cadre documentaire pour assurances, responsabilité civile et incidents voyageurs.",
+            "Transmission structurée des données de revenus et dépenses pour la conformité fiscale.",
           ],
         },
       ],
@@ -525,6 +567,12 @@ export const fr = {
             "Vérification des antécédents (crédit, références)",
             "Rédaction et signature des baux",
           ],
+          detailItems: [
+            "Positionnement de l'annonce (prix, photos, argumentaire) pour attirer les bons profils.",
+            "Préqualification des candidats avant visite pour limiter les vacants prolongés.",
+            "Vérifications documentées (emploi, crédit, références) selon une grille de risque cohérente.",
+            "Baux complets et annexes conformes, avec explication claire des obligations locatives.",
+          ],
         },
         {
           title: "Gestion des loyers et finances",
@@ -533,6 +581,12 @@ export const fr = {
             "Suivi des impayés et relances",
             "Rapports financiers détaillés",
             "Gestion des dépôts de garantie",
+          ],
+          detailItems: [
+            "Encaissements automatisés et rapprochements réguliers pour une vision de trésorerie fiable.",
+            "Relances progressives et interventions documentées dès les premiers retards.",
+            "Rapports mensuels lisibles (revenus, dépenses, travaux, incidents) par immeuble.",
+            "Suivi administratif des garanties et des ajustements de loyer selon les règles en vigueur.",
           ],
         },
         {
@@ -543,6 +597,12 @@ export const fr = {
             "Relations avec les fournisseurs",
             "Gestion des urgences",
           ],
+          detailItems: [
+            "Triage des demandes par criticité pour protéger les actifs et la satisfaction locataire.",
+            "Inspections planifiées avec compte rendu photo et priorisation des interventions.",
+            "Réseau de fournisseurs qualifiés avec suivi des coûts, délais et qualité.",
+            "Procédure d'urgence claire pour intervenir rapidement et limiter les dommages.",
+          ],
         },
         {
           title: "Relation locataire",
@@ -551,6 +611,12 @@ export const fr = {
             "Traitement des demandes et plaintes",
             "Renouvellement et résiliation des baux",
             "Médiation en cas de litiges",
+          ],
+          detailItems: [
+            "Point de contact unique pour fluidifier les échanges et éviter les escalades inutiles.",
+            "SLA internes pour demandes courantes, avec visibilité sur l'avancement.",
+            "Gestion proactive des renouvellements (délais, ajustements, documentation).",
+            "Médiation structurée en cas de litige, avec traces écrites et options de résolution.",
           ],
         },
       ],

@@ -196,6 +196,7 @@ export function ServicePage() {
           <div className="space-y-1">
             {service.offerings.map((block, i) => {
               const isExpanded = expandedDetail === i;
+              const detailItems = block.detailItems?.length ? block.detailItems : block.items;
               return (
                 <ScrollReveal key={block.title} delay={i * 0.03}>
                   <div className="border-b border-black/5 dark:border-white/5">
@@ -209,7 +210,7 @@ export function ServicePage() {
                       </h4>
                       <div className="flex items-center gap-2">
                         <span className="font-sans text-sm text-black/50 dark:text-white/50">
-                          {block.items.length} {t("servicePage.items")}
+                          {detailItems.length} {t("servicePage.items")}
                         </span>
                         <motion.span
                           animate={{ rotate: isExpanded ? 90 : 0 }}
@@ -230,7 +231,7 @@ export function ServicePage() {
                           className="overflow-hidden"
                         >
                           <ul className="pl-0 lg:pl-4 pb-6 space-y-2">
-                            {block.items.map((item) => (
+                            {detailItems.map((item) => (
                               <li
                                 key={item}
                                 className="font-sans text-sm lg:text-base text-black/80 dark:text-white/80 flex items-start gap-3"

@@ -443,6 +443,12 @@ export const en = {
             "Board decision management",
             "Compliance with Quebec condo law",
           ],
+          detailItems: [
+            "Shared annual compliance calendar (AGM, budget, insurance, vendor contracts) with the board.",
+            "Agenda preparation, document collection, and notice distribution within legal timelines.",
+            "Structured minutes with decisions, owners, and clear follow-up deadlines.",
+            "Execution tracking of board resolutions across vendors, communications, and governance docs.",
+          ],
         },
         {
           title: "Reserve fund and finances",
@@ -451,6 +457,12 @@ export const en = {
             "Budget preparation",
             "Accounts and financial reports",
             "Common fee collection",
+          ],
+          detailItems: [
+            "Line-by-line budget planning with assumptions and year-over-year comparisons.",
+            "Monthly variance tracking (budget vs actual) with corrective action recommendations.",
+            "Collection dashboard for receivables, arrears, and staged recovery actions.",
+            "Reserve fund planning aligned with building condition and upcoming capital work.",
           ],
         },
         {
@@ -461,6 +473,12 @@ export const en = {
             "Maintenance contract follow-up",
             "Emergency and claim management",
           ],
+          detailItems: [
+            "Project prioritization by risk, resident impact, and total lifecycle cost.",
+            "Structured bid process (scope, timeline, criteria) for fair vendor comparison.",
+            "Execution follow-up with checkpoints, approvals, and documented decisions.",
+            "Emergency and claims coordination with insurers, experts, and residents.",
+          ],
         },
         {
           title: "Communication and relations",
@@ -469,6 +487,12 @@ export const en = {
             "Complaint and request handling",
             "Transparency in all reports",
             "Ongoing administrative support",
+          ],
+          detailItems: [
+            "Single communication channel to reduce delays and conflicting information.",
+            "Request handling with acknowledgement, priority level, and target resolution windows.",
+            "Proactive notices ahead of interventions (work, access, disruptions, deadlines).",
+            "Centralized documentation accessible to the board for decision continuity.",
           ],
         },
       ],
@@ -487,6 +511,12 @@ export const en = {
             "Check-in and check-out coordination",
             "Review and reputation tracking",
           ],
+          detailItems: [
+            "Dynamic pricing updates based on seasonality, local events, and occupancy trends.",
+            "Templated but personalized guest messaging to improve conversion and trust.",
+            "Guided check-in flows with clear instructions and automated reminders.",
+            "Review monitoring with quality action plans to improve overall rating.",
+          ],
         },
         {
           title: "Day-to-day operations",
@@ -496,6 +526,12 @@ export const en = {
             "Maintenance and repairs",
             "24/7 emergency management",
           ],
+          detailItems: [
+            "Unit-specific cleaning checklists and quality control before each arrival.",
+            "Tight field-team coordination during same-day turnovers.",
+            "Preventive maintenance routines to reduce failures and last-minute cancellations.",
+            "24/7 incident escalation by severity (access, equipment, safety) until closure.",
+          ],
         },
         {
           title: "Compliance and regulation",
@@ -504,6 +540,12 @@ export const en = {
             "Registration and required permits",
             "Insurance and liability",
             "Tax compliance",
+          ],
+          detailItems: [
+            "Ongoing verification of applicable rules (zoning, condo rules, municipal requirements).",
+            "Permit and renewal tracking to avoid interruption of operations.",
+            "Document framework for insurance, liability, and guest incident records.",
+            "Structured revenue/expense reporting package to support tax compliance.",
           ],
         },
       ],
@@ -522,6 +564,12 @@ export const en = {
             "Credit and reference checks",
             "Lease drafting and signing",
           ],
+          detailItems: [
+            "Listing positioning (price, photos, messaging) to attract better-fit applicants.",
+            "Pre-screening before visits to reduce vacancy time and no-shows.",
+            "Documented checks (employment, credit, references) using a consistent risk grid.",
+            "Compliant lease package with clear explanation of tenant obligations.",
+          ],
         },
         {
           title: "Rent and financial management",
@@ -530,6 +578,12 @@ export const en = {
             "Non-payment follow-up",
             "Detailed financial reports",
             "Security deposit management",
+          ],
+          detailItems: [
+            "Automated collection workflows and regular reconciliation for reliable cash visibility.",
+            "Early-stage arrears process with documented notices and escalation.",
+            "Monthly owner reporting (income, expenses, work orders, incidents) by property.",
+            "Administrative tracking for deposits and rent adjustments under current rules.",
           ],
         },
         {
@@ -540,6 +594,12 @@ export const en = {
             "Vendor relations",
             "Emergency handling",
           ],
+          detailItems: [
+            "Issue triage by urgency to protect assets and tenant satisfaction.",
+            "Planned inspections with photo reports and prioritized corrective actions.",
+            "Qualified vendor network with tracking on cost, lead time, and quality.",
+            "Clear emergency response protocol to limit damage and downtime.",
+          ],
         },
         {
           title: "Tenant relations",
@@ -548,6 +608,12 @@ export const en = {
             "Request and complaint handling",
             "Lease renewal and termination",
             "Mediation in disputes",
+          ],
+          detailItems: [
+            "Single point of contact to keep communication calm and consistent.",
+            "Internal SLAs for routine requests with visible progress updates.",
+            "Proactive renewal management (deadlines, terms, and required documentation).",
+            "Structured mediation when conflicts arise, with written traceability.",
           ],
         },
       ],
