@@ -120,7 +120,7 @@ export function ContactCustomSelect({
             setOpen(true);
           }
         }}
-        className={`flex min-h-12 h-12 w-full items-center justify-between gap-2 rounded-lg border border-black/[0.22] px-4 text-left font-sans text-base text-nd-primary hover:border-black/35 dark:border-white/[0.22] dark:hover:border-white/35 focus:border-[#5B9BF6] focus:outline-none focus:ring-2 focus:ring-[#5B9BF6]/25 bg-white dark:bg-[#111111] ${reduceMotion ? "transition-colors" : "transition-[border-radius,colors,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]"} ${open ? "relative z-[1] rounded-b-none border-b-0 ring-0" : ""}`}
+        className={`flex min-h-12 h-12 w-full items-center justify-between gap-2 rounded-lg border-2 border-black/[0.18] px-4 text-left font-sans text-base text-nd-primary hover:border-black/35 dark:border-white/[0.22] dark:hover:border-white/35 focus:border-[#5B9BF6] focus:outline-none focus:ring-2 focus:ring-[#5B9BF6]/25 bg-white dark:bg-[#111111] ${reduceMotion ? "transition-colors" : "transition-[border-radius,colors,box-shadow,border-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]"} ${open ? "relative z-[1] rounded-b-none border-b-0 ring-0" : ""}`}
       >
         <span className={showPlaceholder ? "text-nd-muted" : ""}>
           {showPlaceholder ? placeholder : selectedLabel || placeholder}
@@ -145,7 +145,7 @@ export function ContactCustomSelect({
               duration: reduceMotion ? 0 : 0.26,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="absolute left-0 right-0 top-full z-[2] isolate w-full overflow-hidden rounded-b-lg border border-t-0 border-black/[0.22] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.14)] dark:border-white/[0.22] dark:bg-[#111111] dark:shadow-[0_16px_48px_rgba(0,0,0,0.55)]"
+            className="absolute left-0 right-0 top-full z-[2] isolate w-full overflow-hidden rounded-b-lg border-2 border-t-0 border-black/[0.18] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.14)] dark:border-white/[0.22] dark:bg-[#111111] dark:shadow-[0_16px_48px_rgba(0,0,0,0.55)]"
           >
             <ul
               id={listId}

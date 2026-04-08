@@ -15,7 +15,7 @@ const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
 /** Shared field chrome: readable borders, clear placeholder vs value, stable vertical metrics */
 const contactFieldBorder =
-  "border border-black/[0.22] dark:border-white/[0.22] focus:border-[#5B9BF6] focus:ring-2 focus:ring-[#5B9BF6]/25 focus:outline-none";
+  "border-2 border-black/[0.18] dark:border-white/[0.22] focus:border-[#5B9BF6] focus:ring-2 focus:ring-[#5B9BF6]/25 focus:outline-none";
 const contactInputClass = `w-full min-h-12 h-12 box-border rounded-lg bg-nd-surface px-4 py-0 text-base leading-[3rem] font-sans text-nd-primary placeholder:text-nd-secondary/75 transition-colors ${contactFieldBorder}`;
 const contactTextareaClass = `min-h-[8.5rem] w-full resize-none rounded-lg bg-nd-surface px-4 py-3 text-base leading-relaxed font-sans text-nd-primary placeholder:text-nd-secondary/75 transition-colors ${contactFieldBorder}`;
 
@@ -217,12 +217,12 @@ export function ContactSection() {
                         {t("contact.errorBody")}
                       </p>
                     )}
-                    <div className="space-y-5">
-                      <div>
+                    <div className="space-y-6">
+                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22 space-y-2.5">
                         <label
                           id="contact-topic-label"
                           htmlFor="contact-topic"
-                          className="mb-2 block font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary"
+                          className="block font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary"
                         >
                           {t("contact.topicLabel")}
                         </label>
@@ -243,11 +243,11 @@ export function ContactSection() {
                           ]}
                         />
                       </div>
-                      <div>
+                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22 space-y-2.5">
                         <label
                           id="contact-inquiry-label"
                           htmlFor="contact-inquiry"
-                          className="mb-2 block font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary"
+                          className="block font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary"
                         >
                           {t("contact.inquiryLabel")}
                         </label>
@@ -268,6 +268,7 @@ export function ContactSection() {
                           ]}
                         />
                       </div>
+                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22">
                       <motion.input
                         type="text"
                         placeholder={t("contact.namePlaceholder")}
@@ -279,6 +280,8 @@ export function ContactSection() {
                         autoComplete="name"
                         className={contactInputClass}
                       />
+                      </div>
+                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22">
                       <motion.input
                         type="email"
                         placeholder={t("contact.emailPlaceholder")}
@@ -290,6 +293,8 @@ export function ContactSection() {
                         autoComplete="email"
                         className={contactInputClass}
                       />
+                      </div>
+                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22">
                       <motion.textarea
                         placeholder={t("contact.messagePlaceholder")}
                         value={formData.message}
@@ -300,11 +305,12 @@ export function ContactSection() {
                         required
                         className={contactTextareaClass}
                       />
+                      </div>
                     </div>
                     <motion.button
                       type="submit"
                       disabled={status === "submitting"}
-                      className="mt-8 inline-flex self-start items-center justify-center min-h-[44px] px-5 py-2.5 rounded-none bg-transparent font-sans text-sm font-medium text-nd-primary border border-black dark:border-white transition-colors hover:bg-nd-canvas dark:hover:bg-nd-raised disabled:pointer-events-none disabled:opacity-55"
+                      className="mt-8 inline-flex self-start items-center justify-center min-h-[44px] px-5 py-2.5 rounded-none bg-transparent font-sans text-sm font-medium text-nd-primary border-2 border-black dark:border-white transition-colors hover:bg-nd-canvas dark:hover:bg-nd-raised disabled:pointer-events-none disabled:opacity-55"
                     >
                       {status === "submitting" ? t("contact.sending") : t("contact.send")}
                     </motion.button>

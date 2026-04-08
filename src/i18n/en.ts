@@ -311,7 +311,7 @@ export const en = {
   contact: {
     title: "Let us help you manage simply and efficiently.",
     trustLine:
-      "After you submit, a team member replies on business days — no black box, no endless queue.",
+      "After you submit, a team member replies on business days, without a long wait.",
     cta: "Talk to an advisor",
     topicLabel: "What is this about?",
     topicGeneral: "Property management / general question",

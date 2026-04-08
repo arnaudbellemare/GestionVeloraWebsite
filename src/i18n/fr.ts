@@ -314,7 +314,7 @@ export const fr = {
   contact: {
     title: "Laissez-nous vous aider à gérer de façon simple et efficace.",
     trustLine:
-      "Après l’envoi, un membre de l’équipe vous répond en jours ouvrables — pas de boîte noire, pas de file d’attente interminable.",
+      "Après l’envoi, un membre de l’équipe vous répond en jours ouvrables, sans longue attente.",
     cta: "Parler à un conseiller",
     topicLabel: "Objet du message",
     topicGeneral: "Gestion immobilière / question générale",

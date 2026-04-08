@@ -216,32 +216,45 @@ export function TrustedPartnersSection() {
           </LayoutGroup>
         </div>
 
-        {/* Bottom: Partner logos marquee — high contrast on dark + light */}
-        <div className="mt-24 lg:mt-32 overflow-hidden relative rounded-xl border border-nd-border bg-nd-canvas/80 py-6 dark:border-white/[0.08] dark:bg-black/50">
-          <motion.div
-            className="flex w-max animate-marquee"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            {[0, 1].map((dup) => (
-              <div
-                key={dup}
-                className="flex gap-12 lg:gap-20 py-1 pr-12 lg:pr-20 shrink-0 items-center"
-              >
-                {partnerLogos.map((name) => (
-                  <span
-                    key={`${name}-${dup}`}
-                    className="inline-block font-sans text-lg lg:text-2xl font-semibold tracking-tight text-nd-primary hover:text-nd-display shrink-0 whitespace-nowrap cursor-default dark:text-zinc-300 dark:hover:text-white transition-colors"
-                  >
-                    {name}
-                  </span>
-                ))}
-              </div>
-            ))}
-          </motion.div>
-        </div>
+        {/* Bottom: Partner logos marquee — inView on this box only; wide inner strip breaks IO ratio on mobile */}
+        <motion.div
+          className="mt-24 lg:mt-32 overflow-hidden relative rounded-xl border border-nd-border bg-nd-canvas/80 py-6 dark:border-white/[0.08] dark:bg-black/50"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.12, margin: "0px 0px -32px 0px" }}
+          transition={{ duration: 0.45 }}
+        >
+          {reduceMotion ? (
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 px-4">
+              {partnerLogos.map((name) => (
+                <span
+                  key={name}
+                  className="inline-block font-sans text-lg lg:text-2xl font-semibold tracking-tight text-nd-primary dark:text-zinc-300"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div className="flex w-max animate-marquee">
+              {[0, 1].map((dup) => (
+                <div
+                  key={dup}
+                  className="flex gap-12 lg:gap-20 py-1 pr-12 lg:pr-20 shrink-0 items-center"
+                >
+                  {partnerLogos.map((name) => (
+                    <span
+                      key={`${name}-${dup}`}
+                      className="inline-block font-sans text-lg lg:text-2xl font-semibold tracking-tight text-nd-primary hover:text-nd-display shrink-0 whitespace-nowrap cursor-default dark:text-zinc-300 dark:hover:text-white transition-colors"
+                    >
+                      {name}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+        </motion.div>
       </div>
     </section>
   );

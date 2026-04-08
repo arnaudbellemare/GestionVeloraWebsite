@@ -15,7 +15,8 @@ export function OurStandardsSection() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
-  const loadVideo = useLoadWhenInView(ref);
+  /** Wider margin so the MP4 starts loading before the section fills the viewport (less flash when scrolling fast). */
+  const loadVideo = useLoadWhenInView(ref, "45% 0px");
 
   useEffect(() => {
     if (!loadVideo) return;
@@ -37,9 +38,8 @@ export function OurStandardsSection() {
           <img
             src={BG_IMAGE}
             alt=""
-            loading="lazy"
+            loading="eager"
             decoding="async"
-            fetchPriority="low"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: "center 60%" }}
           />
