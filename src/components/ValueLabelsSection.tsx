@@ -13,6 +13,8 @@ const valueKeys = [
 export function ValueLabelsSection() {
   const { t } = useTranslation();
   const [active, setActive] = useState(0);
+  const titleRaw = t("valueLabels.title");
+  const titleParts = titleRaw.split("\n").map((s) => s.trim()).filter(Boolean);
 
   useEffect(() => {
     const ti = setInterval(() => setActive((a) => (a + 1) % valueKeys.length), 4000);
@@ -28,33 +30,39 @@ export function ValueLabelsSection() {
 
       <div className="max-w-[90rem] mx-auto relative z-10">
         <ScrollReveal>
-          <h2 className="font-playfair font-semibold text-2xl sm:text-3xl lg:text-5xl text-white leading-[1.08] tracking-[-0.02em] mb-10 sm:mb-16 max-w-3xl">
-            {t("valueLabels.title")}
+          <h2 className="font-playfair font-semibold text-2xl sm:text-3xl lg:text-5xl text-white leading-[1.08] tracking-[-0.02em] mb-10 sm:mb-16 max-w-3xl text-balance">
+            {titleParts.length > 1 ? (
+              <>
+                <span className="block">{titleParts[0]}</span>
+                <span className="block pl-8 sm:pl-12 lg:pl-16 mt-1">{titleParts.slice(1).join(" ")}</span>
+              </>
+            ) : (
+              titleRaw
+            )}
           </h2>
         </ScrollReveal>
 
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-16 items-start">
-          {/* Labels with sliding accent */}
-          <div className="relative flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 lg:flex-col lg:pr-6 shrink-0 w-full lg:w-auto">
-            <motion.div
-              className="absolute left-0 top-0 w-0.5 h-5 bg-white rounded-sm hidden lg:block"
-              initial={false}
-              animate={{ y: active * 44 }}
-              transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
-            />
-            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 lg:flex-col lg:pl-4 lg:ml-2">
-              {valueKeys.map((v, i) => (
-                <motion.button
-                  key={v.labelKey}
-                  onClick={() => setActive(i)}
-                  className={`font-mono text-xs uppercase tracking-[0.1em] transition-colors text-left ${
-                    active === i ? "text-white" : "text-[#999999] hover:text-[#E8E8E8]"
+          {/* Labels: bar sits flush left of the word, vertically centered to the label */}
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 lg:flex-col lg:gap-3 shrink-0 w-full lg:w-auto">
+            {valueKeys.map((v, i) => (
+              <motion.button
+                key={v.labelKey}
+                type="button"
+                onClick={() => setActive(i)}
+                className={`group flex items-center gap-1 text-left font-mono text-xs uppercase tracking-[0.1em] transition-colors ${
+                  active === i ? "text-white" : "text-[#999999] hover:text-[#E8E8E8]"
+                }`}
+              >
+                <span
+                  className={`w-0.5 shrink-0 rounded-sm bg-white h-[0.85em] transition-opacity duration-200 ${
+                    active === i ? "opacity-100" : "opacity-0"
                   }`}
-                >
-                  {t(v.labelKey)}
-                </motion.button>
-              ))}
-            </div>
+                  aria-hidden
+                />
+                <span className="min-w-0">{t(v.labelKey)}</span>
+              </motion.button>
+            ))}
           </div>
 
           {/* Description text */}

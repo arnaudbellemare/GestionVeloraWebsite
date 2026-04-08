@@ -104,26 +104,25 @@ export function TrustedPartnersSection() {
                   <motion.div key={p.name} variants={listItem}>
                     <motion.button
                       onClick={() => setActiveIndex(i)}
-                      className={`flex w-full items-stretch gap-3 text-left font-sans font-bold text-xl lg:text-2xl leading-tight transition-colors duration-300 ${
+                      className={`flex w-full items-center gap-1.5 text-left font-sans font-bold text-xl lg:text-2xl leading-tight transition-colors duration-300 ${
                         activeIndex === i
                           ? "text-nd-display"
                           : "text-nd-muted hover:text-nd-secondary dark:text-white/40 dark:hover:text-white/65"
                       }`}
                     >
-                      {/* Rail height follows the title line box; bar fills it when selected */}
                       <span
-                        className="flex w-4 shrink-0 justify-center"
+                        className="flex w-2 shrink-0 justify-center"
                         aria-hidden
                       >
                         {activeIndex === i ? (
                           <motion.span
                             layoutId="trustedPartnerListAccent"
-                            className="w-[3px] shrink-0 self-stretch rounded-none bg-black dark:bg-white"
+                            className="w-[2px] shrink-0 rounded-none bg-black dark:bg-white h-[0.58em] lg:h-[0.6em]"
                             transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
                           />
                         ) : null}
                       </span>
-                      <span className="relative min-w-0 flex items-center">{p.name}</span>
+                      <span className="relative min-w-0">{p.name}</span>
                     </motion.button>
                   </motion.div>
                 ))}

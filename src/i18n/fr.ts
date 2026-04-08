@@ -58,7 +58,7 @@ export const fr = {
 
   // ValueLabels
   valueLabels: {
-    title: "Votre tranquillité, dans le monde réel.",
+    title: "Votre tranquillité,\ndans le monde réel.",
     transparent: "Transparent",
     transparentText:
       "Rapports financiers clairs, données en temps réel, et une visibilité totale sur chaque décision.",
