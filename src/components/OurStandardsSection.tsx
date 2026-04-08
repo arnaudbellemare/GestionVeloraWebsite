@@ -65,7 +65,7 @@ export function OurStandardsSection() {
             {loadVideo ? <source src={BG_VIDEO} type="video/mp4" /> : null}
           </video>
         </div>
-        <div className="absolute inset-0 bg-black/28" aria-hidden />
+        <div className="absolute inset-0 bg-black/38" aria-hidden />
       </div>
 
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-[90rem] mx-auto px-6 lg:px-16 py-24 items-center gap-16 border-b border-[#333333]">
