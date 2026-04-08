@@ -310,7 +310,7 @@ export function ContactSection() {
                     <motion.button
                       type="submit"
                       disabled={status === "submitting"}
-                      className="mt-8 inline-flex self-start items-center justify-center min-h-[44px] px-5 py-2.5 rounded-none bg-transparent font-sans text-sm font-medium text-nd-primary border-2 border-black dark:border-white transition-colors hover:bg-nd-canvas dark:hover:bg-nd-raised disabled:pointer-events-none disabled:opacity-55"
+                      className="mt-8 ml-4 sm:ml-5 inline-flex self-start items-center justify-center min-h-[44px] px-5 py-2.5 rounded-none bg-transparent font-sans text-sm font-medium text-nd-primary border-2 border-black dark:border-white transition-colors hover:bg-nd-canvas dark:hover:bg-nd-raised disabled:pointer-events-none disabled:opacity-55"
                     >
                       {status === "submitting" ? t("contact.sending") : t("contact.send")}
                     </motion.button>

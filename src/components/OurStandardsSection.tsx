@@ -15,8 +15,8 @@ export function OurStandardsSection() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
-  /** Wider margin so the MP4 starts loading before the section fills the viewport (less flash when scrolling fast). */
-  const loadVideo = useLoadWhenInView(ref, "45% 0px");
+  /** Start fetching while the section is still below the fold so playback can begin sooner. */
+  const loadVideo = useLoadWhenInView(ref, "320px 0px");
 
   useEffect(() => {
     if (!loadVideo) return;
@@ -24,6 +24,8 @@ export function OurStandardsSection() {
   }, [loadVideo]);
 
   const handleCanPlay = useCallback(() => {
+    const v = videoRef.current;
+    if (v) void v.play().catch(() => {});
     setVideoReady(true);
   }, []);
 
@@ -34,24 +36,27 @@ export function OurStandardsSection() {
       className="relative min-h-[600px] flex overflow-hidden pt-24 lg:pt-24 -mt-px bg-black"
     >
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 w-full h-full">
+        <div className="absolute inset-0 w-full h-full bg-black">
+          {/* Static frame (matches video) until the MP4 can render — avoids an empty area before load */}
           <img
             src={BG_IMAGE}
             alt=""
             loading="eager"
             decoding="async"
+            fetchPriority="high"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: "center 60%" }}
           />
           <video
             ref={videoRef}
+            poster={BG_IMAGE}
             autoPlay
             loop
             muted
             playsInline
-            preload="none"
-            onCanPlayThrough={handleCanPlay}
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out"
+            preload={loadVideo ? "auto" : "none"}
+            onCanPlay={handleCanPlay}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
             style={{
               objectPosition: "center 60%",
               opacity: videoReady ? 1 : 0,

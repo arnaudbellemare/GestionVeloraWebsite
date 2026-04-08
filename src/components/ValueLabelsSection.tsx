@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
@@ -10,11 +10,45 @@ const valueKeys = [
   { labelKey: "valueLabels.reliable", textKey: "valueLabels.reliableText" },
 ] as const;
 
+type BarRect = { top: number; left: number; width: number; height: number };
+
 export function ValueLabelsSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [active, setActive] = useState(0);
+  const labelsContainerRef = useRef<HTMLDivElement>(null);
+  const spacerRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const [barRect, setBarRect] = useState<BarRect | null>(null);
   const titleRaw = t("valueLabels.title");
   const titleParts = titleRaw.split("\n").map((s) => s.trim()).filter(Boolean);
+
+  const measureBar = useCallback(() => {
+    const container = labelsContainerRef.current;
+    const spacer = spacerRefs.current[active];
+    if (!container || !spacer) return;
+    const c = container.getBoundingClientRect();
+    const s = spacer.getBoundingClientRect();
+    setBarRect({
+      top: Math.round(s.top - c.top),
+      left: Math.round(s.left - c.left),
+      width: Math.max(1, Math.round(s.width)),
+      height: Math.max(1, Math.round(s.height)),
+    });
+  }, [active]);
+
+  useLayoutEffect(() => {
+    measureBar();
+    const container = labelsContainerRef.current;
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(measureBar) : null;
+    if (container && ro) ro.observe(container);
+    window.addEventListener("resize", measureBar);
+    window.addEventListener("orientationchange", measureBar);
+    document.fonts?.ready?.then(measureBar);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", measureBar);
+      window.removeEventListener("orientationchange", measureBar);
+    };
+  }, [measureBar, i18n.language]);
 
   useEffect(() => {
     const ti = setInterval(() => setActive((a) => (a + 1) % valueKeys.length), 4000);
@@ -43,8 +77,25 @@ export function ValueLabelsSection() {
         </ScrollReveal>
 
         <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-16 items-start">
-          {/* Labels: bar sits flush left of the word, vertically centered to the label */}
-          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 lg:flex-col lg:gap-3 shrink-0 w-full lg:w-auto">
+          {/* Labels: one measured bar animates between spacers (avoids mobile opacity flicker on thin lines) */}
+          <div
+            ref={labelsContainerRef}
+            className="relative flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 lg:flex-col lg:gap-3 shrink-0 w-full lg:w-auto"
+          >
+            {barRect !== null && (
+              <motion.div
+                aria-hidden
+                className="absolute z-[1] rounded-sm bg-white pointer-events-none will-change-[top,left,width,height]"
+                initial={false}
+                animate={{
+                  top: barRect.top,
+                  left: barRect.left,
+                  width: barRect.width,
+                  height: barRect.height,
+                }}
+                transition={{ duration: 0.38, ease: [0.25, 0.1, 0.25, 1] }}
+              />
+            )}
             {valueKeys.map((v, i) => (
               <motion.button
                 key={v.labelKey}
@@ -55,9 +106,10 @@ export function ValueLabelsSection() {
                 }`}
               >
                 <span
-                  className={`w-0.5 shrink-0 rounded-sm bg-white h-[0.85em] transition-opacity duration-200 ${
-                    active === i ? "opacity-100" : "opacity-0"
-                  }`}
+                  ref={(el) => {
+                    spacerRefs.current[i] = el;
+                  }}
+                  className="w-0.5 h-[0.85em] shrink-0 rounded-sm bg-transparent"
                   aria-hidden
                 />
                 <span className="min-w-0">{t(v.labelKey)}</span>
