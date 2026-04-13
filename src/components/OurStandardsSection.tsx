@@ -23,10 +23,19 @@ export function OurStandardsSection() {
     videoRef.current?.load();
   }, [loadVideo]);
 
-  const handleCanPlay = useCallback(() => {
+  // onLoadedData fires once the first frame is decoded — safer than onCanPlay
+  // which can fire before any pixels are rendered, causing a brief white flash.
+  const handleLoadedData = useCallback(() => {
     const v = videoRef.current;
     if (v) void v.play().catch(() => {});
     setVideoReady(true);
+  }, []);
+
+  // Retry once on network/decode error (e.g. interrupted preload).
+  const handleError = useCallback(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.load();
   }, []);
 
   return (
@@ -55,7 +64,8 @@ export function OurStandardsSection() {
             muted
             playsInline
             preload={loadVideo ? "auto" : "none"}
-            onCanPlay={handleCanPlay}
+            onLoadedData={handleLoadedData}
+            onError={handleError}
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
             style={{
               objectPosition: "center 60%",

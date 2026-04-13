@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { useIdleReady } from "../hooks/useDeferredMedia";
 
@@ -20,6 +20,12 @@ export function HeroSection() {
     videoRef.current?.load();
   }, [idleReady]);
 
+  // Explicit play() is more reliable than relying on the autoPlay attribute
+  // when the <source> is injected dynamically and load() is called manually.
+  const handleCanPlay = useCallback(() => {
+    void videoRef.current?.play().catch(() => {});
+  }, []);
+
   return (
     <section
       className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-black"
@@ -32,6 +38,7 @@ export function HeroSection() {
         muted
         playsInline
         preload="none"
+        onCanPlay={handleCanPlay}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ backgroundColor: "#000" }}
         aria-hidden
