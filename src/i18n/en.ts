@@ -4,7 +4,7 @@ export const en = {
     line1: "Your property,",
     line2: "in all tranquility.",
     subtitle:
-      "Condo boards, Airbnb hosts, and landlords — 24/7 support, clear reporting, and rigorous processes.",
+      "Condo boards, Airbnb hosts, and landlords - 24/7 support, clear reporting, and rigorous processes.",
     trustLine: "They trust us.",
     trustLink: "Read testimonials",
     ctaDiscover: "See how we work",
@@ -39,13 +39,13 @@ export const en = {
         category: "Condo",
         location: "Montreal",
         name: "Le Beaumont",
-        image: "/IMG-R2790956_1.webp",
+        image: "/images/portfolio/le-beaumont.png?v=5",
       },
       {
         category: "Condo",
         location: "Montreal",
         name: "Syndicat de copropriété Enticy",
-        image: "/images/portfolio/syndicat-enticy.png",
+        image: "/images/portfolio/syndicat-enticy.png?v=5",
       },
       {
         category: "Airbnb",
@@ -151,13 +151,13 @@ export const en = {
         step: "Step 01",
         title: "We understand your needs.",
         body:
-          "Before any recommendation, we take time to understand your situation, goals, and constraints. Condo board, long-term rental, or short-term — every mandate is unique.",
+          "Before any recommendation, we take time to understand your situation, goals, and constraints. Condo board, long-term rental, or short-term - every mandate is unique.",
       },
       {
         step: "Step 02",
         title: "We plan the strategy.",
         body:
-          "We define a clear plan: maintenance, finances, tenants, and communication. No vague promises — a roadmap aligned with your objectives.",
+          "We define a clear plan: maintenance, finances, tenants, and communication. No vague promises - a roadmap aligned with your objectives.",
       },
       {
         step: "Step 03",
@@ -169,7 +169,7 @@ export const en = {
         step: "Step 04",
         title: "We monitor and adjust.",
         body:
-          "Regular reviews, cost and occupancy optimization. Your portfolio evolves — so does our support.",
+          "Regular reviews, cost and occupancy optimization. Your portfolio evolves - so does our support.",
       },
     ],
   },
@@ -303,7 +303,7 @@ export const en = {
     ctaLearn: "Learn more",
     metaTitle: "Services | Gestion Velora",
     metaDescription:
-      "Condo management, Airbnb management, and residential leasing in Montreal — transparency, proactive maintenance, and a responsive team.",
+      "Condo management, Airbnb management, and residential leasing in Montreal - transparency, proactive maintenance, and a responsive team.",
     schemaName: "Gestion Velora services",
   },
 
@@ -364,7 +364,7 @@ export const en = {
     qrViewToggle: "QR view mode",
     qrView2d: "QR",
     qrView3d: "3D",
-    qrScanAria: "Open gestionvelora.com — scan QR or tap",
+    qrScanAria: "Open gestionvelora.com - scan QR or tap",
     qrSeasonGroup: "QR tree season",
     qrSeasonSpring: "Spring",
     qrSeasonSummer: "Summer",
@@ -384,7 +384,7 @@ export const en = {
     relatedInsightsLink: "Read our property management insights →",
     nextStepTitle: "Next step",
     nextStepText:
-      "Tell us your context — we’ll suggest a short call to align on fit and priorities.",
+      "Tell us your context - we’ll suggest a short call to align on fit and priorities.",
     ctaTitle: "We're just getting started",
     ctaText: "Follow us or contact us directly at info@gestionvelora.com",
     planifyCall: "Request a proposal",

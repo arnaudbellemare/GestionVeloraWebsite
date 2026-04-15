@@ -39,13 +39,13 @@ export const fr = {
         category: "Copropriété",
         location: "Montréal",
         name: "Le Beaumont",
-        image: "/IMG-R2790956_1.webp",
+        image: "/images/portfolio/le-beaumont.png?v=5",
       },
       {
         category: "Copropriété",
         location: "Montréal",
         name: "Syndicat de copropriété Enticy",
-        image: "/images/portfolio/syndicat-enticy.png",
+        image: "/images/portfolio/syndicat-enticy.png?v=5",
       },
       {
         category: "Airbnb",
@@ -158,7 +158,7 @@ export const fr = {
         step: "Étape 02",
         title: "Nous planifions la stratégie.",
         body:
-          "Nous définissons un plan clair : maintenance, finances, locataires et communication. Pas de promesses vagues — une feuille de route alignée sur vos objectifs.",
+          "Nous définissons un plan clair : maintenance, finances, locataires et communication. Pas de promesses vagues - une feuille de route alignée sur vos objectifs.",
       },
       {
         step: "Étape 03",
@@ -170,7 +170,7 @@ export const fr = {
         step: "Étape 04",
         title: "Nous suivons et ajustons.",
         body:
-          "Révisions régulières, optimisation des coûts et de l’occupation. Votre patrimoine évolue — notre accompagnement aussi.",
+          "Révisions régulières, optimisation des coûts et de l’occupation. Votre patrimoine évolue - notre accompagnement aussi.",
       },
     ],
   },
@@ -306,7 +306,7 @@ export const fr = {
     ctaLearn: "En savoir plus",
     metaTitle: "Services | Gestion Velora",
     metaDescription:
-      "Syndic de copropriété, gestion Airbnb et location résidentielle à Montréal — transparence, maintenance proactive et équipe réactive.",
+      "Syndic de copropriété, gestion Airbnb et location résidentielle à Montréal - transparence, maintenance proactive et équipe réactive.",
     schemaName: "Services Gestion Velora",
   },
 
@@ -367,7 +367,7 @@ export const fr = {
     qrViewToggle: "Mode d’affichage du QR",
     qrView2d: "QR",
     qrView3d: "3D",
-    qrScanAria: "Ouvrir gestionvelora.com — flasher le code ou toucher",
+    qrScanAria: "Ouvrir gestionvelora.com - flasher le code ou toucher",
     qrSeasonGroup: "Saison de l’arbre QR",
     qrSeasonSpring: "Printemps",
     qrSeasonSummer: "Été",
