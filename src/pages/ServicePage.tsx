@@ -148,25 +148,22 @@ export function ServicePage() {
       <section className="py-16 lg:py-24 bg-nd-surface">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
-            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-12 tracking-[-0.02em]">
+            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-10 tracking-[-0.02em]">
               {t("servicePage.ourServices")}
             </h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
             {service.offerings.map((block, i) => (
               <ScrollReveal key={block.title} delay={i * 0.05}>
                 <motion.article
                   id={toAnchorId(block.title).slice(1)}
-                  className="group rounded-2xl border border-black/10 dark:border-white/10 p-8 lg:p-10 hover:border-waabi-pink/30 transition-colors bg-white dark:bg-white/[0.02] scroll-mt-24"
+                  className="group rounded-2xl border border-black/10 dark:border-white/10 p-7 lg:p-8 hover:border-waabi-pink/30 transition-colors bg-white dark:bg-white/[0.02] scroll-mt-24"
                 >
-                  <span className="inline-block px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white font-sans text-xs font-medium mb-4">
-                    {block.title}
-                  </span>
-                  <h3 className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-6">
+                  <h3 className="font-sans font-medium text-xl lg:text-[1.6rem] text-nd-display mb-5 leading-[1.15]">
                     {block.title}
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2.5">
                     {block.items.map((item) => (
                       <li
                         key={item}
@@ -188,7 +185,7 @@ export function ServicePage() {
       <section className="py-16 lg:py-24 bg-black/[0.02] dark:bg-white/[0.02]">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
-            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-12 tracking-[-0.02em]">
+            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-10 tracking-[-0.02em]">
               {t("servicePage.inDetail")}
             </h2>
           </ScrollReveal>
@@ -203,9 +200,9 @@ export function ServicePage() {
                     <button
                       type="button"
                       onClick={() => setExpandedDetail(isExpanded ? null : i)}
-                      className="w-full text-left py-6 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group cursor-pointer flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2"
+                      className="w-full text-left py-5 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group cursor-pointer flex flex-col lg:flex-row lg:items-center lg:justify-between gap-1.5"
                     >
-                      <h4 className="font-sans font-bold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
+                      <h4 className="font-sans font-semibold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
                         {block.title}
                       </h4>
                       <div className="flex items-center gap-2">
@@ -230,7 +227,7 @@ export function ServicePage() {
                           transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                           className="overflow-hidden"
                         >
-                          <ul className="pl-0 lg:pl-4 pb-6 space-y-2">
+                          <ul className="pl-0 lg:pl-4 pb-5 space-y-1.5">
                             {detailItems.map((item) => (
                               <li
                                 key={item}
@@ -252,7 +249,7 @@ export function ServicePage() {
         </div>
       </section>
 
-      <section className="py-10 lg:py-12 border-y border-nd-border lg:sticky lg:top-20 z-20 backdrop-blur-md bg-nd-surface/95 dark:bg-nd-surface/95 supports-[backdrop-filter]:bg-nd-surface/90">
+      <section className="py-10 lg:py-12 border-y border-nd-border bg-nd-surface">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
             <p className="font-sans font-medium text-nd-display mb-1">{t("servicePage.nextStepTitle")}</p>

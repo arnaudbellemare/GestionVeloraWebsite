@@ -19,9 +19,9 @@ const STORAGE_KEY = "gestion-velora-theme";
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "dark";
+    if (typeof window === "undefined") return "light";
     const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
-    return stored === "dark" || stored === "light" ? stored : "dark";
+    return stored === "dark" || stored === "light" ? stored : "light";
   });
 
   useEffect(() => {

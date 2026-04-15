@@ -34,16 +34,12 @@ export function OurProcessSection() {
           <a
             href={contactHref}
             onClick={goToContact}
-            className="group relative overflow-hidden inline-flex items-center gap-2 self-start lg:self-auto border-2 border-nd-border-visible text-nd-primary px-5 py-3 text-[10px] tracking-[0.12em] uppercase font-mono bg-white/30 dark:bg-white/[0.03] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+            className="inline-flex items-center gap-2 self-start lg:self-auto border border-nd-border-visible text-nd-primary px-5 py-3 text-[10px] tracking-[0.12em] uppercase font-mono hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
           >
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_75%_at_10%_0%,rgba(255,255,255,0.42)_0%,rgba(255,255,255,0.08)_45%,rgba(255,255,255,0)_75%)] opacity-70 transition-opacity duration-300 group-hover:opacity-30 dark:opacity-60 dark:group-hover:opacity-20"
-            />
-            <span className="relative z-[1] text-sm" aria-hidden>
+            <span className="text-sm" aria-hidden>
               ↗
             </span>
-            <span className="relative z-[1]">{t("ourProcess.cta")}</span>
+            {t("ourProcess.cta")}
           </a>
         </div>
 

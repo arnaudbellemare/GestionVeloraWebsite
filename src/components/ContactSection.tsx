@@ -13,11 +13,10 @@ type Topic = "general" | "demo" | "communication";
 
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
-/** Shared field chrome: readable borders, clear placeholder vs value, stable vertical metrics */
 const contactFieldBorder =
-  "border-2 border-black/[0.18] dark:border-white/[0.22] focus:border-[#5B9BF6] focus:ring-2 focus:ring-[#5B9BF6]/25 focus:outline-none";
-const contactInputClass = `w-full min-h-12 h-12 box-border rounded-lg bg-nd-surface px-4 py-0 text-base leading-[3rem] font-sans text-nd-primary placeholder:text-nd-secondary/75 transition-colors ${contactFieldBorder}`;
-const contactTextareaClass = `min-h-[8.5rem] w-full resize-none rounded-lg bg-nd-surface px-4 py-3 text-base leading-relaxed font-sans text-nd-primary placeholder:text-nd-secondary/75 transition-colors ${contactFieldBorder}`;
+  "border border-nd-border-visible focus:border-nd-primary focus:outline-none transition-colors";
+const contactInputClass = `w-full min-h-12 h-12 box-border rounded-md bg-nd-canvas px-4 py-0 text-base leading-[3rem] font-nd-grotesk text-nd-primary placeholder:text-nd-secondary/80 ${contactFieldBorder}`;
+const contactTextareaClass = `min-h-[8.5rem] w-full resize-none rounded-md bg-nd-canvas px-4 py-3 text-base leading-relaxed font-nd-grotesk text-nd-primary placeholder:text-nd-secondary/80 ${contactFieldBorder}`;
 
 function inquiryLabel(t: TFunction, inquiry: Inquiry): string {
   switch (inquiry) {
@@ -145,32 +144,26 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative pt-16 pb-24 lg:pt-20 lg:pb-32 px-6 lg:px-16 bg-nd-surface overflow-x-hidden scroll-mt-24 border-t border-nd-border"
+      className="relative pt-16 pb-24 lg:pt-20 lg:pb-32 px-6 lg:px-16 bg-nd-canvas overflow-x-hidden scroll-mt-24 border-t border-nd-border"
     >
       <div className="max-w-[90rem] mx-auto relative z-10">
-        <div className="max-w-2xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-10 lg:gap-16">
           <ScrollReveal>
-            <h2 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em] mb-6">
-              {t("contact.title")}
-            </h2>
+            <div className="max-w-lg">
+              <p className="font-nd-mono text-[10px] uppercase tracking-[0.14em] text-nd-secondary mb-5">
+                {t("contact.cta")}
+              </p>
+              <h2 className="font-nd-grotesk font-medium text-4xl lg:text-5xl text-nd-display leading-[1.06] tracking-[-0.02em] mb-5">
+                {t("contact.title")}
+              </h2>
+              <p className="max-w-[64ch] font-nd-grotesk text-sm lg:text-base text-nd-secondary leading-relaxed">
+                {t("contact.trustLine")}
+              </p>
+            </div>
           </ScrollReveal>
+
           <ScrollReveal delay={0.1}>
-            <a
-              href="#contact-form"
-              className="inline-flex items-center justify-center min-h-[44px] px-8 rounded-full bg-black text-white font-sans font-medium text-sm leading-normal hover:opacity-90 dark:bg-white dark:text-black border border-nd-border-visible"
-            >
-              {t("contact.cta")}
-            </a>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.15}>
-            <p className="mt-8 max-w-md font-sans text-sm text-nd-secondary leading-relaxed">
-              {t("contact.trustLine")}
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.2}>
-            <div className="mt-8 max-w-md scroll-mt-24" id="contact-form">
+            <div className="w-full max-w-xl lg:ml-auto scroll-mt-24" id="contact-form">
               <AnimatePresence mode="wait">
                 {status === "success" ? (
                   <motion.div
@@ -181,21 +174,21 @@ export function ContactSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.25 }}
-                    className="rounded-2xl border border-nd-border-visible bg-nd-canvas p-8"
+                    className="rounded-lg border border-nd-border-visible bg-nd-surface p-6 lg:p-7"
                   >
-                    <p className="font-sans font-medium text-xl text-nd-primary mb-2">
+                    <p className="font-nd-grotesk font-medium text-xl text-nd-primary mb-2">
                       {t("contact.successTitle")}
                     </p>
-                    <p className="font-sans text-nd-secondary mb-2">
+                    <p className="font-nd-grotesk text-nd-secondary mb-2">
                       {t("contact.successBody")}
                     </p>
-                    <p className="font-sans text-sm text-nd-secondary mb-6">
+                    <p className="font-nd-grotesk text-sm text-nd-secondary mb-6">
                       {t("contact.successExpectation")}
                     </p>
                     <button
                       type="button"
                       onClick={resetToForm}
-                      className="font-sans font-medium text-sm text-[#5B9BF6] hover:underline underline-offset-2"
+                      className="font-nd-mono text-[10px] uppercase tracking-[0.12em] text-nd-primary hover:text-nd-secondary transition-colors"
                     >
                       {t("contact.sendAnother")}
                     </button>
@@ -212,17 +205,17 @@ export function ContactSection() {
                     {status === "error" && (
                       <p
                         role="alert"
-                        className="mb-4 font-mono text-xs uppercase tracking-wider text-[#D71921]"
+                        className="mb-4 font-nd-mono text-[10px] uppercase tracking-[0.12em] text-[#D71921]"
                       >
                         {t("contact.errorBody")}
                       </p>
                     )}
-                    <div className="space-y-6">
-                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22 space-y-2.5">
+                    <div className="space-y-5">
+                      <div className="space-y-2">
                         <label
                           id="contact-topic-label"
                           htmlFor="contact-topic"
-                          className="block font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary"
+                          className="block font-nd-mono text-[10px] uppercase tracking-[0.12em] text-nd-secondary"
                         >
                           {t("contact.topicLabel")}
                         </label>
@@ -243,11 +236,11 @@ export function ContactSection() {
                           ]}
                         />
                       </div>
-                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22 space-y-2.5">
+                      <div className="space-y-2">
                         <label
                           id="contact-inquiry-label"
                           htmlFor="contact-inquiry"
-                          className="block font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary"
+                          className="block font-nd-mono text-[10px] uppercase tracking-[0.12em] text-nd-secondary"
                         >
                           {t("contact.inquiryLabel")}
                         </label>
@@ -268,56 +261,68 @@ export function ContactSection() {
                           ]}
                         />
                       </div>
-                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22">
-                      <motion.input
-                        type="text"
-                        placeholder={t("contact.namePlaceholder")}
-                        value={formData.name}
-                        onChange={(e) =>
-                          setFormData((p) => ({ ...p, name: e.target.value }))
-                        }
-                        required
-                        autoComplete="name"
-                        className={contactInputClass}
-                      />
+                      <div className="space-y-2">
+                        <label htmlFor="contact-name" className="block font-nd-mono text-[10px] uppercase tracking-[0.12em] text-nd-secondary">
+                          {t("contact.namePlaceholder")}
+                        </label>
+                        <motion.input
+                          id="contact-name"
+                          type="text"
+                          placeholder={t("contact.namePlaceholder")}
+                          value={formData.name}
+                          onChange={(e) =>
+                            setFormData((p) => ({ ...p, name: e.target.value }))
+                          }
+                          required
+                          autoComplete="name"
+                          className={contactInputClass}
+                        />
                       </div>
-                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22">
-                      <motion.input
-                        type="email"
-                        placeholder={t("contact.emailPlaceholder")}
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData((p) => ({ ...p, email: e.target.value }))
-                        }
-                        required
-                        autoComplete="email"
-                        className={contactInputClass}
-                      />
+                      <div className="space-y-2">
+                        <label htmlFor="contact-email" className="block font-nd-mono text-[10px] uppercase tracking-[0.12em] text-nd-secondary">
+                          {t("contact.emailPlaceholder")}
+                        </label>
+                        <motion.input
+                          id="contact-email"
+                          type="email"
+                          placeholder={t("contact.emailPlaceholder")}
+                          value={formData.email}
+                          onChange={(e) =>
+                            setFormData((p) => ({ ...p, email: e.target.value }))
+                          }
+                          required
+                          autoComplete="email"
+                          className={contactInputClass}
+                        />
                       </div>
-                      <div className="border-l-2 border-black/18 pl-4 sm:pl-5 dark:border-white/22">
-                      <motion.textarea
-                        placeholder={t("contact.messagePlaceholder")}
-                        value={formData.message}
-                        onChange={(e) =>
-                          setFormData((p) => ({ ...p, message: e.target.value }))
-                        }
-                        rows={5}
-                        required
-                        className={contactTextareaClass}
-                      />
+                      <div className="space-y-2">
+                        <label htmlFor="contact-message" className="block font-nd-mono text-[10px] uppercase tracking-[0.12em] text-nd-secondary">
+                          {t("contact.messagePlaceholder")}
+                        </label>
+                        <motion.textarea
+                          id="contact-message"
+                          placeholder={t("contact.messagePlaceholder")}
+                          value={formData.message}
+                          onChange={(e) =>
+                            setFormData((p) => ({ ...p, message: e.target.value }))
+                          }
+                          rows={5}
+                          required
+                          className={contactTextareaClass}
+                        />
                       </div>
                     </div>
                     <motion.button
                       type="submit"
                       disabled={status === "submitting"}
-                      className="mt-8 ml-4 sm:ml-5 inline-flex self-start items-center justify-center min-h-[44px] px-5 py-2.5 rounded-none bg-transparent font-sans text-sm font-medium text-nd-primary border-2 border-black dark:border-white transition-colors hover:bg-nd-canvas dark:hover:bg-nd-raised disabled:pointer-events-none disabled:opacity-55"
+                      className="mt-7 inline-flex self-start items-center justify-center min-h-[44px] px-5 py-2.5 rounded-md bg-nd-primary text-nd-canvas font-nd-mono text-[11px] tracking-[0.12em] uppercase border border-nd-primary transition-opacity hover:opacity-90 disabled:pointer-events-none disabled:opacity-55"
                     >
                       {status === "submitting" ? t("contact.sending") : t("contact.send")}
                     </motion.button>
                     {!CONTACT_FORM_USE_API && import.meta.env.DEV && (
-                      <p className="mt-4 font-sans text-xs text-black/45 dark:text-white/40">
-                        Dev: set <code className="font-mono">VITE_WEB3FORMS_ACCESS_KEY</code> in{" "}
-                        <code className="font-mono">.env.local</code> for API submit; otherwise mailto opens to{" "}
+                      <p className="mt-4 font-nd-grotesk text-xs text-black/45 dark:text-white/40">
+                        Dev: set <code className="font-nd-mono">VITE_WEB3FORMS_ACCESS_KEY</code> in{" "}
+                        <code className="font-nd-mono">.env.local</code> for API submit; otherwise mailto opens to{" "}
                         {NOTIFICATION_EMAIL}.
                       </p>
                     )}

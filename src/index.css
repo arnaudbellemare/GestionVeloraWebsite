@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,6 +26,12 @@
   /* Stats KPI row — PPMori + Outfit only (minifiers strip quotes; avoid multi-word family names here) */
   .font-stat-numeral {
     font-family: PPMori, Outfit, system-ui, sans-serif;
+  }
+  .font-nd-grotesk {
+    font-family: "Space Grotesk", "DM Sans", system-ui, sans-serif;
+  }
+  .font-nd-mono {
+    font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 }
 

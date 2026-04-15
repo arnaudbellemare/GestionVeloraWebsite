@@ -39,7 +39,7 @@ export const fr = {
         category: "Copropriété",
         location: "Montréal",
         name: "Le Beaumont",
-        image: "/images/portfolio/le-beaumont.png",
+        image: "/IMG-R2790956_1.webp",
       },
       {
         category: "Copropriété",
