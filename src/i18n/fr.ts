@@ -413,6 +413,7 @@ export const fr = {
     exploreServicesIntro: "Besoin d’accompagnement concret ? Nos services :",
     contactQuestion: "Des questions sur la gestion immobilière ? Contactez Gestion Velora.",
     planifyCall: "Demander une soumission",
+    contactUs: "Nous contacter",
   },
 
   // Privacy
@@ -441,7 +442,7 @@ export const fr = {
   services: {
     "syndicat-copropriete": {
       title: "Syndicat de copropriété",
-      subtitle: "Une gestion complète pour votre copropriété",
+      subtitle: "Gestion de syndicat de copropriété à Montréal",
       description:
         "Gestion Velora offre des services complets de gestion pour les syndicats de copropriété à Montréal. Notre équipe expérimentée assure la transparence, la rigueur et une communication claire avec tous les copropriétaires.",
       offerings: [
@@ -523,7 +524,7 @@ export const fr = {
     },
     airbnb: {
       title: "Gestion Airbnb et location courte durée",
-      subtitle: "Maximisez vos revenus en toute sérénité",
+      subtitle: "Gestion Airbnb et location courte durée à Montréal",
       description:
         "Gestion Velora prend en charge l'intégralité de la gestion de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est géré pour vous.",
       offerings: [
@@ -590,7 +591,7 @@ export const fr = {
     },
     location: {
       title: "Gestion locative longue durée",
-      subtitle: "Une gestion locative professionnelle et humaine",
+      subtitle: "Gestion locative longue durée à Montréal",
       description:
         "Gestion Velora gère vos immeubles locatifs à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable.",
       offerings: [

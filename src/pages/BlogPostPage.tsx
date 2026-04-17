@@ -5,8 +5,29 @@ import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
 import { useGoToContact } from "../hooks/useGoToContact";
-import { getPostBySlug, getRelatedPosts } from "../data/blog";
+import { getPostBySlug, getRelatedPosts, type RichParagraph } from "../data/blog";
 import { getLocalizedService, SERVICE_SLUGS } from "../data/services";
+
+function RichPara({ p, id }: { p: RichParagraph; id: string }) {
+  if (typeof p === "string") return <p>{p}</p>;
+  return (
+    <p>
+      {p.map((seg, i) =>
+        typeof seg === "string" ? (
+          <span key={`${id}-${i}`}>{seg}</span>
+        ) : (
+          <InternalLink
+            key={`${id}-${i}`}
+            to={seg.to}
+            className="text-waabi-pink font-medium hover:underline underline-offset-2"
+          >
+            {seg.text}
+          </InternalLink>
+        )
+      )}
+    </p>
+  );
+}
 
 export function BlogPostPage() {
   const { t } = useTranslation();
@@ -84,16 +105,30 @@ export function BlogPostPage() {
 
         <ScrollReveal delay={0.15}>
           <div className="font-sans text-lg text-black/80 dark:text-white/80 leading-relaxed space-y-10">
-            {post.sections.map((section) => (
+            {post.sections.map((section, sectionIndex) => (
               <section key={section.heading} className="scroll-mt-24">
                 <h2 className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-4 leading-snug tracking-[-0.02em]">
                   {section.heading}
                 </h2>
                 <div className="space-y-4">
                   {section.paragraphs.map((p, i) => (
-                    <p key={`${section.heading}-${i}`}>{p}</p>
+                    <RichPara key={`${section.heading}-${i}`} p={p} id={`${section.heading}-${i}`} />
                   ))}
                 </div>
+                {sectionIndex === 1 && (
+                  <div className="mt-8 p-5 lg:p-6 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10">
+                    <p className="font-sans text-sm text-black/70 dark:text-white/70 mb-3">
+                      {t("blog.contactQuestion")}
+                    </p>
+                    <a
+                      href={contactHref}
+                      onClick={goToContact}
+                      className="inline-flex px-5 py-2.5 rounded-full bg-waabi-pink text-white font-sans font-semibold text-sm hover:bg-waabi-pink/90 transition-colors"
+                    >
+                      {t("blog.contactUs")}
+                    </a>
+                  </div>
+                )}
               </section>
             ))}
           </div>

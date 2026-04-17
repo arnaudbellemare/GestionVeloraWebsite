@@ -24,7 +24,7 @@ export function PageMeta() {
   const { slug } = useParams<{ slug: string }>();
 
   const isEn = locale === "en";
-  const baseTitle = isEn ? "Gestion Velora | Property Management Montreal" : "Gestion Velora | Votre tranquillité. Notre affaire.";
+  const baseTitle = isEn ? "Gestion Velora | Property Management Montreal" : "Gestion Velora | Gestion immobilière à Montréal";
   const baseDesc = isEn
     ? "Leading property management Montreal: condo management, Airbnb management, rental management. 98% occupancy, 24/7 support, full transparency."
     : "Gestion Velora offre syndicat de copropriété, gestion Airbnb et location longue durée à Montréal. Administration complète, maintenance proactive et rapports transparents.";

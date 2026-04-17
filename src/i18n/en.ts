@@ -410,6 +410,7 @@ export const en = {
     exploreServicesIntro: "Want hands-on support? Our services:",
     contactQuestion: "Questions about property management? Contact Gestion Velora.",
     planifyCall: "Request a proposal",
+    contactUs: "Contact us",
   },
 
   // Privacy
@@ -438,7 +439,7 @@ export const en = {
   services: {
     "syndicat-copropriete": {
       title: "Condo management",
-      subtitle: "Complete management for your condo board",
+      subtitle: "Condo board management in Montreal",
       description:
         "Gestion Velora offers full condo management services in Montreal. Our experienced team delivers transparency, rigour, and clear communication with all unit owners.",
       offerings: [
@@ -520,7 +521,7 @@ export const en = {
     },
     airbnb: {
       title: "Airbnb and short-term rental management",
-      subtitle: "Maximize revenue with peace of mind",
+      subtitle: "Airbnb and short-term rental management in Montreal",
       description:
         "Gestion Velora handles full management of your short-term rental properties in Montreal. Reservations, cleaning, maintenance, and guest communication, all managed for you.",
       offerings: [
@@ -587,7 +588,7 @@ export const en = {
     },
     location: {
       title: "Long-term rental management",
-      subtitle: "Professional, human rental management",
+      subtitle: "Long-term rental management in Montreal",
       description:
         "Gestion Velora manages your rental properties in Montreal with rigour and professionalism. From tenant screening to rent and maintenance follow-up, we deliver calm, profitable management.",
       offerings: [
