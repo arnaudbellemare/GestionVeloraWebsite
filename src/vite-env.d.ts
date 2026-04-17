@@ -3,6 +3,7 @@
 
 interface Window {
   gtag?: (...args: unknown[]) => void;
+  dataLayer?: Array<Record<string, unknown>>;
 }
 
 interface ImportMetaEnv {

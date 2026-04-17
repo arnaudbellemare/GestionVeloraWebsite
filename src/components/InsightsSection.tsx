@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { InternalLink } from "./InternalLink";
 import { ScrollReveal } from "./ScrollReveal";
 import { blogPosts } from "../data/blog";
+import { trackBlogSelect } from "../lib/analytics";
 
 const featuredPosts = blogPosts.slice(0, 4);
 
@@ -86,6 +87,13 @@ export function InsightsSection() {
             <InternalLink
               key={post.slug}
               to={`/blog/${post.slug}`}
+              onClick={() =>
+                trackBlogSelect(
+                  { slug: post.slug, title: loc.title },
+                  "insights_featured",
+                  i
+                )
+              }
               className="flex-shrink-0 w-[300px]"
               style={{ scrollSnapAlign: "start" }}
             >

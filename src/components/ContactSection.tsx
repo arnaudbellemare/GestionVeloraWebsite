@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 import { ContactCustomSelect } from "./ContactCustomSelect";
 import { CONTACT_FORM_USE_API, WEB3FORMS_ACCESS_KEY } from "../config";
+import { trackGenerateLead } from "../lib/analytics";
 
 const NOTIFICATION_EMAIL = "info@gestionvelora.com";
 
@@ -83,6 +84,11 @@ export function ContactSection() {
   };
 
   const submitMailto = () => {
+    trackGenerateLead({
+      topic: formData.topic,
+      inquiry: formData.inquiry,
+      submit_method: "mailto",
+    });
     const subject = emailSubject(formData.topic, i18n.language);
     const mailto = `mailto:${NOTIFICATION_EMAIL}?subject=${encodeURIComponent(
       subject
@@ -120,6 +126,11 @@ export function ContactSection() {
       const data = (await res.json()) as { success?: boolean; message?: string };
 
       if (data.success) {
+        trackGenerateLead({
+          topic: formData.topic,
+          inquiry: formData.inquiry,
+          submit_method: "api",
+        });
         setStatus("success");
         setFormData({
           topic: "general",

@@ -1,13 +1,24 @@
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { SERVICE_SLUGS, getLocalizedService } from "../data/services";
+import { trackServiceListView, trackServiceSelect } from "../lib/analytics";
 
 export function ServicesIndexPage() {
   const { t } = useTranslation();
   const services = SERVICE_SLUGS.map((slug) => getLocalizedService(slug, t));
+  const listName = "services_hub";
+  const lastTrackedKey = useRef<string>("");
+
+  useEffect(() => {
+    const trackKey = services.map((s) => `${s.slug}:${s.title}`).join("|");
+    if (trackKey === lastTrackedKey.current) return;
+    lastTrackedKey.current = trackKey;
+    trackServiceListView(services, listName);
+  }, [services, listName]);
 
   return (
     <motion.div
@@ -54,6 +65,7 @@ export function ServicesIndexPage() {
                   </p>
                   <InternalLink
                     to={`/services/${service.slug}`}
+                    onClick={() => trackServiceSelect(service, listName, i)}
                     className="inline-flex self-start px-5 py-2.5 rounded-full bg-waabi-pink text-white font-sans font-semibold text-sm hover:bg-waabi-pink/90 transition-colors"
                   >
                     {t("servicesHub.ctaLearn")}

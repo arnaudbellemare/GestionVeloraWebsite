@@ -27,6 +27,23 @@ npm run dev
 - **Google Search Console** : performances par requête (impressions, clics) et pages ; surveiller les anomalies d’indexation.
 - **AEO / citations** : pas de tableau de bord natif ; échantillonner des requêtes cibles et noter présence dans résultats enrichis / AEO (outils externes ou revue manuelle).
 
+## GA4 / GTM event mapping
+
+`src/lib/analytics.ts` centralise les événements `dataLayer` pour GA4 :
+
+- **Catalog / content** : `view_item_list`, `select_item`
+- **Lead** : `generate_lead`
+- **AI / Vertex-ready** : `ai_search`, `ai_search_result_click`, `ai_chat_message`, `ai_response_view`
+
+Paramètres recommandés pour AI search/chat :
+
+- `search_query`
+- `result_position`
+- `result_url`
+- `message_length`
+- `ai_response_length`
+- `ai_provider` (ex: `vertex_ai`)
+
 ## Thème
 
 Bouton lune/soleil dans le header pour basculer entre mode clair et sombre.

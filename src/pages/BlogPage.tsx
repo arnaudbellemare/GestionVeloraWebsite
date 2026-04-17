@@ -1,12 +1,28 @@
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
 import { blogPosts } from "../data/blog";
+import { trackBlogListView, trackBlogSelect } from "../lib/analytics";
 
 export function BlogPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
+  const listName = "blog_hub";
+  const lastTrackedKey = useRef<string>("");
+
+  useEffect(() => {
+    const localizedPosts = blogPosts.map((post) => ({
+      slug: post.slug,
+      title: post[locale].title,
+    }));
+    const trackKey = localizedPosts.map((p) => `${p.slug}:${p.title}`).join("|");
+    if (trackKey === lastTrackedKey.current) return;
+    lastTrackedKey.current = trackKey;
+    trackBlogListView(localizedPosts, listName);
+  }, [locale, listName]);
+
   return (
     <div className="pt-24 lg:pt-32 pb-24 lg:pb-32">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
@@ -26,6 +42,13 @@ export function BlogPage() {
             <ScrollReveal key={post.slug} delay={i * 0.05}>
               <InternalLink
                 to={`/blog/${post.slug}`}
+                onClick={() =>
+                  trackBlogSelect(
+                    { slug: post.slug, title: loc.title },
+                    listName,
+                    i
+                  )
+                }
                 className="group block rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 hover:border-waabi-pink/30 transition-colors"
               >
                 <div className="aspect-[4/3] overflow-hidden">
