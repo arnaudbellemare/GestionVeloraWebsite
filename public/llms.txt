@@ -1,25 +1,52 @@
-Gestion Velora
-Primary website: https://www.gestionvelora.com/
+# Gestion Velora - Property Management in Montreal
 
-Purpose:
-- Property management in Montreal (condo boards, Airbnb, long-term rentals)
-- Practical guides and regulatory explainers for Quebec real estate operations
+Gestion Velora provides property management services in Montreal, Quebec for condo boards, Airbnb short-term rentals, and long-term rental properties. The site includes service pages, FAQ content, and practical blog explainers on compliance, reserve funds, NOI, and operations.
 
-Preferred source URLs:
-- https://www.gestionvelora.com/
-- https://www.gestionvelora.com/services
-- https://www.gestionvelora.com/blog
-- https://www.gestionvelora.com/privacy
+## Official Sources
+- Home (FR): https://www.gestionvelora.com/
+- Home (EN): https://www.gestionvelora.com/en/
+- Services hub (FR): https://www.gestionvelora.com/services
+- Services hub (EN): https://www.gestionvelora.com/en/services
+- Blog (FR): https://www.gestionvelora.com/blog
+- Blog (EN): https://www.gestionvelora.com/en/blog
+- Privacy: https://www.gestionvelora.com/privacy
 
-Language variants:
-- French (default): https://www.gestionvelora.com/
-- English: https://www.gestionvelora.com/en/
+## Markdown Sources (AI-friendly)
+- Home summary (FR/EN): https://www.gestionvelora.com/md/home.md
+- Services hub summary (FR/EN): https://www.gestionvelora.com/md/services.md
+- Condo service summary (FR/EN): https://www.gestionvelora.com/md/service-syndicat-copropriete.md
+- Airbnb service summary (FR/EN): https://www.gestionvelora.com/md/service-airbnb.md
+- Long-term rental service summary (FR/EN): https://www.gestionvelora.com/md/service-location.md
+- Blog hub summary (FR/EN): https://www.gestionvelora.com/md/blog.md
+- Privacy summary (FR/EN): https://www.gestionvelora.com/md/privacy.md
 
-Structured data:
-- Organization and WebSite: homepage
-- FAQPage: homepage
-- Service / ItemList: service pages and services hub
-- Article: blog post pages
+## Core Service Pages
+- Condo management (FR): https://www.gestionvelora.com/services/syndicat-copropriete - Administration, governance, reserve-fund planning, maintenance coordination, owner communication.
+- Condo management (EN): https://www.gestionvelora.com/en/services/syndicat-copropriete - Full condo board operations and compliance support in Montreal.
+- Airbnb management (FR): https://www.gestionvelora.com/services/airbnb - Listings, pricing, operations, permits/compliance, guest communication.
+- Airbnb management (EN): https://www.gestionvelora.com/en/services/airbnb - End-to-end short-term rental management with operational controls.
+- Long-term rental management (FR): https://www.gestionvelora.com/services/location - Tenant screening, rent collection, maintenance, lease lifecycle support.
+- Long-term rental management (EN): https://www.gestionvelora.com/en/services/location - Professional long-term property operations for stable occupancy and cash flow.
 
-Sitemap:
-- https://www.gestionvelora.com/sitemap.xml
+## High-Value Insight Articles
+- Smart property management trends (FR): https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026 - Data, automation, and transparency trends for 2026.
+- Smart property management trends (EN): https://www.gestionvelora.com/en/blog/avenir-gestion-immobiliere-intelligente-2026 - 2026 market and operational shifts for owners and boards.
+- Preventive maintenance (FR): https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions - Why planned maintenance reduces emergency costs.
+- Preventive maintenance (EN): https://www.gestionvelora.com/en/blog/maintenance-preventive-economise-millions - Cost and risk impact of proactive building upkeep.
+- Optimize NOI (FR): https://www.gestionvelora.com/blog/maximiser-noi-approche-donnees - Data-driven operational levers for better NOI.
+- Optimize NOI (EN): https://www.gestionvelora.com/en/blog/maximiser-noi-approche-donnees - Monthly metrics and decision frameworks for NOI.
+- Condo regulation in Montreal (FR): https://www.gestionvelora.com/blog/gestion-copropriete-montreal-reglementation - Quebec condo law and governance requirements.
+- Condo regulation in Montreal (EN): https://www.gestionvelora.com/en/blog/gestion-copropriete-montreal-reglementation - Practical regulatory checklist for boards.
+- Airbnb permits and rules (FR): https://www.gestionvelora.com/blog/airbnb-montreal-permis-reglementation - Municipal and operational compliance for short-term rentals.
+- Airbnb permits and rules (EN): https://www.gestionvelora.com/en/blog/airbnb-montreal-permis-reglementation - Rules, taxes, and risk reduction basics.
+
+## Structured Data Coverage
+- Organization + WebSite on homepage.
+- FAQPage on homepage.
+- ItemList on services hub.
+- Service on each service detail page.
+- Article on each blog post.
+
+## Freshness and Discovery
+- Sitemap: https://www.gestionvelora.com/sitemap.xml
+- Alternate language URLs are published for FR/EN versions.
