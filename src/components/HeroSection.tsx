@@ -74,24 +74,6 @@ export function HeroSection() {
           {t("hero.subtitle")}
         </motion.p>
 
-        <motion.aside
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.38, delay: 0.46, ease }}
-          className="w-full max-w-2xl mb-6 sm:mx-auto rounded-2xl border border-white/20 bg-black/35 backdrop-blur-md px-5 py-4 sm:px-6 sm:py-5 text-left"
-          aria-label={t("hero.answerBoxTitle")}
-        >
-          <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-white/55 mb-2">
-            {t("hero.answerBoxTitle")}
-          </p>
-          <p className="font-sans text-sm sm:text-base text-white/90 leading-relaxed mb-3">
-            {t("hero.answerBoxLine1")}
-          </p>
-          <p className="font-sans text-sm sm:text-base text-white/85 leading-relaxed">
-            {t("hero.answerBoxLine2")}
-          </p>
-        </motion.aside>
-
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
