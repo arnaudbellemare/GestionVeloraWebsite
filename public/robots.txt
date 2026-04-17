@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.gestionvelora.com/sitemap.xml
+# LLM guidance
+# https://www.gestionvelora.com/llms.txt

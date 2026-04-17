@@ -49,9 +49,17 @@ export function BlogPostPage() {
           <h1 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em] mb-6">
             {post.title}
           </h1>
-          <p className="font-sans text-xl text-black/70 dark:text-white/70 leading-relaxed">
+          <p className="font-sans text-xl text-black/70 dark:text-white/70 leading-relaxed mb-6">
             {post.excerpt}
           </p>
+          <aside className="rounded-2xl border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/[0.04] px-5 py-4 lg:px-6 lg:py-5">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-black/45 dark:text-white/45 mb-2">
+              {t("blog.briefLabel")}
+            </p>
+            <p className="font-sans text-base text-black/85 dark:text-white/85 leading-relaxed">
+              {post.brief}
+            </p>
+          </aside>
         </ScrollReveal>
 
         <ScrollReveal delay={0.08}>
@@ -70,13 +78,24 @@ export function BlogPostPage() {
 
         <ScrollReveal delay={0.1}>
           <div className="mt-12 mb-12 rounded-2xl overflow-hidden">
-            <img src={post.image} alt="" className="w-full h-auto object-cover" />
+            <img src={post.image} alt={post.title} className="w-full h-auto object-cover" />
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={0.15}>
-          <div className="font-sans text-lg text-black/80 dark:text-white/80 leading-relaxed whitespace-pre-line">
-            {post.content}
+          <div className="font-sans text-lg text-black/80 dark:text-white/80 leading-relaxed space-y-10">
+            {post.sections.map((section) => (
+              <section key={section.heading} className="scroll-mt-24">
+                <h2 className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-4 leading-snug tracking-[-0.02em]">
+                  {section.heading}
+                </h2>
+                <div className="space-y-4">
+                  {section.paragraphs.map((p, i) => (
+                    <p key={`${section.heading}-${i}`}>{p}</p>
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
         </ScrollReveal>
 

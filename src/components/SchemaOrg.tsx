@@ -1,10 +1,17 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
+import {
+  ARTICLE_AUTHOR_NAME,
+  ARTICLE_AUTHOR_SAME_AS,
+  ARTICLE_AUTHOR_URL,
+  ORGANIZATION_SCHEMA_ID,
+  ORGANIZATION_SAME_AS,
+  PUBLISHER_LOGO_URL,
+  SITE_URL,
+} from "../config";
 import { getPostBySlug } from "../data/blog";
 import { getLocalizedService, getLocalizedServices, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
-
-const SITE_URL = "https://www.gestionvelora.com";
 
 function injectSchema(data: object) {
   const id = "schema-org-page";
@@ -81,7 +88,7 @@ export function SchemaOrg() {
         "@type": "Service",
         name: service.title,
         description: service.description,
-        provider: { "@id": `${SITE_URL}/#organization` },
+        provider: { "@id": ORGANIZATION_SCHEMA_ID },
         url: `${SITE_URL}${path.startsWith("/en") ? "/en" : ""}/services/${service.slug}`,
         image: service.image,
       });
@@ -92,24 +99,35 @@ export function SchemaOrg() {
       const blogLocale = path.startsWith("/en") ? "en" : "fr";
       const post = getPostBySlug(slug, blogLocale);
       if (post) {
-        const months: Record<string, number> = { Janvier: 0, Février: 1, Mars: 2, Avril: 3, Mai: 4, Juin: 5, Juillet: 6, Août: 7, Septembre: 8, Octobre: 9, Novembre: 10, Décembre: 11 };
-        const dateMatch = post.date.match(/(\w+)\s+(\d{4})/);
-        const dateStr = dateMatch && dateMatch[1] in months
-          ? `${dateMatch[2]}-${String(months[dateMatch[1] as keyof typeof months] + 1).padStart(2, "0")}-01`
-          : new Date().toISOString().slice(0, 10);
+        const articleUrl = `${SITE_URL}${path.startsWith("/en") ? "/en" : ""}/blog/${post.slug}`;
         injectSchema({
           "@context": "https://schema.org",
           "@type": "Article",
           headline: post.title,
           description: post.excerpt,
           image: post.image,
-          datePublished: dateStr,
-          dateModified: dateStr,
-          author: { "@id": `${SITE_URL}/#organization` },
-          publisher: { "@id": `${SITE_URL}/#organization` },
+          datePublished: post.datePublished,
+          dateModified: post.dateModified,
+          author: {
+            "@type": "Person",
+            name: ARTICLE_AUTHOR_NAME,
+            url: ARTICLE_AUTHOR_URL,
+            sameAs: ARTICLE_AUTHOR_SAME_AS,
+          },
+          publisher: {
+            "@type": "Organization",
+            "@id": ORGANIZATION_SCHEMA_ID,
+            name: "Gestion Velora",
+            url: SITE_URL,
+            sameAs: ORGANIZATION_SAME_AS,
+            logo: {
+              "@type": "ImageObject",
+              url: PUBLISHER_LOGO_URL,
+            },
+          },
           mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": `${SITE_URL}${path.startsWith("/en") ? "/en" : ""}/blog/${post.slug}`,
+            "@id": articleUrl,
           },
         });
         return () => removePageSchema();

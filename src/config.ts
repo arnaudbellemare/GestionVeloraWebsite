@@ -1,6 +1,30 @@
 /** Google Analytics 4 measurement ID (must match gtag snippet in index.html). */
 export const GA_MEASUREMENT_ID = "G-NMSB2ZT1EZ";
 
+/** Canonical site origin (metadata, JSON-LD, Article author URL). */
+export const SITE_URL = "https://www.gestionvelora.com";
+
+export const ORGANIZATION_SCHEMA_ID = `${SITE_URL}/#organization` as const;
+
+/** Matches Organization logo in index.html JSON-LD. */
+export const PUBLISHER_LOGO_URL = `${SITE_URL}/logo.png?v=10` as const;
+
+/** Article `author` in JSON-LD (Person). */
+export const ARTICLE_AUTHOR_NAME = "Gestion Velora";
+export const ARTICLE_AUTHOR_URL = SITE_URL;
+
+/** Brand entity URLs used in JSON-LD `sameAs`. */
+export const ORGANIZATION_SAME_AS = [
+  SITE_URL,
+  `${SITE_URL}/en/`,
+] as const;
+
+export const ARTICLE_AUTHOR_SAME_AS = [...ORGANIZATION_SAME_AS] as const;
+
+/** Default social cards for pages without dedicated assets. */
+export const DEFAULT_OG_IMAGE: string = `${SITE_URL}/og-image.png`;
+export const DEFAULT_TWITTER_IMAGE: string = `${SITE_URL}/twitter-card.png`;
+
 /**
  * Portal URLs for ManagerSyndicat and ServiceSyndicat.
  * In production, set via VITE_MANAGER_URL and VITE_SERVICE_URL.

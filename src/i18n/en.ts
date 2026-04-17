@@ -5,6 +5,11 @@ export const en = {
     line2: "in all tranquility.",
     subtitle:
       "Condo boards, Airbnb hosts, and landlords - 24/7 support, clear reporting, and rigorous processes.",
+    answerBoxTitle: "In two sentences",
+    answerBoxLine1:
+      "Gestion Velora is a Montreal property management team for condo boards, short-term (Airbnb), and long-term rentals.",
+    answerBoxLine2:
+      "We structure administration, compliance, and occupant relationships—with readable reports, emergency response, and visibility into your operations.",
     trustLine: "They trust us.",
     trustLink: "Read testimonials",
     ctaDiscover: "See how we work",
@@ -390,10 +395,12 @@ export const en = {
     planifyCall: "Request a proposal",
     notFound: "Service not found",
     backHome: "Back to home",
+    faqTitle: "Frequently asked questions",
   },
 
   // Blog
   blog: {
+    briefLabel: "In brief:",
     title: "Insights",
     subtitle: "Thoughts and news on Montreal property management by Gestion Velora.",
     backToInsights: "← All insights",
@@ -496,6 +503,20 @@ export const en = {
           ],
         },
       ],
+      faq: [
+        {
+          q: "How often should the reserve study be updated?",
+          a: "Best practice is periodic updates (often every three to five years depending on the building) so the reserve fund matches real replacement costs.",
+        },
+        {
+          q: "Can owners access meeting minutes and budgets?",
+          a: "Yes—financial and decision transparency matters; rigorous records reduce disputes about votes and spending.",
+        },
+        {
+          q: "What is the difference between the reserve fund and the annual operating budget?",
+          a: "The operating budget funds day-to-day operations; the reserve fund funds major work and planned replacements identified in the reserve study.",
+        },
+      ],
     },
     airbnb: {
       title: "Airbnb and short-term rental management",
@@ -547,6 +568,20 @@ export const en = {
             "Document framework for insurance, liability, and guest incident records.",
             "Structured revenue/expense reporting package to support tax compliance.",
           ],
+        },
+      ],
+      faq: [
+        {
+          q: "Do I need a municipal permit or classification for short-term rentals in Montreal?",
+          a: "The City regulates tourist lodging—confirm the applicable category on Montreal’s official site; we track requirements to reduce operational interruptions.",
+        },
+        {
+          q: "Is a standard homeowner policy enough for Airbnb?",
+          a: "Often not—endorsements or tailored coverage are required; we help you validate coverage with your insurer before listing.",
+        },
+        {
+          q: "How are taxes and rental income tracked?",
+          a: "Applicable obligations (depending on your situation) should be built into the operating model; we document flows for owner transparency.",
         },
       ],
     },
@@ -615,6 +650,20 @@ export const en = {
             "Proactive renewal management (deadlines, terms, and required documentation).",
             "Structured mediation when conflicts arise, with written traceability.",
           ],
+        },
+      ],
+      faq: [
+        {
+          q: "How are arrears and collections handled?",
+          a: "Progressive follow-up, documented files, and compliance with Residential Tenancy Tribunal (TAL) timelines—protecting cash flow while staying within the rules.",
+        },
+        {
+          q: "Who drafts leases and renewals?",
+          a: "We align templates with your property rules and current law, then track renewal deadlines.",
+        },
+        {
+          q: "How fast do you respond to urgent tenant requests?",
+          a: "We prioritize emergencies (safety, heat, water) with acknowledgement and vendor escalation; routine requests get tracked timelines.",
         },
       ],
     },

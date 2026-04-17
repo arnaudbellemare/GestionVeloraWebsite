@@ -50,6 +50,11 @@ export function ServicePage() {
 
   const otherServices = SERVICE_SLUGS.filter((s) => s !== service.slug).map((s) => getLocalizedService(s, t));
 
+  const faqRaw = t(`services.${service.slug}.faq`, { returnObjects: true }) as unknown;
+  const serviceFaq = Array.isArray(faqRaw)
+    ? (faqRaw as { q: string; a: string }[])
+    : [];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -124,6 +129,32 @@ export function ServicePage() {
           </div>
         </div>
       </section>
+
+      {serviceFaq.length > 0 && (
+        <section
+          className="py-10 lg:py-12 bg-nd-canvas border-b border-nd-border"
+          aria-labelledby="service-faq-heading"
+        >
+          <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
+            <h2
+              id="service-faq-heading"
+              className="font-sans font-medium text-xl lg:text-2xl text-nd-display tracking-[-0.02em] mb-6"
+            >
+              {t("servicePage.faqTitle")}
+            </h2>
+            <dl className="space-y-6 max-w-3xl">
+              {serviceFaq.map((item) => (
+                <div key={item.q}>
+                  <dt className="font-sans font-semibold text-black dark:text-white text-base">{item.q}</dt>
+                  <dd className="mt-2 font-sans text-sm lg:text-base text-black/75 dark:text-white/75 leading-relaxed">
+                    {item.a}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+      )}
 
       {/* Browse by - Category pills like Waabi */}
       <section className="py-12 lg:py-16 bg-nd-surface border-b border-nd-border">

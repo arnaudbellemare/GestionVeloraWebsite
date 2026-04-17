@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "../context/LocaleContext";
+import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "../config";
 import { getPostBySlug } from "../data/blog";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
-
-const SITE_URL = "https://www.gestionvelora.com";
 
 function setMeta(name: string, content: string, property = false) {
   const attr = property ? "property" : "name";
@@ -35,6 +34,8 @@ export function PageMeta() {
 
     let title = baseTitle;
     let description = baseDesc;
+    let ogImage = DEFAULT_OG_IMAGE;
+    let twitterImage = DEFAULT_TWITTER_IMAGE;
     const url = SITE_URL + (pathname === "/" || pathname === "/en" || pathname === "/en/" ? "/" : pathname);
 
     const isServicesHub =
@@ -50,6 +51,8 @@ export function PageMeta() {
         const service = getLocalizedService(slug as ServiceSlug, t);
         title = isEn ? `${service.title} | Gestion Velora` : `${service.title} | Gestion Velora`;
         description = service.description;
+        ogImage = service.image;
+        twitterImage = service.image;
       }
     } else if (pathname === "/blog" || pathname === "/en/blog" || pathname === "/en/blog/") {
       title = isEn ? "Insights | Gestion Velora" : "Conseils | Gestion Velora";
@@ -62,6 +65,8 @@ export function PageMeta() {
         if (post) {
           title = `${post.title} | Gestion Velora`;
           description = post.excerpt;
+          ogImage = post.image;
+          twitterImage = post.image;
         }
       } else {
         title = isEn ? "Insights | Gestion Velora" : "Conseils | Gestion Velora";
@@ -76,12 +81,17 @@ export function PageMeta() {
 
     document.title = title;
     setMeta("description", description);
+    setMeta("twitter:card", "summary_large_image");
     setMeta("og:title", title, true);
     setMeta("og:description", description, true);
     setMeta("og:url", url, true);
+    setMeta("og:image", ogImage, true);
+    setMeta("og:locale", isEn ? "en_CA" : "fr_CA", true);
+    setMeta("og:locale:alternate", isEn ? "fr_CA" : "en_CA", true);
     setMeta("twitter:title", title);
     setMeta("twitter:description", description);
     setMeta("twitter:url", url);
+    setMeta("twitter:image", twitterImage);
   }, [pathname, slug, locale, t]);
 
   return null;

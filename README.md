@@ -21,6 +21,12 @@ npm install
 npm run dev
 ```
 
+## Mesure SEO (cycle ~30 jours)
+
+- **GA4** : rapports *Acquisition* > *Traffic acquisition* (organic) et *Pages et écrans* pour les landing *insights* (chemins `/blog/*`). Vérifier que les `page_view` SPA sont bien enregistrés après navigation.
+- **Google Search Console** : performances par requête (impressions, clics) et pages ; surveiller les anomalies d’indexation.
+- **AEO / citations** : pas de tableau de bord natif ; échantillonner des requêtes cibles et noter présence dans résultats enrichis / AEO (outils externes ou revue manuelle).
+
 ## Thème
 
 Bouton lune/soleil dans le header pour basculer entre mode clair et sombre.

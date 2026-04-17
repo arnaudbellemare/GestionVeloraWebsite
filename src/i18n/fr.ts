@@ -5,6 +5,11 @@ export const fr = {
     line2: "Notre affaire.",
     subtitle:
       "Syndicats, Airbnb et location : une équipe disponible 24/7, rapports clairs et processus rigoureux.",
+    answerBoxTitle: "En deux phrases",
+    answerBoxLine1:
+      "Gestion Velora est une équipe de gestion immobilière à Montréal : syndicats de copropriété, location courte durée (Airbnb) et location longue durée.",
+    answerBoxLine2:
+      "Nous structurons l’administration, la conformité et la relation avec les occupants — avec des rapports lisibles, une réponse d’urgence et une visibilité sur vos opérations.",
     trustLine: "Ils nous font confiance.",
     trustLink: "Voir les témoignages",
     ctaDiscover: "Voir ce que nous faisons",
@@ -393,10 +398,12 @@ export const fr = {
     planifyCall: "Demander une soumission",
     notFound: "Service non trouvé",
     backHome: "Retour à l'accueil",
+    faqTitle: "Questions fréquentes",
   },
 
   // Blog
   blog: {
+    briefLabel: "En bref :",
     title: "Conseils",
     subtitle: "Réflexions et actualités sur la gestion immobilière à Montréal par Gestion Velora.",
     backToInsights: "← Tous les conseils",
@@ -499,6 +506,20 @@ export const fr = {
           ],
         },
       ],
+      faq: [
+        {
+          q: "À quelle fréquence l'étude de réserve doit-elle être révisée ?",
+          a: "Les bonnes pratiques recommandent une mise à jour périodique (souvent aux trois ou cinq ans selon l'immeuble) pour aligner le fonds de prévoyance sur les coûts réels de remplacement.",
+        },
+        {
+          q: "Les copropriétaires peuvent-ils consulter les procès-verbaux et le budget ?",
+          a: "Oui : la transparence sur les finances et les décisions est centrale ; une tenue de dossier rigoureuse réduit les litiges sur les votes et les dépenses.",
+        },
+        {
+          q: "Quelle est la différence entre le fonds de prévoyance et le budget courant ?",
+          a: "Le budget courant finance l'exploitation courante ; le fonds de prévoyance finance les travaux majeurs et remplacements planifiés identifiés dans l'étude de réserve.",
+        },
+      ],
     },
     airbnb: {
       title: "Gestion Airbnb et location courte durée",
@@ -550,6 +571,20 @@ export const fr = {
             "Cadre documentaire pour assurances, responsabilité civile et incidents voyageurs.",
             "Transmission structurée des données de revenus et dépenses pour la conformité fiscale.",
           ],
+        },
+      ],
+      faq: [
+        {
+          q: "Faut-il un classement ou un permis municipal pour la location courte durée à Montréal ?",
+          a: "La Ville encadre les hébergements touristiques : vérifiez la catégorie applicable sur le site officiel de Montréal ; nous suivons les exigences pour limiter les interruptions d'exploitation.",
+        },
+        {
+          q: "Les assurances résidentielles classiques suffisent-elles pour une activité Airbnb ?",
+          a: "Souvent non : des avenants ou couvertures adaptées sont requis ; nous vous orientons vers une validation avec votre assureur avant mise en location.",
+        },
+        {
+          q: "Comment sont suivies les taxes et les revenus ?",
+          a: "Les obligations applicables (selon votre situation) doivent être intégrées au modèle d'exploitation ; nous documentons les flux pour une transparence avec le propriétaire.",
         },
       ],
     },
@@ -618,6 +653,20 @@ export const fr = {
             "Gestion proactive des renouvellements (délais, ajustements, documentation).",
             "Médiation structurée en cas de litige, avec traces écrites et options de résolution.",
           ],
+        },
+      ],
+      faq: [
+        {
+          q: "Comment sont gérés les impayés et les relances ?",
+          a: "Relances progressives, dossiers documentés et respect des règles du Tribunal administratif du logement (TAL) ; l'objectif est de protéger votre trésorerie tout en restant conforme.",
+        },
+        {
+          q: "Qui rédige les baux et les renouvellements ?",
+          a: "Nous harmonisons les modèles avec vos règles de propriété et le cadre légal en vigueur, puis suivons les échéances de renouvellement.",
+        },
+        {
+          q: "À quelle vitesse répondez-vous aux demandes urgentes des locataires ?",
+          a: "Nous priorisons les urgences (sécurité, chauffage, eau) avec accusé de réception et escalade fournisseur ; les demandes courantes ont un suivi avec délai cible.",
         },
       ],
     },

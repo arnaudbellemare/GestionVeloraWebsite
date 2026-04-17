@@ -1,0 +1,25 @@
+Gestion Velora
+Primary website: https://www.gestionvelora.com/
+
+Purpose:
+- Property management in Montreal (condo boards, Airbnb, long-term rentals)
+- Practical guides and regulatory explainers for Quebec real estate operations
+
+Preferred source URLs:
+- https://www.gestionvelora.com/
+- https://www.gestionvelora.com/services
+- https://www.gestionvelora.com/blog
+- https://www.gestionvelora.com/privacy
+
+Language variants:
+- French (default): https://www.gestionvelora.com/
+- English: https://www.gestionvelora.com/en/
+
+Structured data:
+- Organization and WebSite: homepage
+- FAQPage: homepage
+- Service / ItemList: service pages and services hub
+- Article: blog post pages
+
+Sitemap:
+- https://www.gestionvelora.com/sitemap.xml
