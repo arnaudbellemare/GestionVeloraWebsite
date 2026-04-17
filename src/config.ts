@@ -1,3 +1,6 @@
+/** Google Analytics 4 measurement ID (must match gtag snippet in index.html). */
+export const GA_MEASUREMENT_ID = "G-NMSB2ZT1EZ";
+
 /**
  * Portal URLs for ManagerSyndicat and ServiceSyndicat.
  * In production, set via VITE_MANAGER_URL and VITE_SERVICE_URL.

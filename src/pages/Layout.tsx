@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FooterSection } from "../FooterSection";
 import { HeaderSection } from "../HeaderSection";
 import { CanonicalUrl } from "../components/CanonicalUrl";
+import { GtagPageView } from "../components/GtagPageView";
 import { PageMeta } from "../components/PageMeta";
 import { HreflangLinks } from "../components/HreflangLinks";
 import { SchemaOrg } from "../components/SchemaOrg";
@@ -36,6 +37,7 @@ export function Layout() {
   return (
     <div className="min-h-screen bg-nd-canvas text-nd-primary overflow-hidden">
       <PageMeta />
+      <GtagPageView />
       <CanonicalUrl />
       <HreflangLinks />
       <SchemaOrg />

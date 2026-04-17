@@ -1,6 +1,10 @@
 /// <reference types="vite/client" />
 /// <reference types="@webgpu/types" />
 
+interface Window {
+  gtag?: (...args: unknown[]) => void;
+}
+
 interface ImportMetaEnv {
   readonly VITE_MANAGER_URL?: string;
   readonly VITE_SERVICE_URL?: string;
