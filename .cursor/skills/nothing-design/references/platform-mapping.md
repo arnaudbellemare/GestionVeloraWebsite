@@ -1,4 +1,4 @@
-# Nothing Design System — Platform Mapping
+# Nothing Design System - Platform Mapping
 
 ## 1. HTML / CSS / WEB
 

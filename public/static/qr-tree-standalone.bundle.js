@@ -12520,7 +12520,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> BlockOutput {
   // Interpolate between 3D isometric and 2D flat view
   let progress = uniforms.progress;
 
-  // Hide block trunk in 3D — keep ground layer (baseY == 0) visible
+  // Hide block trunk in 3D - keep ground layer (baseY == 0) visible
   if (typePacked == 2u && baseY > 0.001) {
     let trunkVis = smoothstep(0.2, 0.6, progress);
     localPos = vec3f(
@@ -12530,7 +12530,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> BlockOutput {
     );
   }
 
-  // Hide cherry blossom cubes in 3D — flowers replace them (hide earlier)
+  // Hide cherry blossom cubes in 3D - flowers replace them (hide earlier)
   if (typePacked == 1u) {
     let cubeVis = smoothstep(0.15, 0.6, progress);
     localPos = vec3f(
@@ -12540,7 +12540,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> BlockOutput {
     );
   }
 
-  // Hide branch blocks in 2D — they'd break QR scanning
+  // Hide branch blocks in 2D - they'd break QR scanning
   if (typePacked == 5u) {
     let branchVis = smoothstep(0.0, 0.4, 1.0 - progress);
     localPos = vec3f(
@@ -12611,7 +12611,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
   let progress = uniforms.progress;
 
   // ============================================
-  // COLOR PALETTES — seasonal
+  // COLOR PALETTES - seasonal
   // ============================================
 
   let season = uniforms.season;
@@ -12621,19 +12621,19 @@ fn main(input: BlockInput) -> @location(0) vec4f {
   let dirtMid = vec3f(0.76, 0.70, 0.60);
   let dirtDark = vec3f(0.68, 0.62, 0.52);
 
-  // Canopy blocks — changes with season
+  // Canopy blocks - changes with season
   var sakuraLight = vec3f(0.88, 0.48, 0.55);  // Spring: pink
   var sakuraMid = vec3f(0.78, 0.34, 0.42);
   var sakuraDeep = vec3f(0.65, 0.24, 0.32);
   var sakuraRich = vec3f(0.52, 0.16, 0.24);
 
-  // Grass — changes with season
+  // Grass - changes with season
   var grassDark = vec3f(0.10, 0.30, 0.06);
   var grassMid = vec3f(0.16, 0.42, 0.10);
   var grassBright = vec3f(0.24, 0.52, 0.14);
 
   if (season > 0.5 && season < 1.5) {
-    // Summer — canopy is green foliage, grass is lush
+    // Summer - canopy is green foliage, grass is lush
     sakuraLight = vec3f(0.28, 0.52, 0.18);
     sakuraMid   = vec3f(0.18, 0.42, 0.10);
     sakuraDeep  = vec3f(0.12, 0.32, 0.08);
@@ -12642,7 +12642,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
     grassMid    = vec3f(0.12, 0.45, 0.08);
     grassBright = vec3f(0.20, 0.55, 0.12);
   } else if (season > 1.5 && season < 2.5) {
-    // Autumn — canopy is orange/red/gold, grass is dry golden
+    // Autumn - canopy is orange/red/gold, grass is dry golden
     sakuraLight = vec3f(0.92, 0.55, 0.18);
     sakuraMid   = vec3f(0.82, 0.35, 0.12);
     sakuraDeep  = vec3f(0.70, 0.22, 0.08);
@@ -12651,7 +12651,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
     grassMid    = vec3f(0.55, 0.40, 0.12);
     grassBright = vec3f(0.68, 0.50, 0.16);
   } else if (season > 2.5) {
-    // Winter — canopy is bare dark bark, grass is frost gray
+    // Winter - canopy is bare dark bark, grass is frost gray
     sakuraLight = vec3f(0.42, 0.36, 0.30);
     sakuraMid   = vec3f(0.35, 0.28, 0.22);
     sakuraDeep  = vec3f(0.28, 0.22, 0.16);
@@ -12661,7 +12661,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
     grassBright = vec3f(0.50, 0.48, 0.40);
   }
 
-  // Trunk — rich warm brown (same all seasons)
+  // Trunk - rich warm brown (same all seasons)
   let barkLight = vec3f(0.42, 0.24, 0.14);
   let barkMid = vec3f(0.34, 0.18, 0.10);
   let barkDark = vec3f(0.24, 0.12, 0.06);
@@ -12672,7 +12672,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
   // ============================================
 
   let sunDir = normalize(vec3f(-0.4, 0.85, -0.3));
-  let sunCol = vec3f(1.20, 1.20, 1.20);  // neutral white light — no warm tint
+  let sunCol = vec3f(1.20, 1.20, 1.20);  // neutral white light - no warm tint
   let ambient = vec3f(0.28, 0.28, 0.30);
   let skyFill = ${k(x.skyFill)};
   let bounce = ${k(x.bounce)};
@@ -12724,11 +12724,11 @@ fn main(input: BlockInput) -> @location(0) vec4f {
   if (input.faceNy > 0.5) {
     let topWarmTint = vec3f(1.1, 1.08, 1.02);
 
-    // Darken dark QR modules and brighten light ones — consistent in both views
+    // Darken dark QR modules and brighten light ones - consistent in both views
     let isDarkModule = step(0.5, f32(blockType));
 
     if (blockType == 0) {
-      // SAND/DIRT — high noise variation to break grid look
+      // SAND/DIRT - high noise variation to break grid look
       var dirtColor = dirtMid;
       let t = noise1;
       if (t < 0.4) {
@@ -12794,7 +12794,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
       albedo = cherryColor * topWarmTint * canopyAO * finalEdge;
 
     } else if (blockType == 2) {
-      // TRUNK top face — sandy at ground level, bark higher up
+      // TRUNK top face - sandy at ground level, bark higher up
       let trunkMaxLayer = 18.0;
       let heightRatio = min(layer / trunkMaxLayer, 1.0);
 
@@ -12834,7 +12834,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
       albedo = grassColor * topWarmTint;
 
     } else if (blockType == 5) {
-      // BRANCH — circular cross-section on top face
+      // BRANCH - circular cross-section on top face
       var branchColor = mix(barkMid, barkLight, noise1 * 0.5);
       let bShift = (noise2 - 0.5) * 0.12;
       branchColor = branchColor * (1.0 + bShift);
@@ -12842,7 +12842,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
       albedo = branchColor * ringNoise * topWarmTint * canopyAO;
 
     } else {
-      // FALLEN PETALS (type 4) — same sandy base as dirt, very subtle pink hint
+      // FALLEN PETALS (type 4) - same sandy base as dirt, very subtle pink hint
       // This minimizes the checkerboard between dark/light QR cells
       let sandA = vec3f(0.84, 0.77, 0.63);
       let sandB = vec3f(0.80, 0.73, 0.60);
@@ -12956,16 +12956,16 @@ fn main(input: BlockInput) -> @location(0) vec4f {
       let groove3 = sin(barkAngle * 20.0 + noise1 * 5.0) * 0.5 + 0.5;
       let grooveDepth = (groove1 * 0.5 + groove2 * 0.3 + groove3 * 0.2) * 0.25 + 0.75;
 
-      // Twisted wood grain — spiral pattern up the trunk
+      // Twisted wood grain - spiral pattern up the trunk
       let spiralAngle = barkAngle + heightRatio * 2.5 + noise1 * 0.5;
       let woodGrain = sin(spiralAngle * 8.0 + layer * 2.0) * 0.08 + 0.92;
 
-      // Horizontal ring pattern — knot-like detail
+      // Horizontal ring pattern - knot-like detail
       let ringPattern = sin(layer * 3.5 + noise2 * 4.0) * 0.10 + 0.90;
       let knotNoise = sin(barkAngle * 3.0 + layer * 5.0 + noise3 * 6.0);
       let knot = smoothstep(0.85, 0.95, knotNoise) * 0.15;
 
-      // Base bark color — warmer with purple undertone at height
+      // Base bark color - warmer with purple undertone at height
       var barkColor = mix(barkDark, barkMid, heightRatio * 0.7);
       barkColor = mix(barkColor, barkLight, groove1 * 0.3);
       let purpleUndertone = vec3f(0.08, 0.02, 0.10) * heightRatio * 0.3;
@@ -13007,7 +13007,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
       albedo = grassColor * shade * tint;
 
     } else if (blockType == 5) {
-      // BRANCH side — bark texture with cylindrical shading
+      // BRANCH side - bark texture with cylindrical shading
       var branchColor = mix(barkDark, barkMid, noise1 * 0.6);
       let grooveSide = sin(layer * 5.0 + noise1 * 3.0) * 0.08 + 0.92;
       let bShift = (noise2 - 0.5) * 0.15;
@@ -13015,7 +13015,7 @@ fn main(input: BlockInput) -> @location(0) vec4f {
       albedo = branchColor * shade * tint;
 
     } else {
-      // Side face fallen petals — sandy to match top
+      // Side face fallen petals - sandy to match top
       let sandSide = vec3f(0.72, 0.66, 0.52);
       let sandSideDark = vec3f(0.62, 0.56, 0.44);
       var fallenColor = mix(sandSide, sandSideDark, noise1 * 0.5);
@@ -13232,7 +13232,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> FlowerOutput {
   let centerY = topY;
   let centerZ = row * blockSize - halfGrid;
 
-  // Wind — coherent with grass and branches
+  // Wind - coherent with grass and branches
   let time = uniforms.time;
   let isGroundPetal = step(topY, blockSize * 2.5);
   let windFactor = (1.0 - isGroundPetal) * vis;
@@ -13242,7 +13242,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> FlowerOutput {
   let swayX = (windBase + windTurb) * windFactor;
   let swayZ = sin(time * 0.35 + col * 0.15 + row * 0.25) * 0.018 * windFactor;
 
-  // Flower sizing — leaves are longer and narrower
+  // Flower sizing - leaves are longer and narrower
   let baseScale = blockSize * (0.7 + seed * 0.3) * vis;
   let flowerScale = mix(baseScale, baseScale * 0.9, isLeaf);
   let petalLength = mix(flowerScale * 0.85, flowerScale * 1.3, isLeaf);
@@ -13253,7 +13253,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> FlowerOutput {
   // Per-flower rotation
   let baseRotation = seed * 6.28318;
 
-  // Gentle tilt — subtle variation, mostly upward-facing
+  // Gentle tilt - subtle variation, mostly upward-facing
   let tiltAngle = (seed * 0.25 + 0.05) * (1.0 - isLeaf * 0.5);
   let tiltDir = seed * 6.28318 * 3.17;
   let tiltCos = cos(tiltAngle);
@@ -13352,7 +13352,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> FlowerOutput {
     }
   }
 
-  // Apply random tilt — rotate offset from center around a random horizontal axis
+  // Apply random tilt - rotate offset from center around a random horizontal axis
   let offX = localPos.x - centerX - swayX;
   let offY = localPos.y - centerY;
   let offZ = localPos.z - centerZ - swayZ;
@@ -13459,12 +13459,12 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
   // Autumn: colored leaves falling (all leaves in warm tones)
   // Winter: mostly bare (many flowers hidden via alpha, sparse pale buds)
 
-  // Override isLeaf based on season — controls geometry (3 petals vs 5)
+  // Override isLeaf based on season - controls geometry (3 petals vs 5)
   // and color path. In summer/autumn, most "flowers" become leaves.
   let leafChance = fract(seed * 4.37);
   var isLeaf = origIsLeaf;
   // isGroundFlower: fallen petals sit near ground (low topY encoded via seed proximity)
-  // We use the original rawSeed — ground flowers have seed < 1.0 and low positions
+  // We use the original rawSeed - ground flowers have seed < 1.0 and low positions
   let isGroundFlower = step(input.petalT, 0.01) * (1.0 - origIsLeaf); // base verts of non-leaf = likely ground
 
   if (season > 0.5 && season < 1.5) {
@@ -13495,19 +13495,19 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
   var leafOlive  = vec3f(0.48, 0.52, 0.28);
 
   if (season > 0.5 && season < 1.5) {
-    // Summer — rich dark greens, dense foliage
+    // Summer - rich dark greens, dense foliage
     leafDark   = vec3f(0.08, 0.28, 0.05);
     leafMedium = vec3f(0.14, 0.38, 0.08);
     leafLight  = vec3f(0.22, 0.48, 0.12);
     leafOlive  = vec3f(0.18, 0.35, 0.10);
   } else if (season > 1.5 && season < 2.5) {
-    // Autumn — warm oranges, reds, golds, browns
+    // Autumn - warm oranges, reds, golds, browns
     leafDark   = vec3f(0.55, 0.18, 0.08);
     leafMedium = vec3f(0.72, 0.32, 0.10);
     leafLight  = vec3f(0.85, 0.52, 0.15);
     leafOlive  = vec3f(0.78, 0.58, 0.12);
   } else if (season > 2.5) {
-    // Winter — muted gray-brown bare twigs
+    // Winter - muted gray-brown bare twigs
     leafDark   = vec3f(0.35, 0.32, 0.28);
     leafMedium = vec3f(0.45, 0.42, 0.38);
     leafLight  = vec3f(0.55, 0.52, 0.48);
@@ -13524,7 +13524,7 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
   var stamenGold  = vec3f(0.92, 0.78, 0.35);
 
   if (season > 0.5 && season < 1.5) {
-    // Summer — the few remaining flowers are tiny cream/white
+    // Summer - the few remaining flowers are tiny cream/white
     shadeDeep   = vec3f(0.92, 0.90, 0.82);
     shadeMedium = vec3f(0.95, 0.93, 0.86);
     shadeLight  = vec3f(0.97, 0.95, 0.90);
@@ -13533,7 +13533,7 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
     shadeWhite  = vec3f(0.99, 0.98, 0.96);
     stamenGold  = vec3f(0.88, 0.82, 0.35);
   } else if (season > 1.5 && season < 2.5) {
-    // Autumn — no flowers, but "petals" become extra leaf colors
+    // Autumn - no flowers, but "petals" become extra leaf colors
     shadeDeep   = vec3f(0.70, 0.15, 0.05);
     shadeMedium = vec3f(0.82, 0.28, 0.08);
     shadeLight  = vec3f(0.92, 0.48, 0.12);
@@ -13542,7 +13542,7 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
     shadeWhite  = vec3f(0.95, 0.78, 0.35);
     stamenGold  = vec3f(0.80, 0.60, 0.15);
   } else if (season > 2.5) {
-    // Winter — sparse pale frost buds
+    // Winter - sparse pale frost buds
     shadeDeep   = vec3f(0.72, 0.75, 0.80);
     shadeMedium = vec3f(0.82, 0.84, 0.88);
     shadeLight  = vec3f(0.90, 0.92, 0.95);
@@ -13621,27 +13621,27 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
     }
   }
 
-  // Neutral directional light — no warm tint
+  // Neutral directional light - no warm tint
   let sunDir = normalize(vec3f(-0.4, 0.85, -0.3));
   let sunColor = vec3f(1.20, 1.20, 1.20);
   let ambient = vec3f(0.28, 0.28, 0.30);
   let NdotL = max(dot(N, sunDir), 0.0);
 
-  // Subsurface scattering — warm pink glow through petals
+  // Subsurface scattering - warm pink glow through petals
   let NdotLBack = max(dot(-N, sunDir), 0.0);
   let sssColor = mix(vec3f(1.0, 0.55, 0.65), vec3f(0.6, 0.8, 0.4), isLeaf);
   let subsurface = NdotLBack * 0.22 * sssColor;
 
-  // Sky fill — warm tinted
+  // Sky fill - warm tinted
   let skyFill = vec3f(0.90, 0.85, 0.88);
   let skyContrib = max(N.y, 0.0) * 0.12 * skyFill;
 
-  // Depth-based darkening — flowers deeper inside canopy (facing down/inward) are darker
+  // Depth-based darkening - flowers deeper inside canopy (facing down/inward) are darker
   // Combines underside darkening + seed-based depth variation
   let depthDarken = mix(0.92, 1.0, fract(seed * 11.3)); // per-flower depth variation
   let undersideDarken = mix(0.55, 1.0, max(N.y, 0.0)) * depthDarken;
 
-  // Rim light — warm edge glow
+  // Rim light - warm edge glow
   let viewDir = normalize(vec3f(0.4, 0.6, 0.7));
   let rimDot = 1.0 - max(dot(N, viewDir), 0.0);
   let rim = pow(rimDot, 3.0) * 0.10 * vec3f(1.0, 0.85, 0.88);
@@ -13651,7 +13651,7 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
   let hdr = acesFilm(lit * 1.05);
   var ldr = pow(hdr, vec3f(1.0 / 2.2));
 
-  // Saturation boost — vivid colors
+  // Saturation boost - vivid colors
   let gray = dot(ldr, vec3f(0.299, 0.587, 0.114));
   ldr = mix(vec3f(gray), ldr, 1.6);
 
@@ -13725,7 +13725,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> BranchOutput {
   // Determine which ring (bottom=0, top=1) and which angle
   var ringT: f32;
   var angle: f32;
-  // Quad: two triangles — (b0,b1,t0) and (t0,b1,t1)
+  // Quad: two triangles - (b0,b1,t0) and (t0,b1,t1)
   if (triVert == 0u) { ringT = 0.0; angle = angle0; }
   else if (triVert == 1u) { ringT = 0.0; angle = angle1; }
   else if (triVert == 2u) { ringT = 1.0; angle = angle0; }
@@ -13748,7 +13748,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> BranchOutput {
   let right = normalize(cross(dir, refUp));
   let up = normalize(cross(right, dir));
 
-  // Wind — same direction as flowers/grass, scaled by branch depth (increased)
+  // Wind - same direction as flowers/grass, scaled by branch depth (increased)
   let time = uniforms.time;
   let windAmount = min(depth / 4.0, 1.0) * 0.016 * branchVis;
   // Primary wind + turbulence matching flower shader
@@ -13825,7 +13825,7 @@ fn main(input: BranchInput) -> @location(0) vec4f {
   let seed = input.vSeed;
   let t = input.ringT;
 
-  // Bark — deep chocolate brown like reference
+  // Bark - deep chocolate brown like reference
   let barkBase  = vec3f(0.28, 0.16, 0.10);
   let barkLight = vec3f(0.40, 0.26, 0.18);
   let barkDark  = vec3f(0.16, 0.09, 0.05);
@@ -13840,17 +13840,17 @@ fn main(input: BranchInput) -> @location(0) vec4f {
   let noise1 = fract(sin(seed * 43.7 + depth * 17.3) * 43758.5);
   let noise2 = fract(sin(seed * 73.1 + depth * 31.1 + 127.1) * 43758.5);
 
-  // Multi-frequency bark grooves — more visible surface detail
+  // Multi-frequency bark grooves - more visible surface detail
   let grooveAngle = fract(sin(seed * 127.1 + t * 31.1) * 43758.5) * 6.28;
   let groove1 = sin(grooveAngle * 8.0 + noise1 * 3.0) * 0.5 + 0.5;
   let groove2 = sin(grooveAngle * 14.0 + noise2 * 5.0 + 1.7) * 0.5 + 0.5;
   let groove3 = sin(grooveAngle * 22.0 + noise1 * 7.0) * 0.5 + 0.5;
   let grooveEffect = (groove1 * 0.5 + groove2 * 0.3 + groove3 * 0.2) * 0.18 + 0.82;
 
-  // Ring pattern — horizontal bark bands
+  // Ring pattern - horizontal bark bands
   let ring = sin(t * 18.0 + noise2 * 6.0) * 0.07 + 0.93;
 
-  // Knot detail — occasional dark spots
+  // Knot detail - occasional dark spots
   let knotNoise = sin(seed * 47.3 + t * 13.0 + noise1 * 8.0);
   let knot = smoothstep(0.88, 0.95, knotNoise) * 0.10;
 
@@ -13943,7 +13943,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> GrassOutput {
   let cosA = cos(angle);
   let sinA = sin(angle);
 
-  // Blade dimensions — wider for better coverage
+  // Blade dimensions - wider for better coverage
   let halfWidth = blockSize * 0.22;
 
   var localPos = vec3f(0.0);
@@ -13952,7 +13952,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> GrassOutput {
   let tiltX = (seed - 0.5) * 0.4;
   let tiltZ = (fract(seed * 7.13) - 0.5) * 0.4;
   let time = uniforms.time;
-  // Wind — very gentle sway
+  // Wind - very gentle sway
   let windBase = sin(time * 0.45 + col * 0.25 + row * 0.15) * 0.02;
   let windTurb = sin(time * 1.1 + col * 0.8 + row * 0.6) * 0.005;
   let windX = windBase + windTurb;
@@ -13974,7 +13974,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> GrassOutput {
     output.greenT = 0.0;
     output.normalY = 0.3;
   } else {
-    // Tip — tilted outward with curl for natural droop
+    // Tip - tilted outward with curl for natural droop
     let curlDroop = bladeHeight * seed * 0.15; // taller blades droop more
     localPos = vec3f(baseX + tipOffX, baseY + yLift + bladeHeight - curlDroop, baseZ + tipOffZ);
     output.greenT = 1.0;
@@ -14043,7 +14043,7 @@ fn main(input: GrassInput) -> @location(0) vec4f {
   var lavender = vec3f(0.55, 0.42, 0.62);
 
   if (season > 0.5 && season < 1.5) {
-    // Summer — lush vibrant greens, no pink
+    // Summer - lush vibrant greens, no pink
     darkGreen  = vec3f(0.08, 0.35, 0.04);
     midGreen   = vec3f(0.18, 0.52, 0.10);
     lightGreen = vec3f(0.30, 0.65, 0.18);
@@ -14054,7 +14054,7 @@ fn main(input: GrassInput) -> @location(0) vec4f {
     whiteFlower = vec3f(0.82, 0.88, 0.72);
     lavender = vec3f(0.35, 0.55, 0.25);
   } else if (season > 1.5 && season < 2.5) {
-    // Autumn — dry golden, brown, burnt orange grass
+    // Autumn - dry golden, brown, burnt orange grass
     darkGreen  = vec3f(0.40, 0.30, 0.10);
     midGreen   = vec3f(0.55, 0.40, 0.12);
     lightGreen = vec3f(0.70, 0.52, 0.18);
@@ -14065,7 +14065,7 @@ fn main(input: GrassInput) -> @location(0) vec4f {
     whiteFlower = vec3f(0.78, 0.72, 0.55);
     lavender = vec3f(0.55, 0.38, 0.22);
   } else if (season > 2.5) {
-    // Winter — sparse, frost-tinted, muted brown/gray
+    // Winter - sparse, frost-tinted, muted brown/gray
     darkGreen  = vec3f(0.32, 0.30, 0.25);
     midGreen   = vec3f(0.42, 0.40, 0.32);
     lightGreen = vec3f(0.52, 0.50, 0.42);
@@ -14108,7 +14108,7 @@ fn main(input: GrassInput) -> @location(0) vec4f {
 
   let color = mix(baseColor, tipColor, input.greenT);
 
-  // Warm lighting — strong sun for grass vibrancy
+  // Warm lighting - strong sun for grass vibrancy
   let sunDir = normalize(vec3f(-0.4, 0.85, -0.3));
   let N = normalize(vec3f(0.0, input.normalY, 0.3));
   let NdotL = max(dot(N, sunDir), 0.0);
@@ -14205,7 +14205,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> FlowerOutput {
   let originX = col * blockSize - halfGrid;
   let originZ = row * blockSize - halfGrid;
 
-  // Horizontal drift — sinusoidal wobble matching wind direction
+  // Horizontal drift - sinusoidal wobble matching wind direction
   let driftX = sin(time * 0.45 + seed * 5.0) * 0.045 * fallT
              + sin(time * 1.1 + seed * 12.0) * 0.012 * fallT;
   let driftZ = sin(time * 0.35 + seed * 8.0) * 0.03 * fallT
@@ -14226,7 +14226,7 @@ fn main(@builtin(vertex_index) vertexIndex: u32) -> FlowerOutput {
   // Per-flower base rotation + tumbling from fall
   let baseRotation = seed * 6.28318 + time * (0.8 + seed * 1.2);
 
-  // Tumbling tilt — increases as flower falls
+  // Tumbling tilt - increases as flower falls
   let tiltAngle = 0.3 + fallT * 1.2 + sin(time * 0.9 + seed * 7.0) * 0.4;
   let tiltDir = time * (0.5 + seed * 0.8) + seed * PI * 2.0;
   let tiltCos = cos(tiltAngle);
@@ -14387,7 +14387,7 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
   // Summer: nothing falls
   if (season > 0.5 && season < 1.5) { discard; }
 
-  // Winter: render as snow — all white, show all particles
+  // Winter: render as snow - all white, show all particles
   if (season > 2.5) {
     let snowWhite = vec3f(0.95, 0.96, 0.98);
     let snowLit = snowWhite * (0.85 + max(dot(N, normalize(vec3f(-0.4, 0.85, -0.3))), 0.0) * 0.15);
@@ -14404,19 +14404,19 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
   var stamenGold   = vec3f(0.92, 0.78, 0.35);
 
   if (season > 0.5 && season < 1.5) {
-    // Summer — falling green leaves
+    // Summer - falling green leaves
     shadeDeep = vec3f(0.15, 0.40, 0.10); shadeMedium = vec3f(0.25, 0.52, 0.18);
     shadeLight = vec3f(0.38, 0.62, 0.25); shadePale = vec3f(0.48, 0.68, 0.32);
     shadeBlush = vec3f(0.30, 0.55, 0.20); shadeWhite = vec3f(0.55, 0.72, 0.38);
     stamenGold = vec3f(0.55, 0.60, 0.22);
   } else if (season > 1.5 && season < 2.5) {
-    // Autumn — falling orange/red leaves
+    // Autumn - falling orange/red leaves
     shadeDeep = vec3f(0.70, 0.15, 0.05); shadeMedium = vec3f(0.82, 0.28, 0.08);
     shadeLight = vec3f(0.92, 0.48, 0.12); shadePale = vec3f(0.95, 0.65, 0.22);
     shadeBlush = vec3f(0.88, 0.38, 0.10); shadeWhite = vec3f(0.95, 0.78, 0.35);
     stamenGold = vec3f(0.80, 0.60, 0.15);
   } else if (season > 2.5) {
-    // Winter — sparse pale flakes
+    // Winter - sparse pale flakes
     shadeDeep = vec3f(0.78, 0.80, 0.85); shadeMedium = vec3f(0.85, 0.87, 0.90);
     shadeLight = vec3f(0.92, 0.93, 0.96); shadePale = vec3f(0.95, 0.96, 0.98);
     shadeBlush = vec3f(0.88, 0.90, 0.94); shadeWhite = vec3f(0.97, 0.98, 0.99);
@@ -14458,7 +14458,7 @@ fn main(input: FlowerInput) -> @location(0) vec4f {
     baseColor = baseColor * veinDarken;
   }
 
-  // Neutral directional light — no warm tint
+  // Neutral directional light - no warm tint
   let sunDir = normalize(vec3f(-0.4, 0.85, -0.3));
   let sunColor = vec3f(1.20, 1.20, 1.20);
   let ambient = vec3f(0.28, 0.28, 0.30);

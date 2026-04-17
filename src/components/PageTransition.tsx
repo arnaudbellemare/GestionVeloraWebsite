@@ -1,6 +1,6 @@
 /*
  * ═══════════════════════════════════════════════════════════════
- *  PAGE TRANSITION — Framer-style scale + fade
+ *  PAGE TRANSITION - Framer-style scale + fade
  * ───────────────────────────────────────────────────────────────
  *  Replicates the exact feel from Framer's Page Effects panel:
  *
@@ -17,7 +17,7 @@
  *    ease     [0.23, 1, 0.32, 1]
  *
  *  Header/footer are EXCLUDED (not wrapped in the animated div).
- *  No overlay, no circle, no shapes — just pure motion.
+ *  No overlay, no circle, no shapes - just pure motion.
  * ═══════════════════════════════════════════════════════════════
  */
 

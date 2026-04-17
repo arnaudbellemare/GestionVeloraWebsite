@@ -17,9 +17,9 @@ Focus on **information architecture**: what pages exist, how they nest, how URLs
 
 Ground plans in the actual app:
 
-- **Router:** `src/` — React Router; locale from path (`fr` default, `en` → prefix `/en` per `src/i18n/index.ts`, `LocaleContext.tsx`).
+- **Router:** `src/` - React Router; locale from path (`fr` default, `en` → prefix `/en` per `src/i18n/index.ts`, `LocaleContext.tsx`).
 - **Routes:** Inspect `src/App.tsx` or route config for exact paths (home, `/blog`, services, `/privacy`, `/en/...`, etc.).
-- **Nav:** `HeaderSection.tsx`, footer `FooterSection.tsx` — internal links, portals, hash anchors (`#contact`, `#faq`, …).
+- **Nav:** `HeaderSection.tsx`, footer `FooterSection.tsx` - internal links, portals, hash anchors (`#contact`, `#faq`, …).
 - **Content:** Page sections as components under `src/components/`; copy and labels often in `src/i18n/en.ts` & `fr.ts`.
 - **Deep links:** Contact uses `/#contact-form` and `useGoToContact` (`src/hooks/useGoToContact.ts`) for SPA-safe scrolling.
 
@@ -62,7 +62,7 @@ Capture:
 
 ```
 Homepage (/)
-├── Service detail (/services/:slug — no /services index)
+├── Service detail (/services/:slug - no /services index)
 ├── Blog (/blog, /blog/:slug)
 ├── Privacy (/privacy)
 └── Anchors on home (#contact, #faq, #standards, …)
@@ -73,7 +73,7 @@ Homepage (/)
 ## Navigation
 
 - **Header:** ~4–7 primary items; logo → home; primary CTA right.  
-- **Footer:** Contact, nav repeat, legal, portals — see current `FooterSection` columns.  
+- **Footer:** Contact, nav repeat, legal, portals - see current `FooterSection` columns.  
 - **Breadcrumbs:** If added, mirror URL path and use `InternalLink` + locale.
 
 ---
@@ -106,11 +106,11 @@ Homepage (/)
 
 ## Deliverables (when user asks for a plan)
 
-1. **Hierarchy** — ASCII or structured list with URLs  
-2. **Mermaid** (optional) — `graph TD` for relationships / nav zones  
-3. **URL table** — page, path, parent, nav zone, priority  
-4. **Nav spec** — header/footer items  
-5. **Internal linking** — hubs, orphans to fix, suggested new links  
+1. **Hierarchy** - ASCII or structured list with URLs  
+2. **Mermaid** (optional) - `graph TD` for relationships / nav zones  
+3. **URL table** - page, path, parent, nav zone, priority  
+4. **Nav spec** - header/footer items  
+5. **Internal linking** - hubs, orphans to fix, suggested new links  
 
 ---
 
@@ -125,7 +125,7 @@ graph TD
   SVC --> S1[Service detail]
 ```
 
-Optional local deep-dives: add files under `.cursor/skills/site-architecture/references/` (e.g. `navigation-patterns.md`) — not shipped in this repo by default.
+Optional local deep-dives: add files under `.cursor/skills/site-architecture/references/` (e.g. `navigation-patterns.md`) - not shipped in this repo by default.
 
 ---
 

@@ -57,7 +57,7 @@ export function ValueLabelsSection() {
 
   return (
     <section className="relative pt-16 pb-24 sm:pt-24 sm:pb-32 lg:py-32 px-5 sm:px-6 lg:px-16 bg-black overflow-hidden border-y border-[#222222]">
-      {/* 3D rotating symbol — behind all content */}
+      {/* 3D rotating symbol - behind all content */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 lg:opacity-40">
         <RotatingSymbol3D className="w-[400px] h-[400px] lg:w-[600px] lg:h-[600px]" />
       </div>

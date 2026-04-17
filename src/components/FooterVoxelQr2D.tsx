@@ -6,7 +6,7 @@ type Props = {
   ariaLabel: string;
 };
 
-/** Sits on footer charcoal; QR is a smaller white tile (quiet zone) centered — no outer frame. */
+/** Sits on footer charcoal; QR is a smaller white tile (quiet zone) centered - no outer frame. */
 export function FooterVoxelQr2D({ url, ariaLabel }: Props): JSX.Element {
   const reduce = useReducedMotion();
 

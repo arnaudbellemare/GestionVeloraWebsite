@@ -7,7 +7,7 @@ type InternalLinkProps = React.ComponentProps<typeof Link> & {
 
 /*
  * ─────────────────────────────────────────────────────────────
- *  InternalLink — locale-aware navigation
+ *  InternalLink - locale-aware navigation
  * ─────────────────────────────────────────────────────────────
  *  Navigates immediately via React Router.
  *  AnimatePresence in Layout.tsx handles the visual transition

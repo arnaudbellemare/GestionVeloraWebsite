@@ -21,7 +21,7 @@ export default {
           success: "#4a9e5c",
           warning: "#d4a843",
         },
-        /** Legacy Velora — keep hex for unmigrated paths; prefer `nd-*` in new UI */
+        /** Legacy Velora - keep hex for unmigrated paths; prefer `nd-*` in new UI */
         "velora-green": "#485c11",
         "accentaccent-1": "var(--nd-text-display)",
         "accentaccent-2": "var(--nd-surface-raised)",
@@ -38,7 +38,7 @@ export default {
         "velora-ocean-hover": "#4a8ee5",
       },
       fontFamily: {
-        /** Google Fonts — see index.html stylesheet */
+        /** Google Fonts - see index.html stylesheet */
         sans: ['"DM Sans"', "system-ui", "sans-serif"],
         mono: [
           "ui-monospace",
@@ -50,7 +50,7 @@ export default {
           "Courier New",
           "monospace",
         ],
-        /** Dot-matrix display (Nothing-adjacent) — load Doto in index.html */
+        /** Dot-matrix display (Nothing-adjacent) - load Doto in index.html */
         doto: ["Doto", "ui-monospace", "monospace"],
         display: ['"Playfair Display"', "Georgia", "serif"],
         /** Large marketing serif blocks (was Syne) */

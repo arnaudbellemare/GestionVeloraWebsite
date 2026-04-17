@@ -37,7 +37,7 @@ export function OurStandardsSection() {
     >
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 w-full h-full bg-black">
-          {/* Static frame (matches video) until the MP4 can render — avoids an empty area before load */}
+          {/* Static frame (matches video) until the MP4 can render - avoids an empty area before load */}
           <img
             src={BG_IMAGE}
             alt=""

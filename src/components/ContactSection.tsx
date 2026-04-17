@@ -48,17 +48,17 @@ function emailSubject(topic: Topic, lang: string): string {
   const isEn = lang.startsWith("en");
   if (topic === "demo") {
     return isEn
-      ? `[Demo] Gestion Velora — Website contact`
-      : `[Démo] Gestion Velora — Contact site web`;
+      ? `[Demo] Gestion Velora - Website contact`
+      : `[Démo] Gestion Velora - Contact site web`;
   }
   if (topic === "communication") {
     return isEn
-      ? `[Communication] Gestion Velora — Website contact`
-      : `[Communication] Gestion Velora — Contact site web`;
+      ? `[Communication] Gestion Velora - Website contact`
+      : `[Communication] Gestion Velora - Contact site web`;
   }
   return isEn
-    ? `Gestion Velora — Website contact`
-    : `Gestion Velora — Contact site web`;
+    ? `Gestion Velora - Website contact`
+    : `Gestion Velora - Contact site web`;
 }
 
 export function ContactSection() {
@@ -86,7 +86,7 @@ export function ContactSection() {
     const subject = emailSubject(formData.topic, i18n.language);
     const mailto = `mailto:${NOTIFICATION_EMAIL}?subject=${encodeURIComponent(
       subject
-    )}&body=${encodeURIComponent(buildMessageBody() + `\n\n—\n${formData.name}\n${formData.email}`)}`;
+    )}&body=${encodeURIComponent(buildMessageBody() + `\n\n-\n${formData.name}\n${formData.email}`)}`;
     window.location.href = mailto;
   };
 

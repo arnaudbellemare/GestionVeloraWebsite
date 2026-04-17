@@ -1,6 +1,6 @@
 import { type RefObject, useEffect, useLayoutEffect, useState } from "react";
 
-/** After first paint / idle — keeps main thread and network free for JS, CSS, fonts. */
+/** After first paint / idle - keeps main thread and network free for JS, CSS, fonts. */
 export function useIdleReady(timeoutMs = 2800): boolean {
   const [ready, setReady] = useState(false);
   useEffect(() => {

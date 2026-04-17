@@ -1,4 +1,4 @@
-# Nothing Design System — Tokens
+# Nothing Design System - Tokens
 
 ## 1. TYPOGRAPHY
 
@@ -10,7 +10,7 @@
 | **Body / UI** | `"Space Grotesk"` | `"DM Sans", system-ui, sans-serif` | Light 300, Regular 400, Medium 500, Bold 700 |
 | **Data / Labels** | `"Space Mono"` | `"JetBrains Mono", "SF Mono", monospace` | Regular 400, Bold 700 |
 
-**Why these fonts:** Doto = variable dot-matrix (closest to NDot 57). Space Grotesk + Space Mono by Colophon Foundry — same foundry as Nothing's actual typefaces. Shared design DNA.
+**Why these fonts:** Doto = variable dot-matrix (closest to NDot 57). Space Grotesk + Space Mono by Colophon Foundry - same foundry as Nothing's actual typefaces. Shared design DNA.
 
 ### Type Scale
 
@@ -41,11 +41,11 @@
 
 | Token | Hex | Contrast on #000 | Role |
 |-------|-----|-------------------|------|
-| `--black` | `#000000` | — | Primary background (OLED) |
+| `--black` | `#000000` | - | Primary background (OLED) |
 | `--surface` | `#111111` | 1.3:1 | Elevated surfaces, cards |
 | `--surface-raised` | `#1A1A1A` | 1.5:1 | Secondary elevation |
-| `--border` | `#222222` | — | Subtle dividers (decorative only) |
-| `--border-visible` | `#333333` | — | Intentional borders, wireframe lines |
+| `--border` | `#222222` | - | Subtle dividers (decorative only) |
+| `--border-visible` | `#333333` | - | Intentional borders, wireframe lines |
 | `--text-disabled` | `#666666` | 4.0:1 | Disabled text, decorative elements |
 | `--text-secondary` | `#999999` | 6.3:1 | Labels, captions, metadata |
 | `--text-primary` | `#E8E8E8` | 16.5:1 | Body text |
@@ -59,7 +59,7 @@
 | `--accent-subtle` | `rgba(215,25,33,0.15)` | Accent tint backgrounds |
 | `--success` | `#4A9E5C` | Confirmed, completed, connected |
 | `--warning` | `#D4A843` | Caution, pending, degraded |
-| `--error` | `#D71921` | Shares accent red — errors ARE the accent moment |
+| `--error` | `#D71921` | Shares accent red - errors ARE the accent moment |
 | `--info` | `#999999` | Uses secondary text color |
 | `--interactive` | `#007AFF` / `#5B9BF6` | Tappable text: links, picker values. Not for buttons. |
 
@@ -108,7 +108,7 @@
 ## 4. MOTION & INTERACTION
 
 - **Duration:** 150–250ms micro, 300–400ms transitions
-- **Easing:** `cubic-bezier(0.25, 0.1, 0.25, 1)` — subtle ease-out. No spring/bounce.
+- **Easing:** `cubic-bezier(0.25, 0.1, 0.25, 1)` - subtle ease-out. No spring/bounce.
 - Prefer opacity over position. Elements fade, don't slide.
 - Hover: border/text brightens. No scale, no shadows.
 - No parallax, scroll-jacking, gratuitous animation.

@@ -1,4 +1,4 @@
-# Nothing Design System — Components
+# Nothing Design System - Components
 
 ## 1. CARDS / SURFACES
 
@@ -38,7 +38,7 @@ All buttons: `Space Mono`, 13px, ALL CAPS, letter-spacing 0.06em, padding 12px 2
 
 **Stat rows:** Label left (Space Mono, ALL CAPS, `--text-secondary`), value right (color = status color), unit adjacent in `--label` size. Trend arrow same color as value.
 
-**Hierarchical rows:** Sub-items indented 16–24px, same divider treatment. No tree lines or expand/collapse — indentation IS the hierarchy.
+**Hierarchical rows:** Sub-items indented 16–24px, same divider treatment. No tree lines or expand/collapse - indentation IS the hierarchy.
 
 ---
 
@@ -78,9 +78,9 @@ All buttons: `Space Mono`, 13px, ALL CAPS, letter-spacing 0.06em, padding 12px 2
 
 ## 9. DATE / PERIOD NAVIGATION
 
-- Layout: `< LABEL >` — back arrow, label, forward arrow
+- Layout: `< LABEL >` - back arrow, label, forward arrow
 - Label: Space Mono/Grotesk, ALL CAPS. Arrows: thin chevrons, `--text-secondary`, 44px touch
-- No calendar popovers — linear stepping IS the interaction
+- No calendar popovers - linear stepping IS the interaction
 
 ---
 
@@ -93,7 +93,7 @@ All buttons: `Space Mono`, 13px, ALL CAPS, letter-spacing 0.06em, padding 12px 2
 
 ## 11. SEGMENTED PROGRESS BARS
 
-The signature data visualization. Discrete blocks — mechanical, instrument-like.
+The signature data visualization. Discrete blocks - mechanical, instrument-like.
 
 **Anatomy:** Label + value above, full-width bar of discrete rectangular segments with 2px gaps below.
 
@@ -122,7 +122,7 @@ Always pair with numeric readout. Bar = proportion, number = precision.
 - **Category differentiation:** Opacity → pattern → line style → color (last resort).
 - Always show numeric value alongside any visual.
 
-**Charts:** Line 1.5–2px `--text-display`, average dashed 1px `--text-secondary`. Axis labels: Space Mono, `--caption`. Grid: `--border`, horizontal only. No area fill, no legend boxes — label lines directly.
+**Charts:** Line 1.5–2px `--text-display`, average dashed 1px `--text-secondary`. Axis labels: Space Mono, `--caption`. Grid: `--border`, horizontal only. No area fill, no legend boxes - label lines directly.
 
 ---
 
@@ -149,5 +149,5 @@ No shadows. Layering through background contrast and borders.
 
 - **Error:** Input border → `--accent` + message below. Form-level: summary box `1px solid --accent`. Inline: `[ERROR]` prefix. Never red backgrounds or alert banners.
 - **Empty:** Centered, 96px+ padding. Headline `--text-secondary`, 1 sentence description `--text-disabled`. Optional dot-matrix illustration. No mascots.
-- **Loading:** Segmented spinner (hardware-style), or segmented bar + percentage. No skeletons — use `[LOADING]` bracket text.
+- **Loading:** Segmented spinner (hardware-style), or segmented bar + percentage. No skeletons - use `[LOADING]` bracket text.
 - **Disabled:** Opacity 0.4 or `--text-disabled`. Borders fade to `--border`.

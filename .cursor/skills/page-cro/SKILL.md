@@ -1,7 +1,7 @@
 ---
 name: page-cro
 description: >-
-  Analyzes and improves marketing page conversion — headlines, CTAs, trust, friction,
+  Analyzes and improves marketing page conversion - headlines, CTAs, trust, friction,
   forms, and hierarchy. Use for homepage, landing, pricing, features, blog, or when the
   user says CRO, conversion optimization, improve conversions, or this page is not converting.
   Signup flows, onboarding, generic forms, and popups may need different playbooks if those
@@ -12,15 +12,15 @@ metadata:
 
 # Page Conversion Rate Optimization (CRO)
 
-Act as a conversion-focused reviewer. Prioritize clarity, one primary action, and measurable hypotheses—not vague design opinions.
+Act as a conversion-focused reviewer. Prioritize clarity, one primary action, and measurable hypotheses-not vague design opinions.
 
 ## This repository (Gestion Velora)
 
 When editing this codebase, align recommendations with what exists:
 
 - **Stack:** Vite, React 18, React Router, Tailwind, Framer Motion, i18next (`src/i18n/en.ts`, `fr.ts`). French default; English under `/en` (see `src/i18n/index.ts`, `LocaleContext`).
-- **Main page:** `src/pages/HomePage.tsx` — hero (`HeroSection`), standards, process, services, FAQ, contact (`#contact`, `#contact-form`), footer with embedded WebGPU QR (`FooterSection`, `public/static/qr-tree-standalone.html` + bundle).
-- **Contact & CTAs:** `ContactSection.tsx` — custom dropdowns (`ContactCustomSelect.tsx`), `useGoToContact` for `/#contact-form`, optional Web3Forms (`VITE_WEB3FORMS_ACCESS_KEY`).
+- **Main page:** `src/pages/HomePage.tsx` - hero (`HeroSection`), standards, process, services, FAQ, contact (`#contact`, `#contact-form`), footer with embedded WebGPU QR (`FooterSection`, `public/static/qr-tree-standalone.html` + bundle).
+- **Contact & CTAs:** `ContactSection.tsx` - custom dropdowns (`ContactCustomSelect.tsx`), `useGoToContact` for `/#contact-form`, optional Web3Forms (`VITE_WEB3FORMS_ACCESS_KEY`).
 - **Links:** Prefer `InternalLink` + locale-aware paths; hash CTAs (`#specification`, `#testimonials`, etc.) appear in hero and sections.
 
 CRO work often touches **copy in i18n** and **section components** under `src/components/`. Keep changes scoped; do not rewrite unrelated pages.
@@ -64,7 +64,7 @@ Clarify when missing:
 
 ### 6. Objections
 
-- Price, fit, effort, risk — addressed in FAQ, process, or guarantees where relevant.
+- Price, fit, effort, risk - addressed in FAQ, process, or guarantees where relevant.
 
 ### 7. Friction
 
@@ -74,10 +74,10 @@ Clarify when missing:
 
 ## Output format
 
-- **Quick wins** — fast, likely impact  
-- **High-impact** — larger bets  
-- **Test ideas** — hypotheses for A/B or measurement  
-- **Copy alternatives** — 2–3 options + why  
+- **Quick wins** - fast, likely impact  
+- **High-impact** - larger bets  
+- **Test ideas** - hypotheses for A/B or measurement  
+- **Copy alternatives** - 2–3 options + why  
 
 ---
 

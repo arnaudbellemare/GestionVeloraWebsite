@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NMSB2ZT1EZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-NMSB2ZT1EZ');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>QR — Gestion Velora</title>
+  <title>QR - Gestion Velora</title>
   <style>
     html,
     body {
@@ -33,7 +42,7 @@
       background-color: #000000;
     }
     /*
-      Footer iframe is a small square; bundle uses inline 100vw/100vh — override so the scene fills the frame.
+      Footer iframe is a small square; bundle uses inline 100vw/100vh - override so the scene fills the frame.
       Root may be StrictMode + one real div; paint #000 everywhere the bundle used #1c1c1c.
     */
     body.embed #root > * {

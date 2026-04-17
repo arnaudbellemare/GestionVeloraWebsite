@@ -215,7 +215,7 @@ export function TrustedPartnersSection() {
           </LayoutGroup>
         </div>
 
-        {/* Bottom: Partner logos marquee — inView on this box only; wide inner strip breaks IO ratio on mobile */}
+        {/* Bottom: Partner logos marquee - inView on this box only; wide inner strip breaks IO ratio on mobile */}
         <motion.div
           className="mt-24 lg:mt-32 overflow-hidden relative rounded-xl border border-nd-border bg-nd-canvas/80 py-6 dark:border-white/[0.08] dark:bg-black/50"
           initial={{ opacity: 0 }}

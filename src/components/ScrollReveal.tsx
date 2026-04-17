@@ -10,7 +10,7 @@ interface ScrollRevealProps {
   direction?: "up" | "down" | "left" | "right";
   amount?: number;
   duration?: number;
-  /** Slight scale-up on reveal — use sparingly (Nothing baseline: opacity + short travel) */
+  /** Slight scale-up on reveal - use sparingly (Nothing baseline: opacity + short travel) */
   scale?: boolean;
 }
 

@@ -1,9 +1,9 @@
 /**
  * WGSL: single `progress` dial (0 = 3D tree, 1 = flat scannable QR).
  *
- * 1) Camera — isometric → top-down via mixed euler-style angles (see vs_main).
- * 2) Visibility — stacked / trunk blocks fade out so modules aren’t occluded.
- * 3) Grid — mix 3D heights + sway into a flat QR plane as progress → 1.
+ * 1) Camera - isometric → top-down via mixed euler-style angles (see vs_main).
+ * 2) Visibility - stacked / trunk blocks fade out so modules aren’t occluded.
+ * 3) Grid - mix 3D heights + sway into a flat QR plane as progress → 1.
  */
 export const QR_TREE_SHADER = /* wgsl */ `
 struct Uniforms {
@@ -86,7 +86,7 @@ fn kind_color(kind: u32, season: f32) -> vec3<f32> {
     case 2u: { c = vec3<f32>(0.28, 0.16, 0.10); }
     case 3u: { c = vec3<f32>(0.35, 0.55, 0.28); }
     case 4u: { c = vec3<f32>(0.88, 0.72, 0.78); }
-    case 5u: { c = vec3<f32>(0.34, 0.72, 0.32); } // rim grass — saturated like reference
+    case 5u: { c = vec3<f32>(0.34, 0.72, 0.32); } // rim grass - saturated like reference
     case 6u: { c = vec3<f32>(0.42, 0.78, 0.38); } // fallen leaf chips
     default: { c = vec3<f32>(0.40, 0.28, 0.18); }
   }
@@ -126,7 +126,7 @@ fn vs_main(
   var world = mix(world3d, worldFlat, p);
 
   // Only collapse the trunk stack for scanning. Cherry / canopy (kind 1) must stay visible when
-  // flat or you lose all pink — “from above” should still show the same palette as 3D.
+  // flat or you lose all pink - “from above” should still show the same palette as 3D.
   var vis = 1.0;
   if (k == 2u && baseY > 0.01) {
     vis = smoothstep(0.1, 0.5, 1.0 - p);

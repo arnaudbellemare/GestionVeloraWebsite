@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NMSB2ZT1EZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-NMSB2ZT1EZ');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>QR → Montréal — voxel morph</title>
+  <title>QR → Montréal - voxel morph</title>
   <style>
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0d12; font-family: ui-sans-serif, system-ui, sans-serif; }
@@ -77,12 +86,12 @@
   </script>
   <div id="bar">
     <label for="url">URL / text</label>
-    <input id="url" type="text" spellcheck="false" placeholder="https://www.gestionvelora.com — type to morph the code…" autocomplete="off" />
+    <input id="url" type="text" spellcheck="false" placeholder="https://www.gestionvelora.com - type to morph the code…" autocomplete="off" />
     <div class="seg" role="group" aria-label="View mode">
       <button type="button" id="btn-2d">QR</button>
       <button type="button" id="btn-3d" class="on">3D</button>
     </div>
-    <span id="hint">Island layout: fleuve south, montagne north, downtown &amp; towers between — toggle QR / 3D anytime.</span>
+    <span id="hint">Island layout: fleuve south, montagne north, downtown &amp; towers between - toggle QR / 3D anytime.</span>
   </div>
   <div id="canvas-wrap"><canvas id="c"></canvas></div>
 
@@ -274,7 +283,7 @@
     const camera = new THREE.PerspectiveCamera(CAM_FOV, 2, 0.1, 200);
     camera.position.set(10, 9, 14);
 
-    /** Half-width on X/Z of the instanced grid (outer voxel edge + tiny pad) — ortho frustum fits this to the viewport. */
+    /** Half-width on X/Z of the instanced grid (outer voxel edge + tiny pad) - ortho frustum fits this to the viewport. */
     const gridExtentHalf = ((N - 1) * 0.5) * CELL * 1.03 + CELL * 0.5;
     const orthoCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 120);
     orthoCam.position.set(0, 32, 0);
@@ -322,7 +331,7 @@
       btn2d.classList.toggle('on', !viewTarget3D);
       btn3d.classList.toggle('on', viewTarget3D);
     }
-    /** @param {boolean} on — true = 3D city view, false = 2D map (top-down QR) */
+    /** @param {boolean} on - true = 3D city view, false = 2D map (top-down QR) */
     function setView3D(on) {
       if (on) {
         viewTarget3D = true;
@@ -366,7 +375,7 @@
     rim.position.set(-12, 8, -16);
     scene.add(rim);
 
-    /** Footer embed: no ground plane — bars read as floating on the page’s solid #1c1c1c (no slab, no contact shadows). */
+    /** Footer embed: no ground plane - bars read as floating on the page’s solid #1c1c1c (no slab, no contact shadows). */
     if (!isEmbed) {
       const ground = new THREE.Mesh(
         new THREE.PlaneGeometry(80, 80),
@@ -394,8 +403,8 @@
     mesh.receiveShadow = true;
     scene.add(mesh);
 
-    /** Dark QR modules — blue (fleuve tone) instead of gray; river plane removed */
-    /** Dark “ink” modules — brick / mountain tones (match city mesh, not blue QR). */
+    /** Dark QR modules - blue (fleuve tone) instead of gray; river plane removed */
+    /** Dark “ink” modules - brick / mountain tones (match city mesh, not blue QR). */
     const qrColor = new THREE.Color(0x2a3228);
     const qrHi = new THREE.Color(0x4a463c);
 
@@ -459,7 +468,7 @@
       syncQr(t);
     });
 
-    // Share / embed: ?q=… or ?url=… — optional ?embed=1 for footer iframe
+    // Share / embed: ?q=… or ?url=… - optional ?embed=1 for footer iframe
     let fromQuery = (params.get('q') || params.get('url') || '').trim();
     if (fromQuery) {
       try {

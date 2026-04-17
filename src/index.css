@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 /*
- * PP Mori (Pangram Pangram) — public/fonts/. Registered as PPMori (no space) for valid @font-face id.
+ * PP Mori (Pangram Pangram) - public/fonts/. Registered as PPMori (no space) for valid @font-face id.
  */
 @font-face {
   font-family: PPMori;
@@ -23,7 +23,7 @@
 }
 
 @layer components {
-  /* Stats KPI row — PPMori + Outfit only (minifiers strip quotes; avoid multi-word family names here) */
+  /* Stats KPI row - PPMori + Outfit only (minifiers strip quotes; avoid multi-word family names here) */
   .font-stat-numeral {
     font-family: PPMori, Outfit, system-ui, sans-serif;
   }
@@ -35,7 +35,7 @@
   }
 }
 
-/* Nothing-inspired design tokens — see .cursor/skills/nothing-design/references/tokens.md */
+/* Nothing-inspired design tokens - see .cursor/skills/nothing-design/references/tokens.md */
 
 html.dark {
   --nd-canvas: #000000;
@@ -135,7 +135,7 @@ html.dark ::-webkit-scrollbar-thumb:hover {
   display: none;
 }
 
-/* Dot grid (Nothing motif) — backgrounds only */
+/* Dot grid (Nothing motif) - backgrounds only */
 .nd-dot-grid {
   background-image: radial-gradient(circle, var(--nd-border-visible) 1px, transparent 1px);
   background-size: 16px 16px;

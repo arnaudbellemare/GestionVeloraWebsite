@@ -21,14 +21,14 @@ A senior product designer's toolkit trained in Swiss typography, industrial desi
 
 - **Subtract, don't add.** Every element must earn its pixel. Default to removal.
 - **Structure is ornament.** Expose the grid, the data, the hierarchy itself.
-- **Monochrome is the canvas.** Color is an event, not a default — except when encoding data status (see Section 3).
-- **Type does the heavy lifting.** Scale, weight, and spacing create hierarchy — not color, not icons, not borders.
-- **Both modes are first-class.** Dark mode: OLED black. Light mode: warm off-white. Neither is "derived" — both get full design attention. Ask the user which mode to start with.
+- **Monochrome is the canvas.** Color is an event, not a default - except when encoding data status (see Section 3).
+- **Type does the heavy lifting.** Scale, weight, and spacing create hierarchy - not color, not icons, not borders.
+- **Both modes are first-class.** Dark mode: OLED black. Light mode: warm off-white. Neither is "derived" - both get full design attention. Ask the user which mode to start with.
 - **Industrial warmth.** Technical and precise, but never cold. A human hand should be felt.
 
 ---
 
-## 2. CRAFT RULES — HOW TO COMPOSE
+## 2. CRAFT RULES - HOW TO COMPOSE
 
 ### 2.1 Visual Hierarchy: The Three-Layer Rule
 
@@ -42,7 +42,7 @@ Every screen has exactly **three layers of importance.** Not two, not five. Thre
 
 **The test:** Squint at the screen. Can you still tell what's most important? If two things compete, one needs to shrink, fade, or move.
 
-**Common mistake:** Making everything "secondary." Evenly-sized elements with even spacing = visual flatness. Be brave — make the primary absurdly large and the tertiary absurdly small. The contrast IS the hierarchy.
+**Common mistake:** Making everything "secondary." Evenly-sized elements with even spacing = visual flatness. Be brave - make the primary absurdly large and the tertiary absurdly small. The contrast IS the hierarchy.
 
 ### 2.2 Font Discipline
 
@@ -50,7 +50,7 @@ Per screen, use maximum:
 
 - **2 font families** (Space Grotesk + Space Mono. Doto only for hero moments.)
 - **3 font sizes** (one large, one medium, one small)
-- **2 font weights** (Regular + one other — usually Light or Medium, rarely Bold)
+- **2 font weights** (Regular + one other - usually Light or Medium, rarely Bold)
 
 Think of it as a budget. Every additional size/weight costs visual coherence. Before adding a new size, ask: can I create this distinction with spacing or color instead?
 
@@ -84,7 +84,7 @@ Vast (64–96px)   = "This is a new context" (hero to content, major divisions)
 3. A subtle border outline
 4. A surface card with background change
 
-Each step down adds visual weight. Use the lightest tool that works. Never box the most important element — let it float on the background.
+Each step down adds visual weight. Use the lightest tool that works. Never box the most important element - let it float on the background.
 
 ### 2.5 Color as Hierarchy
 
@@ -97,7 +97,7 @@ In a monochrome system, the gray scale IS the hierarchy. Max 4 levels per screen
 --text-disabled (40%) → Disabled, timestamps, hints.
 ```
 
-**Red (#D71921) is not part of the hierarchy.** It's an interrupt — "look HERE, NOW." If nothing is urgent, no red on the screen.
+**Red (#D71921) is not part of the hierarchy.** It's an interrupt - "look HERE, NOW." If nothing is urgent, no red on the screen.
 
 **Data status colors** (success green, warning amber, accent red) are exempt from the "one accent" rule when encoding data values. Apply color to the **value itself**, not labels or row backgrounds. See `references/tokens.md` for the full color system.
 
@@ -134,7 +134,7 @@ When 3+ data sections appear on one screen, vary the visual form:
 
 | Form | Best for | Weight |
 |------|----------|--------|
-| Hero number (large Doto/Space Mono) | Single key metric | Heavy — use once |
+| Hero number (large Doto/Space Mono) | Single key metric | Heavy - use once |
 | Segmented progress bar | Progress toward goal | Medium |
 | Concentric rings / arcs | Multiple related percentages | Medium |
 | Inline compact bar | Secondary metrics in rows | Light |
@@ -146,7 +146,7 @@ Lead section → heaviest treatment. Secondary → different form. Tertiary → 
 
 ---
 
-## 3. ANTI-PATTERNS — WHAT TO NEVER DO
+## 3. ANTI-PATTERNS - WHAT TO NEVER DO
 
 - No gradients in UI chrome
 - No shadows. No blur. Flat surfaces, border separation.
@@ -164,13 +164,13 @@ Lead section → heaviest treatment. Secondary → different form. Tertiary → 
 
 ## 4. WORKFLOW
 
-1. **Declare fonts** — tell the user which Google Fonts to load (see `references/tokens.md`)
-2. **Ask mode** — dark or light? Neither is default.
-3. **Sketch hierarchy** — identify the 3 layers before writing any code
-4. **Compose** — apply craft rules (Sections 2.1–2.9)
-5. **Check tokens** — consult `references/tokens.md` for exact values
-6. **Build components** — consult `references/components.md` for patterns
-7. **Adapt to platform** — consult `references/platform-mapping.md` for output conventions
+1. **Declare fonts** - tell the user which Google Fonts to load (see `references/tokens.md`)
+2. **Ask mode** - dark or light? Neither is default.
+3. **Sketch hierarchy** - identify the 3 layers before writing any code
+4. **Compose** - apply craft rules (Sections 2.1–2.9)
+5. **Check tokens** - consult `references/tokens.md` for exact values
+6. **Build components** - consult `references/components.md` for patterns
+7. **Adapt to platform** - consult `references/platform-mapping.md` for output conventions
 
 ---
 
@@ -178,10 +178,10 @@ Lead section → heaviest treatment. Secondary → different form. Tertiary → 
 
 For detailed token values, component specs, and platform-specific guidance:
 
-- **`references/tokens.md`** — Fonts, type scale, color system (dark + light), spacing scale, grid, motion, iconography, dot-matrix motif
-- **`references/components.md`** — Cards, buttons, inputs, lists, tables, nav, tags, segmented controls, progress bars, charts, widgets, overlays, state patterns
-- **`references/platform-mapping.md`** — HTML/CSS, SwiftUI, React/Tailwind, Paper output conventions
-- **`references/jakub-krol-companion.md`** — Optional motion/drag/dialog craft + gradient article (use with **nothing-gradients** when that skill is installed for gradient exceptions)
+- **`references/tokens.md`** - Fonts, type scale, color system (dark + light), spacing scale, grid, motion, iconography, dot-matrix motif
+- **`references/components.md`** - Cards, buttons, inputs, lists, tables, nav, tags, segmented controls, progress bars, charts, widgets, overlays, state patterns
+- **`references/platform-mapping.md`** - HTML/CSS, SwiftUI, React/Tailwind, Paper output conventions
+- **`references/jakub-krol-companion.md`** - Optional motion/drag/dialog craft + gradient article (use with **nothing-gradients** when that skill is installed for gradient exceptions)
 
 ---
 
@@ -197,13 +197,13 @@ npx skills add jakubkrehel/make-interfaces-feel-better
 
 **Further reading** (summarized in `references/jakub-krol-companion.md`):
 
-- [Motion gestures](https://jakub.kr/work/motion-gestures) — intentional motion tied to hierarchy; avoid decorative animation.
-- [Drag gesture](https://jakub.kr/work/drag-gesture) — pointer patterns; keep feel **percussive / precise**, not elastic (see §2.8, §3).
-- [Using AI as a design engineer](https://jakub.kr/work/using-ai-as-a-design-engineer) — agent-friendly spec and build workflow.
-- [Sign-in dialog](https://jakub.kr/components/sign-in-dialog) — focused overlay composition and states.
-- [Gradients](https://jakub.kr/work/gradients) — CSS/OKLCH craft; **Nothing forbids UI chrome gradients by default** — when the user wants gradients, follow the **nothing-gradients** skill if present (e.g. `.cursor/skills/nothing-gradients/SKILL.md`).
+- [Motion gestures](https://jakub.kr/work/motion-gestures) - intentional motion tied to hierarchy; avoid decorative animation.
+- [Drag gesture](https://jakub.kr/work/drag-gesture) - pointer patterns; keep feel **percussive / precise**, not elastic (see §2.8, §3).
+- [Using AI as a design engineer](https://jakub.kr/work/using-ai-as-a-design-engineer) - agent-friendly spec and build workflow.
+- [Sign-in dialog](https://jakub.kr/components/sign-in-dialog) - focused overlay composition and states.
+- [Gradients](https://jakub.kr/work/gradients) - CSS/OKLCH craft; **Nothing forbids UI chrome gradients by default** - when the user wants gradients, follow the **nothing-gradients** skill if present (e.g. `.cursor/skills/nothing-gradients/SKILL.md`).
 
-**Conflict rule:** Nothing anti-patterns in §3 still apply unless the user explicitly overrides them. Treat Jakub’s material as **refinement layer** for timing, gesture clarity, and structure — not a license for bounce easing, blur chrome, or gradient stacking on every card.
+**Conflict rule:** Nothing anti-patterns in §3 still apply unless the user explicitly overrides them. Treat Jakub’s material as **refinement layer** for timing, gesture clarity, and structure - not a license for bounce easing, blur chrome, or gradient stacking on every card.
 
 ---
 

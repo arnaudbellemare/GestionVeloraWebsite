@@ -63,13 +63,13 @@ export function QrTreeWebgpu({
 
     /** 256-byte scratch: WGSL uniform binding + zero padding (some drivers are picky). */
     const uniformScratch = new Uint8Array(QR_TREE_UNIFORM_BYTE_LENGTH);
-    /** viewProj(16) + gridSize,time,season,progress(4) — rest zero-padded to 256 B. */
+    /** viewProj(16) + gridSize,time,season,progress(4) - rest zero-padded to 256 B. */
     const uniformData = new Float32Array(
       uniformScratch.buffer,
       uniformScratch.byteOffset,
       64
     );
-    /** Projection-only camera (never positioned — orbit cam supplies the view matrix). */
+    /** Projection-only camera (never positioned - orbit cam supplies the view matrix). */
     const persp = new PerspectiveCamera(45, 1, 0.08, 50);
     persp.up.set(0, 1, 0);
     /** Raw WebGPU expects NDC z in [0,1]; Three defaults to WebGL [-1,1]. */
@@ -263,10 +263,10 @@ export function QrTreeWebgpu({
 
         persp.updateProjectionMatrix();
         const p = progressForShader;
-        // Single target — lerping Y during morph made the whole frame slide and feel like “spin”.
+        // Single target - lerping Y during morph made the whole frame slide and feel like “spin”.
         lookTarget.set(0, 0.1, 0);
         // Keep azimuth fixed for the whole morph. If angleY eased toward 0 with progress, the camera
-        // would spin horizontally while tilting — the flat QR looks “mirrored” / flipped vs 3D.
+        // would spin horizontally while tilting - the flat QR looks “mirrored” / flipped vs 3D.
         const AZIMUTH = 0.78;
         const angleY = AZIMUTH;
         const angleX = (1 - p) * -0.55 + p * -1.5708;
@@ -281,7 +281,7 @@ export function QrTreeWebgpu({
           lookTarget.z + dist * cp * cy
         );
         orbitCam.position.copy(eye);
-        // Don’t lerp up over p — that slowly rolls the camera (reads as spin). Snap +Z only when
+        // Don’t lerp up over p - that slowly rolls the camera (reads as spin). Snap +Z only when
         // nearly top-down so lookAt stays stable; Y-up for the oblique 3D view.
         if (p > 0.88) {
           orbitCam.up.set(0, 0, 1);

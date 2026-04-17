@@ -18,7 +18,7 @@ Changing an `id` here requires updating footer, hero, and any deep links.
 
 ## Other routes (no hash)
 
-- `/services` — services hub (FR default; `/en/services` in English)
-- `/services/:slug` — service detail
-- `/blog`, `/blog/:slug` — insights
-- `/privacy` — privacy policy (if you add `/legal/terms` etc., document IDs the same way)
+- `/services` - services hub (FR default; `/en/services` in English)
+- `/services/:slug` - service detail
+- `/blog`, `/blog/:slug` - insights
+- `/privacy` - privacy policy (if you add `/legal/terms` etc., document IDs the same way)

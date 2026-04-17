@@ -9,7 +9,7 @@ const QR_SITE_URL = "https://www.gestionvelora.com/";
 
 const QR_TREE_MSG = { channel: "gv-qr-tree", type: "setSeason" } as const;
 
-/** Standalone bundle (`public/static/qr-tree-standalone.*`): WebGPU tree, tap/QR↔3D toggle — same as shipped JS. */
+/** Standalone bundle (`public/static/qr-tree-standalone.*`): WebGPU tree, tap/QR↔3D toggle - same as shipped JS. */
 function qrTreeStandaloneIframeSrc(): string {
   return `/static/qr-tree-standalone.html?embed=1&q=${encodeURIComponent(QR_SITE_URL)}`;
 }
@@ -228,7 +228,7 @@ export const FooterSection = (): JSX.Element => {
 
       </div>
 
-      {/* 3D City Brand Image — top scrim fades footer black into the skyline */}
+      {/* 3D City Brand Image - top scrim fades footer black into the skyline */}
       <div className="relative overflow-hidden">
         <img
           src="/images/footer-city-light.png?v=4"

@@ -34,9 +34,9 @@ function ensureQrContrast(r: number, g: number, b: number): [number, number, num
 }
 
 /**
- * @param col — matrix column (0..n-1)
- * @param row — matrix row (0..n-1)
- * @param n — grid size (matches QR module count)
+ * @param col - matrix column (0..n-1)
+ * @param row - matrix row (0..n-1)
+ * @param n - grid size (matches QR module count)
  */
 export function montrealCityHex(col: number, row: number, n: number): string {
   const cx = (n - 1) / 2;
