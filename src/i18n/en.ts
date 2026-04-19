@@ -9,7 +9,7 @@ export const en = {
     answerBoxLine1:
       "Gestion Velora is a Montreal property management team for condo boards, short-term (Airbnb), and long-term rentals.",
     answerBoxLine2:
-      "We structure administration, compliance, and occupant relationships—with readable reports, emergency response, and visibility into your operations.",
+      "We structure administration, compliance, and occupant relationships, with readable reports, emergency response, and visibility into your operations.",
     trustLine: "They trust us.",
     trustLink: "Read testimonials",
     ctaDiscover: "See how we work",
@@ -511,7 +511,7 @@ export const en = {
         },
         {
           q: "Can owners access meeting minutes and budgets?",
-          a: "Yes—financial and decision transparency matters; rigorous records reduce disputes about votes and spending.",
+          a: "Yes: financial and decision transparency matters; rigorous records reduce disputes about votes and spending.",
         },
         {
           q: "What is the difference between the reserve fund and the annual operating budget?",
@@ -574,11 +574,11 @@ export const en = {
       faq: [
         {
           q: "Do I need a municipal permit or classification for short-term rentals in Montreal?",
-          a: "The City regulates tourist lodging—confirm the applicable category on Montreal’s official site; we track requirements to reduce operational interruptions.",
+          a: "The City regulates tourist lodging: confirm the applicable category on Montreal’s official site; we track requirements to reduce operational interruptions.",
         },
         {
           q: "Is a standard homeowner policy enough for Airbnb?",
-          a: "Often not—endorsements or tailored coverage are required; we help you validate coverage with your insurer before listing.",
+          a: "Often not; endorsements or tailored coverage are required, and we help you validate coverage with your insurer before listing.",
         },
         {
           q: "How are taxes and rental income tracked?",
@@ -656,7 +656,7 @@ export const en = {
       faq: [
         {
           q: "How are arrears and collections handled?",
-          a: "Progressive follow-up, documented files, and compliance with Residential Tenancy Tribunal (TAL) timelines—protecting cash flow while staying within the rules.",
+          a: "Progressive follow-up, documented files, and compliance with Residential Tenancy Tribunal (TAL) timelines, protecting cash flow while staying within the rules.",
         },
         {
           q: "Who drafts leases and renewals?",

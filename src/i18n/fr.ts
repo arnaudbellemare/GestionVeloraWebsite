@@ -9,7 +9,7 @@ export const fr = {
     answerBoxLine1:
       "Gestion Velora est une équipe de gestion immobilière à Montréal : syndicats de copropriété, location courte durée (Airbnb) et location longue durée.",
     answerBoxLine2:
-      "Nous structurons l’administration, la conformité et la relation avec les occupants — avec des rapports lisibles, une réponse d’urgence et une visibilité sur vos opérations.",
+      "Nous structurons l’administration, la conformité et la relation avec les occupants, avec des rapports lisibles, une réponse d’urgence et une visibilité sur vos opérations.",
     trustLine: "Ils nous font confiance.",
     trustLink: "Voir les témoignages",
     ctaDiscover: "Voir ce que nous faisons",
