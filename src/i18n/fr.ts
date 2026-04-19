@@ -188,7 +188,7 @@ export const fr = {
       "Des années d’expérience en gestion immobilière à Montréal. Une vision fondée sur la transparence, la rigueur et la relation humaine avec chaque client.",
     members: [
       {
-        name: "Direction",
+        name: "Arnaud Bellemare",
         role: "FONDATEUR",
         bio: "Vision stratégique et engagement envers une gestion proactive, transparente et centrée sur la valorisation de chaque immeuble.",
       },
@@ -203,7 +203,7 @@ export const fr = {
     seeMore: "Voir plus de témoignages",
     ctaJourney: "Nous contacter",
     partners: [
-      { name: "Volvo", quote: "Gestion Velora a complètement transformé notre façon de gérer cette propriété.", author: "John Smith", role: "Président du syndicat de copropriété" },
+      { name: "Résidence du Parc", quote: "Gestion Velora a complètement transformé notre façon de gérer cette propriété.", author: "John Smith", role: "Président du syndicat de copropriété" },
       { name: "Atlas Immobilier", quote: "La transparence et les rapports que nous recevons sont sans précédent.", author: "Marie Dubois", role: "Directrice" },
       { name: "Crown Properties", quote: "Nos taux d'occupation sont passés de 91% à 98,5% la première année.", author: "Élise Villeneuve", role: "Associée" },
       { name: "Pinnacle Gestion", quote: "Une équipe réactive et des processus éprouvés qui font la différence.", author: "Pierre Martin", role: "Directeur général" },
@@ -309,7 +309,7 @@ export const fr = {
     subtitle:
       "Trois façons d’accompagner votre actif à Montréal : copropriété, courte durée et location longue durée.",
     ctaLearn: "En savoir plus",
-    metaTitle: "Services | Gestion Velora",
+    metaTitle: "Services de gestion immobilière Montréal | Gestion Velora",
     metaDescription:
       "Syndic de copropriété, gestion Airbnb et location résidentielle à Montréal - transparence, maintenance proactive et équipe réactive.",
     schemaName: "Services Gestion Velora",

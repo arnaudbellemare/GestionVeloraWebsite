@@ -186,7 +186,7 @@ export const en = {
       "Years of property management experience in Montreal. A vision built on transparency, rigor, and genuine relationships with every client.",
     members: [
       {
-        name: "Leadership",
+        name: "Arnaud Bellemare",
         role: "FOUNDER",
         bio: "Strategic vision and commitment to proactive, transparent management focused on maximizing every building’s value.",
       },
@@ -200,7 +200,7 @@ export const en = {
     seeMore: "See more testimonials",
     ctaJourney: "Contact us",
     partners: [
-      { name: "Volvo", quote: "Gestion Velora completely transformed how we manage this property.", author: "John Smith", role: "Condo board president" },
+      { name: "Résidence du Parc", quote: "Gestion Velora completely transformed how we manage this property.", author: "John Smith", role: "Condo board president" },
       { name: "Atlas Immobilier", quote: "The transparency and reports we receive are unprecedented.", author: "Marie Dubois", role: "Director" },
       { name: "Crown Properties", quote: "Our occupancy rates went from 91% to 98.5% in the first year.", author: "Élise Villeneuve", role: "Partner" },
       { name: "Pinnacle Gestion", quote: "A responsive team and proven processes that make the difference.", author: "Pierre Martin", role: "General manager" },
@@ -306,7 +306,7 @@ export const en = {
     subtitle:
       "Three ways we support your asset in Montreal: condo boards, short-term rentals, and long-term leases.",
     ctaLearn: "Learn more",
-    metaTitle: "Services | Gestion Velora",
+    metaTitle: "Condo & Property Management Services Montreal | Gestion Velora",
     metaDescription:
       "Condo management, Airbnb management, and residential leasing in Montreal - transparency, proactive maintenance, and a responsive team.",
     schemaName: "Gestion Velora services",

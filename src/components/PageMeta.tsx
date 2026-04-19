@@ -24,7 +24,7 @@ export function PageMeta() {
   const { slug } = useParams<{ slug: string }>();
 
   const isEn = locale === "en";
-  const baseTitle = isEn ? "Gestion Velora | Property Management Montreal" : "Gestion Velora | Gestion immobilière à Montréal";
+  const baseTitle = isEn ? "Property Management Montreal | Gestion Velora" : "Gestion immobilière Montréal | Gestion Velora";
   const baseDesc = isEn
     ? "Leading property management Montreal: condo management, Airbnb management, rental management. 98% occupancy, 24/7 support, full transparency."
     : "Votre tranquillité. Notre affaire. Gestion Velora offre syndicat de copropriété, gestion Airbnb et location longue durée à Montréal. Administration complète, maintenance proactive et rapports transparents.";
@@ -55,7 +55,7 @@ export function PageMeta() {
         twitterImage = service.image;
       }
     } else if (pathname === "/blog" || pathname === "/en/blog" || pathname === "/en/blog/") {
-      title = isEn ? "Insights | Gestion Velora" : "Conseils | Gestion Velora";
+      title = isEn ? "Montreal Property Management Insights | Gestion Velora" : "Conseils gestion immobilière Montréal | Gestion Velora";
       description = isEn
         ? "Thoughts and news on property management in Montreal."
         : "Réflexions et actualités sur la gestion immobilière.";
@@ -69,7 +69,7 @@ export function PageMeta() {
           twitterImage = post.image;
         }
       } else {
-        title = isEn ? "Insights | Gestion Velora" : "Conseils | Gestion Velora";
+        title = isEn ? "Montreal Property Management Insights | Gestion Velora" : "Conseils gestion immobilière Montréal | Gestion Velora";
         description = isEn
           ? "Thoughts and news on property management in Montreal."
           : "Réflexions et actualités sur la gestion immobilière.";
