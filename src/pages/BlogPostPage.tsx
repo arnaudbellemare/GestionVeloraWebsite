@@ -103,10 +103,10 @@ export function BlogPostPage() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.15}>
-          <div className="font-sans text-lg text-black/80 dark:text-white/80 leading-relaxed space-y-10">
-            {post.sections.map((section, sectionIndex) => (
-              <section key={section.heading} className="scroll-mt-24">
+        <div className="mt-12 font-sans text-lg text-black/80 dark:text-white/80 leading-relaxed space-y-10">
+          {post.sections.map((section, sectionIndex) => (
+            <ScrollReveal key={section.heading} amount={0.05}>
+              <section className="scroll-mt-24">
                 <h2 className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-4 leading-snug tracking-[-0.02em]">
                   {section.heading}
                 </h2>
@@ -130,9 +130,9 @@ export function BlogPostPage() {
                   </div>
                 )}
               </section>
-            ))}
-          </div>
-        </ScrollReveal>
+            </ScrollReveal>
+          ))}
+        </div>
 
         {related.length > 0 && (
           <ScrollReveal delay={0.18}>
