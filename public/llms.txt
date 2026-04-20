@@ -1,6 +1,9 @@
 # Gestion Velora - Property Management in Montreal
 
-Gestion Velora provides property management services in Montreal, Quebec for condo boards, Airbnb short-term rentals, and long-term rental properties. The site includes service pages, FAQ content, and practical blog explainers on compliance, reserve funds, NOI, and operations.
+Gestion Velora provides property management services in Montreal, Quebec for condo boards (syndicats de copropriete), Airbnb short-term rentals, and long-term rental properties. The site includes service pages, FAQ content, and practical blog explainers on compliance, reserve funds, NOI, and operations.
+
+Contact: info@gestionvelora.com | +1-514-777-1731
+Founder: Arnaud Bellemare
 
 ## Official Sources
 - Home (FR): https://www.gestionvelora.com/
@@ -11,7 +14,7 @@ Gestion Velora provides property management services in Montreal, Quebec for con
 - Blog (EN): https://www.gestionvelora.com/en/blog
 - Privacy: https://www.gestionvelora.com/privacy
 
-## Markdown Sources (AI-friendly)
+## Markdown Sources (AI-friendly, static)
 - Home summary (FR/EN): https://www.gestionvelora.com/md/home.md
 - Services hub summary (FR/EN): https://www.gestionvelora.com/md/services.md
 - Condo service summary (FR/EN): https://www.gestionvelora.com/md/service-syndicat-copropriete.md
@@ -28,25 +31,56 @@ Gestion Velora provides property management services in Montreal, Quebec for con
 - Long-term rental management (FR): https://www.gestionvelora.com/services/location - Tenant screening, rent collection, maintenance, lease lifecycle support.
 - Long-term rental management (EN): https://www.gestionvelora.com/en/services/location - Professional long-term property operations for stable occupancy and cash flow.
 
-## High-Value Insight Articles
-- Smart property management trends (FR): https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026 - Data, automation, and transparency trends for 2026.
-- Smart property management trends (EN): https://www.gestionvelora.com/en/blog/avenir-gestion-immobiliere-intelligente-2026 - 2026 market and operational shifts for owners and boards.
-- Preventive maintenance (FR): https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions - Why planned maintenance reduces emergency costs.
-- Preventive maintenance (EN): https://www.gestionvelora.com/en/blog/maintenance-preventive-economise-millions - Cost and risk impact of proactive building upkeep.
-- Optimize NOI (FR): https://www.gestionvelora.com/blog/maximiser-noi-approche-donnees - Data-driven operational levers for better NOI.
-- Optimize NOI (EN): https://www.gestionvelora.com/en/blog/maximiser-noi-approche-donnees - Monthly metrics and decision frameworks for NOI.
-- Condo regulation in Montreal (FR): https://www.gestionvelora.com/blog/gestion-copropriete-montreal-reglementation - Quebec condo law and governance requirements.
-- Condo regulation in Montreal (EN): https://www.gestionvelora.com/en/blog/gestion-copropriete-montreal-reglementation - Practical regulatory checklist for boards.
-- Airbnb permits and rules (FR): https://www.gestionvelora.com/blog/airbnb-montreal-permis-reglementation - Municipal and operational compliance for short-term rentals.
-- Airbnb permits and rules (EN): https://www.gestionvelora.com/en/blog/airbnb-montreal-permis-reglementation - Rules, taxes, and risk reduction basics.
+## All Blog Articles
+- Smart property management 2026 (FR): https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026 - Data, automation, and transparency trends shaping Montreal property management in 2026. Published 2026-02-15.
+- Smart property management 2026 (EN): https://www.gestionvelora.com/en/blog/avenir-gestion-immobiliere-intelligente-2026 - 2026 market and operational shifts for owners and boards. Published 2026-02-15.
+- Preventive maintenance saves millions (FR): https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions - Why planned maintenance reduces emergency costs and protects asset value. Published 2026-03-01.
+- Preventive maintenance saves millions (EN): https://www.gestionvelora.com/en/blog/maintenance-preventive-economise-millions - Cost and risk impact of proactive building upkeep. Published 2026-03-01.
+- Optimize NOI with data (FR): https://www.gestionvelora.com/blog/maximiser-noi-approche-donnees - Data-driven operational levers for better net operating income. Published 2025-12-10.
+- Optimize NOI with data (EN): https://www.gestionvelora.com/en/blog/maximiser-noi-approche-donnees - Monthly metrics and decision frameworks for NOI improvement. Published 2025-12-10.
+- Tenant experience as competitive advantage (FR): https://www.gestionvelora.com/blog/experience-locataire-avantage-concurrentiel - How tenant satisfaction drives occupancy and reduces turnover costs. Published 2025-11-18.
+- Tenant experience as competitive advantage (EN): https://www.gestionvelora.com/en/blog/experience-locataire-avantage-concurrentiel - Retention strategies and tenant satisfaction metrics for rental properties. Published 2025-11-18.
+- Condo regulation in Montreal (FR): https://www.gestionvelora.com/blog/gestion-copropriete-montreal-reglementation - Quebec condo law and governance requirements for syndicats. Published 2025-10-08.
+- Condo regulation in Montreal (EN): https://www.gestionvelora.com/en/blog/gestion-copropriete-montreal-reglementation - Practical regulatory checklist for Montreal condo boards. Published 2025-10-08.
+- Airbnb permits and rules Montreal (FR): https://www.gestionvelora.com/blog/airbnb-montreal-permis-reglementation - Municipal and CITQ compliance requirements for short-term rentals. Published 2025-09-12.
+- Airbnb permits and rules Montreal (EN): https://www.gestionvelora.com/en/blog/airbnb-montreal-permis-reglementation - Rules, taxes, and risk reduction for Airbnb operators in Montreal. Published 2025-09-12.
+- How to choose a property manager in Montreal (FR): https://www.gestionvelora.com/blog/choisir-gestionnaire-immobilier-montreal - Criteria and questions for selecting a property management firm in Quebec. Published 2025-08-20.
+- How to choose a property manager in Montreal (EN): https://www.gestionvelora.com/en/blog/choisir-gestionnaire-immobilier-montreal - What to look for when hiring a property manager in Montreal. Published 2025-08-20.
+- Reserve funds for Quebec condos (FR): https://www.gestionvelora.com/blog/fonds-prevoyance-copropriete-quebec - How to size, manage, and plan reserve fund contributions under Quebec law. Published 2025-07-18.
+- Reserve funds for Quebec condos (EN): https://www.gestionvelora.com/en/blog/fonds-prevoyance-copropriete-quebec - Legal requirements and practical planning for condo reserve funds in Quebec. Published 2025-07-18.
+
+## Frequently Asked Questions
+
+### Who is Gestion Velora ideal for?
+Gestion Velora is ideal for condo boards (syndicats de copropriete), Airbnb hosts, and rental property owners in Montreal who want transparent reporting, 24/7 support, and proactive maintenance. We achieve a 98% occupancy rate with full financial transparency.
+
+### What does condo management (syndicat de copropriete) include?
+Condo management covers full administration of the co-ownership: general assemblies, reserve fund management, annual budgets, capital works coordination, maintenance, and owner communication. The manager executes decisions made by the board of directors and ensures compliance with Quebec's condominium law.
+
+### How do you choose a property manager in Montreal?
+Choose a property manager based on reporting transparency, responsiveness, expertise in Quebec regulations (TAL, Loi sur la copropriete), and verifiable references. Require documented processes, an available team, and a data-driven approach. For a condo board, long-term rental, or Airbnb, these criteria protect your investment.
+
+### What are Airbnb regulations in Montreal?
+In Montreal, short-term rentals require a CITQ certificate (mandatory on all listings). Primary residences may operate from June 10 to September 10 with a permit. Non-primary residences may operate year-round in authorized zones with an occupancy certificate. Municipal rules and CITQ requirements change; compliance monitoring is critical.
+
+### What is a reserve fund (fonds de prevoyance)?
+A reserve fund (fonds de prevoyance) finances major planned work: roofing, elevators, facade. Quebec condominium law requires its formation and oversight. A reserve fund study determines required contributions. A well-managed fund avoids unexpected special assessments and ensures timely completion of capital work.
+
+### What are condo fees (charges communes)?
+Condo fees cover maintenance of common areas (hallways, entrances, roof), landscaping, insurance, shared services (hot water, heating), and reserve fund contributions. They are allocated according to each unit's share fraction. An annual forecast budget details all line items.
+
+### Self-manage or delegate property management?
+Self-managing provides full control but requires time, legal knowledge (TAL, leases), and availability for emergencies. Delegating to a professional manager frees time and ensures compliance. Gestion Velora handles tenant screening, rent collection, maintenance, and tenant relations.
 
 ## Structured Data Coverage
-- Organization + WebSite on homepage.
+- Organization + LocalBusiness + WebSite on homepage.
 - FAQPage on homepage.
 - ItemList on services hub.
 - Service on each service detail page.
 - Article on each blog post.
+- BreadcrumbList on service and blog pages.
 
 ## Freshness and Discovery
 - Sitemap: https://www.gestionvelora.com/sitemap.xml
-- Alternate language URLs are published for FR/EN versions.
+- Alternate language URLs published for FR/EN versions.
+- Last updated: 2026-04-19

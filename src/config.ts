@@ -10,7 +10,7 @@ export const ORGANIZATION_SCHEMA_ID = `${SITE_URL}/#organization` as const;
 export const PUBLISHER_LOGO_URL = `${SITE_URL}/logo.png?v=10` as const;
 
 /** Article `author` in JSON-LD (Person). */
-export const ARTICLE_AUTHOR_NAME = "Gestion Velora";
+export const ARTICLE_AUTHOR_NAME = "Arnaud Bellemare";
 export const ARTICLE_AUTHOR_URL = SITE_URL;
 
 /** Brand entity URLs used in JSON-LD `sameAs`. */

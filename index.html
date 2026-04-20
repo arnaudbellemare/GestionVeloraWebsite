@@ -51,23 +51,51 @@
     {
       "@context": "https://schema.org",
       "@id": "https://www.gestionvelora.com/#organization",
-      "@type": "Organization",
+      "@type": ["Organization", "LocalBusiness"],
       "name": "Gestion Velora",
       "url": "https://www.gestionvelora.com",
       "logo": "https://www.gestionvelora.com/logo.png?v=10",
+      "image": "https://www.gestionvelora.com/og-image.png",
+      "email": "info@gestionvelora.com",
+      "telephone": "+1-514-777-1731",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Montréal",
+        "addressRegion": "QC",
+        "addressCountry": "CA"
+      },
+      "areaServed": {
+        "@type": "State",
+        "name": "Quebec",
+        "sameAs": "https://www.wikidata.org/wiki/Q176"
+      },
       "sameAs": [
         "https://www.gestionvelora.com",
         "https://www.gestionvelora.com/en/"
       ],
-      "description": "Syndicat de copropriété et gestion locative à Montréal. Administration complète, gestion Airbnb et location longue durée.",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "info@gestionvelora.com",
-        "telephone": "+1-514-777-1731",
-        "contactType": "customer service",
-        "areaServed": "CA-QC",
-        "availableLanguage": "French"
-      }
+      "description": "Gestion Velora offre la gestion de syndicats de copropriété, la gestion Airbnb et la gestion locative longue durée à Montréal. Administration complète, maintenance proactive et rapports transparents.",
+      "founder": {
+        "@type": "Person",
+        "name": "Arnaud Bellemare"
+      },
+      "knowsAbout": [
+        "Condo board management",
+        "Syndicat de copropriété",
+        "Airbnb management Montreal",
+        "Long-term rental management",
+        "Fonds de prévoyance",
+        "Quebec condominium law"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "email": "info@gestionvelora.com",
+          "telephone": "+1-514-777-1731",
+          "contactType": "customer service",
+          "areaServed": "CA-QC",
+          "availableLanguage": ["French", "English"]
+        }
+      ]
     }
     </script>
     <script type="application/ld+json">
