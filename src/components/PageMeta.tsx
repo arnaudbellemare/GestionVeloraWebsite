@@ -57,8 +57,8 @@ export function PageMeta() {
     } else if (pathname === "/blog" || pathname === "/en/blog" || pathname === "/en/blog/") {
       title = isEn ? "Montreal Property Management Insights | Gestion Velora" : "Conseils gestion immobilière Montréal | Gestion Velora";
       description = isEn
-        ? "Thoughts and news on property management in Montreal."
-        : "Réflexions et actualités sur la gestion immobilière.";
+        ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
+        : "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";
     } else if (pathname.startsWith("/blog/") || pathname.startsWith("/en/blog/")) {
       if (slug) {
         const post = getPostBySlug(slug, locale);
@@ -71,8 +71,8 @@ export function PageMeta() {
       } else {
         title = isEn ? "Montreal Property Management Insights | Gestion Velora" : "Conseils gestion immobilière Montréal | Gestion Velora";
         description = isEn
-          ? "Thoughts and news on property management in Montreal."
-          : "Réflexions et actualités sur la gestion immobilière.";
+          ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
+          : "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";
       }
     } else if (pathname === "/privacy" || pathname === "/en/privacy") {
       title = isEn ? "Privacy | Gestion Velora" : "Confidentialité | Gestion Velora";

@@ -73,12 +73,12 @@ Condo fees cover maintenance of common areas (hallways, entrances, roof), landsc
 Self-managing provides full control but requires time, legal knowledge (TAL, leases), and availability for emergencies. Delegating to a professional manager frees time and ensures compliance. Gestion Velora handles tenant screening, rent collection, maintenance, and tenant relations.
 
 ## Structured Data Coverage
-- Organization + LocalBusiness + WebSite on homepage.
-- FAQPage on homepage.
-- ItemList on services hub.
-- Service on each service detail page.
-- Article on each blog post.
-- BreadcrumbList on service and blog pages.
+- Organization + LocalBusiness (with GeoCoordinates, openingHoursSpecification) + WebSite on homepage.
+- FAQPage (7 questions, FR and EN) on homepage.
+- ItemList on services hub (3 services).
+- Service + BreadcrumbList on each service detail page.
+- ItemList on blog index (all 8 articles).
+- Article + BreadcrumbList on each blog post page.
 
 ## Freshness and Discovery
 - Sitemap: https://www.gestionvelora.com/sitemap.xml

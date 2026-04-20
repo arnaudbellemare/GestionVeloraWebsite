@@ -8,8 +8,8 @@
  *   - Correct <title> and <meta name="description">
  *   - Correct <link rel="canonical"> and hreflang
  *   - Correct <html lang="...">
- *   - Correct <meta property="og:*">
- *   - Page-specific JSON-LD schema (<script type="application/ld+json">)
+ *   - Correct <meta property="og:*"> and <meta name="twitter:*">
+ *   - Page-specific JSON-LD schemas (BreadcrumbList, FAQPage, Service, Article, ItemList)
  *
  * Run after vite build: npm run build calls "tsc -b && vite build && tsx scripts/prerender.ts"
  *
@@ -61,18 +61,19 @@ function escapeHtml(str: string) {
 function buildHtml(
   template: string,
   opts: {
-    lang: string; // "fr-CA" | "en-CA"
+    lang: string;
     title: string;
     description: string;
     canonical: string;
-    ogLocale: string; // "fr_CA" | "en_CA"
+    ogLocale: string;
     ogLocaleAlt: string;
     ogImage: string;
+    twitterImage: string;
     hreflangFr: string;
     hreflangEn: string;
     hreflangDefault: string;
-    /** Page-specific JSON-LD to inject (or null) */
-    pageSchema: object | null;
+    /** Page-specific JSON-LD schemas to inject. Accepts a single object or array. */
+    pageSchemas: object | object[] | null;
   }
 ): string {
   let html = template;
@@ -149,10 +150,10 @@ function buildHtml(
     `<meta name="twitter:url" content="${opts.canonical}"`
   );
 
-  // 14. twitter:image
+  // 14. twitter:image (separate from og:image — homepage uses twitter-card.png)
   html = html.replace(
     /<meta name="twitter:image" content="[^"]*"/,
-    `<meta name="twitter:image" content="${opts.ogImage}"`
+    `<meta name="twitter:image" content="${opts.twitterImage}"`
   );
 
   // 15. hreflang links (replace all three at once via a block match)
@@ -166,14 +167,16 @@ function buildHtml(
     hreflangBlock
   );
 
-  // 16. Inject page-specific JSON-LD (right before </head>)
-  if (opts.pageSchema) {
-    const schemaTag = `  <script type="application/ld+json">\n  ${JSON.stringify(
-      opts.pageSchema,
-      null,
-      2
-    )}\n  </script>\n`;
-    html = html.replace("</head>", `${schemaTag}</head>`);
+  // 16. Inject page-specific JSON-LD schemas (right before </head>)
+  if (opts.pageSchemas) {
+    const schemas = Array.isArray(opts.pageSchemas) ? opts.pageSchemas : [opts.pageSchemas];
+    const schemaTags = schemas
+      .map(
+        (schema) =>
+          `  <script type="application/ld+json">\n  ${JSON.stringify(schema, null, 2)}\n  </script>\n`
+      )
+      .join("");
+    html = html.replace("</head>", `${schemaTags}</head>`);
   }
 
   return html;
@@ -184,9 +187,8 @@ function buildHtml(
 // ---------------------------------------------------------------------------
 function writeRoute(routePath: string, html: string) {
   // routePath is like "/services/airbnb" → dist/services/airbnb/index.html
-  // routePath "/" → dist/index.html (already exists, skip)
-  // routePath "/en/" → dist/en/index.html
-  if (routePath === "/") return; // root is already dist/index.html
+  // routePath "/" → dist/index.html (already exists, handled separately)
+  if (routePath === "/") return;
 
   const clean = routePath.replace(/\/$/, ""); // strip trailing slash
   const dir = join(DIST, clean);
@@ -199,8 +201,6 @@ function writeRoute(routePath: string, html: string) {
 // ---------------------------------------------------------------------------
 // Data helpers
 // ---------------------------------------------------------------------------
-type I18n = typeof frRaw;
-
 function getService(locale: "fr" | "en", slug: string) {
   const t = locale === "fr" ? frRaw : enRaw;
   const s = (t.services as Record<string, { title: string; description: string }>)[slug];
@@ -220,9 +220,15 @@ function getFaqItems(locale: "fr" | "en") {
   return t.faqItems as { question: string; answer: string }[];
 }
 
+function getBreadcrumbLabels(locale: "fr" | "en") {
+  const t = locale === "fr" ? frRaw : enRaw;
+  return t.breadcrumb as { home: string; services: string; insights: string };
+}
+
 // ---------------------------------------------------------------------------
 // Schema builders
 // ---------------------------------------------------------------------------
+
 function buildFaqSchema(locale: "fr" | "en") {
   const items = getFaqItems(locale);
   return {
@@ -236,6 +242,21 @@ function buildFaqSchema(locale: "fr" | "en") {
         "@type": "Answer",
         text: item.answer,
       },
+    })),
+  };
+}
+
+function buildBreadcrumbSchema(
+  items: Array<{ name: string; url?: string }>
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      ...(item.url ? { item: item.url } : {}),
     })),
   };
 }
@@ -279,6 +300,36 @@ function buildServiceSchema(locale: "fr" | "en", slug: string, base: string) {
   };
 }
 
+function buildBlogIndexSchema(locale: "fr" | "en", base: string) {
+  const inLang = locale === "fr" ? "fr-CA" : "en-CA";
+  const name =
+    locale === "fr"
+      ? "Conseils et articles sur la gestion immobilière à Montréal"
+      : "Montreal Property Management Insights";
+  const description =
+    locale === "fr"
+      ? "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb."
+      : "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation.";
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    description,
+    inLanguage: inLang,
+    itemListElement: blogPosts.map((post, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Article",
+        name: post[locale].title,
+        url: `${base}/blog/${post.slug}`,
+        datePublished: post.datePublished,
+        image: post.image,
+      },
+    })),
+  };
+}
+
 function buildArticleSchema(locale: "fr" | "en", slug: string, base: string) {
   const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return null;
@@ -312,14 +363,15 @@ function buildArticleSchema(locale: "fr" | "en", slug: string, base: string) {
 // Route definitions
 // ---------------------------------------------------------------------------
 interface RouteConfig {
-  path: string; // URL path (e.g., "/services/airbnb")
+  path: string;
   locale: "fr" | "en";
-  frPath: string; // canonical FR path
-  enPath: string; // canonical EN path
+  frPath: string;
+  enPath: string;
   title: string;
   description: string;
   ogImage?: string;
-  schema: object | null;
+  twitterImage?: string;
+  pageSchemas: object | object[] | null;
 }
 
 function buildRoutes(): RouteConfig[] {
@@ -333,7 +385,6 @@ function buildRoutes(): RouteConfig[] {
   const enHomeDesc =
     "Leading property management in Montreal: condo boards, Airbnb management, and long-term rental management. 98% occupancy, 24/7 support, full transparency.";
 
-  // FR homepage already is dist/index.html — we still push it so the schema is injected there
   routes.push({
     path: "/",
     locale: "fr",
@@ -341,7 +392,8 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/",
     title: frHomeTitle,
     description: frHomeDesc,
-    schema: buildFaqSchema("fr"),
+    pageSchemas: buildFaqSchema("fr"),
+    // homepage uses dedicated twitter-card, not og-image
   });
   routes.push({
     path: "/en/",
@@ -350,7 +402,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/",
     title: enHomeTitle,
     description: enHomeDesc,
-    schema: buildFaqSchema("en"),
+    pageSchemas: buildFaqSchema("en"),
   });
 
   // --- Services hub ---
@@ -364,7 +416,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/services",
     title: frHubMeta.title,
     description: frHubMeta.description,
-    schema: buildServicesHubSchema("fr", SITE_URL),
+    pageSchemas: buildServicesHubSchema("fr", SITE_URL),
   });
   routes.push({
     path: "/en/services",
@@ -373,7 +425,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/services",
     title: enHubMeta.title,
     description: enHubMeta.description,
-    schema: buildServicesHubSchema("en", `${SITE_URL}/en`),
+    pageSchemas: buildServicesHubSchema("en", `${SITE_URL}/en`),
   });
 
   // --- Service detail pages ---
@@ -381,6 +433,9 @@ function buildRoutes(): RouteConfig[] {
     const frSvc = getService("fr", slug);
     const enSvc = getService("en", slug);
     const img = SERVICE_IMAGES[slug];
+
+    const frBc = getBreadcrumbLabels("fr");
+    const enBc = getBreadcrumbLabels("en");
 
     routes.push({
       path: `/services/${slug}`,
@@ -390,7 +445,15 @@ function buildRoutes(): RouteConfig[] {
       title: `${frSvc.title} | Gestion Velora`,
       description: frSvc.description,
       ogImage: img,
-      schema: buildServiceSchema("fr", slug, SITE_URL),
+      twitterImage: img,
+      pageSchemas: [
+        buildServiceSchema("fr", slug, SITE_URL),
+        buildBreadcrumbSchema([
+          { name: frBc.home, url: SITE_URL + "/" },
+          { name: frBc.services, url: `${SITE_URL}/services` },
+          { name: frSvc.title },
+        ]),
+      ],
     });
     routes.push({
       path: `/en/services/${slug}`,
@@ -400,36 +463,55 @@ function buildRoutes(): RouteConfig[] {
       title: `${enSvc.title} | Gestion Velora`,
       description: enSvc.description,
       ogImage: img,
-      schema: buildServiceSchema("en", slug, `${SITE_URL}/en`),
+      twitterImage: img,
+      pageSchemas: [
+        buildServiceSchema("en", slug, `${SITE_URL}/en`),
+        buildBreadcrumbSchema([
+          { name: enBc.home, url: SITE_URL + "/" },
+          { name: enBc.services, url: `${SITE_URL}/en/services` },
+          { name: enSvc.title },
+        ]),
+      ],
     });
   }
 
   // --- Blog index ---
+  const frBlogTitle = "Conseils gestion immobilière Montréal | Gestion Velora";
+  const frBlogDesc =
+    "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";
+  const enBlogTitle = "Montreal Property Management Insights | Gestion Velora";
+  const enBlogDesc =
+    "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation.";
+
   routes.push({
     path: "/blog",
     locale: "fr",
     frPath: "/blog",
     enPath: "/en/blog",
-    title: "Conseils gestion immobilière Montréal | Gestion Velora",
-    description:
-      "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.",
-    schema: null,
+    title: frBlogTitle,
+    description: frBlogDesc,
+    pageSchemas: buildBlogIndexSchema("fr", SITE_URL),
   });
   routes.push({
     path: "/en/blog",
     locale: "en",
     frPath: "/blog",
     enPath: "/en/blog",
-    title: "Montreal Property Management Insights | Gestion Velora",
-    description:
-      "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation.",
-    schema: null,
+    title: enBlogTitle,
+    description: enBlogDesc,
+    pageSchemas: buildBlogIndexSchema("en", `${SITE_URL}/en`),
   });
 
   // --- Blog posts ---
   for (const post of blogPosts) {
     const slug = post.slug;
     const img = post.image;
+
+    const frBc = getBreadcrumbLabels("fr");
+    const enBc = getBreadcrumbLabels("en");
+
+    const frArticle = buildArticleSchema("fr", slug, SITE_URL);
+    const enArticle = buildArticleSchema("en", slug, `${SITE_URL}/en`);
 
     routes.push({
       path: `/blog/${slug}`,
@@ -439,7 +521,17 @@ function buildRoutes(): RouteConfig[] {
       title: `${post.fr.title} | Gestion Velora`,
       description: post.fr.excerpt,
       ogImage: img,
-      schema: buildArticleSchema("fr", slug, SITE_URL),
+      twitterImage: img,
+      pageSchemas: frArticle
+        ? [
+            frArticle,
+            buildBreadcrumbSchema([
+              { name: frBc.home, url: SITE_URL + "/" },
+              { name: frBc.insights, url: `${SITE_URL}/blog` },
+              { name: post.fr.title },
+            ]),
+          ]
+        : null,
     });
     routes.push({
       path: `/en/blog/${slug}`,
@@ -449,7 +541,17 @@ function buildRoutes(): RouteConfig[] {
       title: `${post.en.title} | Gestion Velora`,
       description: post.en.excerpt,
       ogImage: img,
-      schema: buildArticleSchema("en", slug, `${SITE_URL}/en`),
+      twitterImage: img,
+      pageSchemas: enArticle
+        ? [
+            enArticle,
+            buildBreadcrumbSchema([
+              { name: enBc.home, url: SITE_URL + "/" },
+              { name: enBc.insights, url: `${SITE_URL}/en/blog` },
+              { name: post.en.title },
+            ]),
+          ]
+        : null,
     });
   }
 
@@ -461,7 +563,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/privacy",
     title: "Politique de confidentialité | Gestion Velora",
     description: frHomeDesc,
-    schema: null,
+    pageSchemas: null,
   });
   routes.push({
     path: "/en/privacy",
@@ -470,7 +572,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/privacy",
     title: "Privacy Policy | Gestion Velora",
     description: enHomeDesc,
-    schema: null,
+    pageSchemas: null,
   });
 
   return routes;
@@ -501,17 +603,18 @@ async function main() {
       ogLocale: isEn ? "en_CA" : "fr_CA",
       ogLocaleAlt: isEn ? "fr_CA" : "en_CA",
       ogImage: route.ogImage ?? DEFAULT_OG_IMAGE,
+      twitterImage: route.twitterImage ?? DEFAULT_TWITTER_IMAGE,
       hreflangFr: frCanonical,
       hreflangEn: enCanonical,
-      hreflangDefault: frCanonical, // FR as x-default
-      pageSchema: route.schema,
+      hreflangDefault: frCanonical,
+      pageSchemas: route.pageSchemas,
     });
 
     writeRoute(route.path, html);
     count++;
   }
 
-  // Special: update dist/index.html itself (root /  route)
+  // Special: update dist/index.html itself (root / route)
   const rootRoute = routes.find((r) => r.path === "/")!;
   const rootHtml = buildHtml(template, {
     lang: "fr-CA",
@@ -521,10 +624,11 @@ async function main() {
     ogLocale: "fr_CA",
     ogLocaleAlt: "en_CA",
     ogImage: DEFAULT_OG_IMAGE,
+    twitterImage: DEFAULT_TWITTER_IMAGE,
     hreflangFr: `${SITE_URL}/`,
     hreflangEn: `${SITE_URL}/en/`,
     hreflangDefault: `${SITE_URL}/`,
-    pageSchema: rootRoute.schema,
+    pageSchemas: rootRoute.pageSchemas,
   });
   writeFileSync(join(DIST, "index.html"), rootHtml, "utf-8");
   console.log("  ✓ / (dist/index.html updated)");
