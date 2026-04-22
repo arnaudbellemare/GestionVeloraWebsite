@@ -204,10 +204,17 @@ export const FooterSection = (): JSX.Element => {
             </h4>
             <form
               onSubmit={(e) => e.preventDefault()}
+              data-toolname="newsletter-subscribe"
+              data-tooldescription="Submit newsletter email"
               className="flex items-center gap-2 border-b border-white/30 pb-2"
             >
+              <label htmlFor="footer-newsletter-email" className="sr-only">
+                {t("footer.emailPlaceholder")}
+              </label>
               <input
+                id="footer-newsletter-email"
                 type="email"
+                aria-label={t("footer.emailPlaceholder")}
                 placeholder={t("footer.emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -215,6 +222,8 @@ export const FooterSection = (): JSX.Element => {
               />
               <button
                 type="submit"
+                data-toolname="newsletter-submit"
+                data-tooldescription="Confirm newsletter subscription"
                 aria-label={t("footer.subscribe")}
                 className="text-white/70 hover:text-white transition-colors duration-300"
               >

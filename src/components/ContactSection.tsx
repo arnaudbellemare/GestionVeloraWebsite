@@ -208,6 +208,8 @@ export function ContactSection() {
                   <motion.form
                     key="form"
                     onSubmit={handleSubmit}
+                    data-toolname="contact-form-submit"
+                    data-tooldescription="Submit a property management contact request"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -279,6 +281,7 @@ export function ContactSection() {
                         <motion.input
                           id="contact-name"
                           type="text"
+                          aria-label={t("contact.namePlaceholder")}
                           placeholder={t("contact.namePlaceholder")}
                           value={formData.name}
                           onChange={(e) =>
@@ -296,6 +299,7 @@ export function ContactSection() {
                         <motion.input
                           id="contact-email"
                           type="email"
+                          aria-label={t("contact.emailPlaceholder")}
                           placeholder={t("contact.emailPlaceholder")}
                           value={formData.email}
                           onChange={(e) =>
@@ -312,6 +316,7 @@ export function ContactSection() {
                         </label>
                         <motion.textarea
                           id="contact-message"
+                          aria-label={t("contact.messagePlaceholder")}
                           placeholder={t("contact.messagePlaceholder")}
                           value={formData.message}
                           onChange={(e) =>
@@ -325,6 +330,8 @@ export function ContactSection() {
                     </div>
                     <motion.button
                       type="submit"
+                      data-toolname="send-contact-message"
+                      data-tooldescription="Send a message to Gestion Velora"
                       disabled={status === "submitting"}
                       className="mt-7 inline-flex self-start items-center justify-center min-h-[44px] px-5 py-2.5 rounded-md bg-nd-primary text-nd-canvas font-nd-mono text-[11px] tracking-[0.12em] uppercase border border-nd-primary transition-opacity hover:opacity-90 disabled:pointer-events-none disabled:opacity-55"
                     >

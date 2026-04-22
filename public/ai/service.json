@@ -2,12 +2,24 @@
   "service": "Gestion Velora Property Operations",
   "domain": "gestion immobiliere",
   "url": "https://www.gestionvelora.com",
+  "serviceAreas": ["Montreal", "Greater Montreal", "Quebec"],
+  "summary": "Property management for condo boards, long-term rentals, and short-term rentals with compliance monitoring and preventive maintenance.",
   "capabilities": [
     "gestion syndicat copropriete",
     "gestion locative longue duree",
     "gestion location courte duree",
     "maintenance preventive",
     "reporting proprietaire et conseil syndical"
+  ],
+  "performanceSignals": {
+    "targetOccupancyRange": "95%-98%",
+    "criticalIncidentCoverage": "24/7",
+    "reviewCadence": "monthly"
+  },
+  "complianceReferences": [
+    "https://www.quebec.ca/habitation-et-logement/copropriete",
+    "https://montreal.ca/articles/residences-de-tourisme-16210",
+    "https://www.tal.gouv.qc.ca/"
   ],
   "contact": {
     "email": "info@gestionvelora.com",
