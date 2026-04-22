@@ -154,3 +154,10 @@ Topics covered:
 - Condo management: https://www.gestionvelora.com/services/syndicat-copropriete
 - Airbnb management: https://www.gestionvelora.com/services/airbnb
 - Long-term rental management: https://www.gestionvelora.com/services/location
+
+## Public reference sources
+- Quebec condo framework: https://www.quebec.ca/habitation-et-logement/copropriete
+- Quebec tourist accommodation: https://www.quebec.ca/tourisme-et-loisirs/hebergement-touristique
+- Montreal short-term rental rules: https://montreal.ca/articles/residences-de-tourisme-16210
+- Tribunal administratif du logement (TAL): https://www.tal.gouv.qc.ca/
+- CMHC / SCHL housing data: https://www.cmhc-schl.gc.ca/

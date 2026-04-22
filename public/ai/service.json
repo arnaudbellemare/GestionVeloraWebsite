@@ -1,0 +1,18 @@
+{
+  "service": "Gestion Velora Property Operations",
+  "domain": "gestion immobiliere",
+  "url": "https://www.gestionvelora.com",
+  "capabilities": [
+    "gestion syndicat copropriete",
+    "gestion locative longue duree",
+    "gestion location courte duree",
+    "maintenance preventive",
+    "reporting proprietaire et conseil syndical"
+  ],
+  "contact": {
+    "email": "info@gestionvelora.com",
+    "phone": "+1-514-777-1731"
+  },
+  "languages": ["fr-CA", "en-CA"],
+  "lastModified": "2026-04-22"
+}

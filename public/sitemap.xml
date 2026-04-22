@@ -285,6 +285,54 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/about</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/editorial-policy</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/methodology</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/sources</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/rss.xml</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/ai/summary.json</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/ai/faq.json</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/ai/service.json</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/llms.txt</loc>
     <lastmod>2026-04-19</lastmod>
     <changefreq>weekly</changefreq>

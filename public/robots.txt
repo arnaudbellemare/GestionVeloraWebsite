@@ -4,6 +4,15 @@ Allow: /
 Sitemap: https://www.gestionvelora.com/sitemap.xml
 # LLM guidance
 # https://www.gestionvelora.com/llms.txt
+# AI summary endpoints
+# https://www.gestionvelora.com/ai/summary.json
+# https://www.gestionvelora.com/ai/faq.json
+# https://www.gestionvelora.com/ai/service.json
+# Trust and citation pages
+# https://www.gestionvelora.com/about
+# https://www.gestionvelora.com/editorial-policy
+# https://www.gestionvelora.com/methodology
+# https://www.gestionvelora.com/sources
 
 User-agent: Googlebot
 Allow: /

@@ -1,0 +1,13 @@
+site: https://www.gestionvelora.com
+name: Gestion Velora
+description: Gestion immobiliere a Montreal: syndicat de copropriete, location longue duree, et gestion Airbnb.
+language: fr-CA,en-CA
+llms: https://www.gestionvelora.com/llms.txt
+summary: https://www.gestionvelora.com/ai/summary.json
+faq: https://www.gestionvelora.com/ai/faq.json
+service: https://www.gestionvelora.com/ai/service.json
+about: https://www.gestionvelora.com/about
+editorial_policy: https://www.gestionvelora.com/editorial-policy
+methodology: https://www.gestionvelora.com/methodology
+sources: https://www.gestionvelora.com/sources
+sitemap: https://www.gestionvelora.com/sitemap.xml

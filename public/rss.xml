@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Gestion Velora Insights</title>
+    <link>https://www.gestionvelora.com/</link>
+    <description>Insights on Montreal property management, condo administration, and rental optimization.</description>
+    <language>fr-ca</language>
+    <lastBuildDate>Wed, 22 Apr 2026 18:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Avenir gestion immobiliere intelligente 2026</title>
+      <link>https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026</link>
+      <guid>https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026</guid>
+      <pubDate>Sun, 15 Feb 2026 12:00:00 GMT</pubDate>
+      <description>Tendances, donnees et execution terrain pour la gestion immobiliere a Montreal.</description>
+    </item>
+    <item>
+      <title>Maintenance preventive economise millions</title>
+      <link>https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions</link>
+      <guid>https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions</guid>
+      <pubDate>Sun, 01 Mar 2026 12:00:00 GMT</pubDate>
+      <description>Comment structurer un plan de maintenance qui reduit les interventions majeures.</description>
+    </item>
+    <item>
+      <title>Maximiser le NOI avec une approche data</title>
+      <link>https://www.gestionvelora.com/blog/maximiser-noi-approche-donnees</link>
+      <guid>https://www.gestionvelora.com/blog/maximiser-noi-approche-donnees</guid>
+      <pubDate>Wed, 10 Dec 2025 12:00:00 GMT</pubDate>
+      <description>Methodes pragmatiques pour augmenter la performance operationnelle des immeubles.</description>
+    </item>
+  </channel>
+</rss>

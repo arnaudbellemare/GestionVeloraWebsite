@@ -1,0 +1,17 @@
+{
+  "faqs": [
+    {
+      "question": "Quels services propose Gestion Velora a Montreal?",
+      "answer": "Gestion Velora propose la gestion de syndicat de copropriete, la gestion Airbnb et la gestion locative longue duree."
+    },
+    {
+      "question": "Comment demarrer un mandat avec Gestion Velora?",
+      "answer": "Visitez https://www.gestionvelora.com/services puis contactez l'equipe pour une evaluation de vos besoins et de vos objectifs."
+    },
+    {
+      "question": "Dans quelle zone opere Gestion Velora?",
+      "answer": "L'entreprise opere principalement a Montreal et dans la region metropolitaine du Quebec."
+    }
+  ],
+  "lastModified": "2026-04-22"
+}
