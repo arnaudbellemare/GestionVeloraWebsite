@@ -76,6 +76,39 @@ export function BlogPage() {
             </ScrollReveal>
           );})}
         </div>
+
+        <ScrollReveal delay={0.12}>
+          <section className="mt-14 lg:mt-16 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-6 lg:p-8">
+            <h2 className="font-sans font-semibold text-xl lg:text-2xl text-nd-display mb-2">
+              {locale === "en" ? "Turn insights into an action plan" : "Transformez les insights en plan d'action"}
+            </h2>
+            <p className="font-sans text-sm lg:text-base text-black/70 dark:text-white/70 mb-6 max-w-3xl">
+              {locale === "en"
+                ? "Use the contact flow to request a quote, schedule a consultation, or book a direct call about your building."
+                : "Utilisez le formulaire de contact pour demander une soumission, planifier une consultation ou reserver un appel direct."}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <InternalLink
+                to="/#contact-form"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full bg-waabi-pink text-white font-sans font-semibold text-sm hover:bg-waabi-pink/90 transition-colors"
+              >
+                {locale === "en" ? "Request a Quote" : "Demander une soumission"}
+              </InternalLink>
+              <InternalLink
+                to="/#contact-form"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full border border-black/20 dark:border-white/20 text-black/85 dark:text-white/85 font-sans text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              >
+                {locale === "en" ? "Book a Consultation" : "Planifier une consultation"}
+              </InternalLink>
+              <a
+                href="tel:+15147771731"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full border border-black/20 dark:border-white/20 text-black/85 dark:text-white/85 font-sans text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              >
+                {locale === "en" ? "Call +1 514 777 1731" : "Appeler +1 514 777 1731"}
+              </a>
+            </div>
+          </section>
+        </ScrollReveal>
       </div>
     </div>
   );

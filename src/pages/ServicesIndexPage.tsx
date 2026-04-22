@@ -6,12 +6,15 @@ import { ScrollReveal } from "../components/ScrollReveal";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { SERVICE_SLUGS, getLocalizedService } from "../data/services";
 import { trackServiceListView, trackServiceSelect } from "../lib/analytics";
+import { useLocale } from "../context/LocaleContext";
 
 export function ServicesIndexPage() {
   const { t } = useTranslation();
+  const { locale } = useLocale();
   const services = SERVICE_SLUGS.map((slug) => getLocalizedService(slug, t));
   const listName = "services_hub";
   const lastTrackedKey = useRef<string>("");
+  const isEn = locale === "en";
 
   useEffect(() => {
     const trackKey = services.map((s) => `${s.slug}:${s.title}`).join("|");
@@ -75,6 +78,39 @@ export function ServicesIndexPage() {
             </ScrollReveal>
           ))}
         </div>
+
+        <ScrollReveal delay={0.12}>
+          <section className="mt-14 lg:mt-16 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-6 lg:p-8">
+            <h2 className="font-sans font-semibold text-xl lg:text-2xl text-nd-display mb-2">
+              {isEn ? "Ready to compare options?" : "Pret a comparer vos options?"}
+            </h2>
+            <p className="font-sans text-sm lg:text-base text-black/70 dark:text-white/70 mb-6 max-w-3xl">
+              {isEn
+                ? "Request a quote, book a consultation, or start with a quick call to map the right management model for your property."
+                : "Demandez une soumission, planifiez une consultation ou lancez un appel rapide pour choisir le bon modele de gestion."}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <InternalLink
+                to="/#contact-form"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full bg-waabi-pink text-white font-sans font-semibold text-sm hover:bg-waabi-pink/90 transition-colors"
+              >
+                {isEn ? "Request a Quote" : "Demander une soumission"}
+              </InternalLink>
+              <InternalLink
+                to="/#contact-form"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full border border-black/20 dark:border-white/20 text-black/85 dark:text-white/85 font-sans text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              >
+                {isEn ? "Book a Consultation" : "Planifier une consultation"}
+              </InternalLink>
+              <a
+                href="tel:+15147771731"
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full border border-black/20 dark:border-white/20 text-black/85 dark:text-white/85 font-sans text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              >
+                {isEn ? "Call +1 514 777 1731" : "Appeler +1 514 777 1731"}
+              </a>
+            </div>
+          </section>
+        </ScrollReveal>
       </div>
     </motion.div>
   );
