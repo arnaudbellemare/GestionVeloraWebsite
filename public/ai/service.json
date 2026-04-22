@@ -4,6 +4,12 @@
   "url": "https://www.gestionvelora.com",
   "serviceAreas": ["Montreal", "Greater Montreal", "Quebec"],
   "summary": "Property management for condo boards, long-term rentals, and short-term rentals with compliance monitoring and preventive maintenance.",
+  "endpoints": {
+    "summary": "https://www.gestionvelora.com/ai/summary.json",
+    "faq": "https://www.gestionvelora.com/ai/faq.json",
+    "service": "https://www.gestionvelora.com/ai/service.json",
+    "aiTxt": "https://www.gestionvelora.com/.well-known/ai.txt"
+  },
   "capabilities": [
     "gestion syndicat copropriete",
     "gestion locative longue duree",
