@@ -17,6 +17,7 @@ Languages: fr-CA, en-CA
 - [Editorial policy](https://www.gestionvelora.com/editorial-policy)
 - [Methodology](https://www.gestionvelora.com/methodology)
 - [Sources](https://www.gestionvelora.com/sources)
+- [Trust proof](https://www.gestionvelora.com/trust-proof)
 - [RSS](https://www.gestionvelora.com/rss.xml)
 
 ## Service pages

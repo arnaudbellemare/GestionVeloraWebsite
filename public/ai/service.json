@@ -22,6 +22,23 @@
     "criticalIncidentCoverage": "24/7",
     "reviewCadence": "monthly"
   },
+  "proofAssets": {
+    "trustProofPage": "https://www.gestionvelora.com/trust-proof",
+    "teamProfiles": [
+      "https://ca.linkedin.com/in/gestion-velora-48684b399",
+      "https://ca.linkedin.com/in/arnaud-bellemare-125934372"
+    ],
+    "guarantees": [
+      "24/7 critical incident escalation",
+      "Monthly operating review cadence",
+      "Structured reporting for owners and condo boards"
+    ]
+  },
+  "conversionCtas": {
+    "quote": "https://www.gestionvelora.com/#contact-form",
+    "consultationEmail": "mailto:info@gestionvelora.com",
+    "bookingPhone": "tel:+15147771731"
+  },
   "complianceReferences": [
     "https://www.quebec.ca/habitation-et-logement/copropriete",
     "https://montreal.ca/articles/residences-de-tourisme-16210",

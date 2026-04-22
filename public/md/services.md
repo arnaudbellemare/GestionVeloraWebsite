@@ -103,3 +103,8 @@ Contact: info@gestionvelora.com | +1-514-777-1731
 - Quebec tourist accommodation: https://www.quebec.ca/tourisme-et-loisirs/hebergement-touristique
 - Montreal short-term rental rules: https://montreal.ca/articles/residences-de-tourisme-16210
 - TAL rental framework: https://www.tal.gouv.qc.ca/
+
+## Conversion CTAs
+- Request a quote: https://www.gestionvelora.com/#contact-form
+- Request a consultation: mailto:info@gestionvelora.com
+- Book a call: tel:+15147771731

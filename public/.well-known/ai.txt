@@ -10,4 +10,5 @@ about: https://www.gestionvelora.com/about
 editorial_policy: https://www.gestionvelora.com/editorial-policy
 methodology: https://www.gestionvelora.com/methodology
 sources: https://www.gestionvelora.com/sources
+trust_proof: https://www.gestionvelora.com/trust-proof
 sitemap: https://www.gestionvelora.com/sitemap.xml

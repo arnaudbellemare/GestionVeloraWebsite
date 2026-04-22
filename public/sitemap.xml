@@ -309,6 +309,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/trust-proof</loc>
+    <lastmod>2026-04-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/rss.xml</loc>
     <lastmod>2026-04-22</lastmod>
     <changefreq>weekly</changefreq>
