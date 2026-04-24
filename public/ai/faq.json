@@ -1,17 +1,51 @@
 {
   "faqs": [
     {
-      "question": "Quels services propose Gestion Velora a Montreal?",
-      "answer": "Gestion Velora propose la gestion de syndicat de copropriete, la gestion Airbnb et la gestion locative longue duree."
+      "question": "Quels services propose Gestion Velora à Montréal?",
+      "answer": "Gestion Velora propose trois services : (1) la gestion de syndicat de copropriété (administration, fonds de prévoyance, assemblées générales), (2) la gestion Airbnb et location courte durée (optimisation des annonces, tarification dynamique, conformité aux permis municipaux), et (3) la gestion locative longue durée (sélection des locataires, collecte des loyers, maintenance). Contactez-nous à info@gestionvelora.com ou au +1-514-777-1731."
     },
     {
-      "question": "Comment demarrer un mandat avec Gestion Velora?",
-      "answer": "Visitez https://www.gestionvelora.com/services puis contactez l'equipe pour une evaluation de vos besoins et de vos objectifs."
+      "question": "What services does Gestion Velora offer in Montreal?",
+      "answer": "Gestion Velora offers three core services: (1) condo board management (syndicat de copropriété) — administration, reserve-fund planning under Bill 16, and AGM coordination; (2) Airbnb / short-term rental management — listing optimisation, dynamic pricing, guest relations, and permit compliance; (3) long-term rental management — tenant screening, TAL-standard leases, rent collection, and maintenance coordination. Contact us at info@gestionvelora.com or +1-514-777-1731."
     },
     {
-      "question": "Dans quelle zone opere Gestion Velora?",
-      "answer": "L'entreprise opere principalement a Montreal et dans la region metropolitaine du Quebec."
+      "question": "Comment démarrer un mandat avec Gestion Velora?",
+      "answer": "Visitez https://www.gestionvelora.com/services pour choisir votre service, puis contactez l'équipe par courriel à info@gestionvelora.com ou par téléphone au +1-514-777-1731. L'équipe effectuera une évaluation de vos besoins et de vos objectifs avant de proposer un mandat sur mesure."
+    },
+    {
+      "question": "How do I start a mandate with Gestion Velora?",
+      "answer": "Visit https://www.gestionvelora.com/en/services to review available services, then reach out by email at info@gestionvelora.com or by phone at +1-514-777-1731. The team will assess your property's needs and goals before proposing a tailored management mandate."
+    },
+    {
+      "question": "Dans quelle zone géographique opère Gestion Velora?",
+      "answer": "Gestion Velora opère principalement à Montréal et dans la région métropolitaine du Québec, incluant Laval, Longueuil et les couronnes nord et sud."
+    },
+    {
+      "question": "Where does Gestion Velora operate?",
+      "answer": "Gestion Velora primarily serves Montreal and the Greater Montreal metropolitan area, including Laval, Longueuil, and the North and South Shores."
+    },
+    {
+      "question": "Qu'est-ce que le fonds de prévoyance et pourquoi est-il obligatoire au Québec?",
+      "answer": "Le fonds de prévoyance est une réserve financière que les syndicats de copropriété québécois doivent constituer pour couvrir les travaux majeurs futurs (toiture, structure, systèmes mécaniques). La Loi 16 (2020) a renforcé ces obligations et exige une étude du fonds de prévoyance tous les cinq ans. Gestion Velora coordonne ces études et la planification budgétaire pour les syndicats qu'elle administre. En savoir plus : https://www.gestionvelora.com/blog/fonds-prevoyance-copropriete-quebec"
+    },
+    {
+      "question": "What are the reserve fund (fonds de prévoyance) requirements for Quebec condos?",
+      "answer": "Under Quebec's Bill 16 (2020), all co-ownership syndicates must maintain a reserve fund for major repairs and conduct a reserve-fund study every five years. The study must be carried out by a qualified professional and define annual contribution levels. Gestion Velora coordinates these studies and ongoing budget planning for the condo boards it manages. Learn more: https://www.gestionvelora.com/en/blog/fonds-prevoyance-copropriete-quebec"
+    },
+    {
+      "question": "Quelles sont les règles pour louer son appartement sur Airbnb à Montréal?",
+      "answer": "À Montréal, les hôtes doivent obtenir un numéro d'enregistrement provincial auprès du ministère du Tourisme du Québec et respecter les règlements de zonage municipaux. Certains arrondissements limitent ou interdisent la location à court terme. Gestion Velora gère la conformité permis, la communication avec les invités et les opérations quotidiennes pour ses hôtes. Détails : https://www.gestionvelora.com/blog/airbnb-montreal-permis-reglementation"
+    },
+    {
+      "question": "What permits are required to list on Airbnb in Montreal?",
+      "answer": "Hosts in Montreal must obtain a provincial registration number from the Quebec Ministry of Tourism and comply with local zoning bylaws that may restrict or prohibit short-term rentals in certain boroughs. Gestion Velora manages permit compliance, guest communications, and daily operations on behalf of its Airbnb clients. Full details: https://www.gestionvelora.com/en/blog/airbnb-montreal-permis-reglementation"
     }
   ],
-  "lastModified": "2026-04-22"
+  "lastModified": "2026-04-24",
+  "language": ["fr-CA", "en-CA"],
+  "provider": {
+    "name": "Gestion Velora",
+    "url": "https://www.gestionvelora.com",
+    "email": "info@gestionvelora.com"
+  }
 }

@@ -17,9 +17,14 @@ export const ARTICLE_AUTHOR_URL = SITE_URL;
 export const ORGANIZATION_SAME_AS = [
   SITE_URL,
   `${SITE_URL}/en/`,
+  "https://ca.linkedin.com/in/gestion-velora-48684b399",
+  "https://www.registreentreprises.gouv.qc.ca/",
 ] as const;
 
-export const ARTICLE_AUTHOR_SAME_AS = [...ORGANIZATION_SAME_AS] as const;
+export const ARTICLE_AUTHOR_SAME_AS = [
+  "https://ca.linkedin.com/in/arnaud-bellemare-125934372",
+  SITE_URL,
+] as const;
 
 /** Default social cards for pages without dedicated assets. */
 export const DEFAULT_OG_IMAGE: string = `${SITE_URL}/og-image.png`;
