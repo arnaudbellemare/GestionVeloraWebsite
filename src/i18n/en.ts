@@ -439,47 +439,47 @@ export const en = {
   // Services (full content for ServicePage)
   services: {
     "syndicat-copropriete": {
-      title: "Condo management",
+      title: "Condo board management",
       subtitle: "Condo board management in Montreal",
       description:
-        "Gestion Velora offers full condo management services in Montreal. Our experienced team delivers transparency, rigour, and clear communication with all unit owners.",
+        "Gestion Velora is a Montreal condo management firm specializing in full condo board administration. We handle the administrative, financial, and technical management of your condo corporation: annual budget, common fees, reserve fund, annual general meeting (AGM), condo register, common area maintenance, and Loi 141 compliance. Our dedicated condo manager ensures full transparency for the board and every unit owner.",
       offerings: [
         {
-          title: "Administration and governance",
+          title: "Administration and board governance",
           items: [
-            "Convening and conducting annual meetings",
-            "Meeting minutes",
+            "Convening and conducting the annual general meeting (AGM)",
+            "Meeting minutes and condo register maintenance",
             "Board decision management",
-            "Compliance with Quebec condo law",
+            "Loi 141 and condo declaration compliance",
           ],
           detailItems: [
             "Shared annual compliance calendar (AGM, budget, insurance, vendor contracts) with the board.",
             "Agenda preparation, document collection, and notice distribution within legal timelines.",
             "Structured minutes with decisions, owners, and clear follow-up deadlines.",
-            "Execution tracking of board resolutions across vendors, communications, and governance docs.",
+            "Condo register upkeep: declaration, building by-laws, AGM minutes, contracts, and financial statements.",
           ],
         },
         {
-          title: "Reserve fund and finances",
+          title: "Financial and accounting management",
           items: [
             "Reserve fund management",
-            "Budget preparation",
-            "Accounts and financial reports",
-            "Common fee collection",
+            "Annual condo budget preparation",
+            "Common fee and special assessment collection",
+            "Financial reports and condo accounting",
           ],
           detailItems: [
-            "Line-by-line budget planning with assumptions and year-over-year comparisons.",
+            "Line-by-line annual budget with assumptions and year-over-year comparisons.",
             "Monthly variance tracking (budget vs actual) with corrective action recommendations.",
             "Collection dashboard for receivables, arrears, and staged recovery actions.",
             "Reserve fund planning aligned with building condition and upcoming capital work.",
           ],
         },
         {
-          title: "Work and maintenance",
+          title: "Technical management and common area maintenance",
           items: [
-            "Coordination of major work",
-            "Contractor selection and bids",
-            "Maintenance contract follow-up",
+            "Common area and building maintenance",
+            "Contractor selection and bid management",
+            "Maintenance contract follow-up and preventive maintenance",
             "Emergency and claim management",
           ],
           detailItems: [
@@ -490,9 +490,9 @@ export const en = {
           ],
         },
         {
-          title: "Communication and relations",
+          title: "Communication and owner relations",
           items: [
-            "Liaison with unit owners",
+            "Liaison with unit owners and the board",
             "Complaint and request handling",
             "Transparency in all reports",
             "Ongoing administrative support",
@@ -517,6 +517,18 @@ export const en = {
         {
           q: "What is the difference between the reserve fund and the annual operating budget?",
           a: "The operating budget funds day-to-day operations; the reserve fund funds major work and planned replacements identified in the reserve study.",
+        },
+        {
+          q: "What are the legal obligations of a condo board in Quebec?",
+          a: "A Quebec condo corporation must hold an annual general meeting (AGM), adopt a budget, collect common fees, maintain a reserve fund, keep the condo register up to date, and comply with Loi 141 on divided co-ownership. A professional condo management firm can handle all of these obligations on behalf of the board.",
+        },
+        {
+          q: "What is the difference between a condo management firm and self-management?",
+          a: "Self-management places all administrative, financial, and technical responsibilities on board members, which can be a significant burden. Hiring a professional condo management firm delegates these duties to a dedicated manager, ensures regulatory compliance, and frees the board to focus on strategic decisions.",
+        },
+        {
+          q: "What must the condo register contain?",
+          a: "The condo register must include the condo declaration, building by-laws, AGM and board meeting minutes, financial statements, current contracts, and inspection reports. Loi 141 requires it to be rigorously maintained and accessible to all unit owners.",
         },
       ],
     },

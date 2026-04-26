@@ -71,10 +71,10 @@ export const LOCATION_SERVICES: LocationService[] = [
     h1Fr: "Gestion de syndicat de copropriété à {city}",
     h1En: "Condo board management in {city}",
     descFr:
-      "Gestion Velora assure l'administration complète de votre syndicat de copropriété à {city} : assemblées générales, fonds de prévoyance, conformité Loi 141 et relations avec les copropriétaires.",
+      "Gestion Velora, firme de gestion de copropriété à {city}, assure l'administration complète de votre syndicat de copropriétaires : gestion administrative et financière, assemblée générale annuelle (AGA), budget annuel, charges communes, fonds de prévoyance, registre de copropriété, entretien des parties communes et conformité Loi 141.",
     descEn:
-      "Gestion Velora handles full condo board administration in {city}: general assemblies, reserve funds, Loi 141 compliance, and owner relations.",
-    keywordFr: "syndicat copropriété {city}",
+      "Gestion Velora, a condo management firm serving {city}, handles full condo board administration: administrative and financial management, annual general meeting (AGM), annual budget, common fees, reserve fund, condo register, common area maintenance, and Loi 141 compliance.",
+    keywordFr: "gestion syndicat copropriété {city}",
     keywordEn: "condo board management {city}",
   },
   {

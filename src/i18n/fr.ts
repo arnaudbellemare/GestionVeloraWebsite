@@ -445,44 +445,44 @@ export const fr = {
       title: "Syndicat de copropriété",
       subtitle: "Gestion de syndicat de copropriété à Montréal",
       description:
-        "Gestion Velora offre des services complets de gestion pour les syndicats de copropriété à Montréal. Notre équipe expérimentée assure la transparence, la rigueur et une communication claire avec tous les copropriétaires.",
+        "Gestion Velora est une firme de gestion de copropriété à Montréal spécialisée dans l'administration complète des syndicats de copropriétaires. Nous prenons en charge la gestion administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Notre gestionnaire de copropriété attitré assure la transparence pour le conseil d'administration et chaque copropriétaire.",
       offerings: [
         {
-          title: "Administration et gouvernance",
+          title: "Administration et gouvernance du syndicat",
           items: [
-            "Convoquation et tenue des assemblées générales",
-            "Rédaction des procès-verbaux",
+            "Convocation et tenue de l'assemblée générale annuelle (AGA)",
+            "Rédaction des procès-verbaux et tenue du registre de copropriété",
             "Gestion des décisions du conseil d'administration",
-            "Respect des dispositions de la Loi sur la copropriété",
+            "Conformité à la Loi 141 et à la déclaration de copropriété",
           ],
           detailItems: [
             "Calendrier annuel des obligations (AGA, budget, assurances, contrats) partagé avec le CA.",
             "Préparation des ordres du jour, collecte des pièces et envoi des convocations selon les délais légaux.",
             "Procès-verbaux structurés avec décisions, responsables et échéances de suivi.",
-            "Mise en application des résolutions (fournisseurs, communications, documents de gouvernance).",
+            "Tenue et mise à jour du registre de copropriété : déclaration, règlement d'immeuble, procès-verbaux, contrats et états financiers.",
           ],
         },
         {
-          title: "Fonds de prévoyance et finances",
+          title: "Gestion financière et comptable de copropriété",
           items: [
             "Gestion du fonds de prévoyance",
-            "Élaboration des budgets prévisionnels",
-            "Suivi des comptes et rapports financiers",
-            "Perception des charges communes",
+            "Élaboration du budget annuel de copropriété",
+            "Perception des charges communes et cotisations spéciales",
+            "Rapports financiers et gestion comptable de copropriété",
           ],
           detailItems: [
-            "Budget détaillé par poste avec hypothèses claires et comparaison à l'exercice précédent.",
+            "Budget annuel détaillé par poste avec hypothèses claires et comparaison à l'exercice précédent.",
             "Suivi mensuel des écarts (budget vs réel) avec mesures correctives proposées.",
             "Tableau de bord des encaissements, retards et interventions de recouvrement graduelles.",
             "Planification du fonds de prévoyance alignée avec l'état de l'immeuble et les travaux à venir.",
           ],
         },
         {
-          title: "Travaux et maintenance",
+          title: "Entretien et gestion technique de copropriété",
           items: [
-            "Coordination des travaux majeurs",
-            "Sélection des entrepreneurs et soumissions",
-            "Suivi des contrats d'entretien",
+            "Entretien des parties communes et de l'immeuble",
+            "Sélection des entrepreneurs et appels d'offres",
+            "Suivi des contrats d'entretien et maintenance préventive",
             "Gestion des urgences et sinistres",
           ],
           detailItems: [
@@ -493,9 +493,9 @@ export const fr = {
           ],
         },
         {
-          title: "Communication et relations",
+          title: "Communication et relations avec les copropriétaires",
           items: [
-            "Liaison avec les copropriétaires",
+            "Liaison avec les copropriétaires et le conseil d'administration",
             "Gestion des plaintes et demandes",
             "Transparence dans tous les rapports",
             "Support administratif continu",
@@ -520,6 +520,18 @@ export const fr = {
         {
           q: "Quelle est la différence entre le fonds de prévoyance et le budget courant ?",
           a: "Le budget courant finance l'exploitation courante ; le fonds de prévoyance finance les travaux majeurs et remplacements planifiés identifiés dans l'étude de réserve.",
+        },
+        {
+          q: "Quelles sont les obligations d'un syndicat de copropriété au Québec ?",
+          a: "Un syndicat de copropriété doit tenir une assemblée générale annuelle (AGA), adopter un budget, percevoir les charges communes, maintenir un fonds de prévoyance, tenir le registre de copropriété à jour et se conformer à la Loi 141 sur la copropriété divise. Un gestionnaire externe peut prendre en charge l'ensemble de ces obligations pour le conseil d'administration.",
+        },
+        {
+          q: "Quelle est la différence entre une firme de gestion de copropriété et l'autogestion ?",
+          a: "L'autogestion confie toutes les responsabilités administratives, financières et techniques aux membres du conseil d'administration, ce qui peut représenter une charge importante. Faire appel à une firme de gestion de copropriété permet de déléguer ces obligations à un gestionnaire professionnel, d'assurer la conformité réglementaire et de libérer le CA pour les décisions stratégiques.",
+        },
+        {
+          q: "Que doit contenir le registre de copropriété ?",
+          a: "Le registre de copropriété doit inclure la déclaration de copropriété, le règlement d'immeuble, les procès-verbaux des assemblées générales et des réunions du CA, les états financiers, les contrats en cours et les rapports d'inspection. La Loi 141 impose sa tenue rigoureuse et son accessibilité aux copropriétaires.",
         },
       ],
     },
