@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { useIdleReady } from "../hooks/useDeferredMedia";
 
-const HERO_VIDEO = "/videos/hero-bg.mp4";
+const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop.mp4";
+const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile.mp4";
 
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
@@ -36,7 +37,12 @@ export function HeroSection() {
         style={{ backgroundColor: "#000" }}
         aria-hidden
       >
-        {idleReady ? <source src={HERO_VIDEO} type="video/mp4" /> : null}
+        {idleReady ? (
+          <>
+            <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
+            <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
+          </>
+        ) : null}
       </video>
       <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
 

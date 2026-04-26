@@ -4,7 +4,8 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { useLoadWhenInView } from "../hooks/useDeferredMedia";
 
-const BG_VIDEO = "/videos/our-standards-bg.mp4";
+const BG_VIDEO_DESKTOP = "/videos/our-standards-bg-desktop.mp4";
+const BG_VIDEO_MOBILE = "/videos/our-standards-bg-mobile.mp4";
 const BG_IMAGE = "/images/our-standards-bg-clean.png";
 
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
@@ -41,6 +42,7 @@ export function OurStandardsSection() {
           <img
             src={BG_IMAGE}
             alt=""
+            aria-hidden
             loading="eager"
             decoding="async"
             fetchPriority="high"
@@ -62,7 +64,12 @@ export function OurStandardsSection() {
               opacity: videoReady ? 1 : 0,
             }}
           >
-            {loadVideo ? <source src={BG_VIDEO} type="video/mp4" /> : null}
+            {loadVideo ? (
+              <>
+                <source src={BG_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
+                <source src={BG_VIDEO_DESKTOP} type="video/mp4" />
+              </>
+            ) : null}
           </video>
         </div>
         <div className="absolute inset-0 bg-black/42" aria-hidden />

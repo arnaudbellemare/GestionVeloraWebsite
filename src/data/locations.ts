@@ -19,6 +19,7 @@ export interface LocationService {
 }
 
 export const CITIES: City[] = [
+  // Greater Montreal cities
   { slug: "montreal", nameFr: "Montréal", nameEn: "Montreal", region: "Île de Montréal" },
   { slug: "laval", nameFr: "Laval", nameEn: "Laval", region: "Laval" },
   { slug: "longueuil", nameFr: "Longueuil", nameEn: "Longueuil", region: "Montérégie" },
@@ -33,6 +34,32 @@ export const CITIES: City[] = [
   { slug: "chateauguay", nameFr: "Châteauguay", nameEn: "Chateauguay", region: "Montérégie" },
   { slug: "saint-jerome", nameFr: "Saint-Jérôme", nameEn: "Saint-Jerome", region: "Laurentides" },
   { slug: "varennes", nameFr: "Varennes", nameEn: "Varennes", region: "Montérégie" },
+  // Montreal Island municipalities
+  { slug: "westmount", nameFr: "Westmount", nameEn: "Westmount", region: "Île de Montréal" },
+  { slug: "outremont", nameFr: "Outremont", nameEn: "Outremont", region: "Île de Montréal" },
+  { slug: "mont-royal", nameFr: "Mont-Royal", nameEn: "Mont-Royal", region: "Île de Montréal" },
+  { slug: "cote-saint-luc", nameFr: "Côte-Saint-Luc", nameEn: "Cote-Saint-Luc", region: "Île de Montréal" },
+  { slug: "dollard-des-ormeaux", nameFr: "Dollard-des-Ormeaux", nameEn: "Dollard-des-Ormeaux", region: "Île de Montréal" },
+  { slug: "kirkland", nameFr: "Kirkland", nameEn: "Kirkland", region: "Île de Montréal" },
+  { slug: "pointe-claire", nameFr: "Pointe-Claire", nameEn: "Pointe-Claire", region: "Île de Montréal" },
+  { slug: "saint-laurent", nameFr: "Saint-Laurent", nameEn: "Saint-Laurent", region: "Île de Montréal" },
+  { slug: "verdun", nameFr: "Verdun", nameEn: "Verdun", region: "Île de Montréal" },
+  { slug: "lachine", nameFr: "Lachine", nameEn: "Lachine", region: "Île de Montréal" },
+  // Montreal boroughs (arrondissements — high-search-volume keyword targets)
+  { slug: "plateau-mont-royal", nameFr: "Plateau-Mont-Royal", nameEn: "Plateau-Mont-Royal", region: "Montréal" },
+  { slug: "rosemont-la-petite-patrie", nameFr: "Rosemont–La Petite-Patrie", nameEn: "Rosemont-La Petite-Patrie", region: "Montréal" },
+  { slug: "villeray-saint-michel-parc-extension", nameFr: "Villeray–Saint-Michel–Parc-Extension", nameEn: "Villeray-Saint-Michel-Parc-Extension", region: "Montréal" },
+  { slug: "cote-des-neiges-notre-dame-de-grace", nameFr: "Côte-des-Neiges–Notre-Dame-de-Grâce", nameEn: "Cote-des-Neiges-Notre-Dame-de-Grace", region: "Montréal" },
+  { slug: "mercier-hochelaga-maisonneuve", nameFr: "Mercier–Hochelaga-Maisonneuve", nameEn: "Mercier-Hochelaga-Maisonneuve", region: "Montréal" },
+  { slug: "riviere-des-prairies-pointe-aux-trembles", nameFr: "Rivière-des-Prairies–Pointe-aux-Trembles", nameEn: "Riviere-des-Prairies-Pointe-aux-Trembles", region: "Montréal" },
+  { slug: "ahuntsic-cartierville", nameFr: "Ahuntsic-Cartierville", nameEn: "Ahuntsic-Cartierville", region: "Montréal" },
+  { slug: "saint-leonard", nameFr: "Saint-Léonard", nameEn: "Saint-Leonard", region: "Montréal" },
+  { slug: "anjou", nameFr: "Anjou", nameEn: "Anjou", region: "Montréal" },
+  { slug: "montreal-nord", nameFr: "Montréal-Nord", nameEn: "Montreal-Nord", region: "Montréal" },
+  { slug: "pierrefonds-roxboro", nameFr: "Pierrefonds-Roxboro", nameEn: "Pierrefonds-Roxboro", region: "Montréal" },
+  { slug: "lasalle", nameFr: "LaSalle", nameEn: "LaSalle", region: "Montréal" },
+  { slug: "sud-ouest", nameFr: "Le Sud-Ouest", nameEn: "Le Sud-Ouest", region: "Montréal" },
+  { slug: "ville-marie", nameFr: "Ville-Marie", nameEn: "Ville-Marie", region: "Montréal" },
 ];
 
 export const LOCATION_SERVICES: LocationService[] = [

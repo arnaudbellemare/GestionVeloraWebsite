@@ -7,6 +7,7 @@ import { BlogPage } from "./pages/BlogPage";
 import { BlogPostPage } from "./pages/BlogPostPage";
 import { HomePage } from "./pages/HomePage";
 import { Layout } from "./pages/Layout";
+import { LocationPage } from "./pages/LocationPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import { ServicePage } from "./pages/ServicePage";
 import { ServicesIndexPage } from "./pages/ServicesIndexPage";
@@ -23,6 +24,7 @@ function App() {
                 <Route index element={<HomePage />} />
                 <Route path="services" element={<ServicesIndexPage />} />
                 <Route path="services/:slug" element={<ServicePage />} />
+                <Route path="location/:locationSlug" element={<LocationPage />} />
                 <Route path="blog" element={<BlogPage />} />
                 <Route path="blog/:slug" element={<BlogPostPage />} />
                 <Route path="privacy" element={<PrivacyPage />} />
@@ -31,6 +33,7 @@ function App() {
                 <Route index element={<HomePage />} />
                 <Route path="services" element={<ServicesIndexPage />} />
                 <Route path="services/:slug" element={<ServicePage />} />
+                <Route path="location/:locationSlug" element={<LocationPage />} />
                 <Route path="blog" element={<BlogPage />} />
                 <Route path="blog/:slug" element={<BlogPostPage />} />
                 <Route path="privacy" element={<PrivacyPage />} />

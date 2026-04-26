@@ -396,6 +396,7 @@ export const fr = {
     ctaTitle: "Nous n'avons que commencé",
     ctaText: "Suivez-nous ou contactez-nous directement à info@gestionvelora.com",
     planifyCall: "Demander une soumission",
+    scheduleCall: "Planifier un appel",
     notFound: "Service non trouvé",
     backHome: "Retour à l'accueil",
     faqTitle: "Questions fréquentes",

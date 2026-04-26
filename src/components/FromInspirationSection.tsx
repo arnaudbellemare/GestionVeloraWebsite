@@ -98,7 +98,7 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
             onClick={() => setSelected(i)}
           >
             <div className="flex items-center gap-2 min-w-0">
-              <img src={item.image} alt="" className="h-8 w-8 rounded object-cover shrink-0 bg-neutral-200 dark:bg-neutral-700" />
+              <img src={item.image} alt={item.name} className="h-8 w-8 rounded object-cover shrink-0 bg-neutral-200 dark:bg-neutral-700" />
               <span className="font-sans text-sm text-neutral-900 dark:text-white truncate">{item.name}</span>
             </div>
             {selected === i && (

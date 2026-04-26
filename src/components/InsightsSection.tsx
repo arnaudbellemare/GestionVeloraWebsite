@@ -107,7 +107,7 @@ export function InsightsSection() {
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={post.image}
-                    alt=""
+                    alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>

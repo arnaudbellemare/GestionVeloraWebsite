@@ -54,7 +54,7 @@ export function ServicesIndexPage() {
                 <div className="aspect-[16/10] overflow-hidden">
                   <img
                     src={service.image}
-                    alt=""
+                    alt={`${service.title} — Gestion Velora Montréal`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     style={{ objectPosition: "center 30%" }}
                   />

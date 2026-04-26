@@ -393,6 +393,7 @@ export const en = {
     ctaTitle: "We're just getting started",
     ctaText: "Follow us or contact us directly at info@gestionvelora.com",
     planifyCall: "Request a proposal",
+    scheduleCall: "Schedule a call",
     notFound: "Service not found",
     backHome: "Back to home",
     faqTitle: "Frequently asked questions",

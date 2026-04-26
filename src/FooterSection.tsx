@@ -239,16 +239,14 @@ export const FooterSection = (): JSX.Element => {
 
       {/* 3D City Brand Image - top scrim fades footer black into the skyline */}
       <div className="relative overflow-hidden">
-        <img
-          src="/images/footer-city-light.png?v=4"
-          alt="Gestion Velora - 3D City"
-          className="w-full h-auto block dark:hidden"
-        />
-        <img
-          src="/images/footer-city-dark.png?v=4"
-          alt="Gestion Velora - 3D City"
-          className="w-full h-auto hidden dark:block"
-        />
+        <picture className="block dark:hidden">
+          <source srcSet="/images/footer-city-light.webp" type="image/webp" />
+          <img src="/images/footer-city-light.png?v=4" alt="Gestion Velora - vue aérienne Montréal" className="w-full h-auto" />
+        </picture>
+        <picture className="hidden dark:block">
+          <source srcSet="/images/footer-city-dark.webp" type="image/webp" />
+          <img src="/images/footer-city-dark.png?v=4" alt="Gestion Velora - vue aérienne Montréal" className="w-full h-auto" />
+        </picture>
         <div
           className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-16 sm:h-[5.25rem]"
           style={{
