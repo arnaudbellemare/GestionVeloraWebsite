@@ -207,8 +207,8 @@ export function TarifsPage() {
           </h1>
           <p className="font-sans text-base lg:text-lg text-nd-secondary max-w-2xl">
             {isEn
-              ? "All plans include onboarding, setup, and dedicated support. No hidden fees — pricing is based on the size and complexity of your mandate."
-              : "Tous les forfaits incluent l'intégration, la configuration et un support dédié. Aucun frais caché — les tarifs dépendent de la taille et de la complexité de votre mandat."}
+              ? "All plans include onboarding, setup, and dedicated support. No hidden fees; pricing is based on the size and complexity of your mandate."
+              : "Tous les forfaits incluent l'intégration, la configuration et un support dédié. Aucun frais caché; les tarifs dépendent de la taille et de la complexité de votre mandat."}
           </p>
         </ScrollReveal>
 
@@ -361,7 +361,7 @@ export function TarifsPage() {
                   },
                   {
                     q: "What's not included?",
-                    a: "Maintenance and repair costs are paid directly by the property or condo board — we coordinate the work but don't mark up contractor invoices.",
+                    a: "Maintenance and repair costs are paid directly by the property or condo board; we coordinate the work but don't mark up contractor invoices.",
                   },
                 ]
               : [
@@ -375,7 +375,7 @@ export function TarifsPage() {
                   },
                   {
                     q: "Qu'est-ce qui n'est pas inclus ?",
-                    a: "Les coûts de maintenance et de réparation sont payés directement par l'immeuble ou le syndicat — nous coordonnons les travaux mais ne majorons pas les factures des entrepreneurs.",
+                    a: "Les coûts de maintenance et de réparation sont payés directement par l'immeuble ou le syndicat; nous coordonnons les travaux mais ne majorons pas les factures des entrepreneurs.",
                   },
                 ]
             ).map((item, i) => (

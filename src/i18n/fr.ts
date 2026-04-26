@@ -35,7 +35,7 @@ export const fr = {
 
   // WhoWeAre
   whoWeAre: {
-    title: "Gestionnaire immobilier à Montréal — syndicats et investisseurs.",
+    title: "Gestionnaire immobilier à Montréal : syndicats et investisseurs.",
     description:
       "Nous ciblons des propriétés à haut rendement avec des profils locataires solides et un potentiel de valorisation à travers le Grand Montréal.",
     cta: "Voir le portfolio",

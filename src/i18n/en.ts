@@ -35,7 +35,7 @@ export const en = {
 
   // WhoWeAre - SEO: property management Montreal, condo management, Airbnb management Montreal
   whoWeAre: {
-    title: "Montreal Property Manager — Condo Boards and Investors.",
+    title: "Montreal Property Manager: Condo Boards and Investors.",
     description:
       "We target high-yielding properties with strong tenant profiles and value-add potential across Greater Montreal.",
     cta: "View full portfolio",
@@ -63,7 +63,7 @@ export const en = {
 
   // ValueLabels
   valueLabels: {
-    title: "Condo management, Airbnb, rentals —\ntransparency every day.",
+    title: "Condo management, Airbnb, rentals.\nTransparency every day.",
     transparent: "Transparent",
     transparentText:
       "Clear financial reports, real-time data, and full visibility on every decision.",

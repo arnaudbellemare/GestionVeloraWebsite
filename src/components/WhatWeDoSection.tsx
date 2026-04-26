@@ -88,7 +88,7 @@ export function WhatWeDoSection() {
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-nd-border-visible">
                   <img
                     src={serviceImages[i]}
-                    alt={t(s.labelKey) + " Montréal — Gestion Velora"}
+                    alt={t(s.labelKey) + " Montréal | Gestion Velora"}
                     className="w-full h-full object-cover transition-opacity duration-200"
                     style={{ opacity: isExpanded ? 0.35 : 1 }}
                   />

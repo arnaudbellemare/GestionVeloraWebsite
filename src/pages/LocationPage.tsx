@@ -243,8 +243,8 @@ export function LocationPage() {
               {
                 title: isEn ? "Transparent reporting" : "Rapports transparents",
                 body: isEn
-                  ? "Monthly financial reports, maintenance logs, and meeting minutes — always accessible."
-                  : "Rapports financiers mensuels, suivi des travaux et procès-verbaux — toujours accessibles.",
+                  ? "Monthly financial reports, maintenance logs, and meeting minutes, always accessible."
+                  : "Rapports financiers mensuels, suivi des travaux et procès-verbaux, toujours accessibles.",
               },
               {
                 title: isEn ? "Local expertise" : "Expertise locale",

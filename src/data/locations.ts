@@ -45,7 +45,7 @@ export const CITIES: City[] = [
   { slug: "saint-laurent", nameFr: "Saint-Laurent", nameEn: "Saint-Laurent", region: "Île de Montréal" },
   { slug: "verdun", nameFr: "Verdun", nameEn: "Verdun", region: "Île de Montréal" },
   { slug: "lachine", nameFr: "Lachine", nameEn: "Lachine", region: "Île de Montréal" },
-  // Montreal boroughs (arrondissements — high-search-volume keyword targets)
+  // Montreal boroughs (arrondissements - high-search-volume keyword targets)
   { slug: "plateau-mont-royal", nameFr: "Plateau-Mont-Royal", nameEn: "Plateau-Mont-Royal", region: "Montréal" },
   { slug: "rosemont-la-petite-patrie", nameFr: "Rosemont–La Petite-Patrie", nameEn: "Rosemont-La Petite-Patrie", region: "Montréal" },
   { slug: "villeray-saint-michel-parc-extension", nameFr: "Villeray–Saint-Michel–Parc-Extension", nameEn: "Villeray-Saint-Michel-Parc-Extension", region: "Montréal" },
@@ -82,7 +82,7 @@ export const LOCATION_SERVICES: LocationService[] = [
     serviceSlug: "location",
     nameFr: "Gestion locative",
     nameEn: "Rental management",
-    h1Fr: "Gestion locative à {city} — location longue durée",
+    h1Fr: "Gestion locative à {city}, location longue durée",
     h1En: "Rental property management in {city}",
     descFr:
       "Gestion Velora prend en charge la gestion locative de vos immeubles à {city} : sélection des locataires, rédaction des baux, suivi des loyers et entretien.",
@@ -96,7 +96,7 @@ export const LOCATION_SERVICES: LocationService[] = [
     serviceSlug: "airbnb",
     nameFr: "Gestion Airbnb",
     nameEn: "Airbnb management",
-    h1Fr: "Gestion Airbnb à {city} — location courte durée",
+    h1Fr: "Gestion Airbnb à {city}, location courte durée",
     h1En: "Airbnb management in {city}",
     descFr:
       "Gestion Velora gère vos locations courte durée à {city} : annonces, réservations, accueil des voyageurs, ménage et conformité réglementaire.",
@@ -157,8 +157,8 @@ export function resolveLocation(slug: string): ResolvedLocation | null {
           h1En: fill(svc.h1En, city),
           descFr: fill(svc.descFr, city),
           descEn: fill(svc.descEn, city),
-          metaTitleFr: `${fill(svc.h1Fr, city)} — Gestion Velora`,
-          metaTitleEn: `${fill(svc.h1En, city)} — Gestion Velora`,
+          metaTitleFr: `${fill(svc.h1Fr, city)} | Gestion Velora`,
+          metaTitleEn: `${fill(svc.h1En, city)} | Gestion Velora`,
           metaDescFr: fill(svc.descFr, city),
           metaDescEn: fill(svc.descEn, city),
         };
