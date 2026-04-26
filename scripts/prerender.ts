@@ -265,13 +265,11 @@ function buildBreadcrumbSchema(
 function buildServicesHubSchema(locale: "fr" | "en", base: string) {
   const t = locale === "fr" ? frRaw : enRaw;
   const slugs = ["syndicat-copropriete", "airbnb", "location"] as const;
-  const inLang = locale === "fr" ? "fr-CA" : "en-CA";
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: t.servicesHub.schemaName,
     description: t.servicesHub.metaDescription,
-    inLanguage: inLang,
     itemListElement: slugs.map((slug, i) => {
       const svc = getService(locale, slug);
       return {
@@ -302,7 +300,6 @@ function buildServiceSchema(locale: "fr" | "en", slug: string, base: string) {
 }
 
 function buildBlogIndexSchema(locale: "fr" | "en", base: string) {
-  const inLang = locale === "fr" ? "fr-CA" : "en-CA";
   const name =
     locale === "fr"
       ? "Conseils et articles sur la gestion immobilière à Montréal"
@@ -316,7 +313,6 @@ function buildBlogIndexSchema(locale: "fr" | "en", base: string) {
     "@type": "ItemList",
     name,
     description,
-    inLanguage: inLang,
     itemListElement: blogPosts.map((post, i) => ({
       "@type": "ListItem",
       position: i + 1,

@@ -81,7 +81,6 @@ export function SchemaOrg() {
         "@type": "ItemList",
         name: t("servicesHub.schemaName"),
         description: t("servicesHub.metaDescription"),
-        inLanguage: locale,
         itemListElement: services.map((svc, i) => ({
           "@type": "ListItem",
           position: i + 1,
@@ -159,7 +158,6 @@ export function SchemaOrg() {
         "@type": "ItemList",
         name,
         description,
-        inLanguage: locale,
         itemListElement: blogPosts.map((post, i) => ({
           "@type": "ListItem",
           position: i + 1,
