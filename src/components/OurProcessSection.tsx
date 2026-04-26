@@ -99,11 +99,14 @@ export function OurProcessSection() {
           </div>
 
           <div className="flex-1 relative min-h-[260px] lg:min-h-0 bg-neutral-900 overflow-hidden">
-            <img
-              src="/hero-gestion-velora.jpg"
-              alt="Gestion immobilière Montréal — Gestion Velora"
-              className="absolute inset-0 w-full h-full object-cover object-center opacity-90 grayscale contrast-[1.05] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%,0_32%)]"
-            />
+            <picture>
+              <source srcSet="/hero-gestion-velora.webp" type="image/webp" />
+              <img
+                src="/hero-gestion-velora.jpg"
+                alt="Gestion immobilière Montréal — Gestion Velora"
+                className="absolute inset-0 w-full h-full object-cover object-center opacity-90 grayscale contrast-[1.05] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%,0_32%)]"
+              />
+            </picture>
             <div className="absolute inset-0 bg-black/45 pointer-events-none" aria-hidden />
           </div>
         </div>
