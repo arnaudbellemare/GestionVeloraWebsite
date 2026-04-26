@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { InternalLink } from "./components/InternalLink";
 import { PORTAL_URLS } from "./config";
+import { useLocale } from "./context/LocaleContext";
 
 /** Encoded in the iframe bundle’s QR; opens the marketing site when scanned. */
 const QR_SITE_URL = "https://www.gestionvelora.com/";
@@ -16,6 +17,7 @@ function qrTreeStandaloneIframeSrc(): string {
 
 export const FooterSection = (): JSX.Element => {
   const { t } = useTranslation();
+  const { locale } = useLocale();
   const [email, setEmail] = useState("");
   const qrTreeIframeRef = useRef<HTMLIFrameElement>(null);
   /** Synced with bundle via postMessage (0–3). */
@@ -261,9 +263,20 @@ export const FooterSection = (): JSX.Element => {
       <div className="border-t border-[#222222]">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#999999]">
           <span>©{new Date().getFullYear()} Gestion Velora</span>
-          <InternalLink to="/privacy" className="hover:text-white transition-colors duration-300">
-            {t("footer.privacy")}
-          </InternalLink>
+          <div className="flex flex-wrap items-center gap-4">
+            <InternalLink to="/privacy" className="hover:text-white transition-colors duration-300">
+              {t("footer.privacy")}
+            </InternalLink>
+            <a href="/about" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "About" : "À propos"}
+            </a>
+            <a href="/methodology" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "Methodology" : "Méthodologie"}
+            </a>
+            <a href="/trust-proof" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "Trust" : "Confiance"}
+            </a>
+          </div>
           <a href="#" className="hover:text-white transition-colors duration-300">
             {t("footer.madeWith")}
           </a>
