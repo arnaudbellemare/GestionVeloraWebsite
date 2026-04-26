@@ -54,7 +54,7 @@ export function BlogPage() {
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={post.image}
-                    alt={post.title}
+                    alt={post[locale].title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
