@@ -26,6 +26,7 @@ import { join } from "path";
 import { blogPosts } from "../src/data/blog.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
+import { CITIES, LOCATION_SERVICES } from "../src/data/locations.js";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -163,7 +164,7 @@ function buildHtml(
     `    <link rel="alternate" hreflang="x-default" href="${opts.hreflangDefault}" />`,
   ].join("\n");
   html = html.replace(
-    /<link rel="alternate" hreflang="fr-CA"[^/]*\/>\s*<link rel="alternate" hreflang="en-CA"[^/]*\/>\s*<link rel="alternate" hreflang="x-default"[^/]*\/>/,
+    /<link rel="alternate" hreflang="fr-CA"[^>]*>\s*<link rel="alternate" hreflang="en-CA"[^>]*>\s*<link rel="alternate" hreflang="x-default"[^>]*>/,
     hreflangBlock
   );
 
@@ -357,6 +358,80 @@ function buildArticleSchema(locale: "fr" | "en", slug: string, base: string) {
     },
     mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
   };
+}
+
+function fillLoc(template: string, city: typeof CITIES[0], locale: "fr" | "en"): string {
+  const name = locale === "fr" ? city.nameFr : city.nameEn;
+  return template.replace(/{city}/g, name).replace(/{cityEn}/g, city.nameEn);
+}
+
+function buildLocationServiceSchema(
+  locale: "fr" | "en",
+  svc: typeof LOCATION_SERVICES[0],
+  city: typeof CITIES[0],
+  base: string
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: fillLoc(locale === "fr" ? svc.h1Fr : svc.h1En, city, locale),
+    description: fillLoc(locale === "fr" ? svc.descFr : svc.descEn, city, locale),
+    provider: { "@id": ORG_ID },
+    url: `${base}/location/${svc.slug}-${city.slug}`,
+    areaServed: { "@type": "City", name: locale === "fr" ? city.nameFr : city.nameEn },
+  };
+}
+
+function buildLocationRoutes(): RouteConfig[] {
+  const out: RouteConfig[] = [];
+  for (const svc of LOCATION_SERVICES) {
+    for (const city of CITIES) {
+      const slug = `${svc.slug}-${city.slug}`;
+      const frPath = `/location/${slug}`;
+      const enPath = `/en/location/${slug}`;
+      const svcImage = SERVICE_IMAGES[svc.serviceSlug] ?? DEFAULT_OG_IMAGE;
+      const frBc = getBreadcrumbLabels("fr");
+      const enBc = getBreadcrumbLabels("en");
+
+      out.push({
+        path: frPath,
+        locale: "fr",
+        frPath,
+        enPath,
+        title: `${fillLoc(svc.h1Fr, city, "fr")} | Gestion Velora`,
+        description: fillLoc(svc.descFr, city, "fr"),
+        ogImage: svcImage,
+        twitterImage: svcImage,
+        pageSchemas: [
+          buildLocationServiceSchema("fr", svc, city, SITE_URL),
+          buildBreadcrumbSchema([
+            { name: frBc.home, url: `${SITE_URL}/` },
+            { name: frBc.services, url: `${SITE_URL}/services` },
+            { name: fillLoc(svc.h1Fr, city, "fr") },
+          ]),
+        ],
+      });
+      out.push({
+        path: enPath,
+        locale: "en",
+        frPath,
+        enPath,
+        title: `${fillLoc(svc.h1En, city, "en")} | Gestion Velora`,
+        description: fillLoc(svc.descEn, city, "en"),
+        ogImage: svcImage,
+        twitterImage: svcImage,
+        pageSchemas: [
+          buildLocationServiceSchema("en", svc, city, `${SITE_URL}/en`),
+          buildBreadcrumbSchema([
+            { name: enBc.home, url: `${SITE_URL}/` },
+            { name: enBc.services, url: `${SITE_URL}/en/services` },
+            { name: fillLoc(svc.h1En, city, "en") },
+          ]),
+        ],
+      });
+    }
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------------------
@@ -574,6 +649,31 @@ function buildRoutes(): RouteConfig[] {
     description: enHomeDesc,
     pageSchemas: null,
   });
+
+  // --- Tarifs ---
+  routes.push({
+    path: "/tarifs",
+    locale: "fr",
+    frPath: "/tarifs",
+    enPath: "/en/tarifs",
+    title: "Tarifs de gestion immobilière à Montréal | Gestion Velora",
+    description:
+      "Tarifs transparents pour la gestion de syndicat de copropriété, gestion locative et Airbnb à Montréal. À partir de 40 $/unité/mois. Sans frais cachés.",
+    pageSchemas: null,
+  });
+  routes.push({
+    path: "/en/tarifs",
+    locale: "en",
+    frPath: "/tarifs",
+    enPath: "/en/tarifs",
+    title: "Property Management Fees Montreal | Gestion Velora",
+    description:
+      "Transparent pricing for condo board management, rental management, and Airbnb management in Montreal. Starting at $40/unit/month. No hidden fees.",
+    pageSchemas: null,
+  });
+
+  // --- Location pages (35 cities × 4 services × 2 languages = 280 routes) ---
+  routes.push(...buildLocationRoutes());
 
   return routes;
 }
