@@ -35,7 +35,7 @@ export const en = {
 
   // WhoWeAre - SEO: property management Montreal, condo management, Airbnb management Montreal
   whoWeAre: {
-    title: "Strategic Asset Selection.",
+    title: "Montreal Property Manager — Condo Boards and Investors.",
     description:
       "We target high-yielding properties with strong tenant profiles and value-add potential across Greater Montreal.",
     cta: "View full portfolio",
@@ -63,7 +63,7 @@ export const en = {
 
   // ValueLabels
   valueLabels: {
-    title: "Your peace of mind,\nin the real world.",
+    title: "Condo management, Airbnb, rentals —\ntransparency every day.",
     transparent: "Transparent",
     transparentText:
       "Clear financial reports, real-time data, and full visibility on every decision.",
@@ -112,14 +112,14 @@ export const en = {
 
   // OurStandards
   ourStandards: {
-    title: "Setting new standards in property management.",
+    title: "Transparency and rigour in every property management mandate.",
     cta: "Our approach",
     text: "For us, property management isn't a checkbox, it's a commitment we uphold every day with proactive maintenance, transparent reports, and a culture where every building is treated like our own.",
   },
 
   // FromInspiration
   fromInspiration: {
-    title: "From administration to stewardship.",
+    title: "Manage your property from a single dashboard.",
     download: "One-click download",
     downloadDesc:
       "Export financial reports and meeting minutes to PDF or view them directly in the owner portal.",
@@ -181,7 +181,7 @@ export const en = {
 
   teamSection: {
     label: "Leadership",
-    title: "Behind Velora.",
+    title: "The Velora property management team.",
     intro:
       "Years of property management experience in Montreal. A vision built on transparency, rigor, and genuine relationships with every client.",
     members: [
@@ -195,8 +195,8 @@ export const en = {
 
   trustedPartners: {
     label: "Testimonials",
-    title: "Trusted by the best in the industry.",
-    subtitle: "From condo boards to investors, top owners trust Gestion Velora.",
+    title: "What our property management clients say in Montreal.",
+    subtitle: "Condo boards and property owners trust Gestion Velora.",
     seeMore: "See more testimonials",
     ctaJourney: "Contact us",
     partners: [

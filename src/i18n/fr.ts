@@ -35,7 +35,7 @@ export const fr = {
 
   // WhoWeAre
   whoWeAre: {
-    title: "Sélection stratégique d'actifs.",
+    title: "Gestionnaire immobilier à Montréal — syndicats et investisseurs.",
     description:
       "Nous ciblons des propriétés à haut rendement avec des profils locataires solides et un potentiel de valorisation à travers le Grand Montréal.",
     cta: "Voir le portfolio",
@@ -63,7 +63,7 @@ export const fr = {
 
   // ValueLabels
   valueLabels: {
-    title: "La paix d'esprit,\nconcrète au quotidien.",
+    title: "Syndicat de copropriété, Airbnb et location :\ntransparence au quotidien.",
     transparent: "Transparent",
     transparentText:
       "Rapports financiers clairs, données en temps réel, et une visibilité totale sur chaque décision.",
@@ -112,14 +112,14 @@ export const fr = {
 
   // OurStandards
   ourStandards: {
-    title: "Établir de nouveaux standards en gestion immobilière.",
+    title: "Transparence et rigueur dans chaque mandat de gestion immobilière.",
     cta: "Notre approche",
     text: "Pour nous, la gestion immobilière n'est pas une case à cocher, c'est un engagement que nous renforçons au quotidien avec une maintenance proactive, des rapports transparents et une culture où chaque immeuble est traité comme le nôtre.",
   },
 
   // FromInspiration
   fromInspiration: {
-    title: "De l'administration au pilotage.",
+    title: "Pilotez votre gestion immobilière depuis un tableau de bord.",
     download: "Télécharger en un clic",
     downloadDesc:
       "Exportez vos rapports financiers et assemblées en PDF ou consultez-les directement dans le portail propriétaires.",
@@ -183,7 +183,7 @@ export const fr = {
   // TeamSection
   teamSection: {
     label: "Direction",
-    title: "Derrière Velora.",
+    title: "L'équipe de gestion immobilière Velora.",
     intro:
       "Des années d’expérience en gestion immobilière à Montréal. Une vision fondée sur la transparence, la rigueur et la relation humaine avec chaque client.",
     members: [
@@ -198,8 +198,8 @@ export const fr = {
   // TrustedPartners
   trustedPartners: {
     label: "Témoignages",
-    title: "Approuvé par les meilleurs du secteur.",
-    subtitle: "Des syndicats aux investisseurs, les meilleurs font confiance à Gestion Velora.",
+    title: "Ce que disent nos clients en gestion immobilière à Montréal.",
+    subtitle: "Syndicats de copropriété et propriétaires font confiance à Gestion Velora.",
     seeMore: "Voir plus de témoignages",
     ctaJourney: "Nous contacter",
     partners: [
