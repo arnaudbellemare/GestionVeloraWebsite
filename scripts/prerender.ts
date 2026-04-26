@@ -57,6 +57,24 @@ function escapeHtml(str: string) {
 }
 
 // ---------------------------------------------------------------------------
+// Helper: build a meta <title> that stays under 75 characters.
+// Adds " | Gestion Velora" suffix only if the result fits within the limit.
+// Falls back to bare title (truncated to 75 chars) when too long.
+// ---------------------------------------------------------------------------
+const TITLE_SUFFIX = " | Gestion Velora";
+const TITLE_MAX = 75;
+
+function buildTitle(headline: string): string {
+  const withSuffix = `${headline}${TITLE_SUFFIX}`;
+  if (withSuffix.length <= TITLE_MAX) return withSuffix;
+  if (headline.length <= TITLE_MAX) return headline;
+  // Truncate at last space before limit, append ellipsis
+  const cut = headline.slice(0, TITLE_MAX - 1);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut) + "…";
+}
+
+// ---------------------------------------------------------------------------
 // Helper: inject content into the HTML template
 // ---------------------------------------------------------------------------
 function buildHtml(
@@ -75,6 +93,8 @@ function buildHtml(
     hreflangDefault: string;
     /** Page-specific JSON-LD schemas to inject. Accepts a single object or array. */
     pageSchemas: object | object[] | null;
+    /** Locale of this page; used to strip the French static SEO block on EN pages. */
+    locale: "fr" | "en";
   }
 ): string {
   let html = template;
@@ -167,6 +187,16 @@ function buildHtml(
     /<link rel="alternate" hreflang="fr-CA"[^>]*>\s*<link rel="alternate" hreflang="en-CA"[^>]*>\s*<link rel="alternate" hreflang="x-default"[^>]*>/,
     hreflangBlock
   );
+
+  // 15b. Strip the French-language static SEO block on EN pages.
+  // The block contains hardcoded French prose; declaring lang="en-CA" while
+  // serving French content triggers Semrush's "hreflang language mismatch".
+  if (opts.locale === "en") {
+    html = html.replace(
+      /<main style="display:none">[\s\S]*?<\/main>/,
+      '<main style="display:none" lang="en-CA"><h1>Property management Montreal — Gestion Velora</h1><p>Gestion Velora is a Montreal property management firm specializing in condo board administration, long-term rental management, and short-term rental (Airbnb) management across Greater Montreal.</p></main>'
+    );
+  }
 
   // 16. Inject page-specific JSON-LD schemas (right before </head>)
   if (opts.pageSchemas) {
@@ -394,7 +424,7 @@ function buildLocationRoutes(): RouteConfig[] {
         locale: "fr",
         frPath,
         enPath,
-        title: `${fillLoc(svc.h1Fr, city, "fr")} | Gestion Velora`,
+        title: buildTitle(fillLoc(svc.h1Fr, city, "fr")),
         description: fillLoc(svc.descFr, city, "fr"),
         ogImage: svcImage,
         twitterImage: svcImage,
@@ -412,7 +442,7 @@ function buildLocationRoutes(): RouteConfig[] {
         locale: "en",
         frPath,
         enPath,
-        title: `${fillLoc(svc.h1En, city, "en")} | Gestion Velora`,
+        title: buildTitle(fillLoc(svc.h1En, city, "en")),
         description: fillLoc(svc.descEn, city, "en"),
         ogImage: svcImage,
         twitterImage: svcImage,
@@ -513,7 +543,7 @@ function buildRoutes(): RouteConfig[] {
       locale: "fr",
       frPath: `/services/${slug}`,
       enPath: `/en/services/${slug}`,
-      title: `${frSvc.title} | Gestion Velora`,
+      title: buildTitle(frSvc.title),
       description: frSvc.description,
       ogImage: img,
       twitterImage: img,
@@ -531,7 +561,7 @@ function buildRoutes(): RouteConfig[] {
       locale: "en",
       frPath: `/services/${slug}`,
       enPath: `/en/services/${slug}`,
-      title: `${enSvc.title} | Gestion Velora`,
+      title: buildTitle(enSvc.title),
       description: enSvc.description,
       ogImage: img,
       twitterImage: img,
@@ -589,7 +619,7 @@ function buildRoutes(): RouteConfig[] {
       locale: "fr",
       frPath: `/blog/${slug}`,
       enPath: `/en/blog/${slug}`,
-      title: `${post.fr.title} | Gestion Velora`,
+      title: buildTitle(post.fr.title),
       description: post.fr.excerpt,
       ogImage: img,
       twitterImage: img,
@@ -609,7 +639,7 @@ function buildRoutes(): RouteConfig[] {
       locale: "en",
       frPath: `/blog/${slug}`,
       enPath: `/en/blog/${slug}`,
-      title: `${post.en.title} | Gestion Velora`,
+      title: buildTitle(post.en.title),
       description: post.en.excerpt,
       ogImage: img,
       twitterImage: img,
@@ -704,6 +734,7 @@ async function main() {
       hreflangEn: enCanonical,
       hreflangDefault: frCanonical,
       pageSchemas: route.pageSchemas,
+      locale: route.locale,
     });
 
     writeRoute(route.path, html);
@@ -725,6 +756,7 @@ async function main() {
     hreflangEn: `${SITE_URL}/en/`,
     hreflangDefault: `${SITE_URL}/`,
     pageSchemas: rootRoute.pageSchemas,
+    locale: "fr",
   });
   writeFileSync(join(DIST, "index.html"), rootHtml, "utf-8");
   console.log("  ✓ / (dist/index.html updated)");
