@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /videos/
 
 Sitemap: https://www.gestionvelora.com/sitemap.xml
 # LLM guidance

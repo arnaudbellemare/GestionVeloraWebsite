@@ -58,6 +58,7 @@ export function OurStandardsSection() {
             playsInline
             preload={loadVideo ? "auto" : "none"}
             onCanPlay={handleCanPlay}
+            aria-hidden
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
             style={{
               objectPosition: "center 60%",
