@@ -1045,6 +1045,3 @@ main().catch((err) => {
   console.error("Prerender failed:", err);
   process.exit(1);
 });
-r("Prerender failed:", err);
-  process.exit(1);
-});
