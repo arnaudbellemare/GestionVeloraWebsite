@@ -95,42 +95,16 @@ export function SchemaOrg() {
       return () => removePageSchema();
     }
 
-    // ── Homepage ──────────────────────────────────────────────────────────────
-    if (path === "/" || path === "/en" || path === "/en/") {
-      const faqItems = t("faqItems", { returnObjects: true }) as {
-        question: string;
-        answer: string;
-      }[];
-      injectSchema({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        inLanguage: locale,
-        mainEntity: faqItems.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: { "@type": "Answer", text: item.answer },
-        })),
-      });
-      return () => removePageSchema();
-    }
-
-    // ── FAQ page ──────────────────────────────────────────────────────────────
-    if (path === "/faq" || path === "/en/faq") {
-      const faqItems = t("faqItems", { returnObjects: true }) as {
-        question: string;
-        answer: string;
-      }[];
-      injectSchema({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        inLanguage: locale,
-        mainEntity: faqItems.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: { "@type": "Answer", text: item.answer },
-        })),
-      });
-      return () => removePageSchema();
+    // ── Homepage & FAQ page ───────────────────────────────────────────────────
+    // FAQPage schema is injected statically by prerender.ts for these routes.
+    // Injecting it again here would create a duplicate @type FAQPage on the
+    // same page, which Google flags as a structured data validation error.
+    if (
+      path === "/" || path === "/en" || path === "/en/" ||
+      path === "/faq" || path === "/en/faq"
+    ) {
+      removePageSchema();
+      return;
     }
 
     // ── Service detail page ───────────────────────────────────────────────────
