@@ -745,7 +745,8 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/",
     title: frHomeTitle,
     description: frHomeDesc,
-    pageSchemas: buildFaqSchema("fr"),
+    // Homepage FAQPage is injected at runtime by SchemaOrg.tsx (single source of truth).
+    pageSchemas: null,
     // homepage uses dedicated twitter-card, not og-image
   });
   routes.push({
@@ -755,7 +756,8 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/",
     title: enHomeTitle,
     description: enHomeDesc,
-    pageSchemas: buildFaqSchema("en"),
+    // Homepage FAQPage is injected at runtime by SchemaOrg.tsx (single source of truth).
+    pageSchemas: null,
   });
 
   // --- Services hub ---
