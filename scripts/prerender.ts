@@ -23,10 +23,10 @@ import { join } from "path";
 // ---------------------------------------------------------------------------
 // Import app data sources directly — same source of truth as the React app
 // ---------------------------------------------------------------------------
-import { blogPosts } from "../src/data/blog.js";
+import { blogPosts, type RichParagraph } from "../src/data/blog.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
-import { CITIES, LOCATION_SERVICES } from "../src/data/locations.js";
+import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -62,7 +62,7 @@ function escapeHtml(str: string) {
 // Falls back to bare title (truncated to 75 chars) when too long.
 // ---------------------------------------------------------------------------
 const TITLE_SUFFIX = " | Gestion Velora";
-const TITLE_MAX = 75;
+const TITLE_MAX = 70;
 
 function buildTitle(headline: string): string {
   const withSuffix = `${headline}${TITLE_SUFFIX}`;
@@ -95,6 +95,8 @@ function buildHtml(
     pageSchemas: object | object[] | null;
     /** Locale of this page; used to strip the French static SEO block on EN pages. */
     locale: "fr" | "en";
+    /** Page-specific noscript HTML. When provided, replaces the homepage noscript block entirely. */
+    noscriptBody?: string;
   }
 ): string {
   let html = template;
@@ -188,13 +190,17 @@ function buildHtml(
     hreflangBlock
   );
 
-  // 15b. Strip the French-language static SEO block on EN pages.
-  // The block contains hardcoded French prose; declaring lang="en-CA" while
-  // serving French content triggers Semrush's "hreflang language mismatch".
-  if (opts.locale === "en") {
+  // 15b. Replace the noscript SEO block with page-specific content (preferred)
+  // or fall back to generic EN replacement to avoid hreflang language mismatch.
+  if (opts.noscriptBody) {
     html = html.replace(
-      /<main style="display:none">[\s\S]*?<\/main>/,
-      '<main style="display:none" lang="en-CA"><h1>Property management Montreal — Gestion Velora</h1><p>Gestion Velora is a Montreal property management firm specializing in condo board administration, long-term rental management, and short-term rental (Airbnb) management across Greater Montreal.</p></main>'
+      /<noscript>\s*<main[^>]*>[\s\S]*?<\/main>\s*<\/noscript>/,
+      opts.noscriptBody
+    );
+  } else if (opts.locale === "en") {
+    html = html.replace(
+      /<noscript>\s*<main>[\s\S]*?<\/main>\s*<\/noscript>/,
+      '<noscript><main lang="en-CA"><h1>Property management Montreal — Gestion Velora</h1><p>Gestion Velora is a Montreal property management firm specializing in condo board administration, long-term rental management, and short-term rental (Airbnb) operations across Greater Montreal.</p></main></noscript>'
     );
   }
 
@@ -391,6 +397,108 @@ function fillLoc(template: string, city: typeof CITIES[0], locale: "fr" | "en"):
   return template.replace(/{city}/g, name).replace(/{cityEn}/g, city.nameEn);
 }
 
+// ---------------------------------------------------------------------------
+// Noscript content builders (static text for non-JS crawlers)
+// ---------------------------------------------------------------------------
+
+function richToText(para: RichParagraph): string {
+  if (typeof para === "string") return para;
+  return para.map((seg) => (typeof seg === "string" ? seg : seg.text)).join("");
+}
+
+function buildLocationNoscript(
+  locale: "fr" | "en",
+  svc: typeof LOCATION_SERVICES[0],
+  city: typeof CITIES[0]
+): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const h1 = fillLoc(locale === "fr" ? svc.h1Fr : svc.h1En, city, locale);
+  const desc = fillLoc(locale === "fr" ? svc.descFr : svc.descEn, city, locale);
+  const cityName = locale === "fr" ? city.nameFr : city.nameEn;
+
+  const inclTitle =
+    locale === "fr"
+      ? `${svc.nameFr} à ${city.nameFr} : ce qui est inclus`
+      : `${svc.nameEn} in ${cityName}: what's included`;
+  const inclDesc =
+    locale === "fr"
+      ? `Gestion Velora accompagne les propriétaires et syndicats de toute la région de ${city.nameFr} (${city.region}). Chaque mandat est géré avec la même rigueur : rapports transparents, réactivité 24/7 et conformité réglementaire complète.`
+      : `Gestion Velora serves property owners and condo boards across ${cityName} and the ${city.region} area. Every mandate is handled with the same rigor: transparent reports, 24/7 responsiveness, and full regulatory compliance.`;
+
+  const features = LOCATION_FEATURES[svc.slug];
+  const featureList = locale === "fr" ? features?.fr : features?.en;
+  const featureLis = featureList?.map((f) => `    <li>${escapeHtml(f)}</li>`).join("\n") ?? "";
+
+  const whyTitle =
+    locale === "fr"
+      ? `Pourquoi choisir Gestion Velora à ${city.nameFr} ?`
+      : `Why choose Gestion Velora in ${cityName}?`;
+  const whySub =
+    locale === "fr"
+      ? "Une équipe locale, des processus transparents et un bilan éprouvé dans tout le Grand Montréal."
+      : "A local team, transparent processes, and a proven track record across the Greater Montreal area.";
+  const cards =
+    locale === "fr"
+      ? [
+          { title: "Réactivité 24/7", body: "Les urgences n'attendent pas. Notre équipe est joignable en tout temps." },
+          { title: "Rapports transparents", body: "Rapports financiers mensuels, suivi des travaux et procès-verbaux, toujours accessibles." },
+          { title: "Expertise locale", body: `Connaissance approfondie du marché immobilier de ${city.nameFr} et des règlements locaux.` },
+        ]
+      : [
+          { title: "24/7 responsiveness", body: "Emergencies don't wait. Our team is reachable around the clock for urgent situations." },
+          { title: "Transparent reporting", body: "Monthly financial reports, maintenance logs, and meeting minutes, always accessible." },
+          { title: "Local expertise", body: `Deep knowledge of ${cityName}'s real estate market, regulations, and building stock.` },
+        ];
+  const cardPs = cards
+    .map((c) => `  <p><strong>${escapeHtml(c.title)}</strong>: ${escapeHtml(c.body)}</p>`)
+    .join("\n");
+
+  const readyTitle =
+    locale === "fr"
+      ? `Prêt à confier votre bien à un gestionnaire à ${city.nameFr} ?`
+      : `Ready to work with a property manager in ${cityName}?`;
+  const readyBody =
+    locale === "fr"
+      ? "Contactez-nous pour une soumission gratuite. Nous répondons sous un jour ouvrable."
+      : "Contact us for a free quote. We respond within one business day.";
+
+  return `<noscript><main lang="${lang}">
+  <h1>${escapeHtml(h1)}</h1>
+  <p>${escapeHtml(desc)}</p>
+  <h2>${escapeHtml(inclTitle)}</h2>
+  <p>${escapeHtml(inclDesc)}</p>
+  <ul>
+${featureLis}
+  </ul>
+  <h2>${escapeHtml(whyTitle)}</h2>
+  <p>${escapeHtml(whySub)}</p>
+${cardPs}
+  <h2>${escapeHtml(readyTitle)}</h2>
+  <p>${escapeHtml(readyBody)}</p>
+</main></noscript>`;
+}
+
+function buildBlogNoscript(locale: "fr" | "en", slug: string): string {
+  const post = blogPosts.find((p) => p.slug === slug);
+  if (!post) return "";
+  const loc = post[locale];
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+
+  const sectionHtml = loc.sections
+    .slice(0, 4)
+    .map((section) => {
+      const firstPara = section.paragraphs[0] ? richToText(section.paragraphs[0]).slice(0, 600) : "";
+      return `  <h2>${escapeHtml(section.heading)}</h2>\n  <p>${escapeHtml(firstPara)}</p>`;
+    })
+    .join("\n");
+
+  return `<noscript><main lang="${lang}">
+  <h1>${escapeHtml(loc.title)}</h1>
+  <p>${escapeHtml(loc.brief)}</p>
+${sectionHtml}
+</main></noscript>`;
+}
+
 function buildLocationServiceSchema(
   locale: "fr" | "en",
   svc: typeof LOCATION_SERVICES[0],
@@ -405,6 +513,144 @@ function buildLocationServiceSchema(
     provider: { "@id": ORG_ID },
     url: `${base}/location/${svc.slug}-${city.slug}`,
     areaServed: { "@type": "City", name: locale === "fr" ? city.nameFr : city.nameEn },
+  };
+}
+
+function buildLocationFaqSchema(
+  locale: "fr" | "en",
+  svc: typeof LOCATION_SERVICES[0],
+  city: typeof CITIES[0]
+): object {
+  const cityName = locale === "fr" ? city.nameFr : city.nameEn;
+
+  const qaMap: Record<string, { q: string; a: string }[]> = {
+    "gestion-airbnb":
+      locale === "fr"
+        ? [
+            {
+              q: `Faut-il un permis pour faire Airbnb à ${cityName} ?`,
+              a: `Au Québec, la location courte durée requiert un classement de Tourisme Québec. Des règles de zonage municipales s'appliquent également dans la grande région de Montréal. Gestion Velora gère la conformité réglementaire complète pour tous ses mandats de location courte durée à ${cityName}.`,
+            },
+            {
+              q: `Que comprend la gestion Airbnb à ${cityName} ?`,
+              a: `Gestion Velora prend en charge les annonces, les réservations, l'accueil des voyageurs, la coordination du ménage, la tarification dynamique et la conformité réglementaire pour vos locations courte durée à ${cityName}.`,
+            },
+            {
+              q: `Quel est le tarif de gestion Airbnb à ${cityName} ?`,
+              a: `Les honoraires de gestion Airbnb de Gestion Velora sont calculés en pourcentage des revenus générés. Contactez-nous pour un devis personnalisé selon le type de propriété et la fréquence d'occupation à ${cityName}.`,
+            },
+          ]
+        : [
+            {
+              q: `Do I need a permit for Airbnb in ${cityName}?`,
+              a: `In Quebec, short-term rentals require a Tourisme Québec classification certificate. Municipal zoning rules apply in the Greater Montreal area. Gestion Velora manages full regulatory compliance for all short-term rental mandates in ${cityName}.`,
+            },
+            {
+              q: `What does Airbnb management in ${cityName} include?`,
+              a: `Gestion Velora handles listings, bookings, guest check-in, cleaning coordination, dynamic pricing, and regulatory compliance for short-term rentals in ${cityName}.`,
+            },
+            {
+              q: `How much does Airbnb management cost in ${cityName}?`,
+              a: `Gestion Velora's Airbnb management fees are calculated as a percentage of generated revenue. Contact us for a personalized quote based on your property type and occupancy frequency in ${cityName}.`,
+            },
+          ],
+    "syndicat-copropriete":
+      locale === "fr"
+        ? [
+            {
+              q: `Quelles sont les obligations du syndicat de copropriété à ${cityName} ?`,
+              a: `Un syndicat de copropriété à ${cityName} doit tenir une assemblée générale annuelle, gérer un fonds de prévoyance conforme à la Loi 141, entretenir les parties communes et respecter les obligations de la Loi sur la copropriété (RLRQ c. C-6.1). Gestion Velora structure ces cycles de conformité pour chaque mandat.`,
+            },
+            {
+              q: `Que comprend la gestion d'un syndicat de copropriété à ${cityName} ?`,
+              a: `La gestion de syndicat par Gestion Velora comprend l'administration et la convocation des assemblées, la gestion du fonds de prévoyance, le suivi des travaux majeurs, les rapports financiers trimestriels et la communication 24/7 avec les copropriétaires à ${cityName}.`,
+            },
+            {
+              q: `Pourquoi faire appel à un gestionnaire de copropriété à ${cityName} ?`,
+              a: `Un gestionnaire professionnel réduit les risques de non-conformité réglementaire, structure les cycles de maintenance préventive, et libère les administrateurs bénévoles des tâches opérationnelles courantes. À ${cityName}, Gestion Velora assure transparence et réactivité à chaque mandat.`,
+            },
+          ]
+        : [
+            {
+              q: `What are condo board obligations in ${cityName}?`,
+              a: `A condo board in ${cityName} must hold an annual general meeting, maintain a reserve fund compliant with Bill 16, maintain common areas, and follow Quebec's Condo Act (C-6.1). Gestion Velora structures all compliance cycles for each mandate.`,
+            },
+            {
+              q: `What does condo board management in ${cityName} include?`,
+              a: `Gestion Velora's condo management includes AGM coordination, reserve fund management, major work oversight, quarterly financial reports, and 24/7 owner communication for condo boards in ${cityName}.`,
+            },
+            {
+              q: `Why hire a condo manager in ${cityName}?`,
+              a: `A professional manager reduces regulatory non-compliance risk, structures preventive maintenance cycles, and frees volunteer administrators from day-to-day operations. In ${cityName}, Gestion Velora delivers transparency and responsiveness on every mandate.`,
+            },
+          ],
+    "gestion-locative":
+      locale === "fr"
+        ? [
+            {
+              q: `Que comprend la gestion locative à ${cityName} ?`,
+              a: `La gestion locative de Gestion Velora à ${cityName} comprend la sélection rigoureuse des locataires, la rédaction des baux, la collecte des loyers, la coordination de l'entretien, et les rapports financiers mensuels pour chaque immeuble.`,
+            },
+            {
+              q: `Comment réduire le roulement locatif à ${cityName} ?`,
+              a: `Le roulement locatif se réduit par une communication prévisible, des délais de réponse clairs aux demandes d'entretien, et un état des lieux rigoureux à l'entrée et à la sortie. Gestion Velora applique ces standards sur chaque mandat locatif à ${cityName}.`,
+            },
+            {
+              q: `Quel est le tarif de gestion locative à ${cityName} ?`,
+              a: `Les honoraires de gestion locative varient selon le nombre d'unités, leur type et les services requis. Contactez Gestion Velora pour un devis personnalisé adapté à votre immeuble à ${cityName}.`,
+            },
+          ]
+        : [
+            {
+              q: `What does rental management in ${cityName} include?`,
+              a: `Gestion Velora's rental management in ${cityName} covers rigorous tenant screening, lease drafting, rent collection, maintenance coordination, and monthly financial reports for each building.`,
+            },
+            {
+              q: `How do you reduce tenant turnover in ${cityName}?`,
+              a: `Tenant turnover is reduced through predictable communication, clear maintenance response timelines, and rigorous move-in and move-out inspections. Gestion Velora applies these standards on every rental mandate in ${cityName}.`,
+            },
+            {
+              q: `What is the cost of rental management in ${cityName}?`,
+              a: `Rental management fees vary by number of units, property type, and required services. Contact Gestion Velora for a personalized quote tailored to your building in ${cityName}.`,
+            },
+          ],
+    "gestion-immobiliere-commerciale":
+      locale === "fr"
+        ? [
+            {
+              q: `Que comprend la gestion immobilière commerciale à ${cityName} ?`,
+              a: `Gestion Velora gère les baux commerciaux, les relations avec les locataires commerciaux, l'entretien préventif des espaces et l'optimisation du rendement pour les propriétaires d'immeubles commerciaux à ${cityName}.`,
+            },
+            {
+              q: `Comment optimiser le rendement d'un immeuble commercial à ${cityName} ?`,
+              a: `L'optimisation passe par un suivi mensuel du NOI, des baux bien structurés, la maîtrise des charges communes et une maintenance préventive rigoureuse. Gestion Velora accompagne les propriétaires commerciaux à ${cityName} avec des rapports transparents et une réactivité 24/7.`,
+            },
+          ]
+        : [
+            {
+              q: `What does commercial property management in ${cityName} include?`,
+              a: `Gestion Velora manages commercial leases, tenant relations, preventive maintenance, and yield optimization for commercial property owners in ${cityName}.`,
+            },
+            {
+              q: `How do you maximize commercial property returns in ${cityName}?`,
+              a: `Optimization involves monthly NOI tracking, well-structured leases, controlled common charges, and rigorous preventive maintenance. Gestion Velora supports commercial owners in ${cityName} with transparent reporting and 24/7 responsiveness.`,
+            },
+          ],
+  };
+
+  const items = qaMap[svc.slug] ?? [];
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: locale === "fr" ? "fr-CA" : "en-CA",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.a,
+      },
+    })),
   };
 }
 
@@ -424,10 +670,11 @@ function buildLocationRoutes(): RouteConfig[] {
         locale: "fr",
         frPath,
         enPath,
-        title: buildTitle(fillLoc(svc.h1Fr, city, "fr")),
+        title: buildTitle(fillLoc(svc.titleTmplFr, city, "fr")),
         description: fillLoc(svc.descFr, city, "fr"),
         ogImage: svcImage,
         twitterImage: svcImage,
+        noscriptBody: buildLocationNoscript("fr", svc, city),
         pageSchemas: [
           buildLocationServiceSchema("fr", svc, city, SITE_URL),
           buildBreadcrumbSchema([
@@ -435,6 +682,7 @@ function buildLocationRoutes(): RouteConfig[] {
             { name: frBc.services, url: `${SITE_URL}/services` },
             { name: fillLoc(svc.h1Fr, city, "fr") },
           ]),
+          buildLocationFaqSchema("fr", svc, city),
         ],
       });
       out.push({
@@ -442,10 +690,11 @@ function buildLocationRoutes(): RouteConfig[] {
         locale: "en",
         frPath,
         enPath,
-        title: buildTitle(fillLoc(svc.h1En, city, "en")),
+        title: buildTitle(fillLoc(svc.titleTmplEn, city, "en")),
         description: fillLoc(svc.descEn, city, "en"),
         ogImage: svcImage,
         twitterImage: svcImage,
+        noscriptBody: buildLocationNoscript("en", svc, city),
         pageSchemas: [
           buildLocationServiceSchema("en", svc, city, `${SITE_URL}/en`),
           buildBreadcrumbSchema([
@@ -453,6 +702,7 @@ function buildLocationRoutes(): RouteConfig[] {
             { name: enBc.services, url: `${SITE_URL}/en/services` },
             { name: fillLoc(svc.h1En, city, "en") },
           ]),
+          buildLocationFaqSchema("en", svc, city),
         ],
       });
     }
@@ -473,6 +723,8 @@ interface RouteConfig {
   ogImage?: string;
   twitterImage?: string;
   pageSchemas: object | object[] | null;
+  /** Page-specific noscript HTML to replace the homepage noscript block. */
+  noscriptBody?: string;
 }
 
 function buildRoutes(): RouteConfig[] {
@@ -530,7 +782,7 @@ function buildRoutes(): RouteConfig[] {
   });
 
   // --- Service detail pages ---
-  for (const slug of ["syndicat-copropriete", "airbnb", "location"] as const) {
+  for (const slug of ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"] as const) {
     const frSvc = getService("fr", slug);
     const enSvc = getService("en", slug);
     const img = SERVICE_IMAGES[slug];
@@ -619,10 +871,11 @@ function buildRoutes(): RouteConfig[] {
       locale: "fr",
       frPath: `/blog/${slug}`,
       enPath: `/en/blog/${slug}`,
-      title: buildTitle(post.fr.title),
+      title: buildTitle(post.fr.metaTitle ?? post.fr.title),
       description: post.fr.excerpt,
       ogImage: img,
       twitterImage: img,
+      noscriptBody: buildBlogNoscript("fr", slug),
       pageSchemas: frArticle
         ? [
             frArticle,
@@ -639,10 +892,11 @@ function buildRoutes(): RouteConfig[] {
       locale: "en",
       frPath: `/blog/${slug}`,
       enPath: `/en/blog/${slug}`,
-      title: buildTitle(post.en.title),
+      title: buildTitle(post.en.metaTitle ?? post.en.title),
       description: post.en.excerpt,
       ogImage: img,
       twitterImage: img,
+      noscriptBody: buildBlogNoscript("en", slug),
       pageSchemas: enArticle
         ? [
             enArticle,
@@ -698,6 +952,28 @@ function buildRoutes(): RouteConfig[] {
     pageSchemas: null,
   });
 
+  // --- FAQ ---
+  routes.push({
+    path: "/faq",
+    locale: "fr",
+    frPath: "/faq",
+    enPath: "/en/faq",
+    title: "FAQ gestion immobilière Montréal | Gestion Velora",
+    description:
+      "Réponses aux questions fréquentes sur la gestion de condo, syndicat de copropriété, location et Airbnb à Montréal.",
+    pageSchemas: buildFaqSchema("fr"),
+  });
+  routes.push({
+    path: "/en/faq",
+    locale: "en",
+    frPath: "/faq",
+    enPath: "/en/faq",
+    title: "Property Management FAQ Montreal | Gestion Velora",
+    description:
+      "Answers to the most common questions about condo management, condo boards, rental, and Airbnb in Montreal.",
+    pageSchemas: buildFaqSchema("en"),
+  });
+
   // --- Location pages (35 cities × 4 services × 2 languages = 280 routes) ---
   routes.push(...buildLocationRoutes());
 
@@ -735,6 +1011,7 @@ async function main() {
       hreflangDefault: frCanonical,
       pageSchemas: route.pageSchemas,
       locale: route.locale,
+      noscriptBody: route.noscriptBody,
     });
 
     writeRoute(route.path, html);
@@ -766,5 +1043,8 @@ async function main() {
 
 main().catch((err) => {
   console.error("Prerender failed:", err);
+  process.exit(1);
+});
+r("Prerender failed:", err);
   process.exit(1);
 });

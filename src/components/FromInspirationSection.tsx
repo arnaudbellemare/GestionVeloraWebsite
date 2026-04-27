@@ -173,7 +173,7 @@ export function FromInspirationSection() {
     <section className="py-24 lg:py-32 px-6 lg:px-16 bg-nd-canvas">
       <div className="max-w-[90rem] mx-auto">
         <ScrollReveal>
-          <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] text-nd-display text-center leading-[1.1] tracking-[-0.02em] mb-16">
+          <h2 id="fonctionnalites" className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] text-nd-display text-center leading-[1.1] tracking-[-0.02em] mb-16">
             {t("fromInspiration.title")}
           </h2>
         </ScrollReveal>
@@ -188,7 +188,7 @@ export function FromInspirationSection() {
                   {card.mockup === "comment" && <CommentMockup t={t} />}
                   {card.mockup === "dashboard" && <DashboardMockup />}
                 </div>
-                <h3 className="font-sans font-medium text-lg text-nd-primary mb-2">
+                <h3 id={`fonctionnalite-${i + 1}`} className="font-sans font-medium text-lg text-nd-primary mb-2">
                   {t(card.titleKey)}
                 </h3>
                 <p className="font-sans text-sm text-nd-secondary leading-relaxed">

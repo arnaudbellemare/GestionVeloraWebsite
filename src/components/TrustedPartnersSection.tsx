@@ -66,7 +66,7 @@ export function TrustedPartnersSection() {
               </span>
             </ScrollReveal>
             <ScrollReveal delay={0.06} amount={0.25}>
-              <h2 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em]">
+              <h2 id="temoignages" className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em]">
                 {t("trustedPartners.title")}
               </h2>
             </ScrollReveal>

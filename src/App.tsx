@@ -5,12 +5,14 @@ import { TransitionProvider } from "./context/TransitionContext";
 import { LocaleProvider } from "./context/LocaleContext";
 import { BlogPage } from "./pages/BlogPage";
 import { BlogPostPage } from "./pages/BlogPostPage";
+import { FaqPage } from "./pages/FaqPage";
 import { HomePage } from "./pages/HomePage";
 import { Layout } from "./pages/Layout";
 import { LocationPage } from "./pages/LocationPage";
 import { PrivacyPage } from "./pages/PrivacyPage";
 import { ServicePage } from "./pages/ServicePage";
 import { ServicesIndexPage } from "./pages/ServicesIndexPage";
+import { TarifsPage } from "./pages/TarifsPage";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
                 <Route path="location/:locationSlug" element={<LocationPage />} />
                 <Route path="blog" element={<BlogPage />} />
                 <Route path="blog/:slug" element={<BlogPostPage />} />
+                <Route path="faq" element={<FaqPage />} />
+                <Route path="tarifs" element={<TarifsPage />} />
                 <Route path="privacy" element={<PrivacyPage />} />
               </Route>
               <Route path="/en" element={<Layout />}>
@@ -36,6 +40,8 @@ function App() {
                 <Route path="location/:locationSlug" element={<LocationPage />} />
                 <Route path="blog" element={<BlogPage />} />
                 <Route path="blog/:slug" element={<BlogPostPage />} />
+                <Route path="faq" element={<FaqPage />} />
+                <Route path="tarifs" element={<TarifsPage />} />
                 <Route path="privacy" element={<PrivacyPage />} />
               </Route>
               <Route path="*" element={<Navigate to="/" replace />} />

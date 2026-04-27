@@ -114,6 +114,25 @@ export function SchemaOrg() {
       return () => removePageSchema();
     }
 
+    // ── FAQ page ──────────────────────────────────────────────────────────────
+    if (path === "/faq" || path === "/en/faq") {
+      const faqItems = t("faqItems", { returnObjects: true }) as {
+        question: string;
+        answer: string;
+      }[];
+      injectSchema({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        inLanguage: locale,
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })),
+      });
+      return () => removePageSchema();
+    }
+
     // ── Service detail page ───────────────────────────────────────────────────
     if (
       (path.startsWith("/services/") || path.startsWith("/en/services/")) &&

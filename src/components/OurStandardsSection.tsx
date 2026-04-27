@@ -83,7 +83,7 @@ export function OurStandardsSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.4, ease }}
         >
-          <h2 className="font-sans font-medium text-4xl lg:text-6xl text-white leading-[1.08] tracking-[-0.02em] mb-6 max-w-[18ch]">
+          <h2 id="nos-standards" className="font-sans font-medium text-4xl lg:text-6xl text-white leading-[1.08] tracking-[-0.02em] mb-6 max-w-[18ch]">
             {t("ourStandards.title")}
           </h2>
           <a

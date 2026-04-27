@@ -164,7 +164,7 @@ export function ContactSection() {
               <p className="font-nd-mono text-[10px] uppercase tracking-[0.14em] text-nd-secondary mb-5">
                 {t("contact.cta")}
               </p>
-              <h2 className="font-nd-grotesk font-medium text-4xl lg:text-5xl text-nd-display leading-[1.06] tracking-[-0.02em] mb-5">
+              <h2 id="contact-titre" className="font-nd-grotesk font-medium text-4xl lg:text-5xl text-nd-display leading-[1.06] tracking-[-0.02em] mb-5">
                 {t("contact.title")}
               </h2>
               <p className="max-w-[64ch] font-nd-grotesk text-sm lg:text-base text-nd-secondary leading-relaxed">

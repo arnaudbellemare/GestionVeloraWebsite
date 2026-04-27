@@ -12,6 +12,8 @@ const serviceLinkKeys = [
   { to: "/services/syndicat-copropriete", labelKey: "nav.syndicat", descKey: "nav.syndicatDesc" },
   { to: "/services/airbnb", labelKey: "nav.airbnb", descKey: "nav.airbnbDesc" },
   { to: "/services/location", labelKey: "nav.location", descKey: "nav.locationDesc" },
+  { to: "/services/gestion-condo", labelKey: "nav.gestionCondo", descKey: "nav.gestionCondoDesc" },
+  { to: "/services/gestion-copropriete", labelKey: "nav.gestionCopropriete", descKey: "nav.gestionCoproprieteDesc" },
 ];
 
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];

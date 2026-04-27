@@ -15,7 +15,7 @@ export function TeamSection() {
           <p className="font-mono text-[10px] tracking-[0.12em] uppercase text-nd-secondary mb-4">
             {t("teamSection.label")}
           </p>
-          <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] text-nd-display mb-6 tracking-[-0.02em]">
+          <h2 id="notre-equipe" className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] text-nd-display mb-6 tracking-[-0.02em]">
             {t("teamSection.title")}
           </h2>
           <p className="font-sans text-base text-nd-secondary leading-relaxed">

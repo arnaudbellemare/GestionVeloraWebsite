@@ -13,6 +13,8 @@ export interface BlogPostLocale {
   /** Display date (month + year) for cards */
   date: string;
   title: string;
+  /** Shorter page <title> tag (≤ 57 chars so " | Gestion Velora" fits within 75). Falls back to title. */
+  metaTitle?: string;
   excerpt: string;
   /** 40–60 words, answer-first for AEO */
   brief: string;
@@ -40,6 +42,7 @@ export const blogPosts: BlogPost[] = [
       category: "Actualités",
       date: "Février 2026",
       title: "L'avenir de la gestion immobilière intelligente à Montréal en 2026",
+      metaTitle: "Gestion immobilière intelligente à Montréal 2026",
       excerpt:
         "Les tendances qui transformeront la gestion immobilière à Montréal : technologie, données et expérience locataire.",
       brief:
@@ -83,10 +86,11 @@ export const blogPosts: BlogPost[] = [
       category: "News",
       date: "February 2026",
       title: "The future of intelligent property management in Montreal in 2026",
+      metaTitle: "Intelligent property management in Montreal 2026",
       excerpt:
         "Trends transforming property management in Montreal: technology, data, and tenant experience.",
       brief:
-        "Montreal property management is converging on stronger data, automation, and transparency for owners and tenants. This article summarizes three 2026 trends, how digital tools support condo boards, and what 'smart' management should deliver in practice, without losing human judgment or compliance with Quebec rules.",
+        "Smart property management in Montreal in 2026 means automating repetitive tasks (rent reminders, maintenance follow-ups, reports) while keeping human judgment for emergencies and disputes. Three trends drive this shift: data-driven operations, digital board governance for condo boards, and automated short-term rental workflows — each covered here with practical takeaways for Montreal owners.",
       sections: [
         {
           heading: "What trends are shaping intelligent property management in 2026?",
@@ -132,6 +136,7 @@ export const blogPosts: BlogPost[] = [
       category: "Technologie",
       date: "Janvier 2026",
       title: "Maintenance préventive à Montréal : pourquoi ça économise des millions",
+      metaTitle: "Maintenance préventive à Montréal : économies et rendement",
       excerpt:
         "Une stratégie de maintenance proactive réduit les coûts et prolonge la durée de vie des actifs immobiliers.",
       brief:
@@ -174,7 +179,7 @@ export const blogPosts: BlogPost[] = [
       excerpt:
         "A proactive maintenance strategy reduces costs and extends the lifespan of real estate assets.",
       brief:
-        "Preventive maintenance finds wear before expensive failures and spreads spend over time. Here's why well-run buildings avoid major emergency work, how reserve funds connect for condo boards, and which systems deserve priority inspection calendars in Montreal.",
+        "Preventive maintenance in Montreal reduces emergency repair costs by 20–40% by catching wear before failure occurs. This article explains which building systems to inspect first, how a maintenance calendar connects directly to the reserve fund for condo boards, and why documented upkeep history is both a financial strategy and a legal protection under Quebec law.",
       sections: [
         {
           heading: "Why does preventive maintenance lower total cost?",
@@ -216,6 +221,7 @@ export const blogPosts: BlogPost[] = [
       category: "Finance",
       date: "Décembre 2025",
       title: "Maximiser le NOI à Montréal : approche basée sur les données",
+      metaTitle: "Maximiser le NOI à Montréal : données et performance",
       excerpt:
         "Comment l'analyse des données aide les propriétaires et syndicats à optimiser le revenu net d'exploitation.",
       brief:
@@ -258,7 +264,7 @@ export const blogPosts: BlogPost[] = [
       excerpt:
         "How data analysis helps owners and condo boards optimize net operating income.",
       brief:
-        "NOI summarizes operating performance before financing. We outline which levers to track monthly, how transparent condo charges support AGM decisions, and why data never replaces clear governance among owners.",
+        "Net Operating Income (NOI) for Montreal rental buildings is improved by tracking five monthly indicators: vacancy rate, time-to-lease, recurring maintenance costs, arrears, and utilities. A 2–3 point vacancy swing can move NOI more than a rent increase. This article explains what each metric reveals, how condo boards apply the same logic, and why data governance prevents the disputes that quietly erode returns.",
       sections: [
         {
           heading: "What is NOI and why track it monthly?",
@@ -300,6 +306,7 @@ export const blogPosts: BlogPost[] = [
       category: "Stratégie",
       date: "Novembre 2025",
       title: "L'expérience locataire à Montréal : le nouvel avantage concurrentiel",
+      metaTitle: "Expérience locataire à Montréal : avantage concurrentiel",
       excerpt:
         "Dans un marché compétitif, la qualité de l'expérience locataire fait la différence.",
       brief:
@@ -343,10 +350,11 @@ export const blogPosts: BlogPost[] = [
       category: "Strategy",
       date: "November 2025",
       title: "Tenant experience in Montreal: the new competitive advantage",
+      metaTitle: "Tenant experience in Montreal: competitive advantage",
       excerpt:
         "In a competitive market, tenant experience quality makes the difference.",
       brief:
-        "When supply is plentiful, tenants and guests compare responsiveness, cleanliness, and clear rules. We outline measurable expectations for long- and short-term rentals, turnover's cash-flow impact, and practical ways to respond fast while staying compliant.",
+        "High tenant turnover in Montreal costs landlords 3–6% of annual gross income in vacancy, unit repairs, and re-leasing spend. This article details what long-term tenants and Airbnb guests each expect, which three metrics predict turnover before it happens, and how fast, consistent response times retain quality occupants and compound into meaningful savings over a lease cycle.",
       sections: [
         {
           heading: "Why does tenant experience directly affect returns?",
@@ -392,6 +400,7 @@ export const blogPosts: BlogPost[] = [
       category: "Actualités",
       date: "Octobre 2025",
       title: "Gestion de copropriété à Montréal : ce qu'il faut savoir sur la réglementation",
+      metaTitle: "Réglementation copropriété Montréal : guide pratique",
       excerpt:
         "La Loi sur la copropriété et les règlements municipaux encadrent la gestion des syndicats.",
       brief:
@@ -431,10 +440,11 @@ export const blogPosts: BlogPost[] = [
       category: "News",
       date: "October 2025",
       title: "Condo management in Montreal: what you need to know about regulation",
+      metaTitle: "Condo regulation Montreal: essential compliance guide",
       excerpt:
         "Quebec's Condo Act and municipal bylaws govern condo board management.",
       brief:
-        "Montreal condo boards must align Quebec's Condo Act, municipal bylaws, and the building's internal regulations. We recap meeting and reserve-fund obligations, why minutes matter, and how managers reduce costly compliance gaps.",
+        "Montreal condo boards operate under three regulatory layers: Quebec's Condo Act (C-6.1), City of Montreal bylaws, and the building's internal bylaw. The most common compliance gaps involve AGM notice timing, quorum calculation errors, and underfunded reserves. This article recaps each obligation and explains how a professional manager prevents the costly mistakes self-managed boards make most often.",
       sections: [
         {
           heading: "What laws govern Quebec condo boards?",
@@ -476,6 +486,7 @@ export const blogPosts: BlogPost[] = [
       category: "Technologie",
       date: "Septembre 2025",
       title: "Airbnb à Montréal : permis, réglementation et bonnes pratiques",
+      metaTitle: "Airbnb Montréal : permis et réglementation 2026",
       excerpt:
         "Tout savoir sur la légalité et les exigences pour louer en courte durée à Montréal.",
       brief:
@@ -518,7 +529,7 @@ export const blogPosts: BlogPost[] = [
       excerpt:
         "Everything you need to know about legality and requirements for short-term rental in Montreal.",
       brief:
-        "Short-term rentals in Montreal sit under municipal and tax rules that change. We cover why classification matters, taxes and insurance, and operating practices that align with city requirements and reduce risk during inspections or neighbor complaints.",
+        "Renting on Airbnb in Montreal legally requires a Tourisme Québec classification certificate, compliance with municipal zoning bylaws, dedicated insurance (standard residential policies exclude tourist accommodation), and proper income tax reporting. This article explains each requirement, which rules change most often, and the operating practices that prevent neighbor complaints and city inspection issues.",
       sections: [
         {
           heading: "What municipal requirements should hosts plan for?",
@@ -602,7 +613,7 @@ export const blogPosts: BlogPost[] = [
       excerpt:
         "Criteria to consider when selecting a reliable and competent manager.",
       brief:
-        "A strong manager combines financial transparency, documented processes, and real availability in emergencies. We list verifiable criteria (references, sample reports, governance), red flags, and questions to ask before signing, for condos, rentals, and short-term.",
+        "To choose the right property manager in Montreal, verify three things before signing: sample financial reports (the clearest indicator of actual rigor), their documented emergency response policy, and two recent references in comparable buildings. This article lists objective selection criteria, red flags that signal hidden costs, and specific questions to ask about TAL compliance and dispute handling.",
       sections: [
         {
           heading: "What objective criteria should you verify before signing?",
@@ -644,6 +655,7 @@ export const blogPosts: BlogPost[] = [
       category: "Finance",
       date: "Juillet 2025",
       title: "Fonds de prévoyance en copropriété à Montréal : obligations et bonnes pratiques au Québec",
+      metaTitle: "Fonds de prévoyance copropriété Montréal : obligations",
       excerpt:
         "La constitution et la gestion du fonds de prévoyance sont cruciales pour la pérennité de la copropriété.",
       brief:
@@ -683,10 +695,11 @@ export const blogPosts: BlogPost[] = [
       category: "Finance",
       date: "July 2025",
       title: "Condo reserve fund in Montreal, Quebec: obligations and best practices",
+      metaTitle: "Condo reserve fund Montreal: obligations guide",
       excerpt:
         "Establishing and managing the reserve fund is crucial for condo sustainability.",
       brief:
-        "The reserve fund finances major work not covered by the annual budget. We explain the tie to reserve studies, assembly decisions on contributions, and why steady communication avoids surprise special assessments that hurt unit values.",
+        "Quebec condo boards must maintain a reserve fund for major common-area replacements (roofing, elevators, façade, mechanicals), sized by a reserve study updated every three to five years. An underfunded reserve is a hidden liability that weakens unit sale prices. This article explains how reserve studies set contribution targets and how proactive AGM communication prevents the surprise special assessments that erode owner trust.",
       sections: [
         {
           heading: "What is the reserve fund for?",
@@ -719,6 +732,726 @@ export const blogPosts: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "syndicat-copropriete-fonctionnement",
+    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&q=85",
+    datePublished: "2026-03-10",
+    dateModified: "2026-04-20",
+    fr: {
+      category: "Copropriété",
+      date: "Mars 2026",
+      title: "Comment fonctionne un syndicat de copropriété ?",
+      metaTitle: "Syndicat de copropriété : fonctionnement",
+      excerpt: "Le syndicat de copropriété est l'entité légale qui administre les parties communes d'un immeuble. Voici comment il fonctionne concrètement.",
+      brief: "Le syndicat de copropriété est l'entité légale constituée automatiquement dès qu'une déclaration de copropriété est publiée. Il représente tous les copropriétaires, administre les parties communes, lève les charges et doit faire respecter les règlements de l'immeuble. Sa gouvernance repose sur un conseil d'administration élu en assemblée générale.",
+      sections: [
+        {
+          heading: "Qu'est-ce qu'un syndicat de copropriété au Québec ?",
+          paragraphs: [
+            "Le syndicat de copropriété est une personne morale créée automatiquement lors de la publication de la déclaration de copropriété. Il représente collectivement l'ensemble des copropriétaires et a pour mission d'administrer les parties communes, d'assurer la conservation de l'immeuble et de faire respecter le règlement. Contrairement à ce que certains croient, le syndicat n'est pas une option : il est obligatoire dès qu'un immeuble est divisé en parties privatives.",
+            [
+              "La gestion quotidienne est confiée à un ",
+              { text: "gestionnaire de copropriété", to: "/services/syndicat-copropriete" },
+              " ou assurée en autogestion par les membres du conseil d'administration. Le CA est élu par les copropriétaires en assemblée générale. Il détient les pouvoirs d'administration courante et doit rendre compte de ses décisions lors de l'AGA annuelle obligatoire.",
+            ],
+            "Le syndicat perçoit les charges communes (condo fees) auprès de chaque copropriétaire selon leurs quotes-parts inscrites dans la déclaration. Ces sommes servent à couvrir les dépenses d'exploitation (entretien, assurance, services communs) et à alimenter le fonds de prévoyance pour les travaux majeurs futurs.",
+          ],
+        },
+        {
+          heading: "Quelles sont les responsabilités légales du syndicat ?",
+          paragraphs: [
+            "Depuis la réforme du Code civil par la Loi 16 (2020) et l'entrée en vigueur de la Loi 141 sur les fonds de prévoyance (2022), les obligations du syndicat se sont considérablement renforcées. Le syndicat doit désormais mandater une étude de fonds de prévoyance tous les cinq ans, tenir un carnet d'entretien actualisé et divulguer son état financier à tout copropriétaire qui en fait la demande.",
+            "Le syndicat est également responsable de souscrire une assurance sur les parties communes et d'assurer la conformité de l'immeuble aux normes du bâtiment. En cas de sinistre ou de défaut d'entretien entraînant un préjudice à un copropriétaire ou à un tiers, le syndicat peut être tenu responsable. Une gestion rigoureuse est donc essentielle pour protéger le patrimoine collectif.",
+            "Sur le plan judiciaire, le syndicat peut ester en justice pour défendre les intérêts communs : recouvrer des charges impayées, poursuivre un constructeur pour vices cachés ou réclamer des dommages. Il peut aussi être poursuivi. C'est pourquoi beaucoup de syndicats préfèrent déléguer l'administration à un professionnel agréé plutôt que de gérer ces responsabilités à titre bénévole.",
+          ],
+        },
+        {
+          heading: "Syndicat autogéré ou géré par un professionnel : quelle différence ?",
+          paragraphs: [
+            [
+              "L'autogestion convient aux petits immeubles (moins de 6 unités) où les copropriétaires ont le temps et les compétences nécessaires. Dès que l'immeuble prend de l'ampleur ou que la complexité administrative augmente (Loi 141, gestion des conflits, travaux majeurs), faire appel à une ",
+              { text: "équipe de gestion de condo", to: "/services/gestion-condo" },
+              " devient plus avantageux que de tout gérer bénévolement.",
+            ],
+            "Un gestionnaire professionnel prend en charge la comptabilité, les appels de fonds, la coordination des entrepreneurs, la correspondance avec les copropriétaires, la préparation des assemblées et le suivi réglementaire. Il apporte une expertise en droit de la copropriété québécoise qui réduit le risque d'erreurs coûteuses.",
+            "Gestion Velora accompagne les syndicats de copropriété à Montréal avec un mandat sur mesure : de l'administration complète à la co-gestion selon vos besoins. Nos rapports mensuels et notre portail copropriétaires assurent une transparence totale, sans effort supplémentaire pour votre conseil d'administration.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Condo",
+      date: "March 2026",
+      title: "How does a condo board (syndicat) work in Quebec?",
+      metaTitle: "Condo board Quebec: how it works",
+      excerpt: "A condo board (syndicat de copropriété) is the legal entity that manages the common areas of a building. Here is how it works in practice.",
+      brief: "A condo board (syndicat de copropriété) is a legal entity automatically created when a declaration of co-ownership is registered. It represents all unit owners, manages common areas, collects condo fees, and enforces building rules. Its governance rests on a board of directors elected at the annual general meeting.",
+      sections: [
+        {
+          heading: "What is a condo board (syndicat) in Quebec?",
+          paragraphs: [
+            "A syndicat de copropriété is a legal person automatically created when a declaration of co-ownership is published. It represents all unit owners collectively and is responsible for administering common areas, preserving the building, and enforcing the by-laws. The syndicat is not optional: it is mandatory whenever a building is divided into private and common portions.",
+            [
+              "Day-to-day administration is either handled by a ",
+              { text: "professional condo manager", to: "/services/syndicat-copropriete" },
+              " or self-managed by a volunteer board. The board of directors is elected by unit owners at the annual general meeting (AGM). It holds ordinary management powers and must report to owners at the mandatory yearly AGM.",
+            ],
+            "The syndicat collects condo fees from each owner according to their fractional share (quote-part) registered in the declaration. These funds cover operating expenses (maintenance, insurance, shared services) and the reserve fund for future major work.",
+          ],
+        },
+        {
+          heading: "What are the legal obligations of a condo board?",
+          paragraphs: [
+            "Since the Civil Code reforms under Law 16 (2020) and the reserve fund rules of Law 141 (2022), condo board obligations have significantly increased. Boards must now commission a reserve fund study every five years, maintain an up-to-date maintenance log (carnet d'entretien), and disclose financial statements to any owner upon request.",
+            "The condo board must also carry insurance on common areas and ensure the building meets construction standards. If damage occurs due to poor maintenance, the board may face legal liability. Rigorous management is therefore essential to protect the collective asset.",
+            "Condo boards can sue and be sued. They can pursue construction defect claims, recover unpaid condo fees, and claim damages. This legal exposure is a major reason many buildings hire a professional property manager rather than relying solely on volunteer directors.",
+          ],
+        },
+        {
+          heading: "Self-managed vs. professionally managed: what's the difference?",
+          paragraphs: [
+            [
+              "Self-management works for small buildings (under 6 units) where owners have the time and skills. As complexity grows — Law 141 compliance, conflict resolution, major repairs — hiring a ",
+              { text: "professional condo management team", to: "/services/gestion-condo" },
+              " becomes more cost-effective than managing everything on a volunteer basis.",
+            ],
+            "A professional manager handles accounting, fee collection, contractor coordination, owner communications, AGM preparation, and regulatory compliance. Their expertise in Quebec condo law reduces the risk of costly errors.",
+            "Gestion Velora supports condo boards in Montreal with tailored mandates — from full administration to co-management. Monthly reports and an owner portal deliver complete transparency with no extra burden on your board.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "cout-gestionnaire-copropriete-montreal",
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&q=85",
+    datePublished: "2026-03-18",
+    dateModified: "2026-04-20",
+    fr: {
+      category: "Tarifs",
+      date: "Mars 2026",
+      title: "Combien coûte un gestionnaire de copropriété à Montréal ?",
+      metaTitle: "Gestionnaire copropriété : coût à Montréal",
+      excerpt: "Le coût d'un gestionnaire de copropriété à Montréal varie selon la taille de l'immeuble et les services requis. Voici ce que vous devez savoir.",
+      brief: "À Montréal, les frais de gestion d'un syndicat de copropriété se situent généralement entre 35 $ et 65 $ par unité par mois selon la taille de l'immeuble, la complexité du mandat et les services inclus. Des forfaits modulaires permettent d'ajuster les services aux besoins réels du syndicat.",
+      sections: [
+        {
+          heading: "Quels sont les tarifs habituels pour un gestionnaire de copropriété ?",
+          paragraphs: [
+            [
+              "Les honoraires d'un ",
+              { text: "gestionnaire de copropriété", to: "/services/gestion-copropriete" },
+              " à Montréal sont généralement calculés au prorata du nombre d'unités. Pour un petit immeuble (6 à 12 unités), les frais de gestion se situent typiquement entre 35 $ et 45 $ par unité par mois. Pour les immeubles de taille moyenne (13 à 40 unités), la fourchette se situe entre 45 $ et 60 $ par unité. Les grands complexes (plus de 40 unités) bénéficient souvent d'économies d'échelle et négocient des tarifs à partir de 30 $ à 40 $ par unité.",
+            ],
+            "Ces honoraires couvrent l'administration courante : comptabilité, perception des charges, coordination des travaux, correspondance, préparation des assemblées et suivi réglementaire. Certaines firmes facturent des extras pour la gestion des urgences hors heures, la préparation de l'étude de fonds de prévoyance ou le suivi judiciaire. Il est important de comparer les devis en détail pour éviter les mauvaises surprises.",
+            "Des services additionnels comme la gestion des conflits entre copropriétaires, le suivi des assurances ou l'assistance à la planification des travaux majeurs peuvent être inclus dans un forfait premium ou facturés séparément. Demandez toujours un contrat détaillant l'ensemble des postes inclus et les seuils de facturation supplémentaire.",
+          ],
+        },
+        {
+          heading: "Gestion professionnelle ou autogestion : une question de retour sur investissement",
+          paragraphs: [
+            "Il est tentant de comparer le coût d'un gestionnaire à zéro pour l'autogestion. Mais l'autogestion a un coût réel : temps bénévole des administrateurs, risques d'erreurs comptables, manque de rigueur dans le suivi des travaux et exposure légale si les obligations de la Loi 141 ne sont pas respectées. Pour un immeuble de 20 unités, un gestionnaire professionnel à 50 $/unité représente 1 000 $/mois — soit environ 12 000 $/an. Un seul appel de fonds évité grâce à un fonds de prévoyance bien géré peut couvrir plusieurs années de frais.",
+            "La valeur d'une gestion rigoureuse se reflète aussi dans la valeur des unités. Les acheteurs et prêteurs hypothécaires examinent de près l'état financier du syndicat, la santé du fonds de prévoyance et la qualité des processus administratifs. Un immeuble bien géré se revend mieux et se finance plus facilement.",
+            [
+              "Pour les syndicats qui souhaitent conserver un certain contrôle, des formules de co-gestion permettent de déléguer les tâches les plus chronophages (comptabilité, appels de fonds, suivi des travaux) tout en conservant la prise de décision au sein du CA. Consultez nos ",
+              { text: "tarifs de gestion immobilière", to: "/tarifs" },
+              " pour une vue complète des formules disponibles.",
+            ],
+          ],
+        },
+        {
+          heading: "Comment évaluer et comparer les offres de gestion ?",
+          paragraphs: [
+            "Avant de signer un contrat de gestion, demandez une proposition détaillée précisant : les services inclus dans les honoraires de base, les services facturés en supplément, la durée et les conditions de résiliation du contrat, les délais de réponse garantis (urgences vs demandes courantes) et les outils de reporting mis à disposition.",
+            "Vérifiez les références du gestionnaire auprès d'autres syndicats qu'il administre. La certification de l'OACIQ ou de l'RGCQ (Regroupement des gestionnaires et copropriétaires du Québec) est un indicateur de sérieux et d'adhésion aux meilleures pratiques. Une firme qui gère plus de syndicats offre souvent un meilleur accès à des fournisseurs fiables et à des taux négociés pour les travaux courants.",
+            "Gestion Velora publie ses tarifs de base de façon transparente et propose des soumissions gratuites sans engagement. Chaque mandat est adapté à la réalité de votre immeuble, sans frais cachés ni extras non annoncés.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Pricing",
+      date: "March 2026",
+      title: "How much does a condo property manager cost in Montreal?",
+      metaTitle: "Condo manager cost Montreal",
+      excerpt: "The cost of a condo property manager in Montreal depends on building size and services required. Here is what you need to know before signing.",
+      brief: "In Montreal, condo board management fees typically range from $35 to $65 per unit per month depending on building size, mandate complexity, and included services. Modular packages let you match services to your actual needs.",
+      sections: [
+        {
+          heading: "What are typical condo management fees in Montreal?",
+          paragraphs: [
+            [
+              "Fees for a ",
+              { text: "professional condo property manager", to: "/services/gestion-copropriete" },
+              " in Montreal are generally calculated per unit. For small buildings (6–12 units), expect $35–$45 per unit per month. Mid-size buildings (13–40 units) typically fall between $45–$60 per unit. Larger complexes (40+ units) often benefit from economies of scale with rates starting around $30–$40 per unit.",
+            ],
+            "These fees usually cover routine administration: accounting, fee collection, contractor coordination, owner communications, AGM preparation, and regulatory compliance. Some firms charge extras for after-hours emergencies, reserve fund study coordination, or legal follow-up. Always compare proposals in detail to avoid surprises.",
+            "Additional services such as conflict resolution, insurance coordination, or major work planning may be included in a premium package or billed separately. Always ask for a contract that clearly details what is included in the base fee and what triggers additional billing.",
+          ],
+        },
+        {
+          heading: "Professional management vs. self-management: an ROI question",
+          paragraphs: [
+            "It is tempting to compare the cost of a manager against zero for self-management. But self-management has real costs: volunteer director time, accounting errors, inconsistent maintenance follow-up, and legal exposure if Law 141 obligations are not met. For a 20-unit building, a professional manager at $50/unit costs $1,000/month — about $12,000/year. One avoided special assessment from a well-managed reserve fund can offset several years of management fees.",
+            "Rigorous management also affects unit values. Buyers and mortgage lenders closely examine the condo board's financial health, reserve fund adequacy, and quality of administrative processes. A well-run building sells faster and at a better price.",
+            [
+              "For boards that want to retain some control, co-management arrangements let you delegate the most time-consuming tasks (accounting, fee collection, contractor follow-up) while keeping final decisions within your board. See our ",
+              { text: "property management pricing", to: "/tarifs" },
+              " for a full overview of available packages.",
+            ],
+          ],
+        },
+        {
+          heading: "How to evaluate and compare management proposals",
+          paragraphs: [
+            "Before signing a management contract, ask for a detailed proposal covering: services included in the base fee, services billed as extras, contract duration and termination terms, guaranteed response times (emergencies vs. routine), and reporting tools available to the board.",
+            "Check references with other condo boards the manager currently serves. RGCQ (Regroupement des gestionnaires et copropriétaires du Québec) membership is a sign of commitment to best practices. Firms managing multiple buildings often have better access to reliable contractors and negotiated rates for routine work.",
+            "Gestion Velora publishes base fees transparently and offers free no-commitment quotes. Every mandate is tailored to your building's reality, with no hidden fees or unexpected extras.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "gestion-condo-autogestion-ou-gestionnaire",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85",
+    datePublished: "2026-03-25",
+    dateModified: "2026-04-20",
+    fr: {
+      category: "Copropriété",
+      date: "Mars 2026",
+      title: "Gestion de condo : autogestion ou gestionnaire professionnel ?",
+      metaTitle: "Gestion condo : auto ou professionnel ?",
+      excerpt: "Faut-il autogérer votre condo ou faire appel à un gestionnaire professionnel ? Ce guide compare les deux options pour vous aider à décider.",
+      brief: "L'autogestion convient aux petits immeubles dont les administrateurs ont le temps et les compétences nécessaires. Dès que la complexité augmente — Loi 141, travaux majeurs, conflits de copropriété — un gestionnaire professionnel offre un meilleur rapport risque/coût et protège la valeur de l'immeuble sur le long terme.",
+      sections: [
+        {
+          heading: "Quand l'autogestion est-elle viable pour un condo ?",
+          paragraphs: [
+            [
+              "L'autogestion de la ",
+              { text: "gestion de condo", to: "/services/gestion-condo" },
+              " est envisageable dans un immeuble de petite taille (moins de 8 unités) où les copropriétaires se connaissent bien, où les finances sont simples et où les parties communes nécessitent peu d'entretien. Elle requiert qu'au moins un administrateur dispose de compétences en comptabilité, en droit de la copropriété et en gestion de projet pour superviser les travaux.",
+            ],
+            "L'autogestion présente des avantages réels : économies sur les honoraires de gestion, contrôle direct sur les décisions et connaissance fine de l'immeuble par ses occupants. Toutefois, elle expose le syndicat à des risques importants si les administrateurs manquent de temps ou d'expertise : retards dans les appels de fonds, non-conformité réglementaire, conflits non résolus.",
+            "La Loi 141 a considérablement complexifié les obligations des syndicats depuis 2022 : étude de fonds de prévoyance obligatoire tous les cinq ans, carnet d'entretien structuré, nouvelles règles d'assurance. Ces exigences demandent un suivi rigoureux que peu de syndicats autogérés peuvent assurer sans l'aide d'un professionnel.",
+          ],
+        },
+        {
+          heading: "Quels problèmes surviennent souvent dans les syndicats autogérés ?",
+          paragraphs: [
+            "Les syndicats autogérés font régulièrement face à trois types de problèmes. Premièrement, la comptabilité approximative : mauvaise allocation des charges entre parties communes et privatives, omissions dans les cotisations au fonds de prévoyance, états financiers incomplets. Ces erreurs peuvent entraîner des appels de fonds imprévus et diminuer la valeur de revente des unités.",
+            "Deuxièmement, la gestion des conflits : sans processus formalisé, les désaccords entre copropriétaires (nuisances, travaux non autorisés, stationnement) s'enveniment. Un gestionnaire professionnel intervient comme tiers neutre et applique le règlement de l'immeuble de façon cohérente, réduisant les tensions et les recours judiciaires coûteux.",
+            "Troisièmement, la réactivité aux urgences : les dégâts d'eau, pannes d'ascenseur ou problèmes de chauffage n'attendent pas les disponibilités des administrateurs bénévoles. Un gestionnaire professionnel dispose d'un réseau de fournisseurs qualifiés et d'une ligne d'urgence 24/7 pour intervenir rapidement et limiter les dommages.",
+          ],
+        },
+        {
+          heading: "Comment choisir entre autogestion et gestion professionnelle ?",
+          paragraphs: [
+            [
+              "Faites cet audit rapide. Si votre immeuble compte plus de 10 unités, a plus de 15 ans d'âge, fait face à des travaux majeurs dans les 5 prochaines années ou a connu des difficultés à percevoir les charges communes, la ",
+              { text: "gestion professionnelle de copropriété", to: "/services/gestion-copropriete" },
+              " sera probablement plus rentable que l'autogestion une fois les risques pris en compte.",
+            ],
+            "Pour les syndicats qui souhaitent conserver un certain contrôle, la co-gestion est une solution intermédiaire : le gestionnaire prend en charge les tâches administratives (comptabilité, appels de fonds, gestion des fournisseurs) tandis que le CA conserve la prise de décision stratégique. Cette formule réduit la charge des administrateurs bénévoles sans les priver de leur rôle de gouvernance.",
+            "Gestion Velora propose une évaluation gratuite de votre situation pour vous recommander la formule la mieux adaptée à votre syndicat. Nos mandats sont flexibles et évolutifs : vous pouvez commencer par un mandat partiel et élargir selon vos besoins.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Condo",
+      date: "March 2026",
+      title: "Condo self-management vs. professional manager: which is right?",
+      metaTitle: "Condo self-management vs pro manager",
+      excerpt: "Should you self-manage your condo board or hire a professional manager? This guide compares both options to help you decide.",
+      brief: "Self-management works for small buildings where directors have enough time and expertise. As complexity grows — Law 141 compliance, major repairs, owner disputes — a professional condo manager offers a better risk/cost ratio and protects long-term building value.",
+      sections: [
+        {
+          heading: "When is condo self-management a viable option?",
+          paragraphs: [
+            [
+              "Self-managing a ",
+              { text: "condo building", to: "/services/gestion-condo" },
+              " is feasible in small buildings (fewer than 8 units) where owners know each other well, finances are straightforward, and common areas require minimal maintenance. It requires at least one director with skills in accounting, Quebec condo law, and project management to oversee maintenance work.",
+            ],
+            "Self-management has real advantages: savings on management fees, direct control over decisions, and intimate knowledge of the building. However, it exposes the board to significant risks if directors lack time or expertise: delays in fee collection, regulatory non-compliance, unresolved disputes.",
+            "Law 141 has substantially increased condo board obligations since 2022: mandatory reserve fund studies every five years, structured maintenance logs, and new insurance rules. These requirements demand rigorous follow-up that few self-managed boards can sustain without professional help.",
+          ],
+        },
+        {
+          heading: "What problems commonly arise in self-managed condo boards?",
+          paragraphs: [
+            "Self-managed boards regularly face three types of problems. First, imprecise accounting: misallocated charges between common and private portions, gaps in reserve fund contributions, incomplete financial statements. These errors can trigger surprise special assessments and reduce unit resale values.",
+            "Second, conflict management: without a formalized process, disputes between owners (noise, unauthorized work, parking) escalate. A professional manager intervenes as a neutral third party, applies by-laws consistently, and reduces costly legal proceedings.",
+            "Third, emergency response: water damage, elevator failures, or heating problems don't wait for volunteer directors' availability. A professional manager has a network of qualified contractors and a 24/7 emergency line to respond quickly and limit damage.",
+          ],
+        },
+        {
+          heading: "How to choose between self-management and professional management?",
+          paragraphs: [
+            [
+              "Run this quick audit: if your building has more than 10 units, is over 15 years old, faces major work in the next 5 years, or has had trouble collecting condo fees, ",
+              { text: "professional condo management", to: "/services/gestion-copropriete" },
+              " will likely be more cost-effective than self-management once risks are factored in.",
+            ],
+            "For boards that want to retain some control, co-management is a middle ground: the manager handles administrative tasks (accounting, fee collection, contractor management) while the board retains strategic decision-making. This reduces the burden on volunteer directors without removing their governance role.",
+            "Gestion Velora offers a free assessment to recommend the best option for your building. Our mandates are flexible and scalable — you can start with a partial mandate and expand as needed.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "loi-141-obligations-syndicat-copropriete",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=85",
+    datePublished: "2026-04-02",
+    dateModified: "2026-04-20",
+    fr: {
+      category: "Réglementation",
+      date: "Avril 2026",
+      title: "Loi 141 : obligations des syndicats de copropriété au Québec",
+      metaTitle: "Loi 141 syndicat copropriété Québec",
+      excerpt: "La Loi 141 impose de nouvelles obligations aux syndicats de copropriété québécois. Voici ce que votre CA doit savoir et faire pour être conforme.",
+      brief: "La Loi 141 (2018, en vigueur 2022) oblige les syndicats de copropriété québécois à constituer un fonds de prévoyance suffisant basé sur une étude actuarielle, à tenir un carnet d'entretien et à s'assurer que les assurances couvrent adéquatement la valeur à neuf de l'immeuble. Ces obligations s'appliquent à toutes les copropriétés divises, quelle que soit leur taille.",
+      sections: [
+        {
+          heading: "Quelles sont les principales obligations introduites par la Loi 141 ?",
+          paragraphs: [
+            [
+              "Adoptée en 2018, la Loi 141 (Loi visant principalement à améliorer l'encadrement du secteur financier) a profondément réformé les règles applicables aux ",
+              { text: "syndicats de copropriété", to: "/services/syndicat-copropriete" },
+              " québécois. Ses dispositions relatives aux fonds de prévoyance et à l'entretien des immeubles sont entrées en vigueur progressivement entre 2020 et 2022. Trois obligations majeures en découlent.",
+            ],
+            "Première obligation : l'étude de fonds de prévoyance. Le syndicat doit mandater un professionnel qualifié (ingénieur, technicien en bâtiment ou expert en évaluation) pour réaliser une étude déterminant le montant des contributions annuelles nécessaires pour financer les travaux majeurs prévus sur 25 ans. Cette étude doit être renouvelée tous les 5 ans. Elle remplace l'ancienne règle du minimum de 5 % des charges communes, qui était souvent insuffisante.",
+            "Deuxième obligation : le carnet d'entretien. Le syndicat doit tenir à jour un registre documentant l'état de chaque composante majeure de l'immeuble (toiture, plomberie, systèmes mécaniques, façade), les travaux effectués et les travaux planifiés. Ce document est consultable par tout copropriétaire et doit être remis à l'acheteur lors d'une transaction immobilière.",
+          ],
+        },
+        {
+          heading: "Les assurances : ce que la Loi 141 exige des syndicats",
+          paragraphs: [
+            "La Loi 141 a également renforcé les obligations d'assurance des syndicats. Le syndicat doit maintenant s'assurer à la valeur de remplacement à neuf (full replacement cost) de l'immeuble, incluant les parties communes et les améliorations apportées aux parties privatives. Un évaluateur agréé doit estimer cette valeur au moins une fois tous les trois ans.",
+            "Les copropriétaires individuels doivent, quant à eux, obtenir une assurance habitation (partie privative) qui couvre leur franchise et les améliorations locatives. La Loi 141 a introduit la notion de franchise collective : en cas de sinistre impliquant une partie privative, la franchise de l'assurance collective peut être réclamée auprès du copropriétaire responsable.",
+            "Ces nouvelles règles d'assurance ont complexifié la gestion des sinistres dans les copropriétés. Un gestionnaire professionnel maîtrise ces mécanismes et peut coordonner efficacement les réclamations entre l'assureur du syndicat et ceux des copropriétaires, évitant les litiges coûteux.",
+          ],
+        },
+        {
+          heading: "Comment se conformer à la Loi 141 sans se noyer dans la bureaucratie ?",
+          paragraphs: [
+            "La première étape est de réaliser une étude de fonds de prévoyance si ce n'est pas encore fait. Plusieurs firmes spécialisées offrent ce service à Montréal. Le coût varie entre 2 000 $ et 8 000 $ selon la taille de l'immeuble, mais c'est un investissement qui protège le syndicat de toute contestation légale sur l'insuffisance de ses réserves.",
+            [
+              "La deuxième étape est de mettre en place le carnet d'entretien. Un ",
+              { text: "gestionnaire de copropriété professionnel", to: "/services/gestion-copropriete" },
+              " peut vous aider à structurer ce document et à le tenir à jour. Il sert aussi d'outil de planification pour les travaux à venir, permettant au syndicat d'anticiper les dépenses plutôt que de les subir.",
+            ],
+            "Gestion Velora intègre le suivi de la conformité Loi 141 dans tous ses mandats de gestion de syndicat. Nos clients reçoivent des alertes proactives lorsque des renouvellements d'études ou des mises à jour de carnet sont requis, évitant ainsi toute non-conformité.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Regulation",
+      date: "April 2026",
+      title: "Law 141: condo board obligations in Quebec explained",
+      metaTitle: "Law 141 condo board Quebec",
+      excerpt: "Law 141 introduced major new obligations for Quebec condo boards. Here is what your board needs to know and do to stay compliant.",
+      brief: "Law 141 (2018, in force 2022) requires Quebec condo boards to build an adequate reserve fund based on an actuarial study, maintain a building maintenance log, and insure the building at full replacement cost. These obligations apply to all divided co-ownerships regardless of size.",
+      sections: [
+        {
+          heading: "What are the main obligations introduced by Law 141?",
+          paragraphs: [
+            [
+              "Adopted in 2018, Law 141 profoundly reformed rules applicable to Quebec ",
+              { text: "condo boards (syndicats)", to: "/services/syndicat-copropriete" },
+              ". Its provisions on reserve funds and building maintenance came into force progressively between 2020 and 2022. Three major obligations result from it.",
+            ],
+            "First obligation: the reserve fund study. The board must hire a qualified professional (engineer, building technician, or evaluator) to conduct a study determining the annual contributions needed to fund planned major work over 25 years. This study must be renewed every 5 years. It replaces the old rule of a minimum 5% of condo fees, which was often insufficient.",
+            "Second obligation: the maintenance log (carnet d'entretien). The board must keep an updated register documenting the condition of each major building component (roof, plumbing, mechanical systems, façade), work completed, and planned work. Any owner may consult it, and it must be provided to buyers during a real estate transaction.",
+          ],
+        },
+        {
+          heading: "Insurance: what Law 141 requires from condo boards",
+          paragraphs: [
+            "Law 141 also strengthened insurance obligations. The board must insure the building at full replacement cost, including common areas and improvements made to private portions. A certified appraiser must estimate this value at least once every three years.",
+            "Individual unit owners must carry condo insurance covering their deductible and leasehold improvements. Law 141 introduced the collective deductible concept: in a claim involving a private portion, the collective insurance deductible can be recovered from the responsible owner.",
+            "These new insurance rules have made claims management more complex. A professional manager understands these mechanisms and can efficiently coordinate claims between the board's insurer and individual owners' insurers, avoiding costly disputes.",
+          ],
+        },
+        {
+          heading: "How to comply with Law 141 without drowning in bureaucracy?",
+          paragraphs: [
+            "The first step is commissioning a reserve fund study if you haven't already. Several specialized firms offer this service in Montreal. Costs range from $2,000 to $8,000 depending on building size — a worthwhile investment that protects the board from legal challenges about reserve adequacy.",
+            [
+              "The second step is implementing the maintenance log. A ",
+              { text: "professional condo property manager", to: "/services/gestion-copropriete" },
+              " can help structure and maintain this document. It also serves as a planning tool for upcoming work, letting the board anticipate expenses rather than react to them.",
+            ],
+            "Gestion Velora integrates Law 141 compliance monitoring into all condo board management mandates. Clients receive proactive alerts when study renewals or log updates are required, preventing any non-compliance.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "augmenter-valeur-condo-montreal",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=85",
+    datePublished: "2026-04-05",
+    dateModified: "2026-04-20",
+    fr: {
+      category: "Conseils",
+      date: "Avril 2026",
+      title: "6 façons d'augmenter la valeur de votre condo à Montréal",
+      metaTitle: "Augmenter valeur condo Montréal",
+      excerpt: "Vous souhaitez augmenter la valeur de votre condo à Montréal ? Ces six stratégies éprouvées vous aideront à maximiser votre retour lors de la revente.",
+      brief: "Pour augmenter la valeur d'un condo à Montréal, concentrez-vous sur les rénovations à fort retour sur investissement (cuisine, salle de bain, rangements), la saine gestion du syndicat (fonds de prévoyance, carnet d'entretien) et la présentation de l'unité lors de la mise en marché. La qualité de gestion de l'immeuble influence directement la valeur de chaque unité.",
+      sections: [
+        {
+          heading: "Les rénovations qui rapportent le plus lors de la revente",
+          paragraphs: [
+            "La cuisine et la salle de bain restent les pièces qui génèrent le meilleur retour sur investissement lors d'une rénovation résidentielle. À Montréal, une rénovation de cuisine moderne (comptoirs de quartz, armoires intégrées, éclairage DEL) peut générer un retour de 70 à 85 % du coût en valeur ajoutée à la revente. La salle de bain suit avec 60 à 75 % de retour. Ces estimations varient selon le quartier et le positionnement du condo dans le marché.",
+            "L'optimisation du rangement est souvent sous-estimée. Dans les petits condos montréalais où l'espace est limité, des solutions intelligentes (garde-robes organisés, îlot de cuisine multifonction, mezzanine) peuvent augmenter l'attrait perçu de façon significative. Les acheteurs paient une prime pour le rangement dans les marchés denses comme le Plateau ou Rosemont.",
+            "Attention aux rénovations qui ne se récupèrent pas : les finitions trop personnalisées (couleurs vives, matériaux de niche) ou les équipements technologiques propriétaires (domotique complexe) peuvent réduire le bassin d'acheteurs potentiels plutôt que d'en élargir l'attrait. Visez le neutre, l'intemporel et le fonctionnel.",
+          ],
+        },
+        {
+          heading: "Comment la gestion du syndicat affecte la valeur de votre condo",
+          paragraphs: [
+            [
+              "La valeur d'un condo ne dépend pas uniquement de l'unité elle-même : la santé financière du ",
+              { text: "syndicat de copropriété", to: "/services/syndicat-copropriete" },
+              " influence directement la valeur de chaque unité. Un fonds de prévoyance bien alimenté, un carnet d'entretien à jour et des états financiers sains rassurent les acheteurs et les prêteurs hypothécaires. À l'inverse, un syndicat mal géré avec des dettes ou des travaux urgents non financés peut déprécier une unité même rénovée.",
+            ],
+            "Les notaires et courtiers immobiliers recommandent systématiquement de vérifier l'état du syndicat avant toute offre d'achat. Un appel de fonds extraordinaire imminent, des litiges non résolus ou un fonds de prévoyance sous-capitalisé sont des signaux d'alarme. En tant que copropriétaire, vous pouvez contribuer à la valeur de votre actif en participant activement à la gouvernance de votre syndicat ou en plaidant pour une gestion professionnelle.",
+            [
+              "Investir dans la ",
+              { text: "gestion professionnelle de condo", to: "/services/gestion-condo" },
+              " améliore l'expérience de tous les copropriétaires et la réputation de l'immeuble sur le marché. Les acheteurs potentiels posent souvent la question : « qui gère l'immeuble ? » Un gestionnaire reconnu rassure et facilite la vente.",
+            ],
+          ],
+        },
+        {
+          heading: "Présentation et mise en marché : l'impact de la première impression",
+          paragraphs: [
+            "La mise en scène (home staging) a démontré son efficacité pour raccourcir les délais de vente et maximiser le prix de vente. À Montréal, des études de courtiers immobiliers locaux indiquent qu'un condo bien présenté se vend 5 à 15 % plus cher qu'un condo comparable non mis en scène. Les coûts d'un service de home staging professionnel (500 à 2 500 $) sont généralement récupérés largement à la vente.",
+            "La qualité des photos de mise en marché est aussi déterminante. Plus de 90 % des acheteurs commencent leur recherche en ligne. Des photos professionnelles mettant en valeur la luminosité, les espaces et les finis de qualité génèrent plus de visites et plus d'offres concurrentes. Investissez dans un photographe immobilier professionnel avant de mettre votre condo sur le marché.",
+            "Enfin, la propreté et la dépersonnalisation sont essentielles. Rangez les objets personnels, optez pour une palette neutre et assurez-vous que chaque pièce soit impeccable lors des visites. Ces préparatifs ne coûtent souvent rien mais peuvent faire la différence entre une vente rapide au prix demandé et des mois de négociations.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Tips",
+      date: "April 2026",
+      title: "6 ways to increase your condo value in Montreal",
+      metaTitle: "Increase condo value Montreal",
+      excerpt: "Want to increase your condo value in Montreal? These six proven strategies will help you maximize your return when it comes time to sell.",
+      brief: "To increase condo value in Montreal, focus on high-ROI renovations (kitchen, bathroom, storage), healthy condo board management (reserve fund, maintenance log), and strong presentation when listing. Building management quality directly influences each unit's value.",
+      sections: [
+        {
+          heading: "Renovations that deliver the best resale return",
+          paragraphs: [
+            "Kitchen and bathroom renovations consistently deliver the highest return on investment in residential real estate. In Montreal, a modern kitchen renovation (quartz counters, integrated cabinets, LED lighting) can generate 70–85% of its cost back in added resale value. Bathrooms follow at 60–75%. Returns vary by neighborhood and condo market positioning.",
+            "Storage optimization is often underestimated. In Montreal's smaller condos where space is limited, smart solutions (organized closets, multi-function kitchen islands, mezzanines) can significantly increase perceived appeal. Buyers pay a premium for storage in dense markets like the Plateau or Rosemont.",
+            "Beware of renovations that don't pay back: highly personalized finishes (bold colors, niche materials) or proprietary tech installations (complex smart home systems) can shrink your buyer pool. Aim for neutral, timeless, and functional.",
+          ],
+        },
+        {
+          heading: "How condo board management affects your unit's value",
+          paragraphs: [
+            [
+              "A condo's value depends not only on the unit itself: the financial health of the ",
+              { text: "condo board (syndicat)", to: "/services/syndicat-copropriete" },
+              " directly influences each unit's value. A healthy reserve fund, up-to-date maintenance log, and sound financial statements reassure buyers and mortgage lenders. Conversely, a poorly managed board with debts or unfunded urgent repairs can devalue even a renovated unit.",
+            ],
+            "Notaries and real estate agents routinely recommend verifying the condo board's status before any purchase offer. An impending special assessment, unresolved litigation, or underfunded reserve fund are red flags. As an owner, you can contribute to your asset's value by actively participating in board governance or advocating for professional management.",
+            [
+              "Investing in ",
+              { text: "professional condo management", to: "/services/gestion-condo" },
+              " improves the experience for all owners and the building's reputation on the market. Prospective buyers often ask: 'who manages this building?' A recognized manager provides reassurance and makes your unit easier to sell.",
+            ],
+          ],
+        },
+        {
+          heading: "Presentation and listing: the power of first impressions",
+          paragraphs: [
+            "Home staging has proven its effectiveness in shortening sale timelines and maximizing sale prices. In Montreal, local real estate agent studies suggest a well-presented condo sells 5–15% more than a comparable unstaged unit. Professional staging costs ($500–$2,500) are typically recovered many times over at sale.",
+            "Listing photo quality is equally decisive. Over 90% of buyers start their search online. Professional photos showcasing natural light, space, and quality finishes generate more visits and competing offers. Invest in a professional real estate photographer before listing.",
+            "Finally, cleanliness and depersonalization are essential. Store personal items, opt for a neutral palette, and ensure every room is spotless for showings. These preparations often cost nothing but can mean the difference between a quick sale at asking price and months of negotiations.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "obligations-conseil-administration-copropriete",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=85",
+    datePublished: "2026-04-08",
+    dateModified: "2026-04-20",
+    fr: {
+      category: "Gouvernance",
+      date: "Avril 2026",
+      title: "Obligations du conseil d'administration d'une copropriété",
+      metaTitle: "Obligations CA copropriété Québec",
+      excerpt: "Le conseil d'administration d'une copropriété au Québec a des obligations légales précises. Voici ce que chaque administrateur doit connaître.",
+      brief: "Le conseil d'administration (CA) d'un syndicat de copropriété québécois doit administrer l'immeuble avec diligence et prudence, percevoir les charges communes, maintenir le fonds de prévoyance, tenir les assemblées, et agir dans l'intérêt collectif des copropriétaires. En cas de manquement, les administrateurs peuvent être tenus personnellement responsables.",
+      sections: [
+        {
+          heading: "Quelles sont les obligations légales du CA d'une copropriété ?",
+          paragraphs: [
+            [
+              "Le conseil d'administration est l'organe exécutif du ",
+              { text: "syndicat de copropriété", to: "/services/syndicat-copropriete" },
+              ". Ses membres, élus en assemblée générale, ont l'obligation d'administrer l'immeuble avec la prudence et la diligence d'une personne raisonnable (article 1085 du Code civil du Québec). Cette norme implique de prendre des décisions éclairées, de documenter les délibérations et d'agir dans le meilleur intérêt de l'ensemble des copropriétaires.",
+            ],
+            "Parmi les obligations essentielles du CA : tenir l'assemblée générale annuelle dans les six mois suivant la clôture de l'exercice financier, présenter les états financiers vérifiés, adopter le budget de l'exercice suivant, renouveler l'étude de fonds de prévoyance tous les cinq ans, et mettre à jour le carnet d'entretien. Ces obligations ont été renforcées par la Loi 16 (2020) et la Loi 141 (2022).",
+            "Le CA doit également s'assurer que l'immeuble est adéquatement assuré à la valeur de remplacement à neuf, que les entrepreneurs mandatés sont qualifiés et assurés, et que les décisions importantes (travaux majeurs, modifications de règlement) sont approuvées en assemblée ou par résolution du CA. La tenue à jour des registres du syndicat (procès-verbaux, contrats, correspondance) est aussi une obligation légale.",
+          ],
+        },
+        {
+          heading: "Quelles sont les responsabilités personnelles des administrateurs ?",
+          paragraphs: [
+            "Les membres du CA bénévoles ne sont généralement pas tenus personnellement responsables des dettes du syndicat, mais ils peuvent l'être en cas de faute grave : non-paiement de cotisations à la CNESST, non-respect des règles de sécurité entraînant un accident, ou prise de décisions frauduleuses ou contraires aux intérêts des copropriétaires. La responsabilité civile des administrateurs est une réalité que beaucoup ignorent.",
+            "Pour se protéger, certains syndicats souscrivent une assurance responsabilité des administrateurs et dirigeants (D&O). Cette protection est particulièrement recommandée pour les grands immeubles où les décisions du CA ont un impact financier significatif. Elle couvre les frais de défense et les indemnités en cas de poursuite contre les administrateurs.",
+            "La meilleure protection reste cependant une gouvernance rigoureuse : procès-verbaux détaillés, décisions documentées, appels d'offres pour les travaux majeurs, consultation d'un juriste pour les questions complexes. Un administrateur qui documente ses décisions et agit de bonne foi est rarement tenu responsable même en cas de résultat négatif.",
+          ],
+        },
+        {
+          heading: "Déléguer pour gouverner efficacement : quand faire appel à un gestionnaire ?",
+          paragraphs: [
+            [
+              "Le CA peut déléguer l'administration courante à un ",
+              { text: "gestionnaire professionnel de copropriété", to: "/services/gestion-copropriete" },
+              " sans se dessaisir de sa gouvernance. La délégation couvre typiquement : la comptabilité et les appels de fonds, la gestion des contrats de services, la coordination des travaux, la correspondance avec les copropriétaires et le suivi réglementaire. Le CA conserve l'approbation du budget, les décisions stratégiques et la relation avec les copropriétaires.",
+            ],
+            "Cette délégation réduit la charge des administrateurs bénévoles, améliore la qualité des processus et réduit le risque d'erreurs. Pour les CA dont les membres changent fréquemment (rotation élevée), elle assure aussi la continuité de l'administration : le gestionnaire est la mémoire institutionnelle du syndicat.",
+            "Gestion Velora travaille en partenariat avec les CA des syndicats montréalais, en assurant les opérations quotidiennes tout en préparant les administrateurs aux décisions importantes. Nos rapports mensuels donnent au CA une vision claire de la situation financière et opérationnelle de l'immeuble.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Governance",
+      date: "April 2026",
+      title: "Duties of a condo board of directors in Quebec",
+      metaTitle: "Condo board duties Quebec",
+      excerpt: "A condo board of directors in Quebec has specific legal obligations. Here is what every board member needs to know to govern responsibly.",
+      brief: "A Quebec condo board must administer the building with diligence and prudence, collect condo fees, maintain the reserve fund, hold annual meetings, and act in the collective interest of all owners. Failure to do so can expose individual directors to personal liability.",
+      sections: [
+        {
+          heading: "What are the legal duties of a condo board in Quebec?",
+          paragraphs: [
+            [
+              "The board of directors is the executive body of the ",
+              { text: "condo board (syndicat)", to: "/services/syndicat-copropriete" },
+              ". Its elected members must administer the building with the prudence and diligence of a reasonable person (Quebec Civil Code article 1085). This standard means making informed decisions, documenting deliberations, and acting in the best interest of all unit owners.",
+            ],
+            "Key board obligations include: holding the annual general meeting within six months of fiscal year end, presenting audited financial statements, adopting the following year's budget, renewing the reserve fund study every five years, and updating the maintenance log. These obligations were strengthened by Law 16 (2020) and Law 141 (2022).",
+            "The board must also ensure the building is adequately insured at full replacement cost, that contractors are qualified and insured, and that major decisions (large repairs, by-law changes) are approved at an AGM or by board resolution. Keeping the condo's records up to date (minutes, contracts, correspondence) is also a legal obligation.",
+          ],
+        },
+        {
+          heading: "Personal liability: what board members need to know",
+          paragraphs: [
+            "Volunteer board members are generally not personally liable for the condo board's debts, but they can be held liable for serious faults: failure to pay CNESST contributions, ignoring safety rules that lead to an accident, or taking fraudulent decisions against owners' interests. Director civil liability is a reality many ignore.",
+            "To protect themselves, some boards take out directors and officers (D&O) liability insurance. This coverage is especially recommended for large buildings where board decisions have significant financial impact. It covers defense costs and indemnities if directors are sued.",
+            "The best protection, however, is rigorous governance: detailed meeting minutes, documented decisions, competitive bids for major work, and consultation with a lawyer for complex issues. A director who documents decisions and acts in good faith is rarely held liable even when outcomes are negative.",
+          ],
+        },
+        {
+          heading: "Delegating for effective governance: when to hire a manager?",
+          paragraphs: [
+            [
+              "The board can delegate routine administration to a ",
+              { text: "professional condo property manager", to: "/services/gestion-copropriete" },
+              " without giving up governance. Delegation typically covers: accounting and fee collection, service contract management, contractor coordination, owner communications, and regulatory compliance. The board retains budget approval, strategic decisions, and the relationship with owners.",
+            ],
+            "This delegation reduces the burden on volunteer directors, improves process quality, and reduces the risk of errors. For boards with frequent member turnover, it also ensures administrative continuity: the manager becomes the institutional memory of the condo board.",
+            "Gestion Velora works as a partner with condo boards in Montreal, handling daily operations while preparing directors for important decisions. Monthly reports give the board a clear picture of the building's financial and operational situation.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "assemblee-generale-copropriete-guide",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=85",
+    datePublished: "2026-04-12",
+    dateModified: "2026-04-20",
+    fr: {
+      category: "Gouvernance",
+      date: "Avril 2026",
+      title: "Assemblée générale de copropriété : guide complet pour les syndicats",
+      metaTitle: "Assemblée générale copropriété : guide",
+      excerpt: "L'assemblée générale annuelle (AGA) est une obligation légale pour tout syndicat de copropriété québécois. Ce guide vous explique comment la préparer et la mener efficacement.",
+      brief: "L'assemblée générale annuelle (AGA) d'un syndicat de copropriété québécois doit se tenir dans les six mois suivant la clôture de l'exercice financier. Elle sert à approuver les états financiers, élire les administrateurs, adopter le budget et traiter les résolutions soumises par les copropriétaires. Une bonne préparation est essentielle pour qu'elle soit valide et productive.",
+      sections: [
+        {
+          heading: "Quelles sont les règles pour tenir une assemblée générale valide ?",
+          paragraphs: [
+            [
+              "Le Code civil du Québec et la déclaration de copropriété de l'immeuble encadrent la tenue des assemblées générales du ",
+              { text: "syndicat de copropriété", to: "/services/syndicat-copropriete" },
+              ". L'avis de convocation doit être envoyé à chaque copropriétaire au moins 15 jours avant la date de l'assemblée (ou selon le délai prévu dans la déclaration). Il doit indiquer la date, l'heure, le lieu et l'ordre du jour complet.",
+            ],
+            "Le quorum est généralement fixé à la majorité des voix des copropriétaires représentant la majorité des quotes-parts (sauf dispositions contraires dans la déclaration). Si le quorum n'est pas atteint à l'heure prévue, l'assemblée doit être ajournée et reconvoquée. Faute de quorum à la deuxième convocation, les décisions peuvent être prises par les copropriétaires présents selon certaines conditions.",
+            "Les votes s'expriment selon les quotes-parts de chaque unité, sauf pour certaines décisions qui requièrent une majorité qualifiée (75 % des voix pour les modifications à la déclaration de copropriété, par exemple). Le procès-verbal doit être rédigé et signé dans les 30 jours suivant l'assemblée et conservé dans les registres du syndicat.",
+          ],
+        },
+        {
+          heading: "Comment préparer une AGA efficace étape par étape",
+          paragraphs: [
+            "Commencez la préparation au moins 6 à 8 semaines avant l'AGA. Rassemblez les états financiers de l'exercice clos (idéalement vérifiés par un comptable), préparez le projet de budget pour l'exercice suivant, rédigez l'ordre du jour avec les points obligatoires et les résolutions proposées. Si des travaux majeurs sont à l'ordre du jour, obtenez les soumissions à l'avance pour que les copropriétaires puissent se prononcer en toute connaissance de cause.",
+            [
+              "Envoyez l'avis de convocation avec tous les documents pertinents (états financiers, budget, résolutions, notes explicatives). Un ",
+              { text: "gestionnaire de condo professionnel", to: "/services/gestion-condo" },
+              " prépare habituellement ces documents et l'ensemble des communications avec les copropriétaires. Cette étape est souvent sous-estimée : des copropriétaires bien informés à l'avance sont plus engagés et les débats en assemblée sont plus constructifs.",
+            ],
+            "Pendant l'assemblée, désignez un président de séance (souvent le président du CA), un secrétaire pour rédiger le procès-verbal, et un scrutateur pour le dépouillement des votes. Pour les assemblées à distance (Zoom, Teams), vérifiez que votre déclaration de copropriété le permet et que des dispositions ont été prises pour l'identification des participants et le vote électronique.",
+          ],
+        },
+        {
+          heading: "Les erreurs fréquentes à éviter lors d'une AGA",
+          paragraphs: [
+            "Les erreurs les plus fréquentes : convoquer l'assemblée dans des délais insuffisants (moins de 15 jours), omettre des points obligatoires à l'ordre du jour (approbation des états financiers, élection des administrateurs), ne pas atteindre le quorum faute de mobilisation suffisante, et adopter des résolutions à l'unanimité sur des points qui ne le requièrent pas légalement (ce qui peut poser problème si un seul copropriétaire conteste ultérieurement).",
+            "Une autre erreur fréquente est de ne pas documenter correctement le procès-verbal. Un procès-verbal incomplet ou non signé peut rendre des décisions contestables. Il doit mentionner la date, le lieu, les présences, le quorum atteint, chaque point de l'ordre du jour discuté, les résolutions adoptées avec les résultats des votes et les oppositions exprimées.",
+            "Pour éviter ces écueils, de nombreux syndicats délèguent la préparation et l'animation de l'AGA à leur gestionnaire professionnel. Gestion Velora prépare l'ensemble des documents, coordonne la logistique et rédige le procès-verbal conforme aux exigences légales, libérant le CA de cette charge administrative.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Governance",
+      date: "April 2026",
+      title: "Annual condo AGM: complete guide for Quebec condo boards",
+      metaTitle: "Condo AGM Quebec: complete guide",
+      excerpt: "The annual general meeting (AGM) is a legal obligation for every Quebec condo board. This guide explains how to prepare and run an effective AGM.",
+      brief: "A Quebec condo board's annual general meeting (AGM) must be held within six months of the fiscal year end. It approves financial statements, elects directors, adopts the budget, and addresses owner resolutions. Good preparation is essential for a valid and productive meeting.",
+      sections: [
+        {
+          heading: "What rules govern a valid condo AGM in Quebec?",
+          paragraphs: [
+            [
+              "The Quebec Civil Code and the building's declaration of co-ownership govern the AGM rules for each ",
+              { text: "condo board (syndicat)", to: "/services/syndicat-copropriete" },
+              ". The notice of meeting must be sent to every owner at least 15 days before the meeting (or as per the declaration). It must state the date, time, location, and complete agenda.",
+            ],
+            "Quorum is generally a majority of votes representing a majority of fractional shares (unless the declaration specifies otherwise). If quorum is not reached at the scheduled time, the meeting must be adjourned and reconvened. At the second notice, decisions can sometimes be made by those present depending on specific conditions.",
+            "Votes are weighted by each unit's fractional share, except for certain decisions requiring a qualified majority (e.g., 75% of votes for changes to the declaration). Meeting minutes must be drafted and signed within 30 days and kept in the condo board's records.",
+          ],
+        },
+        {
+          heading: "How to prepare an effective AGM step by step",
+          paragraphs: [
+            "Start preparation 6–8 weeks before the AGM. Gather the closed fiscal year's financial statements (ideally audited by an accountant), prepare the draft budget for the next year, draft the agenda with mandatory items and proposed resolutions. If major repairs are on the agenda, get quotes in advance so owners can vote with full information.",
+            [
+              "Send the notice of meeting with all relevant documents (financial statements, budget, resolutions, explanatory notes). A ",
+              { text: "professional condo manager", to: "/services/gestion-condo" },
+              " typically prepares these documents and handles all owner communications. This step is often underestimated: well-informed owners are more engaged and AGM discussions are more constructive.",
+            ],
+            "During the meeting, designate a chair (usually the board president), a secretary to draft the minutes, and a scrutineer to count votes. For remote meetings (Zoom, Teams), verify your declaration allows it and that provisions have been made for participant identification and electronic voting.",
+          ],
+        },
+        {
+          heading: "Common mistakes to avoid at your condo AGM",
+          paragraphs: [
+            "Most frequent mistakes: giving insufficient notice (less than 15 days), omitting mandatory agenda items (financial statement approval, director elections), failing to reach quorum due to poor owner mobilization, and adopting resolutions unanimously when the law only requires a simple majority (which can create contestation issues later).",
+            "Another common error is inadequate minute-taking. Incomplete or unsigned minutes can make decisions contestable. Minutes must include the date, location, attendees, quorum confirmation, each agenda item discussed, resolutions adopted with vote counts, and any objections raised.",
+            "To avoid these pitfalls, many condo boards delegate AGM preparation and facilitation to their professional manager. Gestion Velora prepares all documents, coordinates logistics, and drafts legally compliant minutes — freeing the board from this administrative burden.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "choisir-gestionnaire-condo-montreal",
+    image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=1200&q=85",
+    datePublished: "2026-04-15",
+    dateModified: "2026-04-20",
+    fr: {
+      category: "Conseils",
+      date: "Avril 2026",
+      title: "Comment choisir son gestionnaire de condo à Montréal",
+      metaTitle: "Choisir gestionnaire condo Montréal",
+      excerpt: "Choisir le bon gestionnaire de condo à Montréal est une décision importante pour votre syndicat. Voici les critères essentiels et les questions à poser.",
+      brief: "Pour choisir un gestionnaire de condo à Montréal, évaluez la transparence des rapports financiers, la réactivité aux urgences, l'expertise en réglementation québécoise (Loi 141, Code civil), les références vérifiables et la qualité des outils numériques mis à disposition. Un bon gestionnaire est un partenaire à long terme, pas un prestataire de services courants.",
+      sections: [
+        {
+          heading: "Quels critères évaluer pour choisir un gestionnaire de condo ?",
+          paragraphs: [
+            [
+              "La sélection d'un ",
+              { text: "gestionnaire de condo", to: "/services/gestion-condo" },
+              " est une décision qui engage votre syndicat pour plusieurs années. Les critères les plus importants : la transparence des rapports financiers (fréquence, format, accessibilité), la réactivité pour les urgences (délai de réponse garanti, réseau d'urgence 24/7), et l'expertise réglementaire (Loi 16, Loi 141, Code civil du Québec, réglementation municipale).",
+            ],
+            "Demandez à voir des exemples de rapports mensuels. Un bon gestionnaire produit des rapports clairs qui permettent au CA de suivre les dépenses réelles vs budget, l'état du fonds de prévoyance, les demandes de maintenance en cours et les indicateurs de performance clés. Des rapports opaques ou excessivement complexes sont un signe de mauvaise gestion ou d'un manque de transparence.",
+            "Vérifiez les affiliations professionnelles : l'RGCQ (Regroupement des gestionnaires et copropriétaires du Québec) regroupe les firmes engagées dans les meilleures pratiques de gestion de copropriété. Certains gestionnaires sont aussi membres de l'OACIQ ou détiennent des certifications en gestion immobilière. Ces affiliations ne garantissent pas la qualité mais indiquent un engagement envers les standards de l'industrie.",
+          ],
+        },
+        {
+          heading: "Les questions à poser lors d'une demande de soumission",
+          paragraphs: [
+            "Posez ces questions clés lors de votre évaluation : Combien d'immeubles gérez-vous actuellement ? Quel est votre ratio gestionnaire / immeubles ? Quels outils numériques offrez-vous aux copropriétaires et au CA ? Comment gérez-vous les urgences hors heures ? Quels sont les délais de réponse garantis pour les demandes courantes ? Qui est mon interlocuteur principal et quelle est sa formation ?",
+            "Demandez des références de syndicats comparables au vôtre (taille, type d'immeuble, quartier) et contactez-les directement. Posez-leur : le gestionnaire respecte-t-il ses engagements de délai ? La comptabilité est-elle précise et à jour ? Le CA se sent-il bien soutenu dans ses décisions ? La communication avec les copropriétaires est-elle professionnelle ? Ces retours d'expérience valent plus que tout discours commercial.",
+            "Examinez attentivement le contrat proposé : durée, conditions de résiliation, services inclus vs facturés en supplément, clause d'indexation annuelle des honoraires, mécanismes de résolution de conflits. Un contrat équilibré protège les deux parties et établit des attentes claires dès le départ.",
+          ],
+        },
+        {
+          heading: "Pourquoi Gestion Velora se distingue à Montréal",
+          paragraphs: [
+            [
+              "Gestion Velora accompagne les syndicats de copropriété et les ",
+              { text: "gestionnaires de copropriété", to: "/services/gestion-copropriete" },
+              " montréalais avec une approche fondée sur la transparence, la rigueur et la disponibilité. Nos rapports mensuels sont accessibles en tout temps via le portail copropriétaires, notre ligne d'urgence est disponible 24/7, et chaque mandat est géré par un gestionnaire dédié qui connaît votre immeuble en profondeur.",
+            ],
+            "Notre expertise couvre l'ensemble des obligations réglementaires québécoises : conformité Loi 141, étude de fonds de prévoyance, carnet d'entretien, préparation des AGA, gestion des assurances et coordination des travaux majeurs. Nous travaillons avec un réseau de fournisseurs qualifiés et assurés, sélectionnés pour leur fiabilité et leurs tarifs compétitifs.",
+            "Nous proposons une évaluation gratuite et sans engagement de votre situation pour vous recommander la formule de gestion la mieux adaptée. Contactez notre équipe pour discuter de votre mandat et recevoir une soumission transparente dans les 48 heures.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Tips",
+      date: "April 2026",
+      title: "How to choose a condo manager in Montreal",
+      metaTitle: "Choose condo manager Montreal",
+      excerpt: "Choosing the right condo manager in Montreal is a critical decision for your board. Here are the key criteria and questions to ask before signing.",
+      brief: "To choose a condo manager in Montreal, evaluate financial report transparency, emergency responsiveness, expertise in Quebec regulation (Law 141, Civil Code), verifiable references, and quality of digital tools. A good manager is a long-term partner, not just a service provider.",
+      sections: [
+        {
+          heading: "What criteria matter most when choosing a condo manager?",
+          paragraphs: [
+            [
+              "Selecting a ",
+              { text: "condo manager", to: "/services/gestion-condo" },
+              " is a decision that commits your board for several years. The most important criteria: financial report transparency (frequency, format, accessibility), emergency responsiveness (guaranteed response times, 24/7 emergency network), and regulatory expertise (Law 16, Law 141, Quebec Civil Code, municipal regulations).",
+            ],
+            "Ask to see sample monthly reports. A good manager produces clear reports that let the board track actual vs. budgeted expenses, reserve fund status, open maintenance requests, and key performance indicators. Opaque or overly complex reports are a sign of poor management or lack of transparency.",
+            "Check professional affiliations: RGCQ (Regroupement des gestionnaires et copropriétaires du Québec) groups firms committed to condo management best practices. Some managers also hold OACIQ membership or property management certifications. Affiliations don't guarantee quality but indicate a commitment to industry standards.",
+          ],
+        },
+        {
+          heading: "Questions to ask when requesting proposals",
+          paragraphs: [
+            "Ask these key questions during your evaluation: How many buildings do you currently manage? What is your manager-to-building ratio? What digital tools do you provide to owners and the board? How do you handle after-hours emergencies? What are guaranteed response times for routine requests? Who is my primary contact and what is their background?",
+            "Request references from boards similar to yours (size, building type, neighborhood) and contact them directly. Ask: does the manager meet their commitments on time? Is the accounting accurate and current? Does the board feel well-supported in its decisions? Is owner communication professional? These firsthand accounts are worth more than any sales pitch.",
+            "Carefully review the proposed contract: duration, termination terms, services included vs. billed as extras, annual fee indexation clause, dispute resolution mechanisms. A balanced contract protects both parties and sets clear expectations from the start.",
+          ],
+        },
+        {
+          heading: "Why Gestion Velora stands out in Montreal",
+          paragraphs: [
+            [
+              "Gestion Velora supports condo boards and ",
+              { text: "condo property managers", to: "/services/gestion-copropriete" },
+              " in Montreal with an approach grounded in transparency, rigor, and availability. Monthly reports are accessible anytime via the owner portal, our emergency line is available 24/7, and every mandate is managed by a dedicated manager who knows your building in depth.",
+            ],
+            "Our expertise covers all Quebec regulatory obligations: Law 141 compliance, reserve fund studies, maintenance logs, AGM preparation, insurance management, and major work coordination. We work with a network of qualified, insured contractors selected for reliability and competitive rates.",
+            "We offer a free, no-commitment assessment of your situation and recommend the best management package for your building. Contact our team to discuss your mandate and receive a transparent quote within 48 hours.",
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export type BlogPostView = {
@@ -729,6 +1462,7 @@ export type BlogPostView = {
   category: string;
   date: string;
   title: string;
+  metaTitle?: string;
   excerpt: string;
   brief: string;
   sections: BlogSection[];
@@ -746,6 +1480,7 @@ export function getPostBySlug(slug: string, locale: "fr" | "en" = "fr"): BlogPos
     category: loc.category,
     date: loc.date,
     title: loc.title,
+    metaTitle: loc.metaTitle,
     excerpt: loc.excerpt,
     brief: loc.brief,
     sections: loc.sections,

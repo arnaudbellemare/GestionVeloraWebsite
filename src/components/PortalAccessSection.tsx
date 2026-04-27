@@ -11,7 +11,7 @@ export function PortalAccessSection() {
     >
       <div className="max-w-[90rem] mx-auto">
         <ScrollReveal>
-          <h2 className="font-sans font-medium text-3xl lg:text-4xl text-white leading-[1.05] tracking-[-0.02em] mb-4">
+          <h2 id="portails-acces" className="font-sans font-medium text-3xl lg:text-4xl text-white leading-[1.05] tracking-[-0.02em] mb-4">
             {t("portalAccess.title")}
           </h2>
           <p className="font-sans text-[#999999] mb-12 max-w-xl">

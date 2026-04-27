@@ -64,7 +64,7 @@ export function ValueLabelsSection() {
 
       <div className="max-w-[90rem] mx-auto relative z-10">
         <ScrollReveal>
-          <h2 className="font-playfair font-semibold text-2xl sm:text-3xl lg:text-5xl text-white leading-[1.08] tracking-[-0.02em] mb-10 sm:mb-16 max-w-3xl text-balance">
+          <h2 id="nos-valeurs" className="font-playfair font-semibold text-2xl sm:text-3xl lg:text-5xl text-white leading-[1.08] tracking-[-0.02em] mb-10 sm:mb-16 max-w-3xl text-balance">
             {titleParts.length > 1 ? (
               <>
                 <span className="block">{titleParts[0]}</span>

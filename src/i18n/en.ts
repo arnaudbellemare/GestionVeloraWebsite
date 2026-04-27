@@ -108,13 +108,17 @@ export const en = {
     airbnbDesc: "Reservations and revenue maximization with peace of mind.",
     location: "Rental management",
     locationDesc: "Tenant screening, leases and professional follow-up.",
+    gestionCondo: "Condo management",
+    gestionCondoDesc: "Day-to-day administration, finances and maintenance for your condo.",
+    gestionCopropriete: "Condo property manager",
+    gestionCoproprieteDesc: "Full expertise for condo boards and demanding unit owners.",
   },
 
   // OurStandards
   ourStandards: {
-    title: "Transparency and rigour in every property management mandate.",
+    title: "Transparency and rigour in every mandate.",
     cta: "Our approach",
-    text: "For us, property management isn't a checkbox, it's a commitment we uphold every day with proactive maintenance, transparent reports, and a culture where every building is treated like our own.",
+    text: "For us, property administration isn't a checkbox, it's a commitment we uphold every day with proactive maintenance, transparent reports, and a culture where every building is treated like our own.",
   },
 
   // FromInspiration
@@ -149,7 +153,7 @@ export const en = {
 
   ourProcess: {
     label: "Our process",
-    title: "An end-to-end approach to property management.",
+    title: "An end-to-end approach to your property portfolio.",
     cta: "Get started",
     steps: [
       {
@@ -181,9 +185,9 @@ export const en = {
 
   teamSection: {
     label: "Leadership",
-    title: "The Velora property management team.",
+    title: "The Velora team, at your service.",
     intro:
-      "Years of property management experience in Montreal. A vision built on transparency, rigor, and genuine relationships with every client.",
+      "Years of experience in property administration in Montreal. A vision built on transparency, rigor, and genuine relationships with every client.",
     members: [
       {
         name: "Arnaud Bellemare",
@@ -195,7 +199,7 @@ export const en = {
 
   trustedPartners: {
     label: "Testimonials",
-    title: "What our property management clients say in Montreal.",
+    title: "What our clients say in Montreal.",
     subtitle: "Condo boards and property owners trust Gestion Velora.",
     seeMore: "See more testimonials",
     ctaJourney: "Contact us",
@@ -209,7 +213,7 @@ export const en = {
 
   // PropertyTools
   propertyTools: {
-    title: "Your property management at a glance.",
+    title: "Your portfolio at a glance.",
     follow: "Track and document.",
     followDesc:
       "Maintain a full history of work, inspections and maintenance. Every intervention is traced and archived for total transparency.",
@@ -357,6 +361,7 @@ export const en = {
     testimonials: "Testimonials",
     portailsSection: "Portal access",
     faq: "FAQ",
+    tarifs: "Pricing",
     insights: "Insights",
     contactLink: "Contact",
     privacy: "Privacy policy",
@@ -681,5 +686,192 @@ export const en = {
         },
       ],
     },
+
+    "gestion-condo": {
+      title: "Condo management in Montreal",
+      subtitle: "Expert condo management for unit owners and condo boards in Montreal",
+      description:
+        "Looking for a condo management company in Montreal? Gestion Velora handles full condo administration: board governance, annual budget, reserve fund, common area maintenance, annual general meeting (AGM), and Loi 141 compliance. Our condo managers serve all Montreal neighbourhoods and the greater metropolitan area.",
+      offerings: [
+        {
+          title: "Condo board administration",
+          items: [
+            "Annual general meeting (AGM) preparation and facilitation",
+            "Meeting minutes and condo register",
+            "Declaration of co-ownership compliance",
+            "Loi 141 and municipal regulation compliance",
+          ],
+          detailItems: [
+            "Full AGM preparation: agenda, legal notices, minutes, and decision tracking.",
+            "Ongoing maintenance of the condo register, accessible to the board at all times.",
+            "Regulatory monitoring to keep the condo in compliance with Loi 141 and applicable rules.",
+            "Single point of contact between the board, unit owners, and suppliers.",
+          ],
+        },
+        {
+          title: "Condo finances and budget",
+          items: [
+            "Annual budget preparation and monitoring",
+            "Common fee collection",
+            "Reserve fund management",
+            "Monthly transparent financial reports",
+          ],
+          detailItems: [
+            "Detailed annual budget with documented assumptions and comparison to prior year.",
+            "Monthly common fee tracking with progressive follow-up and accounting traceability.",
+            "Reserve fund planning aligned with the building's condition and upcoming capital work.",
+            "Clear financial dashboards for the board and unit owner assemblies.",
+          ],
+        },
+        {
+          title: "Condo maintenance and repairs",
+          items: [
+            "Common area maintenance",
+            "Contractor coordination and tendering",
+            "Preventive maintenance and inspections",
+            "24/7 emergency response",
+          ],
+          detailItems: [
+            "Preventive maintenance schedule tailored to the building to reduce long-term costs.",
+            "Structured tendering with qualified vendor selection and job-site follow-up.",
+            "Annual common area inspection with photo report and prioritized action list.",
+            "24-hour emergency line to respond quickly to incidents and claims.",
+          ],
+        },
+        {
+          title: "Unit owner communication",
+          items: [
+            "Dedicated contact for unit owners",
+            "Request and complaint management",
+            "Board decision transparency",
+            "Centralized, accessible documentation",
+          ],
+          detailItems: [
+            "One point of contact for all unit owner, board, and vendor requests.",
+            "Systematic acknowledgement and communicated resolution timelines for every request.",
+            "Proactive communications before major interventions (work, outages, assemblies).",
+            "Online portal to consult documents, budgets, and decisions at any time.",
+          ],
+        },
+      ],
+      faq: [
+        {
+          q: "What is the difference between condo management and condo board management?",
+          a: "In Quebec, both terms refer to managing a divided co-ownership property. The condo corporation (syndicat) is the legal entity grouping all unit owners; condo management refers to the administrative, financial, and technical tasks delegated to a professional manager like Gestion Velora.",
+        },
+        {
+          q: "How much does condo management cost in Montreal?",
+          a: "Condo management fees vary by building size and required services. At Gestion Velora, plans for condo boards start at $40/unit/month for small buildings. Contact us for a personalized quote.",
+        },
+        {
+          q: "Is my condo too small to hire a professional manager?",
+          a: "No. We work with buildings from 6 units. For small condos, professional management is often even more valuable: board members have limited time and expertise, and management errors (insufficient reserve fund, Loi 141 non-compliance) can be costly.",
+        },
+        {
+          q: "Can we switch condo management companies mid-year?",
+          a: "Yes. A condo board can terminate its management contract under the agreed terms (typically 30–90 days notice). Gestion Velora facilitates the transition by taking over existing files, the register, and contracts to ensure continuity of service.",
+        },
+      ],
+    },
+
+    "gestion-copropriete": {
+      title: "Condo property manager Montreal",
+      subtitle: "Your dedicated condo property manager — administration, finances, and compliance",
+      description:
+        "Gestion Velora is a specialized condo management firm in Montreal. Our condo property managers handle all condo board obligations: administration, accounting, reserve fund, common area management, annual general meeting, and Loi 141 compliance. We are the trusted partner for boards that want to delegate day-to-day management to professionals.",
+      offerings: [
+        {
+          title: "Role and responsibilities of a condo property manager",
+          items: [
+            "Full condo board administration",
+            "Board of directors interface",
+            "Vendor and contract management",
+            "Third-party representation of the condo corporation",
+          ],
+          detailItems: [
+            "The condo manager acts as the board's agent: executing decisions, managing operations, and reporting regularly.",
+            "Coordinates all stakeholders (vendors, insurers, lawyers, inspectors) for centralized oversight.",
+            "Primary point of contact for unit owners for all requests and communications.",
+            "Represents the condo corporation in administrative matters and exceptional situations (claims, disputes, major work).",
+          ],
+        },
+        {
+          title: "Financial management and Loi 141 compliance",
+          items: [
+            "Annual budget and common fees",
+            "Reserve fund compliant with Loi 141",
+            "Accounting and financial reports",
+            "Reserve study and long-term planning",
+          ],
+          detailItems: [
+            "Annual budget with detailed line items, documented assumptions, and AGM presentation.",
+            "Reserve fund management per Loi 141 requirements: contributions, investment, and use.",
+            "Monthly financial reports with budget-to-actual variances and corrective recommendations.",
+            "Reserve study follow-up to plan major work and avoid unexpected special assessments.",
+          ],
+        },
+        {
+          title: "Technical management and building maintenance",
+          items: [
+            "Preventive and corrective maintenance",
+            "Major work coordination",
+            "Contractor selection (tendering)",
+            "Emergencies and insurance claims",
+          ],
+          detailItems: [
+            "Structured preventive maintenance program to extend equipment lifespan.",
+            "Structured tendering for comparable quotes and transparent contractor selection.",
+            "Rigorous job-site supervision with milestones, work acceptance, and documentation.",
+            "24/7 emergency protocols with priority vendor contacts and claims procedures.",
+          ],
+        },
+        {
+          title: "Governance and annual general meeting",
+          items: [
+            "AGM preparation and facilitation",
+            "Minutes and condo register",
+            "Board governance advisory",
+            "Declaration of co-ownership compliance",
+          ],
+          detailItems: [
+            "Full AGM preparation: legal notices, agenda, documents, and facilitation.",
+            "Structured minutes with decisions, owners, and deadlines.",
+            "Maintenance and update of the condo register (declaration, minutes, financials, contracts).",
+            "Proactive advisory to the board on governance best practices and regulatory compliance.",
+          ],
+        },
+      ],
+      faq: [
+        {
+          q: "What are the legal obligations of a condo property manager in Quebec?",
+          a: "In Quebec, the condo property manager acts under a mandate from the condo board. They must comply with the Act respecting divided co-ownership (Loi 141), maintain the condo register, manage the reserve fund according to established rules, and convene the AGM within prescribed timelines. Gestion Velora ensures full compliance for your corporation.",
+        },
+        {
+          q: "How do you choose a good condo property manager?",
+          a: "Look for experience managing condo boards in Quebec, financial transparency (real-time report access), responsiveness (emergency line, processing timelines), and references from other managed boards. Ask for a demonstration of the tools used (owner portal, accounting system).",
+        },
+        {
+          q: "What is the difference between self-management and a professional manager?",
+          a: "Self-management places all responsibilities on volunteer board members (administration, finances, maintenance, compliance), which can mean dozens of hours per month. A professional manager takes on all these tasks, frees the board for strategic decisions, and guarantees regulatory compliance.",
+        },
+        {
+          q: "Can the manager make decisions without board approval?",
+          a: "No. The manager acts under a mandate: they execute board decisions and handle day-to-day operations within limits defined in the contract. Major decisions (significant work, large contracts) require board or owner assembly approval per the governance rules.",
+        },
+      ],
+    },
+  },
+};
+
+    },
+  },
+};
+
+};
+
+    },
+  },
+};
+,
   },
 };

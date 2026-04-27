@@ -12,6 +12,9 @@ export interface LocationService {
   nameEn: string;
   h1Fr: string;
   h1En: string;
+  /** Shorter title template for <title> tags (≤ 53 chars so city name + suffix stays ≤ 70). */
+  titleTmplFr: string;
+  titleTmplEn: string;
   descFr: string;
   descEn: string;
   keywordFr: string;
@@ -70,6 +73,8 @@ export const LOCATION_SERVICES: LocationService[] = [
     nameEn: "Condo board management",
     h1Fr: "Gestion de syndicat de copropriété à {city}",
     h1En: "Condo board management in {city}",
+    titleTmplFr: "Syndicat de copropriété à {city}",
+    titleTmplEn: "Condo board management in {city}",
     descFr:
       "Gestion Velora, firme de gestion de copropriété à {city}, assure l'administration complète de votre syndicat de copropriétaires : gestion administrative et financière, assemblée générale annuelle (AGA), budget annuel, charges communes, fonds de prévoyance, registre de copropriété, entretien des parties communes et conformité Loi 141.",
     descEn:
@@ -84,6 +89,8 @@ export const LOCATION_SERVICES: LocationService[] = [
     nameEn: "Rental management",
     h1Fr: "Gestion locative à {city}, location longue durée",
     h1En: "Rental property management in {city}",
+    titleTmplFr: "Gestion locative à {city}",
+    titleTmplEn: "Rental management in {city}",
     descFr:
       "Gestion Velora prend en charge la gestion locative de vos immeubles à {city} : sélection des locataires, rédaction des baux, suivi des loyers et entretien.",
     descEn:
@@ -98,6 +105,8 @@ export const LOCATION_SERVICES: LocationService[] = [
     nameEn: "Airbnb management",
     h1Fr: "Gestion Airbnb à {city}, location courte durée",
     h1En: "Airbnb management in {city}",
+    titleTmplFr: "Gestion Airbnb à {city}",
+    titleTmplEn: "Airbnb management in {city}",
     descFr:
       "Gestion Velora gère vos locations courte durée à {city} : annonces, réservations, accueil des voyageurs, ménage et conformité réglementaire.",
     descEn:
@@ -112,6 +121,8 @@ export const LOCATION_SERVICES: LocationService[] = [
     nameEn: "Commercial property management",
     h1Fr: "Gestion immobilière commerciale à {city}",
     h1En: "Commercial property management in {city}",
+    titleTmplFr: "Gestion commerciale à {city}",
+    titleTmplEn: "Commercial management in {city}",
     descFr:
       "Gestion Velora accompagne les propriétaires d'immeubles commerciaux à {city} : gestion des baux commerciaux, entretien, relations avec les locataires et optimisation du rendement.",
     descEn:
@@ -144,6 +155,15 @@ function fill(template: string, city: City): string {
   return template.replace(/{city}/g, city.nameFr).replace(/{cityEn}/g, city.nameEn);
 }
 
+const TITLE_SUFFIX = " | Gestion Velora";
+const TITLE_MAX = 70;
+
+function buildMetaTitle(headline: string): string {
+  const withSuffix = `${headline}${TITLE_SUFFIX}`;
+  if (withSuffix.length <= TITLE_MAX) return withSuffix;
+  return headline;
+}
+
 export function resolveLocation(slug: string): ResolvedLocation | null {
   for (const svc of LOCATION_SERVICES) {
     for (const city of CITIES) {
@@ -157,8 +177,8 @@ export function resolveLocation(slug: string): ResolvedLocation | null {
           h1En: fill(svc.h1En, city),
           descFr: fill(svc.descFr, city),
           descEn: fill(svc.descEn, city),
-          metaTitleFr: `${fill(svc.h1Fr, city)} | Gestion Velora`,
-          metaTitleEn: `${fill(svc.h1En, city)} | Gestion Velora`,
+          metaTitleFr: buildMetaTitle(fill(svc.titleTmplFr, city)),
+          metaTitleEn: buildMetaTitle(fill(svc.titleTmplEn, city)),
           metaDescFr: fill(svc.descFr, city),
           metaDescEn: fill(svc.descEn, city),
         };

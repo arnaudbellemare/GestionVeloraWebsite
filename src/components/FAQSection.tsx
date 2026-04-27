@@ -18,7 +18,7 @@ export function FAQSection() {
     >
       <div className="max-w-[48rem] mx-auto">
         <ScrollReveal>
-          <h2 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em] mb-4">
+          <h2 id="faq-section" className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em] mb-4">
             {t("faq.title")}
           </h2>
           <p className="font-sans text-base lg:text-lg text-black/60 dark:text-white/60 mb-12">

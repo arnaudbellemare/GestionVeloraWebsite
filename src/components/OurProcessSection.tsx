@@ -27,7 +27,7 @@ export function OurProcessSection() {
             <p className="font-mono text-[10px] tracking-[0.12em] uppercase text-nd-secondary mb-4">
               {t("ourProcess.label")}
             </p>
-            <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-[-0.02em] text-nd-display max-w-3xl">
+            <h2 id="notre-processus" className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.1] tracking-[-0.02em] text-nd-display max-w-3xl">
               {t("ourProcess.title")}
             </h2>
           </div>
@@ -56,7 +56,7 @@ export function OurProcessSection() {
                 <p className="font-mono text-[10px] tracking-[0.12em] uppercase text-[#999999] mb-3">
                   {steps[i].step}
                 </p>
-                <h3 className="font-sans font-medium text-xl sm:text-2xl lg:text-3xl mb-5 leading-snug tracking-[-0.02em]">
+                <h3 id="processus-etape" className="font-sans font-medium text-xl sm:text-2xl lg:text-3xl mb-5 leading-snug tracking-[-0.02em]">
                   {steps[i].title}
                 </h3>
                 <p className="font-sans text-sm sm:text-base text-[#E8E8E8] leading-relaxed max-w-lg">

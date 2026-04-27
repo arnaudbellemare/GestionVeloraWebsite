@@ -42,7 +42,7 @@ export function WhatWeDoSection() {
       className="pt-28 pb-24 lg:pt-32 lg:pb-32 bg-nd-surface overflow-hidden scroll-mt-24"
     >
       <ScrollReveal className="text-center px-6 mb-16 lg:mb-20">
-        <h2 className="font-sans font-medium text-4xl lg:text-5xl xl:text-6xl text-nd-display leading-[1.05] tracking-[-0.02em] max-w-4xl mx-auto mb-4">
+        <h2 id="nos-services" className="font-sans font-medium text-4xl lg:text-5xl xl:text-6xl text-nd-display leading-[1.05] tracking-[-0.02em] max-w-4xl mx-auto mb-4">
           {t("whatWeDo.title")}{" "}
           <span className="text-nd-secondary font-normal">{t("whatWeDo.titleItalic")}</span>
         </h2>

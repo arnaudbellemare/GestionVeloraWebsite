@@ -10,6 +10,29 @@ import { ScrollReveal } from "../components/ScrollReveal";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { SITE_URL } from "../config";
 
+const RELATED_POSTS: Record<string, { slug: string; titleEn: string; titleFr: string }[]> = {
+  "gestion-airbnb": [
+    { slug: "airbnb-montreal-permis-reglementation", titleEn: "Airbnb in Montreal: permits, regulation and best practices", titleFr: "Airbnb à Montréal : permis, réglementation et bonnes pratiques" },
+    { slug: "experience-locataire-avantage-concurrentiel", titleEn: "Tenant experience: the new competitive advantage", titleFr: "L'expérience locataire : le nouvel avantage concurrentiel" },
+    { slug: "avenir-gestion-immobiliere-intelligente-2026", titleEn: "The future of intelligent property management in 2026", titleFr: "L'avenir de la gestion immobilière intelligente en 2026" },
+  ],
+  "syndicat-copropriete": [
+    { slug: "gestion-copropriete-montreal-reglementation", titleEn: "Condo management in Montreal: regulation guide", titleFr: "Gestion de copropriété à Montréal : réglementation" },
+    { slug: "fonds-prevoyance-copropriete-quebec", titleEn: "Condo reserve fund: obligations and best practices", titleFr: "Fonds de prévoyance en copropriété : obligations" },
+    { slug: "maintenance-preventive-economise-millions", titleEn: "Preventive maintenance: why it saves millions", titleFr: "Maintenance préventive : pourquoi ça économise des millions" },
+  ],
+  "gestion-locative": [
+    { slug: "experience-locataire-avantage-concurrentiel", titleEn: "Tenant experience: the new competitive advantage", titleFr: "L'expérience locataire : le nouvel avantage concurrentiel" },
+    { slug: "maximiser-noi-approche-donnees", titleEn: "Maximize NOI in Montreal: a data-driven approach", titleFr: "Maximiser le NOI à Montréal : approche basée sur les données" },
+    { slug: "choisir-gestionnaire-immobilier-montreal", titleEn: "How to choose a property manager in Montreal", titleFr: "Comment choisir son gestionnaire immobilier à Montréal" },
+  ],
+  "gestion-immobiliere-commerciale": [
+    { slug: "maximiser-noi-approche-donnees", titleEn: "Maximize NOI in Montreal: a data-driven approach", titleFr: "Maximiser le NOI à Montréal : approche basée sur les données" },
+    { slug: "maintenance-preventive-economise-millions", titleEn: "Preventive maintenance: why it saves millions", titleFr: "Maintenance préventive : pourquoi ça économise des millions" },
+    { slug: "choisir-gestionnaire-immobilier-montreal", titleEn: "How to choose a property manager in Montreal", titleFr: "Comment choisir son gestionnaire immobilier à Montréal" },
+  ],
+};
+
 const SERVICE_IMAGES: Record<string, string> = {
   "syndicat-copropriete":
     "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=85",
@@ -300,6 +323,36 @@ export function LocationPage() {
           </div>
         </div>
       </section>
+
+      {/* Related articles */}
+      {RELATED_POSTS[loc.service.slug] && (
+        <section className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas border-t border-nd-border">
+          <div className="max-w-[90rem] mx-auto">
+            <ScrollReveal className="mb-10">
+              <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display leading-[1.1] tracking-[-0.02em]">
+                {isEn ? "Related articles" : "Articles associés"}
+              </h2>
+            </ScrollReveal>
+            <div className="grid sm:grid-cols-3 gap-6">
+              {RELATED_POSTS[loc.service.slug].map((post, i) => (
+                <ScrollReveal key={post.slug} delay={i * 0.07}>
+                  <InternalLink
+                    to={`/blog/${post.slug}`}
+                    className="block rounded-2xl border border-nd-border bg-nd-surface p-6 hover:border-nd-primary/40 transition-colors"
+                  >
+                    <span className="font-sans font-medium text-nd-display block mb-1 text-sm leading-snug">
+                      {isEn ? post.titleEn : post.titleFr}
+                    </span>
+                    <span className="font-sans text-xs text-nd-secondary">
+                      {isEn ? "Read article →" : "Lire l'article →"}
+                    </span>
+                  </InternalLink>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-surface border-t border-nd-border text-center">

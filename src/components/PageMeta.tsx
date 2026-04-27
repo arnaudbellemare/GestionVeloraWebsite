@@ -6,6 +6,18 @@ import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "../config";
 import { getPostBySlug } from "../data/blog";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
+const _TITLE_SUFFIX = " | Gestion Velora";
+const _TITLE_MAX = 70;
+
+function buildTitle(headline: string): string {
+  const withSuffix = `${headline}${_TITLE_SUFFIX}`;
+  if (withSuffix.length <= _TITLE_MAX) return withSuffix;
+  if (headline.length <= _TITLE_MAX) return headline;
+  const cut = headline.slice(0, _TITLE_MAX - 1);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut) + "…";
+}
+
 function setMeta(name: string, content: string, property = false) {
   const attr = property ? "property" : "name";
   let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement | null;
@@ -49,7 +61,7 @@ export function PageMeta() {
     } else if (pathname.startsWith("/services/") || pathname.startsWith("/en/services/")) {
       if (slug && SERVICE_SLUGS.includes(slug as ServiceSlug)) {
         const service = getLocalizedService(slug as ServiceSlug, t);
-        title = isEn ? `${service.title} | Gestion Velora` : `${service.title} | Gestion Velora`;
+        title = buildTitle(service.title);
         description = service.description;
         ogImage = service.image;
         twitterImage = service.image;
@@ -63,7 +75,7 @@ export function PageMeta() {
       if (slug) {
         const post = getPostBySlug(slug, locale);
         if (post) {
-          title = `${post.title} | Gestion Velora`;
+          title = buildTitle(post.metaTitle ?? post.title);
           description = post.excerpt;
           ogImage = post.image;
           twitterImage = post.image;

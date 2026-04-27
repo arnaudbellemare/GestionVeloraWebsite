@@ -19,7 +19,7 @@ export function WhoWeAreSection() {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16 lg:mb-20">
           <div className="max-w-2xl">
             <ScrollReveal>
-              <h2 className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] text-nd-display leading-[1.1] tracking-[-0.02em] mb-5">
+              <h2 id="qui-sommes-nous" className="font-sans font-medium text-3xl sm:text-4xl lg:text-[2.75rem] text-nd-display leading-[1.1] tracking-[-0.02em] mb-5">
                 {t("whoWeAre.title")}
               </h2>
             </ScrollReveal>
@@ -44,7 +44,7 @@ export function WhoWeAreSection() {
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {projects.map((project, i) => (
             <ScrollReveal key={project.name} delay={i * 0.1}>
-              <article className="group">
+              <article id={`portfolio-${i + 1}`} className="group">
                 <div className="aspect-[4/5] rounded-lg overflow-hidden mb-4 bg-nd-border border border-nd-border">
                   <img
                     src={project.image}
@@ -63,7 +63,7 @@ export function WhoWeAreSection() {
                     ↗
                   </span>
                 </div>
-                <h3 className="font-sans font-medium text-lg text-nd-primary">
+                <h3 id={`projet-${i + 1}`} className="font-sans font-medium text-lg text-nd-primary">
                   {project.name}
                 </h3>
               </article>

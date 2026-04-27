@@ -29,7 +29,7 @@ export function InsightsSection() {
       <div className="max-w-[90rem] mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <ScrollReveal>
-            <h2 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em]">
+            <h2 id="articles-recents" className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em]">
               {t("insights.title")}
             </h2>
             <p className="font-sans text-black/60 dark:text-white/60 mt-2">
