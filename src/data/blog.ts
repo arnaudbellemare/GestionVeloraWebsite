@@ -1452,6 +1452,334 @@ export const blogPosts: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "releve-31-rl31-guide-proprietaires-locataires-quebec",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=85",
+    datePublished: "2026-04-27",
+    dateModified: "2026-04-27",
+    fr: {
+      category: "Fiscalité",
+      date: "Avril 2026",
+      title: "Relevé 31 (RL-31) au Québec : guide complet pour les propriétaires",
+      metaTitle: "Relevé 31 RL-31 propriétaires Québec 2026",
+      excerpt: "Le relevé 31 est un feuillet fiscal que tout propriétaire québécois doit remettre à ses locataires avant le 28 février. Voici tout ce qu'il faut savoir.",
+      brief: "Le relevé 31 (RL-31) est un feuillet fiscal québécois que chaque propriétaire doit remettre à ses locataires avant le dernier jour de février. Il permet aux locataires de réclamer le crédit d'impôt pour solidarité. L'oubli ou l'erreur expose le propriétaire à des pénalités de Revenu Québec. Un gestionnaire immobilier professionnel émet ces relevés automatiquement pour tous les logements sous mandat.",
+      sections: [
+        {
+          heading: "Qu'est-ce que le relevé 31 (RL-31) et qui est concerné ?",
+          paragraphs: [
+            "Le relevé 31 est le feuillet fiscal officiel de Revenu Québec que tout propriétaire bailleur doit remettre à chaque locataire qui occupait un logement au 31 décembre de l'année visée. Ce document permet au locataire de réclamer le crédit d'impôt pour solidarité, qui tient compte des frais de logement parmi ses trois composantes. Tout propriétaire ou copropriétaire d'un immeuble locatif québécois — triplex, immeuble à revenus ou condo loué — est tenu par la loi de remettre ce relevé.",
+            "Sont exemptés de l'obligation d'émettre un RL-31 : les propriétaires de chambres meublées dont le loyer est inférieur à 100 $ par mois, les résidences pour aînés (RPA) qui émettent plutôt un RL-24, et les logements de fonction fournis par l'employeur. Dans tous les autres cas de location résidentielle standard au Québec, le RL-31 est obligatoire.",
+            "Le feuillet doit être remis au locataire au plus tard le dernier jour de février de l'année suivant l'année d'imposition. Pour l'année 2025, la date limite est le 28 février 2026. Le propriétaire conserve une copie et la transmet également à Revenu Québec.",
+          ],
+        },
+        {
+          heading: "Comment remplir le RL-31 : cases et informations requises",
+          paragraphs: [
+            "Le relevé 31 comporte plusieurs cases : l'adresse complète du logement loué, le montant total des loyers reçus pour l'année (case A), la proportion du logement utilisée à des fins commerciales (case B), le nombre de locataires principaux (case C), et les coordonnées du locataire et du propriétaire. Depuis 2021, le formulaire inclut aussi des cases pour les résidences en RPA et les subventions gouvernementales reçues.",
+            "Le montant à inscrire à la case A correspond aux loyers bruts reçus — loyer mensuel multiplié par le nombre de mois d'occupation. Si le locataire a occupé le logement du 1er mars au 31 décembre, on inscrit 10 mois de loyer. Les charges séparées (stationnement facturé en sus, remboursement de services publics) ne sont généralement pas incluses si elles sont distinctement contractuelles.",
+            "Le RL-31 peut être soumis électroniquement via le portail Mon dossier pour les entreprises de Revenu Québec, ou en format papier. Les propriétaires gérant plusieurs logements ont tout intérêt à utiliser des logiciels de gestion immobilière ou à déléguer cette tâche à un gestionnaire professionnel disposant d'outils automatisés.",
+          ],
+        },
+        {
+          heading: "Conséquences en cas de non-remise ou d'erreur sur le RL-31",
+          paragraphs: [
+            "Le défaut de remettre le RL-31 à temps expose le propriétaire à des pénalités de Revenu Québec. La pénalité de base pour omission est de 25 $ par relevé, avec un minimum de 100 $ et un maximum de 7 500 $ par année d'imposition. En cas de récidive, la pénalité peut être plus élevée. Des intérêts s'accumulent sur les montants impayés.",
+            "Une erreur — montant de loyer incorrect ou mauvaise adresse — peut priver le locataire d'une portion de son crédit d'impôt pour solidarité et entraîner un avis de cotisation de Revenu Québec. Le propriétaire doit alors émettre un relevé corrigé et le transmettre à Revenu Québec avec une copie au locataire.",
+            [
+              "Un ",
+              { text: "gestionnaire immobilier professionnel", to: "/services/gestion-locative" },
+              " comme Gestion Velora intègre la production des RL-31 dans son mandat annuel. Tous les relevés sont générés, vérifiés et transmis avant la date limite, sans que le propriétaire ait à s'en préoccuper. Cette prise en charge évite les erreurs, les oublis et les pénalités associées.",
+            ],
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Tax",
+      date: "April 2026",
+      title: "RL-31 (Relevé 31) in Quebec: complete guide for landlords",
+      metaTitle: "RL-31 Releve 31 Quebec landlord guide 2026",
+      excerpt: "The RL-31 (Relevé 31) is a Quebec tax slip every landlord must give tenants by the last day of February. Here's what you need to know to stay compliant.",
+      brief: "The RL-31 (Relevé 31) is a Quebec tax slip that every landlord must deliver to tenants by the last day of February. It allows tenants to claim the solidarity tax credit. Failing to issue it or making errors exposes landlords to Revenu Québec penalties. A professional property manager issues these slips automatically for all managed units.",
+      sections: [
+        {
+          heading: "What is the RL-31 and who must issue it?",
+          paragraphs: [
+            "The RL-31 is the official Revenu Québec tax slip that every landlord must give to each tenant who occupied a rental unit on December 31 of the tax year. This document lets tenants claim the solidarity tax credit, which considers housing costs among its three components. Every owner of a Quebec residential rental property — duplex, income property, or rented condo — is legally required to issue this slip.",
+            "Exemptions apply to: furnished room rentals under $100/month, seniors' residences (RPA, which issue an RL-24 instead), and employer-provided housing. In all other standard Quebec residential rental situations, the RL-31 is mandatory.",
+            "The slip must be delivered to the tenant no later than the last day of February of the year following the tax year. For the 2025 tax year, the deadline is February 28, 2026. The landlord keeps a copy and also transmits it to Revenu Québec.",
+          ],
+        },
+        {
+          heading: "How to complete the RL-31: required boxes and information",
+          paragraphs: [
+            "The RL-31 requires: the full address of the rented unit, total rent received for the year (box A), any portion used commercially (box B), the number of primary tenants (box C), and contact information for both landlord and tenant. Since 2021, the form also includes boxes for RPA residents and government subsidies received.",
+            "Box A reflects gross rents received — monthly rent multiplied by months of occupancy. If the tenant occupied the unit from March 1 to December 31, report 10 months of rent. Separately-billed charges (parking, utility reimbursements) are generally excluded if they are contractually distinct.",
+            "The RL-31 can be submitted electronically through Revenu Québec's Mon dossier portal or in paper format. Landlords managing multiple units benefit from property management software or from delegating to a professional manager with automated tools.",
+          ],
+        },
+        {
+          heading: "Consequences for late or incorrect RL-31 filing",
+          paragraphs: [
+            "Failing to deliver the RL-31 on time exposes landlords to Revenu Québec penalties. The base penalty for failure to file is $25 per slip, with a minimum of $100 and a maximum of $7,500 per tax year. Repeat violations attract higher penalties, and interest accrues on unpaid amounts.",
+            "An error — wrong rent amount or incorrect address — can reduce the tenant's solidarity tax credit and trigger a Revenu Québec assessment. The landlord must then issue a corrected RL-31 and transmit it to Revenu Québec with a copy to the tenant.",
+            [
+              "A professional ",
+              { text: "property manager", to: "/services/gestion-locative" },
+              " like Gestion Velora includes RL-31 production in the standard annual mandate. All slips are generated, verified, and submitted before the deadline — at no extra effort for the landlord. This eliminates errors, omissions, and associated penalties.",
+            ],
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "augmentation-loyer-montreal-regles-calcul-tal",
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85",
+    datePublished: "2026-04-27",
+    dateModified: "2026-04-27",
+    fr: {
+      category: "Réglementation",
+      date: "Avril 2026",
+      title: "Augmentation de loyer à Montréal : règles, calcul et procédure TAL 2026",
+      metaTitle: "Augmentation loyer Montréal règles TAL 2026",
+      excerpt: "L'augmentation de loyer au Québec est encadrée par le TAL et le Code civil. Préavis, calcul justifiable et contestation : ce que chaque propriétaire doit savoir en 2026.",
+      brief: "Au Québec, un propriétaire peut augmenter le loyer à chaque renouvellement de bail à condition de respecter un préavis écrit de 3 à 6 mois avant la fin du bail. Le locataire peut accepter, refuser ou demander la fixation du loyer par le Tribunal administratif du logement (TAL). Le taux suggéré par le TAL pour 2026 est de 3,7 % pour les logements chauffés et 2,7 % pour les non chauffés.",
+      sections: [
+        {
+          heading: "Règles de préavis pour une augmentation de loyer au Québec",
+          paragraphs: [
+            "Au Québec, l'augmentation de loyer doit être communiquée par écrit au locataire dans un délai précis avant la fin du bail : au moins 3 mois avant la fin d'un bail à durée fixe de 12 mois, au moins 6 mois avant la fin d'un bail de plus de 12 mois, et entre 1 et 2 mois pour un bail mensuel. Ce préavis doit être envoyé par écrit — idéalement par lettre recommandée ou remise en main propre contre signature — et indiquer le nouveau montant proposé et la date d'entrée en vigueur.",
+            "Le propriétaire devrait utiliser le formulaire officiel du Tribunal administratif du logement (TAL) pour aviser le locataire, bien que ce formulaire ne soit pas strictement obligatoire si l'avis contient toutes les informations requises par le Code civil du Québec. L'avis doit mentionner le montant actuel du loyer, le nouveau montant proposé ou le montant de l'augmentation, et la date à laquelle la modification prendrait effet.",
+            "Si le propriétaire omet d'envoyer l'avis dans les délais prescrits, il ne peut pas augmenter le loyer lors du renouvellement — le bail se renouvelle aux mêmes conditions. Cette règle oblige les propriétaires d'immeubles à revenus à planifier leurs hausses à l'avance, particulièrement lorsque plusieurs baux arrivent à terme à des dates différentes.",
+          ],
+        },
+        {
+          heading: "Comment calculer une augmentation de loyer justifiable au Québec",
+          paragraphs: [
+            "Chaque année, le TAL publie un guide de fixation du loyer qui détaille les critères de calcul. Pour 2026, le taux suggéré est de 3,7 % pour les logements chauffés par le propriétaire et 2,7 % pour les logements non chauffés. Ces taux reflètent l'évolution des dépenses typiques d'un immeuble : taxes municipales et scolaires, assurances, frais d'entretien, coûts de chauffage et rénovations amortissables.",
+            "Le calcul réel de l'augmentation justifiable est plus complexe que le simple taux suggéré. Il prend en compte les dépenses réelles de l'immeuble, le taux d'intérêt sur les améliorations majeures, et d'autres facteurs spécifiques. Un propriétaire peut demander une augmentation supérieure au taux suggéré s'il peut justifier des dépenses plus élevées — travaux de rénovation importants, hausse significative des taxes ou des primes d'assurance.",
+            [
+              "Un ",
+              { text: "gestionnaire immobilier professionnel", to: "/services/gestion-locative" },
+              " calcule les augmentations justifiables pour chaque logement, prépare et envoie les avis dans les délais requis, et assure le suivi des refus et des demandes de fixation au TAL. Cette prise en charge évite les erreurs de procédure qui peuvent invalider une augmentation ou exposer le propriétaire à des pénalités.",
+            ],
+          ],
+        },
+        {
+          heading: "Que faire si le locataire refuse l'augmentation de loyer ?",
+          paragraphs: [
+            "Lorsque le locataire reçoit l'avis d'augmentation, il dispose d'un délai d'un mois pour répondre. S'il n'accepte pas expressément la hausse, le propriétaire doit saisir le TAL dans un délai d'un mois après la fin du bail pour demander la fixation du loyer. À défaut, le bail est reconduit aux conditions existantes, sans l'augmentation proposée.",
+            "La fixation du loyer par le TAL est un processus administratif où le tribunal détermine le loyer justifiable en fonction des dépenses de l'immeuble. Le propriétaire doit soumettre les pièces justificatives : relevés de taxes, primes d'assurance, factures de chauffage, coûts d'entretien et de rénovation. Le TAL peut fixer un loyer inférieur, égal ou supérieur à ce que le propriétaire a demandé, selon les faits soumis.",
+            "Les recours au TAL sont accessibles et relativement rapides, mais exigent une préparation documentaire rigoureuse. Gestion Velora représente les propriétaires dans leurs démarches au TAL, constitue les dossiers justificatifs et assure le suivi des audiences. Cette expertise réduit le risque d'erreur procédurale et maximise les chances d'obtenir l'augmentation justifiable.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Regulation",
+      date: "April 2026",
+      title: "Rent increases in Montreal: rules, calculation and TAL process 2026",
+      metaTitle: "Rent increase Montreal rules TAL 2026",
+      excerpt: "Quebec rent increases are governed by the TAL and Civil Code. Notice periods, calculation methods, and the dispute process — what every landlord needs to know in 2026.",
+      brief: "In Quebec, a landlord can raise rent at each lease renewal by giving written notice 3–6 months before the lease end. The tenant can accept, refuse, or request rent fixation by the Tribunal administratif du logement (TAL). The TAL suggested rate for 2026 is 3.7% for heated units and 2.7% for unheated units.",
+      sections: [
+        {
+          heading: "Notice requirements for rent increases in Quebec",
+          paragraphs: [
+            "In Quebec, rent increases must be communicated in writing within specific notice periods before lease end: at least 3 months for a fixed 12-month lease, at least 6 months for leases longer than 12 months, and 1–2 months for monthly leases. Notice must be in writing — ideally by registered mail or hand-delivered against signature — clearly stating the proposed new rent and effective date.",
+            "Landlords should use the official TAL form to notify tenants, though it isn't strictly mandatory if the notice contains all information required by the Quebec Civil Code. The notice must state the current rent, the proposed new amount or the increase, and the effective date.",
+            "If the landlord fails to send notice within the required period, the lease renews at the same conditions — no increase can be applied. This rule requires landlords of multi-unit buildings to plan renewals in advance, especially when leases expire at different dates throughout the year.",
+          ],
+        },
+        {
+          heading: "How to calculate a justifiable rent increase in Quebec",
+          paragraphs: [
+            "Each year, the TAL publishes a rent fixation guide detailing calculation criteria. For 2026, the suggested rate is 3.7% for landlord-heated units and 2.7% for tenant-heated units. These rates reflect typical building expense increases: municipal and school taxes, insurance, maintenance, heating, and amortizable renovations.",
+            "The actual justifiable increase is more nuanced than the suggested rate. It factors in real building expenses, interest on major improvements, and other situation-specific elements. A landlord can request an increase above the suggested rate if they can document higher expenses — major renovations, significant tax increases, or rising insurance premiums.",
+            [
+              "A professional ",
+              { text: "property manager", to: "/services/gestion-locative" },
+              " calculates justifiable increases per unit, prepares and sends notices on time, and tracks refusals and TAL fixation requests. This eliminates procedural errors that can invalidate an increase or expose the landlord to penalties.",
+            ],
+          ],
+        },
+        {
+          heading: "What happens when a tenant refuses the rent increase?",
+          paragraphs: [
+            "When a tenant receives the rent increase notice, they have one month to respond. If they don't expressly accept the increase, the landlord must file with the TAL within one month after lease end to request rent fixation. Failing to do so means the lease renews at existing conditions without the proposed increase.",
+            "TAL rent fixation is an administrative process where the tribunal determines the justifiable rent based on building expenses. The landlord must submit supporting documents: tax statements, insurance premiums, heating bills, maintenance and renovation costs. The TAL may set a rent lower, equal, or higher than requested depending on the evidence.",
+            "TAL proceedings are accessible and relatively quick but require rigorous documentation. Gestion Velora represents landlords in TAL proceedings, compiles supporting files, and manages hearing follow-up. This expertise reduces procedural risk and maximizes the chances of obtaining the justifiable increase.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "bail-logement-quebec-guide-complet-proprietaires",
+    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=1200&q=85",
+    datePublished: "2026-04-27",
+    dateModified: "2026-04-27",
+    fr: {
+      category: "Réglementation",
+      date: "Avril 2026",
+      title: "Bail de logement au Québec : guide complet pour les propriétaires",
+      metaTitle: "Bail logement Québec guide propriétaires 2026",
+      excerpt: "Le bail résidentiel au Québec est un formulaire obligatoire réglementé par le TAL. Clauses permises, interdites, case G et renouvellement : ce que chaque propriétaire doit maîtriser.",
+      brief: "Au Québec, tout bail résidentiel doit être rédigé sur le formulaire officiel du Tribunal administratif du logement (TAL). Ce formulaire oblige le propriétaire à divulguer le loyer le plus bas payé au cours des 12 derniers mois (case G). Les clauses contraires à l'ordre public ou aux droits des locataires sont nulles de plein droit, peu importe ce que dit le contrat signé.",
+      sections: [
+        {
+          heading: "Le formulaire de bail obligatoire au Québec : ce qu'il contient",
+          paragraphs: [
+            "Au Québec, le bail résidentiel doit être rédigé sur le formulaire officiel produit par le Tribunal administratif du logement (TAL, anciennement la Régie du logement). Ce formulaire est obligatoire depuis 1996 et comprend : l'identification des parties, la description du logement et des accessoires inclus (stationnement, rangement, électroménagers), le loyer mensuel et ses conditions de paiement, la durée du bail et les services inclus.",
+            "Une des obligations les plus importantes est la divulgation du loyer le plus bas payé au cours des 12 derniers mois pour ce logement (case G). Cette obligation vise à éviter les augmentations abusives entre deux locataires. Si le propriétaire indique un montant inférieur au loyer réel précédent — ou omet cette information — le nouveau locataire peut demander la diminution de son loyer au TAL dans les 10 premiers jours du bail.",
+            "Le formulaire officiel est disponible gratuitement sur le site du TAL et peut être rempli en ligne. Les propriétaires qui gèrent plusieurs logements doivent s'assurer que chaque bail est à jour avec la version la plus récente du formulaire, car le TAL le met à jour périodiquement pour refléter les changements législatifs.",
+          ],
+        },
+        {
+          heading: "Clauses permises, clauses interdites et pièges courants",
+          paragraphs: [
+            "Le Code civil du Québec établit clairement quelles clauses sont permises dans un bail résidentiel et lesquelles sont nulles. Sont interdites notamment : les clauses qui empêchent le locataire de sous-louer ou de céder son bail sans raison valable, celles qui imposent des frais pour l'autorisation de sous-location, les clauses qui suppriment le droit au maintien dans les lieux, et les pénalités non prévues par la loi.",
+            "Les clauses particulières (section K du formulaire) peuvent ajouter des conditions spécifiques : interdiction de fumer, politique concernant les animaux de compagnie, règles d'utilisation des parties communes. Ces clauses doivent cependant respecter la Charte des droits et libertés et le Code civil — une clause interdisant tout animal de compagnie peut être contestée si elle est appliquée de façon discriminatoire.",
+            [
+              "Les pièges les plus fréquents : omettre la case G (loyer précédent), rédiger des clauses non conformes au Code civil, négliger d'inclure les règlements de l'immeuble en annexe, et oublier de remettre un exemplaire signé au locataire. Un ",
+              { text: "gestionnaire locatif professionnel", to: "/services/gestion-locative" },
+              " prépare et fait signer les baux en conformité avec la législation en vigueur, évitant ainsi les litiges coûteux.",
+            ],
+          ],
+        },
+        {
+          heading: "Renouvellement, cession et résiliation du bail au Québec",
+          paragraphs: [
+            "Au Québec, le bail résidentiel se renouvelle automatiquement aux mêmes conditions à son échéance, sauf si le propriétaire envoie un avis de modification dans les délais prescrits. Ni le propriétaire ni le locataire ne peut mettre fin unilatéralement à un bail à durée fixe avant son terme, sauf pour des motifs prévus par la loi : non-paiement de loyer, reprise de logement pour occupation personnelle, ou démolition.",
+            "La cession de bail — le transfert du bail à un nouveau locataire par l'occupant actuel — est un droit du locataire québécois. Le propriétaire peut refuser uniquement pour des motifs sérieux (insolvabilité manifeste du cessionnaire, intention de sous-louer à un prix supérieur). Un refus sans motif valable expose le propriétaire à des recours au TAL.",
+            "La sous-location partielle ou totale est également permise avec l'accord du propriétaire. Le locataire original reste cependant solidairement responsable des obligations du bail pendant la période de sous-location. Ces règles complexes justifient le recours à un gestionnaire immobilier pour la rédaction et le suivi des baux sur l'ensemble d'un portefeuille locatif.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Regulation",
+      date: "April 2026",
+      title: "Quebec residential lease: complete guide for landlords",
+      metaTitle: "Quebec residential lease guide landlords 2026",
+      excerpt: "Quebec residential leases must use the official TAL form and disclose the previous lowest rent. What landlords need to know about required clauses, box G, and lease renewal.",
+      brief: "In Quebec, every residential lease must use the official Tribunal administratif du logement (TAL) form. It requires landlords to disclose the lowest rent paid in the past 12 months (box G). Clauses that violate tenant rights or public order are automatically null, regardless of what the signed contract says.",
+      sections: [
+        {
+          heading: "The mandatory Quebec lease form: what it contains",
+          paragraphs: [
+            "In Quebec, residential leases must use the official form produced by the TAL (formerly the Régie du logement). This form has been mandatory since 1996. It covers: identification of parties, description of the unit and included accessories (parking, storage, appliances), monthly rent and payment terms, lease duration, and included services.",
+            "One of the most important obligations is disclosing the lowest rent paid in the past 12 months for that unit (box G). This prevents abusive between-tenant rent hikes. If the landlord states an amount below the actual previous rent — or omits it — the new tenant can request a rent reduction at the TAL within the first 10 days of the lease.",
+            "The official form is available free on the TAL website and can be completed online. Landlords managing multiple units must ensure each lease uses the most current version, as the TAL updates it periodically to reflect legislative changes.",
+          ],
+        },
+        {
+          heading: "Permitted clauses, prohibited clauses, and common pitfalls",
+          paragraphs: [
+            "The Quebec Civil Code defines which lease clauses are permitted and which are null. Prohibited clauses include: those preventing tenants from sub-leasing or assigning without valid reason, those imposing fees for sublease authorization, clauses eliminating the right to maintain occupancy, and penalty clauses beyond what the law allows.",
+            "Special clauses (section K) can add unit-specific conditions: no-smoking rules, pet policies, common area usage rules. These must comply with the Charter of Human Rights and Freedoms and the Civil Code — a total pet ban may be challenged if applied discriminatorily.",
+            [
+              "Common landlord pitfalls: omitting box G (previous rent), drafting clauses that violate the Civil Code, failing to include building rules as annexes, and not giving the tenant a signed copy. A professional ",
+              { text: "rental property manager", to: "/services/gestion-locative" },
+              " prepares and executes leases in full compliance with current legislation, preventing costly disputes.",
+            ],
+          ],
+        },
+        {
+          heading: "Lease renewal, assignment, and termination in Quebec",
+          paragraphs: [
+            "In Quebec, a residential lease automatically renews at the same conditions unless the landlord sends a notice of modification within the required notice period. Neither party can unilaterally end a fixed-term lease before expiry except for legally recognized reasons: non-payment, repossession for personal use, or demolition.",
+            "Lease assignment — transferring the lease to a new tenant — is a Quebec tenant right. Landlords can only refuse on serious grounds (manifest insolvency of the assignee, intent to sublet at a higher price). An unjustified refusal exposes the landlord to TAL recourse.",
+            "Partial or full subletting is permitted with the landlord's consent. The original tenant remains jointly liable for lease obligations during the subletting period. These complex rules make professional property management valuable for any landlord managing a rental portfolio.",
+          ],
+        },
+      ],
+    },
+  },
+  {
+    slug: "req-neq-verifier-gestionnaire-immobilier-montreal",
+    image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&q=85",
+    datePublished: "2026-04-27",
+    dateModified: "2026-04-27",
+    fr: {
+      category: "Conseils",
+      date: "Avril 2026",
+      title: "REQ et NEQ : vérifier le registre d'un gestionnaire immobilier au Québec",
+      metaTitle: "REQ NEQ vérifier gestionnaire immobilier Québec",
+      excerpt: "Avant de confier votre immeuble à un gestionnaire, vérifiez son NEQ au Registraire des entreprises du Québec (REQ). Voici comment faire et pourquoi c'est essentiel.",
+      brief: "Tout gestionnaire immobilier exerçant au Québec doit être immatriculé au Registraire des entreprises du Québec (REQ) et détenir un numéro d'entreprise du Québec (NEQ) actif. Vérifier ce numéro en ligne prend moins de deux minutes et confirme que l'entreprise est légalement constituée, en règle et autorisée à exercer ses activités commerciales au Québec.",
+      sections: [
+        {
+          heading: "Qu'est-ce que le REQ et le NEQ au Québec ?",
+          paragraphs: [
+            "Le Registraire des entreprises du Québec (REQ) est l'organisme gouvernemental responsable de l'immatriculation de toutes les entreprises exerçant des activités au Québec. Toute personne morale (compagnie, société par actions) ou société de personnes qui exploite une entreprise au Québec est tenue de s'immatriculer auprès du REQ et d'obtenir un numéro d'entreprise du Québec (NEQ). Ce numéro est unique et permanent — il suit l'entreprise tout au long de son existence.",
+            "L'immatriculation au REQ n'est pas optionnelle : exercer une activité commerciale sans immatriculation valide peut entraîner des amendes et l'impossibilité d'obtenir certains permis et licences. Pour les gestionnaires immobiliers, cette immatriculation est une condition préalable à l'exercice légal de leurs activités de gestion pour le compte de tiers.",
+            "Le registre public du REQ est accessible gratuitement en ligne. Il permet à toute personne de vérifier le statut d'une entreprise, ses administrateurs, son adresse officielle, la date de constitution et l'état de ses déclarations annuelles. Cette transparence est un outil de protection pour les propriétaires qui cherchent à confier leur immeuble à un gestionnaire fiable.",
+          ],
+        },
+        {
+          heading: "Comment vérifier le NEQ d'un gestionnaire immobilier",
+          paragraphs: [
+            "Pour vérifier le NEQ d'un gestionnaire immobilier : rendez-vous sur registreentreprises.gouv.qc.ca, utilisez la recherche par nom d'entreprise ou par NEQ, et consultez la fiche de l'entreprise. Vérifiez que le statut est « actif », que les déclarations annuelles sont à jour (une entreprise qui ne les dépose pas peut être radiée), que l'adresse et les administrateurs correspondent à ce que le gestionnaire vous a présenté, et que l'objet de l'entreprise couvre la gestion immobilière.",
+            "Un gestionnaire immobilier peut aussi être assujetti à d'autres obligations selon la nature de ses activités : s'il agit comme courtier immobilier ou gère des fonds en fiducie, il doit détenir une licence de l'OACIQ. La gestion locative pure ne requiert pas de licence OACIQ, mais l'immatriculation au REQ reste obligatoire.",
+            [
+              "Lors de votre évaluation d'un ",
+              { text: "gestionnaire immobilier à Montréal", to: "/services/gestion-locative" },
+              ", demandez son NEQ et vérifiez-le vous-même. Un gestionnaire établi n'aura aucune réticence à vous fournir cette information. Si un prestataire hésite à divulguer son NEQ ou si sa fiche REQ présente des irrégularités, considérez cela comme un signal d'alarme.",
+            ],
+          ],
+        },
+        {
+          heading: "Autres vérifications à faire avant de signer un mandat de gestion",
+          paragraphs: [
+            "Au-delà du REQ, plusieurs autres vérifications s'imposent : assurez-vous que l'entreprise détient une assurance responsabilité civile professionnelle (erreurs et omissions) adéquate — au minimum 1 M$ par sinistre est la norme dans l'industrie. Vérifiez aussi l'existence d'une assurance détournement si le gestionnaire gère des fonds en fiducie pour votre compte.",
+            "Consultez les avis sur Google, le registre du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec) pour les gestionnaires de copropriété, et demandez au moins deux références récentes auprès de clients comparables. Un gestionnaire sérieux fournit ces informations spontanément et encourage les vérifications indépendantes.",
+            "Gestion Velora est immatriculée au REQ, détient une assurance responsabilité civile professionnelle, est membre du RGCQ et opère en toute transparence. Notre NEQ, nos assurances et nos références sont disponibles sur demande. Nous croyons que la confiance se mérite par la vérification.",
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Tips",
+      date: "April 2026",
+      title: "REQ and NEQ: how to verify a property manager's Quebec registration",
+      metaTitle: "REQ NEQ verify property manager Quebec registration",
+      excerpt: "Before hiring a property manager in Quebec, verify their NEQ at the Registraire des entreprises du Québec (REQ). Here's how to do it and why it matters.",
+      brief: "Any property manager operating in Quebec must be registered with the Registraire des entreprises du Québec (REQ) and hold an active Quebec business number (NEQ). Checking this number online takes under two minutes and confirms the firm is legally constituted, in good standing, and authorized to conduct commercial activities in Quebec.",
+      sections: [
+        {
+          heading: "What are the REQ and NEQ in Quebec?",
+          paragraphs: [
+            "The Registraire des entreprises du Québec (REQ) is the government body responsible for registering all businesses operating in Quebec. Every corporation or partnership conducting business in Quebec must register with the REQ and obtain a Quebec business number (NEQ). This number is unique and permanent — it follows the company throughout its existence.",
+            "REQ registration is not optional: conducting commercial activity without valid registration can result in fines and the inability to obtain certain permits. For property managers, this registration is a prerequisite for legally managing properties on behalf of third parties.",
+            "The REQ public registry is freely accessible online. Anyone can verify a company's status, directors, official address, incorporation date, and annual declaration status. This transparency is a protection tool for owners evaluating property managers.",
+          ],
+        },
+        {
+          heading: "How to verify a property manager's NEQ",
+          paragraphs: [
+            "To verify a property manager's NEQ: go to registreentreprises.gouv.qc.ca, search by company name or NEQ number, and review the company profile. Check that status is 'active', annual declarations are current, the address and directors match what the manager presented, and the business purpose covers property management.",
+            "A property manager may also face additional registration requirements: if they act as a real estate broker or hold funds in trust, they must hold an OACIQ license. Pure rental management doesn't require OACIQ licensing, but REQ registration remains mandatory.",
+            [
+              "When evaluating a ",
+              { text: "Montreal property manager", to: "/services/gestion-locative" },
+              ", ask for their NEQ and verify it yourself. An established manager will have no hesitation providing this. If a service provider hesitates to disclose their NEQ or their REQ profile shows irregularities, treat this as a red flag.",
+            ],
+          ],
+        },
+        {
+          heading: "Other checks to perform before signing a management mandate",
+          paragraphs: [
+            "Beyond the REQ, several verifications matter: confirm the company holds adequate professional liability insurance (errors and omissions) — at least $1M per occurrence is the industry standard. Verify fidelity insurance exists if the manager holds funds in trust on your behalf.",
+            "Check Google reviews, the RGCQ registry for condo managers, and request at least two recent references from comparable clients. A serious manager provides this information proactively and encourages independent verification.",
+            "Gestion Velora is registered with the REQ, holds professional liability insurance, is an RGCQ member, and operates with full transparency. Our NEQ, insurance details, and references are available on request. We believe trust is earned through verification, not through sales pitches.",
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export type BlogPostView = {

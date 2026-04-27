@@ -22,13 +22,13 @@ const RELATED_POSTS: Record<string, { slug: string; titleEn: string; titleFr: st
     { slug: "maintenance-preventive-economise-millions", titleEn: "Preventive maintenance: why it saves millions", titleFr: "Maintenance préventive : pourquoi ça économise des millions" },
   ],
   "gestion-locative": [
-    { slug: "experience-locataire-avantage-concurrentiel", titleEn: "Tenant experience: the new competitive advantage", titleFr: "L'expérience locataire : le nouvel avantage concurrentiel" },
-    { slug: "maximiser-noi-approche-donnees", titleEn: "Maximize NOI in Montreal: a data-driven approach", titleFr: "Maximiser le NOI à Montréal : approche basée sur les données" },
-    { slug: "choisir-gestionnaire-immobilier-montreal", titleEn: "How to choose a property manager in Montreal", titleFr: "Comment choisir son gestionnaire immobilier à Montréal" },
+    { slug: "augmentation-loyer-montreal-regles-calcul-tal", titleEn: "Rent increases in Montreal: rules, calculation and TAL process", titleFr: "Augmentation de loyer à Montréal : règles, calcul et procédure TAL" },
+    { slug: "bail-logement-quebec-guide-complet-proprietaires", titleEn: "Quebec residential lease: complete guide for landlords", titleFr: "Bail de logement au Québec : guide complet pour les propriétaires" },
+    { slug: "releve-31-rl31-guide-proprietaires-locataires-quebec", titleEn: "RL-31 (Relevé 31) in Quebec: complete guide for landlords", titleFr: "Relevé 31 (RL-31) au Québec : guide complet pour les propriétaires" },
   ],
   "gestion-immobiliere-commerciale": [
     { slug: "maximiser-noi-approche-donnees", titleEn: "Maximize NOI in Montreal: a data-driven approach", titleFr: "Maximiser le NOI à Montréal : approche basée sur les données" },
-    { slug: "maintenance-preventive-economise-millions", titleEn: "Preventive maintenance: why it saves millions", titleFr: "Maintenance préventive : pourquoi ça économise des millions" },
+    { slug: "req-neq-verifier-gestionnaire-immobilier-montreal", titleEn: "REQ and NEQ: how to verify a property manager's Quebec registration", titleFr: "REQ et NEQ : vérifier le registre d'un gestionnaire immobilier au Québec" },
     { slug: "choisir-gestionnaire-immobilier-montreal", titleEn: "How to choose a property manager in Montreal", titleFr: "Comment choisir son gestionnaire immobilier à Montréal" },
   ],
 };
