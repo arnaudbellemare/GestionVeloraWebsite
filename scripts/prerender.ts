@@ -981,6 +981,63 @@ function buildRoutes(): RouteConfig[] {
 }
 
 // ---------------------------------------------------------------------------
+// Sitemap generator — runs after every build so the file never goes stale
+// ---------------------------------------------------------------------------
+function buildSitemap(routes: RouteConfig[]): void {
+  const today = new Date().toISOString().slice(0, 10);
+
+  function priority(path: string): string {
+    if (path === "/" || path === "/en/") return "1.0";
+    if (path.startsWith("/services") || path.startsWith("/en/services")) return "0.9";
+    if (path.startsWith("/location/") || path.startsWith("/en/location/")) return "0.8";
+    if (path.startsWith("/blog/") || path.startsWith("/en/blog/")) return "0.7";
+    return "0.6";
+  }
+
+  function changefreq(path: string): string {
+    if (path === "/" || path === "/en/") return "weekly";
+    if (path.startsWith("/location/") || path.startsWith("/en/location/")) return "monthly";
+    return "monthly";
+  }
+
+  const seen = new Set<string>();
+  const entries: string[] = [];
+
+  for (const route of routes) {
+    if (seen.has(route.path)) continue;
+    seen.add(route.path);
+
+    const loc = `${SITE_URL}${route.path}`;
+    const frHref = `${SITE_URL}${route.frPath}`;
+    const enHref = `${SITE_URL}${route.enPath}`;
+
+    entries.push(
+      `  <url>\n` +
+      `    <loc>${loc}</loc>\n` +
+      `    <xhtml:link rel="alternate" hreflang="fr-CA" href="${frHref}" />\n` +
+      `    <xhtml:link rel="alternate" hreflang="en-CA" href="${enHref}" />\n` +
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${frHref}" />\n` +
+      `    <lastmod>${today}</lastmod>\n` +
+      `    <changefreq>${changefreq(route.path)}</changefreq>\n` +
+      `    <priority>${priority(route.path)}</priority>\n` +
+      `  </url>`
+    );
+  }
+
+  const xml =
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
+    entries.join("\n") + "\n" +
+    `</urlset>\n`;
+
+  const distPath = join(DIST, "sitemap.xml");
+  const publicPath = join(process.cwd(), "public", "sitemap.xml");
+  writeFileSync(distPath, xml, "utf-8");
+  writeFileSync(publicPath, xml, "utf-8");
+  console.log(`  ✓ sitemap.xml — ${entries.length} URLs written`);
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 async function main() {
@@ -1037,6 +1094,9 @@ async function main() {
   });
   writeFileSync(join(DIST, "index.html"), rootHtml, "utf-8");
   console.log("  ✓ / (dist/index.html updated)");
+
+  // Auto-generate sitemap from all routes so it never goes stale
+  buildSitemap(routes);
 
   console.log(`\n✅ Prerendered ${count} routes.\n`);
 }
