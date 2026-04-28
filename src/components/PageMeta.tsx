@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useLocale } from "../context/LocaleContext";
 import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "../config";
 import { getPostBySlug } from "../data/blog";
+import { getComparisonBySlug } from "../data/comparisons";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
 const _TITLE_SUFFIX = " | Gestion Velora";
@@ -38,8 +39,8 @@ export function PageMeta() {
   const isEn = locale === "en";
   const baseTitle = isEn ? "Property Management Montreal | Gestion Velora" : "Gestion immobilière Montréal | Gestion Velora";
   const baseDesc = isEn
-    ? "Leading property management Montreal: condo management, Airbnb management, rental management. 98% occupancy, 24/7 support, full transparency."
-    : "Votre tranquillité. Notre affaire. Gestion Velora offre syndicat de copropriété, gestion Airbnb et location longue durée à Montréal. Administration complète, maintenance proactive et rapports transparents.";
+    ? "Montreal property operations for condo boards, short-term rentals, and long-term rentals. Transparent reporting, 24/7 support, and proactive maintenance."
+    : "Gestion Velora accompagne syndicats, locations courte duree et locations longue duree a Montreal avec des rapports transparents, une equipe 24/7 et une maintenance proactive.";
 
   useEffect(() => {
     document.documentElement.lang = isEn ? "en-CA" : "fr-CA";
@@ -58,6 +59,27 @@ export function PageMeta() {
     if (isServicesHub) {
       title = t("servicesHub.metaTitle");
       description = t("servicesHub.metaDescription");
+    } else if (pathname === "/compare" || pathname === "/en/compare") {
+      title = isEn
+        ? "Property Management Comparison Guides | Gestion Velora"
+        : "Guides comparatifs en gestion immobiliere | Gestion Velora";
+      description = isEn
+        ? "Side-by-side comparisons of key property management models in Montreal for condo boards, landlords, and investors."
+        : "Comparatifs clairs entre les principaux modeles de gestion immobiliere a Montreal: autogestion, gestion professionnelle, location courte et longue duree.";
+    } else if (pathname.startsWith("/compare/") || pathname.startsWith("/en/compare/")) {
+      const compareSlug = pathname.split("/").filter(Boolean).pop();
+      const page = compareSlug ? getComparisonBySlug(compareSlug) : null;
+      if (page) {
+        title = buildTitle(isEn ? page.titleEn : page.titleFr);
+        description = isEn ? page.descriptionEn : page.descriptionFr;
+      }
+    } else if (pathname === "/locations" || pathname === "/en/locations") {
+      title = isEn
+        ? "City Property Management Pages | Gestion Velora"
+        : "Pages locales gestion immobiliere | Gestion Velora";
+      description = isEn
+        ? "Local property management pages by city across Greater Montreal for condo boards, rentals, and Airbnb operations."
+        : "Pages locales de gestion immobiliere par ville du Grand Montreal: copropriete, location et Airbnb.";
     } else if (pathname.startsWith("/services/") || pathname.startsWith("/en/services/")) {
       if (slug && SERVICE_SLUGS.includes(slug as ServiceSlug)) {
         const service = getLocalizedService(slug as ServiceSlug, t);
@@ -67,7 +89,7 @@ export function PageMeta() {
         twitterImage = service.image;
       }
     } else if (pathname === "/blog" || pathname === "/en/blog" || pathname === "/en/blog/") {
-      title = isEn ? "Montreal Property Management Insights | Gestion Velora" : "Conseils gestion immobilière Montréal | Gestion Velora";
+      title = isEn ? "Condo, Airbnb & Rental Insights Montreal | Gestion Velora" : "Blog copropriété, Airbnb et location | Gestion Velora";
       description = isEn
         ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
         : "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";
@@ -81,7 +103,7 @@ export function PageMeta() {
           twitterImage = post.image;
         }
       } else {
-        title = isEn ? "Montreal Property Management Insights | Gestion Velora" : "Conseils gestion immobilière Montréal | Gestion Velora";
+        title = isEn ? "Condo, Airbnb & Rental Insights Montreal | Gestion Velora" : "Blog copropriété, Airbnb et location | Gestion Velora";
         description = isEn
           ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
           : "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";

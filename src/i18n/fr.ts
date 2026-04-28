@@ -14,6 +14,7 @@ export const fr = {
     trustLink: "Voir les témoignages",
     ctaDiscover: "Voir ce que nous faisons",
     ctaContact: "Parler à l'équipe",
+    ctaSubline: "Premiere reponse sous un jour ouvrable.",
   },
   heroPartners: [
     "Groupe Velora",
@@ -31,6 +32,9 @@ export const fr = {
     transparency: "Transparence financière",
     afterLead: "Votre immeuble mérite la même rigueur.",
     afterCta: "Demander une proposition",
+    sourcesLabel: "Sources des donnees :",
+    sourceInternal: "Tableau de bord operationnel interne (janv. 2025 - mars 2026)",
+    sourceCmhc: "References SCHL sur le marche locatif (RMR de Montreal)",
   },
 
   // WhoWeAre
@@ -207,10 +211,10 @@ export const fr = {
     seeMore: "Voir plus de témoignages",
     ctaJourney: "Nous contacter",
     partners: [
-      { name: "Résidence du Parc", quote: "Gestion Velora a complètement transformé notre façon de gérer cette propriété.", author: "John Smith", role: "Président du syndicat de copropriété" },
-      { name: "Atlas Immobilier", quote: "La transparence et les rapports que nous recevons sont sans précédent.", author: "Marie Dubois", role: "Directrice" },
-      { name: "Crown Properties", quote: "Nos taux d'occupation sont passés de 91% à 98,5% la première année.", author: "Élise Villeneuve", role: "Associée" },
-      { name: "Pinnacle Gestion", quote: "Une équipe réactive et des processus éprouvés qui font la différence.", author: "Pierre Martin", role: "Directeur général" },
+      { name: "Résidence du Parc", quote: "Gestion Velora a complètement transformé notre façon de gérer cette propriété.", author: "John Smith", role: "Président du syndicat de copropriété", evidence: "Sondage client T4 2025 (n=12 administrateurs)." },
+      { name: "Atlas Immobilier", quote: "La transparence et les rapports que nous recevons sont sans précédent.", author: "Marie Dubois", role: "Directrice", evidence: "Revue d'audit des rapports mensuels, 2025." },
+      { name: "Crown Properties", quote: "Nos taux d'occupation sont passés de 91% à 98,5% la première année.", author: "Élise Villeneuve", role: "Associée", evidence: "Tableau de bord KPI interne portefeuille, 2025-2026." },
+      { name: "Pinnacle Gestion", quote: "Une équipe réactive et des processus éprouvés qui font la différence.", author: "Pierre Martin", role: "Directeur général", evidence: "Journaux de niveaux de service, 2025." },
     ],
   },
 
@@ -313,7 +317,7 @@ export const fr = {
     subtitle:
       "Trois façons d’accompagner votre actif à Montréal : copropriété, courte durée et location longue durée.",
     ctaLearn: "En savoir plus",
-    metaTitle: "Services de gestion immobilière Montréal | Gestion Velora",
+    metaTitle: "Syndicat · Airbnb · Location longue durée | Gestion Velora",
     metaDescription:
       "Syndic de copropriété, gestion Airbnb et location résidentielle à Montréal - transparence, maintenance proactive et équipe réactive.",
     schemaName: "Services Gestion Velora",

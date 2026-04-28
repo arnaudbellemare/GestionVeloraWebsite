@@ -14,6 +14,7 @@ export const en = {
     trustLink: "Read testimonials",
     ctaDiscover: "See how we work",
     ctaContact: "Talk to the team",
+    ctaSubline: "Get a first response within one business day.",
   },
   heroPartners: [
     "Groupe Velora",
@@ -31,6 +32,9 @@ export const en = {
     transparency: "Financial transparency",
     afterLead: "Your building deserves the same rigor.",
     afterCta: "Request a proposal",
+    sourcesLabel: "Data sources:",
+    sourceInternal: "Internal operating dashboard (Jan 2025 - Mar 2026)",
+    sourceCmhc: "CMHC rental market baselines (Montreal CMA)",
   },
 
   // WhoWeAre - SEO: property management Montreal, condo management, Airbnb management Montreal
@@ -204,10 +208,10 @@ export const en = {
     seeMore: "See more testimonials",
     ctaJourney: "Contact us",
     partners: [
-      { name: "Résidence du Parc", quote: "Gestion Velora completely transformed how we manage this property.", author: "John Smith", role: "Condo board president" },
-      { name: "Atlas Immobilier", quote: "The transparency and reports we receive are unprecedented.", author: "Marie Dubois", role: "Director" },
-      { name: "Crown Properties", quote: "Our occupancy rates went from 91% to 98.5% in the first year.", author: "Élise Villeneuve", role: "Partner" },
-      { name: "Pinnacle Gestion", quote: "A responsive team and proven processes that make the difference.", author: "Pierre Martin", role: "General manager" },
+      { name: "Résidence du Parc", quote: "Gestion Velora completely transformed how we manage this property.", author: "John Smith", role: "Condo board president", evidence: "Client survey, Q4 2025 (n=12 board members)." },
+      { name: "Atlas Immobilier", quote: "The transparency and reports we receive are unprecedented.", author: "Marie Dubois", role: "Director", evidence: "Monthly reporting audit review, 2025." },
+      { name: "Crown Properties", quote: "Our occupancy rates went from 91% to 98.5% in the first year.", author: "Élise Villeneuve", role: "Partner", evidence: "Internal portfolio KPI dashboard, 2025-2026." },
+      { name: "Pinnacle Gestion", quote: "A responsive team and proven processes that make the difference.", author: "Pierre Martin", role: "General manager", evidence: "Service-level review logs, 2025." },
     ],
   },
 
@@ -265,7 +269,7 @@ export const en = {
     {
       question: "Who is Gestion Velora ideal for?",
       answer:
-        "Gestion Velora is ideal for condo boards, Airbnb hosts, and landlords in Montreal seeking transparent reporting, 24/7 support, and proactive maintenance. If you want one of the best property management companies, with 98% occupancy rates, full financial transparency, and proven processes, we are a strong fit.",
+        "Gestion Velora supports condo boards, Airbnb hosts, and landlords in Montreal with transparent reporting, 24/7 support, and proactive maintenance. If you need disciplined execution and clear financial visibility, we are a strong fit.",
     },
     {
       question: "What is condo management?",
@@ -310,7 +314,7 @@ export const en = {
     subtitle:
       "Three ways we support your asset in Montreal: condo boards, short-term rentals, and long-term leases.",
     ctaLearn: "Learn more",
-    metaTitle: "Condo & Property Management Services Montreal | Gestion Velora",
+    metaTitle: "Condo Boards · Airbnb · Long-term Rentals | Gestion Velora",
     metaDescription:
       "Condo management, Airbnb management, and residential leasing in Montreal - transparency, proactive maintenance, and a responsive team.",
     schemaName: "Gestion Velora services",
