@@ -417,10 +417,10 @@ export const en = {
     notFound: "Article not found",
     backToInsightsLink: "Back to insights",
     relatedPostsTitle: "Related reading",
-    exploreServicesIntro: "Want hands-on support? Our services:",
-    contactQuestion: "Questions about property management? Contact Gestion Velora.",
-    planifyCall: "Request a proposal",
-    contactUs: "Contact us",
+    exploreServicesIntro: "Managing a building in Montreal? Our services:",
+    contactQuestion: "Your building deserves structured management. Get a free proposal within 24h.",
+    planifyCall: "Get a free proposal",
+    contactUs: "Talk to the team",
   },
 
   // Privacy
@@ -864,5 +864,18 @@ export const en = {
         },
       ],
     },
+  },
+
+  // Lead capture
+  leadCapture: {
+    eyebrow: "Free guide",
+    title: "5 Property Management Mistakes to Avoid in Quebec",
+    subtitle:
+      "Condo boards, Airbnb hosts, landlords — the costly errors and how to avoid them. Sent straight to your inbox.",
+    placeholder: "Your email address",
+    cta: "Get the guide",
+    success: "Thank you! You'll receive the guide shortly. Check your inbox (and spam folder).",
+    error: "Submission failed. Try again or email us at info@gestionvelora.com.",
+    legal: "Zero spam. One-time send.",
   },
 };

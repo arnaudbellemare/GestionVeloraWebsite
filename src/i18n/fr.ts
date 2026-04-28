@@ -14,7 +14,7 @@ export const fr = {
     trustLink: "Voir les témoignages",
     ctaDiscover: "Voir ce que nous faisons",
     ctaContact: "Parler à l'équipe",
-    ctaSubline: "Premiere reponse sous un jour ouvrable.",
+    ctaSubline: "Première réponse sous un jour ouvrable.",
   },
   heroPartners: [
     "Groupe Velora",
@@ -420,10 +420,10 @@ export const fr = {
     notFound: "Article non trouvé",
     backToInsightsLink: "Retour aux conseils",
     relatedPostsTitle: "À lire aussi",
-    exploreServicesIntro: "Besoin d’accompagnement concret ? Nos services :",
-    contactQuestion: "Des questions sur la gestion immobilière ? Contactez Gestion Velora.",
-    planifyCall: "Demander une soumission",
-    contactUs: "Nous contacter",
+    exploreServicesIntro: "Vous gérez un immeuble à Montréal ? Nos services :",
+    contactQuestion: "Votre immeuble mérite une gestion structurée. Obtenez une proposition gratuite sous 24h.",
+    planifyCall: "Obtenir une proposition gratuite",
+    contactUs: "Parler à l’équipe",
   },
 
   // Privacy
@@ -867,5 +867,18 @@ export const fr = {
         },
       ],
     },
+  },
+
+  // Lead capture
+  leadCapture: {
+    eyebrow: "Guide gratuit",
+    title: "5 erreurs à éviter en gestion immobilière au Québec",
+    subtitle:
+      "Syndicats, Airbnb, baux résidentiels — les faux pas qui coûtent cher et comment les éviter. Reçu directement dans votre boîte de réception.",
+    placeholder: "Votre adresse courriel",
+    cta: "Recevoir le guide",
+    success: "Merci ! Vous recevrez le guide sous peu. Vérifiez vos courriels (et vos indésirables).",
+    error: "Envoi échoué. Essayez à nouveau ou écrivez-nous à info@gestionvelora.com.",
+    legal: "Zéro spam. Un seul envoi.",
   },
 };

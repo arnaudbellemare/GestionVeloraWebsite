@@ -3,6 +3,7 @@ import { FAQSection } from "../components/FAQSection";
 import { FromInspirationSection } from "../components/FromInspirationSection";
 import { HeroSection } from "../components/HeroSection";
 import { InsightsSection } from "../components/InsightsSection";
+import { LeadCaptureSection } from "../components/LeadCaptureSection";
 import { OurStandardsSection } from "../components/OurStandardsSection";
 import { PortalAccessSection } from "../components/PortalAccessSection";
 import { StatsSection } from "../components/StatsSection";
@@ -36,6 +37,7 @@ export function HomePage() {
       <SectionSpacer />
       <PortalAccessSection />
       <InsightsSection />
+      <LeadCaptureSection variant="homepage" />
       <FAQSection />
       <ContactSection />
     </>

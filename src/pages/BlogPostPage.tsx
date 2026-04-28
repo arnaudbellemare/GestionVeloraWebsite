@@ -6,7 +6,17 @@ import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { getPostBySlug, getRelatedPosts, type RichParagraph } from "../data/blog";
+import { LeadCaptureSection } from "../components/LeadCaptureSection";
 import { getLocalizedService, SERVICE_SLUGS } from "../data/services";
+
+function toHeadingId(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
 
 function RichPara({ p, id }: { p: RichParagraph; id: string }) {
   if (typeof p === "string") return <p>{p}</p>;
@@ -107,7 +117,7 @@ export function BlogPostPage() {
           {post.sections.map((section, sectionIndex) => (
             <ScrollReveal key={section.heading} amount={0.05}>
               <section className="scroll-mt-24">
-                <h2 className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-4 leading-snug tracking-[-0.02em]">
+                <h2 id={`post-section-${toHeadingId(section.heading)}`} className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-4 leading-snug tracking-[-0.02em]">
                   {section.heading}
                 </h2>
                 <div className="space-y-4">
@@ -134,10 +144,12 @@ export function BlogPostPage() {
           ))}
         </div>
 
+        <LeadCaptureSection variant="blog" />
+
         {related.length > 0 && (
           <ScrollReveal delay={0.18}>
             <div className="mt-16 pt-12 border-t border-black/10 dark:border-white/10">
-              <h2 className="font-sans font-medium text-xl text-nd-display mb-6">{t("blog.relatedPostsTitle")}</h2>
+              <h2 id="post-related-articles" className="font-sans font-medium text-xl text-nd-display mb-6">{t("blog.relatedPostsTitle")}</h2>
               <ul className="space-y-4">
                 {related.map((r) => (
                   <li key={r.slug}>
