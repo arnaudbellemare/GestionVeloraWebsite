@@ -26,3 +26,9 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# GEO tool artifact directories (draft templates, not web content)
+geo-fixes/
+velora-fixes/
+velora-fixes-v2/
+vertical/
