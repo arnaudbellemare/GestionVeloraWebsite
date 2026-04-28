@@ -1,0 +1,12 @@
+# Gestion Velora — Full Content Index (repository pointer)
+
+The full machine-readable content index is maintained at:
+
+  Web:  https://www.gestionvelora.com/llms-full.md
+  Repo: public/llms-full.md
+
+It covers company identity, all service descriptions, blog article summaries,
+location pages, regulatory context, editorial standards, and AI discovery
+endpoints for Gestion Velora (Montreal, Quebec, Canada).
+
+Contact: info@gestionvelora.com | +1-514-777-1731
