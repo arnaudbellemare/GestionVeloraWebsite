@@ -54,7 +54,7 @@
     {
       "@context": "https://schema.org",
       "@id": "https://www.gestionvelora.com/#organization",
-      "@type": ["Organization", "LocalBusiness"],
+      "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
       "name": "Gestion Velora",
       "legalName": "Gestion Velora",
       "alternateName": [
@@ -68,23 +68,48 @@
       "image": "https://www.gestionvelora.com/og-image.png",
       "email": "info@gestionvelora.com",
       "telephone": "+1-514-777-1731",
+      "priceRange": "$$",
+      "currenciesAccepted": "CAD",
+      "paymentAccepted": "Credit Card, Bank Transfer, Cheque",
+      "hasMap": "https://maps.google.com/?q=Gestion+Velora+Montreal+Quebec",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Montréal",
         "addressRegion": "QC",
-        "addressCountry": "CA"
+        "addressCountry": "CA",
+        "addressCountryFull": "Canada"
       },
-      "areaServed": {
-        "@type": "State",
-        "name": "Quebec",
-        "sameAs": "https://www.wikidata.org/wiki/Q176"
-      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Montréal",
+          "sameAs": "https://www.wikidata.org/wiki/Q340"
+        },
+        {
+          "@type": "City",
+          "name": "Laval",
+          "sameAs": "https://www.wikidata.org/wiki/Q219074"
+        },
+        {
+          "@type": "City",
+          "name": "Longueuil",
+          "sameAs": "https://www.wikidata.org/wiki/Q218521"
+        },
+        {
+          "@type": "State",
+          "name": "Quebec",
+          "sameAs": "https://www.wikidata.org/wiki/Q176"
+        }
+      ],
       "sameAs": [
         "https://www.gestionvelora.com",
         "https://www.gestionvelora.com/en/",
         "https://ca.linkedin.com/in/gestion-velora-48684b399",
         "https://ca.linkedin.com/in/arnaud-bellemare-125934372",
-        "https://www.registreentreprises.gouv.qc.ca/"
+        "https://www.registreentreprises.gouv.qc.ca/",
+        "https://www.facebook.com/gestionvelora",
+        "https://www.instagram.com/gestionvelora",
+        "https://g.co/kgs/gestionvelora"
       ],
       "description": "Gestion Velora offre syndicat de copropriété, gestion Airbnb et location longue durée à Montréal. Administration complète, maintenance proactive et rapports transparents.",
       "knowsLanguage": ["fr-CA", "en-CA"],
@@ -223,9 +248,18 @@
                 "@type": "Service",
                 "@id": "https://www.gestionvelora.com/services/syndicat-copropriete#service",
                 "name": "Syndicat de copropriete",
+                "url": "https://www.gestionvelora.com/services/syndicat-copropriete",
+                "description": "Administration complète des syndicats de copropriété à Montréal : assemblées générales, fonds de prévoyance, conformité Loi 16, gestion des entrepreneurs.",
                 "provider": { "@id": "https://www.gestionvelora.com/#organization" },
                 "serviceType": "Condo board management",
-                "areaServed": "Montreal"
+                "areaServed": "Greater Montreal",
+                "termsOfService": "https://www.gestionvelora.com/tarifs",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "CAD",
+                  "priceSpecification": { "@type": "UnitPriceSpecification", "referenceQuantity": { "@type": "QuantitativeValue", "value": 1, "unitText": "month" } },
+                  "url": "https://www.gestionvelora.com/tarifs"
+                }
               }
             },
             {
@@ -235,9 +269,17 @@
                 "@type": "Service",
                 "@id": "https://www.gestionvelora.com/services/location#service",
                 "name": "Gestion locative longue duree",
+                "url": "https://www.gestionvelora.com/services/location",
+                "description": "Gestion complète des locations résidentielles longue durée à Montréal : sélection des locataires, perception des loyers, entretien, baux TAL.",
                 "provider": { "@id": "https://www.gestionvelora.com/#organization" },
                 "serviceType": "Long-term rental management",
-                "areaServed": "Montreal"
+                "areaServed": "Greater Montreal",
+                "termsOfService": "https://www.gestionvelora.com/tarifs",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "CAD",
+                  "url": "https://www.gestionvelora.com/tarifs"
+                }
               }
             },
             {
@@ -247,9 +289,17 @@
                 "@type": "Service",
                 "@id": "https://www.gestionvelora.com/services/airbnb#service",
                 "name": "Gestion Airbnb",
+                "url": "https://www.gestionvelora.com/services/airbnb",
+                "description": "Gestion Airbnb clé en main à Montréal : optimisation des annonces, tarification dynamique, communication des voyageurs, conformité CITQ.",
                 "provider": { "@id": "https://www.gestionvelora.com/#organization" },
                 "serviceType": "Short-term rental operations",
-                "areaServed": "Montreal"
+                "areaServed": "Greater Montreal",
+                "termsOfService": "https://www.gestionvelora.com/tarifs",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "CAD",
+                  "url": "https://www.gestionvelora.com/tarifs"
+                }
               }
             }
           ]
