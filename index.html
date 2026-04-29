@@ -217,11 +217,40 @@
       "dateModified": "2026-04-22",
       "about": "https://www.gestionvelora.com/about",
       "publishingPrinciples": "https://www.gestionvelora.com/editorial-policy",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.gestionvelora.com/blog?query={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      "potentialAction": [
+        {
+          "@type": "SearchAction",
+          "name": "Search property management insights",
+          "target": "https://www.gestionvelora.com/blog?query={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        {
+          "@type": "CommunicateAction",
+          "name": "Request a management consultation",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.gestionvelora.com/#contact-form",
+            "inLanguage": ["fr-CA", "en-CA"],
+            "actionPlatform": [
+              "https://schema.org/DesktopWebPlatform",
+              "https://schema.org/MobileWebPlatform"
+            ]
+          }
+        },
+        {
+          "@type": "ViewAction",
+          "name": "Browse service options",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.gestionvelora.com/services",
+            "inLanguage": ["fr-CA", "en-CA"],
+            "actionPlatform": [
+              "https://schema.org/DesktopWebPlatform",
+              "https://schema.org/MobileWebPlatform"
+            ]
+          }
+        }
+      ]
     }
     </script>
     <script type="application/ld+json">
