@@ -70,7 +70,8 @@ export function LocationPage() {
 
     const title = isEn ? loc.metaTitleEn : loc.metaTitleFr;
     const desc = isEn ? loc.metaDescEn : loc.metaDescFr;
-    const url = `${SITE_URL}/${locationSlug}/`;
+    const path = `${isEn ? "/en" : ""}/location/${locationSlug}`;
+    const url = `${SITE_URL}${path}`;
     const img = SERVICE_IMAGES[loc.service.slug] ?? SERVICE_IMAGES["syndicat-copropriete"];
 
     document.title = title;
@@ -101,12 +102,12 @@ export function LocationPage() {
       "@graph": [
         {
           "@type": "LocalBusiness",
-          "@id": `${SITE_URL}/${locationSlug}/#localbusiness`,
+          "@id": `${url}#localbusiness`,
           name: "Gestion Velora",
           url: url,
           description: desc,
           image: img,
-          telephone: "+1-514-000-0000",
+          telephone: "+1-514-777-1731",
           address: {
             "@type": "PostalAddress",
             addressLocality: loc.city.nameFr,
@@ -127,7 +128,7 @@ export function LocationPage() {
               "@type": "ListItem",
               position: 2,
               name: isEn ? loc.service.nameEn : loc.service.nameFr,
-              item: `${SITE_URL}/${locationSlug}/`,
+              item: url,
             },
           ],
         },
@@ -159,7 +160,7 @@ export function LocationPage() {
       className="pt-24 lg:pt-32"
     >
       {/* Hero */}
-      <section className="relative min-h-[55vh] flex flex-col justify-end pb-16 lg:pb-24">
+      <section id="location-hero" className="relative min-h-[55vh] flex flex-col justify-end pb-16 lg:pb-24">
         <div className="absolute inset-0">
           <img
             src={heroImg}
@@ -194,13 +195,13 @@ export function LocationPage() {
       </section>
 
       {/* Features list */}
-      <section className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas">
+      <section id="location-included" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas">
         <div className="max-w-[90rem] mx-auto grid lg:grid-cols-2 gap-16 items-start">
           <ScrollReveal>
             <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-nd-secondary block mb-4">
               {isEn ? loc.service.nameEn : loc.service.nameFr}
             </span>
-            <h2 className="font-sans font-medium text-3xl lg:text-4xl text-nd-display leading-[1.1] tracking-[-0.02em] mb-6">
+            <h2 id="location-services-included" className="font-sans font-medium text-3xl lg:text-4xl text-nd-display leading-[1.1] tracking-[-0.02em] mb-6">
               {isEn
                 ? `${loc.service.nameEn} in ${loc.city.nameEn}: what's included`
                 : `${loc.service.nameFr} à ${loc.city.nameFr} : ce qui est inclus`}
@@ -240,10 +241,10 @@ export function LocationPage() {
       </section>
 
       {/* Why Velora */}
-      <section className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-surface border-y border-nd-border">
+      <section id="location-why-velora" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-surface border-y border-nd-border">
         <div className="max-w-[90rem] mx-auto">
           <ScrollReveal className="text-center mb-14">
-            <h2 className="font-sans font-medium text-3xl lg:text-4xl text-nd-display leading-[1.1] tracking-[-0.02em] mb-4">
+            <h2 id="location-why-velora-title" className="font-sans font-medium text-3xl lg:text-4xl text-nd-display leading-[1.1] tracking-[-0.02em] mb-4">
               {isEn
                 ? `Why choose Gestion Velora in ${loc.city.nameEn}?`
                 : `Pourquoi choisir Gestion Velora à ${loc.city.nameFr} ?`}
@@ -278,7 +279,7 @@ export function LocationPage() {
             ].map((card, i) => (
               <ScrollReveal key={i} delay={i * 0.08}>
                 <div className="rounded-2xl border border-nd-border bg-nd-canvas p-8">
-                  <h3 className="font-sans font-semibold text-lg text-nd-display mb-3">{card.title}</h3>
+                  <h3 id={`location-benefit-${i + 1}`} className="font-sans font-semibold text-lg text-nd-display mb-3">{card.title}</h3>
                   <p className="font-sans text-base text-nd-secondary leading-relaxed">{card.body}</p>
                 </div>
               </ScrollReveal>
@@ -288,10 +289,10 @@ export function LocationPage() {
       </section>
 
       {/* Related services */}
-      <section className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas">
+      <section id="location-related-services" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas">
         <div className="max-w-[90rem] mx-auto">
           <ScrollReveal className="mb-10">
-            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display leading-[1.1] tracking-[-0.02em]">
+            <h2 id="location-related-services-title" className="font-sans font-medium text-2xl lg:text-3xl text-nd-display leading-[1.1] tracking-[-0.02em]">
               {isEn
                 ? `Other services in ${loc.city.nameEn}`
                 : `Autres services à ${loc.city.nameFr}`}
@@ -309,7 +310,7 @@ export function LocationPage() {
               return (
                 <ScrollReveal key={svcSlug} delay={i * 0.07}>
                   <InternalLink
-                    to={`/${pageSlug}`}
+                    to={`/location/${pageSlug}`}
                     className="block rounded-2xl border border-nd-border bg-nd-surface p-6 hover:border-nd-primary/40 transition-colors"
                   >
                     <span className="font-sans font-medium text-nd-display block mb-1">{label}</span>
@@ -326,10 +327,10 @@ export function LocationPage() {
 
       {/* Related articles */}
       {RELATED_POSTS[loc.service.slug] && (
-        <section className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas border-t border-nd-border">
+        <section id="location-related-articles" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas border-t border-nd-border">
           <div className="max-w-[90rem] mx-auto">
             <ScrollReveal className="mb-10">
-              <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display leading-[1.1] tracking-[-0.02em]">
+              <h2 id="location-related-articles-title" className="font-sans font-medium text-2xl lg:text-3xl text-nd-display leading-[1.1] tracking-[-0.02em]">
                 {isEn ? "Related articles" : "Articles associés"}
               </h2>
             </ScrollReveal>
@@ -355,9 +356,9 @@ export function LocationPage() {
       )}
 
       {/* CTA */}
-      <section className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-surface border-t border-nd-border text-center">
+      <section id="location-cta" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-surface border-t border-nd-border text-center">
         <ScrollReveal>
-          <h2 className="font-sans font-medium text-3xl lg:text-4xl text-nd-display leading-[1.1] tracking-[-0.02em] mb-4">
+          <h2 id="location-cta-title" className="font-sans font-medium text-3xl lg:text-4xl text-nd-display leading-[1.1] tracking-[-0.02em] mb-4">
             {isEn
               ? `Ready to work with a property manager in ${loc.city.nameEn}?`
               : `Prêt à confier votre bien à un gestionnaire immobilier à ${loc.city.nameFr} ?`}

@@ -36,6 +36,8 @@ export const FooterSection = (): JSX.Element => {
   const navigationLinks = [
     { label: t("footer.home"), to: "/" },
     { label: t("footer.allServices"), to: "/services" },
+    { label: locale === "en" ? "Comparisons" : "Comparatifs", to: "/compare" },
+    { label: locale === "en" ? "City pages" : "Pages locales", to: "/locations" },
     { label: t("footer.standards"), to: "/#standards" },
     { label: t("footer.process"), to: "/#process" },
     { label: t("footer.testimonials"), to: "/#testimonials" },
