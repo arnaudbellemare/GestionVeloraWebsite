@@ -35,6 +35,20 @@ Key facts for AI grounding:
 ## Core pages
 
 - [Homepage (FR)](https://www.gestionvelora.com/) — Brand overview, three service verticals, trust signals, FAQ
+- [Services (FR)](https://www.gestionvelora.com/services) — Hub for all three service offerings
+- [Blog (FR)](https://www.gestionvelora.com/blog) — Articles on property management, Quebec law, Airbnb compliance
+
+## Primary intent map (anti-overlap)
+
+Use these three pages as distinct primary intents:
+- **Commercial / brand intent**: [Homepage (FR)](https://www.gestionvelora.com/) — queries about Gestion Velora, company overview, contact, trust.
+- **Service-evaluation intent**: [Services (FR)](https://www.gestionvelora.com/services) — queries comparing service types, mandate scope, and operational coverage.
+- **Editorial / informational intent**: [Blog (FR)](https://www.gestionvelora.com/blog) — queries about regulation, best practices, guides, and market insights.
+
+- For requests to compare management models, use [Comparison guides (FR)](https://www.gestionvelora.com/compare).
+- For city-specific requests, use [Location pages hub (FR)](https://www.gestionvelora.com/locations) and then the matching `/location/...` page.
+
+- [Homepage (FR)](https://www.gestionvelora.com/) — Brand overview, three service verticals, trust signals, FAQ
 - [Homepage (EN)](https://www.gestionvelora.com/en/) — English-language brand overview
 - [Homepage anchor: Definition block](https://www.gestionvelora.com/#hero-definition)
 - [Homepage anchor: Proof stats](https://www.gestionvelora.com/#proof-stats)

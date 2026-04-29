@@ -317,7 +317,7 @@ export const fr = {
     subtitle:
       "Trois façons d’accompagner votre actif à Montréal : copropriété, courte durée et location longue durée.",
     ctaLearn: "En savoir plus",
-    metaTitle: "Services de gestion immobilière Montréal | Gestion Velora",
+    metaTitle: "Syndicat, Airbnb et location : services à Montréal | Gestion Velora",
     metaDescription:
       "Découvrez nos 3 services à Montréal : syndicats de copropriété, gestion Airbnb (court séjour) et locations résidentielles. Administration, finance et technique pris en charge à 100 %.",
     schemaName: "Services Gestion Velora",

@@ -314,7 +314,7 @@ export const en = {
     subtitle:
       "Three ways we support your asset in Montreal: condo boards, short-term rentals, and long-term leases.",
     ctaLearn: "Learn more",
-    metaTitle: "Condo Boards · Airbnb · Long-term Rentals | Gestion Velora",
+    metaTitle: "Condo, Airbnb & Rental Services in Montreal | Gestion Velora",
     metaDescription:
       "Condo management, Airbnb management, and residential leasing in Montreal - transparency, proactive maintenance, and a responsive team.",
     schemaName: "Gestion Velora services",
