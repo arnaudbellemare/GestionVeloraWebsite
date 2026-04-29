@@ -95,24 +95,8 @@ export function SchemaOrg() {
       return () => removePageSchema();
     }
 
-    // ── Homepage ──────────────────────────────────────────────────────────────
-    if (path === "/" || path === "/en" || path === "/en/") {
-      const faqItems = t("faqItems", { returnObjects: true }) as {
-        question: string;
-        answer: string;
-      }[];
-      injectSchema({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        inLanguage: locale,
-        mainEntity: faqItems.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: { "@type": "Answer", text: item.answer },
-        })),
-      });
-      return () => removePageSchema();
-    }
+    // Homepage intentionally has no FAQPage schema.
+    // Keep FAQ structured data only on /faq to avoid duplicate FAQPage detections.
 
     // ── FAQ page ──────────────────────────────────────────────────────────────
     if (path === "/faq" || path === "/en/faq") {
