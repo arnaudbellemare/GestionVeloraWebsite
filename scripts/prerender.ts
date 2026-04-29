@@ -24,6 +24,7 @@ import { join } from "path";
 // Import app data sources directly — same source of truth as the React app
 // ---------------------------------------------------------------------------
 import { blogPosts, type RichParagraph } from "../src/data/blog.js";
+import { COMPARISON_PAGES } from "../src/data/comparisons.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
 import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
@@ -499,6 +500,61 @@ ${sectionHtml}
 </main></noscript>`;
 }
 
+function buildServicesHubNoscript(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  if (locale === "fr") {
+    return `<noscript><main lang="${lang}">
+  <h1>Services de gestion immobilière à Montréal</h1>
+  <p>Gestion Velora propose trois services distincts a Montreal : syndicat de copropriete, gestion Airbnb et gestion locative longue duree.</p>
+  <h2>Nos services specialises</h2>
+  <ul>
+    <li>Syndicat de copropriete : gouvernance, budget, fonds de prevoyance et conformite.</li>
+    <li>Gestion Airbnb : operations quotidiennes, tarification et experience voyageurs.</li>
+    <li>Gestion locative : selection des locataires, loyers, maintenance et suivis TAL.</li>
+  </ul>
+</main></noscript>`;
+  }
+  return `<noscript><main lang="${lang}">
+  <h1>Property management services in Montreal</h1>
+  <p>Gestion Velora provides three focused services in Montreal: condo board management, Airbnb operations, and long-term rental management.</p>
+  <h2>Our service lines</h2>
+  <ul>
+    <li>Condo boards: governance, budgeting, reserve fund, and compliance.</li>
+    <li>Airbnb: daily operations, pricing strategy, and guest experience.</li>
+    <li>Long-term rentals: tenant screening, rent collection, and maintenance workflows.</li>
+  </ul>
+</main></noscript>`;
+}
+
+function buildBlogIndexNoscript(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const topPosts = blogPosts.slice(0, 6);
+  if (locale === "fr") {
+    const links = topPosts
+      .map((post) => `    <li><a href="/blog/${post.slug}">${escapeHtml(post.fr.title)}</a></li>`)
+      .join("\n");
+    return `<noscript><main lang="${lang}">
+  <h1>Blog – Gestion immobilière Montréal</h1>
+  <p>Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité.</p>
+  <h2>Articles recents</h2>
+  <ul>
+${links}
+  </ul>
+</main></noscript>`;
+  }
+  const links = topPosts
+    .map((post) => `    <li><a href="/en/blog/${post.slug}">${escapeHtml(post.en.title)}</a></li>`)
+    .join("\n");
+  return `<noscript><main lang="${lang}">
+  <h1>Montreal property management blog</h1>
+  <p>Advice and updates on condo management, long-term rentals, preventive maintenance, and Airbnb regulation in Montreal.</p>
+  <h2>Recent articles</h2>
+  <ul>
+${links}
+  </ul>
+</main></noscript>`;
+}
+
 function buildLocationServiceSchema(
   locale: "fr" | "en",
   svc: typeof LOCATION_SERVICES[0],
@@ -733,10 +789,10 @@ function buildRoutes(): RouteConfig[] {
   // --- Homepage ---
   const frHomeTitle = "Gestion immobilière Montréal | Gestion Velora";
   const frHomeDesc =
-    "Gestion Velora offre syndicat de copropriété, gestion Airbnb et location longue durée à Montréal. Administration complète, maintenance proactive et rapports transparents.";
-  const enHomeTitle = "Property Management Montreal | Gestion Velora";
+    "Gestion Velora : gestion complète de copropriétés, locations longue durée et Airbnb à Montréal. Transparence totale, rapports mensuels et tranquillité garantie pour les propriétaires.";
+  const enHomeTitle = "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
   const enHomeDesc =
-    "Leading property management in Montreal: condo boards, Airbnb management, and long-term rental management. 98% occupancy, 24/7 support, full transparency.";
+    "Montreal property operations for condo boards, short-term rentals, and long-term rentals. Transparent reporting, 24/7 support, and proactive maintenance.";
 
   routes.push({
     path: "/",
@@ -771,6 +827,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/services",
     title: frHubMeta.title,
     description: frHubMeta.description,
+    noscriptBody: buildServicesHubNoscript("fr"),
     pageSchemas: buildServicesHubSchema("fr", SITE_URL),
   });
   routes.push({
@@ -780,6 +837,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/services",
     title: enHubMeta.title,
     description: enHubMeta.description,
+    noscriptBody: buildServicesHubNoscript("en"),
     pageSchemas: buildServicesHubSchema("en", `${SITE_URL}/en`),
   });
 
@@ -830,11 +888,77 @@ function buildRoutes(): RouteConfig[] {
     });
   }
 
+  // --- Comparison hub ---
+  routes.push({
+    path: "/compare",
+    locale: "fr",
+    frPath: "/compare",
+    enPath: "/en/compare",
+    title: "Guides comparatifs en gestion immobiliere | Gestion Velora",
+    description:
+      "Comparatifs clairs entre les principaux modeles de gestion immobiliere a Montreal: autogestion, gestion professionnelle, location courte et longue duree.",
+    pageSchemas: null,
+  });
+  routes.push({
+    path: "/en/compare",
+    locale: "en",
+    frPath: "/compare",
+    enPath: "/en/compare",
+    title: "Property Management Comparison Guides | Gestion Velora",
+    description:
+      "Side-by-side comparisons of key property management models in Montreal for condo boards, landlords, and investors.",
+    pageSchemas: null,
+  });
+
+  // --- Comparison detail pages ---
+  for (const page of COMPARISON_PAGES) {
+    routes.push({
+      path: `/compare/${page.slug}`,
+      locale: "fr",
+      frPath: `/compare/${page.slug}`,
+      enPath: `/en/compare/${page.slug}`,
+      title: buildTitle(page.titleFr),
+      description: page.descriptionFr,
+      pageSchemas: null,
+    });
+    routes.push({
+      path: `/en/compare/${page.slug}`,
+      locale: "en",
+      frPath: `/compare/${page.slug}`,
+      enPath: `/en/compare/${page.slug}`,
+      title: buildTitle(page.titleEn),
+      description: page.descriptionEn,
+      pageSchemas: null,
+    });
+  }
+
+  // --- Location hubs ---
+  routes.push({
+    path: "/locations",
+    locale: "fr",
+    frPath: "/locations",
+    enPath: "/en/locations",
+    title: "Pages locales gestion immobiliere | Gestion Velora",
+    description:
+      "Pages locales de gestion immobiliere par ville du Grand Montreal: copropriete, location et Airbnb.",
+    pageSchemas: null,
+  });
+  routes.push({
+    path: "/en/locations",
+    locale: "en",
+    frPath: "/locations",
+    enPath: "/en/locations",
+    title: "City Property Management Pages | Gestion Velora",
+    description:
+      "Local property management pages by city across Greater Montreal for condo boards, rentals, and Airbnb operations.",
+    pageSchemas: null,
+  });
+
   // --- Blog index ---
-  const frBlogTitle = "Conseils gestion immobilière Montréal | Gestion Velora";
+  const frBlogTitle = "Blog gestion immobilière Montréal | Conseils & actualités";
   const frBlogDesc =
-    "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";
-  const enBlogTitle = "Montreal Property Management Insights | Gestion Velora";
+    "Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité. Par l’équipe Gestion Velora.";
+  const enBlogTitle = "Montreal Property Management Blog — Advice & News | Gestion Velora";
   const enBlogDesc =
     "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation.";
 
@@ -845,6 +969,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/blog",
     title: frBlogTitle,
     description: frBlogDesc,
+    noscriptBody: buildBlogIndexNoscript("fr"),
     pageSchemas: buildBlogIndexSchema("fr", SITE_URL),
   });
   routes.push({
@@ -854,6 +979,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/blog",
     title: enBlogTitle,
     description: enBlogDesc,
+    noscriptBody: buildBlogIndexNoscript("en"),
     pageSchemas: buildBlogIndexSchema("en", `${SITE_URL}/en`),
   });
 
@@ -991,6 +1117,9 @@ function buildSitemap(routes: RouteConfig[]): void {
   function priority(path: string): string {
     if (path === "/" || path === "/en/") return "1.0";
     if (path.startsWith("/services") || path.startsWith("/en/services")) return "0.9";
+    if (path.startsWith("/compare/") || path.startsWith("/en/compare/")) return "0.8";
+    if (path === "/compare" || path === "/en/compare") return "0.8";
+    if (path === "/locations" || path === "/en/locations") return "0.8";
     if (path.startsWith("/location/") || path.startsWith("/en/location/")) return "0.8";
     if (path.startsWith("/blog/") || path.startsWith("/en/blog/")) return "0.7";
     return "0.6";

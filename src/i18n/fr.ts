@@ -313,13 +313,13 @@ export const fr = {
   },
 
   servicesHub: {
-    title: "Nos services",
+    title: "Services de gestion immobilière à Montréal",
     subtitle:
       "Trois façons d’accompagner votre actif à Montréal : copropriété, courte durée et location longue durée.",
     ctaLearn: "En savoir plus",
-    metaTitle: "Syndicat · Airbnb · Location longue durée | Gestion Velora",
+    metaTitle: "Services de gestion immobilière Montréal | Gestion Velora",
     metaDescription:
-      "Syndic de copropriété, gestion Airbnb et location résidentielle à Montréal - transparence, maintenance proactive et équipe réactive.",
+      "Découvrez nos 3 services à Montréal : syndicats de copropriété, gestion Airbnb (court séjour) et locations résidentielles. Administration, finance et technique pris en charge à 100 %.",
     schemaName: "Services Gestion Velora",
   },
 
@@ -414,7 +414,7 @@ export const fr = {
   // Blog
   blog: {
     briefLabel: "En bref :",
-    title: "Conseils",
+    title: "Blog – Gestion immobilière Montréal",
     subtitle: "Réflexions et actualités sur la gestion immobilière à Montréal par Gestion Velora.",
     backToInsights: "← Tous les conseils",
     notFound: "Article non trouvé",
