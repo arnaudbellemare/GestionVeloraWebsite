@@ -217,6 +217,22 @@ function buildHtml(
     html = html.replace("</head>", `${schemaTags}</head>`);
   }
 
+  // 17. Keep WebSite potentialAction URLs aligned per locale.
+  // This ensures prerendered EN pages point to EN discovery/contact paths.
+  const baseForLocale = opts.locale === "en" ? `${SITE_URL}/en` : SITE_URL;
+  html = html.replace(
+    /"target": "https:\/\/www\.gestionvelora\.com\/blog\?query=\{search_term_string\}"/,
+    `"target": "${baseForLocale}/blog?query={search_term_string}"`
+  );
+  html = html.replace(
+    /"urlTemplate": "https:\/\/www\.gestionvelora\.com\/#contact-form"/,
+    `"urlTemplate": "${baseForLocale}/#contact-form"`
+  );
+  html = html.replace(
+    /"urlTemplate": "https:\/\/www\.gestionvelora\.com\/services"/,
+    `"urlTemplate": "${baseForLocale}/services"`
+  );
+
   return html;
 }
 
