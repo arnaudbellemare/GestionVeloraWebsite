@@ -42,7 +42,7 @@ const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/twitter-card.png`;
 const SERVICE_IMAGES: Record<string, string> = {
   "syndicat-copropriete":
     "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=85",
-  airbnb: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1920&q=85",
+  airbnb: `${SITE_URL}/images/airbnb-service.png`,
   location: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=85",
 };
 
