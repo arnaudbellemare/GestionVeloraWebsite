@@ -5,11 +5,6 @@ export const en = {
     line2: "in all tranquility.",
     subtitle:
       "Condo boards, Airbnb hosts, and landlords - 24/7 support, clear reporting, and rigorous processes.",
-    answerBoxTitle: "In two sentences",
-    answerBoxLine1:
-      "Gestion Velora is a Montreal property management team for condo boards, short-term (Airbnb), and long-term rentals.",
-    answerBoxLine2:
-      "We structure administration, compliance, and occupant relationships, with readable reports, emergency response, and visibility into your operations.",
     trustLine: "They trust us.",
     trustLink: "Read testimonials",
     ctaDiscover: "See how we work",

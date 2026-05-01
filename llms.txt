@@ -50,7 +50,7 @@ Use these three pages as distinct primary intents:
 
 - [Homepage (FR)](https://www.gestionvelora.com/) — Brand overview, three service verticals, trust signals, FAQ
 - [Homepage (EN)](https://www.gestionvelora.com/en/) — English-language brand overview
-- [Homepage anchor: Definition block](https://www.gestionvelora.com/#hero-definition)
+- [Homepage anchor: Hero](https://www.gestionvelora.com/#hero)
 - [Homepage anchor: Proof stats](https://www.gestionvelora.com/#proof-stats)
 - [Homepage anchor: Testimonials](https://www.gestionvelora.com/#testimonials)
 - [About / À propos](https://www.gestionvelora.com/about) — Team, mission, founder profile
