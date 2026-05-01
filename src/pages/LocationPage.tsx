@@ -39,7 +39,7 @@ const SERVICE_IMAGES: Record<string, string> = {
   "gestion-locative":
     "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=85",
   "gestion-airbnb":
-    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1920&q=85",
+    "/images/airbnb-service.png?v=1",
   "gestion-immobiliere-commerciale":
     "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=85",
 };

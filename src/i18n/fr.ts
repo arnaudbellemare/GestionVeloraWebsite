@@ -48,7 +48,7 @@ export const fr = {
         category: "Copropriété",
         location: "Montréal",
         name: "Le Beaumont",
-        image: "/images/portfolio/le-beaumont.png?v=6",
+        image: "/images/portfolio/le-beaumont.png?v=7",
       },
       {
         category: "Copropriété",
@@ -60,7 +60,7 @@ export const fr = {
         category: "Airbnb",
         location: "Vieux-Montréal",
         name: "Loft Saint-Paul",
-        image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+        image: "/images/airbnb-service.png?v=1",
       },
     ],
   },

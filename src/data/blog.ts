@@ -479,7 +479,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "airbnb-montreal-permis-reglementation",
-    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=85",
+    image: "/images/airbnb-service.png?v=1",
     datePublished: "2025-09-12",
     dateModified: "2026-04-01",
     fr: {

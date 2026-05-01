@@ -28,7 +28,7 @@ const serviceData = [
 
 const serviceImages = [
   "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85",
-  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=85",
+  "/images/airbnb-service.png?v=1",
   "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=85",
 ];
 
