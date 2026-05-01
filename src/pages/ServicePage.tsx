@@ -179,7 +179,7 @@ export function ServicePage() {
       <section className="py-16 lg:py-24 bg-nd-surface">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
-            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-10 tracking-[-0.02em]">
+            <h2 id="service-offerings-heading" className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-10 tracking-[-0.02em]">
               {t("servicePage.ourServices")}
             </h2>
           </ScrollReveal>
@@ -216,7 +216,7 @@ export function ServicePage() {
       <section className="py-16 lg:py-24 bg-black/[0.02] dark:bg-white/[0.02]">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
-            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-10 tracking-[-0.02em]">
+            <h2 id="service-details-heading" className="font-sans font-medium text-2xl lg:text-3xl text-nd-display mb-10 tracking-[-0.02em]">
               {t("servicePage.inDetail")}
             </h2>
           </ScrollReveal>
@@ -308,7 +308,7 @@ export function ServicePage() {
       <section className="py-24 lg:py-32 bg-nd-surface">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16">
           <ScrollReveal>
-            <h2 className="font-sans font-medium text-3xl lg:text-4xl text-nd-display mb-4 tracking-[-0.02em]">
+            <h2 id="service-cta-heading" className="font-sans font-medium text-3xl lg:text-4xl text-nd-display mb-4 tracking-[-0.02em]">
               {t("servicePage.ctaTitle")}
             </h2>
             <p className="font-sans text-black/70 dark:text-white/70 mb-8 max-w-xl">

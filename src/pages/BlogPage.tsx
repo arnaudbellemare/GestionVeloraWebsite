@@ -65,7 +65,7 @@ export function BlogPage() {
                     </span>
                     <span className="font-sans text-xs text-black/50 dark:text-white/50">{loc.date}</span>
                   </div>
-                  <h2 className="font-sans font-bold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
+                  <h2 id={`blog-card-${post.slug}`} className="font-sans font-bold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
                     {loc.title}
                   </h2>
                   <p className="font-sans text-sm text-black/60 dark:text-white/60 mt-2 line-clamp-2">
@@ -79,7 +79,7 @@ export function BlogPage() {
 
         <ScrollReveal delay={0.12}>
           <section className="mt-14 lg:mt-16 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-6 lg:p-8">
-            <h2 className="font-sans font-semibold text-xl lg:text-2xl text-nd-display mb-2">
+            <h2 id="blog-action-plan" className="font-sans font-semibold text-xl lg:text-2xl text-nd-display mb-2">
               {locale === "en" ? "Turn insights into an action plan" : "Transformez les insights en plan d'action"}
             </h2>
             <p className="font-sans text-sm lg:text-base text-black/70 dark:text-white/70 mb-6 max-w-3xl">

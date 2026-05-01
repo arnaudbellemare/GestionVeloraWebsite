@@ -43,6 +43,7 @@ export function TrustedPartnersSection() {
     quote: string;
     author: string;
     role: string;
+    evidence?: string;
   }[];
   const [activeIndex, setActiveIndex] = useState(0);
   const active = partners[activeIndex];
@@ -207,6 +208,16 @@ export function TrustedPartnersSection() {
                       >
                         {active.role}
                       </motion.p>
+                      {active.evidence ? (
+                        <motion.p
+                          className="font-sans text-xs text-white/45 mt-2"
+                          initial={reduceMotion ? false : { opacity: 0, x: -6 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ ...contentTransition, delay: 0.14 }}
+                        >
+                          {active.evidence}
+                        </motion.p>
+                      ) : null}
                     </footer>
                   </motion.div>
                 </AnimatePresence>

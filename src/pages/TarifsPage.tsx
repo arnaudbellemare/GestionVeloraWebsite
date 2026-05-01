@@ -215,7 +215,7 @@ export function TarifsPage() {
         {/* Syndicat section */}
         <section className="mb-20">
           <ScrollReveal className="mb-10">
-            <h2 className="font-sans font-semibold text-2xl lg:text-3xl text-nd-display tracking-[-0.015em]">
+            <h2 id="pricing-condo-board" className="font-sans font-semibold text-2xl lg:text-3xl text-nd-display tracking-[-0.015em]">
               {isEn ? "Condo board management" : "Gestion de syndicat de copropriété"}
             </h2>
             <p className="font-sans text-nd-secondary mt-2">
@@ -237,7 +237,7 @@ export function TarifsPage() {
                       {isEn ? "Most popular" : "Le plus populaire"}
                     </span>
                   )}
-                  <h3 className="font-sans font-semibold text-xl text-nd-display mb-1">{tier.name}</h3>
+                  <h3 id={`pricing-condo-tier-${i + 1}`} className="font-sans font-semibold text-xl text-nd-display mb-1">{tier.name}</h3>
                   <p className="font-sans font-medium text-nd-primary text-lg mb-3">{tier.priceNote}</p>
                   <p className="font-sans text-sm text-nd-secondary mb-6 leading-relaxed">{tier.description}</p>
                   <ul className="space-y-2.5 mb-8 flex-1">
@@ -268,7 +268,7 @@ export function TarifsPage() {
         {/* Location section */}
         <section className="mb-20">
           <ScrollReveal className="mb-10">
-            <h2 className="font-sans font-semibold text-2xl lg:text-3xl text-nd-display tracking-[-0.015em]">
+            <h2 id="pricing-rental-management" className="font-sans font-semibold text-2xl lg:text-3xl text-nd-display tracking-[-0.015em]">
               {isEn ? "Rental management" : "Gestion locative longue durée"}
             </h2>
             <p className="font-sans text-nd-secondary mt-2">
@@ -290,7 +290,7 @@ export function TarifsPage() {
                       {isEn ? "Recommended" : "Recommandé"}
                     </span>
                   )}
-                  <h3 className="font-sans font-semibold text-xl text-nd-display mb-1">{tier.name}</h3>
+                  <h3 id={`pricing-rental-tier-${i + 1}`} className="font-sans font-semibold text-xl text-nd-display mb-1">{tier.name}</h3>
                   <p className="font-sans font-medium text-nd-primary text-lg mb-3">{tier.priceNote}</p>
                   <p className="font-sans text-sm text-nd-secondary mb-6 leading-relaxed">{tier.description}</p>
                   <ul className="space-y-2.5 mb-8 flex-1">
@@ -322,7 +322,7 @@ export function TarifsPage() {
         <section className="mb-20">
           <ScrollReveal>
             <div className="rounded-2xl border border-nd-border bg-nd-surface p-8 max-w-2xl">
-              <h2 className="font-sans font-semibold text-xl text-nd-display mb-2">
+              <h2 id="pricing-airbnb-short-term" className="font-sans font-semibold text-xl text-nd-display mb-2">
                 {isEn ? "Airbnb & short-term rental" : "Airbnb et location courte durée"}
               </h2>
               <p className="font-sans text-nd-secondary mb-4">
@@ -344,7 +344,7 @@ export function TarifsPage() {
         {/* FAQ */}
         <section>
           <ScrollReveal className="mb-8">
-            <h2 className="font-sans font-semibold text-2xl text-nd-display">
+            <h2 id="pricing-faq" className="font-sans font-semibold text-2xl text-nd-display">
               {isEn ? "Pricing FAQ" : "FAQ sur les tarifs"}
             </h2>
           </ScrollReveal>
@@ -381,7 +381,7 @@ export function TarifsPage() {
             ).map((item, i) => (
               <ScrollReveal key={i} delay={i * 0.07}>
                 <div className="border-b border-nd-border pb-6">
-                  <h3 className="font-sans font-medium text-nd-display mb-2">{item.q}</h3>
+                  <h3 id={`pricing-faq-item-${i + 1}`} className="font-sans font-medium text-nd-display mb-2">{item.q}</h3>
                   <p className="font-sans text-nd-secondary text-sm leading-relaxed">{item.a}</p>
                 </div>
               </ScrollReveal>

@@ -19,6 +19,7 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
   <title>QR → Montréal - voxel morph</title>
   <style>
     * { box-sizing: border-box; }
@@ -30,11 +31,6 @@
       background: linear-gradient(180deg, rgba(12,13,18,0.97), rgba(12,13,18,0.88));
       border-bottom: 1px solid rgba(255,255,255,0.06);
       backdrop-filter: blur(10px);
-    }
-    body.embed #bar {
-      display: none !important;
-      visibility: hidden !important;
-      pointer-events: none !important;
     }
     #bar label { color: #8b8fa3; font-size: 12px; white-space: nowrap; }
     #url {
@@ -76,10 +72,6 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 </head>
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8MH4WDL"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
   <script>
     (function () {
       try {
@@ -91,6 +83,10 @@
           (p.has("embed") && e !== "0" && e !== "false")
         ) {
           document.body.classList.add("embed");
+          var firstBar = document.getElementById("bar");
+          if (firstBar && firstBar.parentNode) {
+            firstBar.parentNode.removeChild(firstBar);
+          }
         }
       } catch (_) {}
     })();
@@ -117,7 +113,11 @@
       embedParam === '1' ||
       embedParam === 'true' ||
       (params.has('embed') && embedParam !== '0' && embedParam !== 'false');
-    if (isEmbed) document.body.classList.add('embed');
+    if (isEmbed) {
+      document.body.classList.add('embed');
+      const bar = document.getElementById('bar');
+      if (bar) bar.remove();
+    }
 
     const N = 29;
     const CELL = 0.42;

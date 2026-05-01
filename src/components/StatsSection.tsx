@@ -15,7 +15,7 @@ export function StatsSection() {
   const { contactHref, goToContact } = useGoToContact();
 
   return (
-    <section className="pt-24 lg:pt-32 pb-12 lg:pb-16 px-6 lg:px-16 bg-nd-canvas">
+    <section id="proof-stats" className="pt-24 lg:pt-32 pb-12 lg:pb-16 px-6 lg:px-16 bg-nd-canvas scroll-mt-24">
       <div className="max-w-[90rem] mx-auto">
         <div className="grid grid-cols-2 gap-x-4 gap-y-0 sm:gap-8 lg:grid-cols-4 lg:gap-x-0 lg:gap-y-0 divide-y lg:divide-y-0 lg:divide-x divide-nd-border">
           {statKeys.map((stat, i) => (
@@ -34,6 +34,16 @@ export function StatsSection() {
               </div>
             </ScrollReveal>
           ))}
+        </div>
+
+        <div className="mt-6 text-center">
+          <p className="font-sans text-xs text-nd-secondary">
+            <strong>{t("stats.sourcesLabel")}</strong>{" "}
+            {t("stats.sourceInternal")} ·{" "}
+            <a href="/sources" className="underline underline-offset-2 hover:text-nd-primary">
+              {t("stats.sourceCmhc")}
+            </a>
+          </p>
         </div>
 
         <ScrollReveal delay={0.12} amount={0.2}>

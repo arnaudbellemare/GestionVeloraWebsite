@@ -23,6 +23,7 @@ export function HeroSection() {
 
   return (
     <section
+      id="hero"
       className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-black"
       aria-label="Hero"
     >
@@ -80,6 +81,20 @@ export function HeroSection() {
           {t("hero.subtitle")}
         </motion.p>
 
+        <motion.div
+          id="hero-definition"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.47, ease }}
+          className="w-full max-w-xl mb-5 rounded-2xl border border-white/25 bg-black/30 backdrop-blur-sm px-4 py-3.5 sm:px-5"
+        >
+          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/60 mb-2">
+            {t("hero.answerBoxTitle")}
+          </p>
+          <p className="font-sans text-sm text-white/90 leading-relaxed">{t("hero.answerBoxLine1")}</p>
+          <p className="font-sans text-sm text-white/80 leading-relaxed mt-1">{t("hero.answerBoxLine2")}</p>
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -108,6 +123,9 @@ export function HeroSection() {
           >
             {t("hero.ctaContact")}
           </a>
+          <p className="font-sans text-xs text-white/65 text-center sm:text-left">
+            {t("hero.ctaSubline")}
+          </p>
           <a
             href="#specification"
             className="inline-flex items-center justify-center sm:justify-center px-2 py-1 text-[11px] sm:text-xs text-white/55 hover:text-white/90 font-mono uppercase tracking-[0.14em] underline underline-offset-[0.25em] decoration-white/25 hover:decoration-white/45 transition-colors"

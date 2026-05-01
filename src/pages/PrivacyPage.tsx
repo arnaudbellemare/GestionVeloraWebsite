@@ -16,11 +16,11 @@ export function PrivacyPage() {
           </h1>
           <div className="font-sans text-black/80 dark:text-white/80 leading-relaxed space-y-6">
             <p>{t("privacy.p1")}</p>
-            <h2 className="font-sans font-bold text-xl text-black dark:text-white mt-8">{t("privacy.collectTitle")}</h2>
+            <h2 id="privacy-collect" className="font-sans font-bold text-xl text-black dark:text-white mt-8">{t("privacy.collectTitle")}</h2>
             <p>{t("privacy.collectText")}</p>
-            <h2 className="font-sans font-bold text-xl text-black dark:text-white mt-8">{t("privacy.useTitle")}</h2>
+            <h2 id="privacy-use" className="font-sans font-bold text-xl text-black dark:text-white mt-8">{t("privacy.useTitle")}</h2>
             <p>{t("privacy.useText")}</p>
-            <h2 className="font-sans font-bold text-xl text-black dark:text-white mt-8">{t("privacy.contactTitle")}</h2>
+            <h2 id="privacy-contact" className="font-sans font-bold text-xl text-black dark:text-white mt-8">{t("privacy.contactTitle")}</h2>
             <p>{t("privacy.contactText")}</p>
           </div>
         </ScrollReveal>
