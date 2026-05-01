@@ -452,7 +452,7 @@ export const fr = {
   services: {
     "syndicat-copropriete": {
       title: "Syndicat de copropriété",
-      subtitle: "Gestion de syndicat de copropriété à Montréal",
+      subtitle: "Budget, AGA, fonds de prévoyance, parties communes et conformité Loi 141.",
       description:
         "Gestion Velora est une firme de gestion de copropriété à Montréal spécialisée dans l'administration complète des syndicats de copropriétaires. Nous prenons en charge la gestion administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Notre gestionnaire de copropriété attitré assure la transparence pour le conseil d'administration et chaque copropriétaire.",
       offerings: [
@@ -546,7 +546,7 @@ export const fr = {
     },
     airbnb: {
       title: "Gestion Airbnb et location courte durée",
-      subtitle: "Gestion Airbnb et location courte durée à Montréal",
+      subtitle: "Réservations, ménage, voyageurs et conformité locale — clé en main.",
       description:
         "Gestion Velora prend en charge l'intégralité de la gestion de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est géré pour vous.",
       offerings: [
@@ -613,7 +613,7 @@ export const fr = {
     },
     location: {
       title: "Gestion locative longue durée",
-      subtitle: "Gestion locative longue durée à Montréal",
+      subtitle: "Sélection des locataires, loyers, entretien et rapports clairs pour votre immeuble.",
       description:
         "Gestion Velora gère vos immeubles locatifs à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable.",
       offerings: [

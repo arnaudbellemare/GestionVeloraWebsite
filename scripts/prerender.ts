@@ -39,11 +39,23 @@ const AUTHOR_NAME = "Arnaud Bellemare";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/twitter-card.png`;
 
+/** Absolute URLs for OG / Twitter / JSON-LD — must match `src/data/services.ts` (one image per slug). */
 const SERVICE_IMAGES: Record<string, string> = {
-  "syndicat-copropriete":
-    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=85",
+  "syndicat-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy.png?v=5`,
   airbnb: `${SITE_URL}/images/airbnb-service.png`,
-  location: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=85",
+  location: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&q=85",
+  "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont.png?v=7`,
+  "gestion-copropriete":
+    "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1920&q=85",
+};
+
+/** `/location/{service}-{city}` OG images — keyed by `LocationService.slug` (not `serviceSlug`). */
+const LOCATION_LANDING_OG_IMAGES: Record<string, string> = {
+  "syndicat-copropriete": SERVICE_IMAGES["syndicat-copropriete"],
+  "gestion-locative": SERVICE_IMAGES.location,
+  "gestion-airbnb": SERVICE_IMAGES.airbnb,
+  "gestion-immobiliere-commerciale":
+    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=85",
 };
 
 // ---------------------------------------------------------------------------
@@ -733,7 +745,10 @@ function buildLocationRoutes(): RouteConfig[] {
       const slug = `${svc.slug}-${city.slug}`;
       const frPath = `/location/${slug}`;
       const enPath = `/en/location/${slug}`;
-      const svcImage = SERVICE_IMAGES[svc.serviceSlug] ?? DEFAULT_OG_IMAGE;
+      const svcImage =
+        LOCATION_LANDING_OG_IMAGES[svc.slug] ??
+        SERVICE_IMAGES[svc.serviceSlug] ??
+        DEFAULT_OG_IMAGE;
       const frBc = getBreadcrumbLabels("fr");
       const enBc = getBreadcrumbLabels("en");
 

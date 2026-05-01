@@ -54,7 +54,7 @@ export function ServicesIndexPage() {
                 <div className="aspect-[16/10] overflow-hidden">
                   <img
                     src={service.image}
-                    alt={`${service.title} | Gestion Velora Montréal`}
+                    alt={`${service.title} — Gestion Velora`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     style={{ objectPosition: "center 30%" }}
                   />
@@ -63,8 +63,8 @@ export function ServicesIndexPage() {
                   <h2 id={`service-card-${service.slug}`} className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-2">
                     {service.title}
                   </h2>
-                  <p className="font-sans text-sm text-black/70 dark:text-white/70 flex-1 mb-6 line-clamp-4">
-                    {service.description}
+                  <p className="font-sans text-sm text-black/70 dark:text-white/70 flex-1 mb-6 line-clamp-3">
+                    {service.subtitle}
                   </p>
                   <InternalLink
                     to={`/services/${service.slug}`}

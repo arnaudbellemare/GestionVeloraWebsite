@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useLocale } from "../context/LocaleContext";
 import { resolveLocation, LOCATION_FEATURES } from "../data/locations";
+import { LOCATION_LANDING_SERVICE_IMAGES } from "../data/services";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
@@ -31,17 +32,6 @@ const RELATED_POSTS: Record<string, { slug: string; titleEn: string; titleFr: st
     { slug: "req-neq-verifier-gestionnaire-immobilier-montreal", titleEn: "REQ and NEQ: how to verify a property manager's Quebec registration", titleFr: "REQ et NEQ : vérifier le registre d'un gestionnaire immobilier au Québec" },
     { slug: "choisir-gestionnaire-immobilier-montreal", titleEn: "How to choose a property manager in Montreal", titleFr: "Comment choisir son gestionnaire immobilier à Montréal" },
   ],
-};
-
-const SERVICE_IMAGES: Record<string, string> = {
-  "syndicat-copropriete":
-    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=85",
-  "gestion-locative":
-    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=85",
-  "gestion-airbnb":
-    "/images/airbnb-service.png?v=1",
-  "gestion-immobiliere-commerciale":
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=85",
 };
 
 function injectLocationSchema(data: object) {
@@ -72,7 +62,9 @@ export function LocationPage() {
     const desc = isEn ? loc.metaDescEn : loc.metaDescFr;
     const path = `${isEn ? "/en" : ""}/location/${locationSlug}`;
     const url = `${SITE_URL}${path}`;
-    const img = SERVICE_IMAGES[loc.service.slug] ?? SERVICE_IMAGES["syndicat-copropriete"];
+    const img =
+      LOCATION_LANDING_SERVICE_IMAGES[loc.service.slug] ??
+      LOCATION_LANDING_SERVICE_IMAGES["syndicat-copropriete"];
 
     document.title = title;
 
@@ -146,7 +138,9 @@ export function LocationPage() {
   const desc = isEn ? loc.descEn : loc.descFr;
   const features = LOCATION_FEATURES[loc.service.slug];
   const featureList = isEn ? features?.en : features?.fr;
-  const heroImg = SERVICE_IMAGES[loc.service.slug] ?? SERVICE_IMAGES["syndicat-copropriete"];
+  const heroImg =
+    LOCATION_LANDING_SERVICE_IMAGES[loc.service.slug] ??
+    LOCATION_LANDING_SERVICE_IMAGES["syndicat-copropriete"];
 
   const otherServices = ["syndicat-copropriete", "gestion-locative", "gestion-airbnb"].filter(
     (s) => s !== loc.service.slug

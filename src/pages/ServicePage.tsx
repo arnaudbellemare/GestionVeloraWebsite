@@ -67,7 +67,7 @@ export function ServicePage() {
         <div className="absolute inset-0">
           <img
             src={service.image}
-            alt={`${service.title} | Gestion Velora Montréal`}
+            alt={`${service.title} — Gestion Velora`}
             className="w-full h-full object-cover"
             style={{ objectPosition: "center 30%" }}
           />
