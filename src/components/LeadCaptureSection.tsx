@@ -97,12 +97,12 @@ export function LeadCaptureSection({ variant = "homepage" }: LeadCaptureSectionP
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("leadCapture.placeholder")}
-                  className="flex-1 min-w-0 rounded-full border border-black/15 dark:border-white/15 bg-white dark:bg-white/5 px-5 py-3 font-sans text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-nd-interactive/35 focus:border-nd-interactive/50 transition-colors min-h-[44px]"
+                  className="flex-1 min-w-0 rounded-full border border-black/15 dark:border-white/15 bg-white dark:bg-white/5 px-5 py-3 font-sans text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-black/15 focus:border-black/30 dark:focus:ring-white/20 dark:focus:border-white/35 transition-colors min-h-[44px]"
                 />
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="shrink-0 inline-flex items-center justify-center px-6 py-3 rounded-full bg-nd-interactive text-white font-sans font-semibold text-sm hover:brightness-110 active:brightness-95 disabled:opacity-60 disabled:hover:brightness-100 transition-[filter,opacity] min-h-[44px]"
+                  className="shrink-0 inline-flex items-center justify-center px-6 py-3 rounded-full border border-black/15 bg-neutral-950 text-white font-sans font-semibold text-sm shadow-sm hover:bg-black disabled:opacity-60 dark:border-white/20 dark:bg-white dark:text-neutral-950 dark:hover:bg-white/90 transition-colors min-h-[44px]"
                 >
                   {status === "submitting" ? "..." : t("leadCapture.cta")}
                 </button>
