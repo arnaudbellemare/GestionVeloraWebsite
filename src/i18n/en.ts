@@ -60,7 +60,7 @@ export const en = {
         category: "Airbnb",
         location: "Old Montreal",
         name: "Loft Saint-Paul",
-        image: "/images/airbnb-service.png?v=1",
+        image: "/images/portfolio/loft-saint-paul.png?v=1",
       },
     ],
   },

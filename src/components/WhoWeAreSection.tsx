@@ -47,10 +47,12 @@ export function WhoWeAreSection() {
               <article id={`portfolio-${i + 1}`} className="group">
                 <div className="aspect-[4/5] rounded-lg overflow-hidden mb-4 bg-nd-border border border-nd-border">
                   <img
+                    key={`${project.name}-${project.image}`}
                     src={project.image}
                     alt={project.name}
                     className="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-95"
                     loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="flex items-center justify-between mb-1">
