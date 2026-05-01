@@ -10,7 +10,6 @@ import {
   PUBLISHER_LOGO_URL,
   SITE_URL,
 } from "../config";
-import { blogPosts, getPostBySlug } from "../data/blog";
 import { getLocalizedService, getLocalizedServices, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
 // Inject one or multiple JSON-LD schemas into the document head.
@@ -70,6 +69,8 @@ export function SchemaOrg() {
   }
 
   useEffect(() => {
+    let cancelled = false;
+
     // ── Services hub ──────────────────────────────────────────────────────────
     const isServicesHub =
       path === "/services" || path === "/en/services" || path === "/en/services/";
@@ -94,9 +95,6 @@ export function SchemaOrg() {
       });
       return () => removePageSchema();
     }
-
-    // Homepage intentionally has no FAQPage schema.
-    // Keep FAQ structured data only on /faq to avoid duplicate FAQPage detections.
 
     // ── FAQ page ──────────────────────────────────────────────────────────────
     if (path === "/faq" || path === "/en/faq") {
@@ -143,82 +141,89 @@ export function SchemaOrg() {
       return () => removePageSchema();
     }
 
-    // ── Blog index ────────────────────────────────────────────────────────────
+    // ── Blog (index + post): defer heavy blog module ───────────────────────────
     const isBlogIndex =
-      path === "/blog" ||
-      path === "/en/blog" ||
-      path === "/en/blog/";
-    if (isBlogIndex) {
-      const blogLang = isEn ? "en" : "fr";
-      const name = isEn
-        ? "Montreal Property Management Insights"
-        : "Conseils et articles sur la gestion immobilière à Montréal";
-      const description = isEn
-        ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
-        : "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";
-      injectSchema({
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        name,
-        description,
-        itemListElement: blogPosts.map((post, i) => ({
-          "@type": "ListItem",
-          position: i + 1,
-          item: {
-            "@type": "Article",
-            name: post[blogLang].title,
-            url: `${base}/blog/${post.slug}`,
-            datePublished: post.datePublished,
-            image: post.image,
-          },
-        })),
-      });
-      return () => removePageSchema();
-    }
+      path === "/blog" || path === "/en/blog" || path === "/en/blog/";
+    const isBlogPost =
+      Boolean(slug) && (path.startsWith("/blog/") || path.startsWith("/en/blog/")) && !isBlogIndex;
 
-    // ── Blog post ─────────────────────────────────────────────────────────────
-    if ((path.startsWith("/blog/") || path.startsWith("/en/blog/")) && slug) {
-      const blogLocale = isEn ? "en" : "fr";
-      const post = getPostBySlug(slug, blogLocale);
-      if (post) {
-        const articleUrl = `${base}/blog/${post.slug}`;
-        injectSchema([
-          {
+    if (isBlogIndex || isBlogPost) {
+      const blogLang = isEn ? "en" : "fr";
+      void import("../data/blog").then(({ blogPosts, getPostBySlug }) => {
+        if (cancelled) return;
+        if (isBlogIndex) {
+          const name = isEn
+            ? "Montreal Property Management Insights"
+            : "Conseils et articles sur la gestion immobilière à Montréal";
+          const description = isEn
+            ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
+            : "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";
+          injectSchema({
             "@context": "https://schema.org",
-            "@type": "Article",
-            headline: post.title,
-            description: post.excerpt,
-            image: post.image,
-            datePublished: post.datePublished,
-            dateModified: post.dateModified,
-            author: {
-              "@type": "Person",
-              name: ARTICLE_AUTHOR_NAME,
-              url: ARTICLE_AUTHOR_URL,
-              sameAs: ARTICLE_AUTHOR_SAME_AS,
-            },
-            publisher: {
-              "@type": "Organization",
-              "@id": ORGANIZATION_SCHEMA_ID,
-              name: "Gestion Velora",
-              url: SITE_URL,
-              sameAs: ORGANIZATION_SAME_AS,
-              logo: { "@type": "ImageObject", url: PUBLISHER_LOGO_URL },
-            },
-            mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
-          },
-          buildBreadcrumb([
-            { name: bcHome, url: SITE_URL + "/" },
-            { name: bcInsights, url: `${base}/blog` },
-            { name: post.title },
-          ]),
-        ]);
-        return () => removePageSchema();
-      }
+            "@type": "ItemList",
+            name,
+            description,
+            itemListElement: blogPosts.map((post, i) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              item: {
+                "@type": "Article",
+                name: post[blogLang].title,
+                url: `${base}/blog/${post.slug}`,
+                datePublished: post.datePublished,
+                image: post.image,
+              },
+            })),
+          });
+          return;
+        }
+        if (slug) {
+          const post = getPostBySlug(slug, blogLang);
+          if (post) {
+            const articleUrl = `${base}/blog/${post.slug}`;
+            injectSchema([
+              {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                headline: post.title,
+                description: post.excerpt,
+                image: post.image,
+                datePublished: post.datePublished,
+                dateModified: post.dateModified,
+                author: {
+                  "@type": "Person",
+                  name: ARTICLE_AUTHOR_NAME,
+                  url: ARTICLE_AUTHOR_URL,
+                  sameAs: ARTICLE_AUTHOR_SAME_AS,
+                },
+                publisher: {
+                  "@type": "Organization",
+                  "@id": ORGANIZATION_SCHEMA_ID,
+                  name: "Gestion Velora",
+                  url: SITE_URL,
+                  sameAs: ORGANIZATION_SAME_AS,
+                  logo: { "@type": "ImageObject", url: PUBLISHER_LOGO_URL },
+                },
+                mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
+              },
+              buildBreadcrumb([
+                { name: bcHome, url: SITE_URL + "/" },
+                { name: bcInsights, url: `${base}/blog` },
+                { name: post.title },
+              ]),
+            ]);
+          }
+        }
+      });
+      return () => {
+        cancelled = true;
+        removePageSchema();
+      };
     }
 
     removePageSchema();
-  }, [path, slug, t, bcHome, bcServices, bcInsights, base, locale]);
+    return () => removePageSchema();
+  }, [path, slug, t, bcHome, bcServices, bcInsights, base, locale, isEn]);
 
   return null;
 }

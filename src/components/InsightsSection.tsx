@@ -1,18 +1,49 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "../context/LocaleContext";
 import { motion } from "framer-motion";
+import type { BlogPost } from "../data/blog";
 import { InternalLink } from "./InternalLink";
 import { ScrollReveal } from "./ScrollReveal";
-import { blogPosts } from "../data/blog";
 import { trackBlogSelect } from "../lib/analytics";
 
-const featuredPosts = blogPosts.slice(0, 4);
+function FeaturedSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div
+          key={i}
+          className="flex-shrink-0 w-[300px] rounded-2xl overflow-hidden bg-white/60 dark:bg-white/5 border border-black/5 dark:border-white/10 animate-pulse"
+          style={{ scrollSnapAlign: "start" }}
+          aria-hidden
+        >
+          <div className="aspect-[4/3] bg-black/10 dark:bg-white/10" />
+          <div className="p-6 space-y-3">
+            <div className="h-3 w-24 rounded bg-black/10 dark:bg-white/10" />
+            <div className="h-4 w-full rounded bg-black/10 dark:bg-white/10" />
+            <div className="h-4 w-[85%] rounded bg-black/10 dark:bg-white/10" />
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
 
 export function InsightsSection() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [featuredPosts, setFeaturedPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void import("../data/blog").then((m) => {
+      if (!cancelled) setFeaturedPosts(m.blogPosts.slice(0, 4));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const scroll = (dir: "left" | "right") => {
     if (scrollRef.current) {
@@ -51,6 +82,7 @@ export function InsightsSection() {
             </InternalLink>
             <div className="flex gap-2">
               <motion.button
+                type="button"
                 onClick={() => scroll("left")}
                 aria-label={t("insights.prev")}
                 whileHover={{ scale: 1.05 }}
@@ -62,6 +94,7 @@ export function InsightsSection() {
                 </svg>
               </motion.button>
               <motion.button
+                type="button"
                 onClick={() => scroll("right")}
                 aria-label={t("insights.next")}
                 whileHover={{ scale: 1.05 }}
@@ -81,50 +114,53 @@ export function InsightsSection() {
           className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide"
           style={{ scrollSnapType: "x mandatory" }}
         >
-          {featuredPosts.map((post, i) => {
-            const loc = post[locale];
-            return (
-            <InternalLink
-              key={post.slug}
-              to={`/blog/${post.slug}`}
-              onClick={() =>
-                trackBlogSelect(
-                  { slug: post.slug, title: loc.title },
-                  "insights_featured",
-                  i
-                )
-              }
-              className="flex-shrink-0 w-[300px]"
-              style={{ scrollSnapAlign: "start" }}
-            >
-              <motion.article
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="h-full rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 hover:border-waabi-pink/30 transition-colors group"
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={post[locale].title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white font-sans text-xs font-medium">
-                      {loc.category}
-                    </span>
-                    <span className="font-sans text-xs text-black/50 dark:text-white/50">{loc.date}</span>
-                  </div>
-                  <h3 className="font-sans font-bold text-black dark:text-white leading-snug group-hover:text-waabi-pink transition-colors">
-                    {loc.title}
-                  </h3>
-                </div>
-              </motion.article>
-            </InternalLink>
-          );})}
+          {featuredPosts.length === 0 ? (
+            <FeaturedSkeleton />
+          ) : (
+            featuredPosts.map((post, i) => {
+              const loc = post[locale];
+              return (
+                <InternalLink
+                  key={post.slug}
+                  to={`/blog/${post.slug}`}
+                  onClick={() =>
+                    trackBlogSelect({ slug: post.slug, title: loc.title }, "insights_featured", i)
+                  }
+                  className="flex-shrink-0 w-[300px]"
+                  style={{ scrollSnapAlign: "start" }}
+                >
+                  <motion.article
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.05 }}
+                    className="h-full rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 hover:border-waabi-pink/30 transition-colors group"
+                  >
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img
+                        src={post.image}
+                        alt={post[locale].title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white font-sans text-xs font-medium">
+                          {loc.category}
+                        </span>
+                        <span className="font-sans text-xs text-black/50 dark:text-white/50">{loc.date}</span>
+                      </div>
+                      <h3 className="font-sans font-bold text-black dark:text-white leading-snug group-hover:text-waabi-pink transition-colors">
+                        {loc.title}
+                      </h3>
+                    </div>
+                  </motion.article>
+                </InternalLink>
+              );
+            })
+          )}
         </div>
       </div>
     </section>

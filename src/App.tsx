@@ -1,21 +1,33 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToHash } from "./components/ScrollToHash";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { TransitionProvider } from "./context/TransitionContext";
 import { LocaleProvider } from "./context/LocaleContext";
-import { BlogPage } from "./pages/BlogPage";
-import { BlogPostPage } from "./pages/BlogPostPage";
-import { CompareIndexPage } from "./pages/CompareIndexPage";
-import { ComparisonPage } from "./pages/ComparisonPage";
-import { FaqPage } from "./pages/FaqPage";
 import { HomePage } from "./pages/HomePage";
 import { Layout } from "./pages/Layout";
-import { LocationPage } from "./pages/LocationPage";
-import { LocationsIndexPage } from "./pages/LocationsIndexPage";
-import { PrivacyPage } from "./pages/PrivacyPage";
-import { ServicePage } from "./pages/ServicePage";
-import { ServicesIndexPage } from "./pages/ServicesIndexPage";
-import { TarifsPage } from "./pages/TarifsPage";
+
+const BlogPage = lazy(() => import("./pages/BlogPage").then((m) => ({ default: m.BlogPage })));
+const BlogPostPage = lazy(() => import("./pages/BlogPostPage").then((m) => ({ default: m.BlogPostPage })));
+const CompareIndexPage = lazy(() =>
+  import("./pages/CompareIndexPage").then((m) => ({ default: m.CompareIndexPage })),
+);
+const ComparisonPage = lazy(() => import("./pages/ComparisonPage").then((m) => ({ default: m.ComparisonPage })));
+const FaqPage = lazy(() => import("./pages/FaqPage").then((m) => ({ default: m.FaqPage })));
+const LocationPage = lazy(() => import("./pages/LocationPage").then((m) => ({ default: m.LocationPage })));
+const LocationsIndexPage = lazy(() =>
+  import("./pages/LocationsIndexPage").then((m) => ({ default: m.LocationsIndexPage })),
+);
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage").then((m) => ({ default: m.PrivacyPage })));
+const ServicePage = lazy(() => import("./pages/ServicePage").then((m) => ({ default: m.ServicePage })));
+const ServicesIndexPage = lazy(() =>
+  import("./pages/ServicesIndexPage").then((m) => ({ default: m.ServicesIndexPage })),
+);
+const TarifsPage = lazy(() => import("./pages/TarifsPage").then((m) => ({ default: m.TarifsPage })));
+
+function RouteFallback() {
+  return <div className="min-h-[40vh] bg-nd-canvas" aria-busy="true" aria-label="Chargement" />;
+}
 
 function App() {
   return (
@@ -27,31 +39,185 @@ function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<HomePage />} />
-                <Route path="services" element={<ServicesIndexPage />} />
-                <Route path="services/:slug" element={<ServicePage />} />
-                <Route path="compare" element={<CompareIndexPage />} />
-                <Route path="compare/:comparisonSlug" element={<ComparisonPage />} />
-                <Route path="locations" element={<LocationsIndexPage />} />
-                <Route path="location/:locationSlug" element={<LocationPage />} />
-                <Route path="blog" element={<BlogPage />} />
-                <Route path="blog/:slug" element={<BlogPostPage />} />
-                <Route path="faq" element={<FaqPage />} />
-                <Route path="tarifs" element={<TarifsPage />} />
-                <Route path="privacy" element={<PrivacyPage />} />
+                <Route
+                  path="services"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <ServicesIndexPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="services/:slug"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <ServicePage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="compare"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <CompareIndexPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="compare/:comparisonSlug"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <ComparisonPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="locations"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <LocationsIndexPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="location/:locationSlug"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <LocationPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="blog"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <BlogPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="blog/:slug"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <BlogPostPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="faq"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <FaqPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="tarifs"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TarifsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="privacy"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <PrivacyPage />
+                    </Suspense>
+                  }
+                />
               </Route>
               <Route path="/en" element={<Layout />}>
                 <Route index element={<HomePage />} />
-                <Route path="services" element={<ServicesIndexPage />} />
-                <Route path="services/:slug" element={<ServicePage />} />
-                <Route path="compare" element={<CompareIndexPage />} />
-                <Route path="compare/:comparisonSlug" element={<ComparisonPage />} />
-                <Route path="locations" element={<LocationsIndexPage />} />
-                <Route path="location/:locationSlug" element={<LocationPage />} />
-                <Route path="blog" element={<BlogPage />} />
-                <Route path="blog/:slug" element={<BlogPostPage />} />
-                <Route path="faq" element={<FaqPage />} />
-                <Route path="tarifs" element={<TarifsPage />} />
-                <Route path="privacy" element={<PrivacyPage />} />
+                <Route
+                  path="services"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <ServicesIndexPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="services/:slug"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <ServicePage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="compare"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <CompareIndexPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="compare/:comparisonSlug"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <ComparisonPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="locations"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <LocationsIndexPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="location/:locationSlug"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <LocationPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="blog"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <BlogPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="blog/:slug"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <BlogPostPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="faq"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <FaqPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="tarifs"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TarifsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="privacy"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <PrivacyPage />
+                    </Suspense>
+                  }
+                />
               </Route>
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

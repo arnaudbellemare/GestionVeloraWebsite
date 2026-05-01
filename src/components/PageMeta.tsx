@@ -3,7 +3,6 @@ import { useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "../context/LocaleContext";
 import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "../config";
-import { getPostBySlug } from "../data/blog";
 import { getComparisonBySlug } from "../data/comparisons";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
@@ -30,6 +29,30 @@ function setMeta(name: string, content: string, property = false) {
   el.content = content;
 }
 
+function applyDocumentMeta(opts: {
+  title: string;
+  description: string;
+  ogImage: string;
+  twitterImage: string;
+  url: string;
+  isEn: boolean;
+}) {
+  const { title, description, ogImage, twitterImage, url, isEn } = opts;
+  document.title = title;
+  setMeta("description", description);
+  setMeta("twitter:card", "summary_large_image");
+  setMeta("og:title", title, true);
+  setMeta("og:description", description, true);
+  setMeta("og:url", url, true);
+  setMeta("og:image", ogImage, true);
+  setMeta("og:locale", isEn ? "en_CA" : "fr_CA", true);
+  setMeta("og:locale:alternate", isEn ? "fr_CA" : "en_CA", true);
+  setMeta("twitter:title", title);
+  setMeta("twitter:description", description);
+  setMeta("twitter:url", url);
+  setMeta("twitter:image", twitterImage);
+}
+
 export function PageMeta() {
   const { t } = useTranslation();
   const { locale } = useLocale();
@@ -47,11 +70,53 @@ export function PageMeta() {
   useEffect(() => {
     document.documentElement.lang = isEn ? "en-CA" : "fr-CA";
 
+    const url = SITE_URL + (pathname === "/" || pathname === "/en" || pathname === "/en/" ? "/" : pathname);
+
+    const isBlogPostPath =
+      Boolean(slug) &&
+      (pathname.startsWith("/blog/") || pathname.startsWith("/en/blog/")) &&
+      pathname !== "/blog" &&
+      pathname !== "/en/blog" &&
+      pathname !== "/en/blog/";
+
+    if (isBlogPostPath && slug) {
+      let cancelled = false;
+      void import("../data/blog").then(({ getPostBySlug }) => {
+        if (cancelled) return;
+        const post = getPostBySlug(slug, locale);
+        if (post) {
+          applyDocumentMeta({
+            title: buildTitle(post.metaTitle ?? post.title),
+            description: post.excerpt,
+            ogImage: post.image,
+            twitterImage: post.image,
+            url,
+            isEn,
+          });
+        } else {
+          applyDocumentMeta({
+            title: isEn
+              ? "Montreal Property Management Blog — Advice & News | Gestion Velora"
+              : "Blog gestion immobilière Montréal | Conseils & actualités",
+            description: isEn
+              ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
+              : "Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité. Par l’équipe Gestion Velora.",
+            ogImage: DEFAULT_OG_IMAGE,
+            twitterImage: DEFAULT_TWITTER_IMAGE,
+            url,
+            isEn,
+          });
+        }
+      });
+      return () => {
+        cancelled = true;
+      };
+    }
+
     let title = baseTitle;
     let description = baseDesc;
     let ogImage = DEFAULT_OG_IMAGE;
     let twitterImage = DEFAULT_TWITTER_IMAGE;
-    const url = SITE_URL + (pathname === "/" || pathname === "/en" || pathname === "/en/" ? "/" : pathname);
 
     const isServicesHub =
       pathname === "/services" ||
@@ -97,42 +162,13 @@ export function PageMeta() {
       description = isEn
         ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
         : "Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité. Par l’équipe Gestion Velora.";
-    } else if (pathname.startsWith("/blog/") || pathname.startsWith("/en/blog/")) {
-      if (slug) {
-        const post = getPostBySlug(slug, locale);
-        if (post) {
-          title = buildTitle(post.metaTitle ?? post.title);
-          description = post.excerpt;
-          ogImage = post.image;
-          twitterImage = post.image;
-        }
-      } else {
-        title = isEn
-          ? "Montreal Property Management Blog — Advice & News | Gestion Velora"
-          : "Blog gestion immobilière Montréal | Conseils & actualités";
-        description = isEn
-          ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
-          : "Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité. Par l’équipe Gestion Velora.";
-      }
     } else if (pathname === "/privacy" || pathname === "/en/privacy") {
       title = isEn ? "Privacy | Gestion Velora" : "Confidentialité | Gestion Velora";
       description = baseDesc;
     }
 
-    document.title = title;
-    setMeta("description", description);
-    setMeta("twitter:card", "summary_large_image");
-    setMeta("og:title", title, true);
-    setMeta("og:description", description, true);
-    setMeta("og:url", url, true);
-    setMeta("og:image", ogImage, true);
-    setMeta("og:locale", isEn ? "en_CA" : "fr_CA", true);
-    setMeta("og:locale:alternate", isEn ? "fr_CA" : "en_CA", true);
-    setMeta("twitter:title", title);
-    setMeta("twitter:description", description);
-    setMeta("twitter:url", url);
-    setMeta("twitter:image", twitterImage);
-  }, [pathname, slug, locale, t]);
+    applyDocumentMeta({ title, description, ogImage, twitterImage, url, isEn });
+  }, [pathname, slug, locale, t, isEn, baseTitle, baseDesc]);
 
   return null;
 }
