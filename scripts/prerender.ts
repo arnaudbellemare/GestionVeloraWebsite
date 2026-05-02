@@ -1133,7 +1133,7 @@ function buildRoutes(): RouteConfig[] {
     pageSchemas: buildFaqSchema("en"),
   });
 
-  // --- Location pages (35 cities × 4 services × 2 languages = 280 routes) ---
+  // --- Location pages (generated from CITIES × LOCATION_SERVICES × 2 languages) ---
   routes.push(...buildLocationRoutes());
 
   return routes;

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && tsx scripts/prerender.ts",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seo:priority": "tsx scripts/generate-seo-priority.ts"
   },
   "dependencies": {
     "framer-motion": "^11.0.0",

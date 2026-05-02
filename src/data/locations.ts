@@ -63,6 +63,30 @@ export const CITIES: City[] = [
   { slug: "lasalle", nameFr: "LaSalle", nameEn: "LaSalle", region: "Montréal" },
   { slug: "sud-ouest", nameFr: "Le Sud-Ouest", nameEn: "Le Sud-Ouest", region: "Montréal" },
   { slug: "ville-marie", nameFr: "Ville-Marie", nameEn: "Ville-Marie", region: "Montréal" },
+  // High-intent Greater Montreal municipalities (expands local SEO coverage)
+  { slug: "saint-lambert", nameFr: "Saint-Lambert", nameEn: "Saint-Lambert", region: "Montérégie" },
+  { slug: "candiac", nameFr: "Candiac", nameEn: "Candiac", region: "Montérégie" },
+  { slug: "la-prairie", nameFr: "La Prairie", nameEn: "La Prairie", region: "Montérégie" },
+  { slug: "saint-constant", nameFr: "Saint-Constant", nameEn: "Saint-Constant", region: "Montérégie" },
+  { slug: "delson", nameFr: "Delson", nameEn: "Delson", region: "Montérégie" },
+  { slug: "boisbriand", nameFr: "Boisbriand", nameEn: "Boisbriand", region: "Laurentides" },
+  { slug: "lorraine", nameFr: "Lorraine", nameEn: "Lorraine", region: "Laurentides" },
+  { slug: "rosemere", nameFr: "Rosemère", nameEn: "Rosemere", region: "Laurentides" },
+  { slug: "deux-montagnes", nameFr: "Deux-Montagnes", nameEn: "Deux-Montagnes", region: "Laurentides" },
+  { slug: "sainte-therese", nameFr: "Sainte-Thérèse", nameEn: "Sainte-Therese", region: "Laurentides" },
+  { slug: "bois-des-filion", nameFr: "Bois-des-Filion", nameEn: "Bois-des-Filion", region: "Laurentides" },
+  { slug: "charlemagne", nameFr: "Charlemagne", nameEn: "Charlemagne", region: "Lanaudière" },
+  { slug: "lassomption", nameFr: "L'Assomption", nameEn: "L'Assomption", region: "Lanaudière" },
+  { slug: "saint-eustache", nameFr: "Saint-Eustache", nameEn: "Saint-Eustache", region: "Laurentides" },
+  { slug: "beaconsfield", nameFr: "Beaconsfield", nameEn: "Beaconsfield", region: "Île de Montréal" },
+  { slug: "dorval", nameFr: "Dorval", nameEn: "Dorval", region: "Île de Montréal" },
+  { slug: "montreal-ouest", nameFr: "Montréal-Ouest", nameEn: "Montreal West", region: "Île de Montréal" },
+  { slug: "hampstead", nameFr: "Hampstead", nameEn: "Hampstead", region: "Île de Montréal" },
+  { slug: "chambly", nameFr: "Chambly", nameEn: "Chambly", region: "Montérégie" },
+  { slug: "carignan", nameFr: "Carignan", nameEn: "Carignan", region: "Montérégie" },
+  { slug: "saint-bruno-de-montarville", nameFr: "Saint-Bruno-de-Montarville", nameEn: "Saint-Bruno-de-Montarville", region: "Montérégie" },
+  { slug: "sainte-julie", nameFr: "Sainte-Julie", nameEn: "Sainte-Julie", region: "Montérégie" },
+  { slug: "beloeil", nameFr: "Beloeil", nameEn: "Beloeil", region: "Montérégie" },
 ];
 
 export const LOCATION_SERVICES: LocationService[] = [
@@ -76,9 +100,9 @@ export const LOCATION_SERVICES: LocationService[] = [
     titleTmplFr: "Syndicat de copropriété à {city}",
     titleTmplEn: "Condo board management in {city}",
     descFr:
-      "Gestion Velora, firme de gestion de copropriété à {city}, assure l'administration complète de votre syndicat de copropriétaires : gestion administrative et financière, assemblée générale annuelle (AGA), budget annuel, charges communes, fonds de prévoyance, registre de copropriété, entretien des parties communes et conformité Loi 141.",
+      "Gestion Velora, firme de gestion de copropriété à {city}, assure une gestion complète et humaine de votre syndicat de copropriétaires : gestion administrative et financière, assemblée générale annuelle (AGA), budget annuel, charges communes, fonds de prévoyance, registre de copropriété, entretien des parties communes, conformité Loi 141 et accompagnement d'urgence 24/7.",
     descEn:
-      "Gestion Velora, a condo management firm serving {city}, handles full condo board administration: administrative and financial management, annual general meeting (AGM), annual budget, common fees, reserve fund, condo register, common area maintenance, and Loi 141 compliance.",
+      "Gestion Velora, a condo management firm serving {city}, provides complete and human-centered condo board administration: financial and administrative operations, annual general meeting (AGM), annual budget, common fees, reserve fund, condo register, common-area maintenance, Loi 141 compliance, and 24/7 emergency support.",
     keywordFr: "gestion syndicat copropriété {city}",
     keywordEn: "condo board management {city}",
   },
@@ -92,9 +116,9 @@ export const LOCATION_SERVICES: LocationService[] = [
     titleTmplFr: "Gestion locative à {city}",
     titleTmplEn: "Rental management in {city}",
     descFr:
-      "Gestion Velora prend en charge la gestion locative de vos immeubles à {city} : sélection des locataires, rédaction des baux, suivi des loyers et entretien.",
+      "Gestion Velora prend en charge la gestion locative complète de vos immeubles à {city} : sélection des locataires, rédaction des baux, suivi des loyers, entretien, coordination fournisseurs et rapports mensuels transparents.",
     descEn:
-      "Gestion Velora manages your rental properties in {city}: tenant screening, leases, rent collection, and maintenance coordination.",
+      "Gestion Velora delivers complete rental property management in {city}: tenant screening, lease administration, rent collection, maintenance coordination, vendor follow-up, and transparent monthly reporting.",
     keywordFr: "gestion locative {city}",
     keywordEn: "rental management {city}",
   },
@@ -108,9 +132,9 @@ export const LOCATION_SERVICES: LocationService[] = [
     titleTmplFr: "Gestion Airbnb à {city}",
     titleTmplEn: "Airbnb management in {city}",
     descFr:
-      "Gestion Velora gère vos locations courte durée à {city} : annonces, réservations, accueil des voyageurs, ménage et conformité réglementaire.",
+      "Gestion Velora gère vos locations courte durée à {city} avec une approche proactive : annonces, réservations, accueil des voyageurs, ménage, maintenance, optimisation des revenus et conformité réglementaire.",
     descEn:
-      "Gestion Velora manages your short-term rentals in {city}: listings, bookings, guest check-in, cleaning, and regulatory compliance.",
+      "Gestion Velora manages your short-term rentals in {city} with a proactive approach: listings, bookings, guest operations, cleaning, maintenance, revenue optimization, and regulatory compliance.",
     keywordFr: "gestion Airbnb {city}",
     keywordEn: "Airbnb management {city}",
   },
@@ -124,15 +148,15 @@ export const LOCATION_SERVICES: LocationService[] = [
     titleTmplFr: "Gestion commerciale à {city}",
     titleTmplEn: "Commercial management in {city}",
     descFr:
-      "Gestion Velora accompagne les propriétaires d'immeubles commerciaux à {city} : gestion des baux commerciaux, entretien, relations avec les locataires et optimisation du rendement.",
+      "Gestion Velora accompagne les propriétaires d'immeubles commerciaux à {city} : gestion des baux commerciaux, entretien, relations locataires, contrôle des charges, et optimisation durable du rendement.",
     descEn:
-      "Gestion Velora supports commercial property owners in {city}: commercial leases, maintenance, tenant relations, and yield optimization.",
+      "Gestion Velora supports commercial property owners in {city}: lease management, maintenance, tenant relations, operating-cost control, and long-term yield optimization.",
     keywordFr: "gestion immobilière commerciale {city}",
     keywordEn: "commercial property management {city}",
   },
 ];
 
-// All 56 valid location slugs (service-city)
+// All valid location slugs (service-city), generated from LOCATION_SERVICES x CITIES
 export const LOCATION_SLUGS: string[] = LOCATION_SERVICES.flatMap((svc) =>
   CITIES.map((city) => `${svc.slug}-${city.slug}`)
 );
