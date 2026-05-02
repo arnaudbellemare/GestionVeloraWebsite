@@ -47,7 +47,6 @@ export function SchemaOrg() {
   const { slug } = useParams<{ slug: string }>();
   const path = pathname;
   const isEn = path.startsWith("/en");
-  const locale = isEn ? "en-CA" : "fr-CA";
   const base = isEn ? `${SITE_URL}/en` : SITE_URL;
 
   // Breadcrumb label helpers (translated)
@@ -91,25 +90,6 @@ export function SchemaOrg() {
             description: svc.description,
             url: `${base}/services/${svc.slug}`,
           },
-        })),
-      });
-      return () => removePageSchema();
-    }
-
-    // ── FAQ page ──────────────────────────────────────────────────────────────
-    if (path === "/faq" || path === "/en/faq") {
-      const faqItems = t("faqItems", { returnObjects: true }) as {
-        question: string;
-        answer: string;
-      }[];
-      injectSchema({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        inLanguage: locale,
-        mainEntity: faqItems.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: { "@type": "Answer", text: item.answer },
         })),
       });
       return () => removePageSchema();
@@ -223,7 +203,7 @@ export function SchemaOrg() {
 
     removePageSchema();
     return () => removePageSchema();
-  }, [path, slug, t, bcHome, bcServices, bcInsights, base, locale, isEn]);
+  }, [path, slug, t, bcHome, bcServices, bcInsights, base, isEn]);
 
   return null;
 }
