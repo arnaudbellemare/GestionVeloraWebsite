@@ -6,23 +6,13 @@ import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
 import { CITIES, LOCATION_SERVICES } from "../data/locations";
 
-const FEATURED_CITY_SLUGS = [
-  "montreal",
-  "laval",
-  "longueuil",
-  "brossard",
-  "westmount",
-  "plateau-mont-royal",
-  "verdun",
-  "saint-laurent",
-];
-
 export function LocationsIndexPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const isEn = locale === "en";
 
-  const cities = CITIES.filter((city) => FEATURED_CITY_SLUGS.includes(city.slug));
+  const cities = CITIES;
+  const localePrefix = isEn ? "/en" : "";
 
   return (
     <motion.div
@@ -57,13 +47,16 @@ export function LocationsIndexPage() {
                 <h2 className="font-sans font-semibold text-2xl text-nd-display mb-4">
                   {isEn ? city.nameEn : city.nameFr}
                 </h2>
+                <p className="font-sans text-sm text-nd-secondary mb-5">
+                  {isEn ? `Region: ${city.region}` : `Region : ${city.region}`}
+                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   {LOCATION_SERVICES.map((service) => {
                     const pageSlug = `${service.slug}-${city.slug}`;
                     return (
                       <InternalLink
                         key={pageSlug}
-                        to={`/location/${pageSlug}`}
+                        to={`${localePrefix}/location/${pageSlug}`}
                         className="inline-flex items-center justify-between rounded-xl border border-black/12 dark:border-white/12 px-4 py-3 text-sm font-sans text-black/85 dark:text-white/85 hover:border-nd-primary/45 transition-colors"
                       >
                         <span>{isEn ? service.nameEn : service.nameFr}</span>

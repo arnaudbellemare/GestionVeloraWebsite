@@ -3,13 +3,14 @@ import { Navigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useLocale } from "../context/LocaleContext";
-import { resolveLocation, LOCATION_FEATURES } from "../data/locations";
+import { resolveLocation, LOCATION_FEATURES, CITIES } from "../data/locations";
 import { LOCATION_LANDING_SERVICE_IMAGES } from "../data/services";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { SITE_URL } from "../config";
+import { COMPARISON_PAGES } from "../data/comparisons";
 
 const RELATED_POSTS: Record<string, { slug: string; titleEn: string; titleFr: string }[]> = {
   "gestion-airbnb": [
@@ -145,6 +146,9 @@ export function LocationPage() {
   const otherServices = ["syndicat-copropriete", "gestion-locative", "gestion-airbnb"].filter(
     (s) => s !== loc.service.slug
   );
+  const localePrefix = isEn ? "/en" : "";
+  const nearbyCities = CITIES.filter((city) => city.slug !== loc.city.slug && city.region === loc.city.region).slice(0, 3);
+  const serviceComparisons = COMPARISON_PAGES.slice(0, 2);
 
   return (
     <motion.div
@@ -234,6 +238,42 @@ export function LocationPage() {
         </div>
       </section>
 
+      {/* Answer-first + internal links */}
+      <section id="location-answer-first" className="py-14 lg:py-16 px-6 lg:px-16 bg-nd-surface border-y border-nd-border">
+        <div className="max-w-[90rem] mx-auto grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14">
+          <ScrollReveal>
+            <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display leading-[1.1] tracking-[-0.02em] mb-4">
+              {isEn
+                ? `What is the best ${loc.service.nameEn.toLowerCase()} approach in ${loc.city.nameEn}?`
+                : `Quelle approche de ${loc.service.nameFr.toLowerCase()} est la plus efficace à ${loc.city.nameFr} ?`}
+            </h2>
+            <p className="font-sans text-base text-nd-secondary leading-relaxed">
+              {isEn
+                ? `For most buildings in ${loc.city.nameEn}, the best approach is a documented operating cadence: preventive maintenance, monthly reporting, and fast incident response. Gestion Velora applies this framework with local vendor coordination, clear compliance checkpoints, and one accountable team so owners and boards keep visibility without operational overload.`
+                : `Pour la majorité des immeubles à ${loc.city.nameFr}, l'approche la plus efficace combine un rythme d'exploitation documenté : maintenance préventive, reporting mensuel et réponse rapide aux incidents. Gestion Velora applique ce cadre avec une coordination locale des fournisseurs, des jalons de conformité clairs et une équipe responsable pour garder de la visibilité sans surcharge opérationnelle.`}
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.06}>
+            <div className="rounded-2xl border border-nd-border bg-nd-canvas p-6">
+              <h3 className="font-sans font-semibold text-nd-display mb-3">
+                {isEn ? "Compare your options" : "Comparer vos options"}
+              </h3>
+              <div className="space-y-2.5">
+                {serviceComparisons.map((comparison) => (
+                  <InternalLink
+                    key={comparison.slug}
+                    to={`${localePrefix}/compare/${comparison.slug}`}
+                    className="block text-sm text-nd-secondary hover:text-nd-primary transition-colors"
+                  >
+                    {isEn ? comparison.titleEn : comparison.titleFr} →
+                  </InternalLink>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* Why Velora */}
       <section id="location-why-velora" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-surface border-y border-nd-border">
         <div className="max-w-[90rem] mx-auto">
@@ -304,7 +344,7 @@ export function LocationPage() {
               return (
                 <ScrollReveal key={svcSlug} delay={i * 0.07}>
                   <InternalLink
-                    to={`/location/${pageSlug}`}
+                    to={`${localePrefix}/location/${pageSlug}`}
                     className="block rounded-2xl border border-nd-border bg-nd-surface p-6 hover:border-nd-primary/40 transition-colors"
                   >
                     <span className="font-sans font-medium text-nd-display block mb-1">{label}</span>
@@ -319,6 +359,31 @@ export function LocationPage() {
         </div>
       </section>
 
+      {/* Nearby city links */}
+      {nearbyCities.length > 0 && (
+        <section id="location-nearby-cities" className="py-16 lg:py-20 px-6 lg:px-16 bg-nd-canvas border-t border-nd-border">
+          <div className="max-w-[90rem] mx-auto">
+            <ScrollReveal className="mb-8">
+              <h2 className="font-sans font-medium text-2xl lg:text-3xl text-nd-display leading-[1.1] tracking-[-0.02em]">
+                {isEn ? "Nearby cities we also serve" : "Villes voisines aussi desservies"}
+              </h2>
+            </ScrollReveal>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {nearbyCities.map((city) => (
+                <InternalLink
+                  key={city.slug}
+                  to={`${localePrefix}/location/${loc.service.slug}-${city.slug}`}
+                  className="inline-flex items-center justify-between rounded-xl border border-nd-border bg-nd-surface px-4 py-3 font-sans text-sm text-nd-secondary hover:border-nd-primary/40 transition-colors"
+                >
+                  <span>{isEn ? city.nameEn : city.nameFr}</span>
+                  <span aria-hidden>→</span>
+                </InternalLink>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Related articles */}
       {RELATED_POSTS[loc.service.slug] && (
         <section id="location-related-articles" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas border-t border-nd-border">
@@ -332,7 +397,7 @@ export function LocationPage() {
               {RELATED_POSTS[loc.service.slug].map((post, i) => (
                 <ScrollReveal key={post.slug} delay={i * 0.07}>
                   <InternalLink
-                    to={`/blog/${post.slug}`}
+                    to={`${localePrefix}/blog/${post.slug}`}
                     className="block rounded-2xl border border-nd-border bg-nd-surface p-6 hover:border-nd-primary/40 transition-colors"
                   >
                     <span className="font-sans font-medium text-nd-display block mb-1 text-sm leading-snug">
