@@ -19,6 +19,8 @@ export const LOCATION_LANDING_SERVICE_IMAGES: Record<string, string> = {
   "syndicat-copropriete": SERVICE_IMAGES["syndicat-copropriete"],
   "gestion-locative": SERVICE_IMAGES.location,
   "gestion-airbnb": SERVICE_IMAGES.airbnb,
+  "conformite-loi-16":
+    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1920&q=85",
   "gestion-immobiliere-commerciale":
     "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=85",
 };

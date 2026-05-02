@@ -54,6 +54,8 @@ const LOCATION_LANDING_OG_IMAGES: Record<string, string> = {
   "syndicat-copropriete": SERVICE_IMAGES["syndicat-copropriete"],
   "gestion-locative": SERVICE_IMAGES.location,
   "gestion-airbnb": SERVICE_IMAGES.airbnb,
+  "conformite-loi-16":
+    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1920&q=85",
   "gestion-immobiliere-commerciale":
     "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=85",
 };
@@ -696,6 +698,36 @@ function buildLocationFaqSchema(
             {
               q: `What is the cost of rental management in ${cityName}?`,
               a: `Rental management fees vary by number of units, property type, and required services. Contact Gestion Velora for a personalized quote tailored to your building in ${cityName}.`,
+            },
+          ],
+    "conformite-loi-16":
+      locale === "fr"
+        ? [
+            {
+              q: `Que comprend la mise en conformité Loi 16 à ${cityName} ?`,
+              a: `La conformité Loi 16 pour les syndicats de copropriété à ${cityName} comprend le carnet d'entretien de l'immeuble, l'étude du fonds de prévoyance, le registre de copropriété et l'attestation lors de vente d'unité. Gestion Velora structure ces obligations pour chaque syndicat afin de respecter les échéances réglementaires prévues jusqu'en 2027.`,
+            },
+            {
+              q: `Quand les syndicats de ${cityName} doivent-ils être conformes à la Loi 16 ?`,
+              a: `La Loi 16 est entrée en vigueur le 14 août 2025 avec des délais de transition de 1 à 3 ans selon les obligations. Les syndicats à ${cityName} doivent être pleinement conformes d'ici 2027 au plus tard. Gestion Velora planifie le calendrier de conformité de chaque mandat dès la signature.`,
+            },
+            {
+              q: `Que se passe-t-il si un syndicat à ${cityName} n'est pas conforme à la Loi 16 ?`,
+              a: `Le non-respect de la Loi 16 expose les administrateurs de syndicat à des poursuites civiles et peut bloquer les transactions immobilières dans l'immeuble. À ${cityName}, Gestion Velora accompagne les syndicats en retard de conformité pour régulariser leur situation et éviter toute exposition légale.`,
+            },
+          ]
+        : [
+            {
+              q: `What does Bill 16 compliance in ${cityName} include?`,
+              a: `Bill 16 compliance for condo boards in ${cityName} covers the building maintenance logbook, reserve fund study, condo register, and unit sale attestation. Gestion Velora structures these obligations for each mandate to meet all regulatory deadlines through 2027.`,
+            },
+            {
+              q: `When must condo boards in ${cityName} be fully compliant with Bill 16?`,
+              a: `Bill 16 came into force on August 14, 2025, with transition periods of 1 to 3 years depending on the obligation. Condo boards in ${cityName} must be fully compliant by 2027 at the latest. Gestion Velora builds a compliance calendar into every mandate from signing.`,
+            },
+            {
+              q: `What happens if a condo board in ${cityName} is not compliant with Bill 16?`,
+              a: `Non-compliance with Bill 16 exposes condo board administrators to civil liability and can block real estate transactions in the building. In ${cityName}, Gestion Velora helps boards in a compliance backlog to regularize their situation quickly and avoid legal exposure.`,
             },
           ],
     "gestion-immobiliere-commerciale":

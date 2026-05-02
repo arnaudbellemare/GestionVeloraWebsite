@@ -87,6 +87,17 @@ export const CITIES: City[] = [
   { slug: "saint-bruno-de-montarville", nameFr: "Saint-Bruno-de-Montarville", nameEn: "Saint-Bruno-de-Montarville", region: "Montérégie" },
   { slug: "sainte-julie", nameFr: "Sainte-Julie", nameEn: "Sainte-Julie", region: "Montérégie" },
   { slug: "beloeil", nameFr: "Beloeil", nameEn: "Beloeil", region: "Montérégie" },
+  // Expansion cities — Quebec City region, Estrie, Mauricie, Outaouais, Laurentides vacationing
+  { slug: "quebec", nameFr: "Québec", nameEn: "Quebec City", region: "Capitale-Nationale" },
+  { slug: "levis", nameFr: "Lévis", nameEn: "Lévis", region: "Capitale-Nationale" },
+  { slug: "sherbrooke", nameFr: "Sherbrooke", nameEn: "Sherbrooke", region: "Estrie" },
+  { slug: "trois-rivieres", nameFr: "Trois-Rivières", nameEn: "Trois-Rivières", region: "Mauricie" },
+  { slug: "gatineau", nameFr: "Gatineau", nameEn: "Gatineau", region: "Outaouais" },
+  { slug: "drummondville", nameFr: "Drummondville", nameEn: "Drummondville", region: "Centre-du-Québec" },
+  { slug: "saint-hyacinthe", nameFr: "Saint-Hyacinthe", nameEn: "Saint-Hyacinthe", region: "Montérégie" },
+  { slug: "granby", nameFr: "Granby", nameEn: "Granby", region: "Estrie" },
+  { slug: "mont-tremblant", nameFr: "Mont-Tremblant", nameEn: "Mont-Tremblant", region: "Laurentides" },
+  { slug: "bromont", nameFr: "Bromont", nameEn: "Bromont", region: "Estrie" },
 ];
 
 export const LOCATION_SERVICES: LocationService[] = [
@@ -137,6 +148,22 @@ export const LOCATION_SERVICES: LocationService[] = [
       "Gestion Velora manages your short-term rentals in {city} with a proactive approach: listings, bookings, guest operations, cleaning, maintenance, revenue optimization, and regulatory compliance.",
     keywordFr: "gestion Airbnb {city}",
     keywordEn: "Airbnb management {city}",
+  },
+  {
+    slug: "conformite-loi-16",
+    serviceSlug: "syndicat-copropriete",
+    nameFr: "Conformité Loi 16",
+    nameEn: "Bill 16 compliance",
+    h1Fr: "Conformité Loi 16 à {city} — carnet d'entretien et fonds de prévoyance",
+    h1En: "Bill 16 compliance in {city} — maintenance log and reserve fund",
+    titleTmplFr: "Conformité Loi 16 à {city}",
+    titleTmplEn: "Bill 16 compliance in {city}",
+    descFr:
+      "Gestion Velora accompagne les syndicats de copropriété à {city} dans leur mise en conformité avec la Loi 16 : réalisation du carnet d'entretien, étude du fonds de prévoyance, registre de copropriété, attestation lors de vente d'unité et respect des délais réglementaires prévus jusqu'en 2027.",
+    descEn:
+      "Gestion Velora helps condo boards in {city} achieve full Bill 16 compliance: building maintenance logbook, reserve fund study, condo register, unit sale attestation, and adherence to all regulatory deadlines through 2027.",
+    keywordFr: "conformité loi 16 {city}",
+    keywordEn: "bill 16 compliance {city}",
   },
   {
     slug: "gestion-immobiliere-commerciale",
@@ -266,6 +293,24 @@ export const LOCATION_FEATURES: Record<string, { fr: string[]; en: string[] }> =
       "Cleaning and maintenance coordination",
       "Dynamic pricing by season",
       "Compliance with municipal short-term rental regulations",
+    ],
+  },
+  "conformite-loi-16": {
+    fr: [
+      "Réalisation et tenue du carnet d'entretien de l'immeuble (Loi 16)",
+      "Coordination de l'étude du fonds de prévoyance",
+      "Mise en place et gestion du registre de copropriété",
+      "Attestation de conformité lors des transactions immobilières",
+      "Calendrier de mise en conformité jusqu'aux échéances de 2027",
+      "Accompagnement en cas d'inspection ou de litige de conformité",
+    ],
+    en: [
+      "Building maintenance logbook creation and ongoing management (Bill 16)",
+      "Reserve fund study coordination",
+      "Condo register setup and administration",
+      "Compliance attestation for property transactions",
+      "Compliance calendar through 2027 regulatory deadlines",
+      "Support for compliance inspections and disputes",
     ],
   },
   "gestion-immobiliere-commerciale": {
