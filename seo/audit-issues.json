@@ -1,0 +1,74 @@
+{
+  "title": "Gestion Velora SEO audit issues (repo-native)",
+  "generatedAt": "2026-05-02",
+  "recheckAllBy": "2026-08-01",
+  "sourceConfidenceNote": "Repo inspection [HIGH]. Live index counts, CWV field data, and GSC query splits require Search Console export [MEDIUM].",
+  "issues": [
+    {
+      "id": "GEO-SCALE-001",
+      "severity": "P0",
+      "category": "helpful_content / scaled_content_risk",
+      "title": "Large programmatic location URL set may trigger scaled-content scrutiny",
+      "description": "Many URLs are generated from CITIES × LOCATION_SERVICES × locales (see src/data/locations.ts, prerender). Without clearly distinct on-page value per URL, this pattern aligns with doorway/thin-page risk factors described in Google's scaled content abuse and Helpful Content guidance.",
+      "evidence": [
+        "src/data/locations.ts exports CITIES and LOCATION_SERVICES; LOCATION_SLUGS cross-product.",
+        "scripts/prerender.ts emits static HTML + sitemap entries for each route.",
+        "Build output: sitemap URL count ~560 (last local build log)."
+      ],
+      "recommendedActions": [
+        "Freeze net-new city×service URLs until each existing template passes a uniqueness rubric (local proof, data, or FAQ depth).",
+        "Sample 30 lowest-impression location URLs in GSC; merge, noindex, or substantially rewrite underperformers.",
+        "Prefer one high-quality locations hub + dynamic UX (e.g. user-selected city) over continued static multiplication."
+      ],
+      "rollback": "Reduce CITIES list and rebuild; or add selective robots noindex for experimental subsets after controlled test.",
+      "verification": "GSC: Pages report + URL Inspection on 10 random /location/* URLs; manual content diff review.",
+      "confidence": "HIGH",
+      "recheckBy": "2026-08-01"
+    },
+    {
+      "id": "META-DUP-001",
+      "severity": "P2",
+      "category": "metadata",
+      "title": "Ensure single JSON-LD authority per page type",
+      "description": "Runtime SchemaOrg and prerender schemas must not duplicate the same @type for one URL. FAQ fixed in 709f00b; audit other templates if similar patterns appear.",
+      "evidence": ["src/components/SchemaOrg.tsx", "scripts/prerender.ts pageSchemas"],
+      "recommendedActions": ["Per route: choose prerender OR runtime schema for primary entity, not both."],
+      "rollback": "Revert dual-injection commits; restore single source.",
+      "verification": "Rich Results Test + view-source on /faq, /services/*, /blog/*",
+      "confidence": "HIGH",
+      "recheckBy": "2026-06-15"
+    },
+    {
+      "id": "CWV-001",
+      "severity": "P2",
+      "category": "page_experience",
+      "title": "Field Core Web Vitals + INP not captured in repo",
+      "description": "Performance must be validated with real-user CrUX / Search Console Experience, not only Lighthouse lab scores.",
+      "evidence": ["No automated CrUX fetch in CI—by design (requires GSC API or PSI with URL secrets)."],
+      "recommendedActions": [
+        "Export monthly Experience report; annotate deploys in GSC (see seo/gsc-dashboard-handbook.md).",
+        "Prioritize LCP/INP on largest templates (home, service, blog post)."
+      ],
+      "rollback": "N/A",
+      "verification": "Search Console Experience dashboard",
+      "confidence": "MEDIUM",
+      "recheckBy": "2026-07-01"
+    },
+    {
+      "id": "GSC-SYNC-001",
+      "severity": "P3",
+      "category": "measurement",
+      "title": "Discovered vs indexed URL lag after sitemap changes",
+      "description": "Sitemap URL count can exceed indexed count for weeks; not necessarily an error.",
+      "evidence": ["Operator reports ~376 discovered vs ~560 sitemap lines locally."],
+      "recommendedActions": [
+        "Confirm live sitemap.xml matches deploy.",
+        "Request indexing for representative URLs only—not bulk spam requests."
+      ],
+      "rollback": "N/A",
+      "verification": "URL Inspection + sitemap last read date in GSC",
+      "confidence": "MEDIUM",
+      "recheckBy": "2026-06-01"
+    }
+  ]
+}

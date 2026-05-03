@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
     "seo:priority": "tsx scripts/generate-seo-priority.ts",
+    "seo:verify": "tsx scripts/verify-seo-artifacts.ts",
     "sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {

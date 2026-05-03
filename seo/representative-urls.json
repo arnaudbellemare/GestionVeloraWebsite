@@ -1,0 +1,68 @@
+{
+  "generatedAt": "2026-05-02",
+  "siteUrl": "https://www.gestionvelora.com",
+  "purpose": "Minimal URL set for Rich Results Test, URL Inspection, and manual parity checks (FR/EN). Not exhaustive.",
+  "templates": [
+    {
+      "id": "home",
+      "fr": "https://www.gestionvelora.com/",
+      "en": "https://www.gestionvelora.com/en/"
+    },
+    {
+      "id": "services_hub",
+      "fr": "https://www.gestionvelora.com/services",
+      "en": "https://www.gestionvelora.com/en/services"
+    },
+    {
+      "id": "service_detail_syndicat",
+      "fr": "https://www.gestionvelora.com/services/syndicat-copropriete",
+      "en": "https://www.gestionvelora.com/en/services/syndicat-copropriete"
+    },
+    {
+      "id": "compare_hub",
+      "fr": "https://www.gestionvelora.com/compare",
+      "en": "https://www.gestionvelora.com/en/compare"
+    },
+    {
+      "id": "compare_detail",
+      "fr": "https://www.gestionvelora.com/compare/gestionnaire-vs-autogestion-condo",
+      "en": "https://www.gestionvelora.com/en/compare/gestionnaire-vs-autogestion-condo"
+    },
+    {
+      "id": "locations_hub",
+      "fr": "https://www.gestionvelora.com/locations",
+      "en": "https://www.gestionvelora.com/en/locations"
+    },
+    {
+      "id": "location_detail_sample",
+      "note": "Sample only; full matrix is large—see audit GEO-SCALE-001",
+      "fr": "https://www.gestionvelora.com/location/syndicat-copropriete-montreal",
+      "en": "https://www.gestionvelora.com/en/location/syndicat-copropriete-montreal"
+    },
+    {
+      "id": "blog_index",
+      "fr": "https://www.gestionvelora.com/blog",
+      "en": "https://www.gestionvelora.com/en/blog"
+    },
+    {
+      "id": "blog_post_sample",
+      "fr": "https://www.gestionvelora.com/blog/gestion-copropriete-montreal-reglementation",
+      "en": "https://www.gestionvelora.com/en/blog/gestion-copropriete-montreal-reglementation"
+    },
+    {
+      "id": "faq",
+      "fr": "https://www.gestionvelora.com/faq",
+      "en": "https://www.gestionvelora.com/en/faq"
+    },
+    {
+      "id": "tarifs",
+      "fr": "https://www.gestionvelora.com/tarifs",
+      "en": "https://www.gestionvelora.com/en/tarifs"
+    },
+    {
+      "id": "privacy",
+      "fr": "https://www.gestionvelora.com/privacy",
+      "en": "https://www.gestionvelora.com/en/privacy"
+    }
+  ]
+}
