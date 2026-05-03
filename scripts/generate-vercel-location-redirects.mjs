@@ -15,7 +15,6 @@ const REMOVED_CITY_SLUGS = [
   "trois-rivieres",
   "gatineau",
   "drummondville",
-  "saint-hyacinthe",
   "granby",
   "mont-tremblant",
   "bromont",

@@ -79,6 +79,16 @@ export const CITIES: City[] = [
   { slug: "chateauguay", nameFr: "Châteauguay", nameEn: "Chateauguay", region: "Montérégie" },
   { slug: "saint-jerome", nameFr: "Saint-Jérôme", nameEn: "Saint-Jerome", region: "Laurentides" },
   { slug: "varennes", nameFr: "Varennes", nameEn: "Varennes", region: "Montérégie" },
+  {
+    slug: "saint-hyacinthe",
+    nameFr: "Saint-Hyacinthe",
+    nameEn: "Saint-Hyacinthe",
+    region: "Montérégie",
+    localLeadFr:
+      "Centre régional actif en Montérégie : parc mixte résidentiel et copropriétés reliées au corridor Montréal–Québec — même cadre légal qu’ailleurs au Québec (copropriété, Loi 16), avec enjeux locaux d’entretien et de coordination fournisseurs.",
+    localLeadEn:
+      "Active regional hub in Montérégie: mixed residential stock and condos tied to the Montreal–Quebec corridor — same Quebec-wide legal framework (Condo Act, Bill 16), with local maintenance and vendor-coordination realities.",
+  },
   // Montreal Island municipalities
   { slug: "westmount", nameFr: "Westmount", nameEn: "Westmount", region: "Île de Montréal" },
   { slug: "outremont", nameFr: "Outremont", nameEn: "Outremont", region: "Île de Montréal" },

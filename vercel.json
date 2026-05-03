@@ -67,16 +67,6 @@
       "permanent": true
     },
     {
-      "source": "/location/(.*)-saint-hyacinthe",
-      "destination": "/locations",
-      "permanent": true
-    },
-    {
-      "source": "/en/location/(.*)-saint-hyacinthe",
-      "destination": "/en/locations",
-      "permanent": true
-    },
-    {
       "source": "/location/(.*)-granby",
       "destination": "/locations",
       "permanent": true
