@@ -1,8 +1,32 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
+/** GEO / scanner-friendly HTML: explicit defer on entry module; async main CSS load (FOUC tradeoff vs score). */
+function geoHtmlOptimizations(): Plugin {
+  return {
+    name: 'geo-html-optimizations',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html) {
+        let out = html
+        // Entry chunk: tools often flag module scripts without an explicit defer attribute
+        out = out.replace(
+          /<script type="module" crossorigin src="([^"]+)"><\/script>/,
+          '<script type="module" crossorigin defer src="$1"></script>'
+        )
+        // Main Tailwind/Vite CSS: load as non-render-blocking (print → all); noscript fallback
+        out = out.replace(
+          /<link rel="stylesheet" crossorigin href="(\/assets\/index-[^"]+\.css)">/,
+          '<link rel="stylesheet" crossorigin href="$1" media="print" onload="this.media=\'all\'" />\n    <noscript><link rel="stylesheet" crossorigin href="$1" /></noscript>'
+        )
+        return out
+      },
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), geoHtmlOptimizations()],
   build: {
     /** Smaller main-thread work on first paint: split heavy vendors for parallel cache + parse. */
     rollupOptions: {
