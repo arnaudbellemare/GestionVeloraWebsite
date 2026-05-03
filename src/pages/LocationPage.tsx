@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useLocale } from "../context/LocaleContext";
@@ -133,7 +133,56 @@ export function LocationPage() {
     };
   }, [loc, isEn, locationSlug]);
 
-  if (!loc) return <Navigate to="/" replace />;
+  useEffect(() => {
+    if (loc) return;
+    const prevTitle = document.title;
+    document.title = isEn ? "Page not found | Gestion Velora" : "Page introuvable | Gestion Velora";
+    let meta = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    const createdMeta = !meta;
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "robots");
+      document.head.appendChild(meta);
+    }
+    const prevRobots = meta.getAttribute("content");
+    meta.setAttribute("content", "noindex, nofollow");
+    return () => {
+      document.title = prevTitle;
+      if (createdMeta) {
+        meta?.remove();
+      } else {
+        if (prevRobots != null) meta?.setAttribute("content", prevRobots);
+        else meta?.removeAttribute("content");
+      }
+    };
+  }, [loc, isEn]);
+
+  if (!loc) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="pt-28 lg:pt-36 pb-24 max-w-xl mx-auto px-6"
+      >
+        <p className="text-sm font-sans uppercase tracking-[0.12em] text-neutral-500 mb-2">404</p>
+        <h1 className="font-playfair text-3xl font-semibold text-neutral-900 mb-4">
+          {isEn ? "This location page doesn’t exist" : "Cette page de localisation n’existe pas"}
+        </h1>
+        <p className="font-sans text-neutral-600 mb-8 leading-relaxed">
+          {isEn
+            ? "That URL isn’t part of our published service areas. Use the city list to find a valid page."
+            : "Cette adresse ne fait pas partie de nos pages publiées par ville. Consultez la liste des villes pour trouver une page valide."}
+        </p>
+        <InternalLink
+          to="/locations"
+          className="inline-flex font-sans font-semibold text-sm text-neutral-900 underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-900"
+        >
+          {isEn ? "Cities we serve" : "Villes desservies"}
+        </InternalLink>
+      </motion.div>
+    );
+  }
 
   const h1 = isEn ? loc.h1En : loc.h1Fr;
   const desc = isEn ? loc.descEn : loc.descFr;

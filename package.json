@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && tsx scripts/prerender.ts",
+    "build": "tsx scripts/generate-location-slugs-json.ts && tsc -b && vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
     "seo:priority": "tsx scripts/generate-seo-priority.ts",
     "seo:verify": "tsx scripts/verify-seo-artifacts.ts",
@@ -13,6 +13,7 @@
     "sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
+    "@vercel/functions": "^3.5.0",
     "framer-motion": "^11.0.0",
     "i18next": "^25.8.17",
     "lenis": "^1.3.18",
