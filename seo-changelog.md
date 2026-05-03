@@ -42,6 +42,7 @@
 
 | Date (UTC) | Git | Notes |
 |------------|-----|-------|
+| 2026-05-02 | _(see commit)_ | Shrink `CITIES` to Greater Montreal footprint; optional factual `localLead` copy on key municipalities; Vercel 301s for removed city suffixes → `/locations`. |
 | 2026-05-02 | `709f00b` | Dedupe FAQ JSON-LD on `/faq` (runtime vs prerender). |
 | 2026-05-02 | `d3377dc` | Location template internal linking + locations index breadth; sitemap regen. |
 | 2026-05-02 | `9871432` | Expanded location inventory + priority matrix tooling—**review under GEO-SCALE-001**. |

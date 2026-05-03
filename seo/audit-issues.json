@@ -17,6 +17,7 @@
       ],
       "recommendedActions": [
         "Freeze net-new city×service URLs until each existing template passes a uniqueness rubric (local proof, data, or FAQ depth).",
+        "Partial mitigation shipped: CITIES reduced to core Greater Montreal; optional factual localLead paragraphs on priority municipalities; Vercel redirects from removed URL suffixes to /locations.",
         "Sample 30 lowest-impression location URLs in GSC; merge, noindex, or substantially rewrite underperformers.",
         "Prefer one high-quality locations hub + dynamic UX (e.g. user-selected city) over continued static multiplication."
       ],

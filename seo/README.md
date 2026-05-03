@@ -24,3 +24,11 @@ Root **`seo-changelog.md`** ties deploys (Git) to SEO outcomes.
 ```bash
 npm run seo:verify
 ```
+
+## Removed location URLs (301)
+
+When cities are removed from `src/data/locations.ts`, regenerate Vercel redirects from `scripts/generate-vercel-location-redirects.mjs` (keep `REMOVED_CITY_SLUGS` in sync), then:
+
+```bash
+npm run seo:vercel-redirects
+```

@@ -493,9 +493,19 @@ function buildLocationNoscript(
       ? "Contactez-nous pour une soumission gratuite. Nous répondons sous un jour ouvrable."
       : "Contact us for a free quote. We respond within one business day.";
 
+  const localLead =
+    locale === "fr"
+      ? city.localLeadFr
+        ? `<p>${escapeHtml(city.localLeadFr)}</p>`
+        : ""
+      : city.localLeadEn
+        ? `<p>${escapeHtml(city.localLeadEn)}</p>`
+        : "";
+
   return `<noscript><main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(desc)}</p>
+${localLead}
   <h2>${escapeHtml(inclTitle)}</h2>
   <p>${escapeHtml(inclDesc)}</p>
   <ul>

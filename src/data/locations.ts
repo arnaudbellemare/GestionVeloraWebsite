@@ -3,6 +3,12 @@ export interface City {
   nameFr: string;
   nameEn: string;
   region: string;
+  /**
+   * Optional factual framing for this municipality (QUE law / regional context only).
+   * No invented bylaws or statistics — editorial guardrail for Helpful Content.
+   */
+  localLeadFr?: string;
+  localLeadEn?: string;
 }
 
 export interface LocationService {
@@ -22,11 +28,47 @@ export interface LocationService {
 }
 
 export const CITIES: City[] = [
-  // Greater Montreal cities
-  { slug: "montreal", nameFr: "Montréal", nameEn: "Montreal", region: "Île de Montréal" },
-  { slug: "laval", nameFr: "Laval", nameEn: "Laval", region: "Laval" },
-  { slug: "longueuil", nameFr: "Longueuil", nameEn: "Longueuil", region: "Montérégie" },
-  { slug: "brossard", nameFr: "Brossard", nameEn: "Brossard", region: "Montérégie" },
+  // Greater Montreal — core service area only (shrink non-defensible expansion)
+  {
+    slug: "montreal",
+    nameFr: "Montréal",
+    nameEn: "Montreal",
+    region: "Île de Montréal",
+    localLeadFr:
+      "Marché dense en copropriétés : conformité provinciale (Loi 141, Loi 16), rôle des arrondissements pour certains règlements locaux, et coordination des fournisseurs sur un parc immobilier hétérogène.",
+    localLeadEn:
+      "Dense condo market: provincial compliance (Loi 141, Bill 16), borough-level rules where applicable, and vendor coordination across heterogeneous building stock.",
+  },
+  {
+    slug: "laval",
+    nameFr: "Laval",
+    nameEn: "Laval",
+    region: "Laval",
+    localLeadFr:
+      "Ville à part entière avec dynamique de copropriétés et de locations distincte du centre-ville : budgets et cycles d’entretien doivent suivre la réalité locale et les obligations du Québec.",
+    localLeadEn:
+      "Standalone city with condo and rental dynamics distinct from downtown: budgets and maintenance cycles must match local building realities and Quebec obligations.",
+  },
+  {
+    slug: "longueuil",
+    nameFr: "Longueuil",
+    nameEn: "Longueuil",
+    region: "Montérégie",
+    localLeadFr:
+      "Rive-Sud centrale : forte présence résidentielle et copropriétés reliées au marché du Grand Montréal — pilotage des charges et des travaux avec continuité opérationnelle.",
+    localLeadEn:
+      "Core South Shore: strong residential stock tied to Greater Montreal — operating charges and major works need disciplined governance.",
+  },
+  {
+    slug: "brossard",
+    nameFr: "Brossard",
+    nameEn: "Brossard",
+    region: "Montérégie",
+    localLeadFr:
+      "Parc immobilier récent et dynamique : attention aux cycles d’entretien des parties communes et à la gestion des attentes des copropriétaires.",
+    localLeadEn:
+      "Dynamic, often newer stock: focus on common-element maintenance cycles and clear owner communication.",
+  },
   { slug: "boucherville", nameFr: "Boucherville", nameEn: "Boucherville", region: "Montérégie" },
   { slug: "repentigny", nameFr: "Repentigny", nameEn: "Repentigny", region: "Lanaudière" },
   { slug: "terrebonne", nameFr: "Terrebonne", nameEn: "Terrebonne", region: "Lanaudière" },
@@ -48,8 +90,17 @@ export const CITIES: City[] = [
   { slug: "saint-laurent", nameFr: "Saint-Laurent", nameEn: "Saint-Laurent", region: "Île de Montréal" },
   { slug: "verdun", nameFr: "Verdun", nameEn: "Verdun", region: "Île de Montréal" },
   { slug: "lachine", nameFr: "Lachine", nameEn: "Lachine", region: "Île de Montréal" },
-  // Montreal boroughs (arrondissements - high-search-volume keyword targets)
-  { slug: "plateau-mont-royal", nameFr: "Plateau-Mont-Royal", nameEn: "Plateau-Mont-Royal", region: "Montréal" },
+  // Montreal boroughs (arrondissements)
+  {
+    slug: "plateau-mont-royal",
+    nameFr: "Plateau-Mont-Royal",
+    nameEn: "Plateau-Mont-Royal",
+    region: "Montréal",
+    localLeadFr:
+      "Tissu mixte locatif / copropriété et forte densité : la conformité (Copropriété, Loi 16) et la gestion des nuisances (bruit, location courte durée) sont des sujets récurrents.",
+    localLeadEn:
+      "Mixed rental and condo fabric with high density: compliance (Condo Act, Bill 16) and nuisance issues (noise, short-term rentals) are recurring operational themes.",
+  },
   { slug: "rosemont-la-petite-patrie", nameFr: "Rosemont–La Petite-Patrie", nameEn: "Rosemont-La Petite-Patrie", region: "Montréal" },
   { slug: "villeray-saint-michel-parc-extension", nameFr: "Villeray–Saint-Michel–Parc-Extension", nameEn: "Villeray-Saint-Michel-Parc-Extension", region: "Montréal" },
   { slug: "cote-des-neiges-notre-dame-de-grace", nameFr: "Côte-des-Neiges–Notre-Dame-de-Grâce", nameEn: "Cote-des-Neiges-Notre-Dame-de-Grace", region: "Montréal" },
@@ -62,42 +113,28 @@ export const CITIES: City[] = [
   { slug: "pierrefonds-roxboro", nameFr: "Pierrefonds-Roxboro", nameEn: "Pierrefonds-Roxboro", region: "Montréal" },
   { slug: "lasalle", nameFr: "LaSalle", nameEn: "LaSalle", region: "Montréal" },
   { slug: "sud-ouest", nameFr: "Le Sud-Ouest", nameEn: "Le Sud-Ouest", region: "Montréal" },
-  { slug: "ville-marie", nameFr: "Ville-Marie", nameEn: "Ville-Marie", region: "Montréal" },
-  // High-intent Greater Montreal municipalities (expands local SEO coverage)
+  {
+    slug: "ville-marie",
+    nameFr: "Ville-Marie",
+    nameEn: "Ville-Marie",
+    region: "Montréal",
+    localLeadFr:
+      "Cœur urbain : copropriétés touristiques et résidentielles mélangées — la coordination des opérations (ménage, accès, règlements) est critique.",
+    localLeadEn:
+      "Urban core: blended residential and visitor-heavy condos — operations coordination (cleaning, access, bylaws) is critical.",
+  },
+  // South Shore & Laurentians corridor (Greater Montreal)
   { slug: "saint-lambert", nameFr: "Saint-Lambert", nameEn: "Saint-Lambert", region: "Montérégie" },
-  { slug: "candiac", nameFr: "Candiac", nameEn: "Candiac", region: "Montérégie" },
-  { slug: "la-prairie", nameFr: "La Prairie", nameEn: "La Prairie", region: "Montérégie" },
-  { slug: "saint-constant", nameFr: "Saint-Constant", nameEn: "Saint-Constant", region: "Montérégie" },
-  { slug: "delson", nameFr: "Delson", nameEn: "Delson", region: "Montérégie" },
   { slug: "boisbriand", nameFr: "Boisbriand", nameEn: "Boisbriand", region: "Laurentides" },
-  { slug: "lorraine", nameFr: "Lorraine", nameEn: "Lorraine", region: "Laurentides" },
-  { slug: "rosemere", nameFr: "Rosemère", nameEn: "Rosemere", region: "Laurentides" },
   { slug: "deux-montagnes", nameFr: "Deux-Montagnes", nameEn: "Deux-Montagnes", region: "Laurentides" },
   { slug: "sainte-therese", nameFr: "Sainte-Thérèse", nameEn: "Sainte-Therese", region: "Laurentides" },
-  { slug: "bois-des-filion", nameFr: "Bois-des-Filion", nameEn: "Bois-des-Filion", region: "Laurentides" },
-  { slug: "charlemagne", nameFr: "Charlemagne", nameEn: "Charlemagne", region: "Lanaudière" },
-  { slug: "lassomption", nameFr: "L'Assomption", nameEn: "L'Assomption", region: "Lanaudière" },
   { slug: "saint-eustache", nameFr: "Saint-Eustache", nameEn: "Saint-Eustache", region: "Laurentides" },
   { slug: "beaconsfield", nameFr: "Beaconsfield", nameEn: "Beaconsfield", region: "Île de Montréal" },
   { slug: "dorval", nameFr: "Dorval", nameEn: "Dorval", region: "Île de Montréal" },
   { slug: "montreal-ouest", nameFr: "Montréal-Ouest", nameEn: "Montreal West", region: "Île de Montréal" },
   { slug: "hampstead", nameFr: "Hampstead", nameEn: "Hampstead", region: "Île de Montréal" },
-  { slug: "chambly", nameFr: "Chambly", nameEn: "Chambly", region: "Montérégie" },
-  { slug: "carignan", nameFr: "Carignan", nameEn: "Carignan", region: "Montérégie" },
   { slug: "saint-bruno-de-montarville", nameFr: "Saint-Bruno-de-Montarville", nameEn: "Saint-Bruno-de-Montarville", region: "Montérégie" },
   { slug: "sainte-julie", nameFr: "Sainte-Julie", nameEn: "Sainte-Julie", region: "Montérégie" },
-  { slug: "beloeil", nameFr: "Beloeil", nameEn: "Beloeil", region: "Montérégie" },
-  // Expansion cities — Quebec City region, Estrie, Mauricie, Outaouais, Laurentides vacationing
-  { slug: "quebec", nameFr: "Québec", nameEn: "Quebec City", region: "Capitale-Nationale" },
-  { slug: "levis", nameFr: "Lévis", nameEn: "Lévis", region: "Capitale-Nationale" },
-  { slug: "sherbrooke", nameFr: "Sherbrooke", nameEn: "Sherbrooke", region: "Estrie" },
-  { slug: "trois-rivieres", nameFr: "Trois-Rivières", nameEn: "Trois-Rivières", region: "Mauricie" },
-  { slug: "gatineau", nameFr: "Gatineau", nameEn: "Gatineau", region: "Outaouais" },
-  { slug: "drummondville", nameFr: "Drummondville", nameEn: "Drummondville", region: "Centre-du-Québec" },
-  { slug: "saint-hyacinthe", nameFr: "Saint-Hyacinthe", nameEn: "Saint-Hyacinthe", region: "Montérégie" },
-  { slug: "granby", nameFr: "Granby", nameEn: "Granby", region: "Estrie" },
-  { slug: "mont-tremblant", nameFr: "Mont-Tremblant", nameEn: "Mont-Tremblant", region: "Laurentides" },
-  { slug: "bromont", nameFr: "Bromont", nameEn: "Bromont", region: "Estrie" },
 ];
 
 export const LOCATION_SERVICES: LocationService[] = [

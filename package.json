@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "seo:priority": "tsx scripts/generate-seo-priority.ts",
     "seo:verify": "tsx scripts/verify-seo-artifacts.ts",
+    "seo:vercel-redirects": "node scripts/generate-vercel-location-redirects.mjs",
     "sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {

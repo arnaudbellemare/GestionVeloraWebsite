@@ -192,6 +192,26 @@ export function LocationPage() {
         </div>
       </section>
 
+      {(isEn ? loc.city.localLeadEn : loc.city.localLeadFr) && (
+        <section
+          id="location-local-context"
+          aria-labelledby="location-local-context-heading"
+          className="relative z-10 px-6 lg:px-16 -mt-6 pb-10 lg:pb-14"
+        >
+          <div className="max-w-[90rem] mx-auto rounded-2xl border border-white/25 bg-black/35 backdrop-blur-md px-6 py-6 lg:px-8 lg:py-7">
+            <h2
+              id="location-local-context-heading"
+              className="font-sans font-semibold text-sm uppercase tracking-[0.12em] text-white/90 mb-3"
+            >
+              {isEn ? "Local operating context" : "Contexte local d'exploitation"}
+            </h2>
+            <p className="font-sans text-base text-white/88 leading-relaxed max-w-4xl">
+              {isEn ? loc.city.localLeadEn : loc.city.localLeadFr}
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Features list */}
       <section id="location-included" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas">
         <div className="max-w-[90rem] mx-auto grid lg:grid-cols-2 gap-16 items-start">
