@@ -7,30 +7,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-/** Must match cities removed from CITIES in src/data/locations.ts */
-const REMOVED_CITY_SLUGS = [
-  "quebec",
-  "levis",
-  "sherbrooke",
-  "trois-rivieres",
-  "gatineau",
-  "drummondville",
-  "granby",
-  "mont-tremblant",
-  "bromont",
-  "candiac",
-  "la-prairie",
-  "saint-constant",
-  "delson",
-  "lorraine",
-  "rosemere",
-  "bois-des-filion",
-  "charlemagne",
-  "lassomption",
-  "carignan",
-  "chambly",
-  "beloeil",
-];
+/** Cities removed from CITIES — empty = no legacy location 301s (orphan URLs hit the SPA / not-found). */
+const REMOVED_CITY_SLUGS = [];
 
 const root = process.cwd();
 const vercelPath = join(root, "vercel.json");

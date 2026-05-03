@@ -145,6 +145,23 @@ export const CITIES: City[] = [
   { slug: "hampstead", nameFr: "Hampstead", nameEn: "Hampstead", region: "Île de Montréal" },
   { slug: "saint-bruno-de-montarville", nameFr: "Saint-Bruno-de-Montarville", nameEn: "Saint-Bruno-de-Montarville", region: "Montérégie" },
   { slug: "sainte-julie", nameFr: "Sainte-Julie", nameEn: "Sainte-Julie", region: "Montérégie" },
+  { slug: "beloeil", nameFr: "Beloeil", nameEn: "Beloeil", region: "Montérégie" },
+  { slug: "bois-des-filion", nameFr: "Bois-des-Filion", nameEn: "Bois-des-Filion", region: "Montérégie" },
+  { slug: "candiac", nameFr: "Candiac", nameEn: "Candiac", region: "Montérégie" },
+  { slug: "carignan", nameFr: "Carignan", nameEn: "Carignan", region: "Montérégie" },
+  { slug: "chambly", nameFr: "Chambly", nameEn: "Chambly", region: "Montérégie" },
+  { slug: "charlemagne", nameFr: "Charlemagne", nameEn: "Charlemagne", region: "Montérégie" },
+  { slug: "delson", nameFr: "Delson", nameEn: "Delson", region: "Montérégie" },
+  { slug: "la-prairie", nameFr: "La Prairie", nameEn: "La Prairie", region: "Montérégie" },
+  {
+    slug: "lassomption",
+    nameFr: "L'Assomption",
+    nameEn: "L'Assomption",
+    region: "Montérégie",
+  },
+  { slug: "lorraine", nameFr: "Lorraine", nameEn: "Lorraine", region: "Montérégie" },
+  { slug: "rosemere", nameFr: "Rosemère", nameEn: "Rosemere", region: "Montérégie" },
+  { slug: "saint-constant", nameFr: "Saint-Constant", nameEn: "Saint-Constant", region: "Montérégie" },
 ];
 
 export const LOCATION_SERVICES: LocationService[] = [
