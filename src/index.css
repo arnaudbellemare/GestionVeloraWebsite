@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap");
+/* Space Grotesk / Space Mono: loaded via preload + onload in index.html (avoid @import blocking). */
 
 @tailwind base;
 @tailwind components;

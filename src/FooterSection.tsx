@@ -246,11 +246,27 @@ export const FooterSection = (): JSX.Element => {
       <div className="relative overflow-hidden">
         <picture className="block dark:hidden">
           <source srcSet="/images/footer-city-light.webp" type="image/webp" />
-          <img src="/images/footer-city-light.png?v=4" alt="Gestion Velora - vue aérienne Montréal" className="w-full h-auto" />
+          <img
+            src="/images/footer-city-light.png?v=4"
+            alt="Gestion Velora - vue aérienne Montréal"
+            className="w-full h-auto"
+            width={1600}
+            height={640}
+            loading="lazy"
+            decoding="async"
+          />
         </picture>
         <picture className="hidden dark:block">
           <source srcSet="/images/footer-city-dark.webp" type="image/webp" />
-          <img src="/images/footer-city-dark.png?v=4" alt="Gestion Velora - vue aérienne Montréal" className="w-full h-auto" />
+          <img
+            src="/images/footer-city-dark.png?v=4"
+            alt="Gestion Velora - vue aérienne Montréal"
+            className="w-full h-auto"
+            width={1600}
+            height={640}
+            loading="lazy"
+            decoding="async"
+          />
         </picture>
         <div
           className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-16 sm:h-[5.25rem]"

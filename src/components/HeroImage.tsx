@@ -4,9 +4,23 @@ interface HeroImageProps {
   src: string;
   alt: string;
   className?: string;
+  width?: number;
+  height?: number;
+  loading?: "eager" | "lazy";
+  decoding?: "async" | "auto" | "sync";
+  fetchPriority?: "high" | "low" | "auto";
 }
 
-export function HeroImage({ src, alt, className = "" }: HeroImageProps) {
+export function HeroImage({
+  src,
+  alt,
+  className = "",
+  width,
+  height,
+  loading = "lazy",
+  decoding = "async",
+  fetchPriority,
+}: HeroImageProps) {
   const [errored, setErrored] = useState(false);
 
   if (errored) {
@@ -24,6 +38,11 @@ export function HeroImage({ src, alt, className = "" }: HeroImageProps) {
       src={src}
       alt={alt}
       className={className}
+      width={width}
+      height={height}
+      loading={loading}
+      decoding={decoding}
+      fetchPriority={fetchPriority}
       onError={() => setErrored(true)}
     />
   );

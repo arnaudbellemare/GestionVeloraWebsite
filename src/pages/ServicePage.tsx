@@ -70,6 +70,11 @@ export function ServicePage() {
             alt={`${service.title} — Gestion Velora`}
             className="w-full h-full object-cover"
             style={{ objectPosition: "center 30%" }}
+            width={1920}
+            height={1080}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-black/50" />
         </div>

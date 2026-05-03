@@ -110,7 +110,16 @@ export function BlogPostPage() {
 
         <ScrollReveal delay={0.1}>
           <div className="mt-12 mb-12 rounded-2xl overflow-hidden">
-            <img src={post.image} alt={post.title} className="w-full h-auto object-cover" />
+            <img
+              src={post.image}
+              alt={post.title}
+              className="w-full h-auto object-cover"
+              width={1200}
+              height={800}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
           </div>
         </ScrollReveal>
 

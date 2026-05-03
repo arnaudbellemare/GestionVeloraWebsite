@@ -51,6 +51,8 @@ export function WhoWeAreSection() {
                     src={project.image}
                     alt={project.name}
                     className="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-95"
+                    width={800}
+                    height={1000}
                     loading="lazy"
                     decoding="async"
                   />

@@ -46,6 +46,8 @@ export function OurStandardsSection() {
             loading="eager"
             decoding="async"
             fetchPriority="high"
+            width={1920}
+            height={1080}
             className="absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: "center 60%" }}
           />

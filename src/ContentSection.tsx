@@ -147,6 +147,10 @@ export const ContentSection = (): JSX.Element => {
               src="/hero-image.png"
               alt="Gestion immobilière"
               className="w-full h-full object-cover"
+              width={1920}
+              height={1080}
+              loading="lazy"
+              decoding="async"
               onError={(e) => {
                 const el = e.currentTarget;
                 el.style.background =
@@ -271,6 +275,10 @@ export const ContentSection = (): JSX.Element => {
                 src="/image.png"
                 alt="Témoignage"
                 className="w-full h-full object-cover"
+                width={1200}
+                height={1500}
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </ScrollReveal>
@@ -331,6 +339,10 @@ export const ContentSection = (): JSX.Element => {
               src="/image-2.png"
               alt="Showcase immobilier"
               className="w-full h-full object-cover"
+              width={1920}
+              height={1080}
+              loading="lazy"
+              decoding="async"
               onError={(e) => {
                 e.currentTarget.style.background =
                   "linear-gradient(135deg, rgba(72,92,17,0.2) 0%, rgba(10,10,10,0.8) 100%)";

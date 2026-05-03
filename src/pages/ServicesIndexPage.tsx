@@ -57,6 +57,10 @@ export function ServicesIndexPage() {
                     alt={`${service.title} — Gestion Velora`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     style={{ objectPosition: "center 30%" }}
+                    width={1600}
+                    height={1000}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="p-6 lg:p-8 flex flex-col flex-1">

@@ -271,6 +271,11 @@ export function LocationPage() {
             alt={`${isEn ? loc.service.nameEn : loc.service.nameFr} ${loc.city.nameFr}`}
             className="w-full h-full object-cover"
             style={{ objectPosition: "center 30%" }}
+            width={1920}
+            height={1080}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-black/55" />
         </div>

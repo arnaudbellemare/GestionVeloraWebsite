@@ -91,6 +91,10 @@ export function WhatWeDoSection() {
                     alt={t(s.labelKey) + " Montréal | Gestion Velora"}
                     className="w-full h-full object-cover transition-opacity duration-200"
                     style={{ opacity: isExpanded ? 0.35 : 1 }}
+                    width={900}
+                    height={1200}
+                    loading="lazy"
+                    decoding="async"
                   />
 
                   {/* Label - always visible at bottom */}
