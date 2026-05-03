@@ -273,11 +273,17 @@ export const FooterSection = (): JSX.Element => {
             <a href="/about" className="hover:text-white transition-colors duration-300">
               {locale === "en" ? "About" : "À propos"}
             </a>
-            <a href="/methodology" className="hover:text-white transition-colors duration-300">
-              {locale === "en" ? "Methodology" : "Méthodologie"}
+            <a href="/editorial-policy" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "Editorial policy" : "Politique éditoriale"}
             </a>
-            <a href="/trust-proof" className="hover:text-white transition-colors duration-300">
-              {locale === "en" ? "Trust" : "Confiance"}
+            <a
+              href="https://www.rgcq.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors duration-300"
+              title={locale === "en" ? "RGCQ — Quebec condo governance body" : "RGCQ — Regroupement des gestionnaires et copropriétaires du Québec"}
+            >
+              Membre RGCQ
             </a>
           </div>
           <a href="#" className="hover:text-white transition-colors duration-300">

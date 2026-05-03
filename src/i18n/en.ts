@@ -190,8 +190,8 @@ export const en = {
     members: [
       {
         name: "Arnaud Bellemare",
-        role: "FOUNDER",
-        bio: "Strategic vision and commitment to proactive, transparent management focused on maximizing every building’s value.",
+        role: "FOUNDER · RGCQ MEMBER",
+        bio: "Founder of Gestion Velora and member of RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec’s reference body for condominium governance. Proactive, transparent management focused on maximizing every building’s value in Greater Montreal.",
       },
     ],
   },
@@ -274,7 +274,7 @@ export const en = {
     {
       question: "How to choose a property manager in Montreal?",
       answer:
-        "Choose a property manager based on report transparency, responsiveness, expertise in Quebec regulation (condo law, TAL), and verifiable references. For condo boards, long-term rentals, or Airbnb, demand documented processes, an available team, and a data-driven approach. Gestion Velora is a trusted property management Montreal provider.",
+        "Choose a property manager based on report transparency, responsiveness, expertise in Quebec regulation (condo law, TAL), and verifiable references. Look for membership in the RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec's reference body for condominium governance standards. For condo boards, long-term rentals, or Airbnb, demand documented processes, an available team, and a data-driven approach.",
     },
     {
       question: "Rental management: self-manage or delegate?",

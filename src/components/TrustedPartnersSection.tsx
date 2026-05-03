@@ -16,6 +16,7 @@ const partnerLogos = [
   "Pinnacle Gestion",
   "Vertex Capital",
   "Harbor Corp",
+  "RGCQ",
 ];
 
 const listContainer = {

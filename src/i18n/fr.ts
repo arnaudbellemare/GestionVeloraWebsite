@@ -192,8 +192,8 @@ export const fr = {
     members: [
       {
         name: "Arnaud Bellemare",
-        role: "FONDATEUR",
-        bio: "Vision stratégique et engagement envers une gestion proactive, transparente et centrée sur la valorisation de chaque immeuble.",
+        role: "FONDATEUR · MEMBRE RGCQ",
+        bio: "Fondateur de Gestion Velora et membre du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec). Gestion proactive et transparente, centrée sur la valorisation durable de chaque immeuble dans le Grand Montréal.",
       },
     ],
   },
@@ -277,7 +277,7 @@ export const fr = {
     {
       question: "Comment choisir un gestionnaire immobilier à Montréal ?",
       answer:
-        "Choisissez un gestionnaire immobilier selon la transparence des rapports, la réactivité, l'expertise en réglementation québécoise (Loi sur la copropriété, TAL) et les références vérifiables. Pour un syndicat, une location longue durée ou un Airbnb, exigez des processus documentés, une équipe disponible et une approche orientée données.",
+        "Choisissez un gestionnaire immobilier selon la transparence des rapports, la réactivité, l'expertise en réglementation québécoise (Loi sur la copropriété, TAL) et les références vérifiables. Privilégiez un gestionnaire membre du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), l'organisme de référence en gouvernance des copropriétés au Québec. Pour un syndicat, une location longue durée ou un Airbnb, exigez des processus documentés, une équipe disponible et une approche orientée données.",
     },
     {
       question: "Gestion locative : gérer seul ou déléguer ?",

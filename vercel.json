@@ -1,9 +1,29 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/",                      "destination": "/index.html" },
+    { "source": "/en",                    "destination": "/index.html" },
+    { "source": "/services",              "destination": "/index.html" },
+    { "source": "/services/:slug",        "destination": "/index.html" },
+    { "source": "/en/services",           "destination": "/index.html" },
+    { "source": "/en/services/:slug",     "destination": "/index.html" },
+    { "source": "/compare",               "destination": "/index.html" },
+    { "source": "/compare/:slug",         "destination": "/index.html" },
+    { "source": "/en/compare",            "destination": "/index.html" },
+    { "source": "/en/compare/:slug",      "destination": "/index.html" },
+    { "source": "/locations",             "destination": "/index.html" },
+    { "source": "/location/:slug",        "destination": "/index.html" },
+    { "source": "/en/locations",          "destination": "/index.html" },
+    { "source": "/en/location/:slug",     "destination": "/index.html" },
+    { "source": "/blog",                  "destination": "/index.html" },
+    { "source": "/blog/:slug",            "destination": "/index.html" },
+    { "source": "/en/blog",               "destination": "/index.html" },
+    { "source": "/en/blog/:slug",         "destination": "/index.html" },
+    { "source": "/faq",                   "destination": "/index.html" },
+    { "source": "/en/faq",               "destination": "/index.html" },
+    { "source": "/tarifs",                "destination": "/index.html" },
+    { "source": "/en/tarifs",             "destination": "/index.html" },
+    { "source": "/privacy",               "destination": "/index.html" },
+    { "source": "/en/privacy",            "destination": "/index.html" }
   ],
   "redirects": []
 }

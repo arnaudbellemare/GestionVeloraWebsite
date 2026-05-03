@@ -201,6 +201,25 @@ export function SchemaOrg() {
       };
     }
 
+    // ── FAQ page ───────────────────────────────────────────────────────────
+    const isFaqPage = path === "/faq" || path === "/en/faq" || path === "/en/faq/";
+    if (isFaqPage) {
+      const faqItems = t("faqItems", { returnObjects: true }) as Array<{
+        question: string;
+        answer: string;
+      }>;
+      injectSchema({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqItems.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })),
+      });
+      return () => removePageSchema();
+    }
+
     removePageSchema();
     return () => removePageSchema();
   }, [path, slug, t, bcHome, bcServices, bcInsights, base, isEn]);

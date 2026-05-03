@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToHash } from "./components/ScrollToHash";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { TransitionProvider } from "./context/TransitionContext";
@@ -27,6 +27,23 @@ const TarifsPage = lazy(() => import("./pages/TarifsPage").then((m) => ({ defaul
 
 function RouteFallback() {
   return <div className="min-h-[40vh] bg-nd-canvas" aria-busy="true" aria-label="Chargement" />;
+}
+
+function NotFound() {
+  return (
+    <div className="min-h-screen bg-nd-canvas text-nd-primary flex flex-col items-center justify-center gap-6 p-8 text-center">
+      <p className="text-7xl font-bold text-nd-accent leading-none">404</p>
+      <h1 className="text-xl font-semibold">Page introuvable</h1>
+      <p className="text-nd-secondary max-w-sm leading-relaxed">
+        Cette adresse n&apos;existe pas sur le site de Gestion Velora.
+      </p>
+      <nav className="flex gap-6 flex-wrap justify-center text-nd-accent underline-offset-4">
+        <a href="/" className="hover:underline">Accueil</a>
+        <a href="/locations" className="hover:underline">Villes desservies</a>
+        <a href="/en/locations" className="hover:underline">Cities we serve</a>
+      </nav>
+    </div>
+  );
 }
 
 function App() {
@@ -219,7 +236,7 @@ function App() {
                   }
                 />
               </Route>
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </TransitionProvider>
         </LocaleProvider>

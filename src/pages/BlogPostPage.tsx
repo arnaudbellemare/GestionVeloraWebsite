@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { ARTICLE_AUTHOR_NAME, ARTICLE_AUTHOR_LINKEDIN } from "../config";
 import { useLocale } from "../context/LocaleContext";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { getPostBySlug, getRelatedPosts, type RichParagraph } from "../data/blog";
@@ -145,6 +146,47 @@ export function BlogPostPage() {
         </div>
 
         <LeadCaptureSection variant="blog" />
+
+        {/* ── Author bio — visible EEAT signal for Google quality raters ── */}
+        <ScrollReveal delay={0.15}>
+          <div className="mt-16 pt-10 border-t border-black/10 dark:border-white/10">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-black/40 dark:text-white/40 mb-4">
+              {locale === "en" ? "Written by" : "Écrit par"}
+            </p>
+            <div className="flex items-center gap-4">
+              <div
+                className="w-12 h-12 rounded-full bg-nd-raised border border-nd-border flex items-center justify-center flex-shrink-0"
+                aria-hidden="true"
+              >
+                <span className="font-sans font-semibold text-sm text-nd-display select-none">AB</span>
+              </div>
+              <div>
+                <p className="font-sans font-semibold text-base text-nd-display leading-tight">
+                  {ARTICLE_AUTHOR_NAME}
+                </p>
+                <p className="font-sans text-sm text-black/55 dark:text-white/55 mt-0.5">
+                  {locale === "en" ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora"}
+                </p>
+              </div>
+            </div>
+            <p className="font-sans text-sm text-black/60 dark:text-white/60 leading-relaxed mt-4 max-w-lg">
+              {locale === "en"
+                ? "Property management professional specializing in condo boards, long-term rentals, and short-term rentals in Greater Montreal."
+                : "Professionnel de la gestion immobilière spécialisé en syndicats de copropriété, location longue durée et Airbnb dans le Grand Montréal."}
+            </p>
+            <a
+              href={ARTICLE_AUTHOR_LINKEDIN}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 mt-4 font-sans text-sm text-waabi-pink hover:underline underline-offset-2"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              {locale === "en" ? "View LinkedIn profile" : "Voir le profil LinkedIn"}
+            </a>
+          </div>
+        </ScrollReveal>
 
         {related.length > 0 && (
           <ScrollReveal delay={0.18}>
