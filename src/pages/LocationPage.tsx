@@ -12,6 +12,49 @@ import { useGoToContact } from "../hooks/useGoToContact";
 import { SITE_URL } from "../config";
 import { COMPARISON_PAGES } from "../data/comparisons";
 
+/** Explicit definitional lead per service — GEO/AEO “definition in first ~300 words”. */
+const SERVICE_DEFINITION: Record<string, { fr: (cityFr: string) => string; en: (cityEn: string) => string }> = {
+  "syndicat-copropriete": {
+    fr: (cityFr) =>
+      `Au Québec, le syndicat de copropriété pour un immeuble à ${cityFr} est l’organe qui administre le condominium au nom des copropriétaires, selon la Loi sur la copropriété des immeubles (RLRQ, c. C-6.1). La gestion professionnelle du syndicat couvre budgets, assemblées générales, fonds de prévoyance et entretien documenté des parties communes.`,
+    en: (cityEn) =>
+      `In Quebec, the condo board (“syndicat”) for a building in ${cityEn} is the legal entity that administers the condominium on behalf of owners under the Act respecting the co-ownership of buildings (CQLR c. C-6.1). Professional board administration covers budgets, annual general meetings, reserve funding, and documented upkeep of common elements.`,
+  },
+  "gestion-locative": {
+    fr: (cityFr) =>
+      `La gestion locative à ${cityFr}, c’est le mandat confié au gestionnaire pour louer, encaisser les loyers, faire respecter le bail et coordonner l’entretien, dans les règles du bail résidentiel au Québec (Tribunal administratif du logement, formulaires et obligations du propriétaire).`,
+    en: (cityEn) =>
+      `Rental management in ${cityEn} is the mandate given to a manager to lease units, collect rent, enforce the lease, and coordinate maintenance under Quebec residential tenancy rules (TAL, prescribed lease forms, and landlord obligations).`,
+  },
+  "gestion-airbnb": {
+    fr: (cityFr) =>
+      `La gestion Airbnb (location courte durée) à ${cityFr}, c’est l’exploitation encadrée des séjours de courte durée : annonces, réservations, ménage et conformité aux règlements municipaux applicables en plus du cadre civil et fiscal provincial.`,
+    en: (cityEn) =>
+      `Airbnb-style short-term rental management in ${cityEn} is the structured operation of short stays—listings, bookings, housekeeping, and compliance with applicable municipal bylaws on top of provincial civil and tax rules.`,
+  },
+  "conformite-loi-16": {
+    fr: (cityFr) =>
+      `La conformité Loi 16 à ${cityFr}, c’est la mise en œuvre du carnet d’entretien, du registre de copropriété et des études reliées au fonds de prévoyance selon les délais fixés pour les syndicats au Québec (modernisation de la copropriété).`,
+    en: (cityEn) =>
+      `Bill 16 compliance in ${cityEn} means implementing the maintenance logbook, condo register, and reserve-related studies on the schedule set for Quebec syndicates under the province’s co-ownership modernization framework.`,
+  },
+  "gestion-immobiliere-commerciale": {
+    fr: (cityFr) =>
+      `La gestion immobilière commerciale à ${cityFr}, c’est l’administration des baux commerciaux, des charges d’exploitation et de l’entretien des espaces pour stabiliser la valeur locative et respecter les obligations contractuelles du propriétaire.`,
+    en: (cityEn) =>
+      `Commercial property management in ${cityEn} is the administration of commercial leases, operating costs, and space upkeep to stabilize rental value and meet the owner’s contractual obligations.`,
+  },
+};
+
+function serviceShortLabel(serviceSlug: string, isEn: boolean): string {
+  if (serviceSlug === "syndicat-copropriete") return isEn ? "Condo board" : "Syndicat";
+  if (serviceSlug === "gestion-locative") return isEn ? "Rental management" : "Gestion locative";
+  if (serviceSlug === "gestion-airbnb") return isEn ? "Airbnb" : "Airbnb";
+  if (serviceSlug === "conformite-loi-16") return isEn ? "Bill 16" : "Loi 16";
+  if (serviceSlug === "gestion-immobiliere-commerciale") return isEn ? "Commercial" : "Commercial";
+  return isEn ? "Service" : "Service";
+}
+
 const RELATED_POSTS: Record<string, { slug: string; titleEn: string; titleFr: string }[]> = {
   "gestion-airbnb": [
     { slug: "airbnb-montreal-permis-reglementation", titleEn: "Airbnb in Montreal: permits, regulation and best practices", titleFr: "Airbnb à Montréal : permis, réglementation et bonnes pratiques" },
@@ -199,6 +242,20 @@ export function LocationPage() {
   const nearbyCities = CITIES.filter((city) => city.slug !== loc.city.slug && city.region === loc.city.region).slice(0, 3);
   const serviceComparisons = COMPARISON_PAGES.slice(0, 2);
 
+  const defEntry = SERVICE_DEFINITION[loc.service.slug];
+  const definitionSentence = defEntry
+    ? isEn
+      ? defEntry.en(loc.city.nameEn)
+      : defEntry.fr(loc.city.nameFr)
+    : "";
+
+  const attributedStatsParagraph = isEn
+    ? "Regulatory basis (co-ownership): CQLR c. C-6.1; Bill 16 (2019) adds maintenance logbooks, the condo register, and reserve-related obligations with Quebec-published compliance milestones through 2027—see official provincial notices for dates. Rental-market context: CMHC rental-market data and Statistics Canada housing indicators are public benchmarks; they do not replace your syndicate’s financial statements or engineer reserve studies."
+    : "Références légales (copropriété) : RLRQ, c. C-6.1 ; Loi 16 (2019) pour carnet d’entretien, registre de copropriété et obligations reliées au fonds de prévoyance, avec échéances publiées jusqu’en 2027 par le gouvernement du Québec. Contexte locatif : les portraits du marché locatif de la SCHL et les indicateurs habitation de Statistique Canada sont des sources publiques ; ils ne remplacent ni vos états financiers ni vos études de fonds.";
+
+  const crossLinks = otherServices.slice(0, 2);
+  const nearbyForIntro = nearbyCities[0];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -238,6 +295,105 @@ export function LocationPage() {
           >
             {isEn ? "Request a quote" : "Demander une soumission"}
           </a>
+        </div>
+      </section>
+
+      {/* GEO/AEO: definitional lead + attributed facts + /location/* links within opening content */}
+      <section
+        id="location-definition"
+        className="relative z-10 px-6 lg:px-16 pt-10 pb-8 bg-nd-canvas border-b border-nd-border"
+        aria-labelledby="location-definition-heading"
+      >
+        <div className="max-w-[90rem] mx-auto max-w-3xl">
+          <h2 id="location-definition-heading" className="font-sans font-semibold text-sm uppercase tracking-[0.14em] text-nd-secondary mb-3">
+            {isEn ? "Definition" : "Définition"}
+          </h2>
+          {definitionSentence ? (
+            <p className="font-sans text-base text-nd-primary leading-relaxed">{definitionSentence}</p>
+          ) : null}
+          <p className="font-sans text-base text-nd-primary leading-relaxed mt-4">
+            {isEn ? (
+              <>
+                <span className="font-medium text-nd-display">
+                  {loc.service.nameEn} in {loc.city.nameEn}
+                </span>{" "}
+                is the focus of this URL. For the same city, see{" "}
+                {crossLinks.map((svc, i) => (
+                  <span key={svc}>
+                    {i > 0 ? (crossLinks.length === 2 && i === 1 ? " and " : ", ") : null}
+                    <InternalLink
+                      to={`/location/${svc}-${loc.city.slug}`}
+                      className="text-waabi-pink font-medium hover:underline underline-offset-2"
+                    >
+                      {serviceShortLabel(svc, true)} ({loc.city.nameEn})
+                    </InternalLink>
+                  </span>
+                ))}
+                {nearbyForIntro ? (
+                  <>
+                    {" "}
+                    ; same service in{" "}
+                    <InternalLink
+                      to={`/location/${loc.service.slug}-${nearbyForIntro.slug}`}
+                      className="text-waabi-pink font-medium hover:underline underline-offset-2"
+                    >
+                      {nearbyForIntro.nameEn}
+                    </InternalLink>
+                  </>
+                ) : null}
+                . Browse{" "}
+                <InternalLink to="/locations" className="text-waabi-pink font-medium hover:underline underline-offset-2">
+                  all cities we serve
+                </InternalLink>
+                .
+              </>
+            ) : (
+              <>
+                Cette URL détaille{" "}
+                <span className="font-medium text-nd-display">
+                  {loc.service.nameFr} à {loc.city.nameFr}
+                </span>
+                . Pour la même ville, voir{" "}
+                {crossLinks.map((svc, i) => (
+                  <span key={svc}>
+                    {i > 0 ? (crossLinks.length === 2 && i === 1 ? " et " : ", ") : null}
+                    <InternalLink
+                      to={`/location/${svc}-${loc.city.slug}`}
+                      className="text-waabi-pink font-medium hover:underline underline-offset-2"
+                    >
+                      {serviceShortLabel(svc, false)} ({loc.city.nameFr})
+                    </InternalLink>
+                  </span>
+                ))}
+                {nearbyForIntro ? (
+                  <>
+                    {" "}
+                    ; le même service à{" "}
+                    <InternalLink
+                      to={`/location/${loc.service.slug}-${nearbyForIntro.slug}`}
+                      className="text-waabi-pink font-medium hover:underline underline-offset-2"
+                    >
+                      {nearbyForIntro.nameFr}
+                    </InternalLink>
+                  </>
+                ) : null}
+                . Voir{" "}
+                <InternalLink to="/locations" className="text-waabi-pink font-medium hover:underline underline-offset-2">
+                  toutes les villes desservies
+                </InternalLink>
+                .
+              </>
+            )}
+          </p>
+          <aside
+            className="mt-6 rounded-xl border border-nd-border bg-nd-surface p-4 lg:p-5"
+            aria-labelledby="location-attributed-stats-heading"
+          >
+            <h3 id="location-attributed-stats-heading" className="font-sans font-semibold text-sm text-nd-display mb-2">
+              {isEn ? "Sources & figures (attributed)" : "Sources et chiffres (attribués)"}
+            </h3>
+            <p className="font-sans text-sm text-nd-secondary leading-relaxed">{attributedStatsParagraph}</p>
+          </aside>
         </div>
       </section>
 
