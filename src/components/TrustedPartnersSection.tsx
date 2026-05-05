@@ -210,20 +210,6 @@ export function TrustedPartnersSection() {
                         transition={{ ...contentTransition, delay: 0.1 }}
                       >
                         {active.role}
-                        {active.website && (
-                          <span>
-                            {" "}(
-                            <a
-                              href={`https://${active.website}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-white/80 hover:text-white underline underline-offset-2 transition-colors"
-                            >
-                              {active.website}
-                            </a>
-                            )
-                          </span>
-                        )}
                       </motion.p>
                       {active.evidence ? (
                         <motion.p
