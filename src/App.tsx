@@ -24,6 +24,9 @@ const ServicesIndexPage = lazy(() =>
   import("./pages/ServicesIndexPage").then((m) => ({ default: m.ServicesIndexPage })),
 );
 const TarifsPage = lazy(() => import("./pages/TarifsPage").then((m) => ({ default: m.TarifsPage })));
+const TrustDocumentPage = lazy(() =>
+  import("./pages/TrustDocumentPage").then((m) => ({ default: m.TrustDocumentPage })),
+);
 
 function RouteFallback() {
   return <div className="min-h-[40vh] bg-nd-canvas" aria-busy="true" aria-label="Chargement" />;
@@ -144,6 +147,46 @@ function App() {
                     </Suspense>
                   }
                 />
+                <Route
+                  path="about"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="editorial-policy"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="sources"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="methodology"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="trust-proof"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
               </Route>
               <Route path="/en" element={<Layout />}>
                 <Route index element={<HomePage />} />
@@ -232,6 +275,46 @@ function App() {
                   element={
                     <Suspense fallback={<RouteFallback />}>
                       <PrivacyPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="about"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="editorial-policy"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="sources"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="methodology"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="trust-proof"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
                     </Suspense>
                   }
                 />

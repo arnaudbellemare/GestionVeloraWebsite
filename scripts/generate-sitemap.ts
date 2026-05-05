@@ -14,9 +14,12 @@ import { join } from "path";
 import { blogPosts } from "../src/data/blog.js";
 import { COMPARISON_PAGES } from "../src/data/comparisons.js";
 import { CITIES, LOCATION_SERVICES } from "../src/data/locations.js";
+import { TRUST_PAGE_PATHS_FR } from "../src/data/trust-pages.js";
 
 const SITE_URL = "https://www.gestionvelora.com";
 const SERVICE_SLUGS = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"];
+
+const TRUST_SITEMAP_PATHS = new Set(TRUST_PAGE_PATHS_FR.flatMap((fr) => [fr, `/en${fr}`]));
 
 interface RouteEntry {
   path: string;
@@ -39,6 +42,12 @@ function buildAllRoutes(): RouteEntry[] {
     ["/privacy", "/en/privacy"],
   ];
   for (const [fr, en] of staticPairs) {
+    routes.push({ path: fr, frPath: fr, enPath: en });
+    routes.push({ path: en, frPath: fr, enPath: en });
+  }
+
+  for (const fr of TRUST_PAGE_PATHS_FR) {
+    const en = `/en${fr}`;
     routes.push({ path: fr, frPath: fr, enPath: en });
     routes.push({ path: en, frPath: fr, enPath: en });
   }
@@ -76,6 +85,7 @@ function buildAllRoutes(): RouteEntry[] {
 }
 
 function priority(path: string): string {
+  if (TRUST_SITEMAP_PATHS.has(path)) return "0.5";
   if (path === "/" || path === "/en/") return "1.0";
   if (path.startsWith("/services") || path.startsWith("/en/services")) return "0.9";
   if (path.startsWith("/compare/") || path.startsWith("/en/compare/")) return "0.8";
@@ -108,14 +118,14 @@ function main() {
 
     entries.push(
       `  <url>\n` +
-      `    <loc>${loc}</loc>\n` +
-      `    <xhtml:link rel="alternate" hreflang="fr-CA" href="${frHref}" />\n` +
-      `    <xhtml:link rel="alternate" hreflang="en-CA" href="${enHref}" />\n` +
-      `    <xhtml:link rel="alternate" hreflang="x-default" href="${frHref}" />\n` +
-      `    <lastmod>${today}</lastmod>\n` +
-      `    <changefreq>${changefreq(route.path)}</changefreq>\n` +
-      `    <priority>${priority(route.path)}</priority>\n` +
-      `  </url>`
+        `    <loc>${loc}</loc>\n` +
+        `    <xhtml:link rel="alternate" hreflang="fr-CA" href="${frHref}" />\n` +
+        `    <xhtml:link rel="alternate" hreflang="en-CA" href="${enHref}" />\n` +
+        `    <xhtml:link rel="alternate" hreflang="x-default" href="${frHref}" />\n` +
+        `    <lastmod>${today}</lastmod>\n` +
+        `    <changefreq>${changefreq(route.path)}</changefreq>\n` +
+        `    <priority>${priority(route.path)}</priority>\n` +
+        `  </url>`
     );
   }
 

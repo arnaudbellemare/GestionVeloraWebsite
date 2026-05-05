@@ -283,6 +283,12 @@ export const FooterSection = (): JSX.Element => {
         <div className="max-w-[90rem] mx-auto px-6 lg:px-16 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#999999]">
           <span>©{new Date().getFullYear()} Gestion Velora</span>
           <div className="flex flex-wrap items-center gap-4">
+            <InternalLink to="/about" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "About" : "À propos"}
+            </InternalLink>
+            <InternalLink to="/editorial-policy" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "Editorial policy" : "Politique éditoriale"}
+            </InternalLink>
             <InternalLink to="/privacy" className="hover:text-white transition-colors duration-300">
               {t("footer.privacy")}
             </InternalLink>

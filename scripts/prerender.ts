@@ -28,6 +28,7 @@ import { COMPARISON_PAGES } from "../src/data/comparisons.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
 import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
+import { TRUST_PAGES } from "../src/data/trust-pages.js";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -839,6 +840,7 @@ function buildLocationRoutes(): RouteConfig[] {
   return out;
 }
 
+
 // ---------------------------------------------------------------------------
 // Route definitions
 // ---------------------------------------------------------------------------
@@ -855,6 +857,38 @@ interface RouteConfig {
   /** Page-specific noscript HTML to replace the homepage noscript block. */
   noscriptBody?: string;
 }
+
+
+function buildTrustDocumentRoutes(): RouteConfig[] {
+  const ids = ["about", "editorial-policy", "sources", "methodology", "trust-proof"] as const;
+  const out: RouteConfig[] = [];
+  for (const id of ids) {
+    const fr = TRUST_PAGES[id].fr;
+    const en = TRUST_PAGES[id].en;
+    const frPath = `/${id}`;
+    const enPath = `/en/${id}`;
+    out.push({
+      path: frPath,
+      locale: "fr",
+      frPath,
+      enPath,
+      title: fr.metaTitle,
+      description: fr.metaDescription,
+      pageSchemas: null,
+    });
+    out.push({
+      path: enPath,
+      locale: "en",
+      frPath,
+      enPath,
+      title: en.metaTitle,
+      description: en.metaDescription,
+      pageSchemas: null,
+    });
+  }
+  return out;
+}
+
 
 function buildRoutes(): RouteConfig[] {
   const routes: RouteConfig[] = [];
@@ -1178,6 +1212,8 @@ function buildRoutes(): RouteConfig[] {
   // --- Location pages (generated from CITIES × LOCATION_SERVICES × 2 languages) ---
   routes.push(...buildLocationRoutes());
 
+  routes.push(...buildTrustDocumentRoutes());
+
   return routes;
 }
 
@@ -1188,6 +1224,10 @@ function buildSitemap(routes: RouteConfig[]): void {
   const today = new Date().toISOString().slice(0, 10);
 
   function priority(path: string): string {
+    const trustPaths = new Set(
+      (["/about", "/editorial-policy", "/sources", "/methodology", "/trust-proof"] as const).flatMap((fr) => [fr, `/en${fr}`])
+    );
+    if (trustPaths.has(path)) return "0.5";
     if (path === "/" || path === "/en/") return "1.0";
     if (path.startsWith("/services") || path.startsWith("/en/services")) return "0.9";
     if (path.startsWith("/compare/") || path.startsWith("/en/compare/")) return "0.8";

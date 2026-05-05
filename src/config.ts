@@ -11,9 +11,8 @@ export const PUBLISHER_LOGO_URL = `${SITE_URL}/logo.png?v=10` as const;
 
 /** Article `author` in JSON-LD (Person). */
 export const ARTICLE_AUTHOR_NAME = "Arnaud Bellemare";
+export const ARTICLE_AUTHOR_URL = `${SITE_URL}/about`;
 export const ARTICLE_AUTHOR_LINKEDIN = "https://ca.linkedin.com/in/arnaud-bellemare-125934372";
-/** Person URL for Article schema — LinkedIn profile (no standalone /about page). */
-export const ARTICLE_AUTHOR_URL = ARTICLE_AUTHOR_LINKEDIN;
 
 /** Brand entity URLs used in JSON-LD `sameAs`. */
 export const ORGANIZATION_SAME_AS = [

@@ -5,6 +5,7 @@ import { useLocale } from "../context/LocaleContext";
 import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "../config";
 import { getComparisonBySlug } from "../data/comparisons";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
+import { getTrustPageLocale, trustPageIdFromPath } from "../data/trust-pages";
 
 const _TITLE_SUFFIX = " | Gestion Velora";
 const _TITLE_MAX = 70;
@@ -165,6 +166,13 @@ export function PageMeta() {
     } else if (pathname === "/privacy" || pathname === "/en/privacy") {
       title = isEn ? "Privacy | Gestion Velora" : "Confidentialité | Gestion Velora";
       description = baseDesc;
+    } else {
+      const trustId = trustPageIdFromPath(pathname);
+      if (trustId) {
+        const tp = getTrustPageLocale(trustId, isEn ? "en" : "fr");
+        title = buildTitle(tp.metaTitle);
+        description = tp.metaDescription;
+      }
     }
 
     applyDocumentMeta({ title, description, ogImage, twitterImage, url, isEn });
