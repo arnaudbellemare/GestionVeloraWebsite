@@ -1,5 +1,5 @@
 import { next } from "@vercel/functions/middleware";
-import allowlist from "./location-slugs.generated.json" with { type: "json" };
+import allowlist from "./location-slugs.generated.json";
 
 const allowed = new Set(allowlist as string[]);
 
