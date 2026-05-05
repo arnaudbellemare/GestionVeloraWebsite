@@ -564,7 +564,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "choisir-gestionnaire-immobilier-montreal",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=85",
+    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200&q=85",
     datePublished: "2025-08-20",
     dateModified: "2026-04-01",
     fr: {
