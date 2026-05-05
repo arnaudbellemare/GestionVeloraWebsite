@@ -128,6 +128,16 @@ export function TrustedPartnersSection() {
                       </span>
                       <span className="relative min-w-0">{p.name}</span>
                     </motion.button>
+                    {p.website && (
+                      <a
+                        href={`https://${p.website}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-3.5 font-sans text-sm font-normal text-nd-secondary hover:text-nd-display dark:text-white/40 dark:hover:text-white/70 underline underline-offset-2 transition-colors"
+                      >
+                        ({p.website})
+                      </a>
+                    )}
                   </motion.div>
                 ))}
               </motion.div>

@@ -210,7 +210,7 @@ export const fr = {
       { name: "Atlas Immobilier", quote: "La transparence et les rapports que nous recevons sont sans précédent.", author: "Marie Dubois", role: "Directrice", evidence: "Revue d'audit des rapports mensuels, 2025." },
       { name: "Crown Properties", quote: "Nos taux d'occupation sont passés de 91% à 98,5% la première année.", author: "Élise Villeneuve", role: "Associée", evidence: "Tableau de bord KPI interne portefeuille, 2025-2026." },
       { name: "Pinnacle Gestion", quote: "Une équipe réactive et des processus éprouvés qui font la différence.", author: "Pierre Martin", role: "Directeur général", evidence: "Journaux de niveaux de service, 2025." },
-      { name: "Nickel & Krome", quote: "Nous travaillons avec Gestion Velora et ils savent vraiment faire avancer les choses sans complexité. Un partenariat fluide, clair et professionnel.", author: "Nadia Kanem", role: "Fondatrice & CEO, Nickel & Krome", evidence: "Collaboration partenaire active, 2025-2026.", website: "nickelandkrome.ca" },
+      { name: "Nickel & Krome", quote: "Nous travaillons avec Gestion Velora et ils savent vraiment faire avancer les choses sans complexité. Un partenariat fluide, clair et professionnel.", author: "Karim Alyan", role: "Nickel & Krome", evidence: "Collaboration partenaire active, 2025-2026.", website: "nickelandkrome.ca" },
     ],
   },
 
