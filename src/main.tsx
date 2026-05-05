@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { ReactLenis } from "lenis/react";
 import App from "./App";
+import { ChunkErrorBoundary } from "./components/ChunkErrorBoundary";
 import { ThemeProvider } from "./context/ThemeContext";
 import "./i18n";
 import "./index.css";
@@ -12,10 +13,12 @@ if ("scrollRestoration" in history) {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider>
-      <ReactLenis root options={{ lerp: 0.14, duration: 0.85, smoothWheel: true }}>
-        <App />
-      </ReactLenis>
-    </ThemeProvider>
+    <ChunkErrorBoundary>
+      <ThemeProvider>
+        <ReactLenis root options={{ lerp: 0.14, duration: 0.85, smoothWheel: true }}>
+          <App />
+        </ReactLenis>
+      </ThemeProvider>
+    </ChunkErrorBoundary>
   </React.StrictMode>
 );
