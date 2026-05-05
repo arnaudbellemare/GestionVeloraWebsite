@@ -40,7 +40,12 @@ export function StatsSection() {
           <p className="font-sans text-xs text-nd-secondary">
             <strong>{t("stats.sourcesLabel")}</strong>{" "}
             {t("stats.sourceInternal")} ·{" "}
-            <a href="/sources" className="underline underline-offset-2 hover:text-nd-primary">
+            <a
+              href="https://www.cmhc-schl.gc.ca/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-nd-primary"
+            >
               {t("stats.sourceCmhc")}
             </a>
           </p>

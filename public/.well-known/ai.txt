@@ -6,9 +6,4 @@ llms: https://www.gestionvelora.com/llms.txt
 summary: https://www.gestionvelora.com/ai/summary.json
 faq: https://www.gestionvelora.com/ai/faq.json
 service: https://www.gestionvelora.com/ai/service.json
-about: https://www.gestionvelora.com/about
-editorial_policy: https://www.gestionvelora.com/editorial-policy
-methodology: https://www.gestionvelora.com/methodology
-sources: https://www.gestionvelora.com/sources
-trust_proof: https://www.gestionvelora.com/trust-proof
 sitemap: https://www.gestionvelora.com/sitemap.xml

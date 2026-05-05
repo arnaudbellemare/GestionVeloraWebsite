@@ -286,12 +286,6 @@ export const FooterSection = (): JSX.Element => {
             <InternalLink to="/privacy" className="hover:text-white transition-colors duration-300">
               {t("footer.privacy")}
             </InternalLink>
-            <a href="/about" className="hover:text-white transition-colors duration-300">
-              {locale === "en" ? "About" : "À propos"}
-            </a>
-            <a href="/editorial-policy" className="hover:text-white transition-colors duration-300">
-              {locale === "en" ? "Editorial policy" : "Politique éditoriale"}
-            </a>
             <a
               href="https://www.rgcq.org/"
               target="_blank"

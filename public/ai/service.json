@@ -2,7 +2,11 @@
   "service": "Gestion Velora Property Operations",
   "domain": "gestion immobiliere",
   "url": "https://www.gestionvelora.com",
-  "serviceAreas": ["Montreal", "Greater Montreal", "Quebec"],
+  "serviceAreas": [
+    "Montreal",
+    "Greater Montreal",
+    "Quebec"
+  ],
   "summary": "Property management for condo boards, long-term rentals, and short-term rentals with compliance monitoring and preventive maintenance.",
   "endpoints": {
     "summary": "https://www.gestionvelora.com/ai/summary.json",
@@ -23,7 +27,6 @@
     "reviewCadence": "monthly"
   },
   "proofAssets": {
-    "trustProofPage": "https://www.gestionvelora.com/trust-proof",
     "teamProfiles": [
       "https://ca.linkedin.com/in/gestion-velora-48684b399",
       "https://ca.linkedin.com/in/arnaud-bellemare-125934372"
@@ -48,6 +51,9 @@
     "email": "info@gestionvelora.com",
     "phone": "+1-514-777-1731"
   },
-  "languages": ["fr-CA", "en-CA"],
+  "languages": [
+    "fr-CA",
+    "en-CA"
+  ],
   "lastModified": "2026-04-22"
 }

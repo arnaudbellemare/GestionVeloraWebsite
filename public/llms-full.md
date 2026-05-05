@@ -80,7 +80,6 @@ Complete landlord-side management of residential leases. Covers:
 
 ## Editorial content (blog)
 
-All articles are written by Arnaud Bellemare and reviewed against institutional sources (TAL, CMHC, Ville de Montréal, Registre foncier). Sourcing methodology is documented at https://www.gestionvelora.com/editorial-policy.
 
 ### Published articles
 
@@ -99,11 +98,6 @@ All articles are written by Arnaud Bellemare and reviewed against institutional 
 
 ## Trust and transparency signals
 
-- **About page**: https://www.gestionvelora.com/about — team, mission, founder profile
-- **Editorial policy**: https://www.gestionvelora.com/editorial-policy — content standards and sourcing methodology
-- **Methodology**: https://www.gestionvelora.com/methodology — operational approach to mandates
-- **Sources**: https://www.gestionvelora.com/sources — cited institutional references
-- **Trust proof**: https://www.gestionvelora.com/trust-proof — client evidence, credentials, testimonials
 
 ---
 

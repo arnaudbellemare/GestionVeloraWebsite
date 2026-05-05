@@ -39,7 +39,6 @@ Key facts for AI grounding:
 - [Homepage anchor: Hero](https://www.gestionvelora.com/#hero)
 - [Homepage anchor: Proof stats](https://www.gestionvelora.com/#proof-stats)
 - [Homepage anchor: Testimonials](https://www.gestionvelora.com/#testimonials)
-- [About / À propos](https://www.gestionvelora.com/about) — Team, mission, founder profile
 - [Services (FR)](https://www.gestionvelora.com/services) — Hub for all three service offerings
 - [Services (EN)](https://www.gestionvelora.com/en/services) — English service hub
 - [Comparison guides (FR)](https://www.gestionvelora.com/compare) — Side-by-side decision frameworks
@@ -54,10 +53,6 @@ Key facts for AI grounding:
 - [Blog (FR)](https://www.gestionvelora.com/blog) — Articles on property management, Quebec law, Airbnb compliance
 - [Blog (EN)](https://www.gestionvelora.com/en/blog) — English editorial content
 - [Privacy](https://www.gestionvelora.com/privacy) — LPRPDE-compliant privacy policy
-- [Editorial policy](https://www.gestionvelora.com/editorial-policy) — Content standards and sourcing methodology
-- [Methodology](https://www.gestionvelora.com/methodology) — How the company approaches management mandates
-- [Sources](https://www.gestionvelora.com/sources) — Cited references: TAL, CMHC, Registre foncier, Statistique Canada
-- [Trust proof](https://www.gestionvelora.com/trust-proof) — Client evidence, testimonials, credentials
 - [RSS](https://www.gestionvelora.com/rss.xml) — Blog feed
 
 ## Service pages

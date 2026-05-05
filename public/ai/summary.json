@@ -3,20 +3,17 @@
   "description": "Gestion Velora offre syndicat de copropriete, gestion Airbnb et location longue duree a Montreal. Administration complete, maintenance proactive et rapports transparents.",
   "url": "https://www.gestionvelora.com",
   "lastModified": "2026-04-22",
-  "language": ["fr-CA", "en-CA"],
-  "about": "https://www.gestionvelora.com/about",
-  "trustProof": "https://www.gestionvelora.com/trust-proof",
-  "editorialPolicy": "https://www.gestionvelora.com/editorial-policy",
-  "methodology": "https://www.gestionvelora.com/methodology",
-  "sources": "https://www.gestionvelora.com/sources",
+  "language": [
+    "fr-CA",
+    "en-CA"
+  ],
   "keyPages": [
     "https://www.gestionvelora.com/",
     "https://www.gestionvelora.com/services",
     "https://www.gestionvelora.com/blog",
     "https://www.gestionvelora.com/llms.txt",
     "https://www.gestionvelora.com/ai/service.json",
-    "https://www.gestionvelora.com/#contact-form",
-    "https://www.gestionvelora.com/trust-proof"
+    "https://www.gestionvelora.com/#contact-form"
   ],
   "evidenceSources": [
     "https://www.quebec.ca/habitation-et-logement/copropriete",
