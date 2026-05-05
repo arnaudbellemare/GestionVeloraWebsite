@@ -1700,7 +1700,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "req-neq-verifier-gestionnaire-immobilier-montreal",
-    image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&q=85",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=85",
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {
