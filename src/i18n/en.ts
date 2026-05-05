@@ -207,6 +207,7 @@ export const en = {
       { name: "Atlas Immobilier", quote: "The transparency and reports we receive are unprecedented.", author: "Marie Dubois", role: "Director", evidence: "Monthly reporting audit review, 2025." },
       { name: "Crown Properties", quote: "Our occupancy rates went from 91% to 98.5% in the first year.", author: "Élise Villeneuve", role: "Partner", evidence: "Internal portfolio KPI dashboard, 2025-2026." },
       { name: "Pinnacle Gestion", quote: "A responsive team and proven processes that make the difference.", author: "Pierre Martin", role: "General manager", evidence: "Service-level review logs, 2025." },
+      { name: "Nickel & Krome", quote: "We work with Gestion Velora and they really know how to make things go well without complexity. A smooth, clear and professional partnership.", author: "Nadia Kanem", role: "Founder & CEO, Nickel & Krome", evidence: "Active partner collaboration, 2025-2026." },
     ],
   },
 

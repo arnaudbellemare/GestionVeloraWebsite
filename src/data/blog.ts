@@ -1780,6 +1780,114 @@ export const blogPosts: BlogPost[] = [
       ],
     },
   },
+  {
+    slug: "partenaire-nettoyage-nickel-krome-montreal",
+    image: "https://nickelandkrome.ca/assets/canonical-logo.png",
+    datePublished: "2026-05-04",
+    dateModified: "2026-05-04",
+    fr: {
+      category: "Partenaires",
+      date: "Mai 2026",
+      title: "Nickel & Krome : l'entreprise de nettoyage avec qui nous travaillons à Montréal",
+      metaTitle: "Nickel & Krome compagnie de nettoyage Montréal | Gestion Velora",
+      excerpt: "Gestion Velora s'associe à Nickel & Krome, compagnie de nettoyage spécialisée en post-construction et en entretien résidentiel à Montréal et Laval.",
+      brief: "Nickel & Krome (nickelandkrome.ca) est une compagnie de nettoyage professionnelle basée à Laval, spécialisée en nettoyage post-construction, remise en état de condos et entretien des parties communes. Gestion Velora travaille avec Nickel & Krome pour offrir à ses immeubles un niveau de propreté et de finition irréprochable, sans complications logistiques.",
+      sections: [
+        {
+          heading: "Qui est Nickel & Krome ?",
+          paragraphs: [
+            [
+              "Nickel & Krome est une compagnie de nettoyage professionnelle fondée par Nadia Kanem, basée à Laval et intervenant sur l'ensemble du Grand Montréal. Spécialisée dans le nettoyage post-construction, la remise en état de condos, l'entretien des parties communes et le nettoyage de stationnements souterrains après travaux, l'entreprise s'est bâti une solide réputation auprès des promoteurs, gestionnaires et syndicats de copropriété. Pour en savoir plus sur leurs services, visitez leur site : ",
+              { text: "nickelandkrome.ca", to: "https://nickelandkrome.ca" },
+              ".",
+            ],
+            "Ce qui distingue Nickel & Krome, c'est leur approche méthodique et sans complication. Chaque mandat est traité avec rigueur : planification claire, communication directe et résultats constants. Que ce soit pour un chantier de fin de construction ou un entretien régulier des corridors et espaces communs, l'équipe livre un travail soigné qui répond aux exigences des syndicats de copropriété les plus exigeants.",
+            "L'entreprise dessert Montréal, Laval, la Rive-Nord et le Grand Montréal, avec une capacité d'intervention rapide adaptée aux réalités opérationnelles des immeubles en gestion active.",
+          ],
+        },
+        {
+          heading: "Pourquoi Gestion Velora travaille avec Nickel & Krome",
+          paragraphs: [
+            [
+              "Chez Gestion Velora, nous choisissons nos partenaires avec soin. La gestion immobilière professionnelle repose sur un réseau de fournisseurs fiables, ponctuels et capables de livrer sans friction. Nickel & Krome correspond exactement à ce profil. Comme le souligne Nadia Kanem, fondatrice et CEO : « Nous travaillons avec Gestion Velora et ils savent vraiment faire avancer les choses sans complexité. Un partenariat fluide, clair et professionnel. »",
+            ],
+            [
+              "Pour nos ",
+              { text: "syndicats de copropriété", to: "/services/syndicat-copropriete" },
+              " et nos propriétaires, la propreté des parties communes est une composante directe de la valeur perçue et de la satisfaction des résidents. Un immeuble bien entretenu, aux espaces communs impeccables, fidélise les locataires et protège la valeur du bâtiment à long terme.",
+            ],
+            "Nickel & Krome intervient ponctuellement ou de façon récurrente selon les besoins de chaque immeuble. Leur flexibilité et leur réactivité s'intègrent naturellement à notre modèle de gestion proactive, où chaque intervention est planifiée, documentée et suivie dans notre tableau de bord.",
+          ],
+        },
+        {
+          heading: "Nettoyage post-construction : un service essentiel pour les copropriétés",
+          paragraphs: [
+            "Le nettoyage post-construction est souvent sous-estimé dans le calendrier d'un projet immobilier. Pourtant, la qualité de cette étape conditionne la première impression des résidents et la conformité aux standards d'un syndicat bien géré. Nickel & Krome maîtrise ce segment avec une précision qui évite les allers-retours coûteux et les corrections de dernière minute.",
+            [
+              "Pour les promoteurs et gestionnaires qui cherchent une compagnie de nettoyage fiable à Montréal, Nickel & Krome représente un choix solide. N'hésitez pas à les contacter directement via leur site ",
+              { text: "nickelandkrome.ca", to: "https://nickelandkrome.ca" },
+              " ou par téléphone au +1-514-699-3317.",
+            ],
+            [
+              "Gestion Velora recommande Nickel & Krome à nos clients qui en font la demande. Si vous gérez un immeuble à Montréal ou Laval et souhaitez en savoir plus sur notre réseau de partenaires de confiance, ",
+              { text: "contactez-nous", to: "/#contact" },
+              ".",
+            ],
+          ],
+        },
+      ],
+    },
+    en: {
+      category: "Partners",
+      date: "May 2026",
+      title: "Nickel & Krome: the cleaning company we work with in Montreal",
+      metaTitle: "Nickel & Krome cleaning company Montreal | Gestion Velora",
+      excerpt: "Gestion Velora partners with Nickel & Krome, a professional cleaning company specializing in post-construction and residential maintenance in Montreal and Laval.",
+      brief: "Nickel & Krome (nickelandkrome.ca) is a professional cleaning company based in Laval, specializing in post-construction cleaning, condo turnover, and common area maintenance. Gestion Velora works with Nickel & Krome to deliver an impeccable standard of cleanliness across its managed buildings — without logistical complexity.",
+      sections: [
+        {
+          heading: "Who is Nickel & Krome?",
+          paragraphs: [
+            [
+              "Nickel & Krome is a professional cleaning company founded by Nadia Kanem, based in Laval and operating throughout Greater Montreal. Specializing in post-construction cleaning, condo turnover, common area maintenance, and underground parking cleaning after construction, the company has built a solid reputation with developers, managers, and condo boards. Learn more about their services at: ",
+              { text: "nickelandkrome.ca", to: "https://nickelandkrome.ca" },
+              ".",
+            ],
+            "What sets Nickel & Krome apart is their methodical, no-fuss approach. Every mandate is handled with precision: clear scheduling, direct communication, and consistent results. Whether for end-of-construction cleanup or regular corridor and common area maintenance, the team delivers thorough work that meets the standards of the most demanding condo boards.",
+            "The company serves Montreal, Laval, the North Shore, and Greater Montreal, with a fast-response capacity suited to the operational realities of actively managed buildings.",
+          ],
+        },
+        {
+          heading: "Why Gestion Velora works with Nickel & Krome",
+          paragraphs: [
+            "At Gestion Velora, we choose our partners carefully. Professional property management relies on a network of reliable, punctual suppliers who deliver without friction. Nickel & Krome fits that profile exactly. As founder and CEO Nadia Kanem puts it: \"We work with Gestion Velora and they really know how to make things go well without complexity. A smooth, clear and professional partnership.\"",
+            [
+              "For our ",
+              { text: "condo boards", to: "/services/syndicat-copropriete" },
+              " and property owners, clean common areas are a direct component of perceived value and resident satisfaction. A well-maintained building with impeccable shared spaces retains tenants and protects long-term asset value.",
+            ],
+            "Nickel & Krome intervenes on a one-time or recurring basis depending on each building's needs. Their flexibility and responsiveness integrate naturally into our proactive management model, where every intervention is planned, documented, and tracked in our dashboard.",
+          ],
+        },
+        {
+          heading: "Post-construction cleaning: an essential service for condominiums",
+          paragraphs: [
+            "Post-construction cleaning is often underestimated in a real estate project timeline. Yet the quality of this step sets the first impression for residents and ensures compliance with the standards expected by a well-run condo board. Nickel & Krome handles this segment with a precision that avoids costly back-and-forth and last-minute corrections.",
+            [
+              "For developers and managers looking for a reliable cleaning company in Montreal, Nickel & Krome is a solid choice. Contact them directly through their website ",
+              { text: "nickelandkrome.ca", to: "https://nickelandkrome.ca" },
+              " or by phone at +1-514-699-3317.",
+            ],
+            [
+              "Gestion Velora recommends Nickel & Krome to clients who request it. If you manage a building in Montreal or Laval and want to learn more about our trusted partner network, ",
+              { text: "contact us", to: "/#contact" },
+              ".",
+            ],
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export type BlogPostView = {

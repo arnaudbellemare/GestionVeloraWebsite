@@ -17,6 +17,7 @@ const partnerLogos = [
   "Vertex Capital",
   "Harbor Corp",
   "RGCQ",
+  "Nickel & Krome",
 ];
 
 const listContainer = {

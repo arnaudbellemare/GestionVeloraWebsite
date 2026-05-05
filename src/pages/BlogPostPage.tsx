@@ -26,6 +26,16 @@ function RichPara({ p, id }: { p: RichParagraph; id: string }) {
       {p.map((seg, i) =>
         typeof seg === "string" ? (
           <span key={`${id}-${i}`}>{seg}</span>
+        ) : seg.to.startsWith("http://") || seg.to.startsWith("https://") ? (
+          <a
+            key={`${id}-${i}`}
+            href={seg.to}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-waabi-pink font-medium hover:underline underline-offset-2"
+          >
+            {seg.text}
+          </a>
         ) : (
           <InternalLink
             key={`${id}-${i}`}
