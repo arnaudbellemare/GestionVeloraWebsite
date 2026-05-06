@@ -72,6 +72,14 @@ function escapeHtml(str: string) {
     .replace(/"/g, "&quot;");
 }
 
+/** Shown in <noscript> when real content lives inside #root (avoids duplicate full <main> in HTML). */
+function buildJsFallbackNoscript(locale: "fr" | "en"): string {
+  if (locale === "fr") {
+    return `<noscript><p lang="fr-CA">Activez JavaScript pour la version interactive. Le contenu principal de cette page est déjà affiché ci-dessous.</p></noscript>`;
+  }
+  return `<noscript><p lang="en-CA">Enable JavaScript for the interactive experience. This page's main content is already shown below.</p></noscript>`;
+}
+
 // ---------------------------------------------------------------------------
 // Helper: build a meta <title> that stays under 75 characters.
 // Adds " | Gestion Velora" suffix only if the result fits within the limit.
@@ -111,8 +119,10 @@ function buildHtml(
     pageSchemas: object | object[] | null;
     /** Locale of this page; used to strip the French static SEO block on EN pages. */
     locale: "fr" | "en";
-    /** Page-specific noscript HTML. When provided, replaces the homepage noscript block entirely. */
+    /** Page-specific noscript HTML. When provided (without prerenderMainInner), replaces the homepage noscript block entirely. */
     noscriptBody?: string;
+    /** Full <main>...</main> inserted inside #root before React mounts (crawlable without relying on <noscript>). */
+    prerenderMainInner?: string;
   }
 ): string {
   let html = template;
@@ -206,9 +216,22 @@ function buildHtml(
     hreflangBlock
   );
 
-  // 15b. Replace the noscript SEO block with page-specific content (preferred)
-  // or fall back to generic EN replacement to avoid hreflang language mismatch.
-  if (opts.noscriptBody) {
+  // 15a. Crawlable body copy inside #root (replaced on first React render).
+  if (opts.prerenderMainInner) {
+    html = html.replace(
+      /<div id="root"><\/div>/,
+      `<div id="root">\n    ${opts.prerenderMainInner}\n    </div>`
+    );
+  }
+
+  // 15b. Replace the homepage noscript SEO block: either JS-only hint when main is in #root,
+  // page-specific noscript (homepage-scale), or generic EN stub.
+  if (opts.prerenderMainInner) {
+    html = html.replace(
+      /<noscript>\s*<main[^>]*>[\s\S]*?<\/main>\s*<\/noscript>/,
+      buildJsFallbackNoscript(opts.locale)
+    );
+  } else if (opts.noscriptBody) {
     html = html.replace(
       /<noscript>\s*<main[^>]*>[\s\S]*?<\/main>\s*<\/noscript>/,
       opts.noscriptBody
@@ -438,7 +461,7 @@ function richToText(para: RichParagraph): string {
   return para.map((seg) => (typeof seg === "string" ? seg : seg.text)).join("");
 }
 
-function buildLocationNoscript(
+function buildLocationMainHtml(
   locale: "fr" | "en",
   svc: typeof LOCATION_SERVICES[0],
   city: typeof CITIES[0]
@@ -503,7 +526,7 @@ function buildLocationNoscript(
         ? `<p>${escapeHtml(city.localLeadEn)}</p>`
         : "";
 
-  return `<noscript><main lang="${lang}">
+  return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(desc)}</p>
 ${localLead}
@@ -517,10 +540,10 @@ ${featureLis}
 ${cardPs}
   <h2>${escapeHtml(readyTitle)}</h2>
   <p>${escapeHtml(readyBody)}</p>
-</main></noscript>`;
+</main>`;
 }
 
-function buildBlogNoscript(locale: "fr" | "en", slug: string): string {
+function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return "";
   const loc = post[locale];
@@ -534,17 +557,17 @@ function buildBlogNoscript(locale: "fr" | "en", slug: string): string {
     })
     .join("\n");
 
-  return `<noscript><main lang="${lang}">
+  return `<main lang="${lang}">
   <h1>${escapeHtml(loc.title)}</h1>
   <p>${escapeHtml(loc.brief)}</p>
 ${sectionHtml}
-</main></noscript>`;
+</main>`;
 }
 
-function buildServicesHubNoscript(locale: "fr" | "en"): string {
+function buildServicesHubMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
   if (locale === "fr") {
-    return `<noscript><main lang="${lang}">
+    return `<main lang="${lang}">
   <h1>Services de gestion immobilière à Montréal</h1>
   <p>Gestion Velora propose trois services distincts a Montreal : syndicat de copropriete, gestion Airbnb et gestion locative longue duree.</p>
   <h2>Nos services specialises</h2>
@@ -553,9 +576,9 @@ function buildServicesHubNoscript(locale: "fr" | "en"): string {
     <li>Gestion Airbnb : operations quotidiennes, tarification et experience voyageurs.</li>
     <li>Gestion locative : selection des locataires, loyers, maintenance et suivis TAL.</li>
   </ul>
-</main></noscript>`;
+</main>`;
   }
-  return `<noscript><main lang="${lang}">
+  return `<main lang="${lang}">
   <h1>Property management services in Montreal</h1>
   <p>Gestion Velora provides three focused services in Montreal: condo board management, Airbnb operations, and long-term rental management.</p>
   <h2>Our service lines</h2>
@@ -564,36 +587,68 @@ function buildServicesHubNoscript(locale: "fr" | "en"): string {
     <li>Airbnb: daily operations, pricing strategy, and guest experience.</li>
     <li>Long-term rentals: tenant screening, rent collection, and maintenance workflows.</li>
   </ul>
-</main></noscript>`;
+</main>`;
 }
 
-function buildBlogIndexNoscript(locale: "fr" | "en"): string {
+function buildBlogIndexMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
   const topPosts = blogPosts.slice(0, 6);
   if (locale === "fr") {
     const links = topPosts
       .map((post) => `    <li><a href="/blog/${post.slug}">${escapeHtml(post.fr.title)}</a></li>`)
       .join("\n");
-    return `<noscript><main lang="${lang}">
+    return `<main lang="${lang}">
   <h1>Blog – Gestion immobilière Montréal</h1>
   <p>Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité.</p>
   <h2>Articles recents</h2>
   <ul>
 ${links}
   </ul>
-</main></noscript>`;
+</main>`;
   }
   const links = topPosts
     .map((post) => `    <li><a href="/en/blog/${post.slug}">${escapeHtml(post.en.title)}</a></li>`)
     .join("\n");
-  return `<noscript><main lang="${lang}">
+  return `<main lang="${lang}">
   <h1>Montreal property management blog</h1>
   <p>Advice and updates on condo management, long-term rentals, preventive maintenance, and Airbnb regulation in Montreal.</p>
   <h2>Recent articles</h2>
   <ul>
 ${links}
   </ul>
-</main></noscript>`;
+</main>`;
+}
+
+function buildComparisonMainHtml(locale: "fr" | "en", page: (typeof COMPARISON_PAGES)[0]): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const title = locale === "fr" ? page.titleFr : page.titleEn;
+  const hero = locale === "fr" ? page.heroFr : page.heroEn;
+  const desc = locale === "fr" ? page.descriptionFr : page.descriptionEn;
+  const sectionsHtml = page.sections
+    .slice(0, 3)
+    .map((s) => {
+      const h = locale === "fr" ? s.headingFr : s.headingEn;
+      const b = locale === "fr" ? s.bodyFr : s.bodyEn;
+      const points = locale === "fr" ? s.pointsFr : s.pointsEn;
+      const lis = points.slice(0, 5).map((pt) => `    <li>${escapeHtml(pt)}</li>`).join("\n");
+      return `  <h2>${escapeHtml(h)}</h2>\n  <p>${escapeHtml(b)}</p>\n  <ul>\n${lis}\n  </ul>`;
+    })
+    .join("\n");
+  return `<main lang="${lang}">
+  <h1>${escapeHtml(title)}</h1>
+  <p>${escapeHtml(hero)}</p>
+  <p>${escapeHtml(desc)}</p>
+${sectionsHtml}
+</main>`;
+}
+
+function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
+  const svc = getService(locale, slug);
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  return `<main lang="${lang}">
+  <h1>${escapeHtml(svc.title)}</h1>
+  <p>${escapeHtml(svc.description)}</p>
+</main>`;
 }
 
 function buildLocationServiceSchema(
@@ -804,7 +859,7 @@ function buildLocationRoutes(): RouteConfig[] {
         description: fillLoc(svc.descFr, city, "fr"),
         ogImage: svcImage,
         twitterImage: svcImage,
-        noscriptBody: buildLocationNoscript("fr", svc, city),
+        prerenderMainInner: buildLocationMainHtml("fr", svc, city),
         pageSchemas: [
           buildLocationServiceSchema("fr", svc, city, SITE_URL),
           buildBreadcrumbSchema([
@@ -824,7 +879,7 @@ function buildLocationRoutes(): RouteConfig[] {
         description: fillLoc(svc.descEn, city, "en"),
         ogImage: svcImage,
         twitterImage: svcImage,
-        noscriptBody: buildLocationNoscript("en", svc, city),
+        prerenderMainInner: buildLocationMainHtml("en", svc, city),
         pageSchemas: [
           buildLocationServiceSchema("en", svc, city, `${SITE_URL}/en`),
           buildBreadcrumbSchema([
@@ -854,8 +909,10 @@ interface RouteConfig {
   ogImage?: string;
   twitterImage?: string;
   pageSchemas: object | object[] | null;
-  /** Page-specific noscript HTML to replace the homepage noscript block. */
+  /** Page-specific noscript HTML to replace the homepage noscript block (homepage only; prefer prerenderMainInner elsewhere). */
   noscriptBody?: string;
+  /** Crawlable <main> placed inside #root before React renders. */
+  prerenderMainInner?: string;
 }
 
 
@@ -934,7 +991,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/services",
     title: frHubMeta.title,
     description: frHubMeta.description,
-    noscriptBody: buildServicesHubNoscript("fr"),
+    prerenderMainInner: buildServicesHubMainHtml("fr"),
     pageSchemas: buildServicesHubSchema("fr", SITE_URL),
   });
   routes.push({
@@ -944,7 +1001,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/services",
     title: enHubMeta.title,
     description: enHubMeta.description,
-    noscriptBody: buildServicesHubNoscript("en"),
+    prerenderMainInner: buildServicesHubMainHtml("en"),
     pageSchemas: buildServicesHubSchema("en", `${SITE_URL}/en`),
   });
 
@@ -966,6 +1023,7 @@ function buildRoutes(): RouteConfig[] {
       description: frSvc.description,
       ogImage: img,
       twitterImage: img,
+      prerenderMainInner: buildServiceDetailMainHtml("fr", slug),
       pageSchemas: [
         buildServiceSchema("fr", slug, SITE_URL),
         buildBreadcrumbSchema([
@@ -984,6 +1042,7 @@ function buildRoutes(): RouteConfig[] {
       description: enSvc.description,
       ogImage: img,
       twitterImage: img,
+      prerenderMainInner: buildServiceDetailMainHtml("en", slug),
       pageSchemas: [
         buildServiceSchema("en", slug, `${SITE_URL}/en`),
         buildBreadcrumbSchema([
@@ -1026,6 +1085,7 @@ function buildRoutes(): RouteConfig[] {
       enPath: `/en/compare/${page.slug}`,
       title: buildTitle(page.titleFr),
       description: page.descriptionFr,
+      prerenderMainInner: buildComparisonMainHtml("fr", page),
       pageSchemas: null,
     });
     routes.push({
@@ -1035,6 +1095,7 @@ function buildRoutes(): RouteConfig[] {
       enPath: `/en/compare/${page.slug}`,
       title: buildTitle(page.titleEn),
       description: page.descriptionEn,
+      prerenderMainInner: buildComparisonMainHtml("en", page),
       pageSchemas: null,
     });
   }
@@ -1076,7 +1137,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/blog",
     title: frBlogTitle,
     description: frBlogDesc,
-    noscriptBody: buildBlogIndexNoscript("fr"),
+    prerenderMainInner: buildBlogIndexMainHtml("fr"),
     pageSchemas: buildBlogIndexSchema("fr", SITE_URL),
   });
   routes.push({
@@ -1086,7 +1147,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/blog",
     title: enBlogTitle,
     description: enBlogDesc,
-    noscriptBody: buildBlogIndexNoscript("en"),
+    prerenderMainInner: buildBlogIndexMainHtml("en"),
     pageSchemas: buildBlogIndexSchema("en", `${SITE_URL}/en`),
   });
 
@@ -1110,7 +1171,7 @@ function buildRoutes(): RouteConfig[] {
       description: post.fr.excerpt,
       ogImage: img,
       twitterImage: img,
-      noscriptBody: buildBlogNoscript("fr", slug),
+      prerenderMainInner: buildBlogMainHtml("fr", slug),
       pageSchemas: frArticle
         ? [
             frArticle,
@@ -1131,7 +1192,7 @@ function buildRoutes(): RouteConfig[] {
       description: post.en.excerpt,
       ogImage: img,
       twitterImage: img,
-      noscriptBody: buildBlogNoscript("en", slug),
+      prerenderMainInner: buildBlogMainHtml("en", slug),
       pageSchemas: enArticle
         ? [
             enArticle,
@@ -1313,6 +1374,7 @@ async function main() {
       pageSchemas: route.pageSchemas,
       locale: route.locale,
       noscriptBody: route.noscriptBody,
+      prerenderMainInner: route.prerenderMainInner,
     });
 
     writeRoute(route.path, html);
