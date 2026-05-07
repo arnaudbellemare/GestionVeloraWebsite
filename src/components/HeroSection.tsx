@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { useIdleReady } from "../hooks/useDeferredMedia";
+import { useLocale } from "../context/LocaleContext";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile.mp4";
@@ -11,10 +12,14 @@ const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
 export function HeroSection() {
   const { t } = useTranslation();
+  const { localePath } = useLocale();
   const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
   const videoRef = useRef<HTMLVideoElement>(null);
   const idleReady = useIdleReady(2800);
+  const watchVideoHref = localePath("/video/hero-bg-mobile");
+  const watchVideoLabel =
+    watchVideoHref.startsWith("/en/") ? "Watch hero video" : "Voir la video hero";
 
   useEffect(() => {
     if (!idleReady) return;
@@ -117,6 +122,12 @@ export function HeroSection() {
             className="inline-flex items-center justify-center sm:justify-center px-2 py-1 text-[11px] sm:text-xs text-white/55 hover:text-white/90 font-mono uppercase tracking-[0.14em] underline underline-offset-[0.25em] decoration-white/25 hover:decoration-white/45 transition-colors"
           >
             {t("hero.ctaDiscover")}
+          </a>
+          <a
+            href={watchVideoHref}
+            className="inline-flex items-center justify-center sm:justify-center px-2 py-1 text-[11px] sm:text-xs text-white/55 hover:text-white/90 font-mono uppercase tracking-[0.14em] underline underline-offset-[0.25em] decoration-white/25 hover:decoration-white/45 transition-colors"
+          >
+            {watchVideoLabel}
           </a>
         </motion.div>
       </div>

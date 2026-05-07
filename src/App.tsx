@@ -27,6 +27,7 @@ const TarifsPage = lazy(() => import("./pages/TarifsPage").then((m) => ({ defaul
 const TrustDocumentPage = lazy(() =>
   import("./pages/TrustDocumentPage").then((m) => ({ default: m.TrustDocumentPage })),
 );
+const VideoPage = lazy(() => import("./pages/VideoPage").then((m) => ({ default: m.VideoPage })));
 
 function RouteFallback() {
   return <div className="min-h-[40vh] bg-nd-canvas" aria-busy="true" aria-label="Chargement" />;
@@ -187,6 +188,14 @@ function App() {
                     </Suspense>
                   }
                 />
+                <Route
+                  path="video/hero-bg-mobile"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <VideoPage />
+                    </Suspense>
+                  }
+                />
               </Route>
               <Route path="/en" element={<Layout />}>
                 <Route index element={<HomePage />} />
@@ -315,6 +324,14 @@ function App() {
                   element={
                     <Suspense fallback={<RouteFallback />}>
                       <TrustDocumentPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="video/hero-bg-mobile"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <VideoPage />
                     </Suspense>
                   }
                 />

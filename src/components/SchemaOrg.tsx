@@ -220,6 +220,44 @@ export function SchemaOrg() {
       return () => removePageSchema();
     }
 
+    // ── Video watch page ───────────────────────────────────────────────────
+    const isVideoWatchPage =
+      path === "/video/hero-bg-mobile" || path === "/en/video/hero-bg-mobile";
+    if (isVideoWatchPage) {
+      const watchUrl = `${base}/video/hero-bg-mobile`;
+      const videoName = isEn ? "Gestion Velora - Hero video" : "Gestion Velora - Video hero";
+      const videoDescription = isEn
+        ? "Official hero video used on the Gestion Velora homepage."
+        : "Video officielle utilisee sur la page d'accueil de Gestion Velora.";
+      injectSchema([
+        {
+          "@context": "https://schema.org",
+          "@type": "VideoObject",
+          name: videoName,
+          description: videoDescription,
+          thumbnailUrl: `${SITE_URL}/og-image.png`,
+          uploadDate: "2026-04-30",
+          duration: "PT11S",
+          contentUrl: `${SITE_URL}/videos/hero-bg-mobile.mp4`,
+          embedUrl: watchUrl,
+          inLanguage: isEn ? "en-CA" : "fr-CA",
+          publisher: {
+            "@type": "Organization",
+            "@id": ORGANIZATION_SCHEMA_ID,
+            name: "Gestion Velora",
+            url: SITE_URL,
+            sameAs: ORGANIZATION_SAME_AS,
+            logo: { "@type": "ImageObject", url: PUBLISHER_LOGO_URL },
+          },
+        },
+        buildBreadcrumb([
+          { name: bcHome, url: SITE_URL + "/" },
+          { name: "Video" },
+        ]),
+      ]);
+      return () => removePageSchema();
+    }
+
     removePageSchema();
     return () => removePageSchema();
   }, [path, slug, t, bcHome, bcServices, bcInsights, base, isEn]);

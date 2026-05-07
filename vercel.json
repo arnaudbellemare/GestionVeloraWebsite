@@ -1,5 +1,15 @@
 {
-  "redirects": [],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "gestionvelora.com" }],
+      "destination": "https://www.gestionvelora.com/:path*",
+      "permanent": true
+    },
+    { "source": "/en/en/:path*", "destination": "/en/:path*", "permanent": true },
+    { "source": "/blog/", "destination": "/blog", "permanent": true },
+    { "source": "/en/blog/", "destination": "/en/blog", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/en", "destination": "/index.html" },
@@ -19,6 +29,8 @@
     { "source": "/blog/:slug", "destination": "/index.html" },
     { "source": "/en/blog", "destination": "/index.html" },
     { "source": "/en/blog/:slug", "destination": "/index.html" },
+    { "source": "/video/:slug", "destination": "/index.html" },
+    { "source": "/en/video/:slug", "destination": "/index.html" },
     { "source": "/faq", "destination": "/index.html" },
     { "source": "/en/faq", "destination": "/index.html" },
     { "source": "/tarifs", "destination": "/index.html" },
