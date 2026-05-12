@@ -10,6 +10,12 @@ import { getTrustPageLocale, trustPageIdFromPath } from "../data/trust-pages";
 const _TITLE_SUFFIX = " | Gestion Velora";
 const _TITLE_MAX = 70;
 
+function canonicalPathFor(pathname: string): string {
+  if (pathname === "/") return "/";
+  if (pathname === "/en" || pathname === "/en/") return "/en/";
+  return pathname;
+}
+
 function buildTitle(headline: string): string {
   const withSuffix = `${headline}${_TITLE_SUFFIX}`;
   if (withSuffix.length <= _TITLE_MAX) return withSuffix;
@@ -37,10 +43,12 @@ function applyDocumentMeta(opts: {
   twitterImage: string;
   url: string;
   isEn: boolean;
+  robots?: string;
 }) {
-  const { title, description, ogImage, twitterImage, url, isEn } = opts;
+  const { title, description, ogImage, twitterImage, url, isEn, robots } = opts;
   document.title = title;
   setMeta("description", description);
+  setMeta("robots", robots ?? "index, follow");
   setMeta("twitter:card", "summary_large_image");
   setMeta("og:title", title, true);
   setMeta("og:description", description, true);
@@ -71,7 +79,11 @@ export function PageMeta() {
   useEffect(() => {
     document.documentElement.lang = isEn ? "en-CA" : "fr-CA";
 
-    const url = SITE_URL + (pathname === "/" || pathname === "/en" || pathname === "/en/" ? "/" : pathname);
+    const url = SITE_URL + canonicalPathFor(pathname);
+    const robots =
+      pathname.startsWith("/video/") || pathname.startsWith("/en/video/")
+        ? "noindex, follow"
+        : "index, follow";
 
     const isBlogPostPath =
       Boolean(slug) &&
@@ -93,6 +105,7 @@ export function PageMeta() {
             twitterImage: post.image,
             url,
             isEn,
+            robots,
           });
         } else {
           applyDocumentMeta({
@@ -106,6 +119,7 @@ export function PageMeta() {
             twitterImage: DEFAULT_TWITTER_IMAGE,
             url,
             isEn,
+            robots,
           });
         }
       });
@@ -175,7 +189,7 @@ export function PageMeta() {
       }
     }
 
-    applyDocumentMeta({ title, description, ogImage, twitterImage, url, isEn });
+    applyDocumentMeta({ title, description, ogImage, twitterImage, url, isEn, robots });
   }, [pathname, slug, locale, t, isEn, baseTitle, baseDesc]);
 
   return null;

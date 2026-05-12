@@ -11,6 +11,7 @@ import { ScrollReveal } from "../components/ScrollReveal";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { SITE_URL } from "../config";
 import { COMPARISON_PAGES } from "../data/comparisons";
+import { isPriorityLocationSlug } from "../data/locationPriority";
 
 /** Explicit definitional lead per service — GEO/AEO “definition in first ~300 words”. */
 const SERVICE_DEFINITION: Record<string, { fr: (cityFr: string) => string; en: (cityEn: string) => string }> = {
@@ -98,6 +99,7 @@ export function LocationPage() {
   const isEn = locale === "en";
 
   const loc = locationSlug ? resolveLocation(locationSlug) : null;
+  const isPriorityLocation = Boolean(locationSlug && isPriorityLocationSlug(locationSlug));
 
   useEffect(() => {
     if (!loc) return;
@@ -131,50 +133,54 @@ export function LocationPage() {
     setMeta("og:locale", isEn ? "en_CA" : "fr_CA", true);
     setMeta("twitter:title", title);
     setMeta("twitter:description", desc);
+    setMeta("robots", isPriorityLocation ? "index, follow" : "noindex, follow");
 
-    // LocalBusiness schema
-    injectLocationSchema({
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "LocalBusiness",
-          "@id": `${url}#localbusiness`,
-          name: "Gestion Velora",
-          url: url,
-          description: desc,
-          image: img,
-          telephone: "+1-514-777-1731",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: loc.city.nameFr,
-            addressRegion: "QC",
-            addressCountry: "CA",
-          },
-          areaServed: {
-            "@type": "City",
-            name: loc.city.nameFr,
-          },
-          serviceType: isEn ? loc.service.nameEn : loc.service.nameFr,
-        },
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: isEn ? "Home" : "Accueil", item: SITE_URL },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: isEn ? loc.service.nameEn : loc.service.nameFr,
-              item: url,
+    if (isPriorityLocation) {
+      injectLocationSchema({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "LocalBusiness",
+            "@id": `${url}#localbusiness`,
+            name: "Gestion Velora",
+            url: url,
+            description: desc,
+            image: img,
+            telephone: "+1-514-777-1731",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: loc.city.nameFr,
+              addressRegion: "QC",
+              addressCountry: "CA",
             },
-          ],
-        },
-      ],
-    });
+            areaServed: {
+              "@type": "City",
+              name: loc.city.nameFr,
+            },
+            serviceType: isEn ? loc.service.nameEn : loc.service.nameFr,
+          },
+          {
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: isEn ? "Home" : "Accueil", item: SITE_URL },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: isEn ? loc.service.nameEn : loc.service.nameFr,
+                item: url,
+              },
+            ],
+          },
+        ],
+      });
+    } else {
+      document.getElementById("schema-org-location")?.remove();
+    }
 
     return () => {
       document.getElementById("schema-org-location")?.remove();
     };
-  }, [loc, isEn, locationSlug]);
+  }, [isEn, isPriorityLocation, loc, locationSlug]);
 
   useEffect(() => {
     if (loc) return;

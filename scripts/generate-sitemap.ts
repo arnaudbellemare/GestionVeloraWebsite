@@ -14,6 +14,7 @@ import { join } from "path";
 import { blogPosts } from "../src/data/blog.js";
 import { COMPARISON_PAGES } from "../src/data/comparisons.js";
 import { CITIES, LOCATION_SERVICES } from "../src/data/locations.js";
+import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { TRUST_PAGE_PATHS_FR } from "../src/data/trust-pages.js";
 
 const SITE_URL = "https://www.gestionvelora.com";
@@ -37,7 +38,6 @@ function buildAllRoutes(): RouteEntry[] {
     ["/compare", "/en/compare"],
     ["/locations", "/en/locations"],
     ["/blog", "/en/blog"],
-    ["/video/hero-bg-mobile", "/en/video/hero-bg-mobile"],
     ["/faq", "/en/faq"],
     ["/tarifs", "/en/tarifs"],
     ["/privacy", "/en/privacy"],
@@ -75,6 +75,7 @@ function buildAllRoutes(): RouteEntry[] {
   for (const svc of LOCATION_SERVICES) {
     for (const city of CITIES) {
       const slug = `${svc.slug}-${city.slug}`;
+      if (!isPriorityLocationSlug(slug)) continue;
       const frPath = `/location/${slug}`;
       const enPath = `/en/location/${slug}`;
       routes.push({ path: frPath, frPath, enPath });

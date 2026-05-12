@@ -25,6 +25,7 @@ import { join } from "path";
 // ---------------------------------------------------------------------------
 import { blogPosts, type RichParagraph } from "../src/data/blog.js";
 import { COMPARISON_PAGES } from "../src/data/comparisons.js";
+import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
 import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
@@ -115,6 +116,7 @@ function buildHtml(
     hreflangFr: string;
     hreflangEn: string;
     hreflangDefault: string;
+    robots?: string;
     /** Page-specific JSON-LD schemas to inject. Accepts a single object or array. */
     pageSchemas: object | object[] | null;
     /** Locale of this page; used to strip the French static SEO block on EN pages. */
@@ -204,6 +206,11 @@ function buildHtml(
     /<meta name="twitter:image" content="[^"]*"/,
     `<meta name="twitter:image" content="${opts.twitterImage}"`
   );
+
+  html = html.replace(/\s*<meta name="robots" content="[^"]*"\s*\/?>/g, "");
+  if (opts.robots) {
+    html = html.replace("</head>", `  <meta name="robots" content="${opts.robots}" />\n</head>`);
+  }
 
   // 15. hreflang links (replace all three at once via a block match)
   const hreflangBlock = [
@@ -841,6 +848,7 @@ function buildLocationRoutes(): RouteConfig[] {
   for (const svc of LOCATION_SERVICES) {
     for (const city of CITIES) {
       const slug = `${svc.slug}-${city.slug}`;
+      const isPriorityLocation = isPriorityLocationSlug(slug);
       const frPath = `/location/${slug}`;
       const enPath = `/en/location/${slug}`;
       const svcImage =
@@ -859,16 +867,20 @@ function buildLocationRoutes(): RouteConfig[] {
         description: fillLoc(svc.descFr, city, "fr"),
         ogImage: svcImage,
         twitterImage: svcImage,
+        robots: isPriorityLocation ? undefined : "noindex, follow",
+        includeInSitemap: isPriorityLocation,
         prerenderMainInner: buildLocationMainHtml("fr", svc, city),
-        pageSchemas: [
-          buildLocationServiceSchema("fr", svc, city, SITE_URL),
-          buildBreadcrumbSchema([
-            { name: frBc.home, url: `${SITE_URL}/` },
-            { name: frBc.services, url: `${SITE_URL}/services` },
-            { name: fillLoc(svc.h1Fr, city, "fr") },
-          ]),
-          buildLocationFaqSchema("fr", svc, city),
-        ],
+        pageSchemas: isPriorityLocation
+          ? [
+              buildLocationServiceSchema("fr", svc, city, SITE_URL),
+              buildBreadcrumbSchema([
+                { name: frBc.home, url: `${SITE_URL}/` },
+                { name: frBc.services, url: `${SITE_URL}/services` },
+                { name: fillLoc(svc.h1Fr, city, "fr") },
+              ]),
+              buildLocationFaqSchema("fr", svc, city),
+            ]
+          : null,
       });
       out.push({
         path: enPath,
@@ -879,16 +891,20 @@ function buildLocationRoutes(): RouteConfig[] {
         description: fillLoc(svc.descEn, city, "en"),
         ogImage: svcImage,
         twitterImage: svcImage,
+        robots: isPriorityLocation ? undefined : "noindex, follow",
+        includeInSitemap: isPriorityLocation,
         prerenderMainInner: buildLocationMainHtml("en", svc, city),
-        pageSchemas: [
-          buildLocationServiceSchema("en", svc, city, `${SITE_URL}/en`),
-          buildBreadcrumbSchema([
-            { name: enBc.home, url: `${SITE_URL}/` },
-            { name: enBc.services, url: `${SITE_URL}/en/services` },
-            { name: fillLoc(svc.h1En, city, "en") },
-          ]),
-          buildLocationFaqSchema("en", svc, city),
-        ],
+        pageSchemas: isPriorityLocation
+          ? [
+              buildLocationServiceSchema("en", svc, city, `${SITE_URL}/en`),
+              buildBreadcrumbSchema([
+                { name: enBc.home, url: `${SITE_URL}/` },
+                { name: enBc.services, url: `${SITE_URL}/en/services` },
+                { name: fillLoc(svc.h1En, city, "en") },
+              ]),
+              buildLocationFaqSchema("en", svc, city),
+            ]
+          : null,
       });
     }
   }
@@ -908,6 +924,8 @@ interface RouteConfig {
   description: string;
   ogImage?: string;
   twitterImage?: string;
+  robots?: string;
+  includeInSitemap?: boolean;
   pageSchemas: object | object[] | null;
   /** Page-specific noscript HTML to replace the homepage noscript block (homepage only; prefer prerenderMainInner elsewhere). */
   noscriptBody?: string;
@@ -1309,6 +1327,7 @@ function buildSitemap(routes: RouteConfig[]): void {
   const entries: string[] = [];
 
   for (const route of routes) {
+    if (route.includeInSitemap === false) continue;
     if (seen.has(route.path)) continue;
     seen.add(route.path);
 
@@ -1368,6 +1387,7 @@ async function main() {
       ogLocaleAlt: isEn ? "fr_CA" : "en_CA",
       ogImage: route.ogImage ?? DEFAULT_OG_IMAGE,
       twitterImage: route.twitterImage ?? DEFAULT_TWITTER_IMAGE,
+      robots: route.robots,
       hreflangFr: frCanonical,
       hreflangEn: enCanonical,
       hreflangDefault: frCanonical,
@@ -1392,6 +1412,7 @@ async function main() {
     ogLocaleAlt: "en_CA",
     ogImage: DEFAULT_OG_IMAGE,
     twitterImage: DEFAULT_TWITTER_IMAGE,
+    robots: rootRoute.robots,
     hreflangFr: `${SITE_URL}/`,
     hreflangEn: `${SITE_URL}/en/`,
     hreflangDefault: `${SITE_URL}/`,

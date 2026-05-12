@@ -26,8 +26,10 @@ export function getPathWithoutLocale(pathname: string): string {
 }
 
 export function addLocaleToPath(path: string, locale: Locale): string {
-  if (locale === "fr") return path;
-  const base = path === "/" ? "" : path;
+  const normalizedPath = path || "/";
+  const basePath = getPathWithoutLocale(normalizedPath) || "/";
+  if (locale === "fr") return basePath;
+  const base = basePath === "/" ? "" : basePath;
   return `${EN_PREFIX}${base}`;
 }
 
