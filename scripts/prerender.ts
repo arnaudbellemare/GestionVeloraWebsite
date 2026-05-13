@@ -225,10 +225,18 @@ function buildHtml(
 
   // 15a. Crawlable body copy inside #root (replaced on first React render).
   if (opts.prerenderMainInner) {
-    html = html.replace(
-      /<div id="root"><\/div>/,
-      `<div id="root">\n    ${opts.prerenderMainInner}\n    </div>`
-    );
+    const innerBlock = `\n    ${opts.prerenderMainInner}\n    `;
+    if (html.includes('id="root" data-gv-boot="pending"')) {
+      html = html.replace(
+        /<div id="root" data-gv-boot="pending">\s*<\/div>/,
+        `<div id="root" data-gv-boot="pending">${innerBlock}</div>`
+      );
+    } else {
+      html = html.replace(
+        /<div id="root"><\/div>/,
+        `<div id="root" data-gv-boot="pending">${innerBlock}</div>`
+      );
+    }
   }
 
   // 15b. Replace the homepage noscript SEO block: either JS-only hint when main is in #root,

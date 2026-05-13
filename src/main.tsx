@@ -17,8 +17,15 @@ if ("scrollRestoration" in history) {
  * to match the full client tree (Layout, motion, hooks, etc.). React would warn or fail hydration
  * if the DOM structures differ. Replacing the subtree is intentional “SEO shell → client takeover”.
  * True hydration would require the same components (or isomorphic output) for static and client.
+ *
+ * #root starts with data-gv-boot="pending" + CSS opacity:0 (index.html) so the prerender shell does not
+ * flash on hard refresh before JS paints the real app.
  */
-ReactDOM.createRoot(document.getElementById("root")!).render(
+const rootEl = document.getElementById("root")!;
+if (!rootEl.dataset.gvBoot) rootEl.dataset.gvBoot = "pending";
+
+const root = ReactDOM.createRoot(rootEl);
+root.render(
   <React.StrictMode>
     <ChunkErrorBoundary>
       <ThemeProvider>
@@ -29,3 +36,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </ChunkErrorBoundary>
   </React.StrictMode>
 );
+
+queueMicrotask(() => {
+  rootEl.dataset.gvBoot = "ready";
+});

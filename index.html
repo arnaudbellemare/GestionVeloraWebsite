@@ -14,6 +14,14 @@
     <script>
       (function(){var t=localStorage.getItem('gestion-velora-theme');document.documentElement.classList.add(t==='dark'?'dark':'light');})();
     </script>
+    <style id="gv-root-cloak">
+      /* Canvas matches ThemeContext / index.css so refresh is not a white flash */
+      html.light body { background-color: #f5f5f5; }
+      html.dark body { background-color: #000000; }
+      /* Prerender puts <main> in #root; hide until React mounts (avoids raw HTML flash on hard refresh) */
+      #root[data-gv-boot="pending"] { opacity: 0; }
+      #root[data-gv-boot="ready"] { opacity: 1; transition: opacity 0.14s ease-out; }
+    </style>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=12" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=12" />
     <link rel="icon" type="image/png" href="/favicon.png?v=12" />
@@ -355,7 +363,7 @@
     </noscript>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" data-gv-boot="pending"></div>
     <!-- Hidden form for Netlify form detection -->
     <form name="lead-capture" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="email" name="email" />
