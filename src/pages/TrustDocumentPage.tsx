@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { InternalLink } from "../components/InternalLink";
-import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
 import {
   getTrustPageLocale,
@@ -80,7 +79,7 @@ export function TrustDocumentPage() {
         >
           {t("privacy.backHome")}
         </InternalLink>
-        <ScrollReveal>
+        <div>
           <h1 className="font-sans font-medium text-4xl text-nd-display mb-8 tracking-[-0.02em]">{content.title}</h1>
           <div className="font-sans leading-relaxed space-y-10">
             {content.sections.map((section, si) => (
@@ -94,7 +93,7 @@ export function TrustDocumentPage() {
               </section>
             ))}
           </div>
-        </ScrollReveal>
+        </div>
       </div>
     </div>
   );

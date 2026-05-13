@@ -13,18 +13,21 @@ const EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 const pageVariants = {
   initial: {
     opacity: 0,
+    y: 10,
   },
   enter: {
     opacity: 1,
+    y: 0,
     transition: {
-      duration: 0.28,
+      duration: 0.34,
       ease: EASE,
     },
   },
   exit: {
     opacity: 0,
+    y: -6,
     transition: {
-      duration: 0.22,
+      duration: 0.2,
       ease: EASE,
     },
   },
@@ -35,7 +38,7 @@ export function Layout() {
   const currentOutlet = useOutlet();
 
   return (
-    <div className="min-h-screen bg-nd-canvas text-nd-primary overflow-hidden">
+    <div className="min-h-screen bg-nd-canvas text-nd-primary flex flex-col overflow-x-hidden">
       <PageMeta />
       <GtagPageView />
       <CanonicalUrl />
@@ -56,13 +59,12 @@ export function Layout() {
           initial="initial"
           animate="enter"
           exit="exit"
+          className="flex-1 flex flex-col w-full min-w-0 min-h-0"
         >
-          <main>
-            {currentOutlet}
-          </main>
-          <FooterSection />
+          <main className="flex-1 w-full min-w-0">{currentOutlet}</main>
         </motion.div>
       </AnimatePresence>
+      <FooterSection />
     </div>
   );
 }

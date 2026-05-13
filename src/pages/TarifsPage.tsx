@@ -203,7 +203,7 @@ export function TarifsPage() {
           ]}
         />
 
-        <ScrollReveal className="mb-16 mt-8">
+        <div className="mb-16 mt-8">
           <h1 className="font-playfair font-semibold text-[clamp(2.25rem,5vw,3.5rem)] leading-[1.08] tracking-[-0.02em] text-nd-display mb-4">
             {isEn ? "Transparent pricing for every property type" : "Tarifs transparents pour chaque type de bien"}
           </h1>
@@ -212,7 +212,7 @@ export function TarifsPage() {
               ? "All plans include onboarding, setup, and dedicated support. No hidden fees; pricing is based on the size and complexity of your mandate."
               : "Tous les forfaits incluent l'intégration, la configuration et un support dédié. Aucun frais caché; les tarifs dépendent de la taille et de la complexité de votre mandat."}
           </p>
-        </ScrollReveal>
+        </div>
 
         {/* Syndicat section */}
         <section className="mb-20">

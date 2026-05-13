@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { InternalLink } from "../components/InternalLink";
-import { ScrollReveal } from "../components/ScrollReveal";
 
 export function PrivacyPage() {
   const { t } = useTranslation();
@@ -10,7 +9,7 @@ export function PrivacyPage() {
         <InternalLink to="/" className="font-sans text-sm text-black/60 dark:text-white/60 hover:text-waabi-pink mb-8 inline-block">
           {t("privacy.backHome")}
         </InternalLink>
-        <ScrollReveal>
+        <div>
           <h1 className="font-sans font-medium text-4xl text-nd-display mb-8 tracking-[-0.02em]">
             {t("privacy.title")}
           </h1>
@@ -23,7 +22,7 @@ export function PrivacyPage() {
             <h2 id="privacy-contact" className="font-sans font-bold text-xl text-black dark:text-white mt-8">{t("privacy.contactTitle")}</h2>
             <p>{t("privacy.contactText")}</p>
           </div>
-        </ScrollReveal>
+        </div>
       </div>
     </div>
   );
