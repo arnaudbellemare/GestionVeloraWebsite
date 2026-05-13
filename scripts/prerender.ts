@@ -29,7 +29,12 @@ import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
 import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
-import { TRUST_PAGES } from "../src/data/trust-pages.js";
+import {
+  TRUST_PAGES,
+  getTrustPageLocale,
+  type TrustBlock,
+  type TrustPageId,
+} from "../src/data/trust-pages.js";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -721,6 +726,87 @@ function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
 </main>`;
 }
 
+function buildTarifsMainHtml(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  if (locale === "fr") {
+    return `<main lang="${lang}">
+  <h1>Tarifs de gestion immobilière à Montréal</h1>
+  <p>Tarifs transparents pour la gestion de syndicat de copropriété, la gestion locative et Airbnb à Montréal. Syndicat : en général 33 $ à 36 $ / unité / mois, jusqu'à 40 $ avec intégrations applicatives. Location : honoraires sur la base d'un mois de loyer. Sans frais cachés.</p>
+  <h2>Ce qui influence le tarif syndicat</h2>
+  <ul>
+    <li>Nombre d'unités et ampleur des parties communes.</li>
+    <li>Portail copropriétaires, intégrations comptables ou outils d'analyse.</li>
+    <li>Profondeur du mandat (AGA, fonds de prévoyance, projets majeurs).</li>
+  </ul>
+  <h2>Location longue durée</h2>
+  <p>Honoraires structurés autour d'un mois de loyer, selon portefeuille et services inclus.</p>
+  <h2>Airbnb et courte durée</h2>
+  <p>Forfait ou pourcentage des revenus bruts selon la charge opérationnelle et le calendrier de réservations.</p>
+</main>`;
+  }
+  return `<main lang="${lang}">
+  <h1>Property management fees in Montreal</h1>
+  <p>Transparent pricing for condo board, rental, and Airbnb management in Montreal. Condo boards: typically $33–$36/unit/month, up to $40 with app integrations. Rentals: fee structured as one month's rent. No hidden fees.</p>
+  <h2>What drives condo board pricing</h2>
+  <ul>
+    <li>Unit count and scope of common elements.</li>
+    <li>Owner portal, accounting integrations, or reporting depth.</li>
+    <li>Mandate breadth (AGMs, reserve studies, major projects).</li>
+  </ul>
+  <h2>Long-term rentals</h2>
+  <p>Fees anchored to one month's rent depending on portfolio size and included services.</p>
+  <h2>Airbnb and short-term</h2>
+  <p>Flat fee or gross-revenue share based on operational load and booking calendar.</p>
+</main>`;
+}
+
+function trustBlocksToPrerenderHtml(blocks: TrustBlock[], maxBlocks: number): string {
+  const parts: string[] = [];
+  let n = 0;
+  for (const b of blocks) {
+    if (n >= maxBlocks) break;
+    if (b.kind === "p") {
+      parts.push(`  <p>${escapeHtml(b.text.slice(0, 700))}</p>`);
+      n++;
+    } else if (b.kind === "ul") {
+      const lis = b.items
+        .slice(0, 8)
+        .map((item) => `    <li>${escapeHtml(item.slice(0, 320))}</li>`)
+        .join("\n");
+      parts.push(`  <ul>\n${lis}\n  </ul>`);
+      n++;
+    } else if (b.kind === "linkList") {
+      const lis = b.items
+        .slice(0, 10)
+        .map((it) => {
+          const suf = it.suffix ? escapeHtml(it.suffix) : "";
+          return `    <li><a href="${escapeHtml(it.href)}">${escapeHtml(it.label)}</a>${suf}</li>`;
+        })
+        .join("\n");
+      parts.push(`  <ul>\n${lis}\n  </ul>`);
+      n++;
+    }
+  }
+  return parts.join("\n");
+}
+
+function buildTrustDocumentMainHtml(locale: "fr" | "en", id: TrustPageId): string {
+  const page = getTrustPageLocale(id, locale);
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const sectionHtml = page.sections
+    .slice(0, 4)
+    .map((sec) => {
+      const inner = trustBlocksToPrerenderHtml(sec.blocks, 2);
+      return `  <h2>${escapeHtml(sec.heading)}</h2>\n${inner}`;
+    })
+    .join("\n");
+  return `<main lang="${lang}">
+  <h1>${escapeHtml(page.title)}</h1>
+  <p>${escapeHtml(page.metaDescription)}</p>
+${sectionHtml}
+</main>`;
+}
+
 function buildLocationServiceSchema(
   locale: "fr" | "en",
   svc: typeof LOCATION_SERVICES[0],
@@ -1013,6 +1099,7 @@ function buildTrustDocumentRoutes(): RouteConfig[] {
       title: fr.metaTitle,
       description: fr.metaDescription,
       pageSchemas: null,
+      prerenderMainInner: buildTrustDocumentMainHtml("fr", id),
     });
     out.push({
       path: enPath,
@@ -1022,6 +1109,7 @@ function buildTrustDocumentRoutes(): RouteConfig[] {
       title: en.metaTitle,
       description: en.metaDescription,
       pageSchemas: null,
+      prerenderMainInner: buildTrustDocumentMainHtml("en", id),
     });
   }
   return out;
@@ -1316,6 +1404,7 @@ function buildRoutes(): RouteConfig[] {
     description:
       "Tarifs transparents pour la gestion de syndicat de copropriété, gestion locative et Airbnb à Montréal. Syndicat : en général 33 $ à 36 $ / unité / mois, jusqu'à 40 $ avec intégrations applicatives. Location : honoraires sur la base d'un mois de loyer. Sans frais cachés.",
     pageSchemas: null,
+    prerenderMainInner: buildTarifsMainHtml("fr"),
   });
   routes.push({
     path: "/en/tarifs",
@@ -1326,6 +1415,7 @@ function buildRoutes(): RouteConfig[] {
     description:
       "Transparent pricing for condo board, rental, and Airbnb management in Montreal. Condo boards: typically $33–$36/unit/month, up to $40 with app integrations. Rentals: fee structured as one month's rent. No hidden fees.",
     pageSchemas: null,
+    prerenderMainInner: buildTarifsMainHtml("en"),
   });
 
   // --- Location pages (generated from CITIES × LOCATION_SERVICES × 2 languages) ---
