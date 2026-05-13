@@ -99,6 +99,7 @@ export const en = {
     allServices: "All services",
     allServicesDesc: "Overview: condo, Airbnb, and rentals.",
     insights: "Insights",
+    about: "About",
     contact: "Contact",
     login: "Log in",
     syndicat: "Condo management",
@@ -259,7 +260,8 @@ export const en = {
   // FAQ
   faq: {
     title: "Frequently asked questions",
-    subtitle: "Answers to the most common questions about property management in Montreal",
+    subtitle:
+      "Straight answers on Montreal residential real estate: condo boards, long-term rentals, and short-term stays.",
   },
   faqItems: [
     {

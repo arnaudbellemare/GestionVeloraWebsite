@@ -38,7 +38,6 @@ function buildAllRoutes(): RouteEntry[] {
     ["/compare", "/en/compare"],
     ["/locations", "/en/locations"],
     ["/blog", "/en/blog"],
-    ["/faq", "/en/faq"],
     ["/tarifs", "/en/tarifs"],
     ["/privacy", "/en/privacy"],
   ];

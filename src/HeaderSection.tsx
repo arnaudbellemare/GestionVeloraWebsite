@@ -128,6 +128,12 @@ export const HeaderSection = (): JSX.Element => {
             >
               {t("nav.insights")}
             </InternalLink>
+            <InternalLink
+              to="/about"
+              className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
+            >
+              {t("nav.about")}
+            </InternalLink>
           </nav>
           <button
             type="button"
@@ -219,6 +225,9 @@ export const HeaderSection = (): JSX.Element => {
           </div>
           <InternalLink to="/blog" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
             {t("nav.insights")}
+          </InternalLink>
+          <InternalLink to="/about" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+            {t("nav.about")}
           </InternalLink>
           <a href={contactHref} onClick={goToContact} className="font-sans text-[#E8E8E8] py-2">
             {t("nav.contact")}

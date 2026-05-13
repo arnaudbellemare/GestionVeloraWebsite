@@ -99,6 +99,7 @@ export const fr = {
     allServices: "Tous les services",
     allServicesDesc: "Vue d’ensemble : syndic, Airbnb et location.",
     insights: "Conseils",
+    about: "À propos",
     contact: "Contact",
     login: "Connexion",
     syndicat: "Syndicat de copropriété",
@@ -262,7 +263,8 @@ export const fr = {
   // FAQ
   faq: {
     title: "Questions fréquentes",
-    subtitle: "Réponses aux questions les plus posées sur la gestion immobilière à Montréal",
+    subtitle:
+      "Réponses aux questions les plus posées sur l'immobilier résidentiel à Montréal : copropriété, location et court séjour.",
   },
   faqItems: [
     {
@@ -271,9 +273,9 @@ export const fr = {
         "Gestion Velora est idéal pour les syndicats de copropriété, les hôtes Airbnb et les propriétaires locatifs à Montréal qui recherchent des rapports transparents, un support 24/7 et une maintenance proactive. Si vous cherchez l'une des meilleures entreprises de gestion immobilière, 98 % de taux d'occupation, transparence financière totale et processus éprouvés, nous sommes un choix adapté.",
     },
     {
-      question: "Qu'est-ce que la gestion de copropriété ?",
+      question: "Qu'est-ce que l'administration d'une copropriété ?",
       answer:
-        "La gestion de copropriété est l'administration des parties communes d'un immeuble en copropriété. Elle inclut la tenue des assemblées générales, la gestion du fonds de prévoyance, les budgets prévisionnels, la coordination des travaux et la communication avec les copropriétaires. Un syndic ou gestionnaire exécute les décisions du conseil d'administration.",
+        "L'administration d'une copropriété couvre les parties communes d'un immeuble en copropriété. Elle inclut la tenue des assemblées générales, la gestion du fonds de prévoyance, les budgets prévisionnels, la coordination des travaux et la communication avec les copropriétaires. Un syndic ou un gestionnaire exécute les décisions du conseil d'administration.",
     },
     {
       question: "Comment choisir un gestionnaire immobilier à Montréal ?",

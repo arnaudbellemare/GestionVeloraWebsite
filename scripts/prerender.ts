@@ -328,11 +328,15 @@ function getBreadcrumbLabels(locale: "fr" | "en") {
 // Schema builders
 // ---------------------------------------------------------------------------
 
-function buildFaqSchema(locale: "fr" | "en") {
+/** FAQPage JSON-LD for the homepage FAQ block (canonical URL + #faq; must match visible copy). */
+function buildHomepageFaqPageSchema(locale: "fr" | "en") {
+  const canonical = locale === "fr" ? `${SITE_URL}/` : `${SITE_URL}/en/`;
   const items = getFaqItems(locale);
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "@id": `${canonical}#faq`,
+    url: canonical,
     inLanguage: locale === "fr" ? "fr-CA" : "en-CA",
     mainEntity: items.map((item) => ({
       "@type": "Question",
@@ -568,6 +572,57 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   <h1>${escapeHtml(loc.title)}</h1>
   <p>${escapeHtml(loc.brief)}</p>
 ${sectionHtml}
+</main>`;
+}
+
+function buildHomepageMainHtml(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const t = locale === "fr" ? frRaw : enRaw;
+  const h1 =
+    locale === "fr"
+      ? "Gestion immobilière Montréal | Gestion Velora"
+      : "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
+  const lead =
+    locale === "fr"
+      ? "Gestion Velora accompagne syndicats de copropriété, propriétaires locatifs et hôtes Airbnb dans le Grand Montréal : rapports mensuels transparents, équipe joignable en tout temps et entretien planifié."
+      : "Gestion Velora supports condo boards, residential landlords, and Airbnb hosts across Greater Montreal with transparent monthly reports, round-the-clock availability, and planned maintenance.";
+  const svcTitle = locale === "fr" ? "Trois portes d'entrée" : "Three ways we help";
+  const svcLis =
+    locale === "fr"
+      ? [
+          "Syndicat de copropriété : administration, budget, fonds de prévoyance et parties communes.",
+          "Location longue durée : locataires, baux, perception des loyers et suivi d'entretien.",
+          "Location courte durée (Airbnb) : réservations, tarification, voyageurs et conformité municipale.",
+        ]
+      : [
+          "Condo boards: administration, budgeting, reserve funds, and common elements.",
+          "Long-term rentals: tenants, leases, rent collection, and maintenance follow-up.",
+          "Short-term stays (Airbnb): bookings, pricing, guest operations, and municipal compliance.",
+        ];
+  const faqTitle = t.faq.title as string;
+  const faqSub = t.faq.subtitle as string;
+  const items = t.faqItems as { question: string; answer: string }[];
+  const faqBlocks = items
+    .map(
+      (item) => `  <div>
+    <h3>${escapeHtml(item.question)}</h3>
+    <p>${escapeHtml(item.answer)}</p>
+  </div>`
+    )
+    .join("\n");
+  const svcUl = svcLis.map((line) => `    <li>${escapeHtml(line)}</li>`).join("\n");
+  return `<main lang="${lang}">
+  <h1>${escapeHtml(h1)}</h1>
+  <p>${escapeHtml(lead)}</p>
+  <h2>${escapeHtml(svcTitle)}</h2>
+  <ul>
+${svcUl}
+  </ul>
+  <section id="faq">
+  <h2>${escapeHtml(faqTitle)}</h2>
+  <p>${escapeHtml(faqSub)}</p>
+${faqBlocks}
+  </section>
 </main>`;
 }
 
@@ -983,9 +1038,8 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/",
     title: frHomeTitle,
     description: frHomeDesc,
-    // Homepage FAQPage is injected at runtime by SchemaOrg.tsx (single source of truth).
-    pageSchemas: null,
-    // homepage uses dedicated twitter-card, not og-image
+    pageSchemas: buildHomepageFaqPageSchema("fr"),
+    prerenderMainInner: buildHomepageMainHtml("fr"),
   });
   routes.push({
     path: "/en/",
@@ -994,8 +1048,8 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/",
     title: enHomeTitle,
     description: enHomeDesc,
-    // Homepage FAQPage is injected at runtime by SchemaOrg.tsx (single source of truth).
-    pageSchemas: null,
+    pageSchemas: buildHomepageFaqPageSchema("en"),
+    prerenderMainInner: buildHomepageMainHtml("en"),
   });
 
   // --- Services hub ---
@@ -1266,28 +1320,6 @@ function buildRoutes(): RouteConfig[] {
     pageSchemas: null,
   });
 
-  // --- FAQ ---
-  routes.push({
-    path: "/faq",
-    locale: "fr",
-    frPath: "/faq",
-    enPath: "/en/faq",
-    title: "FAQ gestion immobilière Montréal | Gestion Velora",
-    description:
-      "Réponses aux questions fréquentes sur la gestion de condo, syndicat de copropriété, location et Airbnb à Montréal.",
-    pageSchemas: buildFaqSchema("fr"),
-  });
-  routes.push({
-    path: "/en/faq",
-    locale: "en",
-    frPath: "/faq",
-    enPath: "/en/faq",
-    title: "Property Management FAQ Montreal | Gestion Velora",
-    description:
-      "Answers to the most common questions about condo management, condo boards, rental, and Airbnb in Montreal.",
-    pageSchemas: buildFaqSchema("en"),
-  });
-
   // --- Location pages (generated from CITIES × LOCATION_SERVICES × 2 languages) ---
   routes.push(...buildLocationRoutes());
 
@@ -1418,6 +1450,7 @@ async function main() {
     hreflangDefault: `${SITE_URL}/`,
     pageSchemas: rootRoute.pageSchemas,
     locale: "fr",
+    prerenderMainInner: rootRoute.prerenderMainInner,
   });
   writeFileSync(join(DIST, "index.html"), rootHtml, "utf-8");
   console.log("  ✓ / (dist/index.html updated)");

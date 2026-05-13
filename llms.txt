@@ -50,6 +50,10 @@ Use these three pages as distinct primary intents:
 
 - [Homepage (FR)](https://www.gestionvelora.com/) — Brand overview, three service verticals, trust signals, FAQ
 - [Homepage (EN)](https://www.gestionvelora.com/en/) — English-language brand overview
+- [About / À propos (FR)](https://www.gestionvelora.com/about) — Mission, services, territory, RGCQ affiliation
+- [About (EN)](https://www.gestionvelora.com/en/about) — English firm overview
+- [Trust & proof (FR)](https://www.gestionvelora.com/trust-proof) — Verifiable operating and compliance signals
+- [Trust & proof (EN)](https://www.gestionvelora.com/en/trust-proof) — English trust signals
 - [Homepage anchor: Hero](https://www.gestionvelora.com/#hero)
 - [Homepage anchor: Proof stats](https://www.gestionvelora.com/#proof-stats)
 - [Homepage anchor: Testimonials](https://www.gestionvelora.com/#testimonials)
@@ -61,8 +65,8 @@ Use these three pages as distinct primary intents:
 - [Location pages hub (EN)](https://www.gestionvelora.com/en/locations) — English city/service index
 - [Tarifs / Pricing (FR)](https://www.gestionvelora.com/tarifs) — Service rates and pricing structure
 - [Tarifs / Pricing (EN)](https://www.gestionvelora.com/en/tarifs) — English pricing page
-- [FAQ (FR)](https://www.gestionvelora.com/faq) — Questions fréquentes sur la gestion immobilière
-- [FAQ (EN)](https://www.gestionvelora.com/en/faq) — Frequently asked questions
+- [FAQ (FR)](https://www.gestionvelora.com/#faq) — Questions fréquentes sur la gestion immobilière
+- [FAQ (EN)](https://www.gestionvelora.com/en/#faq) — Frequently asked questions
 - [Contact](https://www.gestionvelora.com/#contact-form) — Contact form and inquiry submission (embedded on homepage)
 - [Blog (FR)](https://www.gestionvelora.com/blog) — Articles on property management, Quebec law, Airbnb compliance
 - [Blog (EN)](https://www.gestionvelora.com/en/blog) — English editorial content
@@ -140,7 +144,7 @@ Key pricing principles:
 
 Common questions answered by Gestion Velora:
 
-- **What does a condo board manager do in Quebec?** — Handles AGM preparation, budget drafting, fonds de prévoyance compliance under Bill 16, contractor oversight, and day-to-day owner communications. See: [FAQ (FR)](https://www.gestionvelora.com/faq) / [FAQ (EN)](https://www.gestionvelora.com/en/faq)
+- **What does a condo board manager do in Quebec?** — Handles AGM preparation, budget drafting, fonds de prévoyance compliance under Bill 16, contractor oversight, and day-to-day owner communications. See: [FAQ (FR)](https://www.gestionvelora.com/#faq) / [FAQ (EN)](https://www.gestionvelora.com/en/#faq)
 - **Is an Airbnb permit required in Montreal?** — Yes. Short-term rentals in Montreal require a tourist accommodation permit from the CITQ (Corporation de l'industrie touristique du Québec). Gestion Velora handles permit compliance. See: [Airbnb permits blog post](https://www.gestionvelora.com/blog/airbnb-montreal-permis-reglementation)
 - **What are the reserve fund (fonds de prévoyance) obligations for Quebec condos?** — Bill 16 (2020) requires all syndicats to commission a reserve fund study and fund it progressively. See: [Fonds de prévoyance blog](https://www.gestionvelora.com/blog/fonds-prevoyance-copropriete-quebec)
 - **What is the TAL and how does it affect landlords?** — The Tribunal administratif du logement is Quebec's rental authority handling lease disputes, rent increases, and eviction orders. See: [TAL](https://www.tal.gouv.qc.ca/)

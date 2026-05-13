@@ -42,7 +42,7 @@ export const FooterSection = (): JSX.Element => {
     { label: t("footer.process"), to: "/#process" },
     { label: t("footer.testimonials"), to: "/#testimonials" },
     { label: t("footer.portailsSection"), to: "/#portails" },
-    { label: t("footer.faq"), to: "/faq" },
+    { label: t("footer.faq"), to: "/#faq" },
     { label: t("footer.tarifs"), to: "/tarifs" },
     { label: t("footer.insights"), to: "/blog" },
     { label: t("footer.contactLink"), to: "/#contact-form" },

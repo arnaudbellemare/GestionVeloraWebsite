@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToHash } from "./components/ScrollToHash";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { TransitionProvider } from "./context/TransitionContext";
@@ -13,7 +13,6 @@ const CompareIndexPage = lazy(() =>
   import("./pages/CompareIndexPage").then((m) => ({ default: m.CompareIndexPage })),
 );
 const ComparisonPage = lazy(() => import("./pages/ComparisonPage").then((m) => ({ default: m.ComparisonPage })));
-const FaqPage = lazy(() => import("./pages/FaqPage").then((m) => ({ default: m.FaqPage })));
 const LocationPage = lazy(() => import("./pages/LocationPage").then((m) => ({ default: m.LocationPage })));
 const LocationsIndexPage = lazy(() =>
   import("./pages/LocationsIndexPage").then((m) => ({ default: m.LocationsIndexPage })),
@@ -124,14 +123,7 @@ function App() {
                     </Suspense>
                   }
                 />
-                <Route
-                  path="faq"
-                  element={
-                    <Suspense fallback={<RouteFallback />}>
-                      <FaqPage />
-                    </Suspense>
-                  }
-                />
+                <Route path="faq" element={<Navigate to="/#faq" replace />} />
                 <Route
                   path="tarifs"
                   element={
@@ -263,14 +255,7 @@ function App() {
                     </Suspense>
                   }
                 />
-                <Route
-                  path="faq"
-                  element={
-                    <Suspense fallback={<RouteFallback />}>
-                      <FaqPage />
-                    </Suspense>
-                  }
-                />
+                <Route path="faq" element={<Navigate to="/en/#faq" replace />} />
                 <Route
                   path="tarifs"
                   element={

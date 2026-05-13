@@ -201,9 +201,11 @@ export function SchemaOrg() {
       };
     }
 
-    // ── FAQ page ───────────────────────────────────────────────────────────
-    const isFaqPage = path === "/faq" || path === "/en/faq" || path === "/en/faq/";
-    if (isFaqPage) {
+    // ── Homepage FAQ (same URL as visible FAQSection; canonical + #faq) ───
+    const isHome =
+      path === "/" || path === "/en" || path === "/en/" || path === "";
+    if (isHome) {
+      const canonical = isEn ? `${SITE_URL}/en/` : `${SITE_URL}/`;
       const faqItems = t("faqItems", { returnObjects: true }) as Array<{
         question: string;
         answer: string;
@@ -211,6 +213,9 @@ export function SchemaOrg() {
       injectSchema({
         "@context": "https://schema.org",
         "@type": "FAQPage",
+        "@id": `${canonical}#faq`,
+        url: canonical,
+        inLanguage: isEn ? "en-CA" : "fr-CA",
         mainEntity: faqItems.map((item) => ({
           "@type": "Question",
           name: item.question,

@@ -35,7 +35,7 @@
     },
     {
       "id": "location_detail_sample",
-      "note": "Sample only; full matrix is large—see audit GEO-SCALE-001",
+      "note": "Sample only; full matrix is large\u2014see audit GEO-SCALE-001",
       "fr": "https://www.gestionvelora.com/location/syndicat-copropriete-montreal",
       "en": "https://www.gestionvelora.com/en/location/syndicat-copropriete-montreal"
     },
@@ -51,8 +51,9 @@
     },
     {
       "id": "faq",
-      "fr": "https://www.gestionvelora.com/faq",
-      "en": "https://www.gestionvelora.com/en/faq"
+      "fr": "https://www.gestionvelora.com/#faq",
+      "en": "https://www.gestionvelora.com/en/#faq",
+      "note": "FAQ UI + FAQPage JSON-LD are on the homepage at this fragment."
     },
     {
       "id": "tarifs",
