@@ -48,8 +48,8 @@ export function TarifsPage() {
     ? [
         {
           name: "Essential",
-          priceNote: "From $40 / unit / month",
-          description: "Core condo board administration for small buildings (up to 12 units).",
+          priceNote: "Typically $33–$36 / unit / month",
+          description: "Core condo board administration for small buildings (up to 12 units). Final pricing depends on mandate specifics.",
           features: [
             "Annual general assembly",
             "Monthly financial reports",
@@ -60,10 +60,11 @@ export function TarifsPage() {
         },
         {
           name: "Standard",
-          priceNote: "From $55 / unit / month",
-          description: "Full administration with reserve fund management for mid-size buildings.",
+          priceNote: "Up to $40 / unit / month with app integrations",
+          description: "Full administration with reserve fund management for mid-size buildings, including portals and operational tooling.",
           features: [
             "Everything in Essential",
+            "App & portal integrations (pricing up to $40/unit/month)",
             "Reserve fund management (Loi 141)",
             "Major work coordination",
             "Owner portal access",
@@ -89,8 +90,8 @@ export function TarifsPage() {
     : [
         {
           name: "Essentiel",
-          priceNote: "À partir de 40 $ / unité / mois",
-          description: "Administration de base pour petits syndicats (jusqu'à 12 unités).",
+          priceNote: "Généralement 33 $ à 36 $ / unité / mois",
+          description: "Administration de base pour petits syndicats (jusqu'à 12 unités). Montant selon les spécificités du mandat.",
           features: [
             "Assemblée générale annuelle",
             "Rapports financiers mensuels",
@@ -101,10 +102,11 @@ export function TarifsPage() {
         },
         {
           name: "Standard",
-          priceNote: "À partir de 55 $ / unité / mois",
-          description: "Administration complète avec gestion du fonds de prévoyance pour immeubles de taille moyenne.",
+          priceNote: "Jusqu'à 40 $ / unité / mois avec intégrations applicatives",
+          description: "Administration complète avec portails et outils applicatifs, et gestion du fonds de prévoyance pour immeubles de taille moyenne.",
           features: [
             "Tout ce qui est inclus dans Essentiel",
+            "Intégrations applicatives et portails (jusqu'à 40 $ / unité / mois)",
             "Gestion du fonds de prévoyance (Loi 141)",
             "Coordination des travaux majeurs",
             "Accès au portail copropriétaires",
@@ -132,8 +134,8 @@ export function TarifsPage() {
     ? [
         {
           name: "Basic",
-          priceNote: "8% of gross rents",
-          description: "Rental collection and tenant communications for hands-off landlords.",
+          priceNote: "One month's rent",
+          description: "Rent collection and tenant communications. Our fee is structured as one month's gross rent under the mandate terms.",
           features: [
             "Tenant screening",
             "Rent collection",
@@ -144,8 +146,8 @@ export function TarifsPage() {
         },
         {
           name: "Full Service",
-          priceNote: "10–12% of gross rents",
-          description: "End-to-end rental management including leasing and maintenance.",
+          priceNote: "One month's rent",
+          description: "End-to-end rental management including leasing and maintenance, for the same one-month-rent fee structure with broader service scope.",
           features: [
             "Everything in Basic",
             "Lease drafting and renewals",
@@ -160,8 +162,8 @@ export function TarifsPage() {
     : [
         {
           name: "Base",
-          priceNote: "8 % des loyers bruts",
-          description: "Collecte des loyers et communications avec les locataires.",
+          priceNote: "Honoraires : 1 mois de loyer",
+          description: "Collecte des loyers et communications avec les locataires. Rémunération équivalente à un mois de loyer brut, selon modalités du mandat.",
           features: [
             "Sélection des locataires",
             "Collecte des loyers",
@@ -172,8 +174,8 @@ export function TarifsPage() {
         },
         {
           name: "Complet",
-          priceNote: "10–12 % des loyers bruts",
-          description: "Gestion locative complète incluant mise en location et maintenance.",
+          priceNote: "Honoraires : 1 mois de loyer",
+          description: "Gestion locative complète incluant mise en location et maintenance. Même principe (un mois de loyer), périmètre de services élargi.",
           features: [
             "Tout ce qui est inclus dans Base",
             "Rédaction et renouvellement des baux",
@@ -218,8 +220,10 @@ export function TarifsPage() {
             <h2 id="pricing-condo-board" className="font-sans font-semibold text-2xl lg:text-3xl text-nd-display tracking-[-0.015em]">
               {isEn ? "Condo board management" : "Gestion de syndicat de copropriété"}
             </h2>
-            <p className="font-sans text-nd-secondary mt-2">
-              {isEn ? "Per unit per month, minimum 6-unit buildings." : "Par unité par mois, immeubles de 6 unités minimum."}
+            <p className="font-sans text-nd-secondary mt-2 max-w-3xl">
+              {isEn
+                ? "Per unit per month, minimum 6-unit buildings. Typical range is $33–$36 per unit depending on mandate specifics; packages with app and portal integrations can go up to $40."
+                : "Par unité par mois, immeubles de 6 unités minimum. Fourchette habituelle : 33 $ à 36 $ / unité selon les spécificités du mandat ; avec intégrations applicatives (portails, outils), jusqu'à 40 $ / unité / mois."}
             </p>
           </ScrollReveal>
           <div className="grid sm:grid-cols-3 gap-6">
@@ -271,8 +275,10 @@ export function TarifsPage() {
             <h2 id="pricing-rental-management" className="font-sans font-semibold text-2xl lg:text-3xl text-nd-display tracking-[-0.015em]">
               {isEn ? "Rental management" : "Gestion locative longue durée"}
             </h2>
-            <p className="font-sans text-nd-secondary mt-2">
-              {isEn ? "Percentage of collected rents." : "Pourcentage des loyers perçus."}
+            <p className="font-sans text-nd-secondary mt-2 max-w-3xl">
+              {isEn
+                ? "Fees are structured as one month’s gross rent under the mandate (not a percentage of each month’s collections)."
+                : "Honoraires calibrés sur un mois de loyer brut (forfait lié au mandat), et non sur un pourcentage mensuel des loyers perçus."}
             </p>
           </ScrollReveal>
           <div className="grid sm:grid-cols-2 gap-6 max-w-2xl">

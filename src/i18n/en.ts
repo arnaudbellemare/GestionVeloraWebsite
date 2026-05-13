@@ -763,7 +763,7 @@ export const en = {
         },
         {
           q: "How much does condo management cost in Montreal?",
-          a: "Condo management fees vary by building size and required services. At Gestion Velora, plans for condo boards start at $40/unit/month for small buildings. Contact us for a personalized quote.",
+          a: "Condo management fees vary by building size and required services. At Gestion Velora, condo board packages typically run $33–$36/unit/month depending on the mandate, up to $40/unit with app integrations. Long-term rental fees are structured as one month's rent. Contact us for a personalized quote.",
         },
         {
           q: "Is my condo too small to hire a professional manager?",

@@ -1306,7 +1306,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/tarifs",
     title: "Tarifs de gestion immobilière à Montréal | Gestion Velora",
     description:
-      "Tarifs transparents pour la gestion de syndicat de copropriété, gestion locative et Airbnb à Montréal. À partir de 40 $/unité/mois. Sans frais cachés.",
+      "Tarifs transparents pour la gestion de syndicat de copropriété, gestion locative et Airbnb à Montréal. Syndicat : en général 33 $ à 36 $ / unité / mois, jusqu'à 40 $ avec intégrations applicatives. Location : honoraires sur la base d'un mois de loyer. Sans frais cachés.",
     pageSchemas: null,
   });
   routes.push({
@@ -1316,7 +1316,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/tarifs",
     title: "Property Management Fees Montreal | Gestion Velora",
     description:
-      "Transparent pricing for condo board management, rental management, and Airbnb management in Montreal. Starting at $40/unit/month. No hidden fees.",
+      "Transparent pricing for condo board, rental, and Airbnb management in Montreal. Condo boards: typically $33–$36/unit/month, up to $40 with app integrations. Rentals: fee structured as one month's rent. No hidden fees.",
     pageSchemas: null,
   });
 

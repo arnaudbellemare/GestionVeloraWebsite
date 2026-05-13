@@ -766,7 +766,7 @@ export const fr = {
         },
         {
           q: "Combien coûte la gestion d'un condo à Montréal ?",
-          a: "Les frais de gestion de condo varient selon la taille de l'immeuble et les services requis. Chez Gestion Velora, les forfaits pour syndicats de copropriété commencent à partir de 40 $/unité/mois pour les petits immeubles. Contactez-nous pour une soumission personnalisée.",
+          a: "Les frais de gestion de condo varient selon la taille de l'immeuble et les services requis. Chez Gestion Velora, les syndicats se situent en général entre 33 $ et 36 $ / unité / mois selon le mandat, jusqu'à 40 $ / unité avec intégrations applicatives. Pour la location longue durée, les honoraires suivent une structure d'un mois de loyer. Contactez-nous pour une soumission personnalisée.",
         },
         {
           q: "Mon condo est-il trop petit pour faire appel à un gestionnaire professionnel ?",
