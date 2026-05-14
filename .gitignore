@@ -32,3 +32,10 @@ geo-fixes/
 velora-fixes/
 velora-fixes-v2/
 vertical/
+
+# Analysis artifacts and Claude docs
+claudedocs/
+.memoire/
+GITHUB-ACTION-PLAN.md
+GITHUB-SEO-REPORT.md
+geo-track-report.html
