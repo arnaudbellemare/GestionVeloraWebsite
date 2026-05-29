@@ -44,6 +44,7 @@ const SERVICE_WEIGHTS: Record<string, number> = {
   "syndicat-copropriete": 10,
   "gestion-locative": 9,
   "gestion-airbnb": 8,
+  "conformite-loi-16": 8,
   "gestion-immobiliere-commerciale": 6,
 };
 
@@ -52,22 +53,22 @@ const INTENTS_BY_SERVICE: Record<string, Intent[]> = {
     {
       key: "gestion-complete",
       weight: 10,
-      keywordFr: "gestion copropriete complete {city}",
-      keywordEn: "full condo management {city}",
+      keywordFr: "gestion de copropriété {city}",
+      keywordEn: "condo management {city}",
       source: "solutioncondo",
     },
     {
-      key: "petites-coproprietes",
+      key: "gestionnaire-copropriete",
       weight: 8,
-      keywordFr: "gestion petites coproprietes {city}",
-      keywordEn: "small condo association management {city}",
+      keywordFr: "gestionnaire de copropriété {city}",
+      keywordEn: "condo property manager {city}",
       source: "both",
     },
     {
       key: "loi-16-141",
       weight: 9,
-      keywordFr: "gestion copropriete loi 16 loi 141 {city}",
-      keywordEn: "condo law 16 141 compliance management {city}",
+      keywordFr: "gestion copropriété loi 16 {city}",
+      keywordEn: "condo bill 16 compliance management {city}",
       source: "both",
     },
     {
@@ -122,6 +123,29 @@ const INTENTS_BY_SERVICE: Record<string, Intent[]> = {
       keywordFr: "optimisation revenus airbnb {city}",
       keywordEn: "airbnb revenue optimization {city}",
       source: "solutioncondo",
+    },
+  ],
+  "conformite-loi-16": [
+    {
+      key: "loi-16-carnet-entretien",
+      weight: 9,
+      keywordFr: "conformité loi 16 copropriété {city}",
+      keywordEn: "bill 16 condo compliance {city}",
+      source: "both",
+    },
+    {
+      key: "fonds-prevoyance",
+      weight: 8,
+      keywordFr: "fonds de prévoyance copropriété {city}",
+      keywordEn: "condo reserve fund study {city}",
+      source: "both",
+    },
+    {
+      key: "carnet-entretien",
+      weight: 8,
+      keywordFr: "carnet d'entretien copropriété {city}",
+      keywordEn: "condo maintenance logbook {city}",
+      source: "both",
     },
   ],
   "gestion-immobiliere-commerciale": [

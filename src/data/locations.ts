@@ -170,16 +170,16 @@ export const LOCATION_SERVICES: LocationService[] = [
     serviceSlug: "syndicat-copropriete",
     nameFr: "Syndicat de copropriété",
     nameEn: "Condo board management",
-    h1Fr: "Gestion de syndicat de copropriété à {city}",
-    h1En: "Condo board management in {city}",
-    titleTmplFr: "Syndicat de copropriété à {city}",
-    titleTmplEn: "Condo board management in {city}",
+    h1Fr: "Gestion de copropriété à {city} pour syndicat",
+    h1En: "Condo management in {city} for condo boards",
+    titleTmplFr: "Gestion de copropriété à {city}",
+    titleTmplEn: "Condo management in {city}",
     descFr:
       "Gestion Velora, firme de gestion de copropriété à {city}, assure une gestion complète et humaine de votre syndicat de copropriétaires : gestion administrative et financière, assemblée générale annuelle (AGA), budget annuel, charges communes, fonds de prévoyance, registre de copropriété, entretien des parties communes, conformité Loi 141 et accompagnement d'urgence 24/7.",
     descEn:
       "Gestion Velora, a condo management firm serving {city}, provides complete and human-centered condo board administration: financial and administrative operations, annual general meeting (AGM), annual budget, common fees, reserve fund, condo register, common-area maintenance, Loi 141 compliance, and 24/7 emergency support.",
-    keywordFr: "gestion syndicat copropriété {city}",
-    keywordEn: "condo board management {city}",
+    keywordFr: "gestion de copropriété {city}",
+    keywordEn: "condo management {city}",
   },
   {
     slug: "gestion-locative",

@@ -6,9 +6,9 @@ Sources used: `laucandrique.ca` and `solutioncondo.com` service/sitemap patterns
 
 | Intent | Source | FR keyword pattern | EN keyword pattern |
 |---|---|---|---|
-| gestion-complete | solutioncondo | `gestion copropriete complete {city}` | `full condo management {city}` |
-| petites-coproprietes | both | `gestion petites coproprietes {city}` | `small condo association management {city}` |
-| loi-16-141 | both | `gestion copropriete loi 16 loi 141 {city}` | `condo law 16 141 compliance management {city}` |
+| gestion-complete | solutioncondo | `gestion de copropriété {city}` | `condo management {city}` |
+| gestionnaire-copropriete | both | `gestionnaire de copropriété {city}` | `condo property manager {city}` |
+| loi-16-141 | both | `gestion copropriété loi 16 {city}` | `condo bill 16 compliance management {city}` |
 | urgence-24-7 | laucandrique | `urgence copropriete 24-7 {city}` | `24-7 condo emergency support {city}` |
 
 ## Gestion locative (gestion-locative)
@@ -26,6 +26,14 @@ Sources used: `laucandrique.ca` and `solutioncondo.com` service/sitemap patterns
 | location-courte-duree | both | `gestion location courte duree {city}` | `short-term rental management {city}` |
 | conformite-reglementaire | both | `conformite location courte duree {city}` | `short-term rental compliance {city}` |
 | optimisation-revenus | solutioncondo | `optimisation revenus airbnb {city}` | `airbnb revenue optimization {city}` |
+
+## Conformité Loi 16 (conformite-loi-16)
+
+| Intent | Source | FR keyword pattern | EN keyword pattern |
+|---|---|---|---|
+| loi-16-carnet-entretien | both | `conformité loi 16 copropriété {city}` | `bill 16 condo compliance {city}` |
+| fonds-prevoyance | both | `fonds de prévoyance copropriété {city}` | `condo reserve fund study {city}` |
+| carnet-entretien | both | `carnet d'entretien copropriété {city}` | `condo maintenance logbook {city}` |
 
 ## Gestion immobilière commerciale (gestion-immobiliere-commerciale)
 
