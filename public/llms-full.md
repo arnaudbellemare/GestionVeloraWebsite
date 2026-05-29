@@ -119,13 +119,12 @@ Complete landlord-side management of residential leases. Covers:
 
 Gestion Velora grounds its content in the following authoritative sources:
 
-- [Quebec — Copropriété](https://www.quebec.ca/habitation-et-logement/copropriete) — Provincial co-ownership guidance
+- [Quebec — Copropriété](https://www.quebec.ca/habitation-territoire/achat-vente/condos-coproprietes) — Provincial co-ownership guidance
 - [Quebec — Hébergement touristique](https://www.quebec.ca/tourisme-et-loisirs/hebergement-touristique) — Tourist accommodation regulation
-- [Ville de Montréal — Résidences de tourisme](https://montreal.ca/articles/residences-de-tourisme-16210) — Montreal short-term rental rules
+- [Ville de Montréal — Hébergement touristique](https://montreal.ca/sujets/hebergement-touristique-court-terme) — Montreal short-term rental rules
 - [Tribunal administratif du logement (TAL)](https://www.tal.gouv.qc.ca/) — Quebec tenancy tribunal
 - [CMHC / SCHL](https://www.cmhc-schl.gc.ca/) — Canada Mortgage and Housing Corporation
 - [Statistics Canada](https://www150.statcan.gc.ca/) — Housing and demographic statistics
-- [Registre des entreprises du Québec](https://www.registreentreprises.gouv.qc.ca/) — Quebec business registry
 
 ---
 

@@ -99,9 +99,9 @@ Gestion Velora offers three core property management services in Montreal, Quebe
 Contact: info@gestionvelora.com | +1-514-777-1731
 
 ## Public reference sources
-- Quebec condo framework: https://www.quebec.ca/habitation-et-logement/copropriete
+- Quebec condo framework: https://www.quebec.ca/habitation-territoire/achat-vente/condos-coproprietes
 - Quebec tourist accommodation: https://www.quebec.ca/tourisme-et-loisirs/hebergement-touristique
-- Montreal short-term rental rules: https://montreal.ca/articles/residences-de-tourisme-16210
+- Montreal short-term rental rules: https://montreal.ca/sujets/hebergement-touristique-court-terme
 - TAL rental framework: https://www.tal.gouv.qc.ca/
 
 ## Conversion CTAs

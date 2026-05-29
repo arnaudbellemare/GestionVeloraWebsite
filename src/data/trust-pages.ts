@@ -440,7 +440,7 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
                   label: "Québec — Hébergement touristique",
                   href: "https://www.quebec.ca/tourisme-loisirs-sport/hebergement-touristique",
                 },
-                { label: "CITQ", href: "https://www.cithq.org/" },
+                { label: "CITQ", href: "https://www.citq.qc.ca/fr/" },
               ],
             },
           ],
@@ -529,9 +529,9 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
               items: [
                 {
                   label: "Quebec — Tourist accommodation",
-                  href: "https://www.quebec.ca/en/tourism-and-recreation/tourist-accommodation",
+                  href: "https://www.quebec.ca/tourisme-et-loisirs/hebergement-touristique",
                 },
-                { label: "CITQ", href: "https://www.cithq.org/" },
+                { label: "CITQ", href: "https://www.citq.qc.ca/en/" },
               ],
             },
           ],

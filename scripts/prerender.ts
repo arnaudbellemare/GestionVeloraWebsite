@@ -320,7 +320,7 @@ function writeRoute(routePath: string, html: string) {
 // ---------------------------------------------------------------------------
 function getService(locale: "fr" | "en", slug: string) {
   const t = locale === "fr" ? frRaw : enRaw;
-  const s = (t.services as Record<string, { title: string; description: string }>)[slug];
+  const s = (t.services as Record<string, { title: string; description: string; subtitle?: string; offerings?: { title: string; items: string[]; detailItems?: string[] }[] }>)[slug];
   return s;
 }
 
@@ -646,27 +646,37 @@ ${faqBlocks}
 
 function buildServicesHubMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const serviceSlugs = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"];
+  const serviceLinks = serviceSlugs
+    .map((slug) => {
+      const svc = getService(locale, slug);
+      const href = locale === "fr" ? `/services/${slug}` : `/en/services/${slug}`;
+      return `    <li><a href="${href}">${escapeHtml(svc.title)}</a> — ${escapeHtml(svc.description)}</li>`;
+    })
+    .join("\n");
   if (locale === "fr") {
     return `<main lang="${lang}">
   <h1>Services de gestion immobilière à Montréal</h1>
-  <p>Gestion Velora propose trois services distincts a Montreal : syndicat de copropriete, gestion Airbnb et gestion locative longue duree.</p>
+  <p>Gestion Velora propose des services structurés pour les syndicats de copropriété, les propriétaires locatifs, les hôtes Airbnb et les immeubles qui nécessitent une gouvernance plus serrée. Chaque mandat combine coordination terrain, suivi administratif, reporting financier et communication transparente avec les parties prenantes.</p>
+  <p>Notre objectif est de réduire les urgences non planifiées, clarifier les responsabilités et donner aux propriétaires une vue mensuelle sur les décisions, les risques et les coûts. Les services peuvent être utilisés séparément ou combinés selon le portefeuille immobilier.</p>
   <h2>Nos services specialises</h2>
   <ul>
-    <li>Syndicat de copropriete : gouvernance, budget, fonds de prevoyance et conformite.</li>
-    <li>Gestion Airbnb : operations quotidiennes, tarification et experience voyageurs.</li>
-    <li>Gestion locative : selection des locataires, loyers, maintenance et suivis TAL.</li>
+${serviceLinks}
   </ul>
+  <h2>Ce que chaque mandat inclut</h2>
+  <p>Les mandats Gestion Velora couvrent la priorisation des demandes, la coordination fournisseurs, les communications clés, la surveillance des échéances et la production de rapports clairs. Pour les copropriétés, l'accent porte sur la gouvernance et la conformité. Pour les locations, l'accent porte sur l'occupation, les revenus et l'expérience résident.</p>
 </main>`;
   }
   return `<main lang="${lang}">
   <h1>Property management services in Montreal</h1>
-  <p>Gestion Velora provides three focused services in Montreal: condo board management, Airbnb operations, and long-term rental management.</p>
+  <p>Gestion Velora provides structured property management services for condo boards, residential landlords, Airbnb hosts, and buildings that need tighter operating governance. Each mandate combines field coordination, administrative follow-up, financial reporting, and clear stakeholder communication.</p>
+  <p>The goal is to reduce unplanned emergencies, clarify ownership of tasks, and give property owners a monthly view of decisions, risks, and costs. Services can be used separately or combined across a broader portfolio.</p>
   <h2>Our service lines</h2>
   <ul>
-    <li>Condo boards: governance, budgeting, reserve fund, and compliance.</li>
-    <li>Airbnb: daily operations, pricing strategy, and guest experience.</li>
-    <li>Long-term rentals: tenant screening, rent collection, and maintenance workflows.</li>
+${serviceLinks}
   </ul>
+  <h2>What each mandate includes</h2>
+  <p>Gestion Velora mandates cover request triage, vendor coordination, key communications, deadline monitoring, and clear reporting. For condo boards, the emphasis is governance and compliance. For rentals, the emphasis is occupancy, revenue continuity, and resident experience.</p>
 </main>`;
 }
 
@@ -722,12 +732,111 @@ ${sectionsHtml}
 </main>`;
 }
 
+function buildCompareIndexMainHtml(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const links = COMPARISON_PAGES.map((page) => {
+    const href = locale === "fr" ? `/compare/${page.slug}` : `/en/compare/${page.slug}`;
+    const title = locale === "fr" ? page.titleFr : page.titleEn;
+    const desc = locale === "fr" ? page.descriptionFr : page.descriptionEn;
+    return `    <li><a href="${href}">${escapeHtml(title)}</a> — ${escapeHtml(desc)}</li>`;
+  }).join("\n");
+  if (locale === "fr") {
+    return `<main lang="${lang}">
+  <h1>Guides comparatifs en gestion immobilière</h1>
+  <p>Ces guides aident les copropriétaires, conseils d'administration et propriétaires locatifs à choisir entre plusieurs modes de gestion. Chaque comparaison présente les coûts, les risques, la charge opérationnelle, la qualité de service et les situations où une solution devient plus pertinente qu'une autre.</p>
+  <p>Les décisions en gestion immobilière ne sont pas seulement financières. Elles touchent la conformité, la disponibilité des bénévoles ou propriétaires, la rapidité de réponse aux incidents et la capacité à maintenir une documentation claire.</p>
+  <h2>Comparatifs disponibles</h2>
+  <ul>
+${links}
+  </ul>
+</main>`;
+  }
+  return `<main lang="${lang}">
+  <h1>Property management comparison guides</h1>
+  <p>These guides help condo owners, boards, and landlords compare different management models. Each comparison explains cost, risk, operating workload, service quality, and the situations where one option becomes more relevant than another.</p>
+  <p>Property management decisions are not only financial. They affect compliance, owner or volunteer availability, incident response speed, and the ability to maintain clear documentation over time.</p>
+  <h2>Available comparisons</h2>
+  <ul>
+${links}
+  </ul>
+</main>`;
+}
+
 function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
   const svc = getService(locale, slug);
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const offeringHtml = (svc.offerings ?? [])
+    .slice(0, 4)
+    .map((offering) => {
+      const items = [...(offering.detailItems ?? []), ...(offering.items ?? [])].slice(0, 6);
+      const lis = items.map((item) => `    <li>${escapeHtml(item)}</li>`).join("\n");
+      return `  <h2>${escapeHtml(offering.title)}</h2>\n  <ul>\n${lis}\n  </ul>`;
+    })
+    .join("\n");
+  const serviceLinks =
+    locale === "fr"
+      ? `<p>Pour comparer ce mandat avec les autres options, consultez aussi <a href="/services">tous les services</a>, <a href="/tarifs">les tarifs</a> et <a href="/blog">les articles de gestion immobilière</a>.</p>`
+      : `<p>To compare this mandate with other options, see <a href="/en/services">all services</a>, <a href="/en/tarifs">pricing</a>, and <a href="/en/blog">property management articles</a>.</p>`;
   return `<main lang="${lang}">
   <h1>${escapeHtml(svc.title)}</h1>
+  ${svc.subtitle ? `<p>${escapeHtml(svc.subtitle)}</p>` : ""}
   <p>${escapeHtml(svc.description)}</p>
+${offeringHtml}
+${serviceLinks}
+</main>`;
+}
+
+function buildLocationsIndexMainHtml(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const priority = LOCATION_SERVICES.flatMap((service) =>
+    CITIES.map((city) => ({ service, city, slug: `${service.slug}-${city.slug}` }))
+  ).filter((entry) => isPriorityLocationSlug(entry.slug));
+  const links = priority.slice(0, 80).map(({ service, city, slug }) => {
+    const href = locale === "fr" ? `/location/${slug}` : `/en/location/${slug}`;
+    const label = locale === "fr"
+      ? `${service.nameFr} à ${city.nameFr}`
+      : `${service.nameEn} in ${city.nameEn}`;
+    return `    <li><a href="${href}">${escapeHtml(label)}</a></li>`;
+  }).join("\n");
+  if (locale === "fr") {
+    return `<main lang="${lang}">
+  <h1>Gestion immobilière par ville dans le Grand Montréal</h1>
+  <p>Gestion Velora dessert les copropriétés, propriétaires locatifs et hôtes Airbnb dans les principaux secteurs du Grand Montréal. Les pages locales regroupent les services prioritaires par ville afin de clarifier le type de mandat offert et les enjeux opérationnels propres au secteur.</p>
+  <p>Chaque page locale relie une ville à un besoin concret : administration de syndicat, gestion locative, gestion Airbnb, conformité Loi 16 ou gestion commerciale. Les pages les plus importantes sont indexées dans le sitemap et reliées depuis ce hub pour éviter les pages isolées.</p>
+  <h2>Pages locales prioritaires</h2>
+  <ul>
+${links}
+  </ul>
+</main>`;
+  }
+  return `<main lang="${lang}">
+  <h1>Property management by city in Greater Montreal</h1>
+  <p>Gestion Velora serves condo boards, landlords, and Airbnb hosts across key Greater Montreal areas. Local pages connect each city with the most relevant service mandate and explain the operating context for that area.</p>
+  <p>Each local page links a city to a concrete need: condo board administration, rental management, Airbnb operations, Bill 16 compliance, or commercial property management. Priority pages are included in the sitemap and linked from this hub to avoid isolated URLs.</p>
+  <h2>Priority local pages</h2>
+  <ul>
+${links}
+  </ul>
+</main>`;
+}
+
+function buildPrivacyMainHtml(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  if (locale === "fr") {
+    return `<main lang="${lang}">
+  <h1>Politique de confidentialité</h1>
+  <p>Gestion Velora recueille uniquement les renseignements nécessaires pour répondre aux demandes de gestion immobilière, préparer une soumission, planifier un appel ou assurer le suivi d'une relation client. Les renseignements peuvent inclure le nom, l'adresse courriel, le numéro de téléphone, le type d'immeuble, la ville et les détails fournis volontairement dans un formulaire.</p>
+  <p>Les données ne sont pas vendues. Elles sont utilisées pour communiquer avec la personne qui a fait la demande, évaluer le mandat potentiel, améliorer les opérations internes et respecter les obligations applicables. Les outils techniques du site peuvent aussi générer des données d'analyse agrégées pour comprendre la performance des pages.</p>
+  <h2>Vos choix</h2>
+  <p>Vous pouvez demander l'accès, la correction ou la suppression de vos renseignements en communiquant avec Gestion Velora. Les demandes sont traitées selon le contexte opérationnel et les obligations de conservation applicables.</p>
+</main>`;
+  }
+  return `<main lang="${lang}">
+  <h1>Privacy policy</h1>
+  <p>Gestion Velora collects only the information needed to respond to property management inquiries, prepare a quote, schedule a call, or maintain a client relationship. Information may include name, email address, phone number, property type, city, and details voluntarily provided through a form.</p>
+  <p>Data is not sold. It is used to communicate with the person who submitted the request, evaluate a potential mandate, improve internal operations, and comply with applicable obligations. Technical tools on the site may also generate aggregated analytics data to understand page performance.</p>
+  <h2>Your choices</h2>
+  <p>You may request access, correction, or deletion of your information by contacting Gestion Velora. Requests are handled according to the operating context and applicable retention requirements.</p>
 </main>`;
 }
 
@@ -1236,6 +1345,7 @@ function buildRoutes(): RouteConfig[] {
     title: "Guides comparatifs en gestion immobiliere | Gestion Velora",
     description:
       "Comparatifs clairs entre les principaux modeles de gestion immobiliere a Montreal: autogestion, gestion professionnelle, location courte et longue duree.",
+    prerenderMainInner: buildCompareIndexMainHtml("fr"),
     pageSchemas: null,
   });
   routes.push({
@@ -1246,6 +1356,7 @@ function buildRoutes(): RouteConfig[] {
     title: "Property Management Comparison Guides | Gestion Velora",
     description:
       "Side-by-side comparisons of key property management models in Montreal for condo boards, landlords, and investors.",
+    prerenderMainInner: buildCompareIndexMainHtml("en"),
     pageSchemas: null,
   });
 
@@ -1282,6 +1393,7 @@ function buildRoutes(): RouteConfig[] {
     title: "Pages locales gestion immobiliere | Gestion Velora",
     description:
       "Pages locales de gestion immobiliere par ville du Grand Montreal: copropriete, location et Airbnb.",
+    prerenderMainInner: buildLocationsIndexMainHtml("fr"),
     pageSchemas: null,
   });
   routes.push({
@@ -1292,6 +1404,7 @@ function buildRoutes(): RouteConfig[] {
     title: "City Property Management Pages | Gestion Velora",
     description:
       "Local property management pages by city across Greater Montreal for condo boards, rentals, and Airbnb operations.",
+    prerenderMainInner: buildLocationsIndexMainHtml("en"),
     pageSchemas: null,
   });
 
@@ -1387,6 +1500,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/privacy",
     title: "Politique de confidentialité | Gestion Velora",
     description: frHomeDesc,
+    prerenderMainInner: buildPrivacyMainHtml("fr"),
     pageSchemas: null,
   });
   routes.push({
@@ -1396,6 +1510,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/privacy",
     title: "Privacy Policy | Gestion Velora",
     description: enHomeDesc,
+    prerenderMainInner: buildPrivacyMainHtml("en"),
     pageSchemas: null,
   });
 

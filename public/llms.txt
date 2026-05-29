@@ -145,13 +145,12 @@ Common questions answered by Gestion Velora:
 
 ## External reference sources
 
-- [Quebec - Copropriete](https://www.quebec.ca/habitation-et-logement/copropriete) — Official provincial co-ownership guidance
+- [Quebec - Copropriete](https://www.quebec.ca/habitation-territoire/achat-vente/condos-coproprietes) — Official provincial co-ownership guidance
 - [Quebec - Hebergement touristique](https://www.quebec.ca/tourisme-et-loisirs/hebergement-touristique) — Tourist accommodation regulation
-- [Ville de Montreal - Residences de tourisme](https://montreal.ca/articles/residences-de-tourisme-16210) — Montreal short-term rental rules
+- [Ville de Montreal - Hebergement touristique](https://montreal.ca/sujets/hebergement-touristique-court-terme) — Montreal short-term rental rules
 - [Tribunal administratif du logement](https://www.tal.gouv.qc.ca/) — Quebec tenancy tribunal (primary authority for landlord-tenant disputes)
 - [CMHC / SCHL](https://www.cmhc-schl.gc.ca/) — Canada Mortgage and Housing Corporation data
 - [Statistics Canada](https://www150.statcan.gc.ca/) — Housing and demographic statistics
-- [Registre des entreprises du Quebec](https://www.registreentreprises.gouv.qc.ca/) — Quebec business registry
 
 ## Optional
 
