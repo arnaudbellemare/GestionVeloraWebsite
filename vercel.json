@@ -44,135 +44,135 @@
     },
     {
       "source": "/en",
-      "destination": "/index.html"
+      "destination": "/en/index.html"
     },
     {
       "source": "/services",
-      "destination": "/index.html"
+      "destination": "/services/index.html"
     },
     {
       "source": "/services/:slug",
-      "destination": "/index.html"
+      "destination": "/services/:slug/index.html"
     },
     {
       "source": "/en/services",
-      "destination": "/index.html"
+      "destination": "/en/services/index.html"
     },
     {
       "source": "/en/services/:slug",
-      "destination": "/index.html"
+      "destination": "/en/services/:slug/index.html"
     },
     {
       "source": "/compare",
-      "destination": "/index.html"
+      "destination": "/compare/index.html"
     },
     {
       "source": "/compare/:slug",
-      "destination": "/index.html"
+      "destination": "/compare/:slug/index.html"
     },
     {
       "source": "/en/compare",
-      "destination": "/index.html"
+      "destination": "/en/compare/index.html"
     },
     {
       "source": "/en/compare/:slug",
-      "destination": "/index.html"
+      "destination": "/en/compare/:slug/index.html"
     },
     {
       "source": "/locations",
-      "destination": "/index.html"
+      "destination": "/locations/index.html"
     },
     {
       "source": "/location/:slug",
-      "destination": "/index.html"
+      "destination": "/location/:slug/index.html"
     },
     {
       "source": "/en/locations",
-      "destination": "/index.html"
+      "destination": "/en/locations/index.html"
     },
     {
       "source": "/en/location/:slug",
-      "destination": "/index.html"
+      "destination": "/en/location/:slug/index.html"
     },
     {
       "source": "/blog",
-      "destination": "/index.html"
+      "destination": "/blog/index.html"
     },
     {
       "source": "/blog/:slug",
-      "destination": "/index.html"
+      "destination": "/blog/:slug/index.html"
     },
     {
       "source": "/en/blog",
-      "destination": "/index.html"
+      "destination": "/en/blog/index.html"
     },
     {
       "source": "/en/blog/:slug",
-      "destination": "/index.html"
+      "destination": "/en/blog/:slug/index.html"
     },
     {
       "source": "/video/:slug",
-      "destination": "/index.html"
+      "destination": "/video/:slug/index.html"
     },
     {
       "source": "/en/video/:slug",
-      "destination": "/index.html"
+      "destination": "/en/video/:slug/index.html"
     },
     {
       "source": "/tarifs",
-      "destination": "/index.html"
+      "destination": "/tarifs/index.html"
     },
     {
       "source": "/en/tarifs",
-      "destination": "/index.html"
+      "destination": "/en/tarifs/index.html"
     },
     {
       "source": "/privacy",
-      "destination": "/index.html"
+      "destination": "/privacy/index.html"
     },
     {
       "source": "/en/privacy",
-      "destination": "/index.html"
+      "destination": "/en/privacy/index.html"
     },
     {
       "source": "/about",
-      "destination": "/index.html"
+      "destination": "/about/index.html"
     },
     {
       "source": "/editorial-policy",
-      "destination": "/index.html"
+      "destination": "/editorial-policy/index.html"
     },
     {
       "source": "/sources",
-      "destination": "/index.html"
+      "destination": "/sources/index.html"
     },
     {
       "source": "/methodology",
-      "destination": "/index.html"
+      "destination": "/methodology/index.html"
     },
     {
       "source": "/trust-proof",
-      "destination": "/index.html"
+      "destination": "/trust-proof/index.html"
     },
     {
       "source": "/en/about",
-      "destination": "/index.html"
+      "destination": "/en/about/index.html"
     },
     {
       "source": "/en/editorial-policy",
-      "destination": "/index.html"
+      "destination": "/en/editorial-policy/index.html"
     },
     {
       "source": "/en/sources",
-      "destination": "/index.html"
+      "destination": "/en/sources/index.html"
     },
     {
       "source": "/en/methodology",
-      "destination": "/index.html"
+      "destination": "/en/methodology/index.html"
     },
     {
       "source": "/en/trust-proof",
-      "destination": "/index.html"
+      "destination": "/en/trust-proof/index.html"
     }
   ]
 }

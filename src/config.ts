@@ -12,20 +12,11 @@ export const PUBLISHER_LOGO_URL = `${SITE_URL}/logo.png?v=10` as const;
 /** Article `author` in JSON-LD (Person). */
 export const ARTICLE_AUTHOR_NAME = "Arnaud Bellemare";
 export const ARTICLE_AUTHOR_URL = `${SITE_URL}/about`;
-export const ARTICLE_AUTHOR_LINKEDIN = "https://ca.linkedin.com/in/arnaud-bellemare-125934372";
 
 /** Brand entity URLs used in JSON-LD `sameAs`. */
-export const ORGANIZATION_SAME_AS = [
-  SITE_URL,
-  `${SITE_URL}/en/`,
-  "https://ca.linkedin.com/in/gestion-velora-48684b399",
-  "https://www.registreentreprises.gouv.qc.ca/",
-] as const;
+export const ORGANIZATION_SAME_AS = [] as const;
 
-export const ARTICLE_AUTHOR_SAME_AS = [
-  "https://ca.linkedin.com/in/arnaud-bellemare-125934372",
-  SITE_URL,
-] as const;
+export const ARTICLE_AUTHOR_SAME_AS = [] as const;
 
 /** Default social cards for pages without dedicated assets. */
 export const DEFAULT_OG_IMAGE: string = `${SITE_URL}/og-image.png`;

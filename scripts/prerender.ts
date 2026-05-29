@@ -266,12 +266,17 @@ function buildHtml(
   // 16. Inject page-specific JSON-LD schemas (right before </head>)
   if (opts.pageSchemas) {
     const schemas = Array.isArray(opts.pageSchemas) ? opts.pageSchemas : [opts.pageSchemas];
-    const schemaTags = schemas
-      .map(
-        (schema) =>
-          `  <script type="application/ld+json">\n  ${JSON.stringify(schema, null, 2)}\n  </script>\n`
-      )
-      .join("");
+    const pageSchema =
+      schemas.length === 1
+        ? schemas[0]
+        : {
+            "@context": "https://schema.org",
+            "@graph": schemas.map((schema) => {
+              const { "@context": _ctx, ...rest } = schema as Record<string, unknown>;
+              return rest;
+            }),
+          };
+    const schemaTags = `  <script id="schema-org-page" type="application/ld+json">\n  ${JSON.stringify(pageSchema, null, 2)}\n  </script>\n`;
     html = html.replace("</head>", `${schemaTags}</head>`);
   }
 
