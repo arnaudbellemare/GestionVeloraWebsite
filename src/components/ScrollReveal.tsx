@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, ReactNode } from "react";
+import { useEffect, useRef, useState, ReactNode } from "react";
 
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
@@ -24,7 +24,15 @@ export function ScrollReveal({
   scale = false,
 }: ScrollRevealProps) {
   const ref = useRef(null);
+  const [canObserve, setCanObserve] = useState(true);
   const isInView = useInView(ref, { once: true, amount, margin: "120px 0px 120px 0px" });
+  const isVisible = isInView || !canObserve;
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && !("IntersectionObserver" in window)) {
+      setCanObserve(false);
+    }
+  }, []);
 
   const directions = {
     up: { y: 14, x: 0 },
@@ -45,7 +53,7 @@ export function ScrollReveal({
         scale: scale ? 0.98 : 1,
       }}
       animate={
-        isInView
+        isVisible
           ? { opacity: 1, y: 0, x: 0, scale: 1 }
           : { opacity: 0, y, x, scale: scale ? 0.98 : 1 }
       }

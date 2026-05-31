@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
 
 export function FAQSection() {
@@ -29,14 +29,16 @@ export function FAQSection() {
         <div className="space-y-3">
           {faqItems.map((item, i) => (
             <ScrollReveal key={item.question} delay={i * 0.05}>
-              <div
+              <details
+                open={open === i}
+                onToggle={(event) => {
+                  const isOpen = event.currentTarget.open;
+                  setOpen(isOpen ? i : open === i ? null : open);
+                }}
                 className="rounded-xl border border-black/10 dark:border-white/10 overflow-hidden bg-white dark:bg-white/[0.02]"
               >
-                <button
-                  type="button"
-                  onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full px-6 py-5 flex items-center justify-between gap-4 text-left hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
-                  aria-expanded={open === i}
+                <summary
+                  className="w-full px-6 py-5 flex cursor-pointer list-none items-center justify-between gap-4 text-left hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors [&::-webkit-details-marker]:hidden"
                 >
                   <span className="font-sans font-semibold text-base lg:text-lg text-black dark:text-white">
                     {item.question}
@@ -51,23 +53,11 @@ export function FAQSection() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </motion.span>
-                </button>
-                <AnimatePresence initial={false}>
-                  {open === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-6 pb-5 pt-0 font-sans text-base text-black/80 dark:text-white/80 leading-relaxed">
-                        {item.answer}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                </summary>
+                <p className="px-6 pb-5 pt-0 font-sans text-base text-black/80 dark:text-white/80 leading-relaxed">
+                  {item.answer}
+                </p>
+              </details>
             </ScrollReveal>
           ))}
         </div>

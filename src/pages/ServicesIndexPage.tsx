@@ -59,8 +59,9 @@ export function ServicesIndexPage() {
                     style={{ objectPosition: "center 30%" }}
                     width={1600}
                     height={1000}
-                    loading="lazy"
+                    loading={i < 3 ? "eager" : "lazy"}
                     decoding="async"
+                    fetchPriority={i === 0 ? "high" : "auto"}
                   />
                 </div>
                 <div className="p-6 lg:p-8 flex flex-col flex-1">

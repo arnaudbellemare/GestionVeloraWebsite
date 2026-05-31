@@ -17,8 +17,8 @@ if ("scrollRestoration" in history) {
  * if the DOM structures differ. Replacing the subtree is intentional “SEO shell → client takeover”.
  * True hydration would require the same components (or isomorphic output) for static and client.
  *
- * #root starts with data-gv-boot="pending" + CSS opacity:0 (index.html) so the prerender shell does not
- * flash on hard refresh before JS paints the real app.
+ * #root starts with data-gv-boot="pending" + hidden prerender children (index.html) so
+ * the SEO shell does not flash on hard refresh before JS paints the real app.
  */
 const rootEl = document.getElementById("root")!;
 if (!rootEl.dataset.gvBoot) rootEl.dataset.gvBoot = "pending";

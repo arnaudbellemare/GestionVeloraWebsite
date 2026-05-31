@@ -1,39 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
 
-const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop.mp4";
-const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile.mp4";
+const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
+const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-fast.mp4";
+const HERO_POSTER = "/hero-gestion-velora-1200.webp";
 
 export function HeroSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [loadVideo, setLoadVideo] = useState(false);
-
-  useEffect(() => {
-    if (!loadVideo) return;
-    videoRef.current?.load();
-  }, [loadVideo]);
-
-  useEffect(() => {
-    if (loadVideo) return;
-
-    const startVideo = () => setLoadVideo(true);
-    const timeoutId = setTimeout(startVideo, 6500);
-    const events = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
-    events.forEach((eventName) => {
-      window.addEventListener(eventName, startVideo, { once: true, passive: true });
-    });
-
-    return () => {
-      clearTimeout(timeoutId);
-      events.forEach((eventName) => {
-        window.removeEventListener(eventName, startVideo);
-      });
-    };
-  }, [loadVideo]);
 
   return (
     <section
@@ -42,22 +17,18 @@ export function HeroSection() {
       aria-label="Hero"
     >
       <video
-        ref={videoRef}
         autoPlay
         loop
         muted
         playsInline
-        preload="none"
+        preload="auto"
+        poster={HERO_POSTER}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ backgroundColor: "#000" }}
         aria-hidden
       >
-        {loadVideo ? (
-          <>
-            <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
-            <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
-          </>
-        ) : null}
+        <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
+        <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
       </video>
       <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
 

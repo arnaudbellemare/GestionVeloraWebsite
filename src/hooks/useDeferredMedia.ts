@@ -41,6 +41,11 @@ export function useLoadWhenInView(
     const el = ref.current;
     if (!el) return;
 
+    if (typeof IntersectionObserver === "undefined") {
+      setLoad(true);
+      return;
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {

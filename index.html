@@ -11,52 +11,20 @@
       /* Canvas matches ThemeContext / index.css so refresh is not a white flash */
       html.light body { background-color: #f5f5f5; }
       html.dark body { background-color: #000000; }
-      /* Prerender puts crawlable <main> in #root during build; paint it immediately for FCP/LCP. */
-      #root[data-gv-boot="pending"]:not(:empty) {
+      /* Prerender puts crawlable <main> in #root during build; keep it from flashing before React paints. */
+      #root[data-gv-boot="pending"] {
         min-height: 100vh;
-        background: #050505;
-        color: #ffffff;
-      }
-      #root[data-gv-boot="pending"]:not(:empty) > main {
-        min-height: 100vh;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 1.1rem;
-        padding: clamp(6rem, 12vw, 10rem) clamp(1.5rem, 6vw, 6rem) 4rem;
         background:
-          linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.72)),
-          radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.1), transparent 34%),
+          linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.62)),
+          url("/hero-gestion-velora-1200.webp") center / cover no-repeat,
           #050505;
-        font-family: "Space Grotesk", "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        overflow: hidden;
       }
-      #root[data-gv-boot="pending"]:not(:empty) h1 {
-        max-width: 13ch;
-        margin: 0;
-        color: #ffffff;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(2.45rem, 7vw, 4.75rem);
-        font-weight: 600;
-        line-height: 1.05;
-        letter-spacing: 0;
-      }
-      #root[data-gv-boot="pending"]:not(:empty) p {
-        max-width: 60ch;
-        margin: 0;
-        color: rgba(255, 255, 255, 0.78);
-        font-size: clamp(1rem, 2vw, 1.15rem);
-        line-height: 1.65;
-      }
-      #root[data-gv-boot="pending"]:not(:empty) h2,
-      #root[data-gv-boot="pending"]:not(:empty) h3,
-      #root[data-gv-boot="pending"]:not(:empty) ul,
-      #root[data-gv-boot="pending"]:not(:empty) section {
-        max-width: 64rem;
-      }
-      #root[data-gv-boot="pending"]:not(:empty) a { color: #ffffff; }
-      #root[data-gv-boot="ready"] { opacity: 1; }
+      #root[data-gv-boot="pending"] > * { visibility: hidden; }
+      #root[data-gv-boot="ready"] { min-height: 100vh; }
+      #root[data-gv-boot="ready"] > * { visibility: visible; }
     </style>
+    <link rel="preload" as="image" href="/hero-gestion-velora-1200.webp" fetchpriority="high" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=12" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=12" />
     <link rel="icon" type="image/png" href="/favicon.png?v=12" />

@@ -620,6 +620,15 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   const faqTitle = t.faq.title as string;
   const faqSub = t.faq.subtitle as string;
   const items = t.faqItems as { question: string; answer: string }[];
+  const insightsTitle = locale === "fr" ? "Articles recents" : "Recent insights";
+  const insightLinks = blogPosts
+    .slice(0, 4)
+    .map((post) => {
+      const loc = post[locale];
+      const href = locale === "fr" ? `/blog/${post.slug}` : `/en/blog/${post.slug}`;
+      return `    <li><a href="${href}">${escapeHtml(loc.title)}</a> — ${escapeHtml(loc.excerpt)}</li>`;
+    })
+    .join("\n");
   const faqBlocks = items
     .map(
       (item) => `  <div>
@@ -636,6 +645,12 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   <ul>
 ${svcUl}
   </ul>
+  <section id="articles-recents">
+  <h2>${escapeHtml(insightsTitle)}</h2>
+  <ul>
+${insightLinks}
+  </ul>
+  </section>
   <section id="faq">
   <h2>${escapeHtml(faqTitle)}</h2>
   <p>${escapeHtml(faqSub)}</p>

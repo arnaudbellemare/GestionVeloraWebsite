@@ -58,8 +58,9 @@ export function BlogPage() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     width={1200}
                     height={900}
-                    loading="lazy"
+                    loading={i < 3 ? "eager" : "lazy"}
                     decoding="async"
+                    fetchPriority={i === 0 ? "high" : "auto"}
                   />
                 </div>
                 <div className="p-6">
