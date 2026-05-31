@@ -23,6 +23,8 @@ export interface LocationService {
   titleTmplEn: string;
   descFr: string;
   descEn: string;
+  metaDescFr?: string;
+  metaDescEn?: string;
   keywordFr: string;
   keywordEn: string;
 }
@@ -178,6 +180,10 @@ export const LOCATION_SERVICES: LocationService[] = [
       "Gestion Velora, firme de gestion de copropriété à {city}, assure une gestion complète et humaine de votre syndicat de copropriétaires : gestion administrative et financière, assemblée générale annuelle (AGA), budget annuel, charges communes, fonds de prévoyance, registre de copropriété, entretien des parties communes, conformité Loi 141 et accompagnement d'urgence 24/7.",
     descEn:
       "Gestion Velora, a condo management firm serving {city}, provides complete and human-centered condo board administration: financial and administrative operations, annual general meeting (AGM), annual budget, common fees, reserve fund, condo register, common-area maintenance, Loi 141 compliance, and 24/7 emergency support.",
+    metaDescFr:
+      "Gestion de copropriété à {city} pour syndicats : budget, AGA, fonds de prévoyance, registre, entretien et conformité Loi 141.",
+    metaDescEn:
+      "Condo management in {city} for boards: budgets, AGMs, reserve funds, maintenance, condo register, and Loi 141 compliance.",
     keywordFr: "gestion de copropriété {city}",
     keywordEn: "condo management {city}",
   },
@@ -194,6 +200,10 @@ export const LOCATION_SERVICES: LocationService[] = [
       "Gestion Velora prend en charge la gestion locative complète de vos immeubles à {city} : sélection des locataires, rédaction des baux, suivi des loyers, entretien, coordination fournisseurs et rapports mensuels transparents.",
     descEn:
       "Gestion Velora delivers complete rental property management in {city}: tenant screening, lease administration, rent collection, maintenance coordination, vendor follow-up, and transparent monthly reporting.",
+    metaDescFr:
+      "Gestion locative à {city} : sélection des locataires, baux, loyers, entretien, fournisseurs et rapports mensuels clairs.",
+    metaDescEn:
+      "Rental management in {city}: tenant screening, leases, rent collection, maintenance, vendors, and clear monthly reports.",
     keywordFr: "gestion locative {city}",
     keywordEn: "rental management {city}",
   },
@@ -210,6 +220,10 @@ export const LOCATION_SERVICES: LocationService[] = [
       "Gestion Velora gère vos locations courte durée à {city} avec une approche proactive : annonces, réservations, accueil des voyageurs, ménage, maintenance, optimisation des revenus et conformité réglementaire.",
     descEn:
       "Gestion Velora manages your short-term rentals in {city} with a proactive approach: listings, bookings, guest operations, cleaning, maintenance, revenue optimization, and regulatory compliance.",
+    metaDescFr:
+      "Gestion Airbnb à {city} : annonces, réservations, voyageurs, ménage, maintenance, revenus et conformité courte durée.",
+    metaDescEn:
+      "Airbnb management in {city}: listings, bookings, guests, cleaning, maintenance, revenue optimization, and compliance.",
     keywordFr: "gestion Airbnb {city}",
     keywordEn: "Airbnb management {city}",
   },
@@ -226,6 +240,10 @@ export const LOCATION_SERVICES: LocationService[] = [
       "Gestion Velora accompagne les syndicats de copropriété à {city} dans leur mise en conformité avec la Loi 16 : réalisation du carnet d'entretien, étude du fonds de prévoyance, registre de copropriété, attestation lors de vente d'unité et respect des délais réglementaires prévus jusqu'en 2027.",
     descEn:
       "Gestion Velora helps condo boards in {city} achieve full Bill 16 compliance: building maintenance logbook, reserve fund study, condo register, unit sale attestation, and adherence to all regulatory deadlines through 2027.",
+    metaDescFr:
+      "Conformité Loi 16 à {city} : carnet d'entretien, fonds de prévoyance, registre de copropriété et échéances réglementaires.",
+    metaDescEn:
+      "Bill 16 compliance in {city}: maintenance logbook, reserve fund study, condo register, attestations, and regulatory deadlines.",
     keywordFr: "conformité loi 16 {city}",
     keywordEn: "bill 16 compliance {city}",
   },
@@ -242,6 +260,10 @@ export const LOCATION_SERVICES: LocationService[] = [
       "Gestion Velora accompagne les propriétaires d'immeubles commerciaux à {city} : gestion des baux commerciaux, entretien, relations locataires, contrôle des charges, et optimisation durable du rendement.",
     descEn:
       "Gestion Velora supports commercial property owners in {city}: lease management, maintenance, tenant relations, operating-cost control, and long-term yield optimization.",
+    metaDescFr:
+      "Gestion commerciale à {city} : baux, entretien, relations locataires, contrôle des charges et rendement durable.",
+    metaDescEn:
+      "Commercial property management in {city}: leases, maintenance, tenant relations, cost control, and long-term yield.",
     keywordFr: "gestion immobilière commerciale {city}",
     keywordEn: "commercial property management {city}",
   },
@@ -294,8 +316,8 @@ export function resolveLocation(slug: string): ResolvedLocation | null {
           descEn: fill(svc.descEn, city),
           metaTitleFr: buildMetaTitle(fill(svc.titleTmplFr, city)),
           metaTitleEn: buildMetaTitle(fill(svc.titleTmplEn, city)),
-          metaDescFr: fill(svc.descFr, city),
-          metaDescEn: fill(svc.descEn, city),
+          metaDescFr: fill(svc.metaDescFr ?? svc.descFr, city),
+          metaDescEn: fill(svc.metaDescEn ?? svc.descEn, city),
         };
       }
     }

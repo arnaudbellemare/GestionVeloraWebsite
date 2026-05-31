@@ -88,7 +88,7 @@ export function PageMeta() {
     : "Gestion immobilière Montréal | Gestion Velora";
   const baseDesc = isEn
     ? "Montreal property operations for condo boards, short-term rentals, and long-term rentals. Transparent reporting, 24/7 support, and proactive maintenance."
-    : "Gestion Velora : gestion complète de copropriétés, locations longue durée et Airbnb à Montréal. Transparence totale, rapports mensuels et tranquillité garantie pour les propriétaires.";
+    : "Gestion immobilière à Montréal pour copropriétés, locations longue durée et Airbnb. Rapports clairs, soutien 24/7 et entretien proactif.";
 
   useEffect(() => {
     document.documentElement.lang = isEn ? "en-CA" : "fr-CA";
@@ -132,7 +132,7 @@ export function PageMeta() {
               : "Blog gestion immobilière Montréal | Conseils & actualités",
             description: isEn
               ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
-              : "Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité. Par l’équipe Gestion Velora.",
+              : "Conseils sur la gestion immobilière à Montréal : copropriété, Airbnb, location, réglementation, entretien et rentabilité.",
             ogImage: DEFAULT_OG_IMAGE,
             twitterImage: DEFAULT_TWITTER_IMAGE,
             url,
@@ -195,7 +195,7 @@ export function PageMeta() {
         : "Blog gestion immobilière Montréal | Conseils & actualités";
       description = isEn
         ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
-        : "Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité. Par l’équipe Gestion Velora.";
+        : "Conseils sur la gestion immobilière à Montréal : copropriété, Airbnb, location, réglementation, entretien et rentabilité.";
     } else if (pathname === "/privacy" || pathname === "/en/privacy") {
       title = isEn ? "Privacy | Gestion Velora" : "Confidentialité | Gestion Velora";
       description = baseDesc;

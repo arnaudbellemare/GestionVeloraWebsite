@@ -1340,7 +1340,7 @@ function buildLocationRoutes(): RouteConfig[] {
         frPath,
         enPath,
         title: buildTitle(fillLoc(svc.titleTmplFr, city, "fr")),
-        description: fillLoc(svc.descFr, city, "fr"),
+        description: fillLoc(svc.metaDescFr ?? svc.descFr, city, "fr"),
         ogImage: svcImage,
         twitterImage: svcImage,
         robots: isPriorityLocation ? undefined : "noindex, follow",
@@ -1364,7 +1364,7 @@ function buildLocationRoutes(): RouteConfig[] {
         frPath,
         enPath,
         title: buildTitle(fillLoc(svc.titleTmplEn, city, "en")),
-        description: fillLoc(svc.descEn, city, "en"),
+        description: fillLoc(svc.metaDescEn ?? svc.descEn, city, "en"),
         ogImage: svcImage,
         twitterImage: svcImage,
         robots: isPriorityLocation ? undefined : "noindex, follow",
@@ -1450,7 +1450,7 @@ function buildRoutes(): RouteConfig[] {
   // --- Homepage ---
   const frHomeTitle = "Gestion immobilière Montréal | Gestion Velora";
   const frHomeDesc =
-    "Gestion Velora : gestion complète de copropriétés, locations longue durée et Airbnb à Montréal. Transparence totale, rapports mensuels et tranquillité garantie pour les propriétaires.";
+    "Gestion immobilière à Montréal pour copropriétés, locations longue durée et Airbnb. Rapports clairs, soutien 24/7 et entretien proactif.";
   const enHomeTitle = "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
   const enHomeDesc =
     "Montreal property operations for condo boards, short-term rentals, and long-term rentals. Transparent reporting, 24/7 support, and proactive maintenance.";
@@ -1625,7 +1625,7 @@ function buildRoutes(): RouteConfig[] {
   // --- Blog index ---
   const frBlogTitle = "Blog gestion immobilière Montréal | Conseils & actualités";
   const frBlogDesc =
-    "Actualités, conseils pratiques et analyses sur la gestion immobilière à Montréal : copropriétés, Airbnb, locations, réglementation et rentabilité. Par l’équipe Gestion Velora.";
+    "Conseils sur la gestion immobilière à Montréal : copropriété, Airbnb, location, réglementation, entretien et rentabilité.";
   const enBlogTitle = "Montreal Property Management Blog — Advice & News | Gestion Velora";
   const enBlogDesc =
     "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation.";
@@ -1738,7 +1738,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/tarifs",
     title: "Tarifs de gestion immobilière à Montréal | Gestion Velora",
     description:
-      "Tarifs transparents pour la gestion de syndicat de copropriété, gestion locative et Airbnb à Montréal. Syndicat : en général 33 $ à 36 $ / unité / mois, jusqu'à 40 $ avec intégrations applicatives. Location : honoraires sur la base d'un mois de loyer. Sans frais cachés.",
+      "Tarifs de gestion immobilière à Montréal : copropriété, location et Airbnb. Prix clairs, soumission gratuite et aucun frais caché.",
     pageSchemas: null,
     prerenderMainInner: buildTarifsMainHtml("fr"),
   });
@@ -1749,7 +1749,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/tarifs",
     title: "Property Management Fees Montreal | Gestion Velora",
     description:
-      "Transparent pricing for condo board, rental, and Airbnb management in Montreal. Condo boards: typically $33–$36/unit/month, up to $40 with app integrations. Rentals: fee structured as one month's rent. No hidden fees.",
+      "Property management fees in Montreal for condo boards, rentals, and Airbnb. Clear pricing, free proposal, and no hidden fees.",
     pageSchemas: null,
     prerenderMainInner: buildTarifsMainHtml("en"),
   });

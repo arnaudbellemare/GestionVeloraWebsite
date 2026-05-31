@@ -8,7 +8,7 @@
     "build": "tsx scripts/generate-location-slugs-json.ts && tsc -b && vite build && tsx scripts/prerender.ts",
     "preview": "vite preview",
     "seo:priority": "tsx scripts/generate-seo-priority.ts",
-    "seo:verify": "tsx scripts/verify-seo-artifacts.ts",
+    "seo:verify": "tsx scripts/verify-seo-artifacts.ts && tsx scripts/verify-google-search-compliance.ts",
     "seo:vercel-redirects": "node scripts/generate-vercel-location-redirects.mjs",
     "sitemap": "tsx scripts/generate-sitemap.ts"
   },

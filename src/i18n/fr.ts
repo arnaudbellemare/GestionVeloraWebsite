@@ -317,7 +317,7 @@ export const fr = {
     ctaLearn: "En savoir plus",
     metaTitle: "Syndicat, Airbnb et location : services à Montréal | Gestion Velora",
     metaDescription:
-      "Découvrez nos 3 services à Montréal : syndicats de copropriété, gestion Airbnb (court séjour) et locations résidentielles. Administration, finance et technique pris en charge à 100 %.",
+      "Services à Montréal : syndicats de copropriété, gestion Airbnb et location résidentielle. Administration, finances et technique.",
     schemaName: "Services Gestion Velora",
   },
 

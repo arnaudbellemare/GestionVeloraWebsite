@@ -1282,7 +1282,7 @@ export const blogPosts: BlogPost[] = [
       date: "Avril 2026",
       title: "Assemblée générale de copropriété : guide complet pour les syndicats",
       metaTitle: "Assemblée générale copropriété : guide",
-      excerpt: "L'assemblée générale annuelle (AGA) est une obligation légale pour tout syndicat de copropriété québécois. Ce guide vous explique comment la préparer et la mener efficacement.",
+      excerpt: "L'assemblée générale annuelle est obligatoire pour tout syndicat de copropriété. Voici comment préparer une AGA valide, claire et efficace.",
       brief: "L'assemblée générale annuelle (AGA) d'un syndicat de copropriété québécois doit se tenir dans les six mois suivant la clôture de l'exercice financier. Elle sert à approuver les états financiers, élire les administrateurs, adopter le budget et traiter les résolutions soumises par les copropriétaires. Une bonne préparation est essentielle pour qu'elle soit valide et productive.",
       sections: [
         {
@@ -1626,7 +1626,7 @@ export const blogPosts: BlogPost[] = [
       date: "Avril 2026",
       title: "Bail de logement au Québec : guide complet pour les propriétaires",
       metaTitle: "Bail logement Québec guide propriétaires 2026",
-      excerpt: "Le bail résidentiel au Québec est un formulaire obligatoire réglementé par le TAL. Clauses permises, interdites, case G et renouvellement : ce que chaque propriétaire doit maîtriser.",
+      excerpt: "Le bail résidentiel au Québec est un formulaire TAL obligatoire. Clauses, case G, renouvellement : les points clés pour propriétaires.",
       brief: "Au Québec, tout bail résidentiel doit être rédigé sur le formulaire officiel du Tribunal administratif du logement (TAL). Ce formulaire oblige le propriétaire à divulguer le loyer le plus bas payé au cours des 12 derniers mois (case G). Les clauses contraires à l'ordre public ou aux droits des locataires sont nulles de plein droit, peu importe ce que dit le contrat signé.",
       sections: [
         {
@@ -1664,7 +1664,7 @@ export const blogPosts: BlogPost[] = [
       date: "April 2026",
       title: "Quebec residential lease: complete guide for landlords",
       metaTitle: "Quebec residential lease guide landlords 2026",
-      excerpt: "Quebec residential leases must use the official TAL form and disclose the previous lowest rent. What landlords need to know about required clauses, box G, and lease renewal.",
+      excerpt: "Quebec residential leases must use the official TAL form. Key rules for landlords: required clauses, box G, and lease renewal.",
       brief: "In Quebec, every residential lease must use the official Tribunal administratif du logement (TAL) form. It requires landlords to disclose the lowest rent paid in the past 12 months (box G). Clauses that violate tenant rights or public order are automatically null, regardless of what the signed contract says.",
       sections: [
         {

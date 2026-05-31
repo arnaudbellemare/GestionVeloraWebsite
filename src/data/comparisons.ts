@@ -130,7 +130,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
     descriptionEn:
       "A side-by-side framework to decide when in-house rental management stops scaling and when outsourcing improves response quality and NOI stability.",
     descriptionFr:
-      "Cadre d'aide a la decision pour savoir quand la gestion locative interne atteint ses limites et quand l'externalisation ameliore la qualite de service et la stabilite du NOI.",
+      "Cadre clair pour savoir quand la gestion locative interne atteint ses limites et quand l'externalisation stabilise service et NOI.",
     heroEn: "In-house vs outsourced management: when to switch",
     heroFr: "Interne vs externalisee: quand basculer",
     ctaEn: "Review your operating thresholds",
