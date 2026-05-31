@@ -118,6 +118,7 @@ function buildHtml(
     ogLocaleAlt: string;
     ogImage: string;
     twitterImage: string;
+    ampHtmlHref?: string;
     hreflangFr: string;
     hreflangEn: string;
     hreflangDefault: string;
@@ -211,6 +212,11 @@ function buildHtml(
     /<meta name="twitter:image" content="[^"]*"/,
     `<meta name="twitter:image" content="${opts.twitterImage}"`
   );
+
+  html = html.replace(/\s*<link rel="amphtml" href="[^"]*"\s*\/?>/g, "");
+  if (opts.ampHtmlHref) {
+    html = html.replace("</head>", `  <link rel="amphtml" href="${opts.ampHtmlHref}" />\n</head>`);
+  }
 
   html = html.replace(/\s*<meta name="robots" content="[^"]*"\s*\/?>/g, "");
   if (opts.robots) {
@@ -498,6 +504,188 @@ function fillLoc(template: string, city: typeof CITIES[0], locale: "fr" | "en"):
 function richToText(para: RichParagraph): string {
   if (typeof para === "string") return para;
   return para.map((seg) => (typeof seg === "string" ? seg : seg.text)).join("");
+}
+
+function localizePath(path: string, locale: "fr" | "en"): string {
+  if (path.startsWith("http://") || path.startsWith("https://") || path.startsWith("mailto:")) {
+    return path;
+  }
+  if (locale === "en" && path.startsWith("/") && !path.startsWith("/en/")) {
+    return `/en${path}`;
+  }
+  return path;
+}
+
+function richToAmpHtml(para: RichParagraph, locale: "fr" | "en"): string {
+  if (typeof para === "string") return escapeHtml(para);
+  return para
+    .map((seg) => {
+      if (typeof seg === "string") return escapeHtml(seg);
+      const href = localizePath(seg.to, locale);
+      const external = href.startsWith("http://") || href.startsWith("https://");
+      const rel = external ? ' rel="noopener noreferrer"' : "";
+      return `<a href="${escapeHtml(href)}"${rel}>${escapeHtml(seg.text)}</a>`;
+    })
+    .join("");
+}
+
+function schemaToJsonLd(schema: object | object[] | null): string {
+  if (!schema) return "";
+  const schemas = Array.isArray(schema) ? schema : [schema];
+  const pageSchema =
+    schemas.length === 1
+      ? schemas[0]
+      : {
+          "@context": "https://schema.org",
+          "@graph": schemas.map((item) => {
+            const { "@context": _ctx, ...rest } = item as Record<string, unknown>;
+            return rest;
+          }),
+        };
+  return JSON.stringify(pageSchema, null, 2).replace(/</g, "\\u003c");
+}
+
+function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
+  const post = blogPosts.find((p) => p.slug === slug);
+  if (!post) return "";
+  const loc = post[locale];
+  const isEn = locale === "en";
+  const lang = isEn ? "en-CA" : "fr-CA";
+  const base = isEn ? `${SITE_URL}/en` : SITE_URL;
+  const canonical = `${base}/blog/${slug}`;
+  const ampPath = isEn ? `/en/amp/blog/${slug}` : `/amp/blog/${slug}`;
+  const ampUrl = `${SITE_URL}${ampPath}`;
+  const title = buildTitle(loc.metaTitle ?? loc.title);
+  const schema = buildArticleSchema(locale, slug, base);
+  const bc = getBreadcrumbLabels(locale);
+  const schemaJson = schemaToJsonLd(
+    schema
+      ? [
+          schema,
+          buildBreadcrumbSchema([
+            { name: bc.home, url: SITE_URL + "/" },
+            { name: bc.insights, url: `${base}/blog` },
+            { name: loc.title },
+          ]),
+        ]
+      : null
+  );
+  const servicesIntro = isEn
+    ? "Managing a building in Montreal? Our services:"
+    : "Vous gérez un immeuble à Montréal ? Nos services :";
+  const services = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"]
+    .map((serviceSlug) => {
+      const svc = getService(locale, serviceSlug);
+      return `<a href="${localizePath(`/services/${serviceSlug}`, locale)}">${escapeHtml(svc.title)}</a>`;
+    })
+    .join(" <span aria-hidden=\"true\">·</span> ");
+  const sections = loc.sections
+    .map((section, sectionIndex) => {
+      const paras = section.paragraphs
+        .map((p) => `      <p>${richToAmpHtml(p, locale)}</p>`)
+        .join("\n");
+      const contactBlock =
+        sectionIndex === 1
+          ? `\n      <aside class="callout">\n        <p>${escapeHtml(isEn ? enRaw.blog.contactQuestion : frRaw.blog.contactQuestion)}</p>\n        <a class="button" href="${isEn ? "/en/#contact-form" : "/#contact-form"}">${escapeHtml(
+              isEn ? enRaw.blog.contactUs : frRaw.blog.contactUs
+            )}</a>\n      </aside>`
+          : "";
+      return `    <section>\n      <h2>${escapeHtml(section.heading)}</h2>\n${paras}${contactBlock}\n    </section>`;
+    })
+    .join("\n");
+  const related = blogPosts
+    .filter((p) => p.slug !== slug)
+    .slice(0, 3)
+    .map((p) => {
+      const r = p[locale];
+      return `        <li><a href="${localizePath(`/blog/${p.slug}`, locale)}">${escapeHtml(r.title)}</a><span>${escapeHtml(r.date)}</span></li>`;
+    })
+    .join("\n");
+  const relatedTitle = isEn ? enRaw.blog.relatedPostsTitle : frRaw.blog.relatedPostsTitle;
+  const authorLabel = isEn ? "Written by" : "Écrit par";
+  const authorRole = isEn ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora";
+  const authorBio = isEn
+    ? "Property management professional specializing in condo boards, long-term rentals, and short-term rentals in Greater Montreal."
+    : "Professionnel de la gestion immobilière spécialisé en syndicats de copropriété, location longue durée et Airbnb dans le Grand Montréal.";
+  const ctaText = isEn ? enRaw.blog.planifyCall : frRaw.blog.planifyCall;
+
+  return `<!doctype html>
+<html amp lang="${lang}">
+<head>
+  <meta charset="utf-8">
+  <title>${escapeHtml(title)}</title>
+  <link rel="canonical" href="${canonical}">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="${escapeHtml(loc.excerpt)}">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(loc.excerpt)}">
+  <meta property="og:url" content="${ampUrl}">
+  <meta property="og:image" content="${escapeHtml(post.image)}">
+  <meta property="og:locale" content="${isEn ? "en_CA" : "fr_CA"}">
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+  <style amp-custom>
+    :root{color-scheme:light;--ink:#171412;--muted:#655f5a;--line:#e8e0d8;--paper:#fffaf5;--accent:#d33b6a}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.68}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:760px;margin:0 auto;padding:32px 20px 64px}
+    .crumbs,.meta,.eyebrow{font-size:13px;color:var(--muted)}
+    .crumbs{margin-bottom:28px}
+    h1{font-size:42px;line-height:1.08;margin:14px 0 18px;letter-spacing:0}
+    h2{font-size:26px;line-height:1.22;margin:46px 0 14px;letter-spacing:0}
+    p{font-size:18px;margin:0 0 18px}
+    .excerpt{font-size:22px;color:var(--muted)}
+    .brief,.callout{border:1px solid var(--line);background:#fff;padding:20px;border-radius:8px;margin:24px 0}
+    .brief p,.callout p{margin-bottom:0}
+    .services{font-size:15px;margin:28px 0;color:var(--muted)}
+    .hero{margin:34px 0 44px;border-radius:8px;overflow:hidden;background:#eee}
+    .button{display:inline-block;margin-top:12px;background:var(--accent);color:white;padding:11px 16px;border-radius:999px;font-weight:700}
+    .author,.related,.final{border-top:1px solid var(--line);margin-top:46px;padding-top:28px}
+    .author strong{display:block}
+    .related ul{padding-left:18px}
+    .related li{margin:0 0 14px}
+    .related span{display:block;color:var(--muted);font-size:13px}
+    @media(max-width:560px){.wrap{padding:24px 18px 52px}h1{font-size:34px}.excerpt{font-size:20px}p{font-size:17px}}
+  </style>
+  ${schemaJson ? `<script type="application/ld+json">\n${schemaJson}\n  </script>` : ""}
+</head>
+<body>
+  <article class="wrap">
+    <nav class="crumbs"><a href="${isEn ? "/en/" : "/"}">${escapeHtml(bc.home)}</a> / <a href="${localizePath("/blog", locale)}">${escapeHtml(bc.insights)}</a></nav>
+    <p class="meta">${escapeHtml(loc.category)} · ${escapeHtml(loc.date)}</p>
+    <h1>${escapeHtml(loc.title)}</h1>
+    <p class="excerpt">${escapeHtml(loc.excerpt)}</p>
+    <aside class="brief">
+      <p class="eyebrow">${escapeHtml(isEn ? enRaw.blog.briefLabel : frRaw.blog.briefLabel)}</p>
+      <p>${escapeHtml(loc.brief)}</p>
+    </aside>
+    <p class="services">${escapeHtml(servicesIntro)} ${services}</p>
+    <div class="hero">
+      <amp-img src="${escapeHtml(post.image)}" width="1200" height="800" layout="responsive" alt="${escapeHtml(loc.title)}"></amp-img>
+    </div>
+${sections}
+    <section class="author">
+      <p class="eyebrow">${escapeHtml(authorLabel)}</p>
+      <p><strong>${escapeHtml(AUTHOR_NAME)}</strong>${escapeHtml(authorRole)}</p>
+      <p>${escapeHtml(authorBio)}</p>
+      <p><a href="${isEn ? "/en/about" : "/about"}">${escapeHtml(isEn ? "View author profile" : "Voir le profil auteur")}</a></p>
+    </section>
+    <section class="related">
+      <h2>${escapeHtml(relatedTitle)}</h2>
+      <ul>
+${related}
+      </ul>
+    </section>
+    <section class="final">
+      <p>${escapeHtml(isEn ? enRaw.blog.contactQuestion : frRaw.blog.contactQuestion)}</p>
+      <a class="button" href="${isEn ? "/en/#contact-form" : "/#contact-form"}">${escapeHtml(ctaText)}</a>
+    </section>
+  </article>
+</body>
+</html>`;
 }
 
 function buildLocationMainHtml(
@@ -1212,6 +1400,7 @@ interface RouteConfig {
   description: string;
   ogImage?: string;
   twitterImage?: string;
+  ampPath?: string;
   robots?: string;
   includeInSitemap?: boolean;
   pageSchemas: object | object[] | null;
@@ -1482,6 +1671,7 @@ function buildRoutes(): RouteConfig[] {
       description: post.fr.excerpt,
       ogImage: img,
       twitterImage: img,
+      ampPath: `/amp/blog/${slug}`,
       prerenderMainInner: buildBlogMainHtml("fr", slug),
       pageSchemas: frArticle
         ? [
@@ -1503,6 +1693,7 @@ function buildRoutes(): RouteConfig[] {
       description: post.en.excerpt,
       ogImage: img,
       twitterImage: img,
+      ampPath: `/en/amp/blog/${slug}`,
       prerenderMainInner: buildBlogMainHtml("en", slug),
       pageSchemas: enArticle
         ? [
@@ -1662,6 +1853,7 @@ async function main() {
       ogLocaleAlt: isEn ? "fr_CA" : "en_CA",
       ogImage: route.ogImage ?? DEFAULT_OG_IMAGE,
       twitterImage: route.twitterImage ?? DEFAULT_TWITTER_IMAGE,
+      ampHtmlHref: route.ampPath ? `${SITE_URL}${route.ampPath}` : undefined,
       robots: route.robots,
       hreflangFr: frCanonical,
       hreflangEn: enCanonical,
@@ -1697,6 +1889,12 @@ async function main() {
   });
   writeFileSync(join(DIST, "index.html"), rootHtml, "utf-8");
   console.log("  ✓ / (dist/index.html updated)");
+
+  for (const post of blogPosts) {
+    writeRoute(`/amp/blog/${post.slug}`, buildAmpBlogHtml("fr", post.slug));
+    writeRoute(`/en/amp/blog/${post.slug}`, buildAmpBlogHtml("en", post.slug));
+    count += 2;
+  }
 
   // Auto-generate sitemap from all routes so it never goes stale
   buildSitemap(routes);

@@ -36,6 +36,20 @@ function setMeta(name: string, content: string, property = false) {
   el.content = content;
 }
 
+function setAmpHtml(href?: string) {
+  let el = document.querySelector('link[rel="amphtml"]') as HTMLLinkElement | null;
+  if (!href) {
+    el?.remove();
+    return;
+  }
+  if (!el) {
+    el = document.createElement("link");
+    el.rel = "amphtml";
+    document.head.appendChild(el);
+  }
+  el.href = href;
+}
+
 function applyDocumentMeta(opts: {
   title: string;
   description: string;
@@ -98,6 +112,9 @@ export function PageMeta() {
         if (cancelled) return;
         const post = getPostBySlug(slug, locale);
         if (post) {
+          setAmpHtml(
+            `${SITE_URL}${isEn ? `/en/amp/blog/${post.slug}` : `/amp/blog/${post.slug}`}`
+          );
           applyDocumentMeta({
             title: buildTitle(post.metaTitle ?? post.title),
             description: post.excerpt,
@@ -108,6 +125,7 @@ export function PageMeta() {
             robots,
           });
         } else {
+          setAmpHtml();
           applyDocumentMeta({
             title: isEn
               ? "Montreal Property Management Blog — Advice & News | Gestion Velora"
@@ -132,6 +150,7 @@ export function PageMeta() {
     let description = baseDesc;
     let ogImage = DEFAULT_OG_IMAGE;
     let twitterImage = DEFAULT_TWITTER_IMAGE;
+    setAmpHtml();
 
     const isServicesHub =
       pathname === "/services" ||
