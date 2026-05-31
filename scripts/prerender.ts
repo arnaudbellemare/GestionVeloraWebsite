@@ -320,7 +320,17 @@ function writeRoute(routePath: string, html: string) {
 // ---------------------------------------------------------------------------
 function getService(locale: "fr" | "en", slug: string) {
   const t = locale === "fr" ? frRaw : enRaw;
-  const s = (t.services as Record<string, { title: string; description: string; subtitle?: string; offerings?: { title: string; items: string[]; detailItems?: string[] }[] }>)[slug];
+  const s = (t.services as Record<
+    string,
+    {
+      title: string;
+      description: string;
+      metaTitle?: string;
+      metaDescription?: string;
+      subtitle?: string;
+      offerings?: { title: string; items: string[]; detailItems?: string[] }[];
+    }
+  >)[slug];
   return s;
 }
 
@@ -1316,8 +1326,8 @@ function buildRoutes(): RouteConfig[] {
       locale: "fr",
       frPath: `/services/${slug}`,
       enPath: `/en/services/${slug}`,
-      title: buildTitle(frSvc.title),
-      description: frSvc.description,
+      title: frSvc.metaTitle ?? buildTitle(frSvc.title),
+      description: frSvc.metaDescription ?? frSvc.description,
       ogImage: img,
       twitterImage: img,
       prerenderMainInner: buildServiceDetailMainHtml("fr", slug),
@@ -1335,8 +1345,8 @@ function buildRoutes(): RouteConfig[] {
       locale: "en",
       frPath: `/services/${slug}`,
       enPath: `/en/services/${slug}`,
-      title: buildTitle(enSvc.title),
-      description: enSvc.description,
+      title: enSvc.metaTitle ?? buildTitle(enSvc.title),
+      description: enSvc.metaDescription ?? enSvc.description,
       ogImage: img,
       twitterImage: img,
       prerenderMainInner: buildServiceDetailMainHtml("en", slug),

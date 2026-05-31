@@ -448,6 +448,9 @@ export const en = {
     "syndicat-copropriete": {
       title: "Condo board management",
       subtitle: "Budget, AGM, reserve fund, common areas, and Loi 141 compliance.",
+      metaTitle: "Condo Management Montreal | Gestion Velora",
+      metaDescription:
+        "Condo management in Montreal for condo boards: budgets, AGMs, reserve funds, registers, common areas, and Loi 141 compliance.",
       description:
         "Gestion Velora is a Montreal condo management firm specializing in full condo board administration. We handle the administrative, financial, and technical management of your condo corporation: annual budget, common fees, reserve fund, annual general meeting (AGM), condo register, common area maintenance, and Loi 141 compliance. Our dedicated condo manager ensures full transparency for the board and every unit owner.",
       offerings: [
@@ -542,6 +545,9 @@ export const en = {
     airbnb: {
       title: "Airbnb and short-term rental management",
       subtitle: "Listings, turnovers, guests, permits, and compliance — end to end.",
+      metaTitle: "Airbnb Management Montreal | Gestion Velora",
+      metaDescription:
+        "Airbnb management in Montreal: listings, guests, cleaning, maintenance, pricing, and municipal compliance for short-term rentals.",
       description:
         "Gestion Velora handles full management of your short-term rental properties in Montreal. Reservations, cleaning, maintenance, and guest communication, all managed for you.",
       offerings: [
@@ -609,6 +615,9 @@ export const en = {
     location: {
       title: "Long-term rental management",
       subtitle: "Screening, rent collection, maintenance, and transparent building reporting.",
+      metaTitle: "Rental Management Montreal | Gestion Velora",
+      metaDescription:
+        "Rental management in Montreal for landlords: tenant screening, leases, rent collection, maintenance, reports, and TAL follow-up.",
       description:
         "Gestion Velora manages your rental properties in Montreal with rigour and professionalism. From tenant screening to rent and maintenance follow-up, we deliver calm, profitable management.",
       offerings: [
@@ -692,6 +701,9 @@ export const en = {
     "gestion-condo": {
       title: "Condo management in Montreal",
       subtitle: "Expert condo management for unit owners and condo boards in Montreal",
+      metaTitle: "Condo Management Montreal | Gestion Velora",
+      metaDescription:
+        "Condo management in Montreal: daily administration, finances, maintenance, communication, and support for unit owners.",
       description:
         "Looking for a condo management company in Montreal? Gestion Velora handles full condo administration: board governance, annual budget, reserve fund, common area maintenance, annual general meeting (AGM), and Loi 141 compliance. Our condo managers serve all Montreal neighbourhoods and the greater metropolitan area.",
       offerings: [
@@ -779,6 +791,9 @@ export const en = {
     "gestion-copropriete": {
       title: "Condo property manager Montreal",
       subtitle: "Your dedicated condo property manager — administration, finances, and compliance",
+      metaTitle: "Condo Property Manager Montreal | Gestion Velora",
+      metaDescription:
+        "Condo property manager in Montreal for condo boards: governance, budgets, Loi 141 compliance, maintenance, and clear reporting.",
       description:
         "Gestion Velora is a specialized condo management firm in Montreal. Our condo property managers handle all condo board obligations: administration, accounting, reserve fund, common area management, annual general meeting, and Loi 141 compliance. We are the trusted partner for boards that want to delegate day-to-day management to professionals.",
       offerings: [

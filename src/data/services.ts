@@ -42,6 +42,8 @@ export function getLocalizedService(slug: ServiceSlug, t: TFunction) {
     slug,
     title: t(`${base}.title`),
     subtitle: t(`${base}.subtitle`),
+    metaTitle: t(`${base}.metaTitle`),
+    metaDescription: t(`${base}.metaDescription`),
     image: SERVICE_IMAGES[slug],
     description: t(`${base}.description`),
     offerings,

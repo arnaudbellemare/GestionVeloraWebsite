@@ -165,8 +165,8 @@ export function PageMeta() {
     } else if (pathname.startsWith("/services/") || pathname.startsWith("/en/services/")) {
       if (slug && SERVICE_SLUGS.includes(slug as ServiceSlug)) {
         const service = getLocalizedService(slug as ServiceSlug, t);
-        title = buildTitle(service.title);
-        description = service.description;
+        title = service.metaTitle;
+        description = service.metaDescription;
         ogImage = service.image;
         twitterImage = service.image;
       }

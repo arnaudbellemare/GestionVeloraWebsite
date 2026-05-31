@@ -69,9 +69,10 @@ Promote a generated page only when it has:
 - no overlap with a stronger existing page;
 - GSC evidence or clear business priority.
 
-## Next Edits
+## Current Actions
 
-1. Update service metadata so `/services/syndicat-copropriete` owns "gestion de copropriete Montreal".
-2. Add internal links from blog posts about Loi 141, reserve funds, and condo boards to `/services/syndicat-copropriete`.
-3. Add a short comparison block on `/services/gestion-copropriete` clarifying when to hire a gestionnaire vs self-management.
-4. Track GSC impressions for "gestion de copropriete", "gestionnaire de copropriete", "syndicat de copropriete", and city variants before adding more sitemap URLs.
+1. Service metadata now gives `/services/syndicat-copropriete` ownership of "gestion de copropriete Montreal".
+2. Supporting service pages have separate meta titles for "gestionnaire de copropriete Montreal", "gestion condo Montreal", "gestion locative Montreal", and "gestion Airbnb Montreal".
+3. Blog posts about Loi 141, reserve funds, maintenance, AGA, and condo board obligations already include internal links into the condo service pages.
+4. Backlink execution is tracked in `seo/backlink-plan.md`.
+5. Track GSC impressions for "gestion de copropriete", "gestionnaire de copropriete", "syndicat de copropriete", and city variants before adding more sitemap URLs.

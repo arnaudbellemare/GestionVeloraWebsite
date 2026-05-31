@@ -451,6 +451,9 @@ export const fr = {
     "syndicat-copropriete": {
       title: "Syndicat de copropriété",
       subtitle: "Budget, AGA, fonds de prévoyance, parties communes et conformité Loi 141.",
+      metaTitle: "Gestion de copropriété Montréal | Gestion Velora",
+      metaDescription:
+        "Gestion de copropriété à Montréal pour syndicats : budget, AGA, fonds de prévoyance, registre, parties communes et conformité Loi 141.",
       description:
         "Gestion Velora est une firme de gestion de copropriété à Montréal spécialisée dans l'administration complète des syndicats de copropriétaires. Nous prenons en charge la gestion administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Notre gestionnaire de copropriété attitré assure la transparence pour le conseil d'administration et chaque copropriétaire.",
       offerings: [
@@ -545,6 +548,9 @@ export const fr = {
     airbnb: {
       title: "Gestion Airbnb et location courte durée",
       subtitle: "Réservations, ménage, voyageurs et conformité locale — clé en main.",
+      metaTitle: "Gestion Airbnb Montréal | Gestion Velora",
+      metaDescription:
+        "Gestion Airbnb à Montréal : annonces, voyageurs, ménage, maintenance, tarification et conformité municipale pour locations courte durée.",
       description:
         "Gestion Velora prend en charge l'intégralité de la gestion de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est géré pour vous.",
       offerings: [
@@ -612,6 +618,9 @@ export const fr = {
     location: {
       title: "Gestion locative longue durée",
       subtitle: "Sélection des locataires, loyers, entretien et rapports clairs pour votre immeuble.",
+      metaTitle: "Gestion locative Montréal | Gestion Velora",
+      metaDescription:
+        "Gestion locative à Montréal pour propriétaires : sélection des locataires, baux, loyers, entretien, rapports et suivi TAL.",
       description:
         "Gestion Velora gère vos immeubles locatifs à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable.",
       offerings: [
@@ -695,6 +704,9 @@ export const fr = {
     "gestion-condo": {
       title: "Gestion de condo à Montréal",
       subtitle: "Experts en gestion de condo pour propriétaires et syndicats à Montréal",
+      metaTitle: "Gestion condo Montréal | Gestion Velora",
+      metaDescription:
+        "Gestion de condo à Montréal : administration quotidienne, finances, entretien, communication et soutien aux copropriétaires.",
       description:
         "Vous cherchez une firme de gestion de condo à Montréal ? Gestion Velora prend en charge l'administration complète de votre condo : gestion du syndicat de copropriétaires, budget, fonds de prévoyance, entretien des parties communes, assemblée générale et conformité Loi 141. Nos gestionnaires de condo interviennent dans tous les quartiers de Montréal et la grande région métropolitaine.",
       offerings: [
@@ -782,6 +794,9 @@ export const fr = {
     "gestion-copropriete": {
       title: "Gestionnaire de copropriété à Montréal",
       subtitle: "Votre gestionnaire de copropriété dédié — administration, finances et conformité",
+      metaTitle: "Gestionnaire de copropriété Montréal | Gestion Velora",
+      metaDescription:
+        "Gestionnaire de copropriété à Montréal pour conseils d'administration : gouvernance, budget, Loi 141, entretien et rapports clairs.",
       description:
         "Gestion Velora est une firme spécialisée en gestion de copropriété à Montréal. Nos gestionnaires de copropriété prennent en charge l'ensemble des obligations du syndicat : administration, comptabilité, fonds de prévoyance, gestion des parties communes, assemblée générale et conformité à la Loi 141. Nous sommes le partenaire de confiance des conseils d'administration qui souhaitent déléguer la gestion quotidienne à des professionnels.",
       offerings: [
