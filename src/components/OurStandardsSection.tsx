@@ -6,7 +6,7 @@ import { useLoadWhenInView } from "../hooks/useDeferredMedia";
 
 const BG_VIDEO_DESKTOP = "/videos/our-standards-bg-desktop.mp4";
 const BG_VIDEO_MOBILE = "/videos/our-standards-bg-mobile.mp4";
-const BG_IMAGE = "/images/our-standards-bg-clean.png";
+const BG_IMAGE = "/images/our-standards-bg-clean.webp";
 
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
@@ -43,9 +43,9 @@ export function OurStandardsSection() {
             src={BG_IMAGE}
             alt=""
             aria-hidden
-            loading="eager"
+            loading="lazy"
             decoding="async"
-            fetchPriority="high"
+            fetchPriority="low"
             width={1920}
             height={1080}
             className="absolute inset-0 w-full h-full object-cover"
@@ -58,7 +58,7 @@ export function OurStandardsSection() {
             loop
             muted
             playsInline
-            preload={loadVideo ? "auto" : "none"}
+            preload={loadVideo ? "metadata" : "none"}
             onCanPlay={handleCanPlay}
             aria-hidden
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"

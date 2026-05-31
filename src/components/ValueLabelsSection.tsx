@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useEffect, useRef, useLayoutEffect, useCallba
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
+import { useIdleReady, useLoadWhenInView } from "../hooks/useDeferredMedia";
 
 const RotatingSymbol3D = lazy(() =>
   import("./RotatingSymbol3D").then((m) => ({ default: m.RotatingSymbol3D })),
@@ -22,9 +23,13 @@ type BarRect = { top: number; left: number; width: number; height: number };
 export function ValueLabelsSection() {
   const { t, i18n } = useTranslation();
   const [active, setActive] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
   const labelsContainerRef = useRef<HTMLDivElement>(null);
   const spacerRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [barRect, setBarRect] = useState<BarRect | null>(null);
+  const symbolInView = useLoadWhenInView(sectionRef, "280px 0px");
+  const idleReady = useIdleReady(3200);
+  const showSymbol = symbolInView && idleReady;
   const titleRaw = t("valueLabels.title");
   const titleParts = titleRaw.split("\n").map((s) => s.trim()).filter(Boolean);
 
@@ -63,14 +68,18 @@ export function ValueLabelsSection() {
   }, []);
 
   return (
-    <section className="relative pt-16 pb-24 sm:pt-24 sm:pb-32 lg:py-32 px-5 sm:px-6 lg:px-16 bg-black overflow-hidden border-y border-[#222222]">
+    <section ref={sectionRef} className="relative pt-16 pb-24 sm:pt-24 sm:pb-32 lg:py-32 px-5 sm:px-6 lg:px-16 bg-black overflow-hidden border-y border-[#222222]">
       {/* 3D rotating symbol - behind all content */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30 lg:opacity-40">
-        <Suspense
-          fallback={<SymbolBackdropFallback className="w-[400px] h-[400px] lg:w-[600px] lg:h-[600px]" />}
-        >
-          <RotatingSymbol3D className="w-[400px] h-[400px] lg:w-[600px] lg:h-[600px]" />
-        </Suspense>
+        {showSymbol ? (
+          <Suspense
+            fallback={<SymbolBackdropFallback className="w-[400px] h-[400px] lg:w-[600px] lg:h-[600px]" />}
+          >
+            <RotatingSymbol3D className="w-[400px] h-[400px] lg:w-[600px] lg:h-[600px]" />
+          </Suspense>
+        ) : (
+          <SymbolBackdropFallback className="w-[400px] h-[400px] lg:w-[600px] lg:h-[600px]" />
+        )}
       </div>
 
       <div className="max-w-[90rem] mx-auto relative z-10">

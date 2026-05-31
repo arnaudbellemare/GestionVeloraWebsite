@@ -1,5 +1,8 @@
-/** Google Analytics 4 measurement ID (must match gtag snippet in index.html). */
+/** Google Analytics 4 measurement ID. Analytics is injected after first paint. */
 export const GA_MEASUREMENT_ID = "G-NMSB2ZT1EZ";
+
+/** Google Tag Manager container ID. Loaded after first paint/idle. */
+export const GTM_CONTAINER_ID = "GTM-T8MH4WDL";
 
 /** Canonical site origin (metadata, JSON-LD, Article author URL). */
 export const SITE_URL = "https://www.gestionvelora.com";

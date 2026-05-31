@@ -1,24 +1,39 @@
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
-import { useIdleReady } from "../hooks/useDeferredMedia";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile.mp4";
 
-const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
-
 export function HeroSection() {
   const { t } = useTranslation();
-const { contactHref, goToContact } = useGoToContact();
+  const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
   const videoRef = useRef<HTMLVideoElement>(null);
-  const idleReady = useIdleReady(2800);
+  const [loadVideo, setLoadVideo] = useState(false);
+
   useEffect(() => {
-    if (!idleReady) return;
+    if (!loadVideo) return;
     videoRef.current?.load();
-  }, [idleReady]);
+  }, [loadVideo]);
+
+  useEffect(() => {
+    if (loadVideo) return;
+
+    const startVideo = () => setLoadVideo(true);
+    const timeoutId = setTimeout(startVideo, 6500);
+    const events = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
+    events.forEach((eventName) => {
+      window.addEventListener(eventName, startVideo, { once: true, passive: true });
+    });
+
+    return () => {
+      clearTimeout(timeoutId);
+      events.forEach((eventName) => {
+        window.removeEventListener(eventName, startVideo);
+      });
+    };
+  }, [loadVideo]);
 
   return (
     <section
@@ -37,7 +52,7 @@ const { contactHref, goToContact } = useGoToContact();
         style={{ backgroundColor: "#000" }}
         aria-hidden
       >
-        {idleReady ? (
+        {loadVideo ? (
           <>
             <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
             <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
@@ -47,43 +62,24 @@ const { contactHref, goToContact } = useGoToContact();
       <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
 
       <div className="relative z-[2] max-w-4xl px-6 lg:px-16 w-full text-left sm:text-center flex flex-col items-start sm:items-center flex-1 justify-center pt-24">
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.1, ease }}
+        <h1
           className="font-playfair font-semibold text-[clamp(2.25rem,6vw,4rem)] lg:text-[clamp(3rem,7vw,4.75rem)] leading-[1.08] tracking-[-0.02em] text-white mb-6"
         >
-          <motion.span
-            className="block"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.22, ease }}
-          >
+          <span className="block">
             {t("hero.line1")}
-          </motion.span>
-          <motion.span
-            className="block"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.32, ease }}
-          >
+          </span>
+          <span className="block">
             {t("hero.line2")}
-          </motion.span>
-        </motion.h1>
+          </span>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.42, ease }}
+        <p
           className="font-sans text-base lg:text-lg text-white/80 max-w-xl mb-4 sm:mx-auto"
         >
           {t("hero.subtitle")}
-        </motion.p>
+        </p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.5, ease }}
+        <p
           className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50 max-w-xl mb-10 sm:mx-auto"
         >
           <span>{t("hero.trustLine")}</span>{" "}
@@ -93,12 +89,9 @@ const { contactHref, goToContact } = useGoToContact();
           >
             {t("hero.trustLink")}
           </a>
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.55, ease }}
+        <div
           className="flex flex-col items-stretch sm:items-center justify-start sm:justify-center gap-3 w-full max-w-lg sm:mx-auto"
         >
           <a
@@ -117,21 +110,18 @@ const { contactHref, goToContact } = useGoToContact();
           >
             {t("hero.ctaDiscover")}
           </a>
-        </motion.div>
+        </div>
       </div>
 
       <div className="relative z-[2] w-full pb-12 lg:pb-16 px-6 lg:px-16">
         <div className="max-w-[90rem] mx-auto flex flex-wrap justify-start sm:justify-center items-center gap-6 lg:gap-10">
-          {heroPartners.map((name, i) => (
-            <motion.span
+          {heroPartners.map((name) => (
+            <span
               key={name}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.75 }}
-              transition={{ duration: 0.35, delay: 0.65 + i * 0.04, ease }}
               className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/45"
             >
               {name}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>

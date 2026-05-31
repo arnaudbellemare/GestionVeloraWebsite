@@ -48,12 +48,12 @@ const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/twitter-card.png`;
 
 /** Absolute URLs for OG / Twitter / JSON-LD — must match `src/data/services.ts` (one image per slug). */
 const SERVICE_IMAGES: Record<string, string> = {
-  "syndicat-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy.png?v=5`,
-  airbnb: `${SITE_URL}/images/airbnb-service.png`,
-  location: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&q=85",
-  "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont.png?v=7`,
+  "syndicat-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy.webp`,
+  airbnb: `${SITE_URL}/images/airbnb-service.webp`,
+  location: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1280&fm=webp&q=80",
+  "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont.webp`,
   "gestion-copropriete":
-    "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1920&q=85",
+    "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1280&fm=webp&q=80",
 };
 
 /** `/location/{service}-{city}` OG images — keyed by `LocationService.slug` (not `serviceSlug`). */
@@ -62,9 +62,9 @@ const LOCATION_LANDING_OG_IMAGES: Record<string, string> = {
   "gestion-locative": SERVICE_IMAGES.location,
   "gestion-airbnb": SERVICE_IMAGES.airbnb,
   "conformite-loi-16":
-    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1920&q=85",
+    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1280&fm=webp&q=80",
   "gestion-immobiliere-commerciale":
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=85",
+    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1280&fm=webp&q=80",
 };
 
 // ---------------------------------------------------------------------------

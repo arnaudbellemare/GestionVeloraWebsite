@@ -1,13 +1,17 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { GA_MEASUREMENT_ID } from "../config";
+import { initAnalytics, trackPageView } from "../lib/analytics";
 
 /**
- * Sends GA4 page views on client-side navigations. Initial load is covered by gtag in index.html.
+ * Loads analytics after first paint/idle, then sends GA4 page views on client-side navigations.
  */
 export function GtagPageView() {
   const { pathname, search } = useLocation();
   const isFirst = useRef(true);
+
+  useEffect(() => {
+    initAnalytics();
+  }, []);
 
   useEffect(() => {
     if (isFirst.current) {
@@ -15,14 +19,8 @@ export function GtagPageView() {
       return;
     }
 
-    const gtag = window.gtag;
-    if (typeof gtag !== "function") return;
-
     const pagePath = pathname + search;
-    gtag("config", GA_MEASUREMENT_ID, {
-      page_path: pagePath,
-      page_title: document.title,
-    });
+    trackPageView(pagePath);
   }, [pathname, search]);
 
   return null;

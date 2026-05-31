@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr-CA">
   <head>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-T8MH4WDL');</script>
-    <!-- End Google Tag Manager -->
     <meta charset="UTF-8" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,9 +11,51 @@
       /* Canvas matches ThemeContext / index.css so refresh is not a white flash */
       html.light body { background-color: #f5f5f5; }
       html.dark body { background-color: #000000; }
-      /* Prerender puts <main> in #root; hide until React mounts (avoids raw HTML flash on hard refresh) */
-      #root[data-gv-boot="pending"] { opacity: 0; }
-      #root[data-gv-boot="ready"] { opacity: 1; transition: opacity 0.14s ease-out; }
+      /* Prerender puts crawlable <main> in #root during build; paint it immediately for FCP/LCP. */
+      #root[data-gv-boot="pending"]:not(:empty) {
+        min-height: 100vh;
+        background: #050505;
+        color: #ffffff;
+      }
+      #root[data-gv-boot="pending"]:not(:empty) > main {
+        min-height: 100vh;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.1rem;
+        padding: clamp(6rem, 12vw, 10rem) clamp(1.5rem, 6vw, 6rem) 4rem;
+        background:
+          linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.72)),
+          radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.1), transparent 34%),
+          #050505;
+        font-family: "Space Grotesk", "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      #root[data-gv-boot="pending"]:not(:empty) h1 {
+        max-width: 13ch;
+        margin: 0;
+        color: #ffffff;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.45rem, 7vw, 4.75rem);
+        font-weight: 600;
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+      #root[data-gv-boot="pending"]:not(:empty) p {
+        max-width: 60ch;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        line-height: 1.65;
+      }
+      #root[data-gv-boot="pending"]:not(:empty) h2,
+      #root[data-gv-boot="pending"]:not(:empty) h3,
+      #root[data-gv-boot="pending"]:not(:empty) ul,
+      #root[data-gv-boot="pending"]:not(:empty) section {
+        max-width: 64rem;
+      }
+      #root[data-gv-boot="pending"]:not(:empty) a { color: #ffffff; }
+      #root[data-gv-boot="ready"] { opacity: 1; }
     </style>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=12" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=12" />
@@ -483,15 +518,15 @@
           Chaque mandat bénéficie d'une équipe disponible 24/7, de rapports financiers transparents et d'un suivi mensuel des indicateurs.
         </p>
         <figure>
-          <img src="/hero-gestion-velora.jpg" alt="Gestion immobilière Montréal — immeuble résidentiel géré par Gestion Velora — syndicat de copropriété et location" width="1920" height="1080" loading="lazy" />
+          <img src="/hero-gestion-velora-1200.webp" alt="Gestion immobilière Montréal — immeuble résidentiel géré par Gestion Velora — syndicat de copropriété et location" width="1200" height="670" loading="lazy" />
           <figcaption>Gestion Velora — gestion immobilière à Montréal : syndicats, Airbnb et location longue durée.</figcaption>
         </figure>
         <figure>
-          <img src="/images/portfolio/le-beaumont.png?v=7" alt="Syndicat de copropriété Montréal — immeuble Le Beaumont — gestion complète par Gestion Velora" width="800" height="600" loading="lazy" />
+          <img src="/images/portfolio/le-beaumont.webp" alt="Syndicat de copropriété Montréal — immeuble Le Beaumont — gestion complète par Gestion Velora" width="840" height="810" loading="lazy" />
           <figcaption>Le Beaumont — syndicat de copropriété à Montréal géré par Gestion Velora.</figcaption>
         </figure>
         <figure>
-          <img src="/images/portfolio/syndicat-enticy.png" alt="Syndicat de copropriété Enticy Montréal — gestion administrative, financière et conformité Loi 141" width="800" height="600" loading="lazy" />
+          <img src="/images/portfolio/syndicat-enticy.webp" alt="Syndicat de copropriété Enticy Montréal — gestion administrative, financière et conformité Loi 141" width="667" height="1024" loading="lazy" />
           <figcaption>Syndicat de copropriété Enticy — Montréal.</figcaption>
         </figure>
         <h2 id="zones-desservies">Zones desservies au Québec</h2>
@@ -847,14 +882,7 @@
         </ul>
       </main>
     </noscript>
-    <!-- Google tag (gtag.js): after visible markup to avoid blocking first paint in head -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NMSB2ZT1EZ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-NMSB2ZT1EZ');
-    </script>
+    <!-- Analytics is loaded from the app after first paint/idle. -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

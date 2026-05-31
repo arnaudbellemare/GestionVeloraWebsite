@@ -57,7 +57,7 @@ export const HeaderSection = (): JSX.Element => {
         <div className="flex items-center gap-1 px-4 py-2.5 rounded-2xl bg-[#111111] border border-[#333333]">
           <InternalLink to="/" className="flex items-center gap-0.5 shrink-0 -m-1 p-1 rounded-lg">
             <img
-              src="/logo.png"
+              src="/logo-80.webp"
               alt="Gestion Velora"
               className="h-10 w-10 object-contain"
               width={40}

@@ -43,13 +43,13 @@ export const fr = {
         category: "Copropriété",
         location: "Montréal",
         name: "Le Beaumont",
-        image: "/images/portfolio/le-beaumont.png?v=7",
+        image: "/images/portfolio/le-beaumont.webp",
       },
       {
         category: "Copropriété",
         location: "Montréal",
         name: "Syndicat de copropriété Enticy",
-        image: "/images/portfolio/syndicat-enticy.png?v=5",
+        image: "/images/portfolio/syndicat-enticy.webp",
       },
       {
         category: "Airbnb",

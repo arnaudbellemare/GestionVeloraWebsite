@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ReactLenis } from "lenis/react";
 import App from "./App";
 import { ChunkErrorBoundary } from "./components/ChunkErrorBoundary";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -29,14 +28,12 @@ root.render(
   <React.StrictMode>
     <ChunkErrorBoundary>
       <ThemeProvider>
-        <ReactLenis root options={{ lerp: 0.14, duration: 0.85, smoothWheel: true }}>
-          <App />
-        </ReactLenis>
+        <App />
       </ThemeProvider>
     </ChunkErrorBoundary>
   </React.StrictMode>
 );
 
-queueMicrotask(() => {
+requestAnimationFrame(() => {
   rootEl.dataset.gvBoot = "ready";
 });
