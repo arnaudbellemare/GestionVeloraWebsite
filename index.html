@@ -14,17 +14,13 @@
       /* Prerender puts crawlable <main> in #root during build; keep it from flashing before React paints. */
       #root[data-gv-boot="pending"] {
         min-height: 100vh;
-        background:
-          linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.62)),
-          url("/hero-gestion-velora-1200.webp") center / cover no-repeat,
-          #050505;
+        background: #000000;
         overflow: hidden;
       }
       #root[data-gv-boot="pending"] > * { visibility: hidden; }
       #root[data-gv-boot="ready"] { min-height: 100vh; }
       #root[data-gv-boot="ready"] > * { visibility: visible; }
     </style>
-    <link rel="preload" as="image" href="/hero-gestion-velora-1200.webp" fetchpriority="high" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=12" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=12" />
     <link rel="icon" type="image/png" href="/favicon.png?v=12" />

@@ -3,7 +3,6 @@ import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-fast.mp4";
-const HERO_POSTER = "/hero-gestion-velora-1200.webp";
 
 export function HeroSection() {
   const { t } = useTranslation();
@@ -22,7 +21,6 @@ export function HeroSection() {
         muted
         playsInline
         preload="auto"
-        poster={HERO_POSTER}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ backgroundColor: "#000" }}
         aria-hidden
