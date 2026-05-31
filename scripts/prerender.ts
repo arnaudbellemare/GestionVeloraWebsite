@@ -233,13 +233,13 @@ function buildHtml(
     const innerBlock = `\n    ${opts.prerenderMainInner}\n    `;
     if (html.includes('id="root" data-gv-boot="pending"')) {
       html = html.replace(
-        /<div id="root" data-gv-boot="pending">\s*<\/div>/,
-        `<div id="root" data-gv-boot="pending">${innerBlock}</div>`
+        /<div id="root" data-gv-boot="pending"(?: style="visibility:hidden")?>\s*<\/div>/,
+        `<div id="root" data-gv-boot="pending" style="visibility:hidden">${innerBlock}</div>`
       );
     } else {
       html = html.replace(
         /<div id="root"><\/div>/,
-        `<div id="root" data-gv-boot="pending">${innerBlock}</div>`
+        `<div id="root" data-gv-boot="pending" style="visibility:hidden">${innerBlock}</div>`
       );
     }
   }

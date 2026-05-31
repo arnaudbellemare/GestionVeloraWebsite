@@ -9,7 +9,7 @@
     </script>
     <style id="gv-root-cloak">
       /* Canvas matches ThemeContext / index.css so refresh is not a white flash */
-      html.light body { background-color: #f5f5f5; }
+      html.light body { background-color: #000000; }
       html.dark body { background-color: #000000; }
       /* Prerender puts crawlable <main> in #root during build; keep it from flashing before React paints. */
       #root[data-gv-boot="pending"] {
@@ -18,7 +18,7 @@
         overflow: hidden;
       }
       #root[data-gv-boot="pending"] > * { visibility: hidden; }
-      #root[data-gv-boot="ready"] { min-height: 100vh; }
+      #root[data-gv-boot="ready"] { min-height: 100vh; visibility: visible !important; }
       #root[data-gv-boot="ready"] > * { visibility: visible; }
     </style>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=12" />
@@ -336,14 +336,15 @@
       onload="this.media='all'"
     />
     <noscript>
+      <style>#root { visibility: visible !important; }</style>
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Doto:wght@500;600;700&family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap"
       />
     </noscript>
   </head>
-  <body>
-    <div id="root" data-gv-boot="pending"></div>
+  <body style="background:#000000">
+    <div id="root" data-gv-boot="pending" style="visibility:hidden"></div>
     <!-- Hidden form for Netlify form detection -->
     <form name="lead-capture" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="email" name="email" />
