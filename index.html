@@ -11,15 +11,7 @@
       /* Canvas matches ThemeContext / index.css so refresh is not a white flash */
       html.light body { background-color: #000000; }
       html.dark body { background-color: #000000; }
-      /* Prerender puts crawlable <main> in #root during build; keep it from flashing before React paints. */
-      #root[data-gv-boot="pending"] {
-        min-height: 100vh;
-        background: #000000;
-        overflow: hidden;
-      }
-      #root[data-gv-boot="pending"] > * { visibility: hidden; }
-      #root[data-gv-boot="ready"] { min-height: 100vh; visibility: visible !important; }
-      #root[data-gv-boot="ready"] > * { visibility: visible; }
+      #root { min-height: 100vh; background: #000000; color: #ffffff; }
     </style>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=12" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=12" />
@@ -332,7 +324,7 @@
     </noscript>
   </head>
   <body style="background:#000000">
-    <div id="root" data-gv-boot="pending" style="visibility:hidden"></div>
+    <div id="root" data-gv-boot="ready"></div>
     <!-- Hidden form for Netlify form detection -->
     <form name="lead-capture" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="email" name="email" />

@@ -234,15 +234,15 @@ function buildHtml(
   // 15a. Crawlable body copy inside #root (replaced on first React render).
   if (opts.prerenderMainInner) {
     const innerBlock = `\n    ${opts.prerenderMainInner}\n    `;
-    if (html.includes('id="root" data-gv-boot="pending"')) {
+    if (html.includes('id="root" data-gv-boot=')) {
       html = html.replace(
-        /<div id="root" data-gv-boot="pending"(?: style="visibility:hidden")?>\s*<\/div>/,
-        `<div id="root" data-gv-boot="pending" style="visibility:hidden">${innerBlock}</div>`
+        /<div id="root" data-gv-boot="[^"]*"(?: style="[^"]*")?>\s*<\/div>/,
+        `<div id="root" data-gv-boot="ready">${innerBlock}</div>`
       );
     } else {
       html = html.replace(
         /<div id="root"><\/div>/,
-        `<div id="root" data-gv-boot="pending" style="visibility:hidden">${innerBlock}</div>`
+        `<div id="root" data-gv-boot="ready">${innerBlock}</div>`
       );
     }
   }

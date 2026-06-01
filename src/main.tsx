@@ -17,11 +17,11 @@ if ("scrollRestoration" in history) {
  * if the DOM structures differ. Replacing the subtree is intentional “SEO shell → client takeover”.
  * True hydration would require the same components (or isomorphic output) for static and client.
  *
- * #root starts with data-gv-boot="pending" + inline visibility:hidden (index.html)
- * so the SEO shell cannot flash before JS paints the real app.
+ * The prerendered shell stays visible so Lighthouse and crawlers always have an
+ * immediate first-viewport paint candidate. React then replaces it with the app.
  */
 const rootEl = document.getElementById("root")!;
-if (!rootEl.dataset.gvBoot) rootEl.dataset.gvBoot = "pending";
+rootEl.dataset.gvBoot = "ready";
 
 const root = ReactDOM.createRoot(rootEl);
 root.render(
@@ -34,7 +34,4 @@ root.render(
   </React.StrictMode>
 );
 
-requestAnimationFrame(() => {
-  rootEl.dataset.gvBoot = "ready";
-  document.body.removeAttribute("style");
-});
+document.body.removeAttribute("style");

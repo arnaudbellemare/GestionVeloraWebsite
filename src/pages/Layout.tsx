@@ -48,6 +48,7 @@ export function Layout() {
       <HeaderSection />
 
       <AnimatePresence
+        initial={false}
         mode="wait"
         onExitComplete={() => {
           window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
@@ -56,7 +57,7 @@ export function Layout() {
         <motion.div
           key={location.pathname}
           variants={pageVariants}
-          initial="initial"
+          initial={false}
           animate="enter"
           exit="exit"
           className="flex-1 flex flex-col w-full min-w-0 min-h-0"

@@ -38,8 +38,7 @@ export function HeroSection() {
     >
       <img
         src={HERO_IMAGE}
-        alt=""
-        aria-hidden
+        alt="Gestion immobilière à Montréal par Gestion Velora"
         width={1200}
         height={676}
         decoding="async"
