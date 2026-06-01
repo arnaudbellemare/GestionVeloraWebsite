@@ -27,9 +27,9 @@ const serviceData = [
 ];
 
 const serviceImages = [
-  "/images/portfolio/syndicat-enticy.webp",
+  "/images/portfolio/syndicat-enticy-card.webp",
   "/images/airbnb-service.webp",
-  "/images/portfolio/le-beaumont.webp",
+  "/images/portfolio/le-beaumont-card.webp",
 ];
 
 export function WhatWeDoSection() {

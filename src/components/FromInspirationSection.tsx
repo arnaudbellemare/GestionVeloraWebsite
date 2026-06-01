@@ -69,8 +69,8 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
   }, []);
 
   const items = [
-    { name: "Résidence Saint-Denis", image: "/images/portfolio/syndicat-enticy.webp" },
-    { name: "Immeuble Papineau", image: "/images/portfolio/le-beaumont.webp" },
+    { name: "Résidence Saint-Denis", image: "/images/portfolio/syndicat-enticy-thumb.webp" },
+    { name: "Immeuble Papineau", image: "/images/portfolio/le-beaumont-thumb.webp" },
   ];
 
   return (

@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useLayoutEffect, useState } from "react";
+import { type RefObject, useEffect, useState } from "react";
 
 /** After first paint / idle - keeps main thread and network free for JS, CSS, fonts. */
 export function useIdleReady(timeoutMs = 2800): boolean {
@@ -36,7 +36,7 @@ export function useLoadWhenInView(
 ): boolean {
   const [load, setLoad] = useState(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (load) return;
     const el = ref.current;
     if (!el) return;
