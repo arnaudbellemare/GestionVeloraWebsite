@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGoToContact } from "../hooks/useGoToContact";
 
@@ -10,25 +10,7 @@ export function HeroSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
-  const [loadVideo, setLoadVideo] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
-
-  useEffect(() => {
-    const startVideo = () => setLoadVideo(true);
-    const options = { once: true, passive: true } as AddEventListenerOptions;
-
-    window.addEventListener("scroll", startVideo, options);
-    window.addEventListener("pointerdown", startVideo, options);
-    window.addEventListener("touchstart", startVideo, options);
-    window.addEventListener("keydown", startVideo, { once: true });
-
-    return () => {
-      window.removeEventListener("scroll", startVideo);
-      window.removeEventListener("pointerdown", startVideo);
-      window.removeEventListener("touchstart", startVideo);
-      window.removeEventListener("keydown", startVideo);
-    };
-  }, []);
 
   return (
     <section
@@ -50,18 +32,14 @@ export function HeroSection() {
         loop
         muted
         playsInline
-        preload={loadVideo ? "metadata" : "none"}
+        preload="auto"
         onCanPlay={() => setVideoReady(true)}
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
         style={{ opacity: videoReady ? 1 : 0 }}
         aria-hidden
       >
-        {loadVideo ? (
-          <>
-            <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
-            <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
-          </>
-        ) : null}
+        <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
+        <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
       </video>
       <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
 

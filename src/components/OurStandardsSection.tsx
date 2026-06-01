@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { useGoToContact } from "../hooks/useGoToContact";
-import { useLoadWhenInView } from "../hooks/useDeferredMedia";
 
 const BG_VIDEO_DESKTOP = "/videos/our-standards-bg-desktop.mp4";
 const BG_VIDEO_MOBILE = "/videos/our-standards-bg-mobile.mp4";
@@ -15,13 +14,10 @@ export function OurStandardsSection() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
-  /** Start fetching while the section is still below the fold so playback can begin sooner. */
-  const loadVideo = useLoadWhenInView(ref, "320px 0px");
 
   useEffect(() => {
-    if (!loadVideo) return;
     videoRef.current?.load();
-  }, [loadVideo]);
+  }, []);
 
   const handleCanPlay = useCallback(() => {
     const v = videoRef.current;
@@ -43,7 +39,7 @@ export function OurStandardsSection() {
             loop
             muted
             playsInline
-            preload={loadVideo ? "metadata" : "none"}
+            preload="auto"
             onCanPlay={handleCanPlay}
             aria-hidden
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
@@ -52,12 +48,8 @@ export function OurStandardsSection() {
               opacity: videoReady ? 1 : 0,
             }}
           >
-            {loadVideo ? (
-              <>
-                <source src={BG_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
-                <source src={BG_VIDEO_DESKTOP} type="video/mp4" />
-              </>
-            ) : null}
+            <source src={BG_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
+            <source src={BG_VIDEO_DESKTOP} type="video/mp4" />
           </video>
         </div>
         <div className="absolute inset-0 bg-black/42" aria-hidden />

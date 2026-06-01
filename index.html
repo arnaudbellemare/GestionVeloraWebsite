@@ -12,6 +12,14 @@
       html.light body { background-color: #000000; }
       html.dark body { background-color: #000000; }
       #root { min-height: 100vh; background: #000000; color: #ffffff; }
+      #root[data-gv-boot="ready"] > main {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
     </style>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=12" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=12" />
