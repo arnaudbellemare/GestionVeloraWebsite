@@ -1,6 +1,5 @@
+import { lazy, Suspense, useEffect } from "react";
 import { useLocation, useOutlet } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { FooterSection } from "../FooterSection";
 import { HeaderSection } from "../HeaderSection";
 import { CanonicalUrl } from "../components/CanonicalUrl";
 import { GtagPageView } from "../components/GtagPageView";
@@ -8,34 +7,17 @@ import { PageMeta } from "../components/PageMeta";
 import { HreflangLinks } from "../components/HreflangLinks";
 import { SchemaOrg } from "../components/SchemaOrg";
 
-const EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
-
-const pageVariants = {
-  initial: {
-    opacity: 0,
-    y: 4,
-  },
-  enter: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.16,
-      ease: EASE,
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -2,
-    transition: {
-      duration: 0.08,
-      ease: EASE,
-    },
-  },
-};
+const FooterSection = lazy(() =>
+  import("../FooterSection").then((module) => ({ default: module.FooterSection }))
+);
 
 export function Layout() {
   const location = useLocation();
   const currentOutlet = useOutlet();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-nd-canvas text-nd-primary flex flex-col overflow-x-hidden">
@@ -47,25 +29,12 @@ export function Layout() {
 
       <HeaderSection />
 
-      <AnimatePresence
-        initial={false}
-        mode="sync"
-        onExitComplete={() => {
-          window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-        }}
-      >
-        <motion.div
-          key={location.pathname}
-          variants={pageVariants}
-          initial={false}
-          animate="enter"
-          exit="exit"
-          className="flex-1 flex flex-col w-full min-w-0 min-h-0"
-        >
-          <main className="flex-1 w-full min-w-0">{currentOutlet}</main>
-        </motion.div>
-      </AnimatePresence>
-      <FooterSection />
+      <div key={location.pathname} className="flex-1 flex flex-col w-full min-w-0 min-h-0 animate-fade-in">
+        <main className="flex-1 w-full min-w-0">{currentOutlet}</main>
+      </div>
+      <Suspense fallback={null}>
+        <FooterSection />
+      </Suspense>
     </div>
   );
 }

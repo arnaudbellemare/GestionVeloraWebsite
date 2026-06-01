@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { InternalLink } from "./components/InternalLink";
@@ -15,8 +14,6 @@ const serviceLinkKeys = [
   { to: "/services/gestion-condo", labelKey: "nav.gestionCondo", descKey: "nav.gestionCondoDesc" },
   { to: "/services/gestion-copropriete", labelKey: "nav.gestionCopropriete", descKey: "nav.gestionCoproprieteDesc" },
 ];
-
-const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
 export const HeaderSection = (): JSX.Element => {
   const { t } = useTranslation();
@@ -45,12 +42,7 @@ export const HeaderSection = (): JSX.Element => {
   );
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 pt-2 sm:pt-4"
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-2 sm:pt-4">
       <div className="absolute top-0 left-0 right-0 h-px bg-[#333333] opacity-90" aria-hidden />
 
       <div className="max-w-[90rem] mx-auto flex items-center justify-between gap-4">
@@ -103,12 +95,7 @@ export const HeaderSection = (): JSX.Element => {
                 </svg>
               </button>
               {servicesOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2, ease }}
-                  className="absolute top-full left-0 mt-1 py-2 min-w-[280px] rounded-xl bg-[#111111] border border-[#333333]"
-                >
+                <div className="absolute top-full left-0 mt-1 py-2 min-w-[280px] rounded-xl bg-[#111111] border border-[#333333] animate-fade-in">
                   {serviceLinkKeys.map((s) => (
                     <InternalLink
                       key={s.to}
@@ -122,7 +109,7 @@ export const HeaderSection = (): JSX.Element => {
                       </span>
                     </InternalLink>
                   ))}
-                </motion.div>
+                </div>
               )}
             </div>
             <InternalLink
@@ -200,12 +187,7 @@ export const HeaderSection = (): JSX.Element => {
       </div>
 
       {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2, ease }}
-          className="md:hidden mt-2 ml-4 py-4 px-4 rounded-2xl bg-[#111111] border border-[#333333] w-[calc(100%-2rem)] max-w-sm flex flex-col gap-1"
-        >
+        <div className="md:hidden mt-2 ml-4 py-4 px-4 rounded-2xl bg-[#111111] border border-[#333333] w-[calc(100%-2rem)] max-w-sm flex flex-col gap-1 animate-fade-in">
           <InternalLink to="/" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
             {t("nav.home")}
           </InternalLink>
@@ -244,8 +226,8 @@ export const HeaderSection = (): JSX.Element => {
           >
             {t("nav.login")}
           </a>
-        </motion.div>
+        </div>
       )}
-    </motion.header>
+    </header>
   );
 };

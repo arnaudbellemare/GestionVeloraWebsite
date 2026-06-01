@@ -8,15 +8,51 @@ const BG_VIDEO_MOBILE = "/videos/our-standards-bg-mobile.mp4";
 
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
+function getStandardsVideoSource() {
+  if (typeof window === "undefined") return BG_VIDEO_DESKTOP;
+  return window.matchMedia("(max-width: 767px)").matches ? BG_VIDEO_MOBILE : BG_VIDEO_DESKTOP;
+}
+
 export function OurStandardsSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [videoSrc, setVideoSrc] = useState(getStandardsVideoSource);
 
   useEffect(() => {
-    videoRef.current?.load();
+    const media = window.matchMedia("(max-width: 767px)");
+    const updateVideoSource = () => {
+      setVideoReady(false);
+      setVideoSrc(media.matches ? BG_VIDEO_MOBILE : BG_VIDEO_DESKTOP);
+    };
+
+    media.addEventListener("change", updateVideoSource);
+    return () => media.removeEventListener("change", updateVideoSource);
+  }, []);
+
+  useEffect(() => {
+    const section = ref.current;
+    if (!section || shouldLoadVideo) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldLoadVideo(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        setShouldLoadVideo(true);
+        observer.disconnect();
+      },
+      { rootMargin: "800px 0px", threshold: 0 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   const handleCanPlay = useCallback(() => {
@@ -34,12 +70,13 @@ export function OurStandardsSection() {
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 w-full h-full bg-black">
           <video
+            key={videoSrc}
             ref={videoRef}
-            autoPlay
+            autoPlay={shouldLoadVideo}
             loop
             muted
             playsInline
-            preload="auto"
+            preload="metadata"
             onCanPlay={handleCanPlay}
             aria-hidden
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
@@ -47,10 +84,8 @@ export function OurStandardsSection() {
               objectPosition: "center 60%",
               opacity: videoReady ? 1 : 0,
             }}
-          >
-            <source src={BG_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
-            <source src={BG_VIDEO_DESKTOP} type="video/mp4" />
-          </video>
+            src={shouldLoadVideo ? videoSrc : undefined}
+          />
         </div>
         <div className="absolute inset-0 bg-black/60" aria-hidden />
       </div>

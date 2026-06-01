@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGoToContact } from "../hooks/useGoToContact";
 
@@ -7,11 +7,28 @@ const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-fast.mp4";
 const HERO_IMAGE = "/hero-video-poster.webp?v=4";
 const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=4";
 
+function getHeroVideoSource() {
+  if (typeof window === "undefined") return HERO_VIDEO_DESKTOP;
+  return window.matchMedia("(max-width: 767px)").matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP;
+}
+
 export function HeroSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
   const [videoReady, setVideoReady] = useState(false);
+  const [videoSrc, setVideoSrc] = useState(getHeroVideoSource);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+    const updateVideoSource = () => {
+      setVideoReady(false);
+      setVideoSrc(media.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
+    };
+
+    media.addEventListener("change", updateVideoSource);
+    return () => media.removeEventListener("change", updateVideoSource);
+  }, []);
 
   return (
     <section
@@ -31,6 +48,7 @@ export function HeroSection() {
         className="absolute inset-0 h-full w-full object-cover"
       />
       <video
+        key={videoSrc}
         autoPlay
         loop
         muted
@@ -40,10 +58,8 @@ export function HeroSection() {
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
         style={{ opacity: videoReady ? 1 : 0 }}
         aria-hidden
-      >
-        <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
-        <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
-      </video>
+        src={videoSrc}
+      />
       <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
 
       <div className="relative z-[2] max-w-4xl px-6 lg:px-16 w-full text-left sm:text-center flex flex-col items-start sm:items-center flex-1 justify-center pt-24">

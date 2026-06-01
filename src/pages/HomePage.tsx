@@ -1,9 +1,26 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { HeroSection } from "../components/HeroSection";
-import { StatsSection } from "../components/StatsSection";
-import { ValueLabelsSection } from "../components/ValueLabelsSection";
-import { WhatWeDoSection } from "../components/WhatWeDoSection";
-import { WhoWeAreSection } from "../components/WhoWeAreSection";
+
+const StatsSection = lazy(() =>
+  import("../components/StatsSection").then((module) => ({
+    default: module.StatsSection,
+  }))
+);
+const WhoWeAreSection = lazy(() =>
+  import("../components/WhoWeAreSection").then((module) => ({
+    default: module.WhoWeAreSection,
+  }))
+);
+const ValueLabelsSection = lazy(() =>
+  import("../components/ValueLabelsSection").then((module) => ({
+    default: module.ValueLabelsSection,
+  }))
+);
+const WhatWeDoSection = lazy(() =>
+  import("../components/WhatWeDoSection").then((module) => ({
+    default: module.WhatWeDoSection,
+  }))
+);
 
 const FromInspirationSection = lazy(() =>
   import("../components/FromInspirationSection").then((module) => ({
@@ -77,6 +94,10 @@ function DeferredHomeSections() {
 
   return (
     <Suspense fallback={null}>
+      <StatsSection />
+      <WhoWeAreSection />
+      <ValueLabelsSection />
+      <WhatWeDoSection />
       <OurStandardsSection />
       <FromInspirationSection />
       <SectionSpacer />
@@ -99,10 +120,6 @@ export function HomePage() {
   return (
     <>
       <HeroSection />
-      <StatsSection />
-      <WhoWeAreSection />
-      <ValueLabelsSection />
-      <WhatWeDoSection />
       <DeferredHomeSections />
     </>
   );

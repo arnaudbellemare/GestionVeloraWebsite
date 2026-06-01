@@ -7,9 +7,11 @@ import { LocaleProvider } from "./context/LocaleContext";
 import { HomePage } from "./pages/HomePage";
 import { Layout } from "./pages/Layout";
 
-import { TarifsPage } from "./pages/TarifsPage";
-import { TrustDocumentPage } from "./pages/TrustDocumentPage";
-import { PrivacyPage } from "./pages/PrivacyPage";
+const TarifsPage = lazy(() => import("./pages/TarifsPage").then((m) => ({ default: m.TarifsPage })));
+const TrustDocumentPage = lazy(() =>
+  import("./pages/TrustDocumentPage").then((m) => ({ default: m.TrustDocumentPage })),
+);
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage").then((m) => ({ default: m.PrivacyPage })));
 const BlogPage = lazy(() => import("./pages/BlogPage").then((m) => ({ default: m.BlogPage })));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage").then((m) => ({ default: m.BlogPostPage })));
 const CompareIndexPage = lazy(() =>
@@ -133,43 +135,57 @@ function App() {
                 <Route
                   path="tarifs"
                   element={
-                    <TarifsPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TarifsPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="privacy"
                   element={
-                    <PrivacyPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <PrivacyPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="about"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="editorial-policy"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="sources"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="methodology"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="trust-proof"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
@@ -251,43 +267,57 @@ function App() {
                 <Route
                   path="tarifs"
                   element={
-                    <TarifsPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TarifsPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="privacy"
                   element={
-                    <PrivacyPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <PrivacyPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="about"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="editorial-policy"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="sources"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="methodology"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
                   path="trust-proof"
                   element={
-                    <TrustDocumentPage />
+                    <Suspense fallback={<RouteFallback />}>
+                      <TrustDocumentPage />
+                    </Suspense>
                   }
                 />
                 <Route
