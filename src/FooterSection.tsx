@@ -150,7 +150,7 @@ export const FooterSection = (): JSX.Element => {
               <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] whitespace-nowrap">
                 {t("footer.ourSite")}
               </p>
-              <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-[#666666] leading-none whitespace-nowrap">
+              <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-[#A3A3A3] leading-none whitespace-nowrap">
                 {t("footer.qrClickMe")}
               </p>
             </div>
@@ -243,8 +243,8 @@ export const FooterSection = (): JSX.Element => {
       </div>
 
       {/* 3D City Brand Image - top scrim fades footer black into the skyline */}
-      <div className="relative overflow-hidden">
-        <picture className="block dark:hidden">
+      <div className="relative aspect-[800/446] overflow-hidden bg-black">
+        <picture className="absolute inset-0 block dark:hidden">
           <source
             srcSet="/images/footer-city-light-800.webp 800w, /images/footer-city-light-1200.webp 1200w, /images/footer-city-light-1600.webp 1600w"
             sizes="100vw"
@@ -253,14 +253,14 @@ export const FooterSection = (): JSX.Element => {
           <img
             src="/images/footer-city-light.png?v=4"
             alt="Gestion Velora - vue aérienne Montréal"
-            className="w-full h-auto"
-            width={1600}
-            height={640}
+            className="h-full w-full object-cover"
+            width={800}
+            height={446}
             loading="lazy"
             decoding="async"
           />
         </picture>
-        <picture className="hidden dark:block">
+        <picture className="absolute inset-0 hidden dark:block">
           <source
             srcSet="/images/footer-city-dark-800.webp 800w, /images/footer-city-dark-1200.webp 1200w, /images/footer-city-dark-1600.webp 1600w"
             sizes="100vw"
@@ -269,9 +269,9 @@ export const FooterSection = (): JSX.Element => {
           <img
             src="/images/footer-city-dark.png?v=4"
             alt="Gestion Velora - vue aérienne Montréal"
-            className="w-full h-auto"
-            width={1600}
-            height={640}
+            className="h-full w-full object-cover"
+            width={800}
+            height={446}
             loading="lazy"
             decoding="async"
           />
