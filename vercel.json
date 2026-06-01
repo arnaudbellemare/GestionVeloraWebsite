@@ -19,7 +19,7 @@
         }
       ],
       "destination": "https://www.gestionvelora.com/:path*",
-      "permanent": true
+      "statusCode": 308
     },
     {
       "source": "/en/en/:path*",
