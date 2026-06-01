@@ -4,7 +4,7 @@ import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-fast.mp4";
-const HERO_IMAGE = "/hero-video-poster.webp";
+const HERO_IMAGE = "/hero-video-poster.webp?v=3";
 
 export function HeroSection() {
   const { t } = useTranslation();

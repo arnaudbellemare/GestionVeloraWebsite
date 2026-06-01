@@ -6,7 +6,7 @@ import { useLoadWhenInView } from "../hooks/useDeferredMedia";
 
 const BG_VIDEO_DESKTOP = "/videos/our-standards-bg-desktop.mp4";
 const BG_VIDEO_MOBILE = "/videos/our-standards-bg-mobile.mp4";
-const BG_IMAGE = "/images/our-standards-bg-clean.webp";
+const BG_IMAGE = "/images/our-standards-bg-clean.webp?v=3";
 
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
@@ -46,8 +46,8 @@ export function OurStandardsSection() {
             loading="lazy"
             decoding="async"
             fetchPriority="low"
-            width={1920}
-            height={1080}
+            width={768}
+            height={432}
             className="absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: "center 60%" }}
           />
