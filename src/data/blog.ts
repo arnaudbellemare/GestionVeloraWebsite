@@ -131,7 +131,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "maintenance-preventive-economise-millions",
-    image: `${BLOG_IMAGE_BASE}/preventive-maintenance.webp`,
+    image: `${BLOG_IMAGE_BASE}/preventive-maintenance-clean.webp`,
     datePublished: "2026-01-14",
     dateModified: "2026-04-01",
     fr: {
@@ -216,7 +216,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "maximiser-noi-approche-donnees",
-    image: `${BLOG_IMAGE_BASE}/noi-data.webp`,
+    image: `${BLOG_IMAGE_BASE}/noi-data-clean.webp`,
     datePublished: "2025-12-10",
     dateModified: "2026-04-01",
     fr: {
@@ -301,7 +301,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "experience-locataire-avantage-concurrentiel",
-    image: `${BLOG_IMAGE_BASE}/tenant-experience.webp`,
+    image: `${BLOG_IMAGE_BASE}/tenant-experience-clean.webp`,
     datePublished: "2025-11-18",
     dateModified: "2026-04-01",
     fr: {
