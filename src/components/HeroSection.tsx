@@ -4,8 +4,12 @@ import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-fast.mp4";
-const HERO_IMAGE = "/hero-video-poster.webp?v=4";
-const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=4";
+const HERO_IMAGE = "/hero-video-poster.webp?v=5";
+const HERO_IMAGE_MEDIUM = "/hero-video-poster-960.webp?v=5";
+const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=5";
+const HERO_IMAGE_AVIF = "/hero-video-poster.avif?v=5";
+const HERO_IMAGE_AVIF_MEDIUM = "/hero-video-poster-960.avif?v=5";
+const HERO_IMAGE_AVIF_MOBILE = "/hero-video-poster-mobile.avif?v=5";
 
 function getHeroVideoSource() {
   if (typeof window === "undefined") return HERO_VIDEO_DESKTOP;
@@ -36,17 +40,27 @@ export function HeroSection() {
       className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-black"
       aria-label="Hero"
     >
-      <img
-        src={HERO_IMAGE}
-        srcSet={`${HERO_IMAGE_MOBILE} 640w, ${HERO_IMAGE} 1200w`}
-        sizes="100vw"
-        alt="Gestion immobilière à Montréal par Gestion Velora"
-        width={1200}
-        height={676}
-        decoding="async"
-        fetchPriority="high"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+      <picture>
+        <source
+          type="image/avif"
+          srcSet={`${HERO_IMAGE_AVIF_MOBILE} 640w, ${HERO_IMAGE_AVIF_MEDIUM} 960w, ${HERO_IMAGE_AVIF} 1200w`}
+          sizes="100vw"
+        />
+        <source
+          type="image/webp"
+          srcSet={`${HERO_IMAGE_MOBILE} 640w, ${HERO_IMAGE_MEDIUM} 960w, ${HERO_IMAGE} 1200w`}
+          sizes="100vw"
+        />
+        <img
+          src={HERO_IMAGE}
+          alt="Gestion immobilière à Montréal par Gestion Velora"
+          width={1200}
+          height={676}
+          decoding="async"
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      </picture>
       <video
         key={videoSrc}
         autoPlay
