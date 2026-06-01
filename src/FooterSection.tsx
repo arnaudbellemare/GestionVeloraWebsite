@@ -245,7 +245,11 @@ export const FooterSection = (): JSX.Element => {
       {/* 3D City Brand Image - top scrim fades footer black into the skyline */}
       <div className="relative overflow-hidden">
         <picture className="block dark:hidden">
-          <source srcSet="/images/footer-city-light.webp" type="image/webp" />
+          <source
+            srcSet="/images/footer-city-light-800.webp 800w, /images/footer-city-light-1200.webp 1200w, /images/footer-city-light-1600.webp 1600w"
+            sizes="100vw"
+            type="image/webp"
+          />
           <img
             src="/images/footer-city-light.png?v=4"
             alt="Gestion Velora - vue aérienne Montréal"
@@ -257,7 +261,11 @@ export const FooterSection = (): JSX.Element => {
           />
         </picture>
         <picture className="hidden dark:block">
-          <source srcSet="/images/footer-city-dark.webp" type="image/webp" />
+          <source
+            srcSet="/images/footer-city-dark-800.webp 800w, /images/footer-city-dark-1200.webp 1200w, /images/footer-city-dark-1600.webp 1600w"
+            sizes="100vw"
+            type="image/webp"
+          />
           <img
             src="/images/footer-city-dark.png?v=4"
             alt="Gestion Velora - vue aérienne Montréal"
