@@ -35,7 +35,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     slug: "avenir-gestion-immobiliere-intelligente-2026",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-02-15",
     dateModified: "2026-04-01",
     fr: {
@@ -129,7 +129,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "maintenance-preventive-economise-millions",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-01-14",
     dateModified: "2026-04-01",
     fr: {
@@ -214,7 +214,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "maximiser-noi-approche-donnees",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2025-12-10",
     dateModified: "2026-04-01",
     fr: {
@@ -299,7 +299,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "experience-locataire-avantage-concurrentiel",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2025-11-18",
     dateModified: "2026-04-01",
     fr: {
@@ -393,7 +393,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "gestion-copropriete-montreal-reglementation",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2025-10-08",
     dateModified: "2026-04-01",
     fr: {
@@ -564,7 +564,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "choisir-gestionnaire-immobilier-montreal",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2025-08-20",
     dateModified: "2026-04-01",
     fr: {
@@ -648,7 +648,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "fonds-prevoyance-copropriete-quebec",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2025-07-18",
     dateModified: "2026-04-01",
     fr: {
@@ -734,7 +734,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "syndicat-copropriete-fonctionnement",
-    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-03-10",
     dateModified: "2026-04-20",
     fr: {
@@ -824,7 +824,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "cout-gestionnaire-copropriete-montreal",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-03-18",
     dateModified: "2026-04-20",
     fr: {
@@ -914,7 +914,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "gestion-condo-autogestion-ou-gestionnaire",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-03-25",
     dateModified: "2026-04-20",
     fr: {
@@ -1004,7 +1004,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "loi-141-obligations-syndicat-copropriete",
-    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-02",
     dateModified: "2026-04-20",
     fr: {
@@ -1094,7 +1094,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "augmenter-valeur-condo-montreal",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-05",
     dateModified: "2026-04-20",
     fr: {
@@ -1184,7 +1184,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "obligations-conseil-administration-copropriete",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-08",
     dateModified: "2026-04-20",
     fr: {
@@ -1274,7 +1274,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "assemblee-generale-copropriete-guide",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-12",
     dateModified: "2026-04-20",
     fr: {
@@ -1364,7 +1364,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "choisir-gestionnaire-condo-montreal",
-    image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-15",
     dateModified: "2026-04-20",
     fr: {
@@ -1454,7 +1454,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "releve-31-rl31-guide-proprietaires-locataires-quebec",
-    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {
@@ -1536,7 +1536,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "augmentation-loyer-montreal-regles-calcul-tal",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {
@@ -1618,7 +1618,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "bail-logement-quebec-guide-complet-proprietaires",
-    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {
@@ -1700,7 +1700,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "req-neq-verifier-gestionnaire-immobilier-montreal",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=85",
+    image: "https://www.gestionvelora.com/hero-gestion-velora-1200.webp",
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {

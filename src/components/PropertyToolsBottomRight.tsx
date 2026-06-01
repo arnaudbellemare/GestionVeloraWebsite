@@ -90,7 +90,6 @@ export function PropertyToolsBottomRight() {
               </p>
               <motion.p
                 className={`font-sans text-[17px] font-semibold tabular-nums tracking-[-0.02em] ${m.color}`}
-                layout
                 transition={springBounce}
               >
                 {m.value}

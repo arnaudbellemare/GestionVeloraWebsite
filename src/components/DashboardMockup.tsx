@@ -46,6 +46,7 @@ export function DashboardMockup() {
             <motion.button
               key={tab.label}
               type="button"
+              aria-label={tab.label}
               className="flex flex-col items-center gap-1.5 shrink-0"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: chartMounted ? 1 : 0, y: chartMounted ? 0 : 4 }}

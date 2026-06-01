@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import {
   motion,
   AnimatePresence,
-  LayoutGroup,
   useReducedMotion,
 } from "framer-motion";
 import { ScrollReveal } from "./ScrollReveal";
@@ -95,8 +94,7 @@ export function TrustedPartnersSection() {
         {/* Main content: left list + right card */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           {/* Left: Vertical company list */}
-          <LayoutGroup>
-            <div className="lg:w-1/3">
+          <div className="lg:w-1/3">
               <motion.div
                 className="flex flex-row lg:flex-col gap-4 lg:gap-6 flex-wrap lg:flex-nowrap"
                 variants={listContainer}
@@ -107,6 +105,7 @@ export function TrustedPartnersSection() {
                 {partners.map((p, i) => (
                   <motion.div key={p.name} variants={listItem}>
                     <motion.button
+                      type="button"
                       onClick={() => setActiveIndex(i)}
                       className={`flex w-full items-center gap-1.5 text-left font-sans font-bold text-xl lg:text-2xl leading-tight transition-colors duration-300 ${
                         activeIndex === i
@@ -119,10 +118,8 @@ export function TrustedPartnersSection() {
                         aria-hidden
                       >
                         {activeIndex === i ? (
-                          <motion.span
-                            layoutId="trustedPartnerListAccent"
+                          <span
                             className="w-[2px] shrink-0 rounded-none bg-black dark:bg-white h-[0.58em] lg:h-[0.6em]"
-                            transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
                           />
                         ) : null}
                       </span>
@@ -131,7 +128,7 @@ export function TrustedPartnersSection() {
                   </motion.div>
                 ))}
               </motion.div>
-            </div>
+          </div>
 
             {/* Right: Dark testimonial card */}
             <motion.div
@@ -151,6 +148,7 @@ export function TrustedPartnersSection() {
                   {partners.map((p, i) => (
                     <motion.button
                       key={p.name}
+                      type="button"
                       onClick={() => setActiveIndex(i)}
                       className={`relative z-0 font-sans text-sm px-4 py-2 rounded-full transition-colors ${
                         activeIndex === i
@@ -159,10 +157,8 @@ export function TrustedPartnersSection() {
                       }`}
                     >
                       {activeIndex === i && (
-                        <motion.span
-                          layoutId="trustedPartnerTab"
+                        <span
                           className="absolute inset-0 rounded-full bg-white"
-                          transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
                         />
                       )}
                       <span className="relative z-10">{p.name}</span>
@@ -226,7 +222,6 @@ export function TrustedPartnersSection() {
                 </AnimatePresence>
               </div>
             </motion.div>
-          </LayoutGroup>
         </div>
 
         {/* Bottom: Partner logos marquee - inView on this box only; wide inner strip breaks IO ratio on mobile */}

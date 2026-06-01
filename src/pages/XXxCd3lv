@@ -138,9 +138,9 @@ export function ServicePage() {
                   className="block py-6 border-b border-black/5 dark:border-white/5 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
-                    <h4 className="font-sans font-bold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
+                    <span className="font-sans font-bold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
                       {block.title}
-                    </h4>
+                    </span>
                     <span className="font-sans text-sm text-black/50 dark:text-white/50">
                       {block.items.length} éléments
                     </span>

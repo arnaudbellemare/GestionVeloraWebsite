@@ -1,7 +1,4 @@
-import { motion, useInView } from "framer-motion";
-import { useEffect, useRef, useState, ReactNode } from "react";
-
-const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+import type { ReactNode } from "react";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -14,57 +11,6 @@ interface ScrollRevealProps {
   scale?: boolean;
 }
 
-export function ScrollReveal({
-  children,
-  className = "",
-  delay = 0,
-  direction = "up",
-  amount = 0.2,
-  duration = 0.35,
-  scale = false,
-}: ScrollRevealProps) {
-  const ref = useRef(null);
-  const [canObserve, setCanObserve] = useState(true);
-  const isInView = useInView(ref, { once: true, amount, margin: "120px 0px 120px 0px" });
-  const isVisible = isInView || !canObserve;
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && !("IntersectionObserver" in window)) {
-      setCanObserve(false);
-    }
-  }, []);
-
-  const directions = {
-    up: { y: 14, x: 0 },
-    down: { y: -14, x: 0 },
-    left: { y: 0, x: 14 },
-    right: { y: 0, x: -14 },
-  };
-
-  const { y, x } = directions[direction];
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{
-        opacity: 0,
-        y,
-        x,
-        scale: scale ? 0.98 : 1,
-      }}
-      animate={
-        isVisible
-          ? { opacity: 1, y: 0, x: 0, scale: 1 }
-          : { opacity: 0, y, x, scale: scale ? 0.98 : 1 }
-      }
-      transition={{
-        duration,
-        delay,
-        ease,
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+export function ScrollReveal(props: ScrollRevealProps) {
+  return <div className={props.className ?? ""}>{props.children}</div>;
 }

@@ -27,9 +27,9 @@ const serviceData = [
 ];
 
 const serviceImages = [
-  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=720&fm=webp&q=80&fit=crop",
+  "/images/portfolio/syndicat-enticy.webp",
   "/images/airbnb-service.webp",
-  "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=720&fm=webp&q=80&fit=crop",
+  "/images/portfolio/le-beaumont.webp",
 ];
 
 export function WhatWeDoSection() {

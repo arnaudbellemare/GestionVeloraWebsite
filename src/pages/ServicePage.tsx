@@ -238,9 +238,9 @@ export function ServicePage() {
                       onClick={() => setExpandedDetail(isExpanded ? null : i)}
                       className="w-full text-left py-5 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group cursor-pointer flex flex-col lg:flex-row lg:items-center lg:justify-between gap-1.5"
                     >
-                      <h4 className="font-sans font-semibold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
+                      <span className="font-sans font-semibold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
                         {block.title}
-                      </h4>
+                      </span>
                       <div className="flex items-center gap-2">
                         <span className="font-sans text-sm text-black/50 dark:text-white/50">
                           {detailItems.length} {t("servicePage.items")}

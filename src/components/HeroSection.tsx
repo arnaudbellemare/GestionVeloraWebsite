@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGoToContact } from "../hooks/useGoToContact";
 
@@ -8,6 +9,17 @@ export function HeroSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
+  const [loadVideo, setLoadVideo] = useState(false);
+
+  useEffect(() => {
+    const startVideo = () => setLoadVideo(true);
+    if ("requestIdleCallback" in window) {
+      const idleId = window.requestIdleCallback(startVideo, { timeout: 1600 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+    const timeoutId = globalThis.setTimeout(startVideo, 900);
+    return () => globalThis.clearTimeout(timeoutId);
+  }, []);
 
   return (
     <section
@@ -20,13 +32,17 @@ export function HeroSection() {
         loop
         muted
         playsInline
-        preload="auto"
+        preload={loadVideo ? "metadata" : "none"}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ backgroundColor: "#000" }}
         aria-hidden
       >
-        <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
-        <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
+        {loadVideo ? (
+          <>
+            <source src={HERO_VIDEO_MOBILE} type="video/mp4" media="(max-width: 767px)" />
+            <source src={HERO_VIDEO_DESKTOP} type="video/mp4" />
+          </>
+        ) : null}
       </video>
       <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
 

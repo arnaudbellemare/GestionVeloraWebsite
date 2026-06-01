@@ -38,8 +38,7 @@ export default {
         "velora-ocean-hover": "#4a8ee5",
       },
       fontFamily: {
-        /** Google Fonts - see index.html stylesheet */
-        sans: ['"DM Sans"', "system-ui", "sans-serif"],
+        sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
         mono: [
           "ui-monospace",
           "SFMono-Regular",
@@ -50,15 +49,13 @@ export default {
           "Courier New",
           "monospace",
         ],
-        /** Dot-matrix display (Nothing-adjacent) - load Doto in index.html */
-        doto: ["Doto", "ui-monospace", "monospace"],
-        display: ['"Playfair Display"', "Georgia", "serif"],
-        /** Large marketing serif blocks (was Syne) */
-        syne: ['"Instrument Serif"', "Georgia", "serif"],
-        serif: ['"Crimson Text"', "Georgia", "serif"],
-        playfair: ['"Playfair Display"', "Georgia", "serif"],
-        crimson: ['"Crimson Text"', "Georgia", "serif"],
-        instrument: ['"Instrument Serif"', "Georgia", "serif"],
+        doto: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        display: ["Georgia", "Cambria", "Times New Roman", "serif"],
+        syne: ["Georgia", "Cambria", "Times New Roman", "serif"],
+        serif: ["Georgia", "Cambria", "Times New Roman", "serif"],
+        playfair: ["Georgia", "Cambria", "Times New Roman", "serif"],
+        crimson: ["Georgia", "Cambria", "Times New Roman", "serif"],
+        instrument: ["Georgia", "Cambria", "Times New Roman", "serif"],
       },
       animation: {
         marquee: "marquee 30s linear infinite",

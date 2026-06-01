@@ -65,9 +65,9 @@ export const FooterSection = (): JSX.Element => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0 }}
           >
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.contact")}
-            </h4>
+            </p>
             <a
               href="tel:+15147771731"
               className="font-sans text-[#E8E8E8] hover:text-white transition-colors block mb-2"
@@ -92,9 +92,9 @@ export const FooterSection = (): JSX.Element => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.portals")}
-            </h4>
+            </p>
             <div className="flex flex-col gap-2">
               <a
                 href={PORTAL_URLS.manager}
@@ -122,9 +122,9 @@ export const FooterSection = (): JSX.Element => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.navigation")}
-            </h4>
+            </p>
             <nav className="flex flex-col gap-2" aria-label="Footer navigation">
               {navigationLinks.map((link) => (
                 <InternalLink
@@ -147,9 +147,9 @@ export const FooterSection = (): JSX.Element => {
             className="shrink-0 w-full min-w-0 max-w-[16rem] self-start text-left"
           >
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-2">
-              <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] whitespace-nowrap">
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] whitespace-nowrap">
                 {t("footer.ourSite")}
-              </h4>
+              </p>
               <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-[#666666] leading-none whitespace-nowrap">
                 {t("footer.qrClickMe")}
               </p>
@@ -204,9 +204,9 @@ export const FooterSection = (): JSX.Element => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="md:flex-1 xl:max-w-xs"
           >
-            <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.newsletter")}
-            </h4>
+            </p>
             <form
               onSubmit={(e) => e.preventDefault()}
               data-toolname="newsletter-subscribe"

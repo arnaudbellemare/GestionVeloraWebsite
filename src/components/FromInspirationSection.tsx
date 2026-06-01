@@ -22,7 +22,6 @@ function DownloadMockup({ t }: { t: (k: string) => string }) {
   return (
     <div className="flex justify-center py-6">
       <motion.div
-        layout
         className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-white font-sans text-sm cursor-default select-none shadow-[0_2px_12px_rgba(72,92,17,0.25)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)]"
         initial={false}
         animate={{
@@ -72,8 +71,8 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
   }, []);
 
   const items = [
-    { name: "Résidence Saint-Denis", image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=96&q=85" },
-    { name: "Immeuble Papineau", image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=96&q=85" },
+    { name: "Résidence Saint-Denis", image: "/images/portfolio/syndicat-enticy.webp" },
+    { name: "Immeuble Papineau", image: "/images/portfolio/le-beaumont.webp" },
   ];
 
   return (
@@ -89,7 +88,6 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
         {items.map((item, i) => (
           <motion.div
             key={item.name}
-            layout
             className={`flex items-center justify-between gap-2 px-3 py-2 rounded-lg cursor-default ${
               selected === i
                 ? "bg-[#e8efe4] dark:bg-[#2a3328]"
@@ -156,6 +154,7 @@ function CommentMockup({ t }: { t: (k: string) => string }) {
         <div className="flex gap-2 items-center rounded-lg border border-nd-border bg-nd-surface dark:bg-black/25 px-3 py-2">
           <input
             type="text"
+            aria-label={t("fromInspiration.comment")}
             readOnly
             value={TYPING_PHASES[idx]}
             className="flex-1 bg-transparent font-sans text-sm text-neutral-800 dark:text-neutral-200 outline-none"
@@ -163,6 +162,7 @@ function CommentMockup({ t }: { t: (k: string) => string }) {
           <span className="inline-block w-0.5 h-4 bg-neutral-400 dark:bg-neutral-500 animate-pulse" />
           <motion.button
             type="button"
+            aria-label={t("fromInspiration.comment")}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-[#485c11] text-white dark:bg-[#5a7226] dark:text-white shrink-0"
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
