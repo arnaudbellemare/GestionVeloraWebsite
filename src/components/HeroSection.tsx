@@ -4,7 +4,8 @@ import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-fast.mp4";
-const HERO_IMAGE = "/hero-video-poster.webp?v=3";
+const HERO_IMAGE = "/hero-video-poster.webp?v=4";
+const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=4";
 
 export function HeroSection() {
   const { t } = useTranslation();
@@ -20,6 +21,8 @@ export function HeroSection() {
     >
       <img
         src={HERO_IMAGE}
+        srcSet={`${HERO_IMAGE_MOBILE} 640w, ${HERO_IMAGE} 1200w`}
+        sizes="100vw"
         alt="Gestion immobilière à Montréal par Gestion Velora"
         width={1200}
         height={676}

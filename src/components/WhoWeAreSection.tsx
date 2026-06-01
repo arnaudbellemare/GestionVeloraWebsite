@@ -53,8 +53,9 @@ export function WhoWeAreSection() {
                     className="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-95"
                     width={800}
                     height={1000}
-                    loading="lazy"
+                    loading={i < 2 ? "eager" : "lazy"}
                     decoding="async"
+                    fetchPriority={i < 2 ? "high" : "auto"}
                   />
                 </div>
                 <div className="flex items-center justify-between mb-1">
