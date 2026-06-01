@@ -13,21 +13,21 @@ const EASE: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 10,
+    y: 4,
   },
   enter: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.34,
+      duration: 0.16,
       ease: EASE,
     },
   },
   exit: {
     opacity: 0,
-    y: -6,
+    y: -2,
     transition: {
-      duration: 0.2,
+      duration: 0.08,
       ease: EASE,
     },
   },
@@ -49,7 +49,7 @@ export function Layout() {
 
       <AnimatePresence
         initial={false}
-        mode="wait"
+        mode="sync"
         onExitComplete={() => {
           window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
         }}

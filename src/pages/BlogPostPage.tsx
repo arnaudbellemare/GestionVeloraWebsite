@@ -86,7 +86,7 @@ export function BlogPostPage() {
             <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white font-sans text-xs font-medium">
               {post.category}
             </span>
-            <span className="font-sans text-sm text-black/50 dark:text-white/50">{post.date}</span>
+            <span className="font-sans text-sm text-black/60 dark:text-white/70">{post.date}</span>
           </div>
           <h1 className="font-sans font-medium text-4xl lg:text-5xl text-nd-display leading-[1.05] tracking-[-0.02em] mb-6">
             {post.title}
@@ -217,7 +217,7 @@ export function BlogPostPage() {
                       className="group block font-sans text-base text-black/85 dark:text-white/85 hover:text-waabi-pink transition-colors"
                     >
                       <span className="font-medium">{r.title}</span>
-                      <span className="block text-sm text-black/50 dark:text-white/50 mt-0.5">{r.date}</span>
+                      <span className="block text-sm text-black/60 dark:text-white/70 mt-0.5">{r.date}</span>
                     </InternalLink>
                   </li>
                 ))}

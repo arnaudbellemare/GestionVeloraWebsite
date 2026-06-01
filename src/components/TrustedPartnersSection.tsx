@@ -110,7 +110,7 @@ export function TrustedPartnersSection() {
                       className={`flex w-full items-center gap-1.5 text-left font-sans font-bold text-xl lg:text-2xl leading-tight transition-colors duration-300 ${
                         activeIndex === i
                           ? "text-nd-display"
-                          : "text-nd-muted hover:text-nd-secondary dark:text-white/40 dark:hover:text-white/65"
+                          : "text-nd-secondary hover:text-nd-display dark:text-white/70 dark:hover:text-white"
                       }`}
                     >
                       <span

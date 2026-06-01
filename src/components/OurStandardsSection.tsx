@@ -52,7 +52,7 @@ export function OurStandardsSection() {
             <source src={BG_VIDEO_DESKTOP} type="video/mp4" />
           </video>
         </div>
-        <div className="absolute inset-0 bg-black/42" aria-hidden />
+        <div className="absolute inset-0 bg-black/60" aria-hidden />
       </div>
 
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-[90rem] mx-auto px-6 lg:px-16 py-24 items-center gap-12 lg:gap-14 border-b border-[#333333]">
@@ -84,7 +84,7 @@ export function OurStandardsSection() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.4, delay: 0.08, ease }}
         >
-          <p className="font-sans text-[1.02rem] lg:text-[1.1rem] text-white/88 leading-relaxed max-w-[60ch]">
+          <p className="font-sans text-[1.02rem] lg:text-[1.1rem] text-white leading-relaxed max-w-[60ch]">
             {t("ourStandards.text")}
           </p>
         </motion.div>

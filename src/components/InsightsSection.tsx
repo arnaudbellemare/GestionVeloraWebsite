@@ -152,7 +152,7 @@ export function InsightsSection() {
                         <span className="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white font-sans text-xs font-medium">
                           {loc.category}
                         </span>
-                        <span className="font-sans text-xs text-black/50 dark:text-white/50">{loc.date}</span>
+                        <span className="font-sans text-xs text-black/60 dark:text-white/70">{loc.date}</span>
                       </div>
                       <h3 className="font-sans font-bold text-black dark:text-white leading-snug group-hover:text-waabi-pink">
                         {loc.title}

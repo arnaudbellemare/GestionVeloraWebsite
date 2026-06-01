@@ -2,7 +2,7 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
+  useLayoutEffect,
   ReactNode,
 } from "react";
 
@@ -17,6 +17,12 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = "gestion-velora-theme";
 
+function applyTheme(theme: Theme) {
+  if (typeof document === "undefined") return;
+  document.documentElement.classList.remove("light", "dark");
+  document.documentElement.classList.add(theme);
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === "undefined") return "light";
@@ -24,14 +30,18 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return stored === "dark" || stored === "light" ? stored : "light";
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     localStorage.setItem(STORAGE_KEY, theme);
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
+    applyTheme(theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme((prev) => {
+      const next = prev === "light" ? "dark" : "light";
+      localStorage.setItem(STORAGE_KEY, next);
+      applyTheme(next);
+      return next;
+    });
   };
 
   return (
