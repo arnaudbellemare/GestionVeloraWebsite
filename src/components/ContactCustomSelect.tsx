@@ -122,7 +122,7 @@ export function ContactCustomSelect({
         }}
         className={`flex min-h-12 h-12 w-full items-center justify-between gap-2 rounded-md border border-nd-border-visible px-4 text-left font-nd-grotesk text-base text-nd-primary hover:border-nd-primary/45 focus:border-nd-primary focus:outline-none bg-nd-canvas ${reduceMotion ? "transition-colors" : "transition-[border-radius,colors,border-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]"} ${open ? "relative z-[1] rounded-b-none border-b-0 ring-0" : ""}`}
       >
-        <span className={showPlaceholder ? "text-nd-muted" : ""}>
+        <span className={showPlaceholder ? "text-nd-secondary" : ""}>
           {showPlaceholder ? placeholder : selectedLabel || placeholder}
         </span>
         <span

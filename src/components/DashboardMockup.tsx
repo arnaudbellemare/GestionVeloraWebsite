@@ -52,7 +52,7 @@ export function DashboardMockup() {
               animate={{ opacity: chartMounted ? 1 : 0, y: chartMounted ? 0 : 4 }}
               transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.04 }}
             >
-              <span className={`text-[11px] font-sans font-medium ${i === 1 ? "text-neutral-900 dark:text-white" : "text-neutral-400 dark:text-neutral-500"}`}>
+              <span className={`text-[11px] font-sans font-medium ${i === 1 ? "text-neutral-900 dark:text-white" : "text-neutral-700 dark:text-neutral-300"}`}>
                 {tab.label}
               </span>
               <motion.span
@@ -79,7 +79,7 @@ export function DashboardMockup() {
             M
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-sans text-[10px] text-neutral-500 dark:text-neutral-400 mb-0.5">
+            <p className="font-sans text-[10px] text-neutral-700 dark:text-neutral-300 mb-0.5">
               24/08/2024, 14h · {t("fromInspiration.msg1Author")}
             </p>
             <p className="font-sans text-xs font-medium text-neutral-800 dark:text-neutral-100 leading-snug">
@@ -98,7 +98,7 @@ export function DashboardMockup() {
             P
           </div>
           <div className="flex-1 min-w-0">
-            <p className="font-sans text-[10px] text-neutral-500 dark:text-neutral-400 mb-0.5">
+            <p className="font-sans text-[10px] text-neutral-700 dark:text-neutral-300 mb-0.5">
               24/08/2024, 15h · {t("fromInspiration.msg2Author")}
             </p>
             <p className="font-sans text-xs text-neutral-600 dark:text-neutral-300 leading-snug">
@@ -131,7 +131,7 @@ export function DashboardMockup() {
               />
             ))}
           </div>
-          <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400">
+          <span className="font-sans text-xs text-neutral-700 dark:text-neutral-300">
             {t("fromInspiration.marieWriting")}
           </span>
         </motion.div>

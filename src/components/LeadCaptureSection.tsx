@@ -115,7 +115,7 @@ export function LeadCaptureSection({ variant = "homepage" }: LeadCaptureSectionP
               </p>
             )}
 
-            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-black/35 dark:text-white/30">
+            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-black/60 dark:text-white/65">
               {t("leadCapture.legal")}
             </p>
           </div>

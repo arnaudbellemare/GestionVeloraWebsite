@@ -8,6 +8,31 @@ type AnalyticsItem = {
 type DataLayerPayload = Record<string, unknown>;
 
 let analyticsBooted = false;
+let webVitalsBooted = false;
+
+type WebVitalName = "FCP" | "LCP" | "CLS" | "INP" | "TTFB";
+
+type WebVitalPayload = {
+  name: WebVitalName;
+  value: number;
+  rating: "good" | "needs-improvement" | "poor";
+  page_path: string;
+};
+
+type LayoutShiftEntry = PerformanceEntry & {
+  value: number;
+  hadRecentInput: boolean;
+};
+
+type LargestContentfulPaintEntry = PerformanceEntry & {
+  renderTime: number;
+  loadTime: number;
+};
+
+type PerformanceEventTimingEntry = PerformanceEntry & {
+  duration: number;
+  interactionId?: number;
+};
 
 function ensureDataLayer() {
   window.dataLayer = window.dataLayer || [];
@@ -18,6 +43,7 @@ export function initAnalytics() {
   if (typeof window === "undefined" || typeof document === "undefined" || analyticsBooted) return;
   analyticsBooted = true;
   ensureDataLayer();
+  initWebVitalsTracking();
 }
 
 export function trackPageView(pagePath: string, pageTitle = document.title) {
@@ -32,6 +58,113 @@ export function trackPageView(pagePath: string, pageTitle = document.title) {
 function pushDataLayer(payload: DataLayerPayload) {
   if (typeof window === "undefined") return;
   ensureDataLayer().push(payload);
+}
+
+function rateWebVital(name: WebVitalName, value: number): WebVitalPayload["rating"] {
+  const thresholds: Record<WebVitalName, [number, number]> = {
+    FCP: [1800, 3000],
+    LCP: [2500, 4000],
+    CLS: [0.1, 0.25],
+    INP: [200, 500],
+    TTFB: [800, 1800],
+  };
+  const [good, poor] = thresholds[name];
+  if (value <= good) return "good";
+  if (value <= poor) return "needs-improvement";
+  return "poor";
+}
+
+function trackWebVital({ name, value, rating, page_path }: WebVitalPayload) {
+  pushDataLayer({
+    event: "web_vital",
+    web_vital_name: name,
+    web_vital_value: Math.round(value * 1000) / 1000,
+    web_vital_rating: rating,
+    page_path,
+  });
+}
+
+function reportWebVital(name: WebVitalName, value: number) {
+  trackWebVital({
+    name,
+    value,
+    rating: rateWebVital(name, value),
+    page_path: window.location.pathname + window.location.search,
+  });
+}
+
+function observePerformanceEntries(
+  type: string,
+  callback: (entry: PerformanceEntry) => void,
+  buffered = true
+) {
+  if (!("PerformanceObserver" in window)) return undefined;
+
+  try {
+    const observer = new PerformanceObserver((list) => {
+      list.getEntries().forEach(callback);
+    });
+    observer.observe({ type, buffered });
+    return observer;
+  } catch {
+    return undefined;
+  }
+}
+
+function initWebVitalsTracking() {
+  if (webVitalsBooted || typeof window === "undefined" || typeof performance === "undefined") return;
+  webVitalsBooted = true;
+
+  const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+  if (navigation?.responseStart) {
+    reportWebVital("TTFB", navigation.responseStart);
+  }
+
+  let fcpReported = false;
+  observePerformanceEntries("paint", (entry) => {
+    if (entry.name !== "first-contentful-paint" || fcpReported) return;
+    fcpReported = true;
+    reportWebVital("FCP", entry.startTime);
+  });
+
+  let lcpValue = 0;
+  const lcpObserver = observePerformanceEntries("largest-contentful-paint", (entry) => {
+    const lcpEntry = entry as LargestContentfulPaintEntry;
+    lcpValue = lcpEntry.renderTime || lcpEntry.loadTime || lcpEntry.startTime;
+  });
+
+  let clsValue = 0;
+  observePerformanceEntries("layout-shift", (entry) => {
+    const layoutShift = entry as LayoutShiftEntry;
+    if (!layoutShift.hadRecentInput) clsValue += layoutShift.value;
+  });
+
+  let inpValue = 0;
+  observePerformanceEntries("event", (entry) => {
+    const eventEntry = entry as PerformanceEventTimingEntry;
+    if (eventEntry.interactionId && eventEntry.duration > inpValue) {
+      inpValue = eventEntry.duration;
+    }
+  });
+
+  let finalMetricsSent = false;
+  const sendFinalMetrics = () => {
+    if (finalMetricsSent) return;
+    finalMetricsSent = true;
+    lcpObserver?.disconnect();
+    if (lcpValue > 0) reportWebVital("LCP", lcpValue);
+    reportWebVital("CLS", clsValue);
+    if (inpValue > 0) reportWebVital("INP", inpValue);
+  };
+
+  window.addEventListener("pagehide", sendFinalMetrics, { once: true });
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+      if (document.visibilityState === "hidden") sendFinalMetrics();
+    },
+    { once: true }
+  );
 }
 
 export function trackServiceListView(

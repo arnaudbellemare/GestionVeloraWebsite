@@ -67,7 +67,7 @@ export function InsightsSection() {
               {t("insights.subtitle")}{" "}
               <InternalLink
                 to="/services"
-                className="text-waabi-pink hover:underline underline-offset-2 whitespace-nowrap"
+                className="text-waabi-pink font-medium underline underline-offset-4 decoration-current whitespace-nowrap"
               >
                 {t("insights.viewServices")}
               </InternalLink>

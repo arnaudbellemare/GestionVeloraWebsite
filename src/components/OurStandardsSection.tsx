@@ -53,7 +53,6 @@ export function OurStandardsSection() {
           />
           <video
             ref={videoRef}
-            poster={BG_IMAGE}
             autoPlay
             loop
             muted

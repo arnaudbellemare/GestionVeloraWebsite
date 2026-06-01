@@ -22,12 +22,10 @@ function DownloadMockup({ t }: { t: (k: string) => string }) {
   return (
     <div className="flex justify-center py-6">
       <motion.div
-        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-white font-sans text-sm cursor-default select-none shadow-[0_2px_12px_rgba(72,92,17,0.25)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)]"
+        className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-white font-sans text-sm cursor-default select-none shadow-[0_2px_12px_rgba(72,92,17,0.25)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)] ${
+          copied ? "bg-[#5a7026]" : "bg-[#485c11]"
+        }`}
         initial={false}
-        animate={{
-          backgroundColor: copied ? "rgb(90, 112, 38)" : "rgb(72, 92, 17)",
-        }}
-        transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
       >
         {copied ? (
           <>
@@ -78,10 +76,10 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
   return (
     <div className="rounded-2xl border border-nd-border bg-nd-canvas shadow-sm dark:border-nd-border dark:bg-nd-raised dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)] overflow-hidden">
       <div className="px-4 py-3 border-b border-nd-border">
-        <p className="font-sans text-xs font-medium text-neutral-600 dark:text-neutral-400">{t("fromInspiration.archiveIn")}</p>
+        <p className="font-sans text-xs font-medium text-neutral-700 dark:text-neutral-300">{t("fromInspiration.archiveIn")}</p>
       </div>
       <div className="p-2 space-y-1">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-neutral-500 dark:text-neutral-400 hover:bg-nd-surface/80 dark:hover:bg-black/20 cursor-default">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-neutral-700 dark:text-neutral-300 hover:bg-nd-surface/80 dark:hover:bg-black/20 cursor-default">
           <span className="text-lg">+</span>
           <span className="font-sans text-sm">{t("fromInspiration.newFolder")}</span>
         </div>
@@ -140,12 +138,12 @@ function CommentMockup({ t }: { t: (k: string) => string }) {
       <div className="p-4 space-y-3">
         <div className="flex gap-2">
           <div className="h-7 w-7 rounded-full bg-neutral-300 dark:bg-neutral-500 flex items-center justify-center shrink-0" title="Profil par défaut">
-            <svg className="h-4 w-4 text-neutral-500 dark:text-neutral-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+            <svg className="h-4 w-4 text-neutral-600 dark:text-neutral-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
             </svg>
           </div>
           <div>
-            <p className="font-sans text-xs text-neutral-500 dark:text-neutral-400">{t("fromInspiration.you2h")}</p>
+            <p className="font-sans text-xs text-neutral-700 dark:text-neutral-300">{t("fromInspiration.you2h")}</p>
             <p className="font-sans text-sm text-neutral-800 dark:text-neutral-200">
               {t("fromInspiration.quotePlaceholder")}
             </p>

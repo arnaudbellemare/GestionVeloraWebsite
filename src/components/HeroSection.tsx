@@ -4,21 +4,30 @@ import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-fast.mp4";
+const HERO_IMAGE = "/hero-video-poster.webp";
 
 export function HeroSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
   const [loadVideo, setLoadVideo] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     const startVideo = () => setLoadVideo(true);
-    if ("requestIdleCallback" in window) {
-      const idleId = window.requestIdleCallback(startVideo, { timeout: 1600 });
-      return () => window.cancelIdleCallback(idleId);
-    }
-    const timeoutId = globalThis.setTimeout(startVideo, 900);
-    return () => globalThis.clearTimeout(timeoutId);
+    const options = { once: true, passive: true } as AddEventListenerOptions;
+
+    window.addEventListener("scroll", startVideo, options);
+    window.addEventListener("pointerdown", startVideo, options);
+    window.addEventListener("touchstart", startVideo, options);
+    window.addEventListener("keydown", startVideo, { once: true });
+
+    return () => {
+      window.removeEventListener("scroll", startVideo);
+      window.removeEventListener("pointerdown", startVideo);
+      window.removeEventListener("touchstart", startVideo);
+      window.removeEventListener("keydown", startVideo);
+    };
   }, []);
 
   return (
@@ -27,14 +36,25 @@ export function HeroSection() {
       className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-black"
       aria-label="Hero"
     >
+      <img
+        src={HERO_IMAGE}
+        alt=""
+        aria-hidden
+        width={1200}
+        height={676}
+        decoding="async"
+        fetchPriority="high"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
       <video
         autoPlay
         loop
         muted
         playsInline
         preload={loadVideo ? "metadata" : "none"}
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ backgroundColor: "#000" }}
+        onCanPlay={() => setVideoReady(true)}
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
+        style={{ opacity: videoReady ? 1 : 0 }}
         aria-hidden
       >
         {loadVideo ? (
