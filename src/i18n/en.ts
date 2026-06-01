@@ -310,11 +310,11 @@ export const en = {
   servicesHub: {
     title: "Our services",
     subtitle:
-      "Three ways we support your asset in Montreal: condo boards, short-term rentals, and long-term leases.",
+      "Condo corporation management, Airbnb operations, and long-term rental management in Greater Montreal.",
     ctaLearn: "Learn more",
-    metaTitle: "Condo, Airbnb & Rental Services in Montreal | Gestion Velora",
+    metaTitle: "Condo Corporation, Airbnb & Rental Services | Gestion Velora",
     metaDescription:
-      "Condo management, Airbnb management, and residential leasing in Montreal - transparency, proactive maintenance, and a responsive team.",
+      "Montreal services for condo corporation management, condo administration, Airbnb management, and residential leasing.",
     schemaName: "Gestion Velora services",
   },
 
@@ -447,20 +447,20 @@ export const en = {
   services: {
     "syndicat-copropriete": {
       title: "Condo board management",
-      subtitle: "Budget, AGM, reserve fund, common areas, and Loi 141 compliance.",
-      metaTitle: "Condo Management Montreal | Gestion Velora",
+      subtitle: "Condo corporation management in Montreal: budget, AGM, reserve fund, and compliance.",
+      metaTitle: "Condo Corporation Management Montreal | Gestion Velora",
       metaDescription:
-        "Condo management in Montreal for condo boards: budgets, AGMs, reserve funds, registers, common areas, and Loi 141 compliance.",
+        "Gestion Velora supports Montreal condo corporations with clear administrative, financial, and operational management, proactive reporting, and 24/7 support.",
       description:
-        "Gestion Velora is a Montreal condo management firm specializing in full condo board administration. We handle the administrative, financial, and technical management of your condo corporation: annual budget, common fees, reserve fund, annual general meeting (AGM), condo register, common area maintenance, and Loi 141 compliance. Our dedicated condo manager ensures full transparency for the board and every unit owner.",
+        "Gestion Velora is a Montreal condo corporation management firm specializing in full condo board administration. We handle the administrative, financial, and technical management of your condo corporation: annual budget, common fees, reserve fund, annual general meeting (AGM), condo register, common area maintenance, and Loi 141 compliance. Our dedicated condo manager ensures full transparency for the board and every unit owner.",
       offerings: [
         {
-          title: "Administration and board governance",
+          title: "Condo corporation administration",
           items: [
             "Convening and conducting the annual general meeting (AGM)",
             "Meeting minutes and condo register maintenance",
             "Board decision management",
-            "Loi 141 and condo declaration compliance",
+            "Condo corporation administration aligned with Loi 141 and the declaration",
           ],
           detailItems: [
             "Shared annual compliance calendar (AGM, budget, insurance, vendor contracts) with the board.",
@@ -475,7 +475,7 @@ export const en = {
             "Reserve fund management",
             "Annual condo budget preparation",
             "Common fee and special assessment collection",
-            "Financial reports and condo accounting",
+            "Montreal condo financial management with clear monthly reports",
           ],
           detailItems: [
             "Line-by-line annual budget with assumptions and year-over-year comparisons.",
@@ -487,7 +487,7 @@ export const en = {
         {
           title: "Technical management and common area maintenance",
           items: [
-            "Common area and building maintenance",
+            "Common area maintenance and condo management in Montreal",
             "Contractor selection and bid management",
             "Maintenance contract follow-up and preventive maintenance",
             "Emergency and claim management",
@@ -504,8 +504,8 @@ export const en = {
           items: [
             "Liaison with unit owners and the board",
             "Complaint and request handling",
-            "Transparency in all reports",
-            "Ongoing administrative support",
+            "Transparency in all condo corporation reports",
+            "Ongoing administrative support for small and mid-sized condo corporations",
           ],
           detailItems: [
             "Single communication channel to reduce delays and conflicting information.",
@@ -516,6 +516,14 @@ export const en = {
         },
       ],
       faq: [
+        {
+          q: "How do you choose a condo corporation manager in Montreal?",
+          a: "Look for a Montreal condo corporation manager who can handle administration, financial management, technical coordination, register maintenance, AGM preparation, and owner communication. Gestion Velora combines clear reporting, proactive follow-up, and 24/7 support for condo boards.",
+        },
+        {
+          q: "Do you manage small condo corporations in Montreal?",
+          a: "Yes. We support small and mid-sized condo corporations that want to delegate administrative and financial management while keeping board control over decisions. A mandate can include budgets, common fees, minutes, register maintenance, and vendor follow-up.",
+        },
         {
           q: "How often should the reserve study be updated?",
           a: "Best practice is periodic updates (often every three to five years depending on the building) so the reserve fund matches real replacement costs.",

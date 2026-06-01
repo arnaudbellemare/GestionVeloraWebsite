@@ -313,11 +313,11 @@ export const fr = {
   servicesHub: {
     title: "Services de gestion immobilière à Montréal",
     subtitle:
-      "Trois façons d’accompagner votre actif à Montréal : copropriété, courte durée et location longue durée.",
+      "Gestion de syndicat de copropriété, Airbnb et location longue durée dans le Grand Montréal.",
     ctaLearn: "En savoir plus",
-    metaTitle: "Syndicat, Airbnb et location : services à Montréal | Gestion Velora",
+    metaTitle: "Gestion syndicat copropriété, Airbnb et location | Gestion Velora",
     metaDescription:
-      "Services à Montréal : syndicats de copropriété, gestion Airbnb et location résidentielle. Administration, finances et technique.",
+      "Services à Montréal : gestion de syndicat de copropriété, administration de condo, gestion Airbnb et location résidentielle.",
     schemaName: "Services Gestion Velora",
   },
 
@@ -450,20 +450,20 @@ export const fr = {
   services: {
     "syndicat-copropriete": {
       title: "Syndicat de copropriété",
-      subtitle: "Budget, AGA, fonds de prévoyance, parties communes et conformité Loi 141.",
-      metaTitle: "Gestion de copropriété Montréal | Gestion Velora",
+      subtitle: "Gestion de syndicat de copropriété à Montréal : budget, AGA, fonds de prévoyance et conformité.",
+      metaTitle: "Gestion de syndicat de copropriété à Montréal | Gestion Velora",
       metaDescription:
-        "Gestion de copropriété à Montréal pour syndicats : budget, AGA, fonds de prévoyance, registre, parties communes et conformité Loi 141.",
+        "Gestion Velora accompagne les syndicats de copropriété à Montréal avec une gestion administrative, financière et opérationnelle claire, proactive et disponible 24/7.",
       description:
-        "Gestion Velora est une firme de gestion de copropriété à Montréal spécialisée dans l'administration complète des syndicats de copropriétaires. Nous prenons en charge la gestion administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Notre gestionnaire de copropriété attitré assure la transparence pour le conseil d'administration et chaque copropriétaire.",
+        "Gestion Velora est une firme de gestion de syndicat de copropriété à Montréal spécialisée dans l'administration complète des syndicats de copropriétaires. Nous prenons en charge la gestion administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Notre gestionnaire de copropriété attitré assure la transparence pour le conseil d'administration et chaque copropriétaire.",
       offerings: [
         {
-          title: "Administration et gouvernance du syndicat",
+          title: "Administration de syndicat de copropriété",
           items: [
             "Convocation et tenue de l'assemblée générale annuelle (AGA)",
             "Rédaction des procès-verbaux et tenue du registre de copropriété",
             "Gestion des décisions du conseil d'administration",
-            "Conformité à la Loi 141 et à la déclaration de copropriété",
+            "Administration du syndicat de copropriété conforme à la Loi 141 et à la déclaration",
           ],
           detailItems: [
             "Calendrier annuel des obligations (AGA, budget, assurances, contrats) partagé avec le CA.",
@@ -478,7 +478,7 @@ export const fr = {
             "Gestion du fonds de prévoyance",
             "Élaboration du budget annuel de copropriété",
             "Perception des charges communes et cotisations spéciales",
-            "Rapports financiers et gestion comptable de copropriété",
+            "Gestion financière de copropriété à Montréal avec rapports mensuels clairs",
           ],
           detailItems: [
             "Budget annuel détaillé par poste avec hypothèses claires et comparaison à l'exercice précédent.",
@@ -490,7 +490,7 @@ export const fr = {
         {
           title: "Entretien et gestion technique de copropriété",
           items: [
-            "Entretien des parties communes et de l'immeuble",
+            "Entretien des parties communes et gestion de condo à Montréal",
             "Sélection des entrepreneurs et appels d'offres",
             "Suivi des contrats d'entretien et maintenance préventive",
             "Gestion des urgences et sinistres",
@@ -507,8 +507,8 @@ export const fr = {
           items: [
             "Liaison avec les copropriétaires et le conseil d'administration",
             "Gestion des plaintes et demandes",
-            "Transparence dans tous les rapports",
-            "Support administratif continu",
+            "Transparence dans tous les rapports du syndicat",
+            "Support administratif continu pour petites et moyennes copropriétés",
           ],
           detailItems: [
             "Canal de communication unique pour réduire les délais et éviter les informations contradictoires.",
@@ -519,6 +519,14 @@ export const fr = {
         },
       ],
       faq: [
+        {
+          q: "Quel gestionnaire choisir pour un syndicat de copropriété à Montréal ?",
+          a: "Choisissez un gestionnaire de syndicat de copropriété à Montréal capable de couvrir l'administration, la gestion financière, la coordination technique, la tenue du registre, la préparation de l'AGA et les communications avec les copropriétaires. Gestion Velora combine rapports clairs, suivi proactif et disponibilité 24/7 pour les conseils d'administration.",
+        },
+        {
+          q: "Offrez-vous la gestion de petites copropriétés à Montréal ?",
+          a: "Oui. Nous accompagnons les petites et moyennes copropriétés qui veulent déléguer la gestion administrative et financière sans perdre le contrôle des décisions. Le mandat peut couvrir le budget, les charges communes, les procès-verbaux, le registre et le suivi des fournisseurs.",
+        },
         {
           q: "À quelle fréquence l'étude de réserve doit-elle être révisée ?",
           a: "Les bonnes pratiques recommandent une mise à jour périodique (souvent aux trois ou cinq ans selon l'immeuble) pour aligner le fonds de prévoyance sur les coûts réels de remplacement.",

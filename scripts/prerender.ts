@@ -987,9 +987,10 @@ function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
     locale === "fr"
       ? `<p>Pour comparer ce mandat avec les autres options, consultez aussi <a href="/services">tous les services</a>, <a href="/tarifs">les tarifs</a> et <a href="/blog">les articles de gestion immobilière</a>.</p>`
       : `<p>To compare this mandate with other options, see <a href="/en/services">all services</a>, <a href="/en/tarifs">pricing</a>, and <a href="/en/blog">property management articles</a>.</p>`;
+  const h1 = svc.subtitle || svc.title;
   return `<main lang="${lang}">
-  <h1>${escapeHtml(svc.title)}</h1>
-  ${svc.subtitle ? `<p>${escapeHtml(svc.subtitle)}</p>` : ""}
+  <h1>${escapeHtml(h1)}</h1>
+  ${svc.subtitle && svc.subtitle !== svc.title ? `<p>${escapeHtml(svc.title)}</p>` : ""}
   <p>${escapeHtml(svc.description)}</p>
 ${offeringHtml}
 ${serviceLinks}
