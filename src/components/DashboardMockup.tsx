@@ -43,26 +43,27 @@ export function DashboardMockup() {
       <div className="px-4 py-3 border-b border-neutral-100 dark:border-white/[0.06]">
         <div className="flex items-end justify-between gap-1">
           {TABS.map((tab, i) => (
-            <motion.button
+            <button
               key={tab.label}
               type="button"
               aria-label={tab.label}
               className="flex flex-col items-center gap-1.5 shrink-0"
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: chartMounted ? 1 : 0, y: chartMounted ? 0 : 4 }}
-              transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1], delay: i * 0.04 }}
+              style={{
+                opacity: chartMounted ? 1 : 0,
+                transform: chartMounted ? "translateY(0)" : "translateY(4px)",
+              }}
             >
               <span className={`text-[11px] font-sans font-medium ${i === 1 ? "text-neutral-900 dark:text-white" : "text-neutral-700 dark:text-neutral-300"}`}>
                 {tab.label}
               </span>
-              <motion.span
+              <span
                 className={`block h-[2px] rounded-full min-w-[20px] ${i === 1 ? "bg-neutral-900 dark:bg-white" : "bg-neutral-200 dark:bg-white/10"}`}
-                style={{ transformOrigin: "left" }}
-                initial={{ scaleX: 0 }}
-                animate={chartMounted ? { scaleX: 1 } : { scaleX: 0 }}
-                transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1], delay: 0.12 + i * 0.04 }}
+                style={{
+                  transformOrigin: "left",
+                  transform: chartMounted ? "scaleX(1)" : "scaleX(0)",
+                }}
               />
-            </motion.button>
+            </button>
           ))}
         </div>
       </div>
@@ -139,7 +140,7 @@ export function DashboardMockup() {
         {/* Reply button */}
         <motion.button
           type="button"
-          className="w-full mt-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-600 text-neutral-800 dark:text-neutral-100 font-sans text-xs font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors"
+          className="w-full mt-3 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-600 text-neutral-800 dark:text-neutral-100 font-sans text-xs font-medium hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
         >
           {t("fromInspiration.reply")}
         </motion.button>

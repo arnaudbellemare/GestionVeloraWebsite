@@ -49,7 +49,7 @@ export function BlogPage() {
                     i
                   )
                 }
-                className="group block rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 hover:border-waabi-pink/30 transition-colors"
+                className="group block rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 hover:border-waabi-pink/30"
               >
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
@@ -70,7 +70,7 @@ export function BlogPage() {
                     </span>
                     <span className="font-sans text-xs text-black/50 dark:text-white/50">{loc.date}</span>
                   </div>
-                  <h2 id={`blog-card-${post.slug}`} className="font-sans font-bold text-lg text-black dark:text-white group-hover:text-waabi-pink transition-colors">
+                  <h2 id={`blog-card-${post.slug}`} className="font-sans font-bold text-lg text-black dark:text-white group-hover:text-waabi-pink">
                     {loc.title}
                   </h2>
                   <p className="font-sans text-sm text-black/60 dark:text-white/60 mt-2 line-clamp-2">
