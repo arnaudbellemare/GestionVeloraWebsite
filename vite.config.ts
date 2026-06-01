@@ -19,6 +19,16 @@ function geoHtmlOptimizations(): Plugin {
           /<link rel="stylesheet" crossorigin href="(\/assets\/index-[^"]+\.css)">/,
           '<link rel="stylesheet" crossorigin href="$1" media="print" onload="this.media=\'all\'" />\n    <noscript><link rel="stylesheet" crossorigin href="$1" /></noscript>'
         )
+        const assetHintPattern =
+          /\n\s*(?:<script type="module" crossorigin defer src="\/assets\/index-[^"]+\.js"><\/script>|<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js">|<link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css" media="print" onload="this\.media='all'" \/>|<noscript><link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css" \/><\/noscript>)/g
+        const assetHints = out.match(assetHintPattern)
+        if (assetHints?.length) {
+          out = out.replace(assetHintPattern, '')
+          out = out.replace(
+            /(<meta charset="UTF-8" \/>\n)/,
+            `$1${assetHints.map((tag) => `${tag.trimStart()}\n`).join('')}`
+          )
+        }
         return out
       },
     },
