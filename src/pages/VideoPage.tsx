@@ -1,7 +1,7 @@
 import { useLocale } from "../context/LocaleContext";
 import { SITE_URL } from "../config";
 
-const VIDEO_SRC = "/videos/hero-bg-mobile.mp4";
+const VIDEO_SRC = "/videos/hero-bg-mobile-quality.mp4";
 const VIDEO_POSTER = "/og-image.png";
 
 export function VideoPage() {

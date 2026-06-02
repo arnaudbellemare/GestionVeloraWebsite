@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
-const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-fast.mp4";
+const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-quality.mp4";
 const HERO_IMAGE = "/hero-video-poster.webp?v=5";
 const HERO_IMAGE_MEDIUM = "/hero-video-poster-960.webp?v=5";
 const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=5";

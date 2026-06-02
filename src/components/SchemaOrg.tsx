@@ -242,8 +242,8 @@ export function SchemaOrg() {
           description: videoDescription,
           thumbnailUrl: `${SITE_URL}/og-image.png`,
           uploadDate: "2026-04-30",
-          duration: "PT11S",
-          contentUrl: `${SITE_URL}/videos/hero-bg-mobile.mp4`,
+          duration: "PT29S",
+          contentUrl: `${SITE_URL}/videos/hero-bg-mobile-quality.mp4`,
           embedUrl: watchUrl,
           inLanguage: isEn ? "en-CA" : "fr-CA",
           publisher: {
