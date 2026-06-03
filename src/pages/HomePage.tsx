@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, type ReactNode, useEffect, useRef, useState } from "react";
 import { HeroSection } from "../components/HeroSection";
 
 const StatsSection = lazy(() =>
@@ -77,42 +77,96 @@ function SectionSpacer() {
   return <div className="h-px bg-nd-border" aria-hidden />;
 }
 
-function DeferredHomeSections() {
+interface ViewportSectionProps {
+  children: ReactNode;
+  minHeight: number;
+  rootMargin?: string;
+}
+
+function ViewportSection({ children, minHeight, rootMargin = "900px 0px" }: ViewportSectionProps) {
   const [shouldRender, setShouldRender] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const show = () => setShouldRender(true);
-    if ("requestIdleCallback" in window) {
-      const idleId = window.requestIdleCallback(show, { timeout: 1800 });
-      return () => window.cancelIdleCallback(idleId);
-    }
-    const timeoutId = globalThis.setTimeout(show, 900);
-    return () => globalThis.clearTimeout(timeoutId);
-  }, []);
+    if (shouldRender) return;
+    const node = ref.current;
+    if (!node) return;
 
-  if (!shouldRender) return null;
+    if (!("IntersectionObserver" in window)) {
+      const timeoutId = globalThis.setTimeout(() => setShouldRender(true), 600);
+      return () => globalThis.clearTimeout(timeoutId);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        setShouldRender(true);
+        observer.disconnect();
+      },
+      { rootMargin },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [rootMargin, shouldRender]);
 
   return (
-    <Suspense fallback={null}>
-      <StatsSection />
-      <WhoWeAreSection />
-      <ValueLabelsSection />
-      <WhatWeDoSection />
-      <OurStandardsSection />
-      <FromInspirationSection />
+    <div ref={ref} style={{ minHeight }}>
+      {shouldRender ? <Suspense fallback={null}>{children}</Suspense> : null}
+    </div>
+  );
+}
+
+function DeferredHomeSections() {
+  return (
+    <>
+      <ViewportSection minHeight={360} rootMargin="1100px 0px">
+        <StatsSection />
+      </ViewportSection>
+      <ViewportSection minHeight={820}>
+        <WhoWeAreSection />
+      </ViewportSection>
+      <ViewportSection minHeight={560}>
+        <ValueLabelsSection />
+      </ViewportSection>
+      <ViewportSection minHeight={760}>
+        <WhatWeDoSection />
+      </ViewportSection>
+      <ViewportSection minHeight={760}>
+        <OurStandardsSection />
+      </ViewportSection>
+      <ViewportSection minHeight={900}>
+        <FromInspirationSection />
+      </ViewportSection>
       <SectionSpacer />
-      <OurProcessSection />
+      <ViewportSection minHeight={760}>
+        <OurProcessSection />
+      </ViewportSection>
       <SectionSpacer />
-      <TrustedPartnersSection />
+      <ViewportSection minHeight={620}>
+        <TrustedPartnersSection />
+      </ViewportSection>
       <SectionSpacer />
-      <TeamSection />
+      <ViewportSection minHeight={620}>
+        <TeamSection />
+      </ViewportSection>
       <SectionSpacer />
-      <PortalAccessSection />
-      <InsightsSection />
-      <LeadCaptureSection variant="homepage" />
-      <FAQSection />
-      <ContactSection />
-    </Suspense>
+      <ViewportSection minHeight={700}>
+        <PortalAccessSection />
+      </ViewportSection>
+      <ViewportSection minHeight={720}>
+        <InsightsSection />
+      </ViewportSection>
+      <ViewportSection minHeight={700}>
+        <LeadCaptureSection variant="homepage" />
+      </ViewportSection>
+      <ViewportSection minHeight={760}>
+        <FAQSection />
+      </ViewportSection>
+      <ViewportSection minHeight={760}>
+        <ContactSection />
+      </ViewportSection>
+    </>
   );
 }
 
