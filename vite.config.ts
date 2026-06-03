@@ -9,10 +9,10 @@ function geoHtmlOptimizations(): Plugin {
       order: 'post',
       handler(html) {
         let out = html
-        // Entry chunk: tools often flag module scripts without an explicit defer attribute
+        // Entry chunk: surface the hashed module as a high-priority preload before execution.
         out = out.replace(
           /<script type="module" crossorigin src="([^"]+)"><\/script>/,
-          '<script type="module" crossorigin defer src="$1"></script>'
+          '<link rel="modulepreload" crossorigin href="$1" fetchpriority="high">\n    <script type="module" crossorigin defer fetchpriority="high" src="$1"></script>'
         )
         // Main Tailwind/Vite CSS: load as non-render-blocking (print → all); noscript fallback
         out = out.replace(
@@ -20,7 +20,7 @@ function geoHtmlOptimizations(): Plugin {
           '<link rel="stylesheet" crossorigin href="$1" media="print" onload="this.media=\'all\'" />\n    <noscript><link rel="stylesheet" crossorigin href="$1" /></noscript>'
         )
         const assetHintPattern =
-          /\n\s*(?:<script type="module" crossorigin defer src="\/assets\/index-[^"]+\.js"><\/script>|<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js">|<link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css" media="print" onload="this\.media='all'" \/>|<noscript><link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css" \/><\/noscript>)/g
+          /\n\s*(?:<script type="module" crossorigin defer fetchpriority="high" src="\/assets\/index-[^"]+\.js"><\/script>|<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js"(?: fetchpriority="high")?>|<link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css" media="print" onload="this\.media='all'" \/>|<noscript><link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css" \/><\/noscript>)/g
         const assetHints = out.match(assetHintPattern)
         if (assetHints?.length) {
           out = out.replace(assetHintPattern, '')
