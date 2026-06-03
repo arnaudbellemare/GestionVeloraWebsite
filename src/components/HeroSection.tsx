@@ -56,7 +56,7 @@ export function HeroSection() {
           alt="Gestion immobilière à Montréal par Gestion Velora"
           width={1200}
           height={676}
-          decoding="async"
+          decoding="sync"
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover"
         />

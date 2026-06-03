@@ -59,7 +59,8 @@ export const HeaderSection = (): JSX.Element => {
               width={40}
               height={40}
               loading="eager"
-              decoding="async"
+              decoding="sync"
+              fetchPriority="high"
             />
             <span className="font-sans font-medium text-[#E8E8E8] text-[15px] hidden sm:inline tracking-tight">
               Gestion Velora

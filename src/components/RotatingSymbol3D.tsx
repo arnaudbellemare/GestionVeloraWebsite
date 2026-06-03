@@ -87,18 +87,26 @@ export function RotatingSymbol3D({ className = "" }: { className?: string }) {
     };
     animate();
 
+    let resizeRaf = 0;
     const handleResize = () => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = 0;
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (!w || !h) return;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      });
     };
-    window.addEventListener("resize", handleResize);
+    const ro = new ResizeObserver(handleResize);
+    ro.observe(container);
 
     return () => {
       cancelAnimationFrame(animationId);
-      window.removeEventListener("resize", handleResize);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      ro.disconnect();
       renderer.dispose();
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
