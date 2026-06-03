@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { blogCoverUrl } from "../lib/blogImages";
 import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
 import {
@@ -151,7 +152,7 @@ export function SchemaOrg() {
                 name: post[blogLang].title,
                 url: `${base}/blog/${post.slug}`,
                 datePublished: post.datePublished,
-                image: post.image,
+                image: blogCoverUrl(post.image),
               },
             })),
           });
@@ -167,7 +168,7 @@ export function SchemaOrg() {
                 "@type": "Article",
                 headline: post.title,
                 description: post.excerpt,
-                image: post.image,
+                image: blogCoverUrl(post.image),
                 datePublished: post.datePublished,
                 dateModified: post.dateModified,
                 author: {

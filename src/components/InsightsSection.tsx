@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocale } from "../context/LocaleContext";
 import { motion } from "framer-motion";
 import type { BlogPost } from "../data/blog";
+import { BlogPostCover } from "./BlogPostCover";
 import { InternalLink } from "./InternalLink";
 import { ScrollReveal } from "./ScrollReveal";
 import { trackBlogSelect } from "../lib/analytics";
@@ -137,15 +138,7 @@ export function InsightsSection() {
                     className="h-full rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 hover:border-waabi-pink/30 group"
                   >
                     <div className="aspect-[4/3] overflow-hidden">
-                      <img
-                        src={post.image}
-                        alt={post[locale].title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        width={1200}
-                        height={900}
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      <BlogPostCover src={post.image} alt={loc.title} loading="lazy" />
                     </div>
                     <div className="p-6">
                       <div className="flex flex-wrap gap-2 mb-3">

@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { BlogPostCover } from "../components/BlogPostCover";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
@@ -120,16 +121,7 @@ export function BlogPostPage() {
 
         <ScrollReveal delay={0.1}>
           <div className="mt-12 mb-12 rounded-2xl overflow-hidden">
-            <img
-              src={post.image}
-              alt={post.title}
-              className="w-full h-auto object-cover"
-              width={1200}
-              height={800}
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
-            />
+            <BlogPostCover src={post.image} alt={post.title} loading="eager" fetchPriority="high" />
           </div>
         </ScrollReveal>
 

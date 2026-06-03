@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { BlogPostCover } from "../components/BlogPostCover";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
@@ -52,14 +53,10 @@ export function BlogPage() {
                 className="group block rounded-2xl overflow-hidden bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 hover:border-waabi-pink/30"
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img
+                  <BlogPostCover
                     src={post.image}
-                    alt={post[locale].title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    width={1200}
-                    height={900}
+                    alt={loc.title}
                     loading={i < 3 ? "eager" : "lazy"}
-                    decoding="async"
                     fetchPriority={i === 0 ? "high" : "auto"}
                   />
                 </div>

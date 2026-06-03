@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "../context/LocaleContext";
 import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "../config";
+import { blogCoverUrl } from "../lib/blogImages";
 import { getComparisonBySlug } from "../data/comparisons";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 import { getTrustPageLocale, trustPageIdFromPath } from "../data/trust-pages";
@@ -118,8 +119,8 @@ export function PageMeta() {
           applyDocumentMeta({
             title: buildTitle(post.metaTitle ?? post.title),
             description: post.excerpt,
-            ogImage: post.image,
-            twitterImage: post.image,
+            ogImage: blogCoverUrl(post.image),
+            twitterImage: blogCoverUrl(post.image),
             url,
             isEn,
             robots,
