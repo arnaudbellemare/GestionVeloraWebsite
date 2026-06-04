@@ -100,9 +100,15 @@ export function OurProcessSection() {
 
           <div className="flex-1 relative min-h-[260px] lg:min-h-0 bg-neutral-900 overflow-hidden">
             <picture>
-              <source srcSet="/hero-gestion-velora-1200.webp" type="image/webp" />
+              <source
+                type="image/webp"
+                srcSet="/hero-gestion-velora-800.webp 800w, /hero-gestion-velora-1200.webp 1200w"
+                sizes="(max-width: 1023px) 100vw, 50vw"
+              />
               <img
                 src="/hero-gestion-velora-1200.webp"
+                srcSet="/hero-gestion-velora-800.webp 800w, /hero-gestion-velora-1200.webp 1200w"
+                sizes="(max-width: 1023px) 100vw, 50vw"
                 alt="Gestion immobilière Montréal | Gestion Velora"
                 className="absolute inset-0 w-full h-full object-cover object-center opacity-90 grayscale contrast-[1.05] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%,0_32%)]"
                 width={1200}
