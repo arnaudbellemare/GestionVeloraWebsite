@@ -7,15 +7,29 @@ function geoHtmlOptimizations(): Plugin {
     name: 'geo-html-optimizations',
     transformIndexHtml: {
       order: 'post',
-      handler(html) {
+      handler(html, ctx) {
         let out = html
         // Entry chunk: surface the hashed module as a high-priority preload before execution.
         out = out.replace(
           /<script type="module" crossorigin src="([^"]+)"><\/script>/,
           '<link rel="modulepreload" crossorigin href="$1" fetchpriority="high">\n    <script type="module" crossorigin defer fetchpriority="high" src="$1"></script>'
         )
+
+        // Inline the main CSS so it is not a render-blocking request on the LCP critical
+        // path. An inline <style> still applies synchronously (no first-paint style swap /
+        // CLS) but removes the extra network hop. Build-only: ctx.bundle is undefined in dev.
+        const cssLinkRe = /<link rel="stylesheet"[^>]*href="\/(assets\/index-[^"]+\.css)"[^>]*>/
+        const cssMatch = out.match(cssLinkRe)
+        if (cssMatch && ctx.bundle) {
+          const asset = ctx.bundle[cssMatch[1]]
+          if (asset && asset.type === 'asset' && typeof asset.source === 'string') {
+            const css = asset.source
+            out = out.replace(cssLinkRe, () => `<style>${css}</style>`)
+          }
+        }
+
         const assetHintPattern =
-          /\n\s*(?:<script type="module" crossorigin defer fetchpriority="high" src="\/assets\/index-[^"]+\.js"><\/script>|<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js"(?: fetchpriority="high")?>|<link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css">)/g
+          /\n\s*(?:<script type="module" crossorigin defer fetchpriority="high" src="\/assets\/index-[^"]+\.js"><\/script>|<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js"(?: fetchpriority="high")?>)/g
         const assetHints = out.match(assetHintPattern)
         if (assetHints?.length) {
           out = out.replace(assetHintPattern, '')
