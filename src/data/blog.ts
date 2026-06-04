@@ -37,7 +37,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     slug: "avenir-gestion-immobiliere-intelligente-2026",
-    image: blogCoverPath("smart-management-clean.webp"),
+    image: blogCoverPath("cover-future-management.webp"),
     datePublished: "2026-02-15",
     dateModified: "2026-04-01",
     fr: {
@@ -131,7 +131,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "maintenance-preventive-economise-millions",
-    image: blogCoverPath("preventive-maintenance-clean.webp"),
+    image: blogCoverPath("cover-preventive-maintenance.webp"),
     datePublished: "2026-01-14",
     dateModified: "2026-04-01",
     fr: {
@@ -216,7 +216,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "maximiser-noi-approche-donnees",
-    image: blogCoverPath("noi-data-clean.webp"),
+    image: blogCoverPath("cover-noi-data.webp"),
     datePublished: "2025-12-10",
     dateModified: "2026-04-01",
     fr: {
@@ -301,7 +301,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "experience-locataire-avantage-concurrentiel",
-    image: blogCoverPath("tenant-experience-clean.webp"),
+    image: blogCoverPath("cover-tenant-experience.webp"),
     datePublished: "2025-11-18",
     dateModified: "2026-04-01",
     fr: {
@@ -395,7 +395,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "gestion-copropriete-montreal-reglementation",
-    image: blogCoverPath("condo-regulation-clean.webp"),
+    image: blogCoverPath("cover-regulation.webp"),
     datePublished: "2025-10-08",
     dateModified: "2026-04-01",
     fr: {
@@ -481,7 +481,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "airbnb-montreal-permis-reglementation",
-    image: blogCoverPath("tenant-experience-clean.webp"),
+    image: blogCoverPath("cover-airbnb.webp"),
     datePublished: "2025-09-12",
     dateModified: "2026-04-01",
     fr: {
@@ -566,7 +566,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "choisir-gestionnaire-immobilier-montreal",
-    image: blogCoverPath("manager-selection-clean.webp"),
+    image: blogCoverPath("cover-choose-manager.webp"),
     datePublished: "2025-08-20",
     dateModified: "2026-04-01",
     fr: {
@@ -650,7 +650,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "fonds-prevoyance-copropriete-quebec",
-    image: blogCoverPath("reserve-fund-clean.webp"),
+    image: blogCoverPath("cover-reserve-fund.webp"),
     datePublished: "2025-07-18",
     dateModified: "2026-04-01",
     fr: {
@@ -736,7 +736,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "syndicat-copropriete-fonctionnement",
-    image: blogCoverPath("governance-clean.webp"),
+    image: blogCoverPath("cover-condo-board-howto.webp"),
     datePublished: "2026-03-10",
     dateModified: "2026-04-20",
     fr: {
@@ -826,7 +826,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "cout-gestionnaire-copropriete-montreal",
-    image: blogCoverPath("noi-data-clean.webp"),
+    image: blogCoverPath("cover-manager-cost.webp"),
     datePublished: "2026-03-18",
     dateModified: "2026-04-20",
     fr: {
@@ -916,7 +916,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "gestion-condo-autogestion-ou-gestionnaire",
-    image: blogCoverPath("manager-selection-clean.webp"),
+    image: blogCoverPath("cover-self-vs-pro.webp"),
     datePublished: "2026-03-25",
     dateModified: "2026-04-20",
     fr: {
@@ -1006,7 +1006,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "loi-141-obligations-syndicat-copropriete",
-    image: blogCoverPath("governance-clean.webp"),
+    image: blogCoverPath("cover-law141.webp"),
     datePublished: "2026-04-02",
     dateModified: "2026-04-20",
     fr: {
@@ -1096,7 +1096,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "augmenter-valeur-condo-montreal",
-    image: blogCoverPath("condo-regulation-clean.webp"),
+    image: blogCoverPath("cover-condo-value.webp"),
     datePublished: "2026-04-05",
     dateModified: "2026-04-20",
     fr: {
@@ -1186,7 +1186,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "obligations-conseil-administration-copropriete",
-    image: blogCoverPath("governance-clean.webp"),
+    image: blogCoverPath("cover-board-duties.webp"),
     datePublished: "2026-04-08",
     dateModified: "2026-04-20",
     fr: {
@@ -1276,7 +1276,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "assemblee-generale-copropriete-guide",
-    image: blogCoverPath("reserve-fund-clean.webp"),
+    image: blogCoverPath("cover-agm.webp"),
     datePublished: "2026-04-12",
     dateModified: "2026-04-20",
     fr: {
@@ -1366,7 +1366,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "choisir-gestionnaire-condo-montreal",
-    image: blogCoverPath("manager-selection-clean.webp"),
+    image: blogCoverPath("cover-choose-condo-manager.webp"),
     datePublished: "2026-04-15",
     dateModified: "2026-04-20",
     fr: {
@@ -1456,7 +1456,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "releve-31-rl31-guide-proprietaires-locataires-quebec",
-    image: blogCoverPath("rental-operations-clean.webp"),
+    image: blogCoverPath("cover-rl31.webp"),
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {
@@ -1538,7 +1538,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "augmentation-loyer-montreal-regles-calcul-tal",
-    image: blogCoverPath("noi-data-clean.webp"),
+    image: blogCoverPath("cover-rent-increase.webp"),
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {
@@ -1620,7 +1620,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "bail-logement-quebec-guide-complet-proprietaires",
-    image: blogCoverPath("rental-operations-clean.webp"),
+    image: blogCoverPath("cover-lease.webp"),
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {
@@ -1702,7 +1702,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "req-neq-verifier-gestionnaire-immobilier-montreal",
-    image: blogCoverPath("manager-selection-clean.webp"),
+    image: blogCoverPath("cover-req-neq.webp"),
     datePublished: "2026-04-27",
     dateModified: "2026-04-27",
     fr: {
@@ -1784,7 +1784,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "partenaire-nettoyage-nickel-krome-montreal",
-    image: blogCoverPath("partners-cleaning.webp"),
+    image: blogCoverPath("cover-cleaning-partner.webp"),
     datePublished: "2026-05-04",
     dateModified: "2026-05-04",
     fr: {
