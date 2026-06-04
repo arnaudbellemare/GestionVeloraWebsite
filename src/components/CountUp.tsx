@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
 
 interface CountUpProps {
   value: string;
@@ -9,10 +8,35 @@ interface CountUpProps {
 
 export function CountUp({ value, duration = 1.5, className = "" }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [isInView, setIsInView] = useState(false);
   const [displayValue, setDisplayValue] = useState("0");
   const [suffix, setSuffix] = useState("");
   const hasAnimated = useRef(false);
+
+  // Native IntersectionObserver instead of framer-motion's useInView so the
+  // (early-rendering) StatsSection doesn't drag the whole motion chunk into
+  // the first-load critical path.
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setIsInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!isInView || hasAnimated.current) return;

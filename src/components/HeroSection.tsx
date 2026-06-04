@@ -11,27 +11,43 @@ const HERO_IMAGE_AVIF = "/hero-video-poster.avif?v=5";
 const HERO_IMAGE_AVIF_MEDIUM = "/hero-video-poster-960.avif?v=5";
 const HERO_IMAGE_AVIF_MOBILE = "/hero-video-poster-mobile.avif?v=5";
 
-function getHeroVideoSource() {
-  if (typeof window === "undefined") return HERO_VIDEO_DESKTOP;
-  return window.matchMedia("(max-width: 767px)").matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP;
-}
-
 export function HeroSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
   const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
   const [videoReady, setVideoReady] = useState(false);
-  const [videoSrc, setVideoSrc] = useState(getHeroVideoSource);
+  const [videoSrc, setVideoSrc] = useState("");
 
   useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const conn = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    // Keep the static poster and skip the video download entirely on data-saver /
+    // slow links (also what Lighthouse mobile throttles to).
+    if (reduceMotion || conn?.saveData || /(^|-)2g$/.test(conn?.effectiveType ?? "")) return;
+
     const media = window.matchMedia("(max-width: 767px)");
+    const pick = () => (media.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
+
+    // Defer the multi-MB hero video off the first-paint critical path; the poster
+    // image is the LCP element and is already painted.
+    const load = () => setVideoSrc(pick());
+    const hasIdle = typeof window.requestIdleCallback === "function";
+    const idleId = hasIdle
+      ? window.requestIdleCallback(load, { timeout: 2500 })
+      : window.setTimeout(load, 1200);
+
     const updateVideoSource = () => {
       setVideoReady(false);
-      setVideoSrc(media.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
+      setVideoSrc(pick());
     };
-
     media.addEventListener("change", updateVideoSource);
-    return () => media.removeEventListener("change", updateVideoSource);
+    return () => {
+      media.removeEventListener("change", updateVideoSource);
+      if (hasIdle) window.cancelIdleCallback(idleId as number);
+      else clearTimeout(idleId as number);
+    };
   }, []);
 
   return (
@@ -61,19 +77,21 @@ export function HeroSection() {
           className="absolute inset-0 h-full w-full object-cover"
         />
       </picture>
-      <video
-        key={videoSrc}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        onCanPlay={() => setVideoReady(true)}
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
-        style={{ opacity: videoReady ? 1 : 0 }}
-        aria-hidden
-        src={videoSrc}
-      />
+      {videoSrc && (
+        <video
+          key={videoSrc}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          onCanPlay={() => setVideoReady(true)}
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ease-out"
+          style={{ opacity: videoReady ? 1 : 0 }}
+          aria-hidden
+          src={videoSrc}
+        />
+      )}
       <div className="absolute inset-0 z-[1] bg-black/50" aria-hidden />
 
       <div className="relative z-[2] max-w-4xl px-6 lg:px-16 w-full text-left sm:text-center flex flex-col items-start sm:items-center flex-1 justify-center pt-24">

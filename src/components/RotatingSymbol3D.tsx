@@ -79,12 +79,36 @@ export function RotatingSymbol3D({ className = "" }: { className?: string }) {
       turntable.add(root);
     });
 
-    let animationId: number;
+    const prefersReducedMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let animationId = 0;
     const animate = () => {
       animationId = requestAnimationFrame(animate);
-      turntable.rotation.y += 0.008;
+      if (!prefersReducedMotion) turntable.rotation.y += 0.008;
       renderer.render(scene, camera);
     };
+
+    const startLoop = () => {
+      if (!animationId) animate();
+    };
+    const stopLoop = () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = 0;
+      }
+    };
+
+    // Don't burn frames (Style & Layout / Rendering work) when scrolled away.
+    const visibilityObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) startLoop();
+        else stopLoop();
+      },
+      { threshold: 0 },
+    );
+    visibilityObserver.observe(container);
     animate();
 
     let resizeRaf = 0;
@@ -104,8 +128,9 @@ export function RotatingSymbol3D({ className = "" }: { className?: string }) {
     ro.observe(container);
 
     return () => {
-      cancelAnimationFrame(animationId);
+      stopLoop();
       if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      visibilityObserver.disconnect();
       ro.disconnect();
       renderer.dispose();
       if (container.contains(renderer.domElement)) {
