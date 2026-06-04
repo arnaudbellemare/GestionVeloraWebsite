@@ -111,7 +111,7 @@ function ViewportSection({ children, minHeight, rootMargin = "900px 0px" }: View
   }, [rootMargin, shouldRender]);
 
   return (
-    <div ref={ref} style={{ minHeight }}>
+    <div ref={ref} style={shouldRender ? undefined : { minHeight }}>
       {shouldRender ? <Suspense fallback={null}>{children}</Suspense> : null}
     </div>
   );
