@@ -45,7 +45,7 @@ export function OurProcessSection() {
 
         <div className="rounded-2xl overflow-hidden flex flex-col lg:flex-row bg-black text-white min-h-[min(520px,70vh)] border border-[#333333]">
           <div className="lg:w-[min(52%,520px)] flex flex-col justify-between p-8 lg:p-12 lg:pr-8 shrink-0">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -12 }}
@@ -88,8 +88,8 @@ export function OurProcessSection() {
                     key={j}
                     type="button"
                     onClick={() => setI(j)}
-                    className={`h-1 rounded-full transition-all ${
-                      j === i ? "w-8 bg-white" : "w-5 bg-white/25 hover:bg-white/40"
+                    className={`h-1 w-8 rounded-full transition-transform duration-300 ${
+                      j === i ? "scale-x-100 bg-white" : "scale-x-[0.625] bg-white/25 hover:bg-white/40"
                     }`}
                     aria-label={`Step ${j + 1}`}
                   />
