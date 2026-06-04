@@ -69,12 +69,6 @@ html.light {
   textarea {
     @apply appearance-none bg-transparent border-0 outline-none;
   }
-  a,
-  button {
-    transition-property: color, background-color, border-color, opacity;
-    transition-duration: 200ms;
-    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-  }
 }
 
 html.light ::-webkit-scrollbar {

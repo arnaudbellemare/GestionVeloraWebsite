@@ -13,7 +13,7 @@ export function ThemeToggle({ lightModeOverWhite = false }: ThemeToggleProps) {
       type="button"
       onClick={toggleTheme}
       aria-label={theme === "light" ? "Mode sombre" : "Mode clair"}
-      className={`p-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/20 ${
+      className={`p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white/20 ${
         iconDark ? "hover:bg-black/5" : "hover:bg-white/10"
       }`}
     >

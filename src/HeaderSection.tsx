@@ -101,7 +101,7 @@ export const HeaderSection = (): JSX.Element => {
                     <InternalLink
                       key={s.to}
                       to={s.to}
-                      className="block px-4 py-3 hover:bg-[#1A1A1A] transition-colors first:rounded-t-lg last:rounded-b-lg border-b border-[#222222] last:border-0"
+                      className="block px-4 py-3 hover:bg-[#1A1A1A] first:rounded-t-lg last:rounded-b-lg border-b border-[#222222] last:border-0"
                       onClick={() => setServicesOpen(false)}
                     >
                       <span className="font-sans font-medium text-white block">{t(s.labelKey)}</span>
@@ -150,7 +150,7 @@ export const HeaderSection = (): JSX.Element => {
             <button
               type="button"
               onClick={() => setLocale("fr")}
-              className={`font-mono text-[10px] uppercase tracking-wider px-2 py-1 rounded-md transition-colors ${
+              className={`font-mono text-[10px] uppercase tracking-wider px-2 py-1 rounded-md ${
                 locale === "fr" ? "bg-[#1A1A1A] text-white" : "text-[#999999] hover:text-white"
               }`}
               aria-label="Français"
@@ -160,7 +160,7 @@ export const HeaderSection = (): JSX.Element => {
             <button
               type="button"
               onClick={() => setLocale("en")}
-              className={`font-mono text-[10px] uppercase tracking-wider px-2 py-1 rounded-md transition-colors ${
+              className={`font-mono text-[10px] uppercase tracking-wider px-2 py-1 rounded-md ${
                 locale === "en" ? "bg-[#1A1A1A] text-white" : "text-[#999999] hover:text-white"
               }`}
               aria-label="English"

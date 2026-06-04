@@ -12,6 +12,44 @@ const FooterSection = lazy(() =>
   import("../FooterSection").then((module) => ({ default: module.FooterSection }))
 );
 
+function DeferredFooterSection() {
+  const [shouldRender, setShouldRender] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (shouldRender) return;
+    const node = ref.current;
+    if (!node) return;
+
+    if (!("IntersectionObserver" in window)) {
+      const timeoutId = globalThis.setTimeout(() => setShouldRender(true), 2000);
+      return () => globalThis.clearTimeout(timeoutId);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setShouldRender(true);
+        observer.disconnect();
+      },
+      { rootMargin: "1000px 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [shouldRender]);
+
+  return (
+    <div ref={ref}>
+      {shouldRender ? (
+        <Suspense fallback={null}>
+          <FooterSection />
+        </Suspense>
+      ) : null}
+    </div>
+  );
+}
+
 export function Layout() {
   const location = useLocation();
   const currentOutlet = useOutlet();
@@ -44,9 +82,7 @@ export function Layout() {
       >
         <main className="flex-1 w-full min-w-0">{currentOutlet}</main>
       </div>
-      <Suspense fallback={null}>
-        <FooterSection />
-      </Suspense>
+      <DeferredFooterSection />
     </div>
   );
 }

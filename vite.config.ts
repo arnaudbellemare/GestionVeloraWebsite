@@ -1,7 +1,7 @@
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
-/** GEO / scanner-friendly HTML: explicit defer on entry module; async main CSS load (FOUC tradeoff vs score). */
+/** GEO / scanner-friendly HTML: explicit defer on the entry module. */
 function geoHtmlOptimizations(): Plugin {
   return {
     name: 'geo-html-optimizations',
@@ -14,13 +14,8 @@ function geoHtmlOptimizations(): Plugin {
           /<script type="module" crossorigin src="([^"]+)"><\/script>/,
           '<link rel="modulepreload" crossorigin href="$1" fetchpriority="high">\n    <script type="module" crossorigin defer fetchpriority="high" src="$1"></script>'
         )
-        // Main Tailwind/Vite CSS: load as non-render-blocking (print → all); noscript fallback
-        out = out.replace(
-          /<link rel="stylesheet" crossorigin href="(\/assets\/index-[^"]+\.css)">/,
-          '<link rel="stylesheet" crossorigin href="$1" media="print" onload="this.media=\'all\'" />\n    <noscript><link rel="stylesheet" crossorigin href="$1" /></noscript>'
-        )
         const assetHintPattern =
-          /\n\s*(?:<script type="module" crossorigin defer fetchpriority="high" src="\/assets\/index-[^"]+\.js"><\/script>|<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js"(?: fetchpriority="high")?>|<link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css" media="print" onload="this\.media='all'" \/>|<noscript><link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css" \/><\/noscript>)/g
+          /\n\s*(?:<script type="module" crossorigin defer fetchpriority="high" src="\/assets\/index-[^"]+\.js"><\/script>|<link rel="modulepreload" crossorigin href="\/assets\/[^"]+\.js"(?: fetchpriority="high")?>|<link rel="stylesheet" crossorigin href="\/assets\/index-[^"]+\.css">)/g
         const assetHints = out.match(assetHintPattern)
         if (assetHints?.length) {
           out = out.replace(assetHintPattern, '')
