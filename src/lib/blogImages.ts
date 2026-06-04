@@ -1,4 +1,9 @@
-import { SITE_URL } from "../config";
+/**
+ * Blog cover helpers. Kept dependency-free (no `../config` import) so the
+ * Node-based prerender step can import blog data without pulling in
+ * `import.meta.env`, which is undefined outside Vite.
+ */
+const SITE_ORIGIN = "https://www.gestionvelora.com";
 
 export const BLOG_IMAGE_DIR = "/images/blog";
 
@@ -14,5 +19,5 @@ export function blogCoverUrl(pathOrFilename: string): string {
     return pathOrFilename;
   }
   const path = pathOrFilename.startsWith("/") ? pathOrFilename : blogCoverPath(pathOrFilename);
-  return `${SITE_URL}${path}`;
+  return `${SITE_ORIGIN}${path}`;
 }
