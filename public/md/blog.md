@@ -141,12 +141,28 @@ Topics covered:
 
 ---
 
+### 9. Condo Manager Cost in Montreal
+**FR:** https://www.gestionvelora.com/blog/cout-gestionnaire-copropriete-montreal
+**EN:** https://www.gestionvelora.com/en/blog/cout-gestionnaire-copropriete-montreal
+Published: 2026-03-18 | Updated: 2026-06-09
+Category: Tarifs / Pricing
+
+Brief: Gestion Velora publishes clear 2026 condo board pricing: typically $33-$36 per unit/month, up to $40 per unit/month with app and portal integrations. The article explains what is included, how to compare proposals, and why self-management still carries time, compliance, and maintenance risk.
+
+Topics covered:
+- What are typical condo management fees in Montreal?
+- What does Gestion Velora charge for condo board management?
+- How does professional management compare with self-management?
+- What should a board verify before signing a management proposal?
+
+---
+
 ## Browse by Topic
 
-- Condo management: articles 5, 8
+- Condo management: articles 5, 8, 9
 - Airbnb / Short-term rentals: article 6
 - Long-term rental / Tenant management: articles 4, 7
-- Finance / NOI: articles 3, 8
+- Finance / NOI: articles 3, 8, 9
 - Maintenance: article 2
 - Trends / Technology: article 1
 

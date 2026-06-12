@@ -11,9 +11,13 @@ export const ARTICLE_AUTHOR_NAME = "Arnaud Bellemare";
 export const ARTICLE_AUTHOR_URL = `${SITE_URL}/about`;
 
 /** Brand entity URLs used in JSON-LD `sameAs`. */
-export const ORGANIZATION_SAME_AS = [] as const;
+export const ORGANIZATION_SAME_AS = [
+  "https://ca.linkedin.com/in/gestion-velora-48684b399",
+] as const;
 
-export const ARTICLE_AUTHOR_SAME_AS = [] as const;
+export const ARTICLE_AUTHOR_SAME_AS = [
+  "https://ca.linkedin.com/in/gestion-velora-48684b399",
+] as const;
 
 /** Default social cards for pages without dedicated assets. */
 export const DEFAULT_OG_IMAGE: string = `${SITE_URL}/og-image.png`;

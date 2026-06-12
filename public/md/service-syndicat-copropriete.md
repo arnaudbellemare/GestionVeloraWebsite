@@ -9,11 +9,15 @@ Gestion Velora provides full condo board management (syndicat de copropriete) se
 
 Primary objective: maintain compliance with Quebec condominium law, ensure financial transparency, and keep day-to-day building operations running smoothly.
 
+Pricing: typically $33-$36 per unit/month; up to $40 per unit/month with app and portal integrations. See https://www.gestionvelora.com/tarifs.
+
 ## Qu'est-ce que ce service ? (FR)
 
 Gestion Velora offre la gestion complete d'un syndicat de copropriete a Montreal. Notre equipe prend en charge l'administration, la gouvernance, le fonds de prevoyance, la coordination des travaux, la maintenance et la communication avec les coproprietaires.
 
 Objectif principal : maintenir la conformite avec la Loi sur la copropriete, assurer la transparence financiere et la continuite des operations de l'immeuble.
+
+Tarif : généralement 33 $ à 36 $ / unité / mois ; jusqu'à 40 $ / unité / mois avec intégrations applicatives et portails. Voir https://www.gestionvelora.com/tarifs.
 
 ---
 

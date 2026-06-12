@@ -5,6 +5,8 @@ Canonical URL (EN): https://www.gestionvelora.com/en/services
 
 Gestion Velora offers three core property management services in Montreal, Quebec. Each service is bilingual (French/English), includes 24/7 operational support, transparent financial reporting, and compliance with Quebec regulations.
 
+Pricing snapshot (updated 2026): condo board management is typically $33-$36 per unit/month, up to $40 per unit/month with app and portal integrations. Long-term rental management is structured as one month's gross rent. Airbnb / short-term rental management is typically 18-25% of booking revenue depending on volume, property type, and service scope. See https://www.gestionvelora.com/tarifs.
+
 ---
 
 ## 1. Condo Board Management / Syndicat de copropriete
@@ -24,6 +26,9 @@ Gestion Velora offers three core property management services in Montreal, Quebe
 - Compliance with Loi sur la copropriete (Quebec condominium law)
 
 ### Ideal for: Condo boards in Montreal seeking a professional manager to reduce board member workload and ensure legal compliance.
+
+### Pricing:
+Typically $33-$36 per unit/month; up to $40 per unit/month with app and portal integrations.
 
 - Detail page (FR): https://www.gestionvelora.com/services/syndicat-copropriete
 - Detail page (EN): https://www.gestionvelora.com/en/services/syndicat-copropriete
@@ -56,6 +61,9 @@ Gestion Velora offers three core property management services in Montreal, Quebe
 
 ### Ideal for: Owners of one or more units who want to maximize short-term rental income without managing day-to-day operations.
 
+### Pricing:
+Typically 18-25% of booking revenue, depending on booking volume, property type, and service scope.
+
 - Detail page (FR): https://www.gestionvelora.com/services/airbnb
 - Detail page (EN): https://www.gestionvelora.com/en/services/airbnb
 - Related article (FR): https://www.gestionvelora.com/blog/airbnb-montreal-permis-reglementation
@@ -79,6 +87,9 @@ Gestion Velora offers three core property management services in Montreal, Quebe
 - Monthly financial reporting to owners
 
 ### Ideal for: Residential landlords in Montreal who want stable occupancy, protected cash flow, and compliance with the Tribunal administratif du logement (TAL) rules.
+
+### Pricing:
+Structured as one month's gross rent under the mandate terms.
 
 - Detail page (FR): https://www.gestionvelora.com/services/location
 - Detail page (EN): https://www.gestionvelora.com/en/services/location

@@ -453,17 +453,17 @@ export const fr = {
       subtitle: "Gestion de syndicat de copropriété à Montréal : budget, AGA, fonds de prévoyance et conformité.",
       metaTitle: "Gestion de syndicat de copropriété à Montréal | Gestion Velora",
       metaDescription:
-        "Gestion Velora accompagne les syndicats de copropriété à Montréal avec une gestion administrative, financière et opérationnelle claire, proactive et disponible 24/7.",
+        "Gestion Velora accompagne les syndicats de copropriété à Montréal avec une administration claire, financière et opérationnelle, disponible 24/7.",
       description:
-        "Gestion Velora est une firme de gestion de syndicat de copropriété à Montréal spécialisée dans l'administration complète des syndicats de copropriétaires. Nous prenons en charge la gestion administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Notre gestionnaire de copropriété attitré assure la transparence pour le conseil d'administration et chaque copropriétaire.",
+        "Gestion Velora est une firme spécialisée dans l'administration complète des syndicats de copropriétaires à Montréal. Nous assurons la régie administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Votre gestionnaire attitré assure la transparence pour le conseil d'administration et chaque copropriétaire.",
       offerings: [
         {
           title: "Administration de syndicat de copropriété",
           items: [
             "Convocation et tenue de l'assemblée générale annuelle (AGA)",
             "Rédaction des procès-verbaux et tenue du registre de copropriété",
-            "Gestion des décisions du conseil d'administration",
-            "Administration du syndicat de copropriété conforme à la Loi 141 et à la déclaration",
+            "Suivi des décisions du conseil d'administration",
+            "Conformité du syndicat de copropriété à la Loi 141 et à la déclaration",
           ],
           detailItems: [
             "Calendrier annuel des obligations (AGA, budget, assurances, contrats) partagé avec le CA.",
@@ -473,7 +473,7 @@ export const fr = {
           ],
         },
         {
-          title: "Gestion financière et comptable de copropriété",
+          title: "Finances et comptabilité de copropriété",
           items: [
             "Gestion du fonds de prévoyance",
             "Élaboration du budget annuel de copropriété",
@@ -488,7 +488,7 @@ export const fr = {
           ],
         },
         {
-          title: "Entretien et gestion technique de copropriété",
+          title: "Entretien et suivi technique de copropriété",
           items: [
             "Entretien des parties communes et gestion de condo à Montréal",
             "Sélection des entrepreneurs et appels d'offres",
@@ -521,7 +521,7 @@ export const fr = {
       faq: [
         {
           q: "Quel gestionnaire choisir pour un syndicat de copropriété à Montréal ?",
-          a: "Choisissez un gestionnaire de syndicat de copropriété à Montréal capable de couvrir l'administration, la gestion financière, la coordination technique, la tenue du registre, la préparation de l'AGA et les communications avec les copropriétaires. Gestion Velora combine rapports clairs, suivi proactif et disponibilité 24/7 pour les conseils d'administration.",
+          a: "Choisissez un professionnel capable de couvrir l'administration, la tenue financière, la coordination technique, le registre, la préparation de l'AGA et les communications avec les copropriétaires. Gestion Velora combine rapports clairs, suivi proactif et disponibilité 24/7 pour les conseils d'administration.",
         },
         {
           q: "Offrez-vous la gestion de petites copropriétés à Montréal ?",
@@ -560,10 +560,10 @@ export const fr = {
       metaDescription:
         "Gestion Airbnb à Montréal : annonces, voyageurs, ménage, maintenance, tarification et conformité municipale pour locations courte durée.",
       description:
-        "Gestion Velora prend en charge l'intégralité de la gestion de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est géré pour vous.",
+        "Gestion Velora s'occupe de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est pris en charge.",
       offerings: [
         {
-          title: "Gestion des réservations",
+          title: "Réservations et tarification",
           items: [
             "Optimisation des annonces et des tarifs",
             "Gestion des demandes et confirmations",
@@ -583,7 +583,7 @@ export const fr = {
             "Ménage professionnel entre chaque séjour",
             "Remise des clés et accueil des voyageurs",
             "Maintenance et réparations",
-            "Gestion des urgences 24/7",
+            "Urgences traitées 24/7",
           ],
           detailItems: [
             "Checklists ménage par type d'unité et contrôle qualité avant chaque check-in.",
@@ -716,10 +716,10 @@ export const fr = {
       metaDescription:
         "Gestion de condo à Montréal : administration quotidienne, finances, entretien, communication et soutien aux copropriétaires.",
       description:
-        "Vous cherchez une firme de gestion de condo à Montréal ? Gestion Velora prend en charge l'administration complète de votre condo : gestion du syndicat de copropriétaires, budget, fonds de prévoyance, entretien des parties communes, assemblée générale et conformité Loi 141. Nos gestionnaires de condo interviennent dans tous les quartiers de Montréal et la grande région métropolitaine.",
+        "Vous cherchez une firme de gestion de condo à Montréal ? Gestion Velora assure l'administration complète de votre condo : syndicat de copropriétaires, budget, fonds de prévoyance, entretien des parties communes, assemblée générale et conformité Loi 141. Nos professionnels interviennent dans tous les quartiers de Montréal et la grande région métropolitaine.",
       offerings: [
         {
-          title: "Administration et gestion du syndicat de condo",
+          title: "Administration du syndicat de condo",
           items: [
             "Tenue de l'assemblée générale annuelle (AGA)",
             "Convocation, procès-verbaux et registre de copropriété",

@@ -3,7 +3,7 @@
 > Gestion Velora is a bilingual (French/English) property management company headquartered in Montreal, Quebec, Canada. Founded in 2025 by Arnaud Bellemare, the company specialises in three verticals: condo board (syndicat de copropriété) administration, Airbnb / short-term rental operations, and long-term residential rental management. Service territory covers Greater Montreal and the broader Quebec metropolitan region. Phone: +1-514-777-1731. Email: info@gestionvelora.com.
 
 Homepage: [https://www.gestionvelora.com/](https://www.gestionvelora.com/)
-Last updated: 2026-04-28
+Last updated: 2026-06-09
 Languages: fr-CA, en-CA
 Contact: info@gestionvelora.com | +1-514-777-1731
 Jurisdiction: Quebec, Canada
@@ -129,12 +129,15 @@ Complete landlord-side management of residential leases. Covers tenant screening
 
 ## Pricing
 
-Gestion Velora operates on a percentage-of-revenue model with no long-term lock-in contracts. Exact rates depend on portfolio size and service scope.
+Gestion Velora publishes explicit pricing guidance and custom-quote criteria. Exact rates depend on building size, unit count, integrations, property type, booking volume, and service scope.
 
 - [Tarifs / Pricing (FR)](https://www.gestionvelora.com/tarifs) — Full pricing breakdown, fee structure, included services
 - [Pricing (EN)](https://www.gestionvelora.com/en/tarifs) — English pricing page
 
 Key pricing principles:
+- Condo board / syndicat management: typically $33-$36 per unit/month; up to $40 per unit/month with app and portal integrations
+- Long-term rental management: structured as one month's gross rent under the mandate terms
+- Airbnb / short-term rental management: typically 18-25% of booking revenue, depending on volume, property type, and service scope
 - No hidden fees; all costs disclosed upfront
 - Transparent monthly financial reports included
 - First consultation is free

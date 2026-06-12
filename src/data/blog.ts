@@ -835,7 +835,7 @@ export const blogPosts: BlogPost[] = [
       title: "Combien coûte un gestionnaire de copropriété à Montréal ?",
       metaTitle: "Gestionnaire copropriété : coût à Montréal",
       excerpt: "Le coût d'un gestionnaire de copropriété à Montréal varie selon la taille de l'immeuble et les services requis. Voici ce que vous devez savoir.",
-      brief: "À Montréal, les frais de gestion d'un syndicat de copropriété se situent généralement entre 35 $ et 65 $ par unité par mois selon la taille de l'immeuble, la complexité du mandat et les services inclus. Des forfaits modulaires permettent d'ajuster les services aux besoins réels du syndicat.",
+      brief: "En 2026, Gestion Velora publie une base tarifaire claire pour les syndicats de copropriété : généralement 33 $ à 36 $ / unité / mois, jusqu'à 40 $ / unité / mois avec intégrations applicatives et portails. Le coût final dépend de la taille, de la complexité du mandat et des services inclus.",
       sections: [
         {
           heading: "Quels sont les tarifs habituels pour un gestionnaire de copropriété ?",
@@ -843,7 +843,7 @@ export const blogPosts: BlogPost[] = [
             [
               "Les honoraires d'un ",
               { text: "gestionnaire de copropriété", to: "/services/gestion-copropriete" },
-              " à Montréal sont généralement calculés au prorata du nombre d'unités. Pour un petit immeuble (6 à 12 unités), les frais de gestion se situent typiquement entre 35 $ et 45 $ par unité par mois. Pour les immeubles de taille moyenne (13 à 40 unités), la fourchette se situe entre 45 $ et 60 $ par unité. Les grands complexes (plus de 40 unités) bénéficient souvent d'économies d'échelle et négocient des tarifs à partir de 30 $ à 40 $ par unité.",
+              " à Montréal sont généralement calculés au prorata du nombre d'unités. Chez Gestion Velora, la base publiée en 2026 se situe généralement entre 33 $ et 36 $ / unité / mois selon le mandat ; les formules avec intégrations applicatives et portails peuvent aller jusqu'à 40 $ / unité / mois. Le coût final dépend de la taille de l'immeuble, de la complexité opérationnelle, du niveau de reporting et des services inclus.",
             ],
             "Ces honoraires couvrent l'administration courante : comptabilité, perception des charges, coordination des travaux, correspondance, préparation des assemblées et suivi réglementaire. Certaines firmes facturent des extras pour la gestion des urgences hors heures, la préparation de l'étude de fonds de prévoyance ou le suivi judiciaire. Il est important de comparer les devis en détail pour éviter les mauvaises surprises.",
             "Des services additionnels comme la gestion des conflits entre copropriétaires, le suivi des assurances ou l'assistance à la planification des travaux majeurs peuvent être inclus dans un forfait premium ou facturés séparément. Demandez toujours un contrat détaillant l'ensemble des postes inclus et les seuils de facturation supplémentaire.",
@@ -852,7 +852,7 @@ export const blogPosts: BlogPost[] = [
         {
           heading: "Gestion professionnelle ou autogestion : une question de retour sur investissement",
           paragraphs: [
-            "Il est tentant de comparer le coût d'un gestionnaire à zéro pour l'autogestion. Mais l'autogestion a un coût réel : temps bénévole des administrateurs, risques d'erreurs comptables, manque de rigueur dans le suivi des travaux et exposure légale si les obligations de la Loi 141 ne sont pas respectées. Pour un immeuble de 20 unités, un gestionnaire professionnel à 50 $/unité représente 1 000 $/mois — soit environ 12 000 $/an. Un seul appel de fonds évité grâce à un fonds de prévoyance bien géré peut couvrir plusieurs années de frais.",
+            "Il est tentant de comparer le coût d'un gestionnaire à zéro pour l'autogestion. Mais l'autogestion a un coût réel : temps bénévole des administrateurs, risques d'erreurs comptables, manque de rigueur dans le suivi des travaux et exposition légale si les obligations de la Loi 141 ne sont pas respectées. Pour un immeuble de 20 unités, une base de 33 $ à 36 $ / unité représente environ 660 $ à 720 $ / mois ; une formule avec portails jusqu'à 40 $ / unité représente environ 800 $ / mois. Un seul appel de fonds évité grâce à un fonds de prévoyance bien géré peut couvrir plusieurs années de frais.",
             "La valeur d'une gestion rigoureuse se reflète aussi dans la valeur des unités. Les acheteurs et prêteurs hypothécaires examinent de près l'état financier du syndicat, la santé du fonds de prévoyance et la qualité des processus administratifs. Un immeuble bien géré se revend mieux et se finance plus facilement.",
             [
               "Pour les syndicats qui souhaitent conserver un certain contrôle, des formules de co-gestion permettent de déléguer les tâches les plus chronophages (comptabilité, appels de fonds, suivi des travaux) tout en conservant la prise de décision au sein du CA. Consultez nos ",
@@ -877,7 +877,7 @@ export const blogPosts: BlogPost[] = [
       title: "How much does a condo property manager cost in Montreal?",
       metaTitle: "Condo manager cost Montreal",
       excerpt: "The cost of a condo property manager in Montreal depends on building size and services required. Here is what you need to know before signing.",
-      brief: "In Montreal, condo board management fees typically range from $35 to $65 per unit per month depending on building size, mandate complexity, and included services. Modular packages let you match services to your actual needs.",
+      brief: "In 2026, Gestion Velora publishes clear condo board pricing: typically $33-$36 per unit/month, up to $40 per unit/month with app and portal integrations. Final cost depends on building size, mandate complexity, reporting needs, and included services.",
       sections: [
         {
           heading: "What are typical condo management fees in Montreal?",
@@ -885,7 +885,7 @@ export const blogPosts: BlogPost[] = [
             [
               "Fees for a ",
               { text: "professional condo property manager", to: "/services/gestion-copropriete" },
-              " in Montreal are generally calculated per unit. For small buildings (6–12 units), expect $35–$45 per unit per month. Mid-size buildings (13–40 units) typically fall between $45–$60 per unit. Larger complexes (40+ units) often benefit from economies of scale with rates starting around $30–$40 per unit.",
+              " in Montreal are generally calculated per unit. At Gestion Velora, the 2026 published baseline is typically $33-$36 per unit/month depending on the mandate; packages with app and portal integrations can go up to $40 per unit/month. Final cost depends on building size, operational complexity, reporting level, and included services.",
             ],
             "These fees usually cover routine administration: accounting, fee collection, contractor coordination, owner communications, AGM preparation, and regulatory compliance. Some firms charge extras for after-hours emergencies, reserve fund study coordination, or legal follow-up. Always compare proposals in detail to avoid surprises.",
             "Additional services such as conflict resolution, insurance coordination, or major work planning may be included in a premium package or billed separately. Always ask for a contract that clearly details what is included in the base fee and what triggers additional billing.",
@@ -894,7 +894,7 @@ export const blogPosts: BlogPost[] = [
         {
           heading: "Professional management vs. self-management: an ROI question",
           paragraphs: [
-            "It is tempting to compare the cost of a manager against zero for self-management. But self-management has real costs: volunteer director time, accounting errors, inconsistent maintenance follow-up, and legal exposure if Law 141 obligations are not met. For a 20-unit building, a professional manager at $50/unit costs $1,000/month — about $12,000/year. One avoided special assessment from a well-managed reserve fund can offset several years of management fees.",
+            "It is tempting to compare the cost of a manager against zero for self-management. But self-management has real costs: volunteer director time, accounting errors, inconsistent maintenance follow-up, and legal exposure if Law 141 obligations are not met. For a 20-unit building, a $33-$36/unit baseline is roughly $660-$720/month; a portal-enabled package up to $40/unit is roughly $800/month. One avoided special assessment from a well-managed reserve fund can offset several years of management fees.",
             "Rigorous management also affects unit values. Buyers and mortgage lenders closely examine the condo board's financial health, reserve fund adequacy, and quality of administrative processes. A well-run building sells faster and at a better price.",
             [
               "For boards that want to retain some control, co-management arrangements let you delegate the most time-consuming tasks (accounting, fee collection, contractor follow-up) while keeping final decisions within your board. See our ",

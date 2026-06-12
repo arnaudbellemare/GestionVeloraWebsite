@@ -19,7 +19,8 @@
 
 ## P3 — AI / extractability
 
-7. **Citation surfaces:** Ensure methodology, editorial policy, and author signals stay linked from high-traffic pages (footer + in-article).
-8. **Answer-first blocks:** Roll editorial pattern from best-performing posts to service hubs where queries warrant it—**without** duplicate FAQ schema abuse.
+7. **Answer-engine citation loop:** Run the monthly prompt sample in `geo-answer-engine-playbook.md`; classify misses as retrieval failures vs cited-but-not-top recommendation failures.
+8. **Citation surfaces:** Ensure methodology, editorial policy, and author signals stay linked from high-traffic pages (footer + in-article).
+9. **Answer-first blocks:** Roll editorial pattern from best-performing posts to service hubs where queries warrant it—**without** duplicate FAQ schema abuse.
 
 **Rejected:** Bulk FAQPage on non-FAQ pages; mass city page generation without unique proof.

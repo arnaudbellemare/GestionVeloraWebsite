@@ -7,6 +7,7 @@ Describe the user-visible or crawler-visible change (one paragraph).
 - **Risk tier:** P0 / P1 / P2 / P3 (see `seo/audit-issues.json`)
 - **Helpful Content / scaled content:** Does this increase unique utility per URL, or only breadth?
 - **Structured data:** Any new/changed JSON-LD? Confirm single source per page type.
+- **Answer-engine / GEO:** If applicable, confirm retrieval, topic match, price/recency/proof, and page position were checked before formatting-only edits.
 
 ## Evidence
 

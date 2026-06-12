@@ -9,11 +9,15 @@ Gestion Velora manages Airbnb and short-term rental properties in Montreal from 
 
 Primary objective: improve operating performance while reducing operational and compliance risk.
 
+Pricing: typically 18-25% of booking revenue, depending on volume, property type, and service scope. See https://www.gestionvelora.com/tarifs.
+
 ## Qu'est-ce que ce service ? (FR)
 
 Gestion Velora gere les proprietes Airbnb et en location courte duree a Montreal de bout en bout. Nous prenons en charge l'optimisation des annonces, la tarification, la coordination des arrivees et departs, le menage, la maintenance, la communication avec les voyageurs et la conformite reglementaire.
 
 Objectif principal : maximiser la performance d'exploitation tout en reduisant les risques operationnels et de conformite.
+
+Tarif : généralement 18-25 % des revenus de réservation, selon le volume, le type de bien et le périmètre du mandat. Voir https://www.gestionvelora.com/tarifs.
 
 ---
 
@@ -100,7 +104,7 @@ No. In Montreal, primary residences may only be rented short-term from June 10 t
 Non. A Montreal, les residences principales ne peuvent etre louees en courte duree que du 10 juin au 10 septembre avec un permis municipal valide.
 
 ### What does Gestion Velora charge for Airbnb management?
-Contact us for a custom quote based on your property type, number of units, and current operational setup. info@gestionvelora.com | +1-514-777-1731
+Typically 18-25% of booking revenue. The exact fee depends on your property type, number of units, booking volume, and current operational setup. info@gestionvelora.com | +1-514-777-1731
 
 ---
 

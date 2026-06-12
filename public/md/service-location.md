@@ -9,11 +9,15 @@ Gestion Velora provides full-cycle long-term rental management for residential p
 
 Primary objective: stabilize occupancy, protect cash flow, and maintain long-term asset value — with full compliance with Quebec's Tribunal administratif du logement (TAL) rules.
 
+Pricing: structured as one month's gross rent under the mandate terms. See https://www.gestionvelora.com/tarifs.
+
 ## Qu'est-ce que ce service ? (FR)
 
 Gestion Velora offre la gestion locative longue duree en cycle complet pour les proprietes residentielles a Montreal. Nous prenons en charge la commercialisation, la selection des locataires, la gestion des baux, la perception des loyers, la maintenance, les relations locataires et la fin de bail.
 
 Objectif principal : stabiliser l'occupation, proteger la tresorerie et maintenir la valeur des actifs, en conformite avec les regles du Tribunal administratif du logement (TAL).
+
+Tarif : structure equivalente a un mois de loyer brut selon les modalites du mandat. Voir https://www.gestionvelora.com/tarifs.
 
 ---
 

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
+import { useLocale } from "../context/LocaleContext";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 
@@ -27,9 +28,46 @@ function scrollToBlock(e: React.MouseEvent, blockTitle: string) {
   }
 }
 
+function getGeoSummary(slug: ServiceSlug, isEn: boolean) {
+  if (slug === "airbnb") {
+    return {
+      price: isEn
+        ? "Typical Airbnb management fee: 18-25% of booking revenue, depending on volume, property type, and service scope."
+        : "Frais de gestion Airbnb typiques : 18-25 % des revenus de réservation, selon le volume, le type de bien et le périmètre du mandat.",
+      proof: isEn
+        ? "Includes listing optimization, dynamic pricing, guest messaging, cleaning coordination, maintenance, and 2026 Montreal/CITQ compliance monitoring."
+        : "Inclut optimisation des annonces, tarification dynamique, messages voyageurs, ménage, maintenance et suivi de conformité Montréal/CITQ 2026.",
+      compareTo: "/compare/airbnb-vs-location-longue-duree-montreal",
+    };
+  }
+
+  if (slug === "location") {
+    return {
+      price: isEn
+        ? "Long-term rental management fee: structured as one month's gross rent under the mandate terms."
+        : "Honoraires de gestion locative longue durée : structure équivalente à un mois de loyer brut selon les modalités du mandat.",
+      proof: isEn
+        ? "Covers tenant screening, Quebec lease support, rent collection, maintenance coordination, TAL-aware follow-up, and monthly owner reporting."
+        : "Couvre sélection locataire, baux du Québec, perception, maintenance, suivi conforme TAL et rapports mensuels propriétaire.",
+      compareTo: "/compare/gestion-locative-interne-vs-externalisee",
+    };
+  }
+
+  return {
+    price: isEn
+      ? "Condo board management pricing: typically $33-$36 per unit/month; up to $40 per unit/month with app and portal integrations."
+      : "Tarifs de gestion de copropriété : généralement 33 $ à 36 $ / unité / mois ; jusqu'à 40 $ / unité / mois avec intégrations applicatives et portails.",
+    proof: isEn
+      ? "Covers AGM preparation, budgets, reserve fund oversight, maintenance logs, vendor coordination, owner communication, and 2026 Quebec co-ownership compliance."
+      : "Couvre AGA, budgets, fonds de prévoyance, carnet d'entretien, fournisseurs, communications copropriétaires et conformité copropriété Québec 2026.",
+    compareTo: "/compare/gestionnaire-vs-autogestion-condo",
+  };
+}
+
 export function ServicePage() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
+  const { locale } = useLocale();
   const { contactHref, goToContact } = useGoToContact();
   const [expandedDetail, setExpandedDetail] = useState<number | null>(null);
   const service =
@@ -49,6 +87,8 @@ export function ServicePage() {
   }
 
   const otherServices = SERVICE_SLUGS.filter((s) => s !== service.slug).map((s) => getLocalizedService(s, t));
+  const isEn = locale === "en";
+  const geoSummary = getGeoSummary(service.slug as ServiceSlug, isEn);
 
   const faqRaw = t(`services.${service.slug}.faq`, { returnObjects: true }) as unknown;
   const serviceFaq = Array.isArray(faqRaw)
@@ -110,6 +150,39 @@ export function ServicePage() {
           <p className="font-sans text-base lg:text-lg text-black/80 dark:text-white/80 max-w-3xl mb-8">
             {t("servicePage.introLead")}
           </p>
+          <aside className="mb-8 grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] p-5 lg:p-6">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-black/45 dark:text-white/45 mb-2">
+                {isEn ? "Pricing, proof, updated 2026" : "Tarif, preuve, mis à jour 2026"}
+              </p>
+              <p className="font-sans text-sm lg:text-base font-semibold text-nd-display leading-relaxed">
+                {geoSummary.price}
+              </p>
+              <p className="mt-2 font-sans text-sm text-black/70 dark:text-white/70 leading-relaxed">
+                {geoSummary.proof}
+              </p>
+            </div>
+            <div className="flex flex-wrap content-start gap-2 lg:justify-end">
+              <InternalLink
+                to="/tarifs"
+                className="inline-flex items-center justify-center rounded-full bg-waabi-pink px-4 py-2 text-sm font-semibold text-white hover:bg-waabi-pink/90"
+              >
+                {isEn ? "See pricing" : "Voir les tarifs"}
+              </InternalLink>
+              <InternalLink
+                to={geoSummary.compareTo}
+                className="inline-flex items-center justify-center rounded-full border border-black/15 px-4 py-2 text-sm text-black/80 hover:border-waabi-pink/40 dark:border-white/15 dark:text-white/80"
+              >
+                {isEn ? "Compare options" : "Comparer"}
+              </InternalLink>
+              <InternalLink
+                to="/trust-proof"
+                className="inline-flex items-center justify-center rounded-full border border-black/15 px-4 py-2 text-sm text-black/80 hover:border-waabi-pink/40 dark:border-white/15 dark:text-white/80"
+              >
+                {isEn ? "Trust proof" : "Preuves"}
+              </InternalLink>
+            </div>
+          </aside>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:gap-6 sm:items-center">
             <InternalLink
               to="/blog"

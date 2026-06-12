@@ -10,6 +10,7 @@ This folder holds **governance and measurement templates** for Gestion Velora’
 | `representative-urls.json` | Minimal URL set for validation (Rich Results / Inspection) |
 | `decision-cards.md` | reversible decisions with confidence labels |
 | `gsc-dashboard-handbook.md` | How operators use Search Console segments + annotations |
+| `geo-answer-engine-playbook.md` | Answer-engine visibility workflow based on controlled GEO research |
 
 Root **`seo-changelog.md`** ties deploys (Git) to SEO outcomes.
 
@@ -18,6 +19,8 @@ Root **`seo-changelog.md`** ties deploys (Git) to SEO outcomes.
 - **No** scaled thin geo pages for keyword volume. The repo currently contains a large programmatic location matrix—see **`GEO-SCALE-001`** in `audit-issues.json`. Editorial and technical work must increase **distinct value per URL** or reduce inventory.
 
 - **`claudedocs/seo-priority-top100.md`** and **`npm run seo:priority`** are **editorial prioritization aids only**, not authorization to spin up more templates.
+
+- **GEO / answer-engine work** must start with retrieval and topical fit before formatting. Use `geo-answer-engine-playbook.md`; do not treat formatting-only edits as a visibility strategy.
 
 ## Verification
 
