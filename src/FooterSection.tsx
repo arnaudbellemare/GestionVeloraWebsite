@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { InternalLink } from "./components/InternalLink";
@@ -49,22 +48,12 @@ export const FooterSection = (): JSX.Element => {
   ];
 
   return (
-    <motion.footer
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      className="relative bg-black overflow-hidden border-t border-[#222222]"
-    >
+    <footer className="relative bg-black overflow-hidden border-t border-[#222222]">
       <div className="max-w-[90rem] mx-auto relative z-10 px-6 lg:px-16 pt-16 lg:pt-20 pb-8">
         {/* Top: Contact, Connect, Subscribe columns */}
         <div className="flex flex-col md:flex-row md:flex-wrap xl:flex-nowrap gap-12 lg:gap-16 xl:justify-between mb-8 lg:mb-12">
           {/* Contact */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0 }}
-          >
+          <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.contact")}
             </p>
@@ -83,15 +72,10 @@ export const FooterSection = (): JSX.Element => {
             <p className="font-sans text-sm text-[#999999] leading-relaxed">
               Montréal, QC
             </p>
-          </motion.div>
+          </div>
 
           {/* Connect - Portal access */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
+          <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.portals")}
             </p>
@@ -113,15 +97,10 @@ export const FooterSection = (): JSX.Element => {
                 {t("footer.ownerPortal")}
               </a>
             </div>
-          </motion.div>
+          </div>
 
           {/* Nav */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.navigation")}
             </p>
@@ -136,16 +115,10 @@ export const FooterSection = (): JSX.Element => {
                 </InternalLink>
               ))}
             </nav>
-          </motion.div>
+          </div>
 
           {/* QR: standalone WebGPU bundle (3D tree ↔ flat QR; QR encodes QR_SITE_URL) */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="shrink-0 w-full min-w-0 max-w-[16rem] self-start text-left"
-          >
+          <div className="shrink-0 w-full min-w-0 max-w-[16rem] self-start text-left">
             <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-2">
               <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] whitespace-nowrap">
                 {t("footer.ourSite")}
@@ -194,16 +167,10 @@ export const FooterSection = (): JSX.Element => {
                 </button>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Subscribe */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="md:flex-1 xl:max-w-xs"
-          >
+          <div className="md:flex-1 xl:max-w-xs">
             <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
               {t("footer.newsletter")}
             </p>
@@ -237,7 +204,7 @@ export const FooterSection = (): JSX.Element => {
                 </svg>
               </button>
             </form>
-          </motion.div>
+          </div>
         </div>
 
       </div>
@@ -315,6 +282,6 @@ export const FooterSection = (): JSX.Element => {
           </a>
         </div>
       </div>
-    </motion.footer>
+    </footer>
   );
 };
