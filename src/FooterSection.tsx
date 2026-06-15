@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { InternalLink } from "./components/InternalLink";
 import { PORTAL_URLS } from "./config";
@@ -18,6 +18,8 @@ export const FooterSection = (): JSX.Element => {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const [email, setEmail] = useState("");
+  const [isNavigationOpen, setIsNavigationOpen] = useState(false);
+  const footerNavigationId = useId();
   const qrTreeIframeRef = useRef<HTMLIFrameElement>(null);
   /** Synced with bundle via postMessage (0–3). */
   const [qrSeason, setQrSeason] = useState(0);
@@ -101,14 +103,36 @@ export const FooterSection = (): JSX.Element => {
 
           {/* Nav */}
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
+            <button
+              type="button"
+              className="mb-3 flex min-h-11 w-full items-center justify-between gap-3 border-y border-[#222222] py-3 text-left font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] transition-colors hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 md:hidden"
+              aria-expanded={isNavigationOpen}
+              aria-controls={footerNavigationId}
+              onClick={() => setIsNavigationOpen((isOpen) => !isOpen)}
+            >
+              <span>{t("footer.navigation")}</span>
+              <span
+                aria-hidden="true"
+                className={`text-sm leading-none transition-transform duration-200 ${
+                  isNavigationOpen ? "rotate-90 text-white" : "text-[#999999]"
+                }`}
+              >
+                &gt;
+              </span>
+            </button>
+            <p className="mb-4 hidden font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] md:block">
               {t("footer.navigation")}
             </p>
-            <nav className="flex flex-col gap-2" aria-label="Footer navigation">
+            <nav
+              id={footerNavigationId}
+              className={`${isNavigationOpen ? "flex" : "hidden"} flex-col gap-2 md:flex`}
+              aria-label="Footer navigation"
+            >
               {navigationLinks.map((link) => (
                 <InternalLink
                   key={`${link.to}-${link.label}`}
                   to={link.to}
+                  onClick={() => setIsNavigationOpen(false)}
                   className="font-sans text-[#E8E8E8] hover:text-white transition-colors"
                 >
                   {link.label}
