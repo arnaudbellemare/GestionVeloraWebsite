@@ -54,7 +54,7 @@ export const HeaderSection = (): JSX.Element => {
           >
             <img
               src="/logo-80.webp"
-              alt=""
+              alt="Gestion Velora"
               className="h-10 w-10 object-contain"
               width={40}
               height={40}

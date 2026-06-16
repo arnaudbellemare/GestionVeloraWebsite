@@ -45,6 +45,10 @@ const ORG_ID = `${SITE_URL}/#organization`;
 const AUTHOR_NAME = "Arnaud Bellemare";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/twitter-card.png`;
+const DEFAULT_KEYWORDS = {
+  fr: "gestion immobilière Montréal, gestion copropriété, syndicat de copropriété, gestion locative, gestion Airbnb",
+  en: "property management Montreal, condo board management, rental management, Airbnb management, Gestion Velora",
+} as const;
 
 /** Absolute URLs for OG / Twitter / JSON-LD — must match `src/data/services.ts` (one image per slug). */
 const SERVICE_IMAGES: Record<string, string> = {
@@ -101,6 +105,30 @@ function buildTitle(headline: string): string {
   return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut) + "…";
 }
 
+function absoluteSiteUrl(pathOrUrl: string): string {
+  if (pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://")) return pathOrUrl;
+  return `${SITE_URL}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`;
+}
+
+function buildMetaDescription(excerpt: string, brief?: string): string {
+  if (excerpt.length >= 120) return excerpt;
+  const source = `${excerpt} ${brief ?? ""}`.replace(/\s+/g, " ").trim();
+  if (source.length <= 160) return source;
+  const cut = source.slice(0, 157);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 120 ? lastSpace : 157)}…`;
+}
+
+function buildKeywords(locale: "fr" | "en", parts: string[] = []): string {
+  const normalized = parts
+    .map((part) => part.replace(/[—–:|]/g, " ").replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .slice(0, 4);
+  return Array.from(
+    new Set([...normalized, ...DEFAULT_KEYWORDS[locale].split(",").map((part) => part.trim())])
+  ).join(", ");
+}
+
 // ---------------------------------------------------------------------------
 // Helper: inject content into the HTML template
 // ---------------------------------------------------------------------------
@@ -115,6 +143,7 @@ function buildHtml(
     ogLocaleAlt: string;
     ogImage: string;
     twitterImage: string;
+    keywords?: string;
     ampHtmlHref?: string;
     hreflangFr: string;
     hreflangEn: string;
@@ -142,6 +171,13 @@ function buildHtml(
   html = html.replace(
     /<meta name="description" content="[^"]*"/,
     `<meta name="description" content="${escapeHtml(opts.description)}"`
+  );
+
+  html = html.replace(/\s*<meta name="keywords" content="[^"]*"\s*\/?>/g, "");
+  const keywords = opts.keywords ?? DEFAULT_KEYWORDS[opts.locale];
+  html = html.replace(
+    /(<meta name="description" content="[^"]*" \/>)/,
+    `$1\n    <meta name="keywords" content="${escapeHtml(keywords)}" />`
   );
 
   // 4. <link rel="canonical">
@@ -783,6 +819,9 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
 
   return `<main lang="${lang}">
   <h1>${escapeHtml(loc.title)}</h1>
+  <figure>
+    <img src="${escapeHtml(absoluteSiteUrl(post.image))}" alt="${escapeHtml(loc.title)}" width="1200" height="900" loading="eager" />
+  </figure>
   <p>${escapeHtml(loc.brief)}</p>
 ${sectionHtml}
 </main>`;
@@ -1396,6 +1435,7 @@ interface RouteConfig {
   enPath: string;
   title: string;
   description: string;
+  keywords?: string;
   ogImage?: string;
   twitterImage?: string;
   ampPath?: string;
@@ -1666,7 +1706,8 @@ function buildRoutes(): RouteConfig[] {
       frPath: `/blog/${slug}`,
       enPath: `/en/blog/${slug}`,
       title: buildTitle(post.fr.metaTitle ?? post.fr.title),
-      description: post.fr.excerpt,
+      description: buildMetaDescription(post.fr.excerpt, post.fr.brief),
+      keywords: buildKeywords("fr", [post.fr.metaTitle ?? post.fr.title, post.fr.category, post.fr.sections[0]?.heading ?? ""]),
       ogImage: img,
       twitterImage: img,
       ampPath: `/amp/blog/${slug}`,
@@ -1688,7 +1729,8 @@ function buildRoutes(): RouteConfig[] {
       frPath: `/blog/${slug}`,
       enPath: `/en/blog/${slug}`,
       title: buildTitle(post.en.metaTitle ?? post.en.title),
-      description: post.en.excerpt,
+      description: buildMetaDescription(post.en.excerpt, post.en.brief),
+      keywords: buildKeywords("en", [post.en.metaTitle ?? post.en.title, post.en.category, post.en.sections[0]?.heading ?? ""]),
       ogImage: img,
       twitterImage: img,
       ampPath: `/en/amp/blog/${slug}`,
@@ -1846,6 +1888,7 @@ async function main() {
       lang,
       title: route.title,
       description: route.description,
+      keywords: route.keywords,
       canonical,
       ogLocale: isEn ? "en_CA" : "fr_CA",
       ogLocaleAlt: isEn ? "fr_CA" : "en_CA",
@@ -1872,6 +1915,7 @@ async function main() {
     lang: "fr-CA",
     title: rootRoute.title,
     description: rootRoute.description,
+    keywords: rootRoute.keywords,
     canonical: `${SITE_URL}/`,
     ogLocale: "fr_CA",
     ogLocaleAlt: "en_CA",

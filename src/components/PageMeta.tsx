@@ -10,6 +10,10 @@ import { getTrustPageLocale, trustPageIdFromPath } from "../data/trust-pages";
 
 const _TITLE_SUFFIX = " | Gestion Velora";
 const _TITLE_MAX = 70;
+const DEFAULT_KEYWORDS = {
+  fr: "gestion immobilière Montréal, gestion copropriété, syndicat de copropriété, gestion locative, gestion Airbnb",
+  en: "property management Montreal, condo board management, rental management, Airbnb management, Gestion Velora",
+} as const;
 
 function canonicalPathFor(pathname: string): string {
   if (pathname === "/") return "/";
@@ -37,6 +41,25 @@ function setMeta(name: string, content: string, property = false) {
   el.content = content;
 }
 
+function buildMetaDescription(excerpt: string, brief?: string): string {
+  if (excerpt.length >= 120) return excerpt;
+  const source = `${excerpt} ${brief ?? ""}`.replace(/\s+/g, " ").trim();
+  if (source.length <= 160) return source;
+  const cut = source.slice(0, 157);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 120 ? lastSpace : 157)}…`;
+}
+
+function buildKeywords(locale: "fr" | "en", parts: string[] = []): string {
+  const normalized = parts
+    .map((part) => part.replace(/[—–:|]/g, " ").replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .slice(0, 4);
+  return Array.from(
+    new Set([...normalized, ...DEFAULT_KEYWORDS[locale].split(",").map((part) => part.trim())])
+  ).join(", ");
+}
+
 function setAmpHtml(href?: string) {
   let el = document.querySelector('link[rel="amphtml"]') as HTMLLinkElement | null;
   if (!href) {
@@ -59,10 +82,12 @@ function applyDocumentMeta(opts: {
   url: string;
   isEn: boolean;
   robots?: string;
+  keywords?: string;
 }) {
-  const { title, description, ogImage, twitterImage, url, isEn, robots } = opts;
+  const { title, description, ogImage, twitterImage, url, isEn, robots, keywords } = opts;
   document.title = title;
   setMeta("description", description);
+  setMeta("keywords", keywords ?? DEFAULT_KEYWORDS[isEn ? "en" : "fr"]);
   setMeta("robots", robots ?? "index, follow");
   setMeta("twitter:card", "summary_large_image");
   setMeta("og:title", title, true);
@@ -118,12 +143,17 @@ export function PageMeta() {
           );
           applyDocumentMeta({
             title: buildTitle(post.metaTitle ?? post.title),
-            description: post.excerpt,
+            description: buildMetaDescription(post.excerpt, post.brief),
             ogImage: blogCoverUrl(post.image),
             twitterImage: blogCoverUrl(post.image),
             url,
             isEn,
             robots,
+            keywords: buildKeywords(locale, [
+              post.metaTitle ?? post.title,
+              post.category,
+              post.sections[0]?.heading ?? "",
+            ]),
           });
         } else {
           setAmpHtml();
