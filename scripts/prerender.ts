@@ -960,9 +960,17 @@ ${links}
 
 function buildComparisonMainHtml(locale: "fr" | "en", page: (typeof COMPARISON_PAGES)[0]): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
-  const title = locale === "fr" ? page.titleFr : page.titleEn;
+  const h1 = locale === "fr" ? page.h1Fr : page.h1En;
   const hero = locale === "fr" ? page.heroFr : page.heroEn;
   const desc = locale === "fr" ? page.descriptionFr : page.descriptionEn;
+  const primaryColumn = locale === "fr" ? page.primaryColumnFr : page.primaryColumnEn;
+  const alternativeColumn = locale === "fr" ? page.alternativeColumnFr : page.alternativeColumnEn;
+  const bestFor = locale === "fr" ? page.bestForFr : page.bestForEn;
+  const notBestFor = locale === "fr" ? page.notBestForFr : page.notBestForEn;
+  const whereAlternativeWins = locale === "fr" ? page.whereAlternativeWinsFr : page.whereAlternativeWinsEn;
+  const bestForHtml = bestFor.map((pt) => `    <li>${escapeHtml(pt)}</li>`).join("\n");
+  const notBestForHtml = notBestFor.map((pt) => `    <li>${escapeHtml(pt)}</li>`).join("\n");
+  const alternativeWinsHtml = whereAlternativeWins.map((pt) => `    <li>${escapeHtml(pt)}</li>`).join("\n");
   const sectionsHtml = page.sections
     .slice(0, 3)
     .map((s) => {
@@ -973,11 +981,113 @@ function buildComparisonMainHtml(locale: "fr" | "en", page: (typeof COMPARISON_P
       return `  <h2>${escapeHtml(h)}</h2>\n  <p>${escapeHtml(b)}</p>\n  <ul>\n${lis}\n  </ul>`;
     })
     .join("\n");
+  const featureRowsHtml = page.featureRows
+    .map((row) => {
+      const label = locale === "fr" ? row.labelFr : row.labelEn;
+      const velora = locale === "fr" ? row.veloraFr : row.veloraEn;
+      const alternative = locale === "fr" ? row.alternativeFr : row.alternativeEn;
+      return `      <tr>
+        <th>${escapeHtml(label)}</th>
+        <td>${row.veloraPositive ? "✅" : "❌"} ${escapeHtml(velora)}</td>
+        <td>${row.alternativePositive ? "✅" : "❌"} ${escapeHtml(alternative)}</td>
+      </tr>`;
+    })
+    .join("\n");
+  const pricingRowsHtml = page.pricingRows
+    .map((row) => {
+      const item = locale === "fr" ? row.itemFr : row.itemEn;
+      const velora = locale === "fr" ? row.veloraFr : row.veloraEn;
+      const alternative = locale === "fr" ? row.alternativeFr : row.alternativeEn;
+      const note = locale === "fr" ? row.noteFr : row.noteEn;
+      return `  <h3>${escapeHtml(item)}</h3>
+  <p><strong>${escapeHtml(primaryColumn)}:</strong> ${escapeHtml(velora)}</p>
+  <p><strong>${escapeHtml(alternativeColumn)}:</strong> ${escapeHtml(alternative)}</p>
+  <p>${escapeHtml(note)}</p>`;
+    })
+    .join("\n");
+  const storyTitle = locale === "fr" ? page.switchingStory.titleFr : page.switchingStory.titleEn;
+  const storyContext = locale === "fr" ? page.switchingStory.contextFr : page.switchingStory.contextEn;
+  const storyActions = locale === "fr" ? page.switchingStory.actionsFr : page.switchingStory.actionsEn;
+  const storyOutcome = locale === "fr" ? page.switchingStory.outcomeFr : page.switchingStory.outcomeEn;
+  const storyDisclosure = locale === "fr" ? page.switchingStory.disclosureFr : page.switchingStory.disclosureEn;
+  const storyActionsHtml = storyActions.map((pt) => `    <li>${escapeHtml(pt)}</li>`).join("\n");
+  const alternativesHtml = page.alternatives
+    ? `<h2>${locale === "fr" ? "Alternatives en gestion immobilière à Montréal" : "Montreal property management alternatives"}</h2>
+  <ol>
+${page.alternatives
+  .map((alt) => {
+    const best = locale === "fr" ? alt.bestForFr : alt.bestForEn;
+    const notBest = locale === "fr" ? alt.notBestForFr : alt.notBestForEn;
+    const strengths = locale === "fr" ? alt.strengthsFr : alt.strengthsEn;
+    const cautions = locale === "fr" ? alt.cautionsFr : alt.cautionsEn;
+    return `    <li>
+      <h3>${escapeHtml(alt.name)}</h3>
+      <p><strong>${locale === "fr" ? "Meilleur pour" : "Best for"}:</strong> ${escapeHtml(best)}</p>
+      <p><strong>${locale === "fr" ? "Moins adapté pour" : "Not best for"}:</strong> ${escapeHtml(notBest)}</p>
+      <p><strong>${locale === "fr" ? "Forces" : "Strengths"}:</strong> ${strengths.map(escapeHtml).join("; ")}</p>
+      <p><strong>${locale === "fr" ? "À vérifier" : "Check first"}:</strong> ${cautions.map(escapeHtml).join("; ")}</p>
+    </li>`;
+  })
+  .join("\n")}
+  </ol>`
+    : "";
+  const faqsHtml = page.faqs
+    .map((faq) => {
+      const q = locale === "fr" ? faq.questionFr : faq.questionEn;
+      const a = locale === "fr" ? faq.answerFr : faq.answerEn;
+      return `  <h3>${escapeHtml(q)}</h3>\n  <p>${escapeHtml(a)}</p>`;
+    })
+    .join("\n");
+  const linksHtml = page.internalLinks
+    .map((link) => {
+      const href = locale === "fr" ? link.to : `/en${link.to === "/" ? "" : link.to}`;
+      const label = locale === "fr" ? link.labelFr : link.labelEn;
+      return `    <li><a href="${href}">${escapeHtml(label)}</a></li>`;
+    })
+    .join("\n");
   return `<main lang="${lang}">
-  <h1>${escapeHtml(title)}</h1>
+  <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(hero)}</p>
   <p>${escapeHtml(desc)}</p>
+  <h2>${locale === "fr" ? "Meilleur pour" : "Best for"}</h2>
+  <ul>
+${bestForHtml}
+  </ul>
+  <h2>${locale === "fr" ? "Moins adapté pour" : "Not best for"}</h2>
+  <ul>
+${notBestForHtml}
+  </ul>
+  <h2>${locale === "fr" ? "Là où l'autre option gagne" : "Where the other option wins"}</h2>
+  <ul>
+${alternativeWinsHtml}
+  </ul>
 ${sectionsHtml}
+  <h2>${locale === "fr" ? "Tableau comparatif des fonctionnalités" : "Feature comparison table"}</h2>
+  <table>
+    <thead>
+      <tr><th>${locale === "fr" ? "Critère" : "Decision factor"}</th><th>${escapeHtml(primaryColumn)}</th><th>${escapeHtml(alternativeColumn)}</th></tr>
+    </thead>
+    <tbody>
+${featureRowsHtml}
+    </tbody>
+  </table>
+  <h2>${locale === "fr" ? "Comparaison des prix" : "Pricing comparison"}</h2>
+${pricingRowsHtml}
+${alternativesHtml}
+  <h2>${locale === "fr" ? "Histoire de bascule" : "Switching story"}</h2>
+  <h3>${escapeHtml(storyTitle)}</h3>
+  <p>${escapeHtml(storyContext)}</p>
+  <ul>
+${storyActionsHtml}
+  </ul>
+  <p>${escapeHtml(storyOutcome)}</p>
+  <p>${escapeHtml(storyDisclosure)}</p>
+  <h2>FAQ</h2>
+${faqsHtml}
+  <h2>${locale === "fr" ? "Pages internes utiles" : "Helpful internal links"}</h2>
+  <ul>
+${linksHtml}
+  </ul>
 </main>`;
 }
 
@@ -985,7 +1095,7 @@ function buildCompareIndexMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
   const links = COMPARISON_PAGES.map((page) => {
     const href = locale === "fr" ? `/compare/${page.slug}` : `/en/compare/${page.slug}`;
-    const title = locale === "fr" ? page.titleFr : page.titleEn;
+    const title = locale === "fr" ? page.h1Fr : page.h1En;
     const desc = locale === "fr" ? page.descriptionFr : page.descriptionEn;
     return `    <li><a href="${href}">${escapeHtml(title)}</a> — ${escapeHtml(desc)}</li>`;
   }).join("\n");
@@ -993,7 +1103,7 @@ function buildCompareIndexMainHtml(locale: "fr" | "en"): string {
     return `<main lang="${lang}">
   <h1>Guides comparatifs en gestion immobilière</h1>
   <p>Ces guides aident les copropriétaires, conseils d'administration et propriétaires locatifs à choisir entre plusieurs modes de gestion. Chaque comparaison présente les coûts, les risques, la charge opérationnelle, la qualité de service et les situations où une solution devient plus pertinente qu'une autre.</p>
-  <p>Les décisions en gestion immobilière ne sont pas seulement financières. Elles touchent la conformité, la disponibilité des bénévoles ou propriétaires, la rapidité de réponse aux incidents et la capacité à maintenir une documentation claire.</p>
+  <p>Inclut maintenant une page alternatives en gestion immobilière à Montréal avec Gestion Velora et quatre concurrents réels décrits honnêtement.</p>
   <h2>Comparatifs disponibles</h2>
   <ul>
 ${links}
@@ -1003,7 +1113,7 @@ ${links}
   return `<main lang="${lang}">
   <h1>Property management comparison guides</h1>
   <p>These guides help condo owners, boards, and landlords compare different management models. Each comparison explains cost, risk, operating workload, service quality, and the situations where one option becomes more relevant than another.</p>
-  <p>Property management decisions are not only financial. They affect compliance, owner or volunteer availability, incident response speed, and the ability to maintain clear documentation over time.</p>
+  <p>Includes a Montreal property management alternatives page with Gestion Velora and four real competitors described fairly.</p>
   <h2>Available comparisons</h2>
   <ul>
 ${links}
@@ -1621,6 +1731,7 @@ function buildRoutes(): RouteConfig[] {
       enPath: `/en/compare/${page.slug}`,
       title: buildTitle(page.titleFr),
       description: page.descriptionFr,
+      keywords: buildKeywords("fr", [page.h1Fr, page.titleFr, ...page.whereAlternativeWinsFr]),
       prerenderMainInner: buildComparisonMainHtml("fr", page),
       pageSchemas: null,
     });
@@ -1631,6 +1742,7 @@ function buildRoutes(): RouteConfig[] {
       enPath: `/en/compare/${page.slug}`,
       title: buildTitle(page.titleEn),
       description: page.descriptionEn,
+      keywords: buildKeywords("en", [page.h1En, page.titleEn, ...page.whereAlternativeWinsEn]),
       prerenderMainInner: buildComparisonMainHtml("en", page),
       pageSchemas: null,
     });

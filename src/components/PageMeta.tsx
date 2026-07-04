@@ -181,6 +181,7 @@ export function PageMeta() {
     let description = baseDesc;
     let ogImage = DEFAULT_OG_IMAGE;
     let twitterImage = DEFAULT_TWITTER_IMAGE;
+    let keywords: string | undefined;
     setAmpHtml();
 
     const isServicesHub =
@@ -204,6 +205,11 @@ export function PageMeta() {
       if (page) {
         title = buildTitle(isEn ? page.titleEn : page.titleFr);
         description = isEn ? page.descriptionEn : page.descriptionFr;
+        keywords = buildKeywords(locale, [
+          isEn ? page.h1En : page.h1Fr,
+          isEn ? page.titleEn : page.titleFr,
+          ...(isEn ? page.whereAlternativeWinsEn : page.whereAlternativeWinsFr),
+        ]);
       }
     } else if (pathname === "/locations" || pathname === "/en/locations") {
       title = isEn
@@ -239,7 +245,7 @@ export function PageMeta() {
       }
     }
 
-    applyDocumentMeta({ title, description, ogImage, twitterImage, url, isEn, robots });
+    applyDocumentMeta({ title, description, ogImage, twitterImage, url, isEn, robots, keywords });
   }, [pathname, slug, locale, t, isEn, baseTitle, baseDesc]);
 
   return null;

@@ -37,12 +37,12 @@ export function CompareIndexPage() {
           </p>
         </ScrollReveal>
 
-        <section id="comparison-list" className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8" aria-label={isEn ? "Comparison pages" : "Pages de comparaison"}>
+        <section id="comparison-list" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8" aria-label={isEn ? "Comparison pages" : "Pages de comparaison"}>
           {COMPARISON_PAGES.map((page, i) => (
             <ScrollReveal key={page.slug} delay={i * 0.06}>
               <article className="h-full rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/[0.02] p-6 lg:p-8">
                 <h2 className="font-sans font-semibold text-xl text-nd-display mb-3">
-                  {isEn ? page.titleEn : page.titleFr}
+                  {isEn ? page.h1En : page.h1Fr}
                 </h2>
                 <p className="font-sans text-sm text-black/70 dark:text-white/70 mb-6">
                   {isEn ? page.descriptionEn : page.descriptionFr}

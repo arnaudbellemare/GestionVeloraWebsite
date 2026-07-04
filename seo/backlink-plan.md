@@ -12,6 +12,24 @@ Updated 2026-05-31.
 | `/services/location` | gestion locative Montreal | Build rental-owner relevance. |
 | `/services/airbnb` | gestion Airbnb Montreal | Build short-term rental relevance. |
 
+## Comparison Page Backlink Targets
+
+These links should point directly to the comparison page that matches the referring context, not only to the homepage or service hub.
+
+| Page | Keyword Owner | Backlink Goal |
+|---|---|---|
+| `/compare/gestionnaire-vs-autogestion-condo` | gestionnaire de copropriete vs autogestion a Montreal | Capture condo boards evaluating whether volunteer management still scales. |
+| `/compare/airbnb-vs-location-longue-duree-montreal` | Airbnb vs location longue duree a Montreal | Capture owners comparing short-term upside against long-term stability. |
+| `/compare/gestion-locative-interne-vs-externalisee` | gestion locative interne vs externalisee a Montreal | Capture portfolio owners deciding between hiring internally and outsourcing. |
+| `/compare/meilleures-alternatives-gestion-immobiliere-montreal` | meilleures alternatives gestion immobiliere Montreal | Own the category alternatives query before directories or competitors do. |
+
+## Comparison Ranking Actions
+
+- Build targeted backlinks to the matching `/compare/...` page from partner, vendor, and educational content.
+- Seed the pages only where buyers are already asking for alternatives, comparisons, or switching criteria.
+- Track any third-party "alternatives" listicles and request accurate placement where the category fit is real.
+- Add internal links from high-authority pages: `/services`, `/tarifs`, related service pages, and relevant blog posts.
+
 ## Backlink Principles
 
 - Prioritize local relevance over raw domain count: Quebec property, condo, rental, legal, accounting, cleaning, maintenance, and real estate sites matter more than generic directories.
