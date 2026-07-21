@@ -923,7 +923,7 @@ ${serviceLinks}
   <h2>Ce que chaque mandat inclut</h2>
   <p>Les mandats Gestion Velora couvrent la priorisation des demandes, la coordination fournisseurs, les communications clés, la surveillance des échéances et la production de rapports clairs. Pour les copropriétés, l'accent porte sur la gouvernance et la conformité. Pour les locations, l'accent porte sur l'occupation, les revenus et l'expérience résident.</p>
   <h2>Outil gratuit pour investisseurs</h2>
-  <p>Avant de confier la gestion, évaluez l'immeuble : le <a href="${CALCULATOR_PATHS.fr}">calculateur de rendement pour plex et multilogement</a> applique les règles du Québec — droits de mutation de Montréal, mise de fonds SCHL, plafond du TAL et valeur économique bancaire. Gratuit, sans inscription.</p>
+  <p>Avant de confier la gestion, évaluez l'immeuble : le <a href="${CALCULATOR_PATHS.fr}">calculateur de rendement pour plex et multilogement</a> applique les règles du Québec : droits de mutation de Montréal, mise de fonds SCHL, plafond du TAL et valeur économique bancaire. Gratuit, sans inscription.</p>
 </main>`;
   }
   return `<main lang="${lang}">
@@ -937,7 +937,7 @@ ${serviceLinks}
   <h2>What each mandate includes</h2>
   <p>Gestion Velora mandates cover request triage, vendor coordination, key communications, deadline monitoring, and clear reporting. For condo boards, the emphasis is governance and compliance. For rentals, the emphasis is occupancy, revenue continuity, and resident experience.</p>
   <h2>Free tool for investors</h2>
-  <p>Before handing over management, underwrite the building: the <a href="${CALCULATOR_PATHS.en}">plex and multifamily investment calculator</a> applies Quebec's rules — Montreal welcome tax, CMHC down payment caps, the TAL rent ceiling and the bank's economic value. Free, no sign-up.</p>
+  <p>Before handing over management, underwrite the building: the <a href="${CALCULATOR_PATHS.en}">plex and multifamily investment calculator</a> applies Quebec's rules: Montreal welcome tax, CMHC down payment caps, the TAL rent ceiling and the bank's economic value. Free, no sign-up.</p>
 </main>`;
 }
 
@@ -1569,7 +1569,7 @@ function buildPlexCalculatorMainHtml(loc: "fr" | "en"): string {
     .join("");
   const figures = REFERENCE_FIGURES.map(
     (f) =>
-      `<li><strong>${escapeHtml(f.label[loc])}:</strong> ${escapeHtml(f.value[loc])} — <a href="${f.sourceUrl}" rel="noopener">${escapeHtml(f.source)}</a></li>`,
+      `<li><strong>${escapeHtml(f.label[loc])}:</strong> ${escapeHtml(f.value[loc])}, <a href="${f.sourceUrl}" rel="noopener">${escapeHtml(f.source)}</a></li>`,
   ).join("");
   const guideHref = REFERENCE_PATHS[loc];
 

@@ -87,7 +87,7 @@ export function ServicesIndexPage() {
         </div>
 
         <ScrollReveal delay={0.1}>
-          {/* Free tool — its slug differs per locale, so it links directly
+          {/* Free tool: its slug differs per locale, so it links directly
               rather than through InternalLink's /en prefixing. */}
           <section className="mt-14 lg:mt-16 rounded-2xl border border-black/10 dark:border-white/10 overflow-hidden bg-white dark:bg-white/[0.02]">
             <div className="p-6 lg:p-8">

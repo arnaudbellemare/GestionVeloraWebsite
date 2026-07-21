@@ -2,7 +2,7 @@
  * UI labels for the plex calculator, in both site locales.
  *
  * Flat and typed so the component cannot reference a key that has not been
- * translated — adding a field to CalcUi breaks the build until both locales
+ * translated: adding a field to CalcUi breaks the build until both locales
  * define it.
  */
 
@@ -445,7 +445,7 @@ const fr: CalcUi = {
   welcomeTaxMontreal:
     "Montréal applique son propre barème, atteignant 2 % au-delà de 552 300 $, 2,5 % au-delà de 1,1 M$, 3,5 % au-delà de 2,14 M$ et 4 % au-delà de 3,11 M$. C'est la seule municipalité autorisée à dépasser le plafond provincial de 3 %.",
   welcomeTaxOffIsland:
-    "Hors de Montréal, le barème provincial plafonne à 1,5 % au-delà de 315 000 $, mais une municipalité peut ajouter jusqu'à 3 % sur la tranche excédant 500 000 $ par règlement — vérifiez auprès de la ville.",
+    "Hors de Montréal, le barème provincial plafonne à 1,5 % au-delà de 315 000 $, mais une municipalité peut ajouter jusqu'à 3 % sur la tranche excédant 500 000 $ par règlement : vérifiez auprès de la ville.",
   whatChanges: "Ce qui change pour ce type d'immeuble",
 
   typeCondo: "Copropriété",
@@ -457,7 +457,7 @@ const fr: CalcUi = {
 
   unitMixHeading: "Composition des logements",
   unitMixSub:
-    "Le loyer en place est ce que le bail perçoit aujourd'hui. Le loyer du marché est ce que le logement obtient à la relocation. Cet écart est le potentiel de valorisation — et le TAL détermine à quelle vitesse vous le captez.",
+    "Le loyer en place est ce que le bail perçoit aujourd'hui. Le loyer du marché est ce que le logement obtient à la relocation. Cet écart est le potentiel de valorisation, et le TAL détermine à quelle vitesse vous le captez.",
   colType: "Type",
   colUnits: "Nombre",
   colInPlaceRent: "Loyer en place",
@@ -495,9 +495,9 @@ const fr: CalcUi = {
   minRule3to4: "3 à 4 logements : assurable jusqu'à 90 %, donc 10 % minimum.",
   noInsurance: "Sans assurance",
   downPayment: "Mise de fonds",
-  conventionalNoPremium: "Conventionnel — aucune prime",
+  conventionalNoPremium: "Conventionnel: aucune prime",
   insurableTo: "Assurable jusqu'à",
-  rentalNeeds20: "Achat locatif — 20 % requis",
+  rentalNeeds20: "Achat locatif: 20 % requis",
   maxLtv: "Ratio prêt-valeur maximal",
   targetDscr: "Ratio de couverture visé",
   targetDscrHelp: "Minimum du prêteur, généralement 1,10 à 1,30",
@@ -522,7 +522,7 @@ const fr: CalcUi = {
   monthlyPayment: "Paiement mensuel",
   annualDebtService: "Service de la dette annuel",
   premiumNote:
-    "La prime d'assurance est capitalisée dans le prêt; la taxe sur la prime est payable comptant à la clôture. Les taux de prime sont des estimations — la SCHL tarifie chaque dossier individuellement.",
+    "La prime d'assurance est capitalisée dans le prêt; la taxe sur la prime est payable comptant à la clôture. Les taux de prime sont des estimations : la SCHL tarifie chaque dossier individuellement.",
   stressTest: "Test de résistance à",
   passes: "Réussi",
   fails: "Échoué",
@@ -536,7 +536,7 @@ const fr: CalcUi = {
 
   veHeading: "Valeur économique (méthode bancaire)",
   veSub:
-    "À cinq logements et plus, le prêteur ne finance pas votre prix : il finance sa propre valeur. Il normalise quatre postes — gestion, entretien, conciergerie et inoccupation — divise le revenu net normalisé par le ratio de couverture, actualise ce paiement au taux de qualification et obtient le prêt maximal. La valeur économique est ce prêt divisé par le ratio prêt-valeur. Les barèmes normalisés ci-dessous (5 % des revenus, 500 $ et 200 $ par logement, inoccupation plancher de 3 %) sont illustratifs : chaque institution fixe les siens.",
+    "À cinq logements et plus, le prêteur ne finance pas votre prix : il finance sa propre valeur. Il normalise quatre postes (gestion, entretien, conciergerie et inoccupation), divise le revenu net normalisé par le ratio de couverture, actualise ce paiement au taux de qualification et obtient le prêt maximal. La valeur économique est ce prêt divisé par le ratio prêt-valeur. Les barèmes normalisés ci-dessous (5 % des revenus, 500 $ et 200 $ par logement, inoccupation plancher de 3 %) sont illustratifs : chaque institution fixe les siens.",
   veNormalizedNoi: "Revenu net normalisé",
   veNormalizedNote: "Après substitution des dépenses par les normes bancaires",
   veQualificationRate: "Taux de qualification",
@@ -546,10 +546,10 @@ const fr: CalcUi = {
   veGap: "Écart avec le prix",
   veCashRequired: "Comptant réellement requis",
   veCashShortfall: "Comptant additionnel dû à l'écart",
-  veAbovePrice: "La banque évalue au-dessus de votre prix — le financement suit le prix.",
-  veBelowPrice: "La banque évalue sous votre prix — le prêt est plafonné par sa valeur, pas la vôtre.",
+  veAbovePrice: "La banque évalue au-dessus de votre prix : le financement suit le prix.",
+  veBelowPrice: "La banque évalue sous votre prix : le prêt est plafonné par sa valeur, pas la vôtre.",
   veShortfallNote:
-    "Quand la valeur économique est sous le prix d'achat, vous couvrez la totalité de l'écart comptant : la mise de fonds réelle devient prix moins prêt maximal, pas 20 % du prix. À Montréal, le TGA exigé par la banque dépasse largement le TGA du marché — cet écart vient des taux de qualification, pas d'un défaut de l'immeuble.",
+    "Quand la valeur économique est sous le prix d'achat, vous couvrez la totalité de l'écart comptant : la mise de fonds réelle devient prix moins prêt maximal, pas 20 % du prix. À Montréal, le TGA exigé par la banque dépasse largement le TGA du marché, cet écart vient des taux de qualification, pas d'un défaut de l'immeuble.",
   veVariesNote:
     "Chaque prêteur normalise différemment et la valeur économique bouge quotidiennement avec les taux de qualification. Ceci est une version défendable du calcul, pas le chiffre d'une banque précise.",
 
@@ -572,7 +572,7 @@ const fr: CalcUi = {
   holdingPeriod: "Durée de détention",
   holdingPeriodHelp: "Chaque mois coûte l'hypothèque plus le portage",
   flipNote:
-    "Ce profit est net des droits de mutation, du notaire, du portage et des frais de vente — les quatre postes qui grugent discrètement la marge d'un achat-revente.",
+    "Ce profit est net des droits de mutation, du notaire, du portage et des frais de vente : les quatre postes qui grugent discrètement la marge d'un achat-revente.",
 
   expensesHeading: "Dépenses d'exploitation",
   expensesSubPlex:
@@ -606,7 +606,7 @@ const fr: CalcUi = {
   capAtTal: "Plafonner les hausses des loyers en place au taux du TAL",
   taxHeading: "Traitement fiscal",
   taxSub:
-    "Le Canada utilise l'amortissement dégressif, pas linéaire — et le réclamer crée une récupération à la vente. Le terrain n'est pas amortissable.",
+    "Le Canada utilise l'amortissement dégressif, pas linéaire, et le réclamer crée une récupération à la vente. Le terrain n'est pas amortissable.",
   marginalRate: "Taux marginal d'imposition",
   marginalRateHelp: "Québec et fédéral combinés",
   ccaRate: "Taux de DPA",
@@ -650,7 +650,7 @@ const fr: CalcUi = {
 
   exitHeading: "Revente",
   exitSub:
-    "La DPA réclamée en cours de détention est récupérée à votre taux marginal complet — c'est un report d'impôt, pas une déduction.",
+    "La DPA réclamée en cours de détention est récupérée à votre taux marginal complet : c'est un report d'impôt, pas une déduction.",
   holdPeriod: "Durée de détention",
   sellingCostsPct: "Frais de vente",
   salePriceYear: "Prix de vente (année",
@@ -671,11 +671,11 @@ const fr: CalcUi = {
 
   apodHeading: "Données d'exploitation annuelles",
   apodIntro:
-    "Chaque montant peut être modifié. Modifier la colonne « en place » met à jour la donnée d'origine. Modifier la colonne « proforma » ne change que cette ligne — utile pour les taxes après réévaluation, ou la gestion que vous prévoyez assumer vous-même.",
+    "Chaque montant peut être modifié. Modifier la colonne « en place » met à jour la donnée d'origine. Modifier la colonne « proforma » ne change que cette ligne : utile pour les taxes après réévaluation, ou la gestion que vous prévoyez assumer vous-même.",
   typedIn: "Saisi",
   typedInOne: "1 montant proforma est saisi à la main plutôt que calculé",
   typedInMany: "montants proforma sont saisis à la main plutôt que calculés",
-  highlightedBelow: "— surlignés ci-dessous.",
+  highlightedBelow: "- surlignés ci-dessous.",
   recalculateIt: "Recalculer",
   recalculateThem: "Tout recalculer",
   colLine: "Poste",
@@ -697,7 +697,7 @@ const fr: CalcUi = {
   totalOperatingExpenses: "Total des dépenses d'exploitation",
   netOperatingIncome: "Revenu net d'exploitation",
   cashFlowBeforeTax: "Flux de trésorerie avant impôt",
-  resetToCalculated: "Saisi à la main — cliquer pour revenir au montant calculé",
+  resetToCalculated: "Saisi à la main : cliquer pour revenir au montant calculé",
 
   projectionHeading: "Projection proforma",
   colYear: "Année",
@@ -717,7 +717,7 @@ const fr: CalcUi = {
     "Ces seuils sont des règles empiriques, pas une analyse de crédit. Un faible score sur un immeuble que vous pouvez repositionner n'a pas la même portée que sur un immeuble déjà au marché.",
   sourcesHeading: "Règles et chiffres utilisés",
   sourcesIntro:
-    "Chaque valeur ci-dessous provient d'une source externe, à jour en juillet 2026. Toutes sont indexées ou révisées périodiquement — vérifiez-les avant de déposer une offre.",
+    "Chaque valeur ci-dessous provient d'une source externe, à jour en juillet 2026. Toutes sont indexées ou révisées périodiquement : vérifiez-les avant de déposer une offre.",
   colFigure: "Élément",
   colValueHeader: "Valeur",
   colSource: "Source",
@@ -808,7 +808,7 @@ const en: CalcUi = {
   welcomeTaxMontreal:
     "Montreal sets its own schedule, climbing to 2% over $552,300, 2.5% over $1.1M, 3.5% over $2.14M and 4% over $3.11M. It is the one municipality allowed to exceed the 3% provincial ceiling.",
   welcomeTaxOffIsland:
-    "Outside Montreal the statutory schedule tops out at 1.5% above $315,000, though a municipality may add up to 3% on the portion above $500,000 by bylaw — check the town.",
+    "Outside Montreal the statutory schedule tops out at 1.5% above $315,000, though a municipality may add up to 3% on the portion above $500,000 by bylaw: check the town.",
   whatChanges: "What changes at this property type",
 
   typeCondo: "Condo",
@@ -820,7 +820,7 @@ const en: CalcUi = {
 
   unitMixHeading: "Unit mix",
   unitMixSub:
-    "In-place rent is what the lease collects today. Market rent is what the unit gets on turnover. That spread is the value-add — and the TAL decides how slowly you capture it.",
+    "In-place rent is what the lease collects today. Market rent is what the unit gets on turnover. That spread is the value-add, and the TAL decides how slowly you capture it.",
   colType: "Type",
   colUnits: "Units",
   colInPlaceRent: "In-place rent",
@@ -843,7 +843,7 @@ const en: CalcUi = {
 
   financingHeading: "Financing",
   financingSub:
-    "Under five units you are underwritten as residential and your down payment sets the loan. At five and up the lender sizes off NOI — whichever bites first, the LTV cap or the DSCR test, is the loan you get.",
+    "Under five units you are underwritten as residential and your down payment sets the loan. At five and up the lender sizes off NOI: whichever bites first, the LTV cap or the DSCR test, is the loan you get.",
   modeResidential: "Residential (1–4)",
   modeCommercial: "Commercial (5+)",
   modeMli: "CMHC MLI Select",
@@ -858,9 +858,9 @@ const en: CalcUi = {
   minRule3to4: "3–4 units insure to 90% LTV, so 10% is the floor.",
   noInsurance: "No insurance",
   downPayment: "Down payment",
-  conventionalNoPremium: "Conventional — no premium",
+  conventionalNoPremium: "Conventional: no premium",
   insurableTo: "Insurable to",
-  rentalNeeds20: "Rental purchase — 20% required",
+  rentalNeeds20: "Rental purchase: 20% required",
   maxLtv: "Max LTV",
   targetDscr: "Target DSCR",
   targetDscrHelp: "Lender minimum, typically 1.10–1.30",
@@ -885,7 +885,7 @@ const en: CalcUi = {
   monthlyPayment: "Monthly payment",
   annualDebtService: "Annual debt service",
   premiumNote:
-    "The insurance premium is capitalized into the loan; the tax on it is payable in cash at closing. Premium rates are estimates — CMHC prices each file individually.",
+    "The insurance premium is capitalized into the loan; the tax on it is payable in cash at closing. Premium rates are estimates: CMHC prices each file individually.",
   stressTest: "Stress test at",
   passes: "Passes",
   fails: "Fails",
@@ -899,7 +899,7 @@ const en: CalcUi = {
 
   veHeading: "Economic value (the bank's method)",
   veSub:
-    "At five units and up, the lender does not finance your price — it finances its own value. It normalizes four lines — management, maintenance, janitorial and vacancy — divides the normalized NOI by the coverage ratio, discounts that payment at the qualification rate and gets the maximum loan. The economic value is that loan divided by the loan-to-value ratio. The normalized figures below (5% of revenue, $500 and $200 per unit, vacancy floored at 3%) are illustrative: each institution sets its own.",
+    "At five units and up, the lender does not finance your price, it finances its own value. It normalizes four lines (management, maintenance, janitorial and vacancy), divides the normalized NOI by the coverage ratio, discounts that payment at the qualification rate and gets the maximum loan. The economic value is that loan divided by the loan-to-value ratio. The normalized figures below (5% of revenue, $500 and $200 per unit, vacancy floored at 3%) are illustrative: each institution sets its own.",
   veNormalizedNoi: "Normalized NOI",
   veNormalizedNote: "After substituting the bank's expense standards",
   veQualificationRate: "Qualification rate",
@@ -909,16 +909,16 @@ const en: CalcUi = {
   veGap: "Gap to price",
   veCashRequired: "Cash actually required",
   veCashShortfall: "Extra cash due to the gap",
-  veAbovePrice: "The bank values it above your price — financing follows the price.",
-  veBelowPrice: "The bank values it below your price — the loan is capped by its number, not yours.",
+  veAbovePrice: "The bank values it above your price: financing follows the price.",
+  veBelowPrice: "The bank values it below your price: the loan is capped by its number, not yours.",
   veShortfallNote:
-    "When the economic value sits below the purchase price, you cover the whole gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. In Montreal the cap rate the bank requires sits well above the market cap rate — that gap comes from qualification rates, not from a defect in the building.",
+    "When the economic value sits below the purchase price, you cover the whole gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. In Montreal the cap rate the bank requires sits well above the market cap rate, that gap comes from qualification rates, not from a defect in the building.",
   veVariesNote:
     "Every lender normalizes differently, and economic value moves daily with qualification rates. This is one defensible version of the calculation, not any specific bank's number.",
 
   renoHeading: "Renovation and turnover",
   renoSub:
-    "A sitting tenant's rent is capped by the TAL. You only reset to market when a unit turns over, so the pace of turnover — not the size of the rent gap — sets how fast the value-add lands.",
+    "A sitting tenant's rent is capped by the TAL. You only reset to market when a unit turns over, so the pace of turnover, not the size of the rent gap, sets how fast the value-add lands.",
   initialRehab: "Initial rehab budget",
   initialRehabHelp: "Day-one work, paid at closing",
   unitsTurnedPerYear: "Units turned / year",
@@ -930,18 +930,18 @@ const en: CalcUi = {
   monthlyRentLift: "Monthly rent lift at completion",
   noiLift: "NOI lift at completion",
   renoNote:
-    "Renovation spend is treated as capital in the year it happens — it hits the IRR, not the NOI.",
+    "Renovation spend is treated as capital in the year it happens: it hits the IRR, not the NOI.",
   arvHelp: "Resale price once work is done",
   holdingPeriod: "Holding period",
   holdingPeriodHelp: "Every month costs mortgage plus carrying",
   flipNote:
-    "That profit is after welcome tax, notary, carrying and selling costs — the four things that quietly consume a flip margin.",
+    "That profit is after welcome tax, notary, carrying and selling costs: the four things that quietly consume a flip margin.",
 
   expensesHeading: "Operating expenses",
   expensesSubPlex:
     "Snow removal and common hydro are not optional line items in Montreal, and vendors routinely omit both from the listing's expense sheet.",
   expensesSubCondo:
-    "Condo fees are the line to scrutinise — ask for the reserve-fund study before assuming they hold.",
+    "Condo fees are the line to scrutinise: ask for the reserve-fund study before assuming they hold.",
   municipalTaxes: "Municipal taxes",
   schoolTax: "School tax",
   insurance: "Insurance",
@@ -969,7 +969,7 @@ const en: CalcUi = {
   capAtTal: "Cap in-place rent increases at the TAL guideline",
   taxHeading: "Tax treatment",
   taxSub:
-    "Canada uses declining-balance CCA, not straight-line depreciation — and claiming it creates recapture on sale. Land is not depreciable.",
+    "Canada uses declining-balance CCA, not straight-line depreciation, and claiming it creates recapture on sale. Land is not depreciable.",
   marginalRate: "Marginal tax rate",
   marginalRateHelp: "Combined QC + federal",
   ccaRate: "CCA rate",
@@ -1013,7 +1013,7 @@ const en: CalcUi = {
 
   exitHeading: "Exit",
   exitSub:
-    "CCA you claimed along the way comes back as recapture at your full marginal rate — it is a deferral, not a deduction.",
+    "CCA you claimed along the way comes back as recapture at your full marginal rate: it is a deferral, not a deduction.",
   holdPeriod: "Hold period",
   sellingCostsPct: "Selling costs",
   salePriceYear: "Sale price (year",
@@ -1034,11 +1034,11 @@ const en: CalcUi = {
 
   apodHeading: "Annual property operating data",
   apodIntro:
-    "Every figure here can be typed over. Editing the in-place column writes back to the input it came from. Editing the proforma column changes that one line only — useful for taxes after a reassessment, or management you plan to drop by self-managing.",
+    "Every figure here can be typed over. Editing the in-place column writes back to the input it came from. Editing the proforma column changes that one line only: useful for taxes after a reassessment, or management you plan to drop by self-managing.",
   typedIn: "Typed in",
   typedInOne: "1 proforma figure is typed in by hand instead of calculated",
   typedInMany: "proforma figures are typed in by hand instead of calculated",
-  highlightedBelow: "— highlighted below.",
+  highlightedBelow: "- highlighted below.",
   recalculateIt: "Recalculate it",
   recalculateThem: "Recalculate them",
   colLine: "Line",
@@ -1060,7 +1060,7 @@ const en: CalcUi = {
   totalOperatingExpenses: "Total operating expenses",
   netOperatingIncome: "Net operating income",
   cashFlowBeforeTax: "Cash flow before tax",
-  resetToCalculated: "Typed in by hand — click to go back to the calculated figure",
+  resetToCalculated: "Typed in by hand: click to go back to the calculated figure",
 
   projectionHeading: "Proforma projection",
   colYear: "Year",
@@ -1080,7 +1080,7 @@ const en: CalcUi = {
     "Thresholds are rules of thumb, not underwriting. A weak score on a building you can reposition is a different thing from a weak score on one already at market.",
   sourcesHeading: "Rules and figures behind this model",
   sourcesIntro:
-    "Every value below comes from an external source, current as of July 2026. All of them are indexed or revised periodically — re-check before an offer.",
+    "Every value below comes from an external source, current as of July 2026. All of them are indexed or revised periodically: re-check before an offer.",
   colFigure: "Figure",
   colValueHeader: "Value",
   colSource: "Source",

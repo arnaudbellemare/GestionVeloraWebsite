@@ -80,7 +80,7 @@ function PctField({
   return (
     <Field
       label={label}
-      // Two decimals — rates like 4.75% must not round to 4.8%.
+      // Two decimals: rates like 4.75% must not round to 4.8%.
       value={Math.round(value * 10000) / 100}
       onChange={(v) => onChange(v / 100)}
       suffix="%"
@@ -352,8 +352,8 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   /**
    * The verdict factors come out of the engine with English labels and
    * English-formatted values (the engine is locale-agnostic and pre-formats
-   * them). Rather than change its return type, they are mapped here — keyed on
-   * the engine's stable label strings — so a French page never shows
+   * them). Rather than change its return type, they are mapped here: keyed on
+   * the engine's stable label strings, so a French page never shows
    * "PAYBACK (TOTAL): 4 YEARS" or "$-688".
    */
   const VERDICT_LABELS: Record<string, { fr: string; en: string }> = {
@@ -377,7 +377,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
 
   /**
    * Rewrites the engine's en-CA value strings into French conventions. The
-   * engine emits plain toFixed() output, so dollar amounts arrive ungrouped —
+   * engine emits plain toFixed() output, so dollar amounts arrive ungrouped -
    * they are re-formatted here rather than merely moved past the symbol.
    */
   const verdictValue = (value: string): string => {
@@ -427,13 +427,13 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   };
 
   /**
-   * Export is never blocked on the email — the file downloads either way. The
+   * Export is never blocked on the email: the file downloads either way. The
    * address is an optional capture at the moment of highest intent, and the
    * tool stays fully crawlable because nothing is behind a gate.
    */
   const submitEmail = () => {
     // Only posts when the site's Web3Forms key is actually configured, using
-    // the same config export the contact form uses — an unset key would
+    // the same config export the contact form uses: an unset key would
     // otherwise send an empty access_key and fail silently.
     if (email.trim() && CONTACT_FORM_USE_API) {
       void fetch("https://api.web3forms.com/submit", {
@@ -441,7 +441,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `Calculateur plex — ${propertyName}`,
+          subject: `Calculateur plex: ${propertyName}`,
           email: email.trim(),
           message: `${propertyName}\nCap: ${f.percent2(results.purchaseCapRate)}\nNOI: ${f.currency(results.noi)}\nCash flow: ${f.currency(results.btCashFlowYear1)}`,
         }),
@@ -571,8 +571,8 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                 <Field label={t.condoFeesMonthly} value={inputs.condoFees} onChange={(v) => set("condoFees", v)} prefix="$" step={25} help={t.condoFeesHelp} />
               )}
               <Readout label={isCondo ? t.units : t.totalUnits} value={f.number(units)} />
-              <Readout label={isCondo ? t.unitArea : t.netRentableArea} value={results.netRSF > 0 ? f.sqft(results.netRSF) : "—"} />
-              <Readout label={t.costPerSqft} value={results.costPerRSF > 0 ? f.currencyDetailed(results.costPerRSF) : "—"} />
+              <Readout label={isCondo ? t.unitArea : t.netRentableArea} value={results.netRSF > 0 ? f.sqft(results.netRSF) : "-"} />
+              <Readout label={t.costPerSqft} value={results.costPerRSF > 0 ? f.currencyDetailed(results.costPerRSF) : "-"} />
             </div>
 
             <div className="plexc-tags">
@@ -653,7 +653,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                               onChange={(e) => updateUnit(u.id, { sqft: parseFloat(e.target.value) || 0 })} />
                           </div>
                         </td>
-                        <td>{upside > 0 ? f.currency(upside) : "—"}</td>
+                        <td>{upside > 0 ? f.currency(upside) : "-"}</td>
                         <td>
                           <button className="plexc-btn" onClick={() => removeUnit(u.id)}>{t.remove}</button>
                         </td>
@@ -665,7 +665,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                     <td>{units}</td>
                     <td>{f.currency(results.currentMonthlyRent)}</td>
                     <td>{f.currency(results.proformaMonthlyRent)}</td>
-                    <td>{results.netRSF > 0 ? f.number(results.netRSF) : "—"}</td>
+                    <td>{results.netRSF > 0 ? f.number(results.netRSF) : "-"}</td>
                     <td>{f.currency(results.rentUpsideMonthly)}</td>
                     <td></td>
                   </tr>
@@ -679,7 +679,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
               <Readout label={t.annualUpside} value={f.currency(results.rentUpsideMonthly * 12)} />
               <Readout label={t.grmInPlace} value={f.number(results.grm, 1)} />
               <Readout label={t.onePercentRule} value={f.percent2(results.rentToPrice1Pct)} />
-              <Readout label={t.avgRentPerUnit} value={units > 0 ? f.currency(results.currentMonthlyRent / units) : "—"} />
+              <Readout label={t.avgRentPerUnit} value={units > 0 ? f.currency(results.currentMonthlyRent / units) : "-"} />
             </div>
           </div>
         )}
@@ -781,7 +781,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
               {results.closingCosts.cmhcPremium > 0 && (
                 <p className="plexc-note">
                   <strong>{f.currency(results.closingCosts.cmhcPremium)}</strong>{" "}
-                  ({f.percent2(results.mliPremiumPct)}) — {t.premiumNote}
+                  ({f.percent2(results.mliPremiumPct)}): {t.premiumNote}
                 </p>
               )}
               <p className="plexc-note">
@@ -789,7 +789,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                 <span className={`plexc-tag ${results.stressTestPasses ? "plexc-tag-good" : "plexc-tag-bad"}`}>
                   {results.stressTestPasses ? t.passes : t.fails}
                 </span>{" "}
-                — {f.currencyDetailed(results.stressTestPayment)}{t.perMonth}.
+: {f.currencyDetailed(results.stressTestPayment)}{t.perMonth}.
               </p>
             </div>
 
@@ -917,7 +917,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
             <div className="plexc-grid4" style={{ marginTop: 26 }}>
               <Readout label={t.totalOpEx} value={f.currency(results.totalOperatingExpenses)} />
               <Readout label={t.expenseRatio} value={f.percent2(results.operatingExpenseRatio)} />
-              <Readout label={t.perUnitPerYear} value={units > 0 ? f.currency(results.totalOperatingExpenses / units) : "—"} />
+              <Readout label={t.perUnitPerYear} value={units > 0 ? f.currency(results.totalOperatingExpenses / units) : "-"} />
               <Readout label={t.breakEvenRatio} value={f.percent2(results.breakEvenRatio)} />
             </div>
           </div>
@@ -1159,7 +1159,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                     <td>{f.currency(p.noi)}</td>
                     <td>{f.accounting(-p.annualDebtService)}</td>
                     <td>{f.accounting(p.btCashFlow)}</td>
-                    <td>{p.renoSpend > 0 ? f.accounting(-p.renoSpend) : "—"}</td>
+                    <td>{p.renoSpend > 0 ? f.accounting(-p.renoSpend) : "-"}</td>
                     <td>{p.unitsRenovated} / {units}</td>
                     <td>{f.percent2(inputs.purchasePrice > 0 ? p.noi / inputs.purchasePrice : 0)}</td>
                     <td>{f.currency(p.propertyValue)}</td>

@@ -33,7 +33,7 @@ export default function PlexCalculatorPage() {
         </p>
         {/*
           A short factual summary in plain prose, ahead of the interactive tool.
-          Answer engines lift text, not widgets — this is the paragraph most
+          Answer engines lift text, not widgets: this is the paragraph most
           likely to be quoted, so it states the scope and the hard numbers.
         */}
         <p className="mt-4 rounded-lg border border-neutral-200 bg-neutral-50 p-4 text-sm leading-relaxed text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">

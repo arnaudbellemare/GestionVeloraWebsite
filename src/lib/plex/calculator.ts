@@ -4,7 +4,7 @@ export type PropertyType = 'duplex' | 'triplex' | 'quadruplex' | 'fiveplex-plus'
  * Financing track. Which one applies is driven by unit count in Quebec:
  *  - residential:  1–4 units, residential underwriting, CMHC insurable under 20% down
  *  - commercial:   5+ units, loan sized by the lesser of LTV cap and DSCR constraint
- *  - mli-select:   5+ units, CMHC MLI Select — points buy higher LTV / longer amortization
+ *  - mli-select:   5+ units, CMHC MLI Select, points buy higher LTV / longer amortization
  */
 export type FinancingMode = 'residential' | 'commercial' | 'mli-select';
 
@@ -12,7 +12,7 @@ export type FinancingMode = 'residential' | 'commercial' | 'mli-select';
 export type MliPoints = 50 | 70 | 100;
 
 /**
- * One row of the unit mix. Quebec labels rooms, not bedrooms — a 4½ is a
+ * One row of the unit mix. Quebec labels rooms, not bedrooms: a 4½ is a
  * 2-bedroom. `currentRent` is the in-place (lease) rent, `marketRent` is what
  * the unit achieves on turnover. The gap between them is the whole thesis on
  * most Montreal plex and multifamily deals, because the TAL caps what you can
@@ -83,10 +83,10 @@ export function applyUnitType(row: UnitRow, label: UnitTypeLabel): UnitRow {
 }
 
 export interface DealInputs {
-  /** Key into AREAS — drives price, rents, municipal tax and welcome-tax schedule. */
+  /** Key into AREAS: drives price, rents, municipal tax and welcome-tax schedule. */
   areaKey: string;
   propertyType: PropertyType;
-  /** Listing price. Informational — all math runs off `purchasePrice` (your offer). */
+  /** Listing price. Informational: all math runs off `purchasePrice` (your offer). */
   askingPrice: number;
   purchasePrice: number;
   buildingYear: number;
@@ -116,7 +116,7 @@ export interface DealInputs {
   // Financing
   /**
    * Whether the buyer will occupy a unit. This is the gate on CMHC homeowner
-   * insurance — a pure rental purchase is conventional and needs 20% down.
+   * insurance: a pure rental purchase is conventional and needs 20% down.
    */
   ownerOccupied: boolean;
   financingMode: FinancingMode;
@@ -139,7 +139,7 @@ export interface DealInputs {
   renoStartYear: number;
   /**
    * Manual proforma figures entered directly on the operating statement,
-   * keyed by line. A line absent from this map follows its derived value —
+   * keyed by line. A line absent from this map follows its derived value -
    * that is how "taxes reassess after sale" or "I'll self-manage" get modelled
    * without disturbing the in-place numbers.
    */
@@ -352,7 +352,7 @@ export interface YearProjection {
   totalReturn: number; // cash flow + principal paydown + appreciation
   /** Units at market rent by this year (cumulative turnover). */
   unitsRenovated: number;
-  /** Renovation capital spent this year — excluded from btCashFlow, netted in cumulative. */
+  /** Renovation capital spent this year: excluded from btCashFlow, netted in cumulative. */
   renoSpend: number;
 }
 
@@ -420,7 +420,7 @@ export function summarizeUnitMix(inputs: DealInputs): UnitMixSummary {
 
   const netRSF = mix.reduce((s, u) => s + u.count * u.sqft, 0);
   const currentMonthlyRent = mix.reduce((s, u) => s + u.count * u.currentRent, 0);
-  // A market rent left at zero means "no upside identified" — hold the in-place rent.
+  // A market rent left at zero means "no upside identified": hold the in-place rent.
   const proformaMonthlyRent = mix.reduce(
     (s, u) => s + u.count * Math.max(u.marketRent, u.currentRent), 0,
   );
@@ -439,7 +439,7 @@ export function summarizeUnitMix(inputs: DealInputs): UnitMixSummary {
 /**
  * MLI Select trades points (affordability, energy efficiency, accessibility)
  * for leverage and amortization. Figures below are the published tier
- * structure; premiums are ESTIMATES — CMHC prices each file individually and
+ * structure; premiums are ESTIMATES: CMHC prices each file individually and
  * the actual premium comes back on the certificate of insurance.
  */
 export function mliSelectTerms(points: MliPoints): {
@@ -456,7 +456,7 @@ export function mliSelectTerms(points: MliPoints): {
  * Base CMHC multi-unit premium by LTV, before any MLI Select discount.
  *
  * KNOWN TO UNDERSTATE. CMHC repriced multi-unit insurance on risk on 14 July
- * 2025 and effective premiums rose in the large majority of files — reported
+ * 2025 and effective premiums rose in the large majority of files: reported
  * cases moved from roughly 2.8% to near 5.4% after discounts. This table
  * predates that schedule, so treat every premium it produces as a floor.
  */
@@ -481,7 +481,7 @@ export function amortizationSurchargePct(amortYears: number): number {
 }
 
 /**
- * Present value of an annuity — how much loan a given periodic payment supports.
+ * Present value of an annuity: how much loan a given periodic payment supports.
  * This is what turns a DSCR constraint into a dollar loan amount.
  */
 function pv(rate: number, nper: number, payment: number): number {
@@ -496,15 +496,15 @@ function pv(rate: number, nper: number, payment: number): number {
 // ─── Valeur économique (bank value) ────────────────────────────────
 /**
  * The "economic value" is the number Quebec lenders actually finance against
- * on 5+ unit buildings, and it is routinely below the market price — in dense
+ * on 5+ unit buildings, and it is routinely below the market price: in dense
  * Montreal markets a market cap rate near 4.5% against a bank-value cap near
  * 5.5% is normal, not a defect of the deal.
  *
  * Method (as taught by Collège MREX and applied, with variations, by every
  * lender):
- *   1. Normalize NOI — the bank substitutes its own expense standards so all
+ *   1. Normalize NOI: the bank substitutes its own expense standards so all
  *      buildings compare on equal footing: management at ~5% of gross revenue,
- *      maintenance ~$500/unit, janitorial ~$125–300/unit — regardless of what
+ *      maintenance ~$500/unit, janitorial ~$125–300/unit: regardless of what
  *      the owner actually spends.
  *   2. Maximum debt service = normalized NOI ÷ RCD (debt coverage ratio).
  *   3. Present-value that payment at the QUALIFICATION rate (stress-tested,
@@ -519,12 +519,12 @@ function pv(rate: number, nper: number, payment: number): number {
  *
  * The practical consequence: when the economic value is below the purchase
  * price, the loan is capped by the bank's number and the buyer covers the
- * entire difference in cash — the real down payment becomes
+ * entire difference in cash: the real down payment becomes
  * price − maximum loan, not price × 20%.
  */
 /**
  * Lowest vacancy a lender will underwrite, whatever the rent roll shows today.
- * Illustrative — each institution sets its own, generally drawing on CMHC
+ * Illustrative: each institution sets its own, generally drawing on CMHC
  * market data rather than the building's current occupancy.
  */
 export const NORMALIZED_VACANCY_FLOOR = 0.03;
@@ -532,7 +532,7 @@ export const NORMALIZED_VACANCY_FLOOR = 0.03;
 export interface EconomicValueResult {
   /** NOI after the bank's expense substitutions. */
   normalizedNoi: number;
-  /** Vacancy actually applied — the owner's rate or the lender's floor. */
+  /** Vacancy actually applied: the owner's rate or the lender's floor. */
   normalizedVacancyRate: number;
   /** The bank's expense lines that replaced the owner's. */
   normalizedManagement: number;
@@ -572,7 +572,7 @@ export function calculateEconomicValue(
     normalizedManagement + normalizedMaintenance + normalizedJanitorial;
 
   // Vacancy is the fourth normalized line, so the lender's own floor applies
-  // rather than the owner's assumption — a building fully leased today is not
+  // rather than the owner's assumption: a building fully leased today is not
   // underwritten at 0% vacancy.
   const normalizedVacancyRate = Math.max(inputs.vacancyRate, NORMALIZED_VACANCY_FLOOR);
   const egi = grossAnnualRent * (1 - normalizedVacancyRate);
@@ -639,7 +639,7 @@ export function sizeCommercialLoan(
 // ─── Quebec Welcome Tax (Droits de mutation) ───────────────────────
 /**
  * Reference date for every externally-sourced rate in this file. All of these
- * are indexed or re-legislated periodically — re-verify against the primary
+ * are indexed or re-legislated periodically: re-verify against the primary
  * source before relying on an analysis for an offer.
  */
 export const RULES_AS_OF = 'July 2026';
@@ -669,7 +669,7 @@ export const MONTREAL_TRANSFER_BRACKETS: TransferBracket[] = [
 /**
  * Statutory Quebec base schedule for 2026 (quebec.ca). Thresholds are indexed
  * annually to the Quebec CPI. Municipalities outside Montreal may add up to 3%
- * on the portion above $500,000 by bylaw, so check the specific town — this
+ * on the portion above $500,000 by bylaw, so check the specific town: this
  * base schedule is the floor, not necessarily what you will pay.
  */
 export const QUEBEC_TRANSFER_BRACKETS: TransferBracket[] = [
@@ -710,7 +710,7 @@ export const CMHC_MAX_AMORTIZATION = 25;
 
 /**
  * Maximum insured loan-to-value, which steps down at three units.
- * Source: CMHC Purchase — 95% for 1–2 units, 90% for 3–4 units.
+ * Source: CMHC Purchase, 95% for 1–2 units, 90% for 3–4 units.
  */
 export function maxInsuredLtv(units: number): number {
   return units <= 2 ? 0.95 : 0.90;
@@ -738,7 +738,7 @@ export function minimumDownPayment(
 
 /**
  * CMHC premium on owner-occupied 1–4 unit homeowner loans, by LTV.
- * This homeowner schedule is unchanged — the July 2025 move to risk-based
+ * This homeowner schedule is unchanged: the July 2025 move to risk-based
  * pricing applied to multi-unit MLI products, not here (see
  * `multiUnitPremiumPct`). Actual pricing still reflects credit score and
  * amortization, so treat this as the schedule floor rather than a quote.
@@ -778,8 +778,8 @@ export function calculateCMHCPremium(
   });
 
   if (equityPct >= 0.20) return none();
-  if (!ownerOccupied) return none('Not owner-occupied — conventional financing needs 20% down.');
-  if (units > 4) return none('Five or more units is commercial — see MLI Select.');
+  if (!ownerOccupied) return none('Not owner-occupied: conventional financing needs 20% down.');
+  if (units > 4) return none('Five or more units is commercial: see MLI Select.');
   if (purchasePrice >= CMHC_MAX_PRICE) {
     return none(`Above the $${(CMHC_MAX_PRICE / 1e6).toFixed(1)}M insured price cap.`);
   }
@@ -787,7 +787,7 @@ export function calculateCMHCPremium(
   const ltv = 1 - equityPct;
   const ltvCap = maxInsuredLtv(units);
   if (ltv > ltvCap + 1e-9) {
-    return none(`${units <= 2 ? '1–2' : '3–4'} units insure to ${(ltvCap * 100).toFixed(0)}% LTV — you need at least ${((1 - ltvCap) * 100).toFixed(0)}% down.`);
+    return none(`${units <= 2 ? '1–2' : '3–4'} units insure to ${(ltvCap * 100).toFixed(0)}% LTV, you need at least ${((1 - ltvCap) * 100).toFixed(0)}% down.`);
   }
 
   const premiumPct = cmhcPremiumPct(ltv);
@@ -904,7 +904,7 @@ export interface AreaSpec {
  * under the CMA, and North Shore plexes trade at roughly $195k–$285k a door.
  *
  * Everything not marked `anchored` is interpolated from those points and from
- * relative standing — treat it as a starting point, not an appraisal. Tax rates
+ * relative standing: treat it as a starting point, not an appraisal. Tax rates
  * are estimates of the effective total bill (Montreal's *general* residential
  * rate alone is 0.4631% before borough and service levies).
  */
@@ -964,13 +964,13 @@ export function areasByRegion(): { region: Region; keys: string[] }[] {
 /**
  * Starting figures per property type, anchored on Montreal CMA medians.
  *
- * Prices: APCIQ, Q1 2026 — condo $425k, duplex $710k, triplex $900k,
+ * Prices: APCIQ, Q1 2026, condo $425k, duplex $710k, triplex $900k,
  * quadruplex $1.1M, single-family $639k. Five-plus is priced off the
  * quadruplex per-door figure, since APCIQ reports plexes as one category.
  *
  * Rents deliberately split two ways, because they are two different markets:
  *   in-place  ≈ CMHC Rental Market Survey occupied stock (2-bed Greater
- *               Montreal average $1,346) — what rent-controlled leases collect
+ *               Montreal average $1,346): what rent-controlled leases collect
  *   market    ≈ current asking rents on listings (2-bed ~$1,826)
  * The gap between them is the value-add the TAL makes you wait for.
  *
@@ -1079,7 +1079,7 @@ export function applyPropertyPreset(
   const key = areaKey ?? inputs.areaKey;
   const area = AREAS[key] ?? AREAS['villeray'];
 
-  // The area moves price and rents together — a Plateau plex costs more and
+  // The area moves price and rents together: a Plateau plex costs more and
   // commands more, and the two do not move by the same factor, which is
   // exactly why cap rates compress downtown and widen out in the east end.
   const askingPrice = Math.round(p.askingPrice * area.priceIndex);
@@ -1231,12 +1231,12 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const totalUnits = mix.totalUnits;
   const netRSF = mix.netRSF;
 
-  // In-place income — what the rent roll actually collects today.
+  // In-place income: what the rent roll actually collects today.
   const monthlyRentAll = mix.currentMonthlyRent;
   const annualRent = monthlyRentAll * 12;
   const effectiveGrossIncome = annualRent * (1 - inputs.vacancyRate);
 
-  // Proforma income — every unit turned over to market rent, unless the
+  // Proforma income: every unit turned over to market rent, unless the
   // statement carries a manual override for that line.
   const ov = inputs.proformaOverrides ?? {};
   const ovOr = (id: ApodLineId, derived: number) =>
@@ -1524,7 +1524,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   // ─── House flip ────────────────────────────────────────
   const arv = inputs.afterRepairValue || (inputs.purchasePrice + inputs.rehabBudget);
   const flipSellingCosts = arv * inputs.sellingCostsPct;
-  // No welcome tax on the sale side — in Quebec the buyer pays it, not the seller.
+  // No welcome tax on the sale side: in Quebec the buyer pays it, not the seller.
   const holdingCosts = (paymentPerPeriod * inputs.holdingMonths) + (totalOperatingExpenses / 12 * inputs.holdingMonths);
   const flipTotalCost = inputs.purchasePrice + inputs.rehabBudget + flipSellingCosts +
     holdingCosts + welcomeTax + inputs.notaryFees + inputs.inspectionFees;

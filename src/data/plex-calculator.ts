@@ -7,28 +7,32 @@
  * than chrome, and because prerender.ts imports it directly to build static HTML.
  *
  * Every externally-sourced figure is dated and attributed. These are indexed or
- * re-legislated annually — REFERENCE_FIGURES is the single place to update them,
+ * re-legislated annually: REFERENCE_FIGURES is the single place to update them,
  * and both the calculator engine and the reference page read from the same
  * research.
  */
 
+import { LOCALIZED_ROUTE_PAIRS } from "./localized-routes";
+
 export type PlexLocale = "fr" | "en";
 
+// Derived from the shared pair list so the language switcher, these constants
+// and the prerender script can never disagree about a slug.
 export const CALCULATOR_PATHS = {
-  fr: "/calculateur-rendement-plex-montreal",
-  en: "/en/montreal-plex-investment-calculator",
+  fr: LOCALIZED_ROUTE_PAIRS[0][0],
+  en: `/en${LOCALIZED_ROUTE_PAIRS[0][1]}`,
 } as const;
 
 export const REFERENCE_PATHS = {
-  fr: "/guide-achat-plex-montreal",
-  en: "/en/montreal-plex-buyer-guide",
+  fr: LOCALIZED_ROUTE_PAIRS[1][0],
+  en: `/en${LOCALIZED_ROUTE_PAIRS[1][1]}`,
 } as const;
 
 /** Date the external figures below were last verified against primary sources. */
 export const FIGURES_VERIFIED = "2026-07";
 
 // ---------------------------------------------------------------------------
-// Reference figures — the citable core
+// Reference figures: the citable core
 // ---------------------------------------------------------------------------
 
 export interface ReferenceFigure {
@@ -43,8 +47,8 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
   {
     id: "droits-mutation-montreal",
     label: {
-      fr: "Droits de mutation — Montréal (2026)",
-      en: "Welcome tax — Montreal (2026)",
+      fr: "Droits de mutation : Montréal (2026)",
+      en: "Welcome tax: Montreal (2026)",
     },
     value: {
       fr: "0,5 % jusqu'à 62 900 $ · 1 % jusqu'à 315 000 $ · 1,5 % jusqu'à 552 300 $ · 2 % jusqu'à 1 104 700 $ · 2,5 % jusqu'à 2 136 500 $ · 3,5 % jusqu'à 3 113 000 $ · 4 % au-delà",
@@ -57,8 +61,8 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
   {
     id: "droits-mutation-quebec",
     label: {
-      fr: "Droits de mutation — barème québécois de base (2026)",
-      en: "Welcome tax — Quebec base schedule (2026)",
+      fr: "Droits de mutation : barème québécois de base (2026)",
+      en: "Welcome tax: Quebec base schedule (2026)",
     },
     value: {
       fr: "0,5 % jusqu'à 62 900 $ · 1 % jusqu'à 315 000 $ · 1,5 % au-delà. Les municipalités hors Montréal peuvent ajouter jusqu'à 3 % sur la tranche excédant 500 000 $.",
@@ -71,8 +75,8 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
   {
     id: "mise-de-fonds",
     label: {
-      fr: "Mise de fonds minimale — immeuble occupé par le propriétaire",
-      en: "Minimum down payment — owner-occupied",
+      fr: "Mise de fonds minimale : immeuble occupé par le propriétaire",
+      en: "Minimum down payment: owner-occupied",
     },
     value: {
       fr: "1 à 2 logements : 5 % sur la première tranche de 500 000 $ puis 10 % · 3 à 4 logements : 10 % · Immeuble non occupé par le propriétaire : 20 %",
@@ -113,12 +117,12 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
   {
     id: "mli-select",
     label: {
-      fr: "SCHL MLI Select — 5 logements et plus",
-      en: "CMHC MLI Select — 5+ units",
+      fr: "SCHL MLI Select: 5 logements et plus",
+      en: "CMHC MLI Select: 5+ units",
     },
     value: {
-      fr: "50 / 70 / 100 points donnent 10 / 20 / 30 % de réduction de prime, jusqu'à 95 % RPV et 50 ans d'amortissement. Surprime de 0,25 % par tranche de 5 ans au-delà de 25 ans. Depuis la tarification au risque du 14 juillet 2025, les primes effectives ont augmenté dans la majorité des dossiers — budgétez la prime avec votre courtier.",
-      en: "50 / 70 / 100 points give a 10 / 20 / 30% premium discount, up to 95% LTV and 50-year amortization. Surcharge of 0.25% per 5-year increment beyond 25 years. Since risk-based pricing took effect on July 14, 2025, effective premiums rose in most files — budget the premium with your broker.",
+      fr: "50 / 70 / 100 points donnent 10 / 20 / 30 % de réduction de prime, jusqu'à 95 % RPV et 50 ans d'amortissement. Surprime de 0,25 % par tranche de 5 ans au-delà de 25 ans. Depuis la tarification au risque du 14 juillet 2025, les primes effectives ont augmenté dans la majorité des dossiers : budgétez la prime avec votre courtier.",
+      en: "50 / 70 / 100 points give a 10 / 20 / 30% premium discount, up to 95% LTV and 50-year amortization. Surcharge of 0.25% per 5-year increment beyond 25 years. Since risk-based pricing took effect on July 14, 2025, effective premiums rose in most files: budget the premium with your broker.",
     },
     source: "SCHL / CMHC",
     sourceUrl: "https://www.cmhc-schl.gc.ca/",
@@ -139,8 +143,8 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
   {
     id: "prix-medians",
     label: {
-      fr: "Prix médians — RMR de Montréal (T1 2026)",
-      en: "Median prices — Montreal CMA (Q1 2026)",
+      fr: "Prix médians : RMR de Montréal (T1 2026)",
+      en: "Median prices: Montreal CMA (Q1 2026)",
     },
     value: {
       fr: "Copropriété 425 000 $ · Duplex 710 000 $ · Triplex 900 000 $ · Quadruplex 1 100 000 $ · Unifamiliale 639 000 $ · Plex (toutes catégories) 865 000 $",
@@ -153,26 +157,26 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
   {
     id: "loyers-moyens",
     label: {
-      fr: "Loyers — parc occupé contre loyers demandés",
-      en: "Rents — occupied stock vs. asking",
+      fr: "Loyers : parc occupé contre loyers demandés",
+      en: "Rents: occupied stock vs. asking",
     },
     value: {
       fr: "Un 4½ (2 chambres) occupé se loue en moyenne 1 346 $ dans le Grand Montréal, contre environ 1 826 $ demandés à la relocation. Cet écart est le potentiel de valorisation.",
       en: "An occupied 4½ (2-bedroom) averages $1,346 in Greater Montreal against roughly $1,826 asked on turnover. That spread is the value-add.",
     },
-    source: "SCHL — Enquête sur les logements locatifs",
+    source: "SCHL : Enquête sur les logements locatifs",
     sourceUrl:
       "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables",
   },
   {
     id: "valeur-economique",
     label: {
-      fr: "Valeur économique — la valeur du prêteur (5 logements et plus)",
-      en: "Economic value — the lender's value (5+ units)",
+      fr: "Valeur économique : la valeur du prêteur (5 logements et plus)",
+      en: "Economic value: the lender's value (5+ units)",
     },
     value: {
-      fr: "Méthode : le prêteur normalise quatre postes de dépenses (gestion, entretien et réparations, conciergerie, inoccupation), divise le revenu net normalisé (RNN) par le ratio de couverture de la dette (RCD, généralement 1,10 à 1,30), actualise ce paiement au taux de qualification sur l'amortissement, puis divise le prêt obtenu par le ratio prêt-valeur (souvent 75 %). Les montants normalisés ne sont pas publics : chaque institution fixe les siens, en s'inspirant généralement des normes de la SCHL. Le calculateur utilise des valeurs illustratives (gestion 5 % des revenus, entretien 500 $/logement, conciergerie 200 $/logement, inoccupation d'au moins 3 %) — ce ne sont pas les barèmes d'une banque précise. Quand la valeur économique est sous le prix d'achat, l'acheteur couvre l'écart comptant.",
-      en: "Method: the lender normalizes four expense lines (management, maintenance and repairs, janitorial, vacancy), divides the normalized NOI by the debt coverage ratio (typically 1.10–1.30), discounts that payment at the qualification rate over the amortization, then divides the resulting loan by the loan-to-value ratio (often 75%). The normalized amounts are not public: each institution sets its own, generally drawing on CMHC standards. This calculator uses illustrative values (management 5% of revenue, maintenance $500/unit, janitorial $200/unit, vacancy floored at 3%) — these are not any specific bank's schedule. When the economic value sits below the purchase price, the buyer covers the gap in cash.",
+      fr: "Méthode : le prêteur normalise quatre postes de dépenses (gestion, entretien et réparations, conciergerie, inoccupation), divise le revenu net normalisé (RNN) par le ratio de couverture de la dette (RCD, généralement 1,10 à 1,30), actualise ce paiement au taux de qualification sur l'amortissement, puis divise le prêt obtenu par le ratio prêt-valeur (souvent 75 %). Les montants normalisés ne sont pas publics : chaque institution fixe les siens, en s'inspirant généralement des normes de la SCHL. Le calculateur utilise des valeurs illustratives (gestion 5 % des revenus, entretien 500 $/logement, conciergerie 200 $/logement, inoccupation d'au moins 3 %), ce ne sont pas les barèmes d'une banque précise. Quand la valeur économique est sous le prix d'achat, l'acheteur couvre l'écart comptant.",
+      en: "Method: the lender normalizes four expense lines (management, maintenance and repairs, janitorial, vacancy), divides the normalized NOI by the debt coverage ratio (typically 1.10–1.30), discounts that payment at the qualification rate over the amortization, then divides the resulting loan by the loan-to-value ratio (often 75%). The normalized amounts are not public: each institution sets its own, generally drawing on CMHC standards. This calculator uses illustrative values (management 5% of revenue, maintenance $500/unit, janitorial $200/unit, vacancy floored at 3%), these are not any specific bank's schedule. When the economic value sits below the purchase price, the buyer covers the gap in cash.",
     },
     source: "Méthode : Collège MREX",
     sourceUrl:
@@ -291,7 +295,7 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
       {
         id: "faq-valeur-economique",
         q: "Qu'est-ce que la valeur économique d'un immeuble ?",
-        a: "C'est la valeur que le prêteur calcule lui-même pour décider du financement d'un immeuble de 5 logements et plus — et elle diffère du prix du marché. La banque remplace quatre postes de dépenses par ses propres normes (gestion, entretien et réparations, conciergerie, inoccupation), divise le revenu net normalisé par son ratio de couverture de la dette, actualise ce paiement à un taux de qualification majoré et divise le prêt obtenu par le ratio prêt-valeur. Si cette valeur est inférieure à votre prix d'achat, le prêt est plafonné par le chiffre de la banque et vous couvrez tout l'écart comptant : la mise de fonds réelle devient le prix moins le prêt maximal, pas 20 % du prix. Les barèmes normalisés ne sont pas publics et varient d'une institution à l'autre — elles s'inspirent généralement des normes de la SCHL — et la valeur bouge avec les taux de qualification.",
+        a: "C'est la valeur que le prêteur calcule lui-même pour décider du financement d'un immeuble de 5 logements et plus, et elle diffère du prix du marché. La banque remplace quatre postes de dépenses par ses propres normes (gestion, entretien et réparations, conciergerie, inoccupation), divise le revenu net normalisé par son ratio de couverture de la dette, actualise ce paiement à un taux de qualification majoré et divise le prêt obtenu par le ratio prêt-valeur. Si cette valeur est inférieure à votre prix d'achat, le prêt est plafonné par le chiffre de la banque et vous couvrez tout l'écart comptant : la mise de fonds réelle devient le prix moins le prêt maximal, pas 20 % du prix. Les barèmes normalisés ne sont pas publics et varient d'une institution à l'autre (elles s'inspirent généralement des normes de la SCHL), et la valeur bouge avec les taux de qualification.",
       },
       {
         id: "faq-rentabilite-plex-montreal",
@@ -340,7 +344,7 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
         id: "limitations",
         heading: "Limitations",
         body: [
-          "Figures come from public sources dated July 2026 and are a starting point, not an appraisal. Municipal tax rates are estimated from price — replace them with the actual tax bill. MLI Select premiums are indicative; CMHC prices each file individually.",
+          "Figures come from public sources dated July 2026 and are a starting point, not an appraisal. Municipal tax rates are estimated from price: replace them with the actual tax bill. MLI Select premiums are indicative; CMHC prices each file individually.",
           "Area price indices are anchored to published figures for six areas; the rest are interpolated by relative standing, and the tool labels which is which.",
           "This tool does not replace a mortgage broker, an accountant or an inspection.",
         ],
@@ -370,12 +374,12 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
       {
         id: "faq-cca-recapture",
         q: "Is claiming capital cost allowance worth it?",
-        a: "Class 1 CCA reduces taxable income by 4% a year on the building portion, declining balance, with the half-year rule in year one. But everything claimed is recaptured on sale and taxed at your full marginal rate rather than the lower capital-gains rate. It is a tax deferral — useful if your marginal rate falls before you sell, costly if it does not.",
+        a: "Class 1 CCA reduces taxable income by 4% a year on the building portion, declining balance, with the half-year rule in year one. But everything claimed is recaptured on sale and taxed at your full marginal rate rather than the lower capital-gains rate. It is a tax deferral: useful if your marginal rate falls before you sell, costly if it does not.",
       },
       {
         id: "faq-economic-value",
         q: "What is a building's economic value?",
-        a: "It is the value the lender computes for itself to decide the financing on a 5+ unit building — and it differs from the market price. The bank substitutes its own standards for four expense lines (management, maintenance and repairs, janitorial, vacancy), divides the normalized net income by its debt coverage ratio, discounts that payment at a stress-tested qualification rate, and divides the resulting loan by the loan-to-value ratio. If that value comes in below your purchase price, the loan is capped by the bank's number and you cover the entire gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. The normalized figures are not public and vary by institution — they generally draw on CMHC standards — and the value moves with qualification rates.",
+        a: "It is the value the lender computes for itself to decide the financing on a 5+ unit building, and it differs from the market price. The bank substitutes its own standards for four expense lines (management, maintenance and repairs, janitorial, vacancy), divides the normalized net income by its debt coverage ratio, discounts that payment at a stress-tested qualification rate, and divides the resulting loan by the loan-to-value ratio. If that value comes in below your purchase price, the loan is capped by the bank's number and you cover the entire gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. The normalized figures are not public and vary by institution, they generally draw on CMHC standards, and the value moves with qualification rates.",
       },
       {
         id: "faq-are-montreal-plexes-profitable",
@@ -385,7 +389,7 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
     ],
     ctaHeading: "Found a building that works?",
     ctaBody:
-      "Gestion Velora manages condo boards, rental buildings and short-term rentals across Greater Montreal. Management fees are a line in your own calculation — let's talk about the real number for your building.",
+      "Gestion Velora manages condo boards, rental buildings and short-term rentals across Greater Montreal. Management fees are a line in your own calculation: let's talk about the real number for your building.",
     ctaButton: "Talk to the team",
   },
 };
@@ -400,7 +404,7 @@ export const REFERENCE_PAGE: Record<PlexLocale, {
   figuresNote: string;
 }> = {
   fr: {
-    title: "Guide de l'acheteur de plex à Montréal — règles et chiffres 2026",
+    title: "Guide de l'acheteur de plex à Montréal : règles et chiffres 2026",
     metaTitle: "Guide achat plex Montréal : règles et chiffres 2026",
     metaDescription:
       "Droits de mutation de Montréal, mise de fonds et ratios SCHL, MLI Select, hausse du TAL, prix médians APCIQ. Chiffres 2026, chaque source citée.",
@@ -413,14 +417,14 @@ export const REFERENCE_PAGE: Record<PlexLocale, {
       "Dernière vérification auprès des sources primaires : juillet 2026. Les barèmes de droits de mutation et les seuils sont indexés annuellement.",
   },
   en: {
-    title: "Montreal plex buyer's guide — 2026 rules and figures",
+    title: "Montreal plex buyer's guide: 2026 rules and figures",
     metaTitle: "Montreal Plex Buyer's Guide: 2026 Rules & Figures",
     metaDescription:
       "Montreal welcome tax, CMHC down payment and LTV caps, MLI Select, TAL rent increase and APCIQ median prices. 2026 figures, every source cited.",
     keywords:
       "Montreal welcome tax 2026, Quebec transfer duties brackets, duplex triplex down payment Quebec, CMHC loan to value multiplex, MLI Select points, TAL rent increase 2026, Montreal plex median price",
     intro:
-      "The rules and figures that decide a Quebec income-property purchase, each with its source. These values are indexed or revised annually — verify them at the source before making an offer.",
+      "The rules and figures that decide a Quebec income-property purchase, each with its source. These values are indexed or revised annually: verify them at the source before making an offer.",
     figuresHeading: "Reference figures",
     figuresNote:
       "Last verified against primary sources: July 2026. Transfer-duty brackets and thresholds are indexed annually.",

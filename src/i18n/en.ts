@@ -99,7 +99,7 @@ export const en = {
     allServices: "All services",
     allServicesDesc: "Overview: condo, Airbnb, and rentals.",
     plexCalc: "Investment calculator",
-    plexCalcDesc: "Free tool — underwrite a plex or multifamily building.",
+    plexCalcDesc: "Free tool: underwrite a plex or multifamily building.",
     insights: "Insights",
     about: "About",
     contact: "Contact",

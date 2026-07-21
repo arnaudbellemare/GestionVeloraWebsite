@@ -14,6 +14,7 @@ import {
   removeLocaleFromPath,
   type Locale,
 } from "../i18n";
+import { translateRoute } from "../data/localized-routes";
 
 type LocaleContextValue = {
   locale: Locale;
@@ -37,15 +38,19 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   const setLocale = useCallback(
     (newLocale: Locale) => {
+      // A few routes carry a different slug per locale, so the path itself has
+      // to be translated, not just prefixed. Without this the switcher lands on
+      // /en/calculateur-... and 404s.
       const pathWithoutLocale = removeLocaleFromPath(pathname);
-      const newPath = addLocaleToPath(pathWithoutLocale, newLocale);
+      const translated = translateRoute(pathWithoutLocale, newLocale);
+      const newPath = addLocaleToPath(translated, newLocale);
       navigate(newPath);
     },
     [pathname, navigate]
   );
 
   const localePath = useCallback(
-    (path: string) => addLocaleToPath(path, locale),
+    (path: string) => addLocaleToPath(translateRoute(path, locale), locale),
     [locale]
   );
 

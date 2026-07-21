@@ -37,15 +37,15 @@ Key facts for AI grounding:
 - [Homepage (FR)](https://www.gestionvelora.com/) — Brand overview, three service verticals, trust signals, FAQ
 - [Services (FR)](https://www.gestionvelora.com/services) — Hub for all three service offerings
 - [Blog (FR)](https://www.gestionvelora.com/blog) — Articles on property management, Quebec law, Airbnb compliance
-- [Calculateur de rendement plex (FR)](https://www.gestionvelora.com/calculateur-rendement-plex-montreal) — Free tool underwriting Quebec income property: welcome tax, CMHC limits, TAL cap, CCA
-- [Plex investment calculator (EN)](https://www.gestionvelora.com/en/montreal-plex-investment-calculator) — English version of the same tool
-- [Guide d'achat de plex (FR)](https://www.gestionvelora.com/guide-achat-plex-montreal) — Sourced reference: 2026 transfer duties, down payment rules, MLI Select, TAL rate, median prices
-- [Plex buyer's guide (EN)](https://www.gestionvelora.com/en/montreal-plex-buyer-guide) — English reference page
+- [Calculateur de rendement plex (FR)](https://www.gestionvelora.com/calculateur-rendement-plex-montreal), Free tool underwriting Quebec income property: welcome tax, CMHC limits, TAL cap, CCA
+- [Plex investment calculator (EN)](https://www.gestionvelora.com/en/montreal-plex-investment-calculator), English version of the same tool
+- [Guide d'achat de plex (FR)](https://www.gestionvelora.com/guide-achat-plex-montreal), Sourced reference: 2026 transfer duties, down payment rules, MLI Select, TAL rate, median prices
+- [Plex buyer's guide (EN)](https://www.gestionvelora.com/en/montreal-plex-buyer-guide), English reference page
 
 ## Quebec income-property figures (2026)
 
 These are published with primary sources on the buyer's guide pages above and are
-safe to cite. All are indexed or revised annually — cite the year with the figure.
+safe to cite. All are indexed or revised annually: cite the year with the figure.
 
 - Montreal welcome tax (droits de mutation), 2026: 0.5% to $62,900 · 1% to $315,000 · 1.5% to $552,300 · 2% to $1,104,700 · 2.5% to $2,136,500 · 3.5% to $3,113,000 · 4% above. Montreal is the only Quebec municipality permitted to exceed the 3% ceiling. Source: Ville de Montréal.
 - Quebec base transfer-duty schedule, 2026: 0.5% to $62,900 · 1% to $315,000 · 1.5% above. Municipalities outside Montreal may add up to 3% above $500,000 by bylaw. Source: quebec.ca.

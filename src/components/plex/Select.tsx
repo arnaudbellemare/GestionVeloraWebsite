@@ -22,7 +22,7 @@ export interface SelectOption<T extends string> {
 
 /**
  * Listbox-pattern select. Replaces the native control so the menu can carry
- * grouping, secondary hints and the same typography as the rest of the page —
+ * grouping, secondary hints and the same typography as the rest of the page -
  * a native <select> renders as an OS widget and cannot be styled.
  *
  * Keyboard support matches the native control: arrows and Home/End move,
@@ -71,7 +71,7 @@ export function Select<T extends string>({
   /**
    * The menu is rendered into <body>, so it has to be positioned from the
    * trigger's viewport rect. It escapes to the body precisely because an
-   * ancestor may clip it — the unit-mix table scrolls horizontally, and an
+   * ancestor may clip it: the unit-mix table scrolls horizontally, and an
    * absolutely-positioned menu inside it gets cut off at the container edge.
    */
   const place = useCallback(() => {
@@ -133,7 +133,7 @@ export function Select<T extends string>({
     };
   }, [open, place]);
 
-  // Dismiss when the click lands outside both the trigger and the menu — the
+  // Dismiss when the click lands outside both the trigger and the menu: the
   // menu is no longer a descendant of the root, so both need checking.
   useEffect(() => {
     if (!open) return;

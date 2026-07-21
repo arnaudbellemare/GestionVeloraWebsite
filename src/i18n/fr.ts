@@ -99,7 +99,7 @@ export const fr = {
     allServices: "Tous les services",
     allServicesDesc: "Vue d’ensemble : syndic, Airbnb et location.",
     plexCalc: "Calculateur de rendement",
-    plexCalcDesc: "Outil gratuit — analysez un plex ou multilogement.",
+    plexCalcDesc: "Outil gratuit: analysez un plex ou multilogement.",
     insights: "Conseils",
     about: "À propos",
     contact: "Contact",

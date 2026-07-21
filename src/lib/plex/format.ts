@@ -1,8 +1,8 @@
 /**
  * Locale-aware formatters for the plex calculator.
  *
- * French Quebec writes currency as "877 500 $" — trailing symbol, space as the
- * group separator — where English Canada writes "$877,500". Getting that wrong
+ * French Quebec writes currency as "877 500 $": trailing symbol, space as the
+ * group separator: where English Canada writes "$877,500". Getting that wrong
  * is immediately obvious to a Montreal reader, so every figure goes through a
  * formatter bound to the page locale rather than a hardcoded one.
  */

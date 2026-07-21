@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────────────────────
-   Plex calculator — self-contained styles.
+   Plex calculator: self-contained styles.
 
    Every class is namespaced `plexc-` (or `sel-` for the listbox) so nothing
    here can reach the rest of the site, and the component carries its own
@@ -383,7 +383,7 @@
   .plexc-card { padding: 20px; }
 }
 
-/* Dark mode — the site ships a light/dark toggle. */
+/* Dark mode: the site ships a light/dark toggle. */
 :root[data-theme="dark"] .plexc,
 .dark .plexc {
   --pc-surface: #16161a;
