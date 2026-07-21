@@ -83,7 +83,7 @@ interface ViewportSectionProps {
   rootMargin?: string;
 }
 
-function ViewportSection({ children, minHeight, rootMargin = "900px 0px" }: ViewportSectionProps) {
+function ViewportSection({ children, minHeight, rootMargin = "240px 0px" }: ViewportSectionProps) {
   const [shouldRender, setShouldRender] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -120,7 +120,7 @@ function ViewportSection({ children, minHeight, rootMargin = "900px 0px" }: View
 function DeferredHomeSections() {
   return (
     <>
-      <ViewportSection minHeight={360} rootMargin="1100px 0px">
+      <ViewportSection minHeight={360} rootMargin="400px 0px">
         <StatsSection />
       </ViewportSection>
       <ViewportSection minHeight={820}>

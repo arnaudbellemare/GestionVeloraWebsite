@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
+const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-ultra.mp4";
 const HERO_IMAGE = "/hero-video-poster.webp?v=5";
 const HERO_IMAGE_MEDIUM = "/hero-video-poster-960.webp?v=5";
 const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=5";
@@ -27,23 +28,22 @@ export function HeroSection() {
     if (reduceMotion || conn?.saveData || /(^|-)2g$/.test(conn?.effectiveType ?? "")) return;
 
     const media = window.matchMedia("(max-width: 767px)");
+    const load = () => {
+      setVideoSrc(media.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
+    };
 
-    // A full-bleed video becomes a new, late LCP candidate once its first frame
-    // paints. Keep mobile on the optimized poster: it saves more than 5 MB and
-    // avoids turning decorative motion into a Core Web Vitals regression.
-    if (media.matches) return;
-
-    // Defer the multi-MB hero video off the first-paint critical path; the poster
-    // image is the LCP element and is already painted.
-    const load = () => setVideoSrc(HERO_VIDEO_DESKTOP);
-    const hasIdle = typeof window.requestIdleCallback === "function";
-    const idleId = hasIdle
-      ? window.requestIdleCallback(load, { timeout: 2500 })
-      : window.setTimeout(load, 1200);
+    // Preserve the full-quality video without letting its first frame become a
+    // late LCP candidate. LCP observation ends on the user's first interaction,
+    // so the poster owns first paint and motion begins as the visitor engages.
+    const interactionEvents = ["pointerdown", "touchstart", "wheel", "keydown"] as const;
+    interactionEvents.forEach((eventName) => {
+      window.addEventListener(eventName, load, { once: true, passive: true });
+    });
 
     return () => {
-      if (hasIdle) window.cancelIdleCallback(idleId as number);
-      else clearTimeout(idleId as number);
+      interactionEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, load);
+      });
     };
   }, []);
 
