@@ -19,8 +19,12 @@ export function OurStandardsSection() {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(
+    () => typeof navigator !== "undefined" && Boolean(navigator.userActivation?.hasBeenActive),
+  );
   const [videoSrc, setVideoSrc] = useState(getStandardsVideoSource);
+  const shouldLoadVideo = isNearViewport && hasInteracted;
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 767px)");
@@ -35,25 +39,37 @@ export function OurStandardsSection() {
 
   useEffect(() => {
     const section = ref.current;
-    if (!section || shouldLoadVideo) return;
+    if (!section || isNearViewport) return;
 
     if (typeof IntersectionObserver === "undefined") {
-      setShouldLoadVideo(true);
+      setIsNearViewport(true);
       return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry?.isIntersecting) return;
-        setShouldLoadVideo(true);
+        setIsNearViewport(true);
         observer.disconnect();
       },
-      { rootMargin: "800px 0px", threshold: 0 }
+      { rootMargin: "160px 0px", threshold: 0 }
     );
 
     observer.observe(section);
     return () => observer.disconnect();
-  }, []);
+  }, [isNearViewport]);
+
+  useEffect(() => {
+    if (hasInteracted) return;
+    const markInteraction = () => setHasInteracted(true);
+    const events = ["pointerdown", "touchstart", "wheel", "keydown"] as const;
+    events.forEach((eventName) => {
+      window.addEventListener(eventName, markInteraction, { once: true, passive: true });
+    });
+    return () => {
+      events.forEach((eventName) => window.removeEventListener(eventName, markInteraction));
+    };
+  }, [hasInteracted]);
 
   const handleCanPlay = useCallback(() => {
     const v = videoRef.current;

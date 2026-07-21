@@ -22,20 +22,15 @@ function DeferredFooterSection() {
     if (!node) return;
 
     let observer: IntersectionObserver | null = null;
-    let idleId: number | null = null;
-    const timeoutId = globalThis.setTimeout(() => setShouldRender(true), 2500);
 
     const renderFooter = () => {
       setShouldRender(true);
       observer?.disconnect();
-      globalThis.clearTimeout(timeoutId);
-      if (idleId !== null && "cancelIdleCallback" in window) {
-        window.cancelIdleCallback(idleId);
-      }
     };
 
     if (!("IntersectionObserver" in window)) {
-      return () => globalThis.clearTimeout(timeoutId);
+      setShouldRender(true);
+      return;
     }
 
     observer = new IntersectionObserver(
@@ -43,20 +38,13 @@ function DeferredFooterSection() {
         if (!entry.isIntersecting) return;
         renderFooter();
       },
-      { rootMargin: "1400px 0px" },
+      { rootMargin: "480px 0px" },
     );
 
     observer.observe(node);
-    if ("requestIdleCallback" in window) {
-      idleId = window.requestIdleCallback(renderFooter, { timeout: 2000 });
-    }
 
     return () => {
       observer?.disconnect();
-      globalThis.clearTimeout(timeoutId);
-      if (idleId !== null && "cancelIdleCallback" in window) {
-        window.cancelIdleCallback(idleId);
-      }
     };
   }, [shouldRender]);
 
