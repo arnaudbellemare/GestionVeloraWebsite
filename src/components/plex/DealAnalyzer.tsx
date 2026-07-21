@@ -26,6 +26,7 @@ import {
 import { makeFormatters } from "../../lib/plex/format";
 import { CALC_UI, type CalcUi } from "../../data/plex-calculator-ui";
 import { REFERENCE_FIGURES } from "../../data/plex-calculator";
+import { CONTACT_FORM_USE_API, WEB3FORMS_ACCESS_KEY } from "../../config";
 import { Select, type SelectOption } from "./Select";
 
 type Locale = "fr" | "en";
@@ -424,12 +425,15 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
    * tool stays fully crawlable because nothing is behind a gate.
    */
   const submitEmail = () => {
-    if (email.trim()) {
+    // Only posts when the site's Web3Forms key is actually configured, using
+    // the same config export the contact form uses — an unset key would
+    // otherwise send an empty access_key and fail silently.
+    if (email.trim() && CONTACT_FORM_USE_API) {
       void fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY ?? "",
+          access_key: WEB3FORMS_ACCESS_KEY,
           subject: `Calculateur plex — ${propertyName}`,
           email: email.trim(),
           message: `${propertyName}\nCap: ${f.percent2(results.purchaseCapRate)}\nNOI: ${f.currency(results.noi)}\nCash flow: ${f.currency(results.btCashFlowYear1)}`,

@@ -536,7 +536,7 @@ const fr: CalcUi = {
 
   veHeading: "Valeur économique (méthode bancaire)",
   veSub:
-    "À cinq logements et plus, le prêteur ne finance pas votre prix : il finance sa propre valeur. Il normalise les dépenses (gestion à 5 % des revenus, entretien à 500 $/logement, conciergerie à ~200 $/logement), divise le revenu net normalisé par le ratio de couverture, actualise ce paiement au taux de qualification et obtient le prêt maximal. La valeur économique est ce prêt divisé par le ratio prêt-valeur.",
+    "À cinq logements et plus, le prêteur ne finance pas votre prix : il finance sa propre valeur. Il normalise quatre postes — gestion, entretien, conciergerie et inoccupation — divise le revenu net normalisé par le ratio de couverture, actualise ce paiement au taux de qualification et obtient le prêt maximal. La valeur économique est ce prêt divisé par le ratio prêt-valeur. Les barèmes normalisés ci-dessous (5 % des revenus, 500 $ et 200 $ par logement, inoccupation plancher de 3 %) sont illustratifs : chaque institution fixe les siens.",
   veNormalizedNoi: "Revenu net normalisé",
   veNormalizedNote: "Après substitution des dépenses par les normes bancaires",
   veQualificationRate: "Taux de qualification",
@@ -549,7 +549,7 @@ const fr: CalcUi = {
   veAbovePrice: "La banque évalue au-dessus de votre prix — le financement suit le prix.",
   veBelowPrice: "La banque évalue sous votre prix — le prêt est plafonné par sa valeur, pas la vôtre.",
   veShortfallNote:
-    "Quand la valeur économique est sous le prix d'achat, vous couvrez la totalité de l'écart comptant : la mise de fonds réelle devient prix moins prêt maximal, pas 20 % du prix. À Montréal, un TGA de marché de 4,5 % contre un TGA bancaire de 5,5 % est courant — cet écart n'est pas un défaut de l'immeuble.",
+    "Quand la valeur économique est sous le prix d'achat, vous couvrez la totalité de l'écart comptant : la mise de fonds réelle devient prix moins prêt maximal, pas 20 % du prix. À Montréal, le TGA exigé par la banque dépasse largement le TGA du marché — cet écart vient des taux de qualification, pas d'un défaut de l'immeuble.",
   veVariesNote:
     "Chaque prêteur normalise différemment et la valeur économique bouge quotidiennement avec les taux de qualification. Ceci est une version défendable du calcul, pas le chiffre d'une banque précise.",
 
@@ -899,7 +899,7 @@ const en: CalcUi = {
 
   veHeading: "Economic value (the bank's method)",
   veSub:
-    "At five units and up, the lender does not finance your price — it finances its own value. It normalizes expenses (management at 5% of revenue, maintenance at $500/unit, janitorial at ~$200/unit), divides the normalized NOI by the coverage ratio, discounts that payment at the qualification rate and gets the maximum loan. The economic value is that loan divided by the loan-to-value ratio.",
+    "At five units and up, the lender does not finance your price — it finances its own value. It normalizes four lines — management, maintenance, janitorial and vacancy — divides the normalized NOI by the coverage ratio, discounts that payment at the qualification rate and gets the maximum loan. The economic value is that loan divided by the loan-to-value ratio. The normalized figures below (5% of revenue, $500 and $200 per unit, vacancy floored at 3%) are illustrative: each institution sets its own.",
   veNormalizedNoi: "Normalized NOI",
   veNormalizedNote: "After substituting the bank's expense standards",
   veQualificationRate: "Qualification rate",
@@ -912,7 +912,7 @@ const en: CalcUi = {
   veAbovePrice: "The bank values it above your price — financing follows the price.",
   veBelowPrice: "The bank values it below your price — the loan is capped by its number, not yours.",
   veShortfallNote:
-    "When the economic value sits below the purchase price, you cover the whole gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. In Montreal, a 4.5% market cap against a 5.5% bank cap is common — that gap is not a defect of the building.",
+    "When the economic value sits below the purchase price, you cover the whole gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. In Montreal the cap rate the bank requires sits well above the market cap rate — that gap comes from qualification rates, not from a defect in the building.",
   veVariesNote:
     "Every lender normalizes differently, and economic value moves daily with qualification rates. This is one defensible version of the calculation, not any specific bank's number.",
 

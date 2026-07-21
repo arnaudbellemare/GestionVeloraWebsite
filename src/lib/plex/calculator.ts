@@ -452,7 +452,14 @@ export function mliSelectTerms(points: MliPoints): {
   return { maxLtv: 0.85, maxAmortization: 40, premiumDiscount: 0.10 };
 }
 
-/** Base CMHC multi-unit premium by LTV, before any MLI Select discount. Estimate. */
+/**
+ * Base CMHC multi-unit premium by LTV, before any MLI Select discount.
+ *
+ * KNOWN TO UNDERSTATE. CMHC repriced multi-unit insurance on risk on 14 July
+ * 2025 and effective premiums rose in the large majority of files — reported
+ * cases moved from roughly 2.8% to near 5.4% after discounts. This table
+ * predates that schedule, so treat every premium it produces as a floor.
+ */
 export function multiUnitPremiumPct(ltv: number): number {
   if (ltv <= 0.65) return 0.0175;
   if (ltv <= 0.70) return 0.0200;
@@ -515,9 +522,18 @@ function pv(rate: number, nper: number, payment: number): number {
  * entire difference in cash — the real down payment becomes
  * price − maximum loan, not price × 20%.
  */
+/**
+ * Lowest vacancy a lender will underwrite, whatever the rent roll shows today.
+ * Illustrative — each institution sets its own, generally drawing on CMHC
+ * market data rather than the building's current occupancy.
+ */
+export const NORMALIZED_VACANCY_FLOOR = 0.03;
+
 export interface EconomicValueResult {
   /** NOI after the bank's expense substitutions. */
   normalizedNoi: number;
+  /** Vacancy actually applied — the owner's rate or the lender's floor. */
+  normalizedVacancyRate: number;
   /** The bank's expense lines that replaced the owner's. */
   normalizedManagement: number;
   normalizedMaintenance: number;
@@ -555,7 +571,11 @@ export function calculateEconomicValue(
     actualOperatingExpenses - actualManagement - actualMaintenance +
     normalizedManagement + normalizedMaintenance + normalizedJanitorial;
 
-  const egi = grossAnnualRent * (1 - inputs.vacancyRate);
+  // Vacancy is the fourth normalized line, so the lender's own floor applies
+  // rather than the owner's assumption — a building fully leased today is not
+  // underwritten at 0% vacancy.
+  const normalizedVacancyRate = Math.max(inputs.vacancyRate, NORMALIZED_VACANCY_FLOOR);
+  const egi = grossAnnualRent * (1 - normalizedVacancyRate);
   const normalizedNoi = egi - normalizedExpenses;
 
   // Qualification rate: stress-tested above contract. Lenders differ; this
@@ -581,6 +601,7 @@ export function calculateEconomicValue(
 
   return {
     normalizedNoi,
+    normalizedVacancyRate,
     normalizedManagement,
     normalizedMaintenance,
     normalizedJanitorial,
@@ -677,7 +698,14 @@ export function calculateWelcomeTax(purchasePrice: number, isMontreal: boolean):
 /** Insured homeowner loans are capped by purchase price (CMHC Purchase, 2026). */
 export const CMHC_MAX_PRICE = 1_500_000;
 
-/** Longest amortization on a standard insured homeowner loan. */
+/**
+ * Longest amortization on a standard insured homeowner loan.
+ *
+ * Not an absolute ceiling: since 15 December 2024 first-time buyers and buyers
+ * of newly built homes may amortize an insured loan over 30 years. Eligibility
+ * depends on the buyer rather than the building, so the model keeps the
+ * standard figure and leaves 30 years as a manual override.
+ */
 export const CMHC_MAX_AMORTIZATION = 25;
 
 /**
@@ -710,9 +738,10 @@ export function minimumDownPayment(
 
 /**
  * CMHC premium on owner-occupied 1–4 unit homeowner loans, by LTV.
- * CMHC moved to risk-based pricing in July 2025 — actual pricing also reflects
- * credit score and amortization, so treat this as the schedule floor rather
- * than a quote.
+ * This homeowner schedule is unchanged — the July 2025 move to risk-based
+ * pricing applied to multi-unit MLI products, not here (see
+ * `multiUnitPremiumPct`). Actual pricing still reflects credit score and
+ * amortization, so treat this as the schedule floor rather than a quote.
  */
 export function cmhcPremiumPct(ltv: number): number {
   if (ltv <= 0.65) return 0.0060;
