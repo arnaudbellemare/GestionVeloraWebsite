@@ -80,6 +80,8 @@ export interface CalcUi {
   totalUnits: string;
   units: string;
   netRentableArea: string;
+  fromUnitMix: string;
+  fromUnitMixArea: string;
   unitArea: string;
   costPerSqft: string;
   montrealAgglo: string;
@@ -435,6 +437,8 @@ const fr: CalcUi = {
   totalUnits: "Nombre de logements",
   units: "Logements",
   netRentableArea: "Superficie locative nette",
+  fromUnitMix: "Somme de l'onglet Logements",
+  fromUnitMixArea: "Somme des pi² de l'onglet Logements",
   unitArea: "Superficie du logement",
   costPerSqft: "Coût / pi²",
   montrealAgglo: "Agglomération de Montréal",
@@ -803,6 +807,8 @@ const en: CalcUi = {
   totalUnits: "Total units",
   units: "Units",
   netRentableArea: "Net rentable area",
+  fromUnitMix: "Sum of the Unit mix tab",
+  fromUnitMixArea: "Sum of the ft² in the Unit mix tab",
   unitArea: "Unit area",
   costPerSqft: "Cost / ft²",
   montrealAgglo: "Montreal agglomeration",

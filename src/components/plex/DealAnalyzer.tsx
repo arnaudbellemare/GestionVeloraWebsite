@@ -135,11 +135,16 @@ function Kpi({
   );
 }
 
-function Readout({ label, value }: { label: string; value: string }) {
+/**
+ * A computed figure. `help` says where it comes from, so a derived number is
+ * not mistaken for one the reader simply cannot change.
+ */
+function Readout({ label, value, help }: { label: string; value: string; help?: string }) {
   return (
     <div className="plexc-field">
       <label>{label}</label>
       <div className="plexc-readout">{value}</div>
+      {help && <p className="plexc-help">{help}</p>}
     </div>
   );
 }
@@ -571,8 +576,12 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
               ) : (
                 <Field label={t.condoFeesMonthly} value={inputs.condoFees} onChange={(v) => set("condoFees", v)} prefix="$" step={25} help={t.condoFeesHelp} />
               )}
-              <Readout label={isCondo ? t.units : t.totalUnits} value={f.number(units)} />
-              <Readout label={isCondo ? t.unitArea : t.netRentableArea} value={results.netRSF > 0 ? f.sqft(results.netRSF) : "-"} />
+              <Readout label={isCondo ? t.units : t.totalUnits} value={f.number(units)} help={t.fromUnitMix} />
+              <Readout
+                label={isCondo ? t.unitArea : t.netRentableArea}
+                value={results.netRSF > 0 ? f.sqft(results.netRSF) : "-"}
+                help={t.fromUnitMixArea}
+              />
               <Readout label={t.costPerSqft} value={results.costPerRSF > 0 ? f.currencyDetailed(results.costPerRSF) : "-"} />
             </div>
 
