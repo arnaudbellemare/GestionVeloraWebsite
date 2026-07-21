@@ -14,9 +14,12 @@
   --pc-ink: #14140f;
   --pc-ink-2: #6b6b66;
   --pc-ink-3: #9b9a97;
-  /* Text drawn ON --pc-ink. Must invert with it, or a filled button renders
+  /* Text drawn ON --pc-ink. Must invert with it, or a filled surface renders
      white-on-white once the theme flips. */
   --pc-on-ink: #ffffff;
+  /* Filled-button pair, inverted in dark mode. */
+  --pc-btn-bg: #14140f;
+  --pc-btn-fg: #ffffff;
   --pc-good-bg: #edf3ec; --pc-good-fg: #346538;
   --pc-warn-bg: #fbf3db; --pc-warn-fg: #8a5a00;
   --pc-bad-bg: #fdebec;  --pc-bad-fg: #9f2f2d;
@@ -102,7 +105,14 @@
 }
 .plexc-btn:hover { background: var(--pc-sunken); }
 .plexc-btn:active { transform: scale(0.98); }
-.plexc-btn-primary { background: var(--pc-ink); color: var(--pc-on-ink); border-color: var(--pc-ink); }
+/* Filled button: near-black on white in light mode, and a true white button
+   with black text in dark mode. Uses its own pair rather than --pc-ink so the
+   dark variant is pure white rather than the warm off-white used for text. */
+.plexc-btn-primary {
+  background: var(--pc-btn-bg);
+  color: var(--pc-btn-fg);
+  border-color: var(--pc-btn-bg);
+}
 .plexc-btn-primary:hover { opacity: 0.85; }
 
 /* ── KPIs ── */
@@ -384,6 +394,8 @@
   --pc-ink-2: #a8a8a2;
   --pc-ink-3: #7d7d78;
   --pc-on-ink: #14140f;
+  --pc-btn-bg: #ffffff;
+  --pc-btn-fg: #000000;
   --pc-good-bg: #1b2a1d; --pc-good-fg: #86c98d;
   --pc-warn-bg: #2c2413; --pc-warn-fg: #e0b45c;
   --pc-bad-bg: #2c1a1b;  --pc-bad-fg: #e08a86;
