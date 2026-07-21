@@ -978,6 +978,12 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                       <tr><td>{t.environmental}</td><td>{f.currency(results.closingCosts.environmentalAssessment)}</td></tr>
                     )}
                     <tr><td>{t.titleInsurance}</td><td>{f.currency(results.closingCosts.titleInsurance)}</td></tr>
+                    {results.closingCosts.premiumTaxOnCmhc > 0 && (
+                      <tr>
+                        <td>{t.premiumTaxLine}</td>
+                        <td>{f.currency(results.closingCosts.premiumTaxOnCmhc)}</td>
+                      </tr>
+                    )}
                     <tr className="plexc-row-sub"><td>{t.totalClosingCosts}</td><td>{f.currency(results.closingCosts.totalClosingCosts)}</td></tr>
                     <tr><td>{t.downPayment}</td><td>{f.currency(results.equityAmount)}</td></tr>
                     <tr><td>{t.initialRehabLine}</td><td>{f.currency(inputs.rehabBudget)}</td></tr>

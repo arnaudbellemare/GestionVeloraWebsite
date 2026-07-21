@@ -185,8 +185,8 @@ export interface ClosingCostBreakdown {
   inspectionFees: number;
   environmentalAssessment: number;
   titleInsurance: number;
-  gstOnCmhc: number; // GST on CMHC premium
-  qstOnCmhc: number; // QST on CMHC premium
+  /** Quebec tax on the insurance premium. Not GST/QST: see INSURANCE_PREMIUM_TAX_RATE. */
+  premiumTaxOnCmhc: number;
   totalClosingCosts: number;
   totalCashAtClosing: number; // down payment + closing costs (cash portion)
 }
@@ -752,12 +752,25 @@ export function cmhcPremiumPct(ltv: number): number {
   return 0.0400;
 }
 
+/**
+ * Quebec's tax on insurance premiums (taxe sur les primes d'assurance).
+ *
+ * This is NOT GST/QST. Insurance is an exempt financial service, so no GST
+ * applies, and Quebec levies its own premium tax instead of QST. The rate is
+ * 9% and rises to 9.975% for premiums paid after 31 December 2026, harmonizing
+ * it with the QST rate (Bill 99, assented 28 October 2025). Payable in cash at
+ * closing: unlike the premium itself, it cannot be added to the mortgage.
+ */
+export const INSURANCE_PREMIUM_TAX_RATE = 0.09;
+/** Rate for premiums paid from 1 January 2027. */
+export const INSURANCE_PREMIUM_TAX_RATE_2027 = 0.09975;
+
 export interface InsuranceResult {
   premium: number;
   premiumPct: number;
   applicable: boolean;
-  gst: number;
-  qst: number;
+  /** Quebec tax on the premium, payable in cash at closing. */
+  premiumTax: number;
   /** Why insurance is unavailable, when it is. */
   ineligibleReason?: string;
 }
@@ -774,7 +787,7 @@ export function calculateCMHCPremium(
   ownerOccupied: boolean = true,
 ): InsuranceResult {
   const none = (reason?: string): InsuranceResult => ({
-    premium: 0, premiumPct: 0, applicable: false, gst: 0, qst: 0, ineligibleReason: reason,
+    premium: 0, premiumPct: 0, applicable: false, premiumTax: 0, ineligibleReason: reason,
   });
 
   if (equityPct >= 0.20) return none();
@@ -793,11 +806,12 @@ export function calculateCMHCPremium(
   const premiumPct = cmhcPremiumPct(ltv);
   const premium = purchasePrice * ltv * premiumPct;
 
-  // Quebec charges tax on the premium, payable in cash at closing.
-  const gst = premium * 0.05;
-  const qst = premium * 0.09975;
-
-  return { premium, premiumPct, applicable: true, gst, qst };
+  return {
+    premium,
+    premiumPct,
+    applicable: true,
+    premiumTax: premium * INSURANCE_PREMIUM_TAX_RATE,
+  };
 }
 
 // ─── Quebec + Federal Combined Marginal Tax Rates (2024) ───────────
@@ -1300,8 +1314,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   let amortYears = inputs.loanLifeYears;
   let mliPremiumPct = 0;
   let insurancePremium = 0;
-  let premiumGst = 0;
-  let premiumQst = 0;
+  let premiumTax = 0;
   let insured = false;
   let insuranceNote: string | undefined;
 
@@ -1317,8 +1330,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     insured = cmhc.applicable;
     insurancePremium = cmhc.premium;
     mliPremiumPct = cmhc.premiumPct;
-    premiumGst = cmhc.gst;
-    premiumQst = cmhc.qst;
+    premiumTax = cmhc.premiumTax;
     insuranceNote = cmhc.ineligibleReason;
   } else {
     // 5+ units: the lender sizes the loan off NOI. Whichever of the LTV cap
@@ -1344,8 +1356,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
       mliPremiumPct = multiUnitPremiumPct(actualLtv) * (1 - terms.premiumDiscount)
         + amortizationSurchargePct(amortYears);
       insurancePremium = baseLoanAmount * mliPremiumPct;
-      premiumGst = insurancePremium * 0.05;
-      premiumQst = insurancePremium * 0.09975;
+      premiumTax = insurancePremium * INSURANCE_PREMIUM_TAX_RATE;
     }
   }
 
@@ -1357,11 +1368,10 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     inspectionFees: inputs.inspectionFees,
     environmentalAssessment: inputs.environmentalAssessment,
     titleInsurance: inputs.titleInsurance,
-    gstOnCmhc: premiumGst,
-    qstOnCmhc: premiumQst,
+    premiumTaxOnCmhc: premiumTax,
     totalClosingCosts: welcomeTax + inputs.notaryFees + inputs.inspectionFees +
       inputs.environmentalAssessment + inputs.titleInsurance +
-      premiumGst + premiumQst, // cash portion (the premium itself goes on the loan)
+      premiumTax, // cash portion (the premium itself goes on the loan)
     totalCashAtClosing: 0, // calculated below
   };
 

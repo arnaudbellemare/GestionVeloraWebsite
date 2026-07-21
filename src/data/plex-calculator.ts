@@ -107,8 +107,8 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
       en: "Mortgage loan insurance premium",
     },
     value: {
-      fr: "Immeubles de 1 à 4 logements (prêts propriétaires-occupants) : 0,60 % à 65 % RPV · 1,70 % à 75 % · 2,40 % à 80 % · 2,80 % à 85 % · 3,10 % à 90 % · 4,00 % à 95 %. Les primes multilogement (5+) sont tarifées au risque depuis le 14 juillet 2025 et ont augmenté dans la plupart des dossiers.",
-      en: "1–4 unit homeowner loans: 0.60% at 65% LTV · 1.70% at 75% · 2.40% at 80% · 2.80% at 85% · 3.10% at 90% · 4.00% at 95%. Multi-unit (5+) premiums moved to risk-based pricing on July 14, 2025 and rose in most files.",
+      fr: "Immeubles de 1 à 4 logements (prêts propriétaires-occupants) : 0,60 % à 65 % RPV · 1,70 % à 75 % · 2,40 % à 80 % · 2,80 % à 85 % · 3,10 % à 90 % · 4,00 % à 95 %. Les primes multilogement (5+) sont tarifées au risque depuis le 14 juillet 2025 et ont augmenté dans la plupart des dossiers. La prime est capitalisée dans le prêt, mais la taxe québécoise sur les primes d'assurance (9 %) est payable comptant chez le notaire. Ce n'est ni la TPS ni la TVQ : l'assurance est un service financier exonéré de TPS, et le Québec applique sa propre taxe. Le taux passera à 9,975 % pour les primes payées après le 31 décembre 2026.",
+      en: "1–4 unit homeowner loans: 0.60% at 65% LTV · 1.70% at 75% · 2.40% at 80% · 2.80% at 85% · 3.10% at 90% · 4.00% at 95%. Multi-unit (5+) premiums moved to risk-based pricing on July 14, 2025 and rose in most files. The premium is capitalized into the loan, but Quebec's tax on insurance premiums (9%) is payable in cash at the notary. It is neither GST nor QST: insurance is a GST-exempt financial service and Quebec levies its own premium tax. The rate rises to 9.975% for premiums paid after 31 December 2026.",
     },
     source: "SCHL / CMHC",
     sourceUrl:

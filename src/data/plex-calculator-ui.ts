@@ -168,6 +168,7 @@ export interface CalcUi {
   monthlyPayment: string;
   annualDebtService: string;
   premiumNote: string;
+  premiumTaxLine: string;
   stressTest: string;
   passes: string;
   fails: string;
@@ -523,6 +524,7 @@ const fr: CalcUi = {
   effectiveLtv: "Prêt-valeur effectif",
   monthlyPayment: "Paiement mensuel",
   annualDebtService: "Service de la dette annuel",
+  premiumTaxLine: "Taxe sur la prime d'assurance (9 %)",
   premiumNote:
     "La prime d'assurance est capitalisée dans le prêt; la taxe sur la prime est payable comptant à la clôture. Les taux de prime sont des estimations : la SCHL tarifie chaque dossier individuellement.",
   stressTest: "Test de résistance à",
@@ -890,6 +892,7 @@ const en: CalcUi = {
   effectiveLtv: "Effective LTV",
   monthlyPayment: "Monthly payment",
   annualDebtService: "Annual debt service",
+  premiumTaxLine: "Tax on the insurance premium (9%)",
   premiumNote:
     "The insurance premium is capitalized into the loan; the tax on it is payable in cash at closing. Premium rates are estimates: CMHC prices each file individually.",
   stressTest: "Stress test at",
