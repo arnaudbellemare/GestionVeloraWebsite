@@ -486,6 +486,115 @@ function pv(rate: number, nper: number, payment: number): number {
  * Sizes a commercial loan the way a lender actually does: take the lesser of
  * the LTV ceiling and what the NOI supports at the target DSCR.
  */
+// ─── Valeur économique (bank value) ────────────────────────────────
+/**
+ * The "economic value" is the number Quebec lenders actually finance against
+ * on 5+ unit buildings, and it is routinely below the market price — in dense
+ * Montreal markets a market cap rate near 4.5% against a bank-value cap near
+ * 5.5% is normal, not a defect of the deal.
+ *
+ * Method (as taught by Collège MREX and applied, with variations, by every
+ * lender):
+ *   1. Normalize NOI — the bank substitutes its own expense standards so all
+ *      buildings compare on equal footing: management at ~5% of gross revenue,
+ *      maintenance ~$500/unit, janitorial ~$125–300/unit — regardless of what
+ *      the owner actually spends.
+ *   2. Maximum debt service = normalized NOI ÷ RCD (debt coverage ratio).
+ *   3. Present-value that payment at the QUALIFICATION rate (stress-tested,
+ *      higher than the contract rate) → maximum loan.
+ *   4. Economic value = maximum loan ÷ maximum LTV.
+ *
+ * Two properties of the result worth understanding:
+ *   - It moves daily with qualification rates, unlike market value which
+ *     reflects past transactions.
+ *   - Every lender normalizes differently; this is one defensible version,
+ *     not the number any specific bank will produce.
+ *
+ * The practical consequence: when the economic value is below the purchase
+ * price, the loan is capped by the bank's number and the buyer covers the
+ * entire difference in cash — the real down payment becomes
+ * price − maximum loan, not price × 20%.
+ */
+export interface EconomicValueResult {
+  /** NOI after the bank's expense substitutions. */
+  normalizedNoi: number;
+  /** The bank's expense lines that replaced the owner's. */
+  normalizedManagement: number;
+  normalizedMaintenance: number;
+  normalizedJanitorial: number;
+  qualificationRate: number;
+  maxAnnualDebtService: number;
+  maxLoan: number;
+  economicValue: number;
+  /** Purchase price − economic value. Positive = the bank values it below your price. */
+  gapToPrice: number;
+  /** Cash actually required: price − maximum loan (floor: conventional down payment). */
+  requiredCash: number;
+  /** What the down payment would be if the bank financed the full price at max LTV. */
+  conventionalCash: number;
+  /** Extra cash the gap forces beyond the conventional down payment. */
+  cashShortfall: number;
+}
+
+export function calculateEconomicValue(
+  inputs: DealInputs,
+  grossAnnualRent: number,
+  actualOperatingExpenses: number,
+  actualManagement: number,
+  actualMaintenance: number,
+): EconomicValueResult {
+  const mix = summarizeUnitMix(inputs);
+  const units = Math.max(1, mix.totalUnits);
+
+  // Bank normalization: strip the owner's management and maintenance, apply
+  // the standard substitutes. Midpoints of the published ranges.
+  const normalizedManagement = grossAnnualRent * 0.05;
+  const normalizedMaintenance = 500 * units;
+  const normalizedJanitorial = 200 * units;
+  const normalizedExpenses =
+    actualOperatingExpenses - actualManagement - actualMaintenance +
+    normalizedManagement + normalizedMaintenance + normalizedJanitorial;
+
+  const egi = grossAnnualRent * (1 - inputs.vacancyRate);
+  const normalizedNoi = egi - normalizedExpenses;
+
+  // Qualification rate: stress-tested above contract. Lenders differ; this
+  // mirrors the residential stress-test convention as a defensible default.
+  const qualificationRate = Math.max(inputs.annualInterestRate + 0.02, 0.0525);
+
+  const rcd = Math.max(1, inputs.dscrTarget);
+  const maxAnnualDebtService = Math.max(0, normalizedNoi) / rcd;
+
+  const periodicRate = qualificationRate / inputs.paymentsPerYear;
+  const nper = inputs.loanLifeYears * inputs.paymentsPerYear;
+  const periodicPayment = maxAnnualDebtService / inputs.paymentsPerYear;
+  const maxLoan = periodicRate === 0
+    ? periodicPayment * nper
+    : (periodicPayment * (1 - Math.pow(1 + periodicRate, -nper))) / periodicRate;
+
+  const ltv = Math.min(0.95, Math.max(0.5, inputs.maxLtv));
+  const economicValue = maxLoan / ltv;
+
+  const price = inputs.purchasePrice;
+  const conventionalCash = price * (1 - ltv);
+  const requiredCash = Math.max(conventionalCash, price - maxLoan);
+
+  return {
+    normalizedNoi,
+    normalizedManagement,
+    normalizedMaintenance,
+    normalizedJanitorial,
+    qualificationRate,
+    maxAnnualDebtService,
+    maxLoan,
+    economicValue,
+    gapToPrice: price - economicValue,
+    requiredCash,
+    conventionalCash,
+    cashShortfall: Math.max(0, requiredCash - conventionalCash),
+  };
+}
+
 export function sizeCommercialLoan(
   noi: number,
   purchasePrice: number,

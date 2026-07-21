@@ -173,6 +173,23 @@ export interface CalcUi {
   fails: string;
   renewalSensitivity: string;
   renewalSub: string;
+
+  // Valeur économique (bank value)
+  veHeading: string;
+  veSub: string;
+  veNormalizedNoi: string;
+  veNormalizedNote: string;
+  veQualificationRate: string;
+  veMaxDebtService: string;
+  veMaxLoan: string;
+  veValue: string;
+  veGap: string;
+  veCashRequired: string;
+  veCashShortfall: string;
+  veAbovePrice: string;
+  veBelowPrice: string;
+  veShortfallNote: string;
+  veVariesNote: string;
   colRate: string;
   colPaymentMo: string;
   colCashFlow: string;
@@ -517,6 +534,25 @@ const fr: CalcUi = {
   colCashFlow: "Flux de trésorerie",
   colCoc: "Rendement comptant",
 
+  veHeading: "Valeur économique (méthode bancaire)",
+  veSub:
+    "À cinq logements et plus, le prêteur ne finance pas votre prix : il finance sa propre valeur. Il normalise les dépenses (gestion à 5 % des revenus, entretien à 500 $/logement, conciergerie à ~200 $/logement), divise le revenu net normalisé par le ratio de couverture, actualise ce paiement au taux de qualification et obtient le prêt maximal. La valeur économique est ce prêt divisé par le ratio prêt-valeur.",
+  veNormalizedNoi: "Revenu net normalisé",
+  veNormalizedNote: "Après substitution des dépenses par les normes bancaires",
+  veQualificationRate: "Taux de qualification",
+  veMaxDebtService: "Service de la dette maximal",
+  veMaxLoan: "Prêt maximal",
+  veValue: "Valeur économique",
+  veGap: "Écart avec le prix",
+  veCashRequired: "Comptant réellement requis",
+  veCashShortfall: "Comptant additionnel dû à l'écart",
+  veAbovePrice: "La banque évalue au-dessus de votre prix — le financement suit le prix.",
+  veBelowPrice: "La banque évalue sous votre prix — le prêt est plafonné par sa valeur, pas la vôtre.",
+  veShortfallNote:
+    "Quand la valeur économique est sous le prix d'achat, vous couvrez la totalité de l'écart comptant : la mise de fonds réelle devient prix moins prêt maximal, pas 20 % du prix. À Montréal, un TGA de marché de 4,5 % contre un TGA bancaire de 5,5 % est courant — cet écart n'est pas un défaut de l'immeuble.",
+  veVariesNote:
+    "Chaque prêteur normalise différemment et la valeur économique bouge quotidiennement avec les taux de qualification. Ceci est une version défendable du calcul, pas le chiffre d'une banque précise.",
+
   renoHeading: "Rénovation et relocation",
   renoSub:
     "Le loyer d'un locataire en place est plafonné par le TAL. Le loyer ne revient au marché qu'au départ du locataire : c'est le rythme de relocation, et non l'ampleur de l'écart, qui détermine la vitesse de valorisation.",
@@ -860,6 +896,25 @@ const en: CalcUi = {
   colPaymentMo: "Payment / mo",
   colCashFlow: "Cash flow",
   colCoc: "Cash-on-cash",
+
+  veHeading: "Economic value (the bank's method)",
+  veSub:
+    "At five units and up, the lender does not finance your price — it finances its own value. It normalizes expenses (management at 5% of revenue, maintenance at $500/unit, janitorial at ~$200/unit), divides the normalized NOI by the coverage ratio, discounts that payment at the qualification rate and gets the maximum loan. The economic value is that loan divided by the loan-to-value ratio.",
+  veNormalizedNoi: "Normalized NOI",
+  veNormalizedNote: "After substituting the bank's expense standards",
+  veQualificationRate: "Qualification rate",
+  veMaxDebtService: "Maximum debt service",
+  veMaxLoan: "Maximum loan",
+  veValue: "Economic value",
+  veGap: "Gap to price",
+  veCashRequired: "Cash actually required",
+  veCashShortfall: "Extra cash due to the gap",
+  veAbovePrice: "The bank values it above your price — financing follows the price.",
+  veBelowPrice: "The bank values it below your price — the loan is capped by its number, not yours.",
+  veShortfallNote:
+    "When the economic value sits below the purchase price, you cover the whole gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. In Montreal, a 4.5% market cap against a 5.5% bank cap is common — that gap is not a defect of the building.",
+  veVariesNote:
+    "Every lender normalizes differently, and economic value moves daily with qualification rates. This is one defensible version of the calculation, not any specific bank's number.",
 
   renoHeading: "Renovation and turnover",
   renoSub:

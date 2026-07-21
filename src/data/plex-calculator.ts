@@ -165,6 +165,20 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
       "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables",
   },
   {
+    id: "valeur-economique",
+    label: {
+      fr: "Valeur économique — la valeur du prêteur (5 logements et plus)",
+      en: "Economic value — the lender's value (5+ units)",
+    },
+    value: {
+      fr: "La banque normalise les dépenses (gestion 3 à 5 % des revenus bruts, entretien ~500 $/logement, conciergerie 125 à 300 $/logement), divise le revenu net normalisé par le ratio de couverture (RCD, typiquement 1,10 à 1,30), actualise ce paiement au taux de qualification et divise le prêt obtenu par le ratio prêt-valeur. Quand cette valeur est sous le prix d'achat, l'acheteur couvre l'écart comptant. Un TGA de marché de 4,5 % contre un TGA bancaire de 5,5 % est courant à Montréal.",
+      en: "The bank normalizes expenses (management 3–5% of gross revenue, maintenance ~$500/unit, janitorial $125–300/unit), divides the normalized NOI by the debt coverage ratio (typically 1.10–1.30), discounts that payment at the qualification rate and divides the resulting loan by the loan-to-value ratio. When this value sits below the purchase price, the buyer covers the gap in cash. A 4.5% market cap against a 5.5% bank cap is common in Montreal.",
+    },
+    source: "Collège MREX",
+    sourceUrl:
+      "https://mrex.co/comment-calculer-la-valeur-economique-dun-immeuble-multilogement/",
+  },
+  {
     id: "cca",
     label: {
       fr: "Déduction pour amortissement (DPA)",
@@ -275,6 +289,11 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
         a: "La DPA de catégorie 1 réduit le revenu imposable de 4 % par année sur la portion bâtiment, en dégressif, avec la règle du demi-taux la première année. Mais la totalité de la DPA réclamée est récupérée à la vente et imposée à votre taux marginal, pas au taux réduit du gain en capital. C'est un report d'impôt, utile si votre taux marginal baisse d'ici la revente, coûteux dans le cas contraire.",
       },
       {
+        id: "faq-valeur-economique",
+        q: "Qu'est-ce que la valeur économique d'un immeuble ?",
+        a: "C'est la valeur que le prêteur calcule lui-même pour décider du financement d'un immeuble de 5 logements et plus — et elle diffère du prix du marché. La banque remplace vos dépenses par ses normes (gestion à 3-5 % des revenus, entretien d'environ 500 $ par logement, conciergerie de 125 à 300 $ par logement), divise le revenu net normalisé par son ratio de couverture, actualise ce paiement à un taux de qualification majoré et divise le prêt obtenu par le ratio prêt-valeur. Si cette valeur est inférieure à votre prix d'achat, le prêt est plafonné par le chiffre de la banque et vous couvrez tout l'écart comptant : la mise de fonds réelle devient le prix moins le prêt maximal, pas 20 % du prix. Chaque prêteur normalise différemment et cette valeur bouge avec les taux.",
+      },
+      {
         id: "faq-rentabilite-plex-montreal",
         q: "Un plex à Montréal est-il rentable en 2026 ?",
         a: "Les rendements bruts se situent généralement entre 4 et 5 %, et les rendements nets entre 2,5 et 4 % selon le secteur. À 20 % de mise de fonds et aux taux actuels, beaucoup de plex montréalais aux loyers réglementés ne génèrent pas de flux de trésorerie positif dès la première année : le rendement provient du remboursement du capital, de l'appréciation et de la remise à niveau des loyers à la relocation. Les secteurs centraux affichent des taux de capitalisation plus faibles que les secteurs périphériques.",
@@ -352,6 +371,11 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
         id: "faq-cca-recapture",
         q: "Is claiming capital cost allowance worth it?",
         a: "Class 1 CCA reduces taxable income by 4% a year on the building portion, declining balance, with the half-year rule in year one. But everything claimed is recaptured on sale and taxed at your full marginal rate rather than the lower capital-gains rate. It is a tax deferral — useful if your marginal rate falls before you sell, costly if it does not.",
+      },
+      {
+        id: "faq-economic-value",
+        q: "What is a building's economic value?",
+        a: "It is the value the lender computes for itself to decide the financing on a 5+ unit building — and it differs from the market price. The bank substitutes its own expense standards for yours (management at 3–5% of revenue, maintenance around $500 per unit, janitorial $125–300 per unit), divides the normalized net income by its coverage ratio, discounts that payment at a stress-tested qualification rate, and divides the resulting loan by the loan-to-value ratio. If that value comes in below your purchase price, the loan is capped by the bank's number and you cover the entire gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. Every lender normalizes differently, and the value moves with rates.",
       },
       {
         id: "faq-are-montreal-plexes-profitable",

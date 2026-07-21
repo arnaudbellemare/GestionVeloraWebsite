@@ -21,6 +21,7 @@ import {
   UNIT_TYPE_ORDER,
   maxInsuredLtv,
   hasLot,
+  calculateEconomicValue,
 } from "../../lib/plex/calculator";
 import { makeFormatters } from "../../lib/plex/format";
 import { CALC_UI, type CalcUi } from "../../data/plex-calculator-ui";
@@ -211,6 +212,20 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   const units = results.totalUnits;
   const isCommercialProperty = units >= 5;
 
+  // Bank value applies where lending is income-driven: the 5+ commercial tracks.
+  const economicValue = useMemo(
+    () => (isCommercialProperty
+      ? calculateEconomicValue(
+          inputs,
+          results.currentMonthlyRent * 12,
+          results.totalOperatingExpenses,
+          results.propertyManagementAnnual,
+          results.repairsMaintenanceAnnual,
+        )
+      : null),
+    [inputs, results, isCommercialProperty],
+  );
+
   const areaOptions: SelectOption<string>[] = useMemo(
     () => areasByRegion().flatMap(({ region, keys }) =>
       keys.map((k) => ({
@@ -331,6 +346,44 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
       "Cash Flow Before Tax": t.cashFlowBeforeTax,
     };
     return map[fallback] ?? fallback;
+  };
+
+  /**
+   * The verdict factors come out of the engine with English labels and
+   * English-formatted values (the engine is locale-agnostic and pre-formats
+   * them). Rather than change its return type, they are mapped here — keyed on
+   * the engine's stable label strings — so a French page never shows
+   * "PAYBACK (TOTAL): 4 YEARS" or "$-688".
+   */
+  const VERDICT_LABELS: Record<string, { fr: string; en: string }> = {
+    "Cap Rate": { fr: "Taux de capitalisation", en: "Cap rate" },
+    "Cash-on-Cash (BT)": { fr: "Rendement comptant", en: "Cash-on-cash" },
+    "DSCR": { fr: "Ratio de couverture", en: "DSCR" },
+    "Monthly CF (BT)": { fr: "Flux mensuel", en: "Monthly cash flow" },
+    "CF/Door/mo": { fr: "Flux / porte / mois", en: "Cash flow / door / mo" },
+    "Payback (total)": { fr: "Retour sur investissement", en: "Payback (total)" },
+    "CF Payback": { fr: "Retour par flux de trésorerie", en: "Cash-flow payback" },
+    "1% Rule": { fr: "Règle du 1 %", en: "1% rule" },
+    "GRM": { fr: "Multiplicateur de revenu brut", en: "GRM" },
+    "Break-even Ratio": { fr: "Seuil de rentabilité", en: "Break-even ratio" },
+    "Down Payment": { fr: "Mise de fonds", en: "Down payment" },
+    "Flip ROI": { fr: "Rendement de revente", en: "Flip ROI" },
+    "Flip Profit": { fr: "Profit de revente", en: "Flip profit" },
+    "Profit Margin": { fr: "Marge de profit", en: "Profit margin" },
+  };
+
+  const verdictLabel = (label: string) => VERDICT_LABELS[label]?.[locale] ?? label;
+
+  /** Rewrites the engine's en-CA value strings into French conventions. */
+  const verdictValue = (value: string): string => {
+    if (locale === "en") return value;
+    return value
+      .replace(/^\$(-?)([\d.,]+)$/, (_m, sign, n) => `${sign}${n} $`)
+      .replace(/(\d)\.(\d)/g, "$1,$2")
+      .replace(/\byears?\b/gi, "ans")
+      .replace(/\bNever\b/gi, "Jamais")
+      .replace(/(\d)%/, "$1 %")
+      .replace(/need 25%\+/i, "25 % minimum requis");
   };
 
   // ── Export ────────────────────────────────────────────────
@@ -729,6 +782,32 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
               </p>
             </div>
 
+            {economicValue && (
+              <div className="plexc-card">
+                <h3>{t.veHeading}</h3>
+                <p className="plexc-sub">{t.veSub}</p>
+                <div className="plexc-grid4">
+                  <Readout label={t.veNormalizedNoi} value={f.currency(economicValue.normalizedNoi)} />
+                  <Readout label={t.veQualificationRate} value={f.percent2(economicValue.qualificationRate)} />
+                  <Readout label={t.veMaxDebtService} value={f.currency(economicValue.maxAnnualDebtService)} />
+                  <Readout label={t.veMaxLoan} value={f.currency(economicValue.maxLoan)} />
+                  <Readout label={t.veValue} value={f.currency(economicValue.economicValue)} />
+                  <Readout label={t.veGap} value={f.accounting(economicValue.gapToPrice)} />
+                  <Readout label={t.veCashRequired} value={f.currency(economicValue.requiredCash)} />
+                  {economicValue.cashShortfall > 0 && (
+                    <Readout label={t.veCashShortfall} value={f.currency(economicValue.cashShortfall)} />
+                  )}
+                </div>
+                <p className="plexc-note">
+                  <span className={`plexc-tag ${economicValue.gapToPrice > 0 ? "plexc-tag-warn" : "plexc-tag-good"}`}>
+                    {economicValue.gapToPrice > 0 ? t.veBelowPrice : t.veAbovePrice}
+                  </span>
+                  {economicValue.cashShortfall > 0 && <> {t.veShortfallNote}</>}
+                </p>
+                <p className="plexc-note">{t.veVariesNote}</p>
+              </div>
+            )}
+
             <div className="plexc-card">
               <h3>{t.renewalSensitivity}</h3>
               <p className="plexc-sub">{t.renewalSub}</p>
@@ -1091,7 +1170,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
           {analysis.factors.map((factor) => (
             <span key={factor.label}
               className={`plexc-tag ${factor.status === "good" ? "plexc-tag-good" : factor.status === "warning" ? "plexc-tag-warn" : "plexc-tag-bad"}`}>
-              {factor.label}: {factor.value}
+              {verdictLabel(factor.label)}: {verdictValue(factor.value)}
             </span>
           ))}
         </div>
