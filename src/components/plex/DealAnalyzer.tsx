@@ -28,6 +28,7 @@ import { CALC_UI, type CalcUi } from "../../data/plex-calculator-ui";
 import { REFERENCE_FIGURES } from "../../data/plex-calculator";
 import { CONTACT_FORM_USE_API, WEB3FORMS_ACCESS_KEY } from "../../config";
 import { Select, type SelectOption } from "./Select";
+import { ProjectionChart } from "./ProjectionChart";
 
 type Locale = "fr" | "en";
 
@@ -1141,6 +1142,22 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
       {!isFlip && (
         <section className="plexc-block">
           <h3>{projection.length}-{locale === "fr" ? "ans" : "year"} {t.projectionHeading}</h3>
+          <p className="plexc-sub">{t.chartHint}</p>
+          <ProjectionChart
+            rows={projection.map((p) => ({
+              year: p.year,
+              noi: p.noi,
+              // Renovation capital is netted out so a turnover year shows the
+              // cash actually leaving your pocket, matching the table.
+              cashFlow: p.btCashFlow - p.renoSpend,
+              equity: p.equity,
+            }))}
+            formatCurrency={f.currency}
+            labelNoi={t.colNoi}
+            labelCashFlow={t.colCashFlow}
+            labelEquity={t.colEquity}
+            ariaLabel={t.chartAria}
+          />
           <div className="plexc-table-wrap">
             <table className="plexc-table">
               <thead>

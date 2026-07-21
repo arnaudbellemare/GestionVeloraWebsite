@@ -339,6 +339,8 @@ export interface CalcUi {
 
   // Projection
   projectionHeading: string;
+  chartAria: string;
+  chartHint: string;
   colYear: string;
   year: string;
   colGrossRent: string;
@@ -700,6 +702,10 @@ const fr: CalcUi = {
   resetToCalculated: "Saisi à la main : cliquer pour revenir au montant calculé",
 
   projectionHeading: "Projection proforma",
+  chartAria:
+    "Graphique de la projection : barres du flux de trésorerie annuel, courbe du revenu net et courbe de l'équité accumulée. Les mêmes chiffres figurent dans le tableau ci-dessous.",
+  chartHint:
+    "Les barres sous la ligne zéro sont des années à flux négatif. La courbe d'équité montre ce que le remboursement du capital et l'appréciation construisent pendant ce temps.",
   colYear: "Année",
   year: "Année",
   colGrossRent: "Revenu brut",
@@ -1063,6 +1069,10 @@ const en: CalcUi = {
   resetToCalculated: "Typed in by hand: click to go back to the calculated figure",
 
   projectionHeading: "Proforma projection",
+  chartAria:
+    "Projection chart: bars show annual cash flow, one line shows net operating income and another shows accumulated equity. The same figures appear in the table below.",
+  chartHint:
+    "Bars below the zero line are negative cash-flow years. The equity line shows what principal paydown and appreciation build over the same period.",
   colYear: "Year",
   year: "Year",
   colGrossRent: "Gross rent",
