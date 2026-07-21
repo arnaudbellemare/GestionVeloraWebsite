@@ -35,6 +35,14 @@ import {
   type TrustBlock,
   type TrustPageId,
 } from "../src/data/trust-pages.js";
+import {
+  CALCULATOR_PATHS,
+  REFERENCE_PATHS,
+  CALCULATOR_PAGE,
+  REFERENCE_PAGE,
+  REFERENCE_FIGURES,
+  FIGURES_VERIFIED,
+} from "../src/data/plex-calculator.js";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -1538,6 +1546,111 @@ function buildLocationRoutes(): RouteConfig[] {
 // ---------------------------------------------------------------------------
 // Route definitions
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Plex calculator & buyer guide
+// ---------------------------------------------------------------------------
+
+function buildPlexCalculatorMainHtml(loc: "fr" | "en"): string {
+  const p = CALCULATOR_PAGE[loc];
+  const sections = p.sections
+    .map(
+      (s) =>
+        `<section><h2 id="${s.id}">${escapeHtml(s.heading)}</h2>${s.body
+          .map((b) => `<p>${escapeHtml(b)}</p>`)
+          .join("")}</section>`,
+    )
+    .join("");
+  const faq = p.faq
+    .map((f) => `<div><h3 id="${f.id}">${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></div>`)
+    .join("");
+  const figures = REFERENCE_FIGURES.map(
+    (f) =>
+      `<li><strong>${escapeHtml(f.label[loc])}:</strong> ${escapeHtml(f.value[loc])} — <a href="${f.sourceUrl}" rel="noopener">${escapeHtml(f.source)}</a></li>`,
+  ).join("");
+  const guideHref = REFERENCE_PATHS[loc];
+
+  return [
+    `<h1>${escapeHtml(p.title)}</h1>`,
+    `<p>${escapeHtml(p.intro)}</p>`,
+    `<p>${escapeHtml(p.summary)}</p>`,
+    sections,
+    `<section><h2 id="faq">${loc === "fr" ? "Questions fréquentes" : "Frequently asked questions"}</h2>${faq}</section>`,
+    `<section><h2 id="sources">${loc === "fr" ? "Chiffres de référence" : "Reference figures"}</h2><ul>${figures}</ul></section>`,
+    `<p><a href="${guideHref}">${loc === "fr" ? "Guide de l'acheteur de plex à Montréal" : "Montreal plex buyer's guide"}</a></p>`,
+  ].join("");
+}
+
+function buildPlexGuideMainHtml(loc: "fr" | "en"): string {
+  const p = REFERENCE_PAGE[loc];
+  const figures = REFERENCE_FIGURES.map(
+    (f) =>
+      `<section><h2 id="${f.id}">${escapeHtml(f.label[loc])}</h2><p>${escapeHtml(f.value[loc])}</p>` +
+      `<p>${loc === "fr" ? "Source" : "Source"}: <a href="${f.sourceUrl}" rel="noopener">${escapeHtml(f.source)}</a></p></section>`,
+  ).join("");
+
+  return [
+    `<h1>${escapeHtml(p.title)}</h1>`,
+    `<p>${escapeHtml(p.intro)}</p>`,
+    `<p>${escapeHtml(p.figuresNote)}</p>`,
+    figures,
+    `<p><a href="${CALCULATOR_PATHS[loc]}">${loc === "fr" ? "Ouvrir le calculateur de rendement" : "Open the investment calculator"}</a></p>`,
+  ].join("");
+}
+
+function buildPlexCalculatorSchemas(loc: "fr" | "en"): object[] {
+  const p = CALCULATOR_PAGE[loc];
+  const url = `${SITE_URL}${CALCULATOR_PATHS[loc]}`;
+  return [
+    {
+      "@type": "WebApplication",
+      "@id": `${url}#app`,
+      name: p.metaTitle,
+      url,
+      applicationCategory: "FinanceApplication",
+      operatingSystem: "Web",
+      inLanguage: loc === "en" ? "en-CA" : "fr-CA",
+      description: p.metaDescription,
+      isAccessibleForFree: true,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
+      featureList: p.sections.map((s) => s.heading),
+      publisher: { "@id": ORG_ID },
+      areaServed: { "@type": "AdministrativeArea", name: "Montréal, Québec, Canada" },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${url}#faq`,
+      mainEntity: p.faq.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ];
+}
+
+function buildPlexGuideSchemas(loc: "fr" | "en"): object[] {
+  const p = REFERENCE_PAGE[loc];
+  const url = `${SITE_URL}${REFERENCE_PATHS[loc]}`;
+  return [
+    {
+      "@type": "Article",
+      "@id": `${url}#article`,
+      headline: p.metaTitle,
+      description: p.metaDescription,
+      url,
+      inLanguage: loc === "en" ? "en-CA" : "fr-CA",
+      author: { "@type": "Person", name: AUTHOR_NAME },
+      publisher: { "@id": ORG_ID },
+      dateModified: `${FIGURES_VERIFIED}-01`,
+      citation: REFERENCE_FIGURES.map((f) => ({
+        "@type": "CreativeWork",
+        name: f.source,
+        url: f.sourceUrl,
+      })),
+    },
+  ];
+}
+
 interface RouteConfig {
   path: string;
   locale: "fr" | "en";
@@ -1749,6 +1862,38 @@ function buildRoutes(): RouteConfig[] {
   }
 
   // --- Location hubs ---
+  // --- Plex calculator & buyer guide ---
+  // The tool itself is JavaScript, so the prerendered <main> carries the prose
+  // that actually gets indexed and quoted: the summary, the explanatory
+  // sections, every FAQ answer, and the sourced figures with anchors.
+  for (const loc of ["fr", "en"] as const) {
+    const calc = CALCULATOR_PAGE[loc];
+    routes.push({
+      path: CALCULATOR_PATHS[loc],
+      locale: loc,
+      frPath: CALCULATOR_PATHS.fr,
+      enPath: CALCULATOR_PATHS.en,
+      title: `${calc.metaTitle} | Gestion Velora`,
+      description: calc.metaDescription,
+      keywords: calc.keywords,
+      prerenderMainInner: buildPlexCalculatorMainHtml(loc),
+      pageSchemas: buildPlexCalculatorSchemas(loc),
+    });
+
+    const guide = REFERENCE_PAGE[loc];
+    routes.push({
+      path: REFERENCE_PATHS[loc],
+      locale: loc,
+      frPath: REFERENCE_PATHS.fr,
+      enPath: REFERENCE_PATHS.en,
+      title: `${guide.metaTitle} | Gestion Velora`,
+      description: guide.metaDescription,
+      keywords: guide.keywords,
+      prerenderMainInner: buildPlexGuideMainHtml(loc),
+      pageSchemas: buildPlexGuideSchemas(loc),
+    });
+  }
+
   routes.push({
     path: "/locations",
     locale: "fr",

@@ -27,6 +27,8 @@ const ServicesIndexPage = lazy(() =>
   import("./pages/ServicesIndexPage").then((m) => ({ default: m.ServicesIndexPage })),
 );
 const VideoPage = lazy(() => import("./pages/VideoPage").then((m) => ({ default: m.VideoPage })));
+const PlexCalculatorPage = lazy(() => import("./pages/PlexCalculatorPage"));
+const PlexReferencePage = lazy(() => import("./pages/PlexReferencePage"));
 
 function RouteFallback() {
   return (
@@ -128,6 +130,22 @@ function App() {
                   element={
                     <Suspense fallback={<RouteFallback />}>
                       <BlogPostPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="calculateur-rendement-plex-montreal"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <PlexCalculatorPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="guide-achat-plex-montreal"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <PlexReferencePage />
                     </Suspense>
                   }
                 />
@@ -260,6 +278,22 @@ function App() {
                   element={
                     <Suspense fallback={<RouteFallback />}>
                       <BlogPostPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="montreal-plex-investment-calculator"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <PlexCalculatorPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="montreal-plex-buyer-guide"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <PlexReferencePage />
                     </Suspense>
                   }
                 />

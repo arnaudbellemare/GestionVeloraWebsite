@@ -40,6 +40,8 @@ function buildAllRoutes(): RouteEntry[] {
     ["/blog", "/en/blog"],
     ["/tarifs", "/en/tarifs"],
     ["/privacy", "/en/privacy"],
+    ["/calculateur-rendement-plex-montreal", "/en/montreal-plex-investment-calculator"],
+    ["/guide-achat-plex-montreal", "/en/montreal-plex-buyer-guide"],
   ];
   for (const [fr, en] of staticPairs) {
     routes.push({ path: fr, frPath: fr, enPath: en });

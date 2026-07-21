@@ -12,6 +12,14 @@ import {
   SITE_URL,
 } from "../config";
 import { getLocalizedService, getLocalizedServices, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
+import {
+  CALCULATOR_PATHS,
+  REFERENCE_PATHS,
+  CALCULATOR_PAGE,
+  REFERENCE_PAGE,
+  REFERENCE_FIGURES,
+  FIGURES_VERIFIED,
+} from "../data/plex-calculator";
 
 // Inject one or multiple JSON-LD schemas into the document head.
 // When given an array, uses the @graph pattern for clean multi-schema output.
@@ -70,6 +78,85 @@ export function SchemaOrg() {
 
   useEffect(() => {
     let cancelled = false;
+
+    // ── Plex calculator & buyer guide ─────────────────────────────────────────
+    // The calculator publishes WebApplication + FAQPage so answer engines can
+    // both recognise the tool and lift individual answers. The guide publishes
+    // Article + FAQ-free Dataset-style facts, each anchored on the page.
+    const isCalculator = path === CALCULATOR_PATHS.fr || path === CALCULATOR_PATHS.en;
+    const isGuide = path === REFERENCE_PATHS.fr || path === REFERENCE_PATHS.en;
+
+    if (isCalculator || isGuide) {
+      const loc = isEn ? "en" : "fr";
+      const calc = CALCULATOR_PAGE[loc];
+      const guide = REFERENCE_PAGE[loc];
+      const url = `${SITE_URL}${path}`;
+
+      const graph: object[] = [
+        buildBreadcrumb([
+          { name: bcHome, url: `${base}/` },
+          { name: isGuide ? guide.title : calc.title },
+        ]),
+      ];
+
+      if (isCalculator) {
+        graph.push({
+          "@type": "WebApplication",
+          "@id": `${url}#app`,
+          name: calc.metaTitle,
+          url,
+          applicationCategory: "FinanceApplication",
+          operatingSystem: "Web",
+          inLanguage: isEn ? "en-CA" : "fr-CA",
+          description: calc.metaDescription,
+          isAccessibleForFree: true,
+          offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
+          featureList: calc.sections.map((s) => s.heading),
+          publisher: { "@id": ORGANIZATION_SCHEMA_ID },
+          areaServed: {
+            "@type": "AdministrativeArea",
+            name: "Montréal, Québec, Canada",
+          },
+        });
+        graph.push({
+          "@type": "FAQPage",
+          "@id": `${url}#faq`,
+          mainEntity: calc.faq.map((entry) => ({
+            "@type": "Question",
+            name: entry.q,
+            acceptedAnswer: { "@type": "Answer", text: entry.a },
+          })),
+        });
+      } else {
+        graph.push({
+          "@type": "Article",
+          "@id": `${url}#article`,
+          headline: guide.metaTitle,
+          description: guide.metaDescription,
+          url,
+          inLanguage: isEn ? "en-CA" : "fr-CA",
+          author: { "@type": "Person", name: ARTICLE_AUTHOR_NAME, url: ARTICLE_AUTHOR_URL },
+          publisher: { "@id": ORGANIZATION_SCHEMA_ID },
+          // Dated because every figure on the page is annually indexed.
+          dateModified: `${FIGURES_VERIFIED}-01`,
+          about: REFERENCE_FIGURES.map((figure) => ({
+            "@type": "Thing",
+            name: figure.label[loc],
+          })),
+          citation: REFERENCE_FIGURES.map((figure) => ({
+            "@type": "CreativeWork",
+            name: figure.source,
+            url: figure.sourceUrl,
+          })),
+        });
+      }
+
+      injectSchema(graph);
+      return () => {
+        cancelled = true;
+        removePageSchema();
+      };
+    }
 
     // ── Services hub ──────────────────────────────────────────────────────────
     const isServicesHub =

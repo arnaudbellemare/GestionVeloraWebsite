@@ -1,0 +1,387 @@
+/* ─────────────────────────────────────────────────────────────
+   Plex calculator — self-contained styles.
+
+   Every class is namespaced `plexc-` (or `sel-` for the listbox) so nothing
+   here can reach the rest of the site, and the component carries its own
+   tokens rather than depending on the site's Tailwind theme.
+   ───────────────────────────────────────────────────────────── */
+
+.plexc {
+  --pc-surface: #ffffff;
+  --pc-sunken: #f7f6f3;
+  --pc-border: #e6e6e3;
+  --pc-border-strong: #d8d8d5;
+  --pc-ink: #14140f;
+  --pc-ink-2: #6b6b66;
+  --pc-ink-3: #9b9a97;
+  --pc-good-bg: #edf3ec; --pc-good-fg: #346538;
+  --pc-warn-bg: #fbf3db; --pc-warn-fg: #8a5a00;
+  --pc-bad-bg: #fdebec;  --pc-bad-fg: #9f2f2d;
+  --pc-info-bg: #e1f3fe; --pc-info-fg: #1f6c9f;
+  --pc-mono: ui-monospace, "SF Mono", "JetBrains Mono", monospace;
+  --pc-r: 8px;
+  --pc-r-sm: 5px;
+
+  color: var(--pc-ink);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.plexc *, .plexc *::before, .plexc *::after { box-sizing: border-box; }
+
+.plexc h3 {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+  color: var(--pc-ink);
+}
+
+.plexc-sub {
+  font-size: 13px;
+  color: var(--pc-ink-2);
+  margin: 0 0 22px;
+  max-width: 68ch;
+}
+
+.plexc-note {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--pc-ink-2);
+  border-left: 2px solid var(--pc-border-strong);
+  padding-left: 14px;
+  margin: 20px 0 0;
+}
+
+.plexc-help { font-size: 11px; color: var(--pc-ink-3); margin: 5px 0 0; }
+
+/* ── Bar ── */
+.plexc-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.plexc-bar-area { min-width: 260px; flex: 1 1 260px; max-width: 380px; }
+
+.plexc-export {
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r);
+  background: var(--pc-sunken);
+  padding: 16px 18px;
+  margin-bottom: 22px;
+}
+.plexc-export p { margin: 0 0 10px; font-size: 13px; }
+.plexc-export-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.plexc-export-row input {
+  flex: 1 1 220px;
+  border: 1px solid var(--pc-border-strong);
+  border-radius: var(--pc-r-sm);
+  padding: 9px 12px;
+  font-size: 14px;
+  background: var(--pc-surface);
+  color: var(--pc-ink);
+}
+
+/* ── Buttons ── */
+.plexc-btn {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: var(--pc-r-sm);
+  border: 1px solid var(--pc-border-strong);
+  background: var(--pc-surface);
+  color: var(--pc-ink);
+  cursor: pointer;
+  transition: background 160ms ease, transform 120ms ease;
+}
+.plexc-btn:hover { background: var(--pc-sunken); }
+.plexc-btn:active { transform: scale(0.98); }
+.plexc-btn-primary { background: var(--pc-ink); color: #fff; border-color: var(--pc-ink); }
+.plexc-btn-primary:hover { background: #333; }
+
+/* ── KPIs ── */
+.plexc-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r);
+  background: var(--pc-surface);
+  overflow: hidden;
+}
+.plexc-kpi {
+  padding: 16px 18px;
+  border-right: 1px solid var(--pc-border);
+  border-bottom: 1px solid var(--pc-border);
+  min-width: 0;
+}
+.plexc-kpi:nth-child(6n) { border-right: none; }
+.plexc-kpi:nth-last-child(-n+6) { border-bottom: none; }
+.plexc-kpi-label {
+  font-family: var(--pc-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pc-ink-3);
+  margin-bottom: 6px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.plexc-kpi-value {
+  font-family: var(--pc-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.plexc-kpi-note { font-size: 11px; color: var(--pc-ink-3); margin-top: 3px; }
+.plexc-v-good { color: var(--pc-good-fg); }
+.plexc-v-warn { color: var(--pc-warn-fg); }
+.plexc-v-bad  { color: var(--pc-bad-fg); }
+
+/* ── Tabs ── */
+.plexc-tabs {
+  display: flex; gap: 2px;
+  margin-top: 30px;
+  border-bottom: 1px solid var(--pc-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.plexc-tabs::-webkit-scrollbar { display: none; }
+.plexc-tab {
+  font-size: 13px; font-weight: 500;
+  color: var(--pc-ink-2);
+  background: none; border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 15px;
+  cursor: pointer; white-space: nowrap;
+  margin-bottom: -1px;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.plexc-tab:hover { color: var(--pc-ink); }
+.plexc-tab[aria-selected="true"] { color: var(--pc-ink); border-bottom-color: var(--pc-ink); }
+
+.plexc-panel { padding-top: 26px; }
+
+.plexc-card {
+  background: var(--pc-surface);
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r);
+  padding: 26px;
+}
+.plexc-card + .plexc-card { margin-top: 18px; }
+
+.plexc-block { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--pc-border); }
+
+.plexc-grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 22px; }
+
+/* ── Fields ── */
+.plexc-field label {
+  display: block; font-size: 12px; font-weight: 500;
+  color: var(--pc-ink-2); margin-bottom: 6px;
+}
+.plexc-input {
+  display: flex; align-items: center;
+  border: 1px solid var(--pc-border-strong);
+  border-radius: var(--pc-r-sm);
+  background: var(--pc-surface);
+  transition: border-color 160ms ease;
+}
+.plexc-input:focus-within { border-color: var(--pc-ink); }
+.plexc-affix {
+  font-family: var(--pc-mono); font-size: 12px;
+  color: var(--pc-ink-3); padding: 0 10px; user-select: none;
+}
+.plexc-input input {
+  flex: 1; min-width: 0; border: none; outline: none; background: transparent;
+  padding: 9px 10px;
+  font-family: var(--pc-mono); font-variant-numeric: tabular-nums;
+  font-size: 14px; color: var(--pc-ink);
+}
+.plexc-affix + input { padding-left: 0; }
+.plexc-readout {
+  font-family: var(--pc-mono); font-variant-numeric: tabular-nums;
+  font-size: 17px; font-weight: 500; padding-top: 2px;
+}
+.plexc-check {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 13px; cursor: pointer; padding: 6px 0;
+}
+.plexc-check input { width: 15px; height: 15px; accent-color: var(--pc-ink); cursor: pointer; }
+
+.plexc-segmented { display: inline-flex; border: 1px solid var(--pc-border-strong); border-radius: var(--pc-r-sm); overflow: hidden; }
+.plexc-segmented button {
+  font-size: 13px; padding: 8px 15px; border: none;
+  border-right: 1px solid var(--pc-border-strong);
+  background: var(--pc-surface); color: var(--pc-ink-2); cursor: pointer;
+}
+.plexc-segmented button:last-child { border-right: none; }
+.plexc-segmented button:hover:not(:disabled) { background: var(--pc-sunken); }
+.plexc-segmented button[aria-pressed="true"] { background: var(--pc-ink); color: #fff; }
+.plexc-segmented button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Tables ── */
+.plexc-table-wrap { overflow-x: auto; }
+.plexc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.plexc-table th {
+  font-family: var(--pc-mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--pc-ink-3); font-weight: 500;
+  text-align: right; padding: 10px 12px;
+  border-bottom: 1px solid var(--pc-border); white-space: nowrap;
+}
+.plexc-table th:first-child { text-align: left; }
+.plexc-th-sub {
+  display: block; font-family: inherit; font-size: 10px;
+  text-transform: none; letter-spacing: 0; color: var(--pc-ink-3);
+  font-weight: 400; margin-top: 3px; opacity: 0.85;
+}
+.plexc-table td {
+  padding: 9px 12px; border-bottom: 1px solid var(--pc-border);
+  text-align: right; white-space: nowrap;
+  font-family: var(--pc-mono); font-variant-numeric: tabular-nums;
+}
+.plexc-table td:first-child { text-align: left; font-family: inherit; color: var(--pc-ink-2); }
+.plexc-table tr:last-child td { border-bottom: none; }
+.plexc-table-left td, .plexc-table-left th { text-align: left; white-space: normal; font-family: inherit; }
+.plexc-table-left a { color: var(--pc-info-fg); }
+
+.plexc-row-head td {
+  font-family: var(--pc-mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--pc-ink-3); padding-top: 20px;
+}
+.plexc-row-sub td { font-weight: 500; color: var(--pc-ink); background: var(--pc-sunken); }
+.plexc-row-total td {
+  font-weight: 600; color: var(--pc-ink);
+  border-top: 1px solid var(--pc-ink); border-bottom: 1px solid var(--pc-ink);
+}
+.plexc-row-total td:first-child, .plexc-row-sub td:first-child { color: var(--pc-ink); font-weight: 500; }
+
+/* ── Editable statement cells ── */
+.plexc-cell {
+  display: inline-flex; align-items: center; justify-content: flex-end; gap: 1px;
+  border: none; outline: 1px solid transparent; outline-offset: 1px;
+  border-radius: var(--pc-r-sm); padding: 1px 0;
+  transition: outline-color 160ms ease, background 160ms ease;
+}
+.plexc-cell:hover { outline-color: var(--pc-border); background: var(--pc-surface); }
+.plexc-cell:focus-within { outline-color: var(--pc-ink); background: var(--pc-surface); }
+.plexc-cell-affix { font-family: var(--pc-mono); font-size: 13px; color: var(--pc-ink-3); }
+.plexc-cell input {
+  width: 86px; border: none; outline: none; background: transparent;
+  text-align: right; padding: 3px 0;
+  font-family: var(--pc-mono); font-variant-numeric: tabular-nums;
+  font-size: 13px; color: inherit;
+}
+.plexc-cell.is-override { background: var(--pc-warn-bg); }
+.plexc-cell.is-override input { color: var(--pc-warn-fg); font-weight: 500; }
+.plexc-derived { color: var(--pc-ink-3); }
+.plexc-reset {
+  border: none; background: none; cursor: pointer;
+  color: var(--pc-ink-3); font-family: var(--pc-mono); font-size: 13px;
+  line-height: 1; padding: 2px 4px; border-radius: 3px;
+}
+.plexc-reset:hover { color: var(--pc-bad-fg); background: var(--pc-bad-bg); }
+
+.plexc-banner {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--pc-warn-bg); color: var(--pc-warn-fg);
+  border-radius: var(--pc-r-sm); padding: 12px 16px;
+  margin: 0 0 18px; font-size: 13px;
+}
+.plexc-banner .plexc-btn { margin-left: auto; }
+
+/* ── Tags ── */
+.plexc-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.plexc-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+.plexc-tag {
+  display: inline-block; font-family: var(--pc-mono); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 4px 10px; border-radius: 9999px;
+  background: var(--pc-sunken); color: var(--pc-ink-2); white-space: nowrap;
+}
+.plexc-tag-good { background: var(--pc-good-bg); color: var(--pc-good-fg); }
+.plexc-tag-warn { background: var(--pc-warn-bg); color: var(--pc-warn-fg); }
+.plexc-tag-bad  { background: var(--pc-bad-bg);  color: var(--pc-bad-fg); }
+.plexc-tag-info { background: var(--pc-info-bg); color: var(--pc-info-fg); }
+
+/* ── Select (listbox) ── */
+.sel { position: relative; display: inline-block; }
+.sel-full { display: block; width: 100%; }
+.sel-trigger {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  width: 100%; padding: 9px 12px;
+  border: 1px solid var(--pc-border-strong); border-radius: var(--pc-r-sm);
+  background: var(--pc-surface); color: var(--pc-ink);
+  font-size: 14px; text-align: left; cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.sel-trigger:hover { background: var(--pc-sunken); }
+.sel-trigger:focus-visible { outline: none; border-color: var(--pc-ink); }
+.sel-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sel-chevron { flex: none; color: var(--pc-ink-3); transition: transform 180ms cubic-bezier(0.16,1,0.3,1); }
+.sel-trigger.is-open .sel-chevron { transform: rotate(180deg); }
+.sel-compact .sel-trigger { padding: 6px 9px; font-size: 13px; }
+
+.sel-menu {
+  position: absolute; z-index: 200; overflow-y: auto; padding: 5px;
+  background: var(--pc-surface); border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r); box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  animation: plexc-sel-in 160ms cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes plexc-sel-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.sel-menu.is-above { animation-name: plexc-sel-in-above; }
+@keyframes plexc-sel-in-above { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.sel-group {
+  font-family: var(--pc-mono); font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--pc-ink-3); padding: 12px 10px 5px;
+}
+.sel-group:first-child { padding-top: 5px; }
+.sel-option {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px; border-radius: 4px; font-size: 13px;
+  color: var(--pc-ink); cursor: pointer; white-space: nowrap;
+}
+.sel-option.is-active { background: var(--pc-sunken); }
+.sel-option.is-selected { font-weight: 500; }
+.sel-check { flex: none; width: 11px; height: 11px; color: var(--pc-ink); display: inline-flex; align-items: center; }
+.sel-label { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.sel-hint { font-family: var(--pc-mono); font-size: 11px; color: var(--pc-ink-3); padding-left: 14px; }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .plexc-kpis { grid-template-columns: repeat(3, 1fr); }
+  .plexc-kpi:nth-child(6n) { border-right: 1px solid var(--pc-border); }
+  .plexc-kpi:nth-last-child(-n+6) { border-bottom: 1px solid var(--pc-border); }
+  .plexc-kpi:nth-child(3n) { border-right: none; }
+  .plexc-kpi:nth-last-child(-n+3) { border-bottom: none; }
+  .plexc-grid4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 680px) {
+  .plexc-kpis { grid-template-columns: repeat(2, 1fr); }
+  .plexc-kpi:nth-child(3n) { border-right: 1px solid var(--pc-border); }
+  .plexc-kpi:nth-last-child(-n+3) { border-bottom: 1px solid var(--pc-border); }
+  .plexc-kpi:nth-child(2n) { border-right: none; }
+  .plexc-kpi:nth-last-child(-n+2) { border-bottom: none; }
+  .plexc-grid4 { grid-template-columns: 1fr; }
+  .plexc-card { padding: 20px; }
+}
+
+/* Dark mode — the site ships a light/dark toggle. */
+:root[data-theme="dark"] .plexc,
+.dark .plexc {
+  --pc-surface: #16161a;
+  --pc-sunken: #1e1e23;
+  --pc-border: #2a2a30;
+  --pc-border-strong: #3a3a42;
+  --pc-ink: #f2f2ef;
+  --pc-ink-2: #a8a8a2;
+  --pc-ink-3: #7d7d78;
+  --pc-good-bg: #1b2a1d; --pc-good-fg: #86c98d;
+  --pc-warn-bg: #2c2413; --pc-warn-fg: #e0b45c;
+  --pc-bad-bg: #2c1a1b;  --pc-bad-fg: #e08a86;
+  --pc-info-bg: #14252f; --pc-info-fg: #7dc0ea;
+}

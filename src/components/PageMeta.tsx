@@ -7,6 +7,12 @@ import { blogCoverUrl } from "../lib/blogImages";
 import { getComparisonBySlug } from "../data/comparisons";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 import { getTrustPageLocale, trustPageIdFromPath } from "../data/trust-pages";
+import {
+  CALCULATOR_PATHS,
+  REFERENCE_PATHS,
+  CALCULATOR_PAGE,
+  REFERENCE_PAGE,
+} from "../data/plex-calculator";
 
 const _TITLE_SUFFIX = " | Gestion Velora";
 const _TITLE_MAX = 70;
@@ -236,6 +242,19 @@ export function PageMeta() {
     } else if (pathname === "/privacy" || pathname === "/en/privacy") {
       title = isEn ? "Privacy | Gestion Velora" : "Confidentialité | Gestion Velora";
       description = baseDesc;
+    } else if (
+      pathname === CALCULATOR_PATHS.fr ||
+      pathname === CALCULATOR_PATHS.en ||
+      pathname === REFERENCE_PATHS.fr ||
+      pathname === REFERENCE_PATHS.en
+    ) {
+      const isReference =
+        pathname === REFERENCE_PATHS.fr || pathname === REFERENCE_PATHS.en;
+      const loc = isEn ? "en" : "fr";
+      const page = isReference ? REFERENCE_PAGE[loc] : CALCULATOR_PAGE[loc];
+      title = buildTitle(page.metaTitle);
+      description = page.metaDescription;
+      keywords = page.keywords;
     } else {
       const trustId = trustPageIdFromPath(pathname);
       if (trustId) {
