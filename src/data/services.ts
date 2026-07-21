@@ -12,6 +12,14 @@ const SERVICE_IMAGES: Record<ServiceSlug, string> = {
   "gestion-copropriete": "/images/portfolio/syndicat-enticy.webp",
 };
 
+export const SERVICE_MOBILE_IMAGES: Record<ServiceSlug, string> = {
+  "syndicat-copropriete": "/images/portfolio/syndicat-enticy-card.webp",
+  airbnb: "/images/airbnb-service.webp",
+  location: "/hero-gestion-velora-800.webp",
+  "gestion-condo": "/images/portfolio/le-beaumont-card.webp",
+  "gestion-copropriete": "/images/portfolio/syndicat-enticy-card.webp",
+};
+
 /** `/location/...` landing heroes: reuse service art where it matches intent; commercial stays distinct. */
 export const LOCATION_LANDING_SERVICE_IMAGES: Record<string, string> = {
   "syndicat-copropriete": SERVICE_IMAGES["syndicat-copropriete"],
@@ -41,6 +49,7 @@ export function getLocalizedService(slug: ServiceSlug, t: TFunction) {
     metaTitle: t(`${base}.metaTitle`),
     metaDescription: t(`${base}.metaDescription`),
     image: SERVICE_IMAGES[slug],
+    mobileImage: SERVICE_MOBILE_IMAGES[slug],
     description: t(`${base}.description`),
     offerings,
   };

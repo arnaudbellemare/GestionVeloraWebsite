@@ -1,4 +1,3 @@
-import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -96,26 +95,24 @@ export function ServicePage() {
     : [];
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="pt-24 lg:pt-32"
-    >
+    <div className="pt-24 lg:pt-32">
       {/* Hero - Waabi style: clean, minimal */}
       <section className="relative min-h-[60vh] flex flex-col justify-end pb-16 lg:pb-24">
         <div className="absolute inset-0">
-          <img
-            src={service.image}
-            alt={`${service.title} — Gestion Velora`}
-            className="w-full h-full object-cover"
-            style={{ objectPosition: "center 30%" }}
-            width={1920}
-            height={1080}
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcSet={service.mobileImage} />
+            <img
+              src={service.image}
+              alt={`${service.title} — Gestion Velora`}
+              className="w-full h-full object-cover"
+              style={{ objectPosition: "center 30%" }}
+              width={667}
+              height={1024}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
+          </picture>
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-16 w-full">
@@ -127,21 +124,12 @@ export function ServicePage() {
               { label: service.title },
             ]}
           />
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-sans font-medium text-4xl lg:text-6xl text-white leading-[1.05] tracking-[-0.02em] mb-4"
-          >
+          <h1 className="font-sans font-medium text-4xl lg:text-6xl text-white leading-[1.05] tracking-[-0.02em] mb-4">
             {service.subtitle}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="font-sans text-lg text-white/90 max-w-2xl"
-          >
+          </h1>
+          <p className="font-sans text-lg text-white/90 max-w-2xl">
             {service.description}
-          </motion.p>
+          </p>
         </div>
       </section>
 
@@ -265,7 +253,7 @@ export function ServicePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
             {service.offerings.map((block, i) => (
               <ScrollReveal key={block.title} delay={i * 0.05}>
-                <motion.article
+                <article
                   id={toAnchorId(block.title).slice(1)}
                   className="group rounded-2xl border border-black/10 dark:border-white/10 p-7 lg:p-8 hover:border-waabi-pink/30 transition-colors bg-white dark:bg-white/[0.02] scroll-mt-24"
                 >
@@ -283,7 +271,7 @@ export function ServicePage() {
                       </li>
                     ))}
                   </ul>
-                </motion.article>
+                </article>
               </ScrollReveal>
             ))}
           </div>
@@ -318,24 +306,15 @@ export function ServicePage() {
                         <span className="font-sans text-sm text-black/65 dark:text-white/65">
                           {detailItems.length} {t("servicePage.items")}
                         </span>
-                        <motion.span
-                          animate={{ rotate: isExpanded ? 90 : 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="text-black/40 dark:text-white/40 group-hover:text-waabi-pink transition-colors shrink-0"
+                        <span
+                          className={`text-black/40 dark:text-white/40 group-hover:text-waabi-pink transition-transform transition-colors duration-200 shrink-0${isExpanded ? " rotate-90" : ""}`}
                         >
                           →
-                        </motion.span>
+                        </span>
                       </div>
                     </button>
-                    <AnimatePresence>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                          className="overflow-hidden"
-                        >
+                    {isExpanded && (
+                        <div className="overflow-hidden animate-fade-in">
                           <ul className="pl-0 lg:pl-4 pb-5 space-y-1.5">
                             {detailItems.map((item) => (
                               <li
@@ -347,9 +326,8 @@ export function ServicePage() {
                               </li>
                             ))}
                           </ul>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                        </div>
+                    )}
                   </div>
                 </ScrollReveal>
               );
@@ -410,6 +388,6 @@ export function ServicePage() {
           </ScrollReveal>
         </div>
       </section>
-    </motion.div>
+    </div>
   );
 }

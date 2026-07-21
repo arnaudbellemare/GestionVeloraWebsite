@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
-const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-ultra.mp4";
 const HERO_IMAGE = "/hero-video-poster.webp?v=5";
 const HERO_IMAGE_MEDIUM = "/hero-video-poster-960.webp?v=5";
 const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=5";
@@ -28,23 +27,21 @@ export function HeroSection() {
     if (reduceMotion || conn?.saveData || /(^|-)2g$/.test(conn?.effectiveType ?? "")) return;
 
     const media = window.matchMedia("(max-width: 767px)");
-    const pick = () => (media.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
+
+    // A full-bleed video becomes a new, late LCP candidate once its first frame
+    // paints. Keep mobile on the optimized poster: it saves more than 5 MB and
+    // avoids turning decorative motion into a Core Web Vitals regression.
+    if (media.matches) return;
 
     // Defer the multi-MB hero video off the first-paint critical path; the poster
     // image is the LCP element and is already painted.
-    const load = () => setVideoSrc(pick());
+    const load = () => setVideoSrc(HERO_VIDEO_DESKTOP);
     const hasIdle = typeof window.requestIdleCallback === "function";
     const idleId = hasIdle
       ? window.requestIdleCallback(load, { timeout: 2500 })
       : window.setTimeout(load, 1200);
 
-    const updateVideoSource = () => {
-      setVideoReady(false);
-      setVideoSrc(pick());
-    };
-    media.addEventListener("change", updateVideoSource);
     return () => {
-      media.removeEventListener("change", updateVideoSource);
       if (hasIdle) window.cancelIdleCallback(idleId as number);
       else clearTimeout(idleId as number);
     };
@@ -59,16 +56,28 @@ export function HeroSection() {
       <picture>
         <source
           type="image/avif"
-          srcSet={`${HERO_IMAGE_AVIF_MOBILE} 640w, ${HERO_IMAGE_AVIF_MEDIUM} 960w, ${HERO_IMAGE_AVIF} 1200w`}
+          media="(max-width: 767px)"
+          srcSet={HERO_IMAGE_AVIF_MOBILE}
+        />
+        <source
+          type="image/avif"
+          media="(min-width: 768px)"
+          srcSet={`${HERO_IMAGE_AVIF_MEDIUM} 960w, ${HERO_IMAGE_AVIF} 1200w`}
           sizes="100vw"
         />
         <source
           type="image/webp"
-          srcSet={`${HERO_IMAGE_MOBILE} 640w, ${HERO_IMAGE_MEDIUM} 960w, ${HERO_IMAGE} 1200w`}
+          media="(max-width: 767px)"
+          srcSet={HERO_IMAGE_MOBILE}
+        />
+        <source
+          type="image/webp"
+          media="(min-width: 768px)"
+          srcSet={`${HERO_IMAGE_MEDIUM} 960w, ${HERO_IMAGE} 1200w`}
           sizes="100vw"
         />
         <img
-          src={HERO_IMAGE}
+          src={HERO_IMAGE_MOBILE}
           alt="Gestion immobilière à Montréal par Gestion Velora"
           width={1200}
           height={676}

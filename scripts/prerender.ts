@@ -17,7 +17,7 @@
  * so dist/services/airbnb/index.html is served directly for /services/airbnb.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "fs";
 import { join } from "path";
 
 // ---------------------------------------------------------------------------
@@ -59,6 +59,21 @@ const DEFAULT_KEYWORDS = {
   en: "property management Montreal, condo board management, rental management, Airbnb management, Gestion Velora",
 } as const;
 
+function findBuiltAsset(prefix: string): string | undefined {
+  const name = readdirSync(join(DIST, "assets")).find(
+    (file) => file.startsWith(prefix) && file.endsWith(".js"),
+  );
+  return name ? `/assets/${name}` : undefined;
+}
+
+// Dynamic service-route modules are otherwise discovered only after the entry bundle executes.
+// Surface the LCP-critical route and its direct dependencies in the initial HTML instead.
+const SERVICE_MODULE_PRELOADS = [
+  "ServicePage-",
+  "Breadcrumbs-",
+  "ScrollReveal-",
+].map(findBuiltAsset).filter((href): href is string => Boolean(href));
+
 /** Absolute URLs for OG / Twitter / JSON-LD — must match `src/data/services.ts` (one image per slug). */
 const SERVICE_IMAGES: Record<string, string> = {
   "syndicat-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy.webp`,
@@ -66,6 +81,15 @@ const SERVICE_IMAGES: Record<string, string> = {
   location: `${SITE_URL}/hero-gestion-velora-1200.webp`,
   "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont.webp`,
   "gestion-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy.webp`,
+};
+
+/** Smaller first-viewport sources for mobile service pages. */
+const SERVICE_MOBILE_IMAGES: Record<string, string> = {
+  "syndicat-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy-card.webp`,
+  airbnb: `${SITE_URL}/images/airbnb-service.webp`,
+  location: `${SITE_URL}/hero-gestion-velora-800.webp`,
+  "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont-card.webp`,
+  "gestion-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy-card.webp`,
 };
 
 /** `/location/{service}-{city}` OG images — keyed by `LocationService.slug` (not `serviceSlug`). */
@@ -154,6 +178,8 @@ function buildHtml(
     twitterImage: string;
     /** First-viewport image to preload on this route. Omit when the page has no image LCP. */
     lcpImage?: string;
+    /** Route chunks required to render the first viewport. */
+    modulePreloads?: string[];
     keywords?: string;
     ampHtmlHref?: string;
     hreflangFr: string;
@@ -175,10 +201,7 @@ function buildHtml(
   // The Vite template contains homepage-specific responsive poster preloads. Carrying those
   // onto every prerendered route wastes bandwidth and delays the real LCP image on service pages.
   if (opts.canonical !== `${SITE_URL}/` && opts.canonical !== `${SITE_URL}/en/`) {
-    html = html.replace(
-      /\s*<link\s+rel="preload"\s+as="image"\s+href="\/hero-video-poster-mobile\.avif\?v=5"[\s\S]*?fetchpriority="high"\s*\/>/,
-      "",
-    );
+    html = html.replace(/\s*<link\s+data-gv-home-hero[^>]*>/g, "");
     // The homepage's fixed first-paint poster is useful on home, but on every other route it
     // downloads three irrelevant hero candidates and covers the route until React mounts.
     html = html.replace(
@@ -192,6 +215,12 @@ function buildHtml(
       "</head>",
       `  <link rel="preload" as="image" href="${opts.lcpImage}" fetchpriority="high" />\n</head>`,
     );
+  }
+  if (opts.modulePreloads?.length) {
+    const hints = opts.modulePreloads
+      .map((href) => `<link rel="modulepreload" crossorigin href="${href}">`)
+      .join("\n");
+    html = html.replace("</head>", `  ${hints}\n</head>`);
   }
 
   // 1. lang attribute on <html>
@@ -1695,6 +1724,7 @@ interface RouteConfig {
   ogImage?: string;
   twitterImage?: string;
   lcpImage?: string;
+  modulePreloads?: string[];
   ampPath?: string;
   robots?: string;
   includeInSitemap?: boolean;
@@ -1801,6 +1831,7 @@ function buildRoutes(): RouteConfig[] {
     const frSvc = getService("fr", slug);
     const enSvc = getService("en", slug);
     const img = SERVICE_IMAGES[slug];
+    const mobileImg = SERVICE_MOBILE_IMAGES[slug];
 
     const frBc = getBreadcrumbLabels("fr");
     const enBc = getBreadcrumbLabels("en");
@@ -1814,7 +1845,8 @@ function buildRoutes(): RouteConfig[] {
       description: frSvc.metaDescription ?? frSvc.description,
       ogImage: img,
       twitterImage: img,
-      lcpImage: new URL(img).pathname,
+      lcpImage: new URL(mobileImg).pathname,
+      modulePreloads: SERVICE_MODULE_PRELOADS,
       prerenderMainInner: buildServiceDetailMainHtml("fr", slug),
       pageSchemas: [
         buildServiceSchema("fr", slug, SITE_URL),
@@ -1834,7 +1866,8 @@ function buildRoutes(): RouteConfig[] {
       description: enSvc.metaDescription ?? enSvc.description,
       ogImage: img,
       twitterImage: img,
-      lcpImage: new URL(img).pathname,
+      lcpImage: new URL(mobileImg).pathname,
+      modulePreloads: SERVICE_MODULE_PRELOADS,
       prerenderMainInner: buildServiceDetailMainHtml("en", slug),
       pageSchemas: [
         buildServiceSchema("en", slug, `${SITE_URL}/en`),
@@ -2188,6 +2221,7 @@ async function main() {
       ogImage: route.ogImage ?? DEFAULT_OG_IMAGE,
       twitterImage: route.twitterImage ?? DEFAULT_TWITTER_IMAGE,
       lcpImage: route.lcpImage,
+      modulePreloads: route.modulePreloads,
       ampHtmlHref: route.ampPath ? `${SITE_URL}${route.ampPath}` : undefined,
       robots: route.robots,
       hreflangFr: frCanonical,
