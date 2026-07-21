@@ -23,29 +23,20 @@ function DownloadMockup({ t }: { t: (k: string) => string }) {
     <div className="flex justify-center py-6">
       <motion.div
         className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-white font-sans text-sm cursor-default select-none shadow-[0_2px_12px_rgba(72,92,17,0.25)] dark:shadow-[0_2px_16px_rgba(0,0,0,0.35)] ${
-          copied ? "bg-[#5a7026]" : "bg-[#485c11]"
+          copied ? "bg-[#3f5210]" : "bg-[#485c11]"
         }`}
         initial={false}
       >
         {copied ? (
           <>
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-              className="flex h-4 w-4 items-center justify-center rounded-full bg-white/25"
-            >
+            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white/25">
               <svg className="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
               </svg>
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, x: -4 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 }}
-            >
+            </span>
+            <span>
               {t("fromInspiration.downloaded")}
-            </motion.span>
+            </span>
           </>
         ) : (
           <>
