@@ -1,6 +1,8 @@
 import { useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { InternalLink } from "./components/InternalLink";
+import { CALCULATOR_PATHS } from "./data/plex-calculator";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { useLocale } from "./context/LocaleContext";
 import { PORTAL_URLS } from "./config";
@@ -110,6 +112,18 @@ export const HeaderSection = (): JSX.Element => {
                       </span>
                     </InternalLink>
                   ))}
+                  {/* The calculator's slug differs per locale, so it bypasses
+                      InternalLink's automatic /en prefixing. */}
+                  <Link
+                    to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
+                    className="block px-4 py-3 hover:bg-[#1A1A1A] last:rounded-b-lg border-t border-[#333333]"
+                    onClick={() => setServicesOpen(false)}
+                  >
+                    <span className="font-sans font-medium text-white block">{t("nav.plexCalc")}</span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
+                      {t("nav.plexCalcDesc")}
+                    </span>
+                  </Link>
                 </div>
               )}
             </div>
@@ -207,6 +221,13 @@ export const HeaderSection = (): JSX.Element => {
                   {t(s.labelKey)}
                 </InternalLink>
               ))}
+              <Link
+                to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
+                className="font-sans text-[#E8E8E8] py-1.5 text-sm"
+                onClick={() => setMobileOpen(false)}
+              >
+                {t("nav.plexCalc")}
+              </Link>
             </div>
           </div>
           <InternalLink to="/blog" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>

@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { InternalLink } from "../components/InternalLink";
+import { CALCULATOR_PATHS } from "../data/plex-calculator";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { SERVICE_SLUGS, getLocalizedService } from "../data/services";
@@ -83,6 +85,30 @@ export function ServicesIndexPage() {
             </ScrollReveal>
           ))}
         </div>
+
+        <ScrollReveal delay={0.1}>
+          {/* Free tool — its slug differs per locale, so it links directly
+              rather than through InternalLink's /en prefixing. */}
+          <section className="mt-14 lg:mt-16 rounded-2xl border border-black/10 dark:border-white/10 overflow-hidden bg-white dark:bg-white/[0.02]">
+            <div className="p-6 lg:p-8">
+              <span className="inline-block font-mono text-[10px] uppercase tracking-[0.1em] px-3 py-1 rounded-full bg-waabi-pink/10 text-waabi-pink mb-4">
+                {t("servicesHub.toolBadge")}
+              </span>
+              <h2 id="services-plex-calculator" className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-2">
+                {t("servicesHub.toolTitle")}
+              </h2>
+              <p className="font-sans text-sm lg:text-base text-black/70 dark:text-white/70 mb-6 max-w-3xl">
+                {t("servicesHub.toolDesc")}
+              </p>
+              <Link
+                to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
+                className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full bg-waabi-pink text-white font-sans font-semibold text-sm hover:bg-waabi-pink/90 transition-colors"
+              >
+                {t("servicesHub.toolCta")}
+              </Link>
+            </div>
+          </section>
+        </ScrollReveal>
 
         <ScrollReveal delay={0.12}>
           <section className="mt-14 lg:mt-16 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-6 lg:p-8">

@@ -98,6 +98,8 @@ export const fr = {
     services: "Services",
     allServices: "Tous les services",
     allServicesDesc: "Vue d’ensemble : syndic, Airbnb et location.",
+    plexCalc: "Calculateur de rendement",
+    plexCalcDesc: "Outil gratuit — analysez un plex ou multilogement.",
     insights: "Conseils",
     about: "À propos",
     contact: "Contact",
@@ -319,6 +321,11 @@ export const fr = {
     metaDescription:
       "Services à Montréal : gestion de syndicat de copropriété, administration de condo, gestion Airbnb et location résidentielle.",
     schemaName: "Services Gestion Velora",
+    toolBadge: "Outil gratuit",
+    toolTitle: "Calculateur de rendement pour plex et multilogement",
+    toolDesc:
+      "Analysez un immeuble à revenus avec les règles du Québec : droits de mutation de Montréal, mise de fonds SCHL, plafond du TAL, valeur économique bancaire. Gratuit, sans inscription.",
+    toolCta: "Ouvrir le calculateur",
   },
 
   // Contact

@@ -98,6 +98,8 @@ export const en = {
     services: "Services",
     allServices: "All services",
     allServicesDesc: "Overview: condo, Airbnb, and rentals.",
+    plexCalc: "Investment calculator",
+    plexCalcDesc: "Free tool — underwrite a plex or multifamily building.",
     insights: "Insights",
     about: "About",
     contact: "Contact",
@@ -316,6 +318,11 @@ export const en = {
     metaDescription:
       "Montreal services for condo corporation management, condo administration, Airbnb management, and residential leasing.",
     schemaName: "Gestion Velora services",
+    toolBadge: "Free tool",
+    toolTitle: "Plex & multifamily investment calculator",
+    toolDesc:
+      "Underwrite an income property with Quebec's rules: Montreal welcome tax, CMHC down payment caps, the TAL rent ceiling, and the bank's economic value. Free, no sign-up.",
+    toolCta: "Open the calculator",
   },
 
   // Contact
