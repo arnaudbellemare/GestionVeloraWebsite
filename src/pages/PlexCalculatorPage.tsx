@@ -42,6 +42,15 @@ export default function PlexCalculatorPage() {
       </header>
 
       {/* ── The tool ── */}
+      {/*
+        The analyzer's card titles are h3. Without an h2 above them the outline
+        jumps h1 → h3, which breaks heading order for screen readers and muddies
+        the document structure answer engines parse. Visually hidden because the
+        h1 already names the page.
+      */}
+      <h2 id="outil" className="sr-only">
+        {l === "fr" ? "L'outil de calcul" : "The calculator"}
+      </h2>
       <Suspense
         fallback={
           <div className="py-24 text-center text-sm text-neutral-500">

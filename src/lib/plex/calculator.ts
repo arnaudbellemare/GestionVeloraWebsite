@@ -1419,8 +1419,10 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const atCashPlusPrincipalYear1 = atCashFlowYear1 + principalPaydownYear1;
   const atRoiYear1 = totalEquityInvested > 0 ? atCashPlusPrincipalYear1 / totalEquityInvested : 0;
 
-  const rentToPurchaseRatio = annualRent / inputs.purchasePrice;
-  const capRateYear1 = noi / inputs.purchasePrice;
+  // Guarded: clearing the price field yields 0, and an unguarded ratio would
+  // surface as "Infinity%" in the verdict chips.
+  const rentToPurchaseRatio = inputs.purchasePrice > 0 ? annualRent / inputs.purchasePrice : 0;
+  const capRateYear1 = inputs.purchasePrice > 0 ? noi / inputs.purchasePrice : 0;
   const cashOnCashBtYear1 = totalEquityInvested > 0 ? btCashFlowYear1 / totalEquityInvested : 0;
   const atCashOnCashYear1 = totalEquityInvested > 0 ? atCashFlowYear1 / totalEquityInvested : 0;
   const btCashFlowPerUnitYear1 = totalUnits > 0 ? btCashFlowYear1 / totalUnits : 0;
@@ -1433,7 +1435,8 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const ltv = inputs.purchasePrice > 0 ? effectiveLoanAmount / inputs.purchasePrice : 0;
   const breakEvenRatio = annualRent > 0 ? (totalOperatingExpenses + annualDebtService) / annualRent : 0;
   const pricePerDoor = totalUnits > 0 ? inputs.purchasePrice / totalUnits : 0;
-  const rentToPrice1Pct = monthlyRentAll / inputs.purchasePrice; // 1% rule: should be >= 0.01
+  // 1% rule: should be >= 0.01
+  const rentToPrice1Pct = inputs.purchasePrice > 0 ? monthlyRentAll / inputs.purchasePrice : 0;
 
   // ─── Purchase vs. proforma pricing ────────────────────
   const purchaseCapRate = inputs.purchasePrice > 0 ? noi / inputs.purchasePrice : 0;
@@ -1766,7 +1769,7 @@ export function calculateProjection(
       annualDebtService: results.annualDebtService,
       btCashFlow,
       atCashFlow,
-      capRate: noi / propertyValue,
+      capRate: propertyValue > 0 ? noi / propertyValue : 0,
       cocBt: results.totalEquityInvested > 0 ? btCashFlow / results.totalEquityInvested : 0,
       cumulativeCashFlow,
       propertyValue,
@@ -1867,14 +1870,14 @@ export function analyzeDeal(inputs: DealInputs, results: DealResults): DealAnaly
   else { factors.push({ label: isCommercial ? 'CF/Door/mo' : 'Monthly CF (BT)', value: `$${cfPerDoor.toFixed(0)}`, status: 'bad' }); }
 
   const pb = payback.totalReturnPayback;
-  if (pb && pb <= 10) { score += 2; factors.push({ label: 'Payback (total)', value: `${pb} years`, status: 'good' }); }
-  else if (pb && pb <= 20) { score += 1; factors.push({ label: 'Payback (total)', value: `${pb} years`, status: 'warning' }); }
-  else { factors.push({ label: 'Payback (total)', value: pb ? `${pb} years` : 'Never', status: 'bad' }); }
+  if (pb && pb <= 10) { score += 2; factors.push({ label: 'Payback (total)', value: `${pb} year${pb === 1 ? '' : 's'}`, status: 'good' }); }
+  else if (pb && pb <= 20) { score += 1; factors.push({ label: 'Payback (total)', value: `${pb} year${pb === 1 ? '' : 's'}`, status: 'warning' }); }
+  else { factors.push({ label: 'Payback (total)', value: pb ? `${pb} year${pb === 1 ? '' : 's'}` : 'Never', status: 'bad' }); }
 
   const cfPb = payback.cashFlowPayback;
-  if (cfPb && cfPb <= 15) { score += 1; factors.push({ label: 'CF Payback', value: `${cfPb} years`, status: 'good' }); }
-  else if (cfPb && cfPb <= 30) { factors.push({ label: 'CF Payback', value: `${cfPb} years`, status: 'warning' }); }
-  else { factors.push({ label: 'CF Payback', value: cfPb ? `${cfPb} years` : 'Never', status: 'bad' }); }
+  if (cfPb && cfPb <= 15) { score += 1; factors.push({ label: 'CF Payback', value: `${cfPb} year${cfPb === 1 ? '' : 's'}`, status: 'good' }); }
+  else if (cfPb && cfPb <= 30) { factors.push({ label: 'CF Payback', value: `${cfPb} year${cfPb === 1 ? '' : 's'}`, status: 'warning' }); }
+  else { factors.push({ label: 'CF Payback', value: cfPb ? `${cfPb} year${cfPb === 1 ? '' : 's'}` : 'Never', status: 'bad' }); }
 
   // 1% Rule
   if (results.rentToPrice1Pct >= 0.01) { score += 1; factors.push({ label: '1% Rule', value: `${(results.rentToPrice1Pct * 100).toFixed(2)}%`, status: 'good' }); }

@@ -1577,6 +1577,9 @@ function buildPlexCalculatorMainHtml(loc: "fr" | "en"): string {
     `<h1>${escapeHtml(p.title)}</h1>`,
     `<p>${escapeHtml(p.intro)}</p>`,
     `<p>${escapeHtml(p.summary)}</p>`,
+    // Mirrors the client-side heading so the prerendered outline does not jump
+    // h1 → h3 either.
+    `<h2 id="outil">${loc === "fr" ? "L'outil de calcul" : "The calculator"}</h2>`,
     sections,
     `<section><h2 id="faq">${loc === "fr" ? "Questions fréquentes" : "Frequently asked questions"}</h2>${faq}</section>`,
     `<section><h2 id="sources">${loc === "fr" ? "Chiffres de référence" : "Reference figures"}</h2><ul>${figures}</ul></section>`,

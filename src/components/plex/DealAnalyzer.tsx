@@ -375,13 +375,20 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
 
   const verdictLabel = (label: string) => VERDICT_LABELS[label]?.[locale] ?? label;
 
-  /** Rewrites the engine's en-CA value strings into French conventions. */
+  /**
+   * Rewrites the engine's en-CA value strings into French conventions. The
+   * engine emits plain toFixed() output, so dollar amounts arrive ungrouped —
+   * they are re-formatted here rather than merely moved past the symbol.
+   */
   const verdictValue = (value: string): string => {
     if (locale === "en") return value;
     return value
-      .replace(/^\$(-?)([\d.,]+)$/, (_m, sign, n) => `${sign}${n} $`)
+      .replace(/^\$(-?)(\d+)$/, (_m, sign, n) =>
+        `${sign}${f.number(Number(n))} $`)
       .replace(/(\d)\.(\d)/g, "$1,$2")
-      .replace(/\byears?\b/gi, "ans")
+      // "years" before "year", or the plural would be left half-translated.
+      .replace(/\byears\b/gi, "ans")
+      .replace(/\byear\b/gi, "an")
       .replace(/\bNever\b/gi, "Jamais")
       .replace(/(\d)%/, "$1 %")
       .replace(/need 25%\+/i, "25 % minimum requis");
