@@ -10,6 +10,17 @@ type DataLayerPayload = Record<string, unknown>;
 let analyticsBooted = false;
 let webVitalsBooted = false;
 
+const GTM_ID = import.meta.env.VITE_GTM_ID?.trim();
+const GA4_MEASUREMENT_ID = import.meta.env.VITE_GA4_MEASUREMENT_ID?.trim();
+
+const AI_REFERRERS = [
+  { host: "perplexity.ai", platform: "perplexity" },
+  { host: "chatgpt.com", platform: "chatgpt" },
+  { host: "gemini.google.com", platform: "gemini" },
+  { host: "copilot.microsoft.com", platform: "copilot" },
+  { host: "claude.ai", platform: "claude" },
+] as const;
+
 type WebVitalName = "FCP" | "LCP" | "CLS" | "INP" | "TTFB";
 
 type WebVitalPayload = {
@@ -43,6 +54,8 @@ export function initAnalytics() {
   if (typeof window === "undefined" || typeof document === "undefined" || analyticsBooted) return;
   analyticsBooted = true;
   ensureDataLayer();
+  loadGoogleAnalytics();
+  trackAIReferralVisit();
   initWebVitalsTracking();
 }
 
@@ -58,6 +71,58 @@ export function trackPageView(pagePath: string, pageTitle = document.title) {
 function pushDataLayer(payload: DataLayerPayload) {
   if (typeof window === "undefined") return;
   ensureDataLayer().push(payload);
+
+  // GTM consumes object pushes directly. When only the direct GA4 fallback is
+  // configured, mirror custom events through gtag so they reach GA4 as well.
+  if (!GTM_ID && GA4_MEASUREMENT_ID && window.gtag && typeof payload.event === "string") {
+    const { event, ...parameters } = payload;
+    window.gtag("event", event, parameters);
+  }
+}
+
+function loadGoogleAnalytics() {
+  if (GTM_ID) {
+    ensureDataLayer().push({ "gtm.start": Date.now(), event: "gtm.js" });
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(GTM_ID)}`;
+    script.dataset.analyticsLoader = "gtm";
+    document.head.appendChild(script);
+    return;
+  }
+
+  if (!GA4_MEASUREMENT_ID) return;
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA4_MEASUREMENT_ID)}`;
+  script.dataset.analyticsLoader = "ga4";
+  document.head.appendChild(script);
+
+  window.gtag = (...args: unknown[]) => ensureDataLayer().push(args);
+  window.gtag("js", new Date());
+  window.gtag("config", GA4_MEASUREMENT_ID, { send_page_view: false });
+}
+
+function trackAIReferralVisit() {
+  if (!document.referrer) return;
+
+  try {
+    const referrer = new URL(document.referrer);
+    if (referrer.origin === window.location.origin) return;
+    const match = AI_REFERRERS.find(
+      ({ host }) => referrer.hostname === host || referrer.hostname.endsWith(`.${host}`)
+    );
+    if (!match) return;
+
+    pushDataLayer({
+      event: "ai_referral_visit",
+      ai_platform: match.platform,
+      referral_host: referrer.hostname,
+      landing_page: window.location.pathname + window.location.search,
+    });
+  } catch {
+    // Ignore malformed or privacy-reduced referrers.
+  }
 }
 
 function rateWebVital(name: WebVitalName, value: number): WebVitalPayload["rating"] {

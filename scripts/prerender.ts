@@ -26,6 +26,7 @@ import { join } from "path";
 import { blogPosts, type RichParagraph } from "../src/data/blog.js";
 import { COMPARISON_PAGES } from "../src/data/comparisons.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
+import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
 import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
@@ -151,6 +152,8 @@ function buildHtml(
     ogLocaleAlt: string;
     ogImage: string;
     twitterImage: string;
+    /** First-viewport image to preload on this route. Omit when the page has no image LCP. */
+    lcpImage?: string;
     keywords?: string;
     ampHtmlHref?: string;
     hreflangFr: string;
@@ -168,6 +171,28 @@ function buildHtml(
   }
 ): string {
   let html = template;
+
+  // The Vite template contains homepage-specific responsive poster preloads. Carrying those
+  // onto every prerendered route wastes bandwidth and delays the real LCP image on service pages.
+  if (opts.canonical !== `${SITE_URL}/` && opts.canonical !== `${SITE_URL}/en/`) {
+    html = html.replace(
+      /\s*<link\s+rel="preload"\s+as="image"\s+href="\/hero-video-poster-mobile\.avif\?v=5"[\s\S]*?fetchpriority="high"\s*\/>/,
+      "",
+    );
+    // The homepage's fixed first-paint poster is useful on home, but on every other route it
+    // downloads three irrelevant hero candidates and covers the route until React mounts.
+    html = html.replace(
+      /\s*<div id="gv-first-paint"[\s\S]*?(?=\s*<div id="root")/,
+      "\n",
+    );
+    html = html.replace('<body style="background:#000000">', "<body>");
+  }
+  if (opts.lcpImage) {
+    html = html.replace(
+      "</head>",
+      `  <link rel="preload" as="image" href="${opts.lcpImage}" fetchpriority="high" />\n</head>`,
+    );
+  }
 
   // 1. lang attribute on <html>
   html = html.replace(/<html lang="[^"]*"/, `<html lang="${opts.lang}"`);
@@ -1483,6 +1508,7 @@ function buildLocationRoutes(): RouteConfig[] {
   for (const svc of LOCATION_SERVICES) {
     for (const city of CITIES) {
       const slug = `${svc.slug}-${city.slug}`;
+      if (isRetiredLocationSlug(slug)) continue;
       const isPriorityLocation = isPriorityLocationSlug(slug);
       const frPath = `/location/${slug}`;
       const enPath = `/en/location/${slug}`;
@@ -1668,6 +1694,7 @@ interface RouteConfig {
   keywords?: string;
   ogImage?: string;
   twitterImage?: string;
+  lcpImage?: string;
   ampPath?: string;
   robots?: string;
   includeInSitemap?: boolean;
@@ -1787,6 +1814,7 @@ function buildRoutes(): RouteConfig[] {
       description: frSvc.metaDescription ?? frSvc.description,
       ogImage: img,
       twitterImage: img,
+      lcpImage: new URL(img).pathname,
       prerenderMainInner: buildServiceDetailMainHtml("fr", slug),
       pageSchemas: [
         buildServiceSchema("fr", slug, SITE_URL),
@@ -1806,6 +1834,7 @@ function buildRoutes(): RouteConfig[] {
       description: enSvc.metaDescription ?? enSvc.description,
       ogImage: img,
       twitterImage: img,
+      lcpImage: new URL(img).pathname,
       prerenderMainInner: buildServiceDetailMainHtml("en", slug),
       pageSchemas: [
         buildServiceSchema("en", slug, `${SITE_URL}/en`),
@@ -2158,6 +2187,7 @@ async function main() {
       ogLocaleAlt: isEn ? "fr_CA" : "en_CA",
       ogImage: route.ogImage ?? DEFAULT_OG_IMAGE,
       twitterImage: route.twitterImage ?? DEFAULT_TWITTER_IMAGE,
+      lcpImage: route.lcpImage,
       ampHtmlHref: route.ampPath ? `${SITE_URL}${route.ampPath}` : undefined,
       robots: route.robots,
       hreflangFr: frCanonical,

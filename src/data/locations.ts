@@ -1,3 +1,5 @@
+import { isRetiredLocationSlug } from "./locationRoutePolicy";
+
 export interface City {
   slug: string;
   nameFr: string;
@@ -302,6 +304,7 @@ function buildMetaTitle(headline: string): string {
 }
 
 export function resolveLocation(slug: string): ResolvedLocation | null {
+  if (isRetiredLocationSlug(slug)) return null;
   for (const svc of LOCATION_SERVICES) {
     for (const city of CITIES) {
       const pageSlug = `${svc.slug}-${city.slug}`;

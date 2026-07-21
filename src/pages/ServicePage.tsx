@@ -152,7 +152,7 @@ export function ServicePage() {
           </p>
           <aside className="mb-8 grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] p-5 lg:p-6">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-black/45 dark:text-white/45 mb-2">
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-black/65 dark:text-white/65 mb-2">
                 {isEn ? "Pricing, proof, updated 2026" : "Tarif, preuve, mis à jour 2026"}
               </p>
               <p className="font-sans text-sm lg:text-base font-semibold text-nd-display leading-relaxed">
@@ -315,7 +315,7 @@ export function ServicePage() {
                         {block.title}
                       </span>
                       <div className="flex items-center gap-2">
-                        <span className="font-sans text-sm text-black/50 dark:text-white/50">
+                        <span className="font-sans text-sm text-black/65 dark:text-white/65">
                           {detailItems.length} {t("servicePage.items")}
                         </span>
                         <motion.span

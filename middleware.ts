@@ -1,5 +1,9 @@
 import { next } from "@vercel/functions/middleware";
 import allowlist from "./location-slugs.generated.json";
+import {
+  RETIRED_LOCATION_REDIRECTS,
+  isGoneLocationSlug,
+} from "./src/data/locationRoutePolicy";
 
 const allowed = new Set(allowlist as string[]);
 const CANONICAL_HOST = "www.gestionvelora.com";
@@ -23,6 +27,21 @@ const NOT_FOUND_HTML = `<!DOCTYPE html>
     &nbsp;·&nbsp;
     <a href="/en/locations">Cities we serve (EN)</a>
   </p>
+</body>
+</html>`;
+
+const GONE_HTML = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>410 — Gestion Velora</title>
+</head>
+<body style="font-family:system-ui,-apple-system,sans-serif;padding:2rem;max-width:40rem;line-height:1.5">
+  <h1 style="font-size:1.25rem">Page retirée</h1>
+  <p>Cette ancienne page de service par ville a été retirée.</p>
+  <p><a href="/locations">Villes desservies</a></p>
 </body>
 </html>`;
 
@@ -71,6 +90,20 @@ export default function middleware(request: Request) {
     return next();
   }
   const slug = m[1];
+  const redirect = RETIRED_LOCATION_REDIRECTS[slug];
+  if (redirect) {
+    url.pathname = path.startsWith("/en/") ? redirect.en : redirect.fr;
+    return Response.redirect(url, 301);
+  }
+  if (isGoneLocationSlug(slug)) {
+    return new Response(GONE_HTML, {
+      status: 410,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  }
   if (!allowed.has(slug)) {
     return new Response(NOT_FOUND_HTML, {
       status: 404,

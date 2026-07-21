@@ -5,7 +5,9 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { LOCATION_SLUGS } from "../src/data/locations";
+import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy";
 
 const out = join(process.cwd(), "location-slugs.generated.json");
-writeFileSync(out, JSON.stringify(LOCATION_SLUGS, null, 0) + "\n", "utf-8");
-console.log(`Wrote ${LOCATION_SLUGS.length} location page slugs → ${out}`);
+const allowed = LOCATION_SLUGS.filter((slug) => !isRetiredLocationSlug(slug));
+writeFileSync(out, JSON.stringify(allowed, null, 0) + "\n", "utf-8");
+console.log(`Wrote ${allowed.length} location page slugs → ${out}`);

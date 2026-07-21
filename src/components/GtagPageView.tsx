@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { initAnalytics, trackPageView } from "../lib/analytics";
 
@@ -7,18 +7,12 @@ import { initAnalytics, trackPageView } from "../lib/analytics";
  */
 export function GtagPageView() {
   const { pathname, search } = useLocation();
-  const isFirst = useRef(true);
 
   useEffect(() => {
     initAnalytics();
   }, []);
 
   useEffect(() => {
-    if (isFirst.current) {
-      isFirst.current = false;
-      return;
-    }
-
     const pagePath = pathname + search;
     trackPageView(pagePath);
   }, [pathname, search]);

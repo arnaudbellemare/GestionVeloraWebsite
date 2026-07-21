@@ -227,7 +227,7 @@ export function Select<T extends string>({
         // Set inline: the equivalent stylesheet rule matched and had higher
         // specificity but was not winning the cascade in this build, and the
         // open-state border is not worth more time than this.
-        style={open ? { borderColor: "var(--ink)" } : undefined}
+        style={open ? { borderColor: "var(--pc-ink)" } : undefined}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={ariaLabel}
@@ -242,8 +242,11 @@ export function Select<T extends string>({
       </button>
 
       {open && pos && createPortal(
+        // The menu is portaled outside `.plexc`, where the calculator's
+        // light/dark CSS variables normally live. Re-apply that scope on the
+        // portal root so its surface and text stay opaque and themed.
         <div
-          className={`sel-menu ${pos.above ? "is-above" : ""}`}
+          className={`plexc sel-menu ${pos.above ? "is-above" : ""}`}
           role="listbox"
           id={listId}
           ref={listRef}

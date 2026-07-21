@@ -1,10 +1,48 @@
 # GEO answer-engine playbook
 
-Updated 2026-06-09.
+Updated 2026-07-21.
 
 This playbook turns the paper "What Gets Cited: Competitive GEO in AI Answer Engines" into a cautious workflow for Gestion Velora content reviews.
 
 Source: https://arxiv.org/abs/2605.25517
+
+## Current platform requirements
+
+Treat primary platform documentation as the source of truth. GEO experiments can help prioritize
+content, but they do not override crawler or Search requirements.
+
+### Google Search AI features
+
+Google states that AI Overviews and AI Mode use the same foundational SEO requirements as Search.
+There is no additional technical requirement, special Schema.org type, or required AI text file.
+To be eligible as a supporting link, a page must be indexed, eligible to show a snippet, and meet
+Google Search technical requirements.
+
+Practical implications for this site:
+
+- Keep important answers visible as text and reachable through ordinary internal links.
+- Keep structured data aligned with visible page content; never add AI-specific schema by analogy.
+- Preserve snippet eligibility unless there is a deliberate reason to use `nosnippet` or
+  `max-snippet` controls.
+- Read AI-feature traffic within Search Console's Web search reporting and measure downstream
+  conversions in analytics; Google does not expose a separate AI Overview performance filter.
+- Maintain `llms.txt` as an optional discovery aid, not as a Google ranking or inclusion signal.
+
+Primary source: https://developers.google.com/search/docs/appearance/ai-features
+
+### Perplexity
+
+Perplexity currently documents two retrieval agents:
+
+- `PerplexityBot` crawls pages so they can be surfaced and linked in Perplexity search results.
+- `Perplexity-User` fetches pages in response to a user's request and generally ignores
+  `robots.txt`; Perplexity publishes separate current IP lists for both agents.
+
+This site explicitly allows both agents in `public/robots.txt`. If a WAF or hosting security rule is
+introduced, validate both the user agent and Perplexity's published IP ranges instead of trusting a
+spoofable user-agent string alone. Monitor edge logs for successful HTML responses from both agents.
+
+Primary source: https://docs.perplexity.ai/docs/resources/perplexity-crawlers
 
 ## Evidence Boundary
 

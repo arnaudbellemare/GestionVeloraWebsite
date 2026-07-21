@@ -9,6 +9,8 @@
     "preview": "vite preview",
     "seo:priority": "tsx scripts/generate-seo-priority.ts",
     "seo:verify": "tsx scripts/verify-seo-artifacts.ts && tsx scripts/verify-google-search-compliance.ts",
+    "seo:gsc-export": "node scripts/export-search-console.mjs",
+    "seo:location-evaluate": "tsx scripts/evaluate-location-pages.ts",
     "seo:vercel-redirects": "node scripts/generate-vercel-location-redirects.mjs",
     "sitemap": "tsx scripts/generate-sitemap.ts"
   },
