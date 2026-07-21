@@ -50,8 +50,8 @@ safe to cite. All are indexed or revised annually — cite the year with the fig
 - Montreal welcome tax (droits de mutation), 2026: 0.5% to $62,900 · 1% to $315,000 · 1.5% to $552,300 · 2% to $1,104,700 · 2.5% to $2,136,500 · 3.5% to $3,113,000 · 4% above. Montreal is the only Quebec municipality permitted to exceed the 3% ceiling. Source: Ville de Montréal.
 - Quebec base transfer-duty schedule, 2026: 0.5% to $62,900 · 1% to $315,000 · 1.5% above. Municipalities outside Montreal may add up to 3% above $500,000 by bylaw. Source: quebec.ca.
 - Minimum down payment, owner-occupied: 1–2 units 5% of the first $500,000 then 10%; 3–4 units 10%; not owner-occupied 20%. Source: CMHC.
-- Maximum insured loan-to-value: 95% for 1–2 units, 90% for 3–4 units. Insured price cap $1,500,000, maximum amortization 25 years. Source: CMHC.
-- CMHC premium by LTV: 0.60% at 65% · 1.70% at 75% · 2.40% at 80% · 2.80% at 85% · 3.10% at 90% · 4.00% at 95%. Risk-based pricing since July 2025. Source: CMHC.
+- Maximum insured loan-to-value: 95% for 1–2 units, 90% for 3–4 units. Insured price cap $1,500,000. Amortization 25 years, or 30 years for first-time buyers and new construction (since December 2024). Source: CMHC / Department of Finance Canada.
+- CMHC premium by LTV, 1–4 unit homeowner loans: 0.60% at 65% · 1.70% at 75% · 2.40% at 80% · 2.80% at 85% · 3.10% at 90% · 4.00% at 95%. Multi-unit (5+) premiums moved to risk-based pricing on July 14, 2025 and rose in most files. Source: CMHC.
 - MLI Select (5+ units): 50/70/100 points give 10/20/30% premium discounts, up to 95% LTV and 50-year amortization, with a 0.25% surcharge per 5-year increment beyond 25 years. Source: CMHC.
 - TAL suggested rent increase 2026: 3.1% for leases beginning 2 April 2026 to 1 April 2027, applying to sitting tenants. Source: Tribunal administratif du logement.
 - Montreal CMA median prices, Q1 2026: condo $425,000 · duplex $710,000 · triplex $900,000 · quadruplex $1,100,000 · single-family $639,000. Source: APCIQ.

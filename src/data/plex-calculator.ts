@@ -89,8 +89,8 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
       en: "Maximum insured loan-to-value",
     },
     value: {
-      fr: "95 % pour 1 à 2 logements · 90 % pour 3 à 4 logements · Prix d'achat maximal de 1 500 000 $ · Amortissement maximal de 25 ans",
-      en: "95% for 1–2 units · 90% for 3–4 units · Maximum purchase price $1,500,000 · Maximum amortization 25 years",
+      fr: "95 % pour 1 à 2 logements · 90 % pour 3 à 4 logements · Prix d'achat maximal de 1 500 000 $ · Amortissement de 25 ans, ou 30 ans pour les premiers acheteurs et les constructions neuves (depuis décembre 2024)",
+      en: "95% for 1–2 units · 90% for 3–4 units · Maximum purchase price $1,500,000 · 25-year amortization, or 30 years for first-time buyers and new construction (since December 2024)",
     },
     source: "SCHL / CMHC",
     sourceUrl:
@@ -103,8 +103,8 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
       en: "Mortgage loan insurance premium",
     },
     value: {
-      fr: "0,60 % à 65 % RPV · 1,70 % à 75 % · 2,40 % à 80 % · 2,80 % à 85 % · 3,10 % à 90 % · 4,00 % à 95 %. Tarification basée sur le risque depuis juillet 2025.",
-      en: "0.60% at 65% LTV · 1.70% at 75% · 2.40% at 80% · 2.80% at 85% · 3.10% at 90% · 4.00% at 95%. Risk-based pricing since July 2025.",
+      fr: "Immeubles de 1 à 4 logements (prêts propriétaires-occupants) : 0,60 % à 65 % RPV · 1,70 % à 75 % · 2,40 % à 80 % · 2,80 % à 85 % · 3,10 % à 90 % · 4,00 % à 95 %. Les primes multilogement (5+) sont tarifées au risque depuis le 14 juillet 2025 et ont augmenté dans la plupart des dossiers.",
+      en: "1–4 unit homeowner loans: 0.60% at 65% LTV · 1.70% at 75% · 2.40% at 80% · 2.80% at 85% · 3.10% at 90% · 4.00% at 95%. Multi-unit (5+) premiums moved to risk-based pricing on July 14, 2025 and rose in most files.",
     },
     source: "SCHL / CMHC",
     sourceUrl:
@@ -117,8 +117,8 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
       en: "CMHC MLI Select — 5+ units",
     },
     value: {
-      fr: "50 / 70 / 100 points donnent 10 / 20 / 30 % de réduction de prime, jusqu'à 95 % RPV et 50 ans d'amortissement. Surprime de 0,25 % par tranche de 5 ans au-delà de 25 ans.",
-      en: "50 / 70 / 100 points give a 10 / 20 / 30% premium discount, up to 95% LTV and 50-year amortization. Surcharge of 0.25% per 5-year increment beyond 25 years.",
+      fr: "50 / 70 / 100 points donnent 10 / 20 / 30 % de réduction de prime, jusqu'à 95 % RPV et 50 ans d'amortissement. Surprime de 0,25 % par tranche de 5 ans au-delà de 25 ans. Depuis la tarification au risque du 14 juillet 2025, les primes effectives ont augmenté dans la majorité des dossiers — budgétez la prime avec votre courtier.",
+      en: "50 / 70 / 100 points give a 10 / 20 / 30% premium discount, up to 95% LTV and 50-year amortization. Surcharge of 0.25% per 5-year increment beyond 25 years. Since risk-based pricing took effect on July 14, 2025, effective premiums rose in most files — budget the premium with your broker.",
     },
     source: "SCHL / CMHC",
     sourceUrl: "https://www.cmhc-schl.gc.ca/",
