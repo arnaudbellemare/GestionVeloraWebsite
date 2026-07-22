@@ -218,6 +218,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   const isCondo = inputs.propertyType === "condo";
   const isFlip = inputs.propertyType === "house-flip";
   const units = results.totalUnits;
+  const rentalUnits = Math.max(0, units - (inputs.ownerOccupied ? 1 : 0));
   const isCommercialProperty = units >= 5;
 
   // Bank value applies where lending is income-driven: the 5+ commercial tracks.
@@ -564,6 +565,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
           <Kpi label={t.currentNoi} value={f.currency(results.noi)} />
           <Kpi label={t.currentCashFlow} value={f.currency(results.btCashFlowYear1)} tone={cfTone} note={`${f.currency(results.btCashFlowMonthly)}${t.perMonth}`} />
           <Kpi label={t.irr} value={f.percent2(results.irr)} note={`${inputs.exitYear} ${t.yrHold}`} />
+          <Kpi label={t.afterTaxIrr} value={f.percent2(results.afterTaxIrr)} note={`${inputs.exitYear} ${t.yrHold}`} />
           <Kpi label={t.equityMultiple} value={f.multiple(results.equityMultiple)} />
           <Kpi label={t.proformaCashFlow} value={f.currency(results.proformaCashFlow)} note={t.proformaCashFlowNote} />
         </section>
@@ -753,8 +755,30 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
 
               {!isCommercialProperty && (
                 <div style={{ marginTop: 18 }}>
-                  <Toggle label={t.ownerOccupied} checked={inputs.ownerOccupied} onChange={(v) => set("ownerOccupied", v)} />
+                  <Toggle label={t.ownerOccupied} checked={inputs.ownerOccupied} onChange={(v) => {
+                    setInputs((prev) => ({
+                      ...prev,
+                      ownerOccupied: v,
+                      ownerOccupiedUnitId: v
+                        ? (prev.ownerOccupiedUnitId ?? prev.unitMix.find((u) => u.count > 0)?.id ?? null)
+                        : null,
+                    }));
+                  }} />
                   <p className="plexc-help">{t.ownerOccupiedHelp}</p>
+                  {inputs.ownerOccupied && (
+                    <div style={{ marginTop: 12, maxWidth: 360 }}>
+                      <SelectField<string>
+                        label={t.ownerOccupiedUnit}
+                        value={inputs.ownerOccupiedUnitId ?? inputs.unitMix.find((u) => u.count > 0)?.id ?? ""}
+                        onChange={(v) => set("ownerOccupiedUnitId", v)}
+                        options={inputs.unitMix.filter((u) => u.count > 0).map((u, index) => ({
+                          value: u.id,
+                          label: `${locale === "fr" ? "Logement" : "Unit"} ${index + 1} · ${u.label}`,
+                          hint: f.currency(u.currentRent),
+                        }))}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -798,6 +822,15 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                   />
                 )}
                 <PctField label={t.interestRate} value={inputs.annualInterestRate} onChange={(v) => set("annualInterestRate", v)} step={0.05} />
+                <SelectField<string>
+                  label={t.compounding}
+                  value={inputs.mortgageCompounding}
+                  onChange={(v) => set("mortgageCompounding", v as DealInputs["mortgageCompounding"])}
+                  options={[
+                    { value: "semi-annual", label: t.semiAnnual },
+                    { value: "monthly", label: t.monthly },
+                  ]}
+                />
                 <Field label={t.amortization} value={inputs.loanLifeYears} onChange={(v) => set("loanLifeYears", v)} suffix={locale === "fr" ? "ans" : "yrs"} step={1}
                   help={inputs.financingMode === "mli-select" ? `${t.amortCappedBy} ${mliTerms.maxAmortization}` : undefined} />
                 <Field label={t.term} value={inputs.mortgageTerm} onChange={(v) => set("mortgageTerm", v)} suffix={locale === "fr" ? "ans" : "yrs"} step={1} help={t.termHelp} />
@@ -913,8 +946,8 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
             {!isFlip && (
               <>
                 <div className="plexc-grid4" style={{ marginTop: 26 }}>
-                  <Readout label={t.totalProgramCost} value={f.currency(units * inputs.renoCostPerUnit)} />
-                  <Readout label={t.yearsToFullTurnover} value={inputs.renoUnitsPerYear > 0 ? `${Math.ceil(units / inputs.renoUnitsPerYear)}` : t.never} />
+                  <Readout label={t.totalProgramCost} value={f.currency(rentalUnits * inputs.renoCostPerUnit)} />
+                  <Readout label={t.yearsToFullTurnover} value={inputs.renoUnitsPerYear > 0 ? `${Math.ceil(rentalUnits / inputs.renoUnitsPerYear)}` : t.never} />
                   <Readout label={t.monthlyRentLift} value={f.currency(results.rentUpsideMonthly)} />
                   <Readout label={t.noiLift} value={f.currency(results.proformaNoi - results.noi)} />
                 </div>
@@ -973,6 +1006,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                 <PctField label={t.marketRentGrowth} value={inputs.annualRentGrowth} onChange={(v) => set("annualRentGrowth", v)} step={0.1} />
                 <PctField label={t.talGuideline} value={inputs.talRentIncrease} onChange={(v) => set("talRentIncrease", v)} step={0.1} help={t.talGuidelineHelp} />
                 <PctField label={t.appreciation} value={inputs.annualAppreciation} onChange={(v) => set("annualAppreciation", v)} step={0.1} />
+                <PctField label={t.exitCapRate} value={inputs.exitCapRate} onChange={(v) => set("exitCapRate", v)} step={0.1} />
                 <PctField label={t.expenseGrowth} value={inputs.annualExpenseGrowth} onChange={(v) => set("annualExpenseGrowth", v)} step={0.1} />
               </div>
               <div style={{ marginTop: 18 }}>
@@ -1070,6 +1104,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
             <div className="plexc-grid4">
               <Field label={t.holdPeriod} value={inputs.exitYear} onChange={(v) => set("exitYear", v)} suffix={locale === "fr" ? "ans" : "yrs"} step={1} min={1} max={30} />
               <PctField label={t.sellingCostsPct} value={inputs.sellingCostsPct} onChange={(v) => set("sellingCostsPct", v)} step={0.5} />
+              <PctField label={t.exitCapRate} value={inputs.exitCapRate} onChange={(v) => set("exitCapRate", v)} step={0.1} />
             </div>
             <div className="plexc-table-wrap" style={{ marginTop: 26 }}>
               <table className="plexc-table">
@@ -1224,7 +1259,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                     <td>{f.accounting(-p.annualDebtService)}</td>
                     <td>{f.accounting(p.btCashFlow)}</td>
                     <td>{p.renoSpend > 0 ? f.accounting(-p.renoSpend) : "-"}</td>
-                    <td>{p.unitsRenovated} / {units}</td>
+                    <td>{p.unitsRenovated} / {rentalUnits}</td>
                     <td>{f.percent2(inputs.purchasePrice > 0 ? p.noi / inputs.purchasePrice : 0)}</td>
                     <td>{f.currency(p.propertyValue)}</td>
                     <td>{f.currency(p.loanBalance)}</td>

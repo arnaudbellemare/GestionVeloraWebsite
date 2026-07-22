@@ -130,12 +130,12 @@ export const REFERENCE_FIGURES: ReferenceFigure[] = [
   {
     id: "tal-2026",
     label: {
-      fr: "Hausse de loyer suggérée par le TAL (2026)",
-      en: "TAL suggested rent increase (2026)",
+      fr: "Composante de base du calcul TAL (2026)",
+      en: "TAL base calculation component (2026)",
     },
     value: {
-      fr: "3,1 % pour les baux débutant entre le 2 avril 2026 et le 1er avril 2027. S'applique aux locataires en place.",
-      en: "3.1% for leases beginning between 2 April 2026 and 1 April 2027. Applies to sitting tenants.",
+      fr: "3,1 % comme hypothèse de base. Les variations de taxes et d'assurance ainsi que 5 % des travaux admissibles s'ajoutent selon l'immeuble; ce n'est pas un plafond universel.",
+      en: "3.1% as a base planning assumption. Property-specific tax and insurance changes plus 5% of eligible work are additional; this is not a universal ceiling.",
     },
     source: "Tribunal administratif du logement",
     sourceUrl: "https://www.tal.gouv.qc.ca/fr/calcul-pour-l-augmentation-de-loyer",
@@ -228,13 +228,13 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
     title: "Calculateur de rendement pour plex à Montréal",
     metaTitle: "Calculateur de rendement plex Montréal 2026",
     metaDescription:
-      "Calculez le rendement d'un duplex ou triplex à Montréal : droits de mutation, mise de fonds SCHL, plafond du TAL et DPA. Chiffres 2026 vérifiés.",
+      "Calculez le rendement d'un duplex ou triplex à Montréal : droits de mutation, mise de fonds SCHL, règles du TAL et DPA. Chiffres 2026 vérifiés.",
     keywords:
       "calculateur rendement plex Montréal, calcul rentabilité duplex, triplex Montréal investissement, droits de mutation Montréal, taxe de bienvenue calcul, mise de fonds immeuble à revenus Québec, MLI Select",
     intro:
-      "Un outil gratuit pour évaluer un immeuble à revenus au Québec avec les règles qui s'appliquent réellement ici : le barème de droits de mutation propre à Montréal, les plafonds de prêt de la SCHL selon le nombre de logements, la limite de hausse de loyer du TAL et la récupération de la DPA à la revente.",
+      "Un outil gratuit pour évaluer un immeuble à revenus au Québec avec les règles qui s'appliquent réellement ici : le barème de droits de mutation propre à Montréal, les plafonds de prêt de la SCHL selon le nombre de logements, le cadre de fixation de loyer du TAL et la récupération de la DPA à la revente.",
     summary:
-      "Ce calculateur évalue duplex, triplex, quadruplex, immeubles de 5 logements et plus, copropriétés et projets de revente au Québec. Il applique le barème de droits de mutation de Montréal (jusqu'à 4 % au-delà de 3 113 000 $), les ratios prêt-valeur de la SCHL (95 % pour 1 à 2 logements, 90 % pour 3 à 4), la hausse suggérée du TAL de 3,1 % pour 2026 et la déduction pour amortissement de catégorie 1 à 4 %.",
+      "Ce calculateur évalue duplex, triplex, quadruplex, immeubles de 5 logements et plus, copropriétés et projets de revente au Québec. Il applique le barème de droits de mutation de Montréal, les ratios prêt-valeur de la SCHL, une composante de base TAL 2026 ajustable et la déduction pour amortissement de catégorie 1 à 4 %.",
     sections: [
       {
         id: "ce-qui-change-au-quebec",
@@ -242,7 +242,7 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
         body: [
           "La plupart des calculateurs d'immeubles à revenus sont américains. Ils ignorent quatre règles qui déterminent le rendement d'un plex québécois.",
           "Les droits de mutation : Montréal est la seule municipalité autorisée à dépasser le plafond provincial de 3 %. Son barème atteint 4 % sur la tranche excédant 3 113 000 $. Hors de l'île, le barème provincial de base s'applique et coûte nettement moins cher sur le même prix.",
-          "Le plafond du TAL : la hausse suggérée pour 2026 est de 3,1 %. Elle s'applique aux locataires en place. Un loyer ne rejoint le marché qu'au départ du locataire, ce qui étale la valorisation sur plusieurs années.",
+          "Le TAL : la composante de base 2026 est modélisée à 3,1 %, puis les variations propres à l'immeuble — taxes, assurance et 5 % des travaux admissibles — s'ajoutent. Ce n'est pas un plafond universel.",
           "Le financement : à cinq logements, l'immeuble passe du résidentiel au commercial. Le prêt n'est plus fixé par la mise de fonds mais par le ratio de couverture de la dette calculé sur le revenu net.",
           "La DPA : le Canada utilise l'amortissement dégressif de catégorie 1 à 4 %, et la déduction réclamée est récupérée à la vente. C'est un report d'impôt, pas une économie.",
         ],
@@ -285,7 +285,7 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
       {
         id: "faq-tal-hausse-loyer",
         q: "De combien puis-je augmenter le loyer après l'achat ?",
-        a: "Pour un locataire en place, la hausse suggérée par le TAL est de 3,1 % pour les baux débutant entre le 2 avril 2026 et le 1er avril 2027, à laquelle peuvent s'ajouter certains éléments comme la hausse des taxes municipales et scolaires, des assurances et une portion des travaux majeurs. Un loyer ne rejoint le loyer du marché qu'au moment d'une relocation.",
+        a: "Le modèle utilise 3,1 % comme composante de base 2026. Le calcul réel ajoute les variations propres à l'immeuble, notamment les taxes municipales et scolaires, l'assurance et 5 % des travaux admissibles. Il ne s'agit donc pas d'un plafond universel.",
       },
       {
         id: "faq-dpa-recuperation",
@@ -312,13 +312,13 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
     title: "Montreal plex investment calculator",
     metaTitle: "Montreal Plex Investment Calculator 2026",
     metaDescription:
-      "Underwrite a Montreal duplex or triplex with Quebec rules: welcome tax, CMHC down payment caps, TAL rent limit and CCA. Verified 2026 figures.",
+      "Underwrite a Montreal duplex or triplex with Quebec rules: welcome tax, CMHC down payment caps, TAL rent-fixing rules and CCA. Verified 2026 figures.",
     keywords:
       "Montreal plex investment calculator, duplex triplex cash flow Quebec, welcome tax calculator Montreal, CMHC down payment multiplex, MLI Select calculator, Quebec rental property returns",
     intro:
-      "A free tool for underwriting Quebec income property with the rules that actually apply here: Montreal's own welcome-tax schedule, CMHC lending caps by unit count, the TAL rent-increase ceiling, and CCA recapture on sale.",
+      "A free tool for underwriting Quebec income property with the rules that actually apply here: Montreal's own welcome-tax schedule, CMHC lending caps by unit count, the TAL rent-fixing framework, and CCA recapture on sale.",
     summary:
-      "This calculator underwrites duplexes, triplexes, quadruplexes, 5+ unit buildings, condos and flips in Quebec. It applies Montreal's welcome-tax schedule (reaching 4% above $3,113,000), CMHC loan-to-value caps (95% for 1–2 units, 90% for 3–4), the TAL's 3.1% suggested increase for 2026, and Class 1 capital cost allowance at 4%.",
+      "This calculator underwrites duplexes, triplexes, quadruplexes, 5+ unit buildings, condos and flips in Quebec. It applies Montreal's welcome-tax schedule, CMHC loan-to-value caps, an editable 2026 TAL base component, and Class 1 capital cost allowance at 4%.",
     sections: [
       {
         id: "what-is-different-in-quebec",
@@ -326,7 +326,7 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
         body: [
           "Most income-property calculators are American. They miss four rules that decide whether a Quebec plex works.",
           "Welcome tax: Montreal is the only municipality permitted to exceed the 3% provincial ceiling, and its schedule reaches 4% on the portion above $3,113,000. Off the island, the provincial base schedule applies and costs materially less on the same price.",
-          "The TAL ceiling: the suggested increase for 2026 is 3.1%, and it applies to sitting tenants. A rent only reaches market when the unit turns over, which spreads the value-add across years.",
+          "TAL rent fixing: the model uses 3.1% as the 2026 base component, then property-specific taxes, insurance and 5% of eligible work are additional. It is not a universal ceiling.",
           "Financing: at five units a building stops being residential and becomes commercial. The loan is no longer set by your down payment but by the debt-service coverage the net operating income supports.",
           "CCA: Canada uses declining-balance Class 1 depreciation at 4%, and everything claimed is recaptured on sale. It is a deferral, not a saving.",
         ],
@@ -369,7 +369,7 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
       {
         id: "faq-tal-rent-increase",
         q: "How much can you raise the rent after buying?",
-        a: "For a sitting tenant the TAL's suggested increase is 3.1% for leases beginning between 2 April 2026 and 1 April 2027, plus certain additions such as increases in municipal and school taxes, insurance, and a portion of major work. A rent only reaches market level when the unit turns over.",
+        a: "The model uses 3.1% as its 2026 base component. The actual property calculation adds changes in municipal and school taxes, insurance and 5% of eligible work, so this is not a universal ceiling.",
       },
       {
         id: "faq-cca-recapture",

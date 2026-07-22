@@ -321,7 +321,7 @@ export const en = {
     toolBadge: "Free tool",
     toolTitle: "Plex & multifamily investment calculator",
     toolDesc:
-      "Underwrite an income property with Quebec's rules: Montreal welcome tax, CMHC down payment caps, the TAL rent ceiling, and the bank's economic value. Free, no sign-up.",
+      "Underwrite an income property with Quebec's rules: Montreal welcome tax, CMHC down payment caps, the TAL rent-fixing framework, and the bank's economic value. Free, no sign-up.",
     toolCta: "Open the calculator",
   },
 

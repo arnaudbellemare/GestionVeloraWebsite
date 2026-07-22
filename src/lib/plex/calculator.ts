@@ -30,8 +30,8 @@ export type MliPoints = 50 | 70 | 100;
  * One row of the unit mix. Quebec labels rooms, not bedrooms: a 4½ is a
  * 2-bedroom. `currentRent` is the in-place (lease) rent, `marketRent` is what
  * the unit achieves on turnover. The gap between them is the whole thesis on
- * most Montreal plex and multifamily deals, because the TAL caps what you can
- * raise on a sitting tenant.
+ * most Montreal plex and multifamily deals, because a sitting tenant's increase
+ * remains subject to Quebec's rent-fixing framework.
  */
 export interface UnitRow {
   id: string;
@@ -192,6 +192,8 @@ export interface DealInputs {
    * insurance: a pure rental purchase is conventional and needs 20% down.
    */
   ownerOccupied: boolean;
+  /** Unit row containing the one physical unit occupied by the buyer. */
+  ownerOccupiedUnitId: string | null;
   financingMode: FinancingMode;
   /** Commercial/MLI: hard LTV ceiling before the DSCR test is applied. */
   maxLtv: number;
@@ -202,6 +204,8 @@ export interface DealInputs {
   pointsOnMortgagePct: number;
   otherInitialEquitySpent: number;
   annualInterestRate: number;
+  /** Canadian fixed-rate mortgages are normally quoted nominally, compounded semi-annually. */
+  mortgageCompounding: 'semi-annual' | 'monthly';
   loanLifeYears: number;
   paymentsPerYear: number;
   // Renovation / turnover program
@@ -247,6 +251,8 @@ export interface DealInputs {
   brrrrRefiLtv: number; // refinance LTV after rehab (typically 75-80%)
   // Exit / Sale
   exitYear: number; // planned sale year for exit analysis
+  /** Market-derived terminal capitalization rate applied to forward stabilized NOI. */
+  exitCapRate: number;
   capitalGainsInclusion: number; // 50% in Canada (66.7% proposed for >$250k)
 }
 
@@ -318,7 +324,8 @@ export interface DealResults {
   breakEvenRatio: number;
   pricePerDoor: number;
   rentToPrice1Pct: number; // 1% rule check
-  irr: number; // 10-year IRR
+  irr: number; // levered before-tax IRR over the selected hold
+  afterTaxIrr: number;
   npv: number; // NPV at discount rate
   // ─── Unit mix & proforma (in-place vs. market rents) ───
   totalUnits: number;
@@ -462,6 +469,7 @@ export interface ApodLine {
 // ─── Unit Mix ──────────────────────────────────────────────────────
 export interface UnitMixSummary {
   totalUnits: number;
+  rentalUnits: number;
   netRSF: number;
   currentMonthlyRent: number;
   proformaMonthlyRent: number;
@@ -480,9 +488,11 @@ export function summarizeUnitMix(inputs: DealInputs): UnitMixSummary {
 
   if (totalUnits === 0) {
     const units = inputs.numberOfUnits;
-    const rent = units * inputs.avgMonthlyRentPerUnit;
+    const rentalUnits = Math.max(0, units - (inputs.ownerOccupied ? 1 : 0));
+    const rent = rentalUnits * inputs.avgMonthlyRentPerUnit;
     return {
       totalUnits: units,
+      rentalUnits,
       netRSF: 0,
       currentMonthlyRent: rent,
       proformaMonthlyRent: rent,
@@ -491,21 +501,39 @@ export function summarizeUnitMix(inputs: DealInputs): UnitMixSummary {
     };
   }
 
+  const occupiedId = inputs.ownerOccupied
+    ? (inputs.ownerOccupiedUnitId ?? mix.find((u) => u.count > 0)?.id ?? null)
+    : null;
+  const rentalCount = (u: UnitRow) => Math.max(0, u.count - (u.id === occupiedId ? 1 : 0));
+  const rentalUnits = mix.reduce((s, u) => s + rentalCount(u), 0);
   const netRSF = mix.reduce((s, u) => s + u.count * u.sqft, 0);
-  const currentMonthlyRent = mix.reduce((s, u) => s + u.count * u.currentRent, 0);
+  const currentMonthlyRent = mix.reduce((s, u) => s + rentalCount(u) * u.currentRent, 0);
   // A market rent left at zero means "no upside identified": hold the in-place rent.
   const proformaMonthlyRent = mix.reduce(
-    (s, u) => s + u.count * Math.max(u.marketRent, u.currentRent), 0,
+    (s, u) => s + rentalCount(u) * Math.max(u.marketRent, u.currentRent), 0,
   );
 
   return {
     totalUnits,
+    rentalUnits,
     netRSF,
     currentMonthlyRent,
     proformaMonthlyRent,
-    avgCurrentRent: currentMonthlyRent / totalUnits,
-    avgMarketRent: proformaMonthlyRent / totalUnits,
+    avgCurrentRent: rentalUnits > 0 ? currentMonthlyRent / rentalUnits : 0,
+    avgMarketRent: rentalUnits > 0 ? proformaMonthlyRent / rentalUnits : 0,
   };
+}
+
+/** Approximate income-producing share by floor area for mixed owner/rental plexes. */
+export function rentalUseFraction(inputs: DealInputs): number {
+  if (!inputs.ownerOccupied) return 1;
+  const rows = inputs.unitMix ?? [];
+  const totalSqft = rows.reduce((sum, row) => sum + row.count * row.sqft, 0);
+  const occupiedId = inputs.ownerOccupiedUnitId ?? rows.find((row) => row.count > 0)?.id;
+  const occupiedSqft = rows.find((row) => row.id === occupiedId)?.sqft ?? 0;
+  if (totalSqft > 0) return Math.max(0, Math.min(1, (totalSqft - occupiedSqft) / totalSqft));
+  const units = Math.max(1, inputs.numberOfUnits);
+  return Math.max(0, (units - 1) / units);
 }
 
 // ─── CMHC MLI Select ───────────────────────────────────────────────
@@ -560,6 +588,17 @@ export function amortizationSurchargePct(amortYears: number): number {
 function pv(rate: number, nper: number, payment: number): number {
   if (rate === 0) return payment * nper;
   return (payment * (1 - Math.pow(1 + rate, -nper))) / rate;
+}
+
+/** Convert a quoted nominal mortgage rate to the effective payment-period rate. */
+export function mortgagePeriodicRate(
+  annualRate: number,
+  paymentsPerYear: number,
+  compounding: DealInputs['mortgageCompounding'] = 'semi-annual',
+): number {
+  if (annualRate <= 0 || paymentsPerYear <= 0) return 0;
+  if (compounding === 'monthly') return annualRate / paymentsPerYear;
+  return Math.pow(1 + annualRate / 2, 2 / paymentsPerYear) - 1;
 }
 
 /**
@@ -658,7 +697,9 @@ export function calculateEconomicValue(
   const rcd = Math.max(1, inputs.dscrTarget);
   const maxAnnualDebtService = Math.max(0, normalizedNoi) / rcd;
 
-  const periodicRate = qualificationRate / inputs.paymentsPerYear;
+  const periodicRate = mortgagePeriodicRate(
+    qualificationRate, inputs.paymentsPerYear, inputs.mortgageCompounding,
+  );
   const nper = inputs.loanLifeYears * inputs.paymentsPerYear;
   const periodicPayment = maxAnnualDebtService / inputs.paymentsPerYear;
   const maxLoan = periodicRate === 0
@@ -697,11 +738,12 @@ export function sizeCommercialLoan(
   annualRate: number,
   amortYears: number,
   paymentsPerYear: number,
+  compounding: DealInputs['mortgageCompounding'] = 'semi-annual',
 ): { loan: number; byLtv: number; byDscr: number; constraint: 'ltv' | 'dscr' } {
   const byLtv = purchasePrice * maxLtv;
 
   const supportableAnnualDS = dscrTarget > 0 ? noi / dscrTarget : 0;
-  const periodicRate = annualRate / paymentsPerYear;
+  const periodicRate = mortgagePeriodicRate(annualRate, paymentsPerYear, compounding);
   const nper = amortYears * paymentsPerYear;
   const byDscr = Math.max(0, pv(periodicRate, nper, supportableAnnualDS / paymentsPerYear));
 
@@ -933,21 +975,49 @@ function pmt(rate: number, nper: number, pv: number): number {
   return (pv * rate * Math.pow(1 + rate, nper)) / (Math.pow(1 + rate, nper) - 1);
 }
 
-// ─── IRR calculation (Newton's method) ─────────────────────────────
+// ─── IRR calculation ───────────────────────────────────────────────
 function calculateIRR(cashFlows: number[], guess: number = 0.1): number {
-  let rate = guess;
-  for (let i = 0; i < 1000; i++) {
-    let npv = 0;
-    let dnpv = 0;
-    for (let t = 0; t < cashFlows.length; t++) {
-      npv += cashFlows[t] / Math.pow(1 + rate, t);
-      dnpv -= t * cashFlows[t] / Math.pow(1 + rate, t + 1);
+  if (!cashFlows.some((cf) => cf < 0) || !cashFlows.some((cf) => cf > 0)) return 0;
+  const at = (rate: number) => cashFlows.reduce(
+    (sum, cf, period) => sum + cf / Math.pow(1 + rate, period), 0,
+  );
+
+  // Locate every sign-changing interval first. Unlike unguarded Newton
+  // iteration, this cannot jump below -100% or silently return NaN.
+  const rates: number[] = [];
+  for (let i = 0; i <= 2000; i++) rates.push(-0.999 + i * (1.999 / 2000));
+  for (let i = 1; i <= 900; i++) rates.push(1 + i * 0.01);
+  const brackets: Array<[number, number]> = [];
+  let previousRate = rates[0];
+  let previousNpv = at(previousRate);
+  for (const rate of rates.slice(1)) {
+    const npv = at(rate);
+    if (Number.isFinite(previousNpv) && Number.isFinite(npv) && previousNpv * npv <= 0) {
+      brackets.push([previousRate, rate]);
     }
-    if (Math.abs(npv) < 0.001) return rate;
-    if (dnpv === 0) return 0;
-    rate = rate - npv / dnpv;
+    previousRate = rate;
+    previousNpv = npv;
   }
-  return rate;
+  if (brackets.length === 0) return 0;
+
+  const [initialLow, initialHigh] = brackets.sort(
+    (a, b) => Math.abs((a[0] + a[1]) / 2 - guess) - Math.abs((b[0] + b[1]) / 2 - guess),
+  )[0];
+  let low = initialLow;
+  let high = initialHigh;
+  let lowNpv = at(low);
+  for (let i = 0; i < 200; i++) {
+    const middle = (low + high) / 2;
+    const middleNpv = at(middle);
+    if (Math.abs(middleNpv) < 0.001) return middle;
+    if (lowNpv * middleNpv <= 0) {
+      high = middle;
+    } else {
+      low = middle;
+      lowNpv = middleNpv;
+    }
+  }
+  return (low + high) / 2;
 }
 
 // ─── NPV calculation ──────────────────────────────────────────────
@@ -1208,6 +1278,7 @@ export function applyPropertyPreset(
     numberOfUnits: units,
     financingMode: p.financingMode,
     ownerOccupied: p.ownerOccupied,
+    ownerOccupiedUnitId: p.ownerOccupied ? (unitMix.find((u) => u.count > 0)?.id ?? null) : null,
     equityPct: p.equityPct,
     condoFees: p.condoFeesMonthly,
     snowRemoval: p.snowRemoval,
@@ -1260,6 +1331,7 @@ const BASE_INPUTS: DealInputs = {
   holdingMonths: 6,
   sellingCostsPct: 0.06,
   ownerOccupied: true,
+  ownerOccupiedUnitId: 'u1',
   financingMode: 'residential',
   maxLtv: 0.75,
   dscrTarget: 1.20,
@@ -1269,6 +1341,7 @@ const BASE_INPUTS: DealInputs = {
   pointsOnMortgagePct: 0,
   otherInitialEquitySpent: 0,
   annualInterestRate: 0.0475,
+  mortgageCompounding: 'semi-annual',
   loanLifeYears: 25,
   paymentsPerYear: 12,
   renoUnitsPerYear: 1,
@@ -1285,7 +1358,9 @@ const BASE_INPUTS: DealInputs = {
   titleInsurance: 350,
   annualAppreciation: 0.03,
   annualExpenseGrowth: 0.02,
-  talRentIncrease: 0.031, // TAL 2026: 3.1% for leases from 2 Apr 2026
+  // 2026 TAL base component. This is not a universal cap: tax, insurance and
+  // eligible capital-expenditure adjustments are property-specific.
+  talRentIncrease: 0.031,
   usetalCap: true,
   isMontreal: true,
   discountRate: 0.06,
@@ -1294,6 +1369,7 @@ const BASE_INPUTS: DealInputs = {
   renewalRate: 0.05, // expected renewal rate
   brrrrRefiLtv: 0.75, // 75% LTV refinance
   exitYear: 10,
+  exitCapRate: 0.05,
   capitalGainsInclusion: 0.50, // 50% inclusion rate
 };
 
@@ -1306,22 +1382,33 @@ export const DEFAULT_INPUTS: DealInputs = applyPropertyPreset(BASE_INPUTS, 'trip
 // ─── Amortization Schedule ─────────────────────────────────────────
 export function calculateAmortization(inputs: DealInputs, effectiveLoan?: number): AmortizationRow[] {
   const loanAmount = effectiveLoan ?? inputs.purchasePrice * (1 - inputs.equityPct);
-  const periodicRate = inputs.annualInterestRate / inputs.paymentsPerYear;
   const totalPayments = inputs.loanLifeYears * inputs.paymentsPerYear;
-  const payment = pmt(periodicRate, totalPayments, loanAmount);
+  const termPayments = Math.max(1, Math.round(inputs.mortgageTerm * inputs.paymentsPerYear));
+  let periodicRate = mortgagePeriodicRate(
+    inputs.annualInterestRate, inputs.paymentsPerYear, inputs.mortgageCompounding,
+  );
+  let payment = pmt(periodicRate, totalPayments, loanAmount);
   const rows: AmortizationRow[] = [];
   let balance = loanAmount;
   for (let i = 1; i <= totalPayments; i++) {
+    // Canadian loans renew at the end of each term. Re-amortize the balance
+    // over the remaining original amortization at the entered renewal rate.
+    if (i > 1 && (i - 1) % termPayments === 0) {
+      periodicRate = mortgagePeriodicRate(
+        inputs.renewalRate, inputs.paymentsPerYear, inputs.mortgageCompounding,
+      );
+      payment = pmt(periodicRate, totalPayments - i + 1, balance);
+    }
     const interest = balance * periodicRate;
-    const principal = payment - interest;
-    const closing = balance - principal;
+    const principal = Math.min(balance, payment - interest);
+    const closing = Math.max(0, balance - principal);
     rows.push({
       period: i,
       openingBalance: balance,
-      payment,
+      payment: Math.min(payment, balance + interest),
       interest,
       principal,
-      closingBalance: Math.max(0, closing),
+      closingBalance: closing,
     });
     balance = closing;
   }
@@ -1333,6 +1420,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const mix = summarizeUnitMix(inputs);
   const totalUnits = mix.totalUnits;
   const netRSF = mix.netRSF;
+  const rentalShare = rentalUseFraction(inputs);
 
   // In-place income: what the rent roll actually collects today.
   const monthlyRentAll = mix.currentMonthlyRent;
@@ -1370,6 +1458,13 @@ export function calculateDeal(inputs: DealInputs): DealResults {
 
   const totalOperatingExpenses = fixedExpenses + repairsMaintenanceAnnual + propertyManagementAnnual;
   const noi = effectiveGrossIncome - totalOperatingExpenses;
+  const economicUnderwriting = calculateEconomicValue(
+    inputs,
+    annualRent,
+    totalOperatingExpenses,
+    propertyManagementAnnual,
+    repairsMaintenanceAnnual,
+  );
 
   // Every proforma expense line falls back to its derived value until the user
   // types over it on the statement.
@@ -1429,9 +1524,17 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     const ltvCap = isMli ? Math.min(inputs.maxLtv, terms.maxLtv) : inputs.maxLtv;
     amortYears = isMli ? Math.min(inputs.loanLifeYears, terms.maxAmortization) : inputs.loanLifeYears;
 
+    // MREX/lender logic: DSCR is applied to normalized RNN at the
+    // qualification rate, not the owner's actual NOI at the contract rate.
     const sized = sizeCommercialLoan(
-      noi, inputs.purchasePrice, ltvCap, inputs.dscrTarget,
-      inputs.annualInterestRate, amortYears, inputs.paymentsPerYear,
+      economicUnderwriting.normalizedNoi,
+      inputs.purchasePrice,
+      ltvCap,
+      inputs.dscrTarget,
+      economicUnderwriting.qualificationRate,
+      amortYears,
+      inputs.paymentsPerYear,
+      inputs.mortgageCompounding,
     );
     baseLoanAmount = sized.loan;
     maxLoanByLtv = sized.byLtv;
@@ -1486,14 +1589,17 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   closingCosts.totalCashAtClosing = totalEquityInvested;
 
   const totalNumberOfPayments = amortYears * inputs.paymentsPerYear;
-  const periodicInterestRate = inputs.annualInterestRate / inputs.paymentsPerYear;
+  const periodicInterestRate = mortgagePeriodicRate(
+    inputs.annualInterestRate, inputs.paymentsPerYear, inputs.mortgageCompounding,
+  );
   const paymentPerPeriod = pmt(periodicInterestRate, totalNumberOfPayments, effectiveLoanAmount);
   const sumOfPayments = paymentPerPeriod * totalNumberOfPayments;
   const interestCost = sumOfPayments - effectiveLoanAmount;
 
   // ─── CCA (Canadian depreciation) ──────────────────────
-  const { cca: ccaYear1, uccAfter: ccaUCC } = calculateCCA(
-    inputs.purchasePrice, inputs.buildingPct, inputs.ccaRate, inputs.ccaHalfYearRule, 1
+  const { cca: maximumCcaYear1 } = calculateCCA(
+    inputs.purchasePrice, inputs.buildingPct * rentalShare,
+    inputs.ccaRate, inputs.ccaHalfYearRule, 1,
   );
 
   const amortizationOfPointsYear1 = amortYears > 0 ? pointsOnMortgageDollar / amortYears : 0;
@@ -1502,8 +1608,15 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const interestYear1 = amort.slice(0, inputs.paymentsPerYear).reduce((s, r) => s + r.interest, 0);
   const principalPaydownYear1 = amort.slice(0, inputs.paymentsPerYear).reduce((s, r) => s + r.principal, 0);
 
-  // Tax calculation using CCA
-  const btIncomeYear1 = noi - interestYear1 - ccaYear1 - amortizationOfPointsYear1;
+  // CRA limits CCA to the rental income otherwise available; it cannot create
+  // or deepen a rental loss for this property.
+  const incomeBeforeCcaYear1 = effectiveGrossIncome -
+    totalOperatingExpenses * rentalShare -
+    interestYear1 * rentalShare -
+    amortizationOfPointsYear1 * rentalShare;
+  const ccaYear1 = Math.min(maximumCcaYear1, Math.max(0, incomeBeforeCcaYear1));
+  const ccaUCC = inputs.purchasePrice * inputs.buildingPct * rentalShare - ccaYear1;
+  const btIncomeYear1 = incomeBeforeCcaYear1 - ccaYear1;
   const incomeTaxYear1 = Math.max(0, btIncomeYear1 * inputs.marginalTaxBracket);
   const atIncomeYear1 = btIncomeYear1 - incomeTaxYear1;
 
@@ -1544,11 +1657,12 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const costPerRSF = netRSF > 0 ? inputs.purchasePrice / netRSF : 0;
   const rentUpsideMonthly = proformaMonthlyRent - monthlyRentAll;
 
-  // ─── IRR & NPV (10-year) ──────────────────────────────
+  // ─── IRR & NPV over the selected hold ─────────────────
+  const holdPeriodYears = Math.max(1, Math.min(50, Math.floor(inputs.exitYear)));
   const projForIRR = calculateProjection(finInputs, {
     annualRent, totalOperatingExpenses, annualDebtService, totalEquityInvested,
     effectiveLoanAmount, noi, paymentPerPeriod,
-  }, 10, effectiveLoanAmount);
+  }, holdPeriodYears, effectiveLoanAmount);
 
   const irrCashFlows: number[] = [-totalEquityInvested];
   for (let i = 0; i < projForIRR.length; i++) {
@@ -1564,7 +1678,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const npv = calculateNPV(irrCashFlows, inputs.discountRate);
 
   // ─── Hold-period returns ──────────────────────────────
-  const holdYears = Math.max(1, Math.min(inputs.exitYear, projForIRR.length));
+  const holdYears = Math.max(1, Math.min(holdPeriodYears, projForIRR.length));
   const holdRows = projForIRR.slice(0, holdYears);
   const avgCashOnCash = totalEquityInvested > 0 && holdRows.length > 0
     ? holdRows.reduce((s, p) => s + p.btCashFlow - p.renoSpend, 0) / holdRows.length / totalEquityInvested
@@ -1633,7 +1747,9 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   // ─── Mortgage Stress Test ──────────────────────────────
   // Canadian qualifying rate: max(contract + 2%, 5.25%)
   const stressTestRate = Math.max(inputs.annualInterestRate + 0.02, 0.0525);
-  const stressTestPeriodicRate = stressTestRate / inputs.paymentsPerYear;
+  const stressTestPeriodicRate = mortgagePeriodicRate(
+    stressTestRate, inputs.paymentsPerYear, inputs.mortgageCompounding,
+  );
   const stressTestPayment = pmt(stressTestPeriodicRate, totalNumberOfPayments, effectiveLoanAmount);
   const stressTestAnnualDS = stressTestPayment * inputs.paymentsPerYear;
   const stressTestPasses = noi > 0 && (noi / stressTestAnnualDS) >= 1.0;
@@ -1643,45 +1759,61 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const exitIdx = Math.min(inputs.exitYear, exitProj.length) - 1;
   const exitData = exitIdx >= 0 ? exitProj[exitIdx] : null;
 
-  // Calculate total CCA claimed over holding period
-  let totalCCAClaimed = 0;
-  let uccTrack = inputs.purchasePrice * inputs.buildingPct;
-  for (let y = 1; y <= inputs.exitYear && y <= 50; y++) {
-    const { cca, uccAfter } = calculateCCA(
-      inputs.purchasePrice, inputs.buildingPct, inputs.ccaRate,
-      inputs.ccaHalfYearRule, y, y > 1 ? uccTrack : undefined,
-    );
-    totalCCAClaimed += cca;
-    uccTrack = uccAfter;
-  }
+  const totalCCAClaimed = exitProj
+    .slice(0, holdPeriodYears)
+    .reduce((sum, row) => sum + row.ccaDeduction, 0);
+  const rentalBuildingCost = inputs.purchasePrice * inputs.buildingPct * rentalShare;
+  const uccTrack = Math.max(0, rentalBuildingCost - totalCCAClaimed);
 
   const exitSalePrice = exitData ? exitData.propertyValue : inputs.purchasePrice;
   const exitSellingCosts = exitSalePrice * inputs.sellingCostsPct;
   const exitLoanBalance = exitData ? exitData.loanBalance : effectiveLoanAmount;
   const exitNetSaleProceeds = exitSalePrice - exitSellingCosts - exitLoanBalance;
+  const capitalImprovements = inputs.rehabBudget + exitProj
+    .slice(0, holdPeriodYears)
+    .reduce((sum, row) => sum + row.renoSpend, 0);
 
   // CCA Recapture: taxed at full marginal rate
-  const buildingSaleValue = exitSalePrice * inputs.buildingPct;
-  const ccaRecapture = Math.min(totalCCAClaimed, Math.max(0, buildingSaleValue - uccTrack));
+  const buildingSaleValue = exitSalePrice * inputs.buildingPct * rentalShare;
+  const netBuildingProceeds = Math.max(
+    0,
+    buildingSaleValue - exitSellingCosts * inputs.buildingPct * rentalShare,
+  );
+  const originalBuildingCost = rentalBuildingCost;
+  const ccaRecapture = Math.min(
+    totalCCAClaimed,
+    Math.max(0, Math.min(netBuildingProceeds, originalBuildingCost) - uccTrack),
+  );
   const ccaRecaptureTax = ccaRecapture * inputs.marginalTaxBracket;
 
   // Capital Gain: 50% inclusion rate
-  const acb = inputs.purchasePrice + inputs.rehabBudget; // adjusted cost base
-  const capitalGain = Math.max(0, exitSalePrice - exitSellingCosts - acb);
+  const acb = inputs.purchasePrice + capitalImprovements;
+  // For an owner-occupied plex, this models only the income-producing share.
+  // Principal-residence eligibility remains taxpayer-specific.
+  const capitalGain = Math.max(0, (exitSalePrice - exitSellingCosts - acb) * rentalShare);
   const taxableCapitalGain = capitalGain * inputs.capitalGainsInclusion;
   const capitalGainsTax = taxableCapitalGain * inputs.marginalTaxBracket;
   const totalTaxOnSale = ccaRecaptureTax + capitalGainsTax;
 
-  // Total cumulative cash flows during holding
-  let totalCashFlows = 0;
-  for (const p of exitProj.slice(0, inputs.exitYear)) {
-    totalCashFlows += p.btCashFlow - p.renoSpend;
-  }
+  const totalAfterTaxCashFlows = exitProj
+    .slice(0, holdPeriodYears)
+    .reduce((sum, row) => sum + row.atCashFlow - row.renoSpend, 0);
 
-  const netProfitAfterTax = exitNetSaleProceeds + totalCashFlows - totalTaxOnSale;
-  const totalReturnOnInvestment = totalEquityInvested > 0 ? netProfitAfterTax / totalEquityInvested : 0;
-  const annualizedReturn = totalEquityInvested > 0 && inputs.exitYear > 0
-    ? Math.pow(1 + totalReturnOnInvestment, 1 / inputs.exitYear) - 1 : 0;
+  const netCashReturnedAfterTax = exitNetSaleProceeds + totalAfterTaxCashFlows - totalTaxOnSale;
+  const netProfitAfterTax = netCashReturnedAfterTax - totalEquityInvested;
+  const totalReturnOnInvestment = totalEquityInvested > 0
+    ? netProfitAfterTax / totalEquityInvested : 0;
+  const annualizedReturn = totalEquityInvested > 0 && holdPeriodYears > 0 && netCashReturnedAfterTax > 0
+    ? Math.pow(netCashReturnedAfterTax / totalEquityInvested, 1 / holdPeriodYears) - 1 : -1;
+
+  const afterTaxCashFlows = [-totalEquityInvested];
+  for (let i = 0; i < exitProj.length; i++) {
+    const terminalProceeds = i === exitProj.length - 1
+      ? exitNetSaleProceeds - totalTaxOnSale
+      : 0;
+    afterTaxCashFlows.push(exitProj[i].atCashFlow - exitProj[i].renoSpend + terminalProceeds);
+  }
+  const afterTaxIrr = calculateIRR(afterTaxCashFlows);
 
   const exitAnalysis: ExitAnalysis = {
     salePrice: exitSalePrice,
@@ -1725,20 +1857,29 @@ export function calculateDeal(inputs: DealInputs): DealResults {
 
   // ─── Sensitivity: Mortgage Renewal Rates ───────────────
   const sensitivityRenewal: SensitivityResult[] = [];
+  const renewalPeriod = Math.min(
+    amort.length,
+    Math.max(1, Math.round(inputs.mortgageTerm * inputs.paymentsPerYear)),
+  );
+  const renewalBalance = renewalPeriod > 0
+    ? amort[renewalPeriod - 1].closingBalance
+    : effectiveLoanAmount;
+  const remainingPayments = Math.max(1, totalNumberOfPayments - renewalPeriod);
+  const renewalNoi = projForIRR[Math.min(projForIRR.length - 1, Math.max(0, inputs.mortgageTerm))]?.noi ?? noi;
   const rateSteps = [-0.02, -0.01, -0.005, 0, 0.005, 0.01, 0.015, 0.02, 0.03];
   for (const delta of rateSteps) {
     const r = inputs.annualInterestRate + delta;
     if (r <= 0) continue;
-    const pr = r / inputs.paymentsPerYear;
-    const pmt_ = pmt(pr, totalNumberOfPayments, effectiveLoanAmount);
+    const pr = mortgagePeriodicRate(r, inputs.paymentsPerYear, inputs.mortgageCompounding);
+    const pmt_ = pmt(pr, remainingPayments, renewalBalance);
     const ads = pmt_ * inputs.paymentsPerYear;
-    const btcf = noi - ads;
+    const btcf = renewalNoi - ads;
     sensitivityRenewal.push({
       rate: r,
       payment: pmt_,
       annualDebtService: ads,
       btCashFlow: btcf,
-      dscr: ads > 0 ? noi / ads : 0,
+      dscr: ads > 0 ? renewalNoi / ads : 0,
       cashOnCash: totalEquityInvested > 0 ? btcf / totalEquityInvested : 0,
     });
   }
@@ -1763,7 +1904,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     atCashOnCashYear1, btCashFlowPerUnitYear1, atCashFlowPerUnitYear1,
     dscrYear1,
     grm, operatingExpenseRatio, ltv, breakEvenRatio, pricePerDoor, rentToPrice1Pct,
-    irr, npv,
+    irr, afterTaxIrr, npv,
     totalUnits, netRSF, costPerRSF, pricePerUnit: pricePerDoor,
     currentMonthlyRent: monthlyRentAll, proformaMonthlyRent, rentUpsideMonthly,
     purchaseCapRate, proformaCapRate, proformaNoi, proformaCashFlow,
@@ -1790,11 +1931,16 @@ export function calculateProjection(
 ): YearProjection[] {
   const projections: YearProjection[] = [];
   const mix = summarizeUnitMix(inputs);
-  const totalUnits = mix.totalUnits;
-  let opEx = results.totalOperatingExpenses;
-  let propertyValue = inputs.purchasePrice;
-  let cumulativeCashFlow = -results.totalEquityInvested - inputs.rehabBudget;
-  let uccBalance = inputs.purchasePrice * inputs.buildingPct;
+  const rentalUnits = mix.rentalUnits;
+  const rentalShare = rentalUseFraction(inputs);
+  const variableExpensePct = inputs.repairsMaintenancePct + inputs.propertyManagementPct;
+  const fixedOperatingBase = Math.max(
+    0,
+    results.totalOperatingExpenses - results.annualRent * variableExpensePct,
+  );
+  let previousPropertyValue = inputs.purchasePrice;
+  let cumulativeCashFlow = -results.totalEquityInvested;
+  let uccBalance = inputs.purchasePrice * inputs.buildingPct * rentalShare;
   let prevRenovated = 0;
   const loan = effectiveLoan ?? results.effectiveLoanAmount;
 
@@ -1802,51 +1948,72 @@ export function calculateProjection(
   const amort = calculateAmortization(inputs, loan);
   const periodsPerYear = inputs.paymentsPerYear;
 
-  // Sitting tenants: increases are capped by the TAL guideline.
+  // The TAL base component is a planning assumption, not a universal legal
+  // cap. Property-specific tax, insurance and capital-work adjustments remain
+  // outside this simplified forward projection.
   const sittingRentGrowth = inputs.usetalCap
     ? Math.min(inputs.annualRentGrowth, inputs.talRentIncrease)
     : inputs.annualRentGrowth;
 
+  const renovatedByYear = (year: number, units: number) => {
+    const yearsRunning = Math.max(0, year - inputs.renoStartYear + 1);
+    return Math.min(units, Math.floor(yearsRunning * inputs.renoUnitsPerYear));
+  };
+  const rentForYear = (year: number, units: number, currentRent: number, marketRent: number) => {
+    const renovated = renovatedByYear(year, units);
+    const sitting = Math.max(0, units - renovated);
+    const sittingFactor = Math.pow(1 + sittingRentGrowth, year - 1);
+    const marketFactor = Math.pow(1 + inputs.annualRentGrowth, year - 1);
+    return (sitting * currentRent * sittingFactor + renovated * marketRent * marketFactor) * 12;
+  };
+
+  // The owner-occupied unit produces no investment cash flow while occupied,
+  // but a purchaser can rent the vacant unit on sale. Add its market rent only
+  // to the income-approach valuation, not to operating cash flow.
+  const occupiedRow = inputs.ownerOccupied
+    ? inputs.unitMix.find((u) => u.id === (inputs.ownerOccupiedUnitId ?? inputs.unitMix[0]?.id))
+    : undefined;
+  const occupiedMarketRent = occupiedRow
+    ? Math.max(occupiedRow.marketRent, occupiedRow.currentRent)
+    : 0;
+
   for (let y = 1; y <= years; y++) {
-    if (y > 1) {
-      opEx *= 1 + inputs.annualExpenseGrowth;
-      propertyValue *= 1 + inputs.annualAppreciation;
-    }
-
     // Turnover program: a unit only resets to market rent when it turns over.
-    // Everything still occupied by a sitting tenant stays under the TAL cap.
+    // Everything still occupied by a sitting tenant follows the TAL base assumption.
     // This gap is what makes or breaks most Montreal value-add deals.
-    const yearsRunning = Math.max(0, y - inputs.renoStartYear + 1);
-    const unitsRenovated = Math.min(totalUnits, Math.floor(yearsRunning * inputs.renoUnitsPerYear));
-    const unitsSitting = Math.max(0, totalUnits - unitsRenovated);
-
-    const sittingFactor = Math.pow(1 + sittingRentGrowth, y - 1);
-    const marketFactor = Math.pow(1 + inputs.annualRentGrowth, y - 1);
-    const annualRent = totalUnits > 0
-      ? (unitsSitting * mix.avgCurrentRent * sittingFactor +
-         unitsRenovated * mix.avgMarketRent * marketFactor) * 12
-      : results.annualRent * sittingFactor;
+    const unitsRenovated = renovatedByYear(y, rentalUnits);
+    const annualRent = rentalUnits > 0
+      ? rentForYear(y, rentalUnits, mix.avgCurrentRent, mix.avgMarketRent)
+      : 0;
+    const fixedOperatingExpenses = fixedOperatingBase *
+      Math.pow(1 + inputs.annualExpenseGrowth, y - 1);
+    const opEx = fixedOperatingExpenses + annualRent * variableExpensePct;
 
     const renoSpend = (unitsRenovated - prevRenovated) * inputs.renoCostPerUnit;
     prevRenovated = unitsRenovated;
 
     const egi = annualRent * (1 - inputs.vacancyRate);
     const noi = egi - opEx;
-    const btCashFlow = noi - results.annualDebtService;
-
-    // CCA for this year
-    const { cca: ccaDeduction, uccAfter } = calculateCCA(
-      inputs.purchasePrice, inputs.buildingPct, inputs.ccaRate,
-      inputs.ccaHalfYearRule, y, y > 1 ? uccBalance : undefined,
-    );
-    uccBalance = uccAfter;
-
-    // Tax calculation
     const yearStart = (y - 1) * periodsPerYear;
     const yearEnd = y * periodsPerYear;
-    const yearInterest = amort.slice(yearStart, yearEnd).reduce((s, r) => s + r.interest, 0);
-    const yearPrincipal = amort.slice(yearStart, yearEnd).reduce((s, r) => s + r.principal, 0);
-    const taxableIncome = noi - yearInterest - ccaDeduction;
+    const yearRows = amort.slice(yearStart, yearEnd);
+    const annualDebtService = yearRows.reduce((s, r) => s + r.payment, 0);
+    const btCashFlow = noi - annualDebtService;
+
+    // CCA for this year
+    const { cca: maximumCca } = calculateCCA(
+      inputs.purchasePrice, inputs.buildingPct * rentalShare, inputs.ccaRate,
+      inputs.ccaHalfYearRule, y, y > 1 ? uccBalance : undefined,
+    );
+
+    // Tax calculation
+    const yearInterest = yearRows.reduce((s, r) => s + r.interest, 0);
+    const yearPrincipal = yearRows.reduce((s, r) => s + r.principal, 0);
+    const incomeBeforeCca = egi - opEx * rentalShare - yearInterest * rentalShare;
+    // CRA: CCA is optional and cannot create or increase a rental loss.
+    const ccaDeduction = Math.min(maximumCca, Math.max(0, incomeBeforeCca));
+    uccBalance = Math.max(0, uccBalance - ccaDeduction);
+    const taxableIncome = incomeBeforeCca - ccaDeduction;
     const tax = Math.max(0, taxableIncome * inputs.marginalTaxBracket);
     const atCashFlow = btCashFlow - tax;
 
@@ -1856,8 +2023,25 @@ export function calculateProjection(
     const endPeriod = Math.min(y * periodsPerYear, amort.length);
     const loanBalance = endPeriod > 0 && endPeriod <= amort.length ? amort[endPeriod - 1].closingBalance : 0;
 
+    // MREX-style income logic: value the building from forward stabilized NOI
+    // and a market-derived TGA (exit cap), rather than compounding its price.
+    const forwardCashRent = rentalUnits > 0
+      ? rentForYear(y + 1, rentalUnits, mix.avgCurrentRent, mix.avgMarketRent)
+      : 0;
+    const forwardOccupiedRent = occupiedMarketRent *
+      Math.pow(1 + inputs.annualRentGrowth, y) * 12;
+    const forwardGrossRent = forwardCashRent + forwardOccupiedRent;
+    const forwardOpEx = fixedOperatingBase *
+      Math.pow(1 + inputs.annualExpenseGrowth, y) +
+      forwardGrossRent * variableExpensePct;
+    const forwardNoi = forwardGrossRent * (1 - inputs.vacancyRate) - forwardOpEx;
+    const appreciationValue = inputs.purchasePrice * Math.pow(1 + inputs.annualAppreciation, y);
+    const propertyValue = inputs.exitCapRate > 0
+      ? Math.max(0, forwardNoi / inputs.exitCapRate)
+      : appreciationValue;
     const equity = propertyValue - loanBalance;
-    const totalReturn = btCashFlow + yearPrincipal + (propertyValue * inputs.annualAppreciation);
+    const totalReturn = btCashFlow + yearPrincipal + (propertyValue - previousPropertyValue);
+    previousPropertyValue = propertyValue;
 
     projections.push({
       year: y,
@@ -1865,7 +2049,7 @@ export function calculateProjection(
       egi,
       operatingExpenses: opEx,
       noi,
-      annualDebtService: results.annualDebtService,
+      annualDebtService,
       btCashFlow,
       atCashFlow,
       capRate: propertyValue > 0 ? noi / propertyValue : 0,

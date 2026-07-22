@@ -12,7 +12,8 @@
     "seo:gsc-export": "node scripts/export-search-console.mjs",
     "seo:location-evaluate": "tsx scripts/evaluate-location-pages.ts",
     "seo:vercel-redirects": "node scripts/generate-vercel-location-redirects.mjs",
-    "sitemap": "tsx scripts/generate-sitemap.ts"
+    "sitemap": "tsx scripts/generate-sitemap.ts",
+    "test:plex": "tsx scripts/verify-plex-calculator.ts"
   },
   "dependencies": {
     "@vercel/functions": "^3.5.0",

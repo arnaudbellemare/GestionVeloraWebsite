@@ -324,7 +324,7 @@ export const fr = {
     toolBadge: "Outil gratuit",
     toolTitle: "Calculateur de rendement pour plex et multilogement",
     toolDesc:
-      "Analysez un immeuble à revenus avec les règles du Québec : droits de mutation de Montréal, mise de fonds SCHL, plafond du TAL, valeur économique bancaire. Gratuit, sans inscription.",
+      "Analysez un immeuble à revenus avec les règles du Québec : droits de mutation de Montréal, mise de fonds SCHL, cadre de fixation du TAL, valeur économique bancaire. Gratuit, sans inscription.",
     toolCta: "Ouvrir le calculateur",
   },
 

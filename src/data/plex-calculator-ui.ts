@@ -30,6 +30,7 @@ export interface CalcUi {
   currentNoi: string;
   currentCashFlow: string;
   irr: string;
+  afterTaxIrr: string;
   equityMultiple: string;
   proformaCashFlow: string;
   proformaCashFlowNote: string;
@@ -137,6 +138,7 @@ export interface CalcUi {
   commercialStartsAt5: string;
   ownerOccupied: string;
   ownerOccupiedHelp: string;
+  ownerOccupiedUnit: string;
   belowMinimum: string;
   needsAtLeast: string;
   minRule1to2: string;
@@ -152,6 +154,9 @@ export interface CalcUi {
   mliPoints: string;
   mliPointsHelp: string;
   interestRate: string;
+  compounding: string;
+  semiAnnual: string;
+  monthly: string;
   amortization: string;
   amortCappedBy: string;
   term: string;
@@ -294,6 +299,7 @@ export interface CalcUi {
   exitSub: string;
   holdPeriod: string;
   sellingCostsPct: string;
+  exitCapRate: string;
   salePriceYear: string;
   loanBalance: string;
   netSaleProceeds: string;
@@ -389,6 +395,7 @@ const fr: CalcUi = {
   currentNoi: "Revenu net actuel",
   currentCashFlow: "Flux de trésorerie",
   irr: "TRI",
+  afterTaxIrr: "TRI après impôt",
   equityMultiple: "Multiple de la mise",
   proformaCashFlow: "Flux proforma",
   proformaCashFlowNote: "tous les logements au marché",
@@ -495,7 +502,8 @@ const fr: CalcUi = {
   commercialStartsAt5: "Le commercial commence à 5 logements",
   ownerOccupied: "J'occuperai un des logements",
   ownerOccupiedHelp:
-    "L'assurance prêt hypothécaire l'exige pour 1 à 4 logements. Un achat purement locatif est conventionnel : 20 % de mise de fonds minimum.",
+    "L'assurance prêt hypothécaire l'exige pour 1 à 4 logements. Le logement choisi est retiré des revenus locatifs, mais sa valeur locative demeure dans la valeur de revente.",
+  ownerOccupiedUnit: "Logement occupé par l'acheteur",
   belowMinimum: "Sous le minimum",
   needsAtLeast: "Cette structure exige au moins",
   minRule1to2: "1 à 2 logements : 5 % sur la première tranche de 500 000 $ puis 10 % sur le reste.",
@@ -511,6 +519,9 @@ const fr: CalcUi = {
   mliPoints: "Points MLI Select",
   mliPointsHelp: "Jusqu'à",
   interestRate: "Taux d'intérêt",
+  compounding: "Composition du taux",
+  semiAnnual: "Semestrielle canadienne",
+  monthly: "Mensuelle",
   amortization: "Amortissement",
   amortCappedBy: "Plafonné par le palier à",
   term: "Terme",
@@ -563,7 +574,7 @@ const fr: CalcUi = {
 
   renoHeading: "Rénovation et relocation",
   renoSub:
-    "Le loyer d'un locataire en place est plafonné par le TAL. Le loyer ne revient au marché qu'au départ du locataire : c'est le rythme de relocation, et non l'ampleur de l'écart, qui détermine la vitesse de valorisation.",
+    "Le loyer d'un locataire en place suit le cadre de fixation du TAL; il n'existe pas de plafond universel unique. Le rythme de relocation et les règles applicables déterminent la vitesse de valorisation.",
   initialRehab: "Budget de travaux initial",
   initialRehabHelp: "Travaux immédiats, payés à la clôture",
   unitsTurnedPerYear: "Logements relocés / an",
@@ -607,11 +618,11 @@ const fr: CalcUi = {
 
   growthHeading: "Croissance et contrôle des loyers",
   marketRentGrowth: "Croissance des loyers du marché",
-  talGuideline: "Hausse suggérée par le TAL",
-  talGuidelineHelp: "S'applique aux locataires en place",
-  appreciation: "Appréciation",
+  talGuideline: "Composante de base TAL",
+  talGuidelineHelp: "Hypothèse de base seulement; taxes, assurances et travaux admissibles s'ajoutent selon l'immeuble.",
+  appreciation: "Appréciation de repli (si TGA = 0)",
   expenseGrowth: "Croissance des dépenses",
-  capAtTal: "Plafonner les hausses des loyers en place au taux du TAL",
+  capAtTal: "Limiter la croissance de base des loyers en place à l'hypothèse TAL",
   taxHeading: "Traitement fiscal",
   taxSub:
     "Le Canada utilise l'amortissement dégressif, pas linéaire, et le réclamer crée une récupération à la vente. Le terrain n'est pas amortissable.",
@@ -661,6 +672,7 @@ const fr: CalcUi = {
     "La DPA réclamée en cours de détention est récupérée à votre taux marginal complet : c'est un report d'impôt, pas une déduction.",
   holdPeriod: "Durée de détention",
   sellingCostsPct: "Frais de vente",
+  exitCapRate: "TGA de sortie (revenu net année suivante)",
   salePriceYear: "Prix de vente (année",
   loanBalance: "Solde du prêt",
   netSaleProceeds: "Produit net de la vente",
@@ -759,6 +771,7 @@ const en: CalcUi = {
   currentNoi: "Current NOI",
   currentCashFlow: "Current cash flow",
   irr: "IRR",
+  afterTaxIrr: "After-tax IRR",
   equityMultiple: "Equity multiple",
   proformaCashFlow: "Proforma cash flow",
   proformaCashFlowNote: "all units at market",
@@ -865,7 +878,8 @@ const en: CalcUi = {
   commercialStartsAt5: "Commercial tracks start at 5 units",
   ownerOccupied: "I will occupy one of the units",
   ownerOccupiedHelp:
-    "Mortgage insurance on 1–4 units requires it. A pure rental purchase is conventional: 20% down minimum.",
+    "Mortgage insurance on 1–4 units requires it. The selected unit is removed from rental income, while its market rent remains in the resale valuation.",
+  ownerOccupiedUnit: "Buyer-occupied unit",
   belowMinimum: "Below minimum",
   needsAtLeast: "This structure needs at least",
   minRule1to2: "1–2 units: 5% of the first $500,000 plus 10% of the balance.",
@@ -881,6 +895,9 @@ const en: CalcUi = {
   mliPoints: "MLI Select points",
   mliPointsHelp: "Up to",
   interestRate: "Interest rate",
+  compounding: "Rate compounding",
+  semiAnnual: "Canadian semi-annual",
+  monthly: "Monthly",
   amortization: "Amortization",
   amortCappedBy: "Capped by tier at",
   term: "Term",
@@ -933,7 +950,7 @@ const en: CalcUi = {
 
   renoHeading: "Renovation and turnover",
   renoSub:
-    "A sitting tenant's rent is capped by the TAL. You only reset to market when a unit turns over, so the pace of turnover, not the size of the rent gap, sets how fast the value-add lands.",
+    "A sitting tenant's rent follows the TAL rent-fixing framework; there is no single universal ceiling. Turnover timing and the applicable rules determine how quickly the value-add lands.",
   initialRehab: "Initial rehab budget",
   initialRehabHelp: "Day-one work, paid at closing",
   unitsTurnedPerYear: "Units turned / year",
@@ -977,11 +994,11 @@ const en: CalcUi = {
 
   growthHeading: "Growth and rent control",
   marketRentGrowth: "Market rent growth",
-  talGuideline: "TAL guideline increase",
-  talGuidelineHelp: "Applies to sitting tenants",
-  appreciation: "Appreciation",
+  talGuideline: "TAL base component",
+  talGuidelineHelp: "Base planning assumption only; property-specific taxes, insurance and eligible work are additional.",
+  appreciation: "Fallback appreciation (if exit cap = 0)",
   expenseGrowth: "Expense growth",
-  capAtTal: "Cap in-place rent increases at the TAL guideline",
+  capAtTal: "Limit in-place base rent growth to the TAL assumption",
   taxHeading: "Tax treatment",
   taxSub:
     "Canada uses declining-balance CCA, not straight-line depreciation, and claiming it creates recapture on sale. Land is not depreciable.",
@@ -1031,6 +1048,7 @@ const en: CalcUi = {
     "CCA you claimed along the way comes back as recapture at your full marginal rate: it is a deferral, not a deduction.",
   holdPeriod: "Hold period",
   sellingCostsPct: "Selling costs",
+  exitCapRate: "Exit cap rate (next-year NOI)",
   salePriceYear: "Sale price (year",
   loanBalance: "Loan balance",
   netSaleProceeds: "Net sale proceeds",
