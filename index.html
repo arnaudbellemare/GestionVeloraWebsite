@@ -11,7 +11,13 @@
       /* Canvas matches ThemeContext / index.css so refresh is not a white flash */
       html.light body { background-color: #000000; }
       html.dark body { background-color: #000000; }
-      #root { min-height: 100vh; background: #000000; color: #ffffff; }
+      #root {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        background: transparent;
+        color: #ffffff;
+      }
       #root[data-gv-boot="ready"] > main {
         position: absolute;
         width: 1px;
@@ -24,7 +30,7 @@
       #gv-first-paint {
         position: fixed;
         inset: 0;
-        z-index: 45;
+        z-index: 0;
         pointer-events: none;
         background: #000000;
       }

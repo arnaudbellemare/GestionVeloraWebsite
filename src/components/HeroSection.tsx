@@ -28,22 +28,28 @@ export function HeroSection() {
     if (reduceMotion || conn?.saveData || /(^|-)2g$/.test(conn?.effectiveType ?? "")) return;
 
     const media = window.matchMedia("(max-width: 767px)");
-    const load = () => {
+    const loadForViewport = () => {
+      setVideoReady(false);
       setVideoSrc(media.matches ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP);
     };
 
-    // Preserve the full-quality video without letting its first frame become a
-    // late LCP candidate. LCP observation ends on the user's first interaction,
-    // so the poster owns first paint and motion begins as the visitor engages.
-    const interactionEvents = ["pointerdown", "touchstart", "wheel", "keydown"] as const;
-    interactionEvents.forEach((eventName) => {
-      window.addEventListener(eventName, load, { once: true, passive: true });
-    });
+    // Let the poster, menu, and hero copy finish their critical first load, then
+    // fetch automatically. No interaction is required: autoplay begins as soon
+    // as the browser reports that the selected video can play.
+    const startAutomaticVideo = () => {
+      loadForViewport();
+      media.addEventListener("change", loadForViewport);
+    };
+
+    if (document.readyState === "complete") {
+      startAutomaticVideo();
+    } else {
+      window.addEventListener("load", startAutomaticVideo, { once: true });
+    }
 
     return () => {
-      interactionEvents.forEach((eventName) => {
-        window.removeEventListener(eventName, load);
-      });
+      window.removeEventListener("load", startAutomaticVideo);
+      media.removeEventListener("change", loadForViewport);
     };
   }, []);
 
