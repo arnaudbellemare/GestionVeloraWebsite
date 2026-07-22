@@ -1122,7 +1122,11 @@ export const PROPERTY_PRESETS: Record<PropertyType, PropertyPreset> = {
   triplex: {
     askingPrice: 900000, offerDiscount: 0.025,
     lotSizeSqft: 2800, buildingYear: 1955,
-    unitMix: [unitRow('t1', '4½', 1), unitRow('t2', '5½', 2)],
+    unitMix: [
+      unitRow('t1', '4½', 1),
+      unitRow('t2', '5½', 1),
+      unitRow('t3', '5½', 1),
+    ],
     financingMode: 'residential', ownerOccupied: true, equityPct: 0.10,
     condoFeesMonthly: 0, snowRemoval: 1200, lawnLandscaping: 400, commonHydro: 900,
     insurance: 2800, capexPerUnit: 500,
@@ -1130,7 +1134,12 @@ export const PROPERTY_PRESETS: Record<PropertyType, PropertyPreset> = {
   quadruplex: {
     askingPrice: 1100000, offerDiscount: 0.025,
     lotSizeSqft: 3600, buildingYear: 1962,
-    unitMix: [unitRow('q1', '3½', 1), unitRow('q2', '4½', 2), unitRow('q3', '5½', 1)],
+    unitMix: [
+      unitRow('q1', '3½', 1),
+      unitRow('q2', '4½', 1),
+      unitRow('q3', '4½', 1),
+      unitRow('q4', '5½', 1),
+    ],
     financingMode: 'residential', ownerOccupied: true, equityPct: 0.10,
     condoFeesMonthly: 0, snowRemoval: 1500, lawnLandscaping: 500, commonHydro: 1200,
     insurance: 3600, capexPerUnit: 550,
@@ -1139,7 +1148,13 @@ export const PROPERTY_PRESETS: Record<PropertyType, PropertyPreset> = {
     // ~$275k/door, carried across from the quadruplex median.
     askingPrice: 1650000, offerDiscount: 0.03,
     lotSizeSqft: 6000, buildingYear: 1975,
-    unitMix: [unitRow('f1', '3½', 2), unitRow('f2', '4½', 2), unitRow('f3', '5½', 1)],
+    unitMix: [
+      unitRow('f1', '3½', 1),
+      unitRow('f2', '3½', 1),
+      unitRow('f3', '4½', 1),
+      unitRow('f4', '4½', 1),
+      unitRow('f5', '5½', 1),
+    ],
     financingMode: 'mli-select', ownerOccupied: false, equityPct: 0.20,
     condoFeesMonthly: 0, snowRemoval: 2200, lawnLandscaping: 700, commonHydro: 1800,
     insurance: 5200, capexPerUnit: 600,
