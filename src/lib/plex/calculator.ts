@@ -1,5 +1,20 @@
 export type PropertyType = 'duplex' | 'triplex' | 'quadruplex' | 'fiveplex-plus' | 'condo' | 'house-flip';
 
+export interface PropertyUnitRule {
+  min: number;
+  max: number | null;
+}
+
+/** Unit-count constraints implied by the selected property type. */
+export const PROPERTY_UNIT_RULES: Record<PropertyType, PropertyUnitRule> = {
+  condo: { min: 1, max: 1 },
+  duplex: { min: 2, max: 2 },
+  triplex: { min: 3, max: 3 },
+  quadruplex: { min: 4, max: 4 },
+  'fiveplex-plus': { min: 5, max: null },
+  'house-flip': { min: 1, max: 1 },
+};
+
 /**
  * Financing track. Which one applies is driven by unit count in Quebec:
  *  - residential:  1–4 units, residential underwriting, CMHC insurable under 20% down
@@ -25,6 +40,64 @@ export interface UnitRow {
   currentRent: number;
   marketRent: number;
   sqft: number;
+}
+
+/**
+ * Keeps the editable unit mix compatible with its property type. For the
+ * fixed-size plex types, a count edit is balanced against the other rows so
+ * the user can change the mix without changing the number of doors. Five-plus
+ * remains flexible, but can never fall below five units.
+ */
+export function reconcileUnitMixCount(
+  mix: UnitRow[], type: PropertyType, preferredId?: string,
+): UnitRow[] {
+  if (mix.length === 0) return mix;
+
+  const rule = PROPERTY_UNIT_RULES[type];
+  const sanitized = mix.map((row) => ({
+    ...row,
+    count: Math.max(0, Math.floor(Number.isFinite(row.count) ? row.count : 0)),
+  }));
+  const total = sanitized.reduce((sum, row) => sum + row.count, 0);
+  const target = total < rule.min
+    ? rule.min
+    : rule.max !== null && total > rule.max
+      ? rule.max
+      : total;
+
+  if (target === total) return sanitized;
+
+  const next = sanitized.map((row) => ({ ...row }));
+  const preferredIndex = next.findIndex((row) => row.id === preferredId);
+
+  if (target > total) {
+    const deficit = target - total;
+    // On a fixed-size plex, preserve the edited row and move the difference to
+    // another unit type. On five-plus, clamp the edited row at the five-unit floor.
+    const recipient = rule.max === null && preferredIndex >= 0
+      ? preferredIndex
+      : next.findIndex((_, index) => index !== preferredIndex);
+    next[recipient >= 0 ? recipient : Math.max(0, preferredIndex)].count += deficit;
+    return next;
+  }
+
+  let excess = total - target;
+  const reductionOrder = next
+    .map((row, index) => ({ index, count: row.count }))
+    .sort((a, b) => {
+      if (a.index === preferredIndex) return 1;
+      if (b.index === preferredIndex) return -1;
+      return b.count - a.count;
+    });
+
+  for (const { index } of reductionOrder) {
+    if (excess === 0) break;
+    const reduction = Math.min(next[index].count, excess);
+    next[index].count -= reduction;
+    excess -= reduction;
+  }
+
+  return next;
 }
 
 /**
@@ -1066,7 +1139,7 @@ export const PROPERTY_PRESETS: Record<PropertyType, PropertyPreset> = {
     // ~$275k/door, carried across from the quadruplex median.
     askingPrice: 1650000, offerDiscount: 0.03,
     lotSizeSqft: 6000, buildingYear: 1975,
-    unitMix: [unitRow('f1', '3½', 2), unitRow('f2', '4½', 3), unitRow('f3', '5½', 1)],
+    unitMix: [unitRow('f1', '3½', 2), unitRow('f2', '4½', 2), unitRow('f3', '5½', 1)],
     financingMode: 'mli-select', ownerOccupied: false, equityPct: 0.20,
     condoFeesMonthly: 0, snowRemoval: 2200, lawnLandscaping: 700, commonHydro: 1800,
     insurance: 5200, capexPerUnit: 600,
@@ -1098,9 +1171,10 @@ export function applyPropertyPreset(
   // exactly why cap rates compress downtown and widen out in the east end.
   const askingPrice = Math.round(p.askingPrice * area.priceIndex);
   const purchasePrice = Math.round(askingPrice * (1 - p.offerDiscount));
-  const units = p.unitMix.reduce((s, u) => s + u.count, 0);
+  const presetMix = reconcileUnitMixCount(p.unitMix, type);
+  const units = presetMix.reduce((s, u) => s + u.count, 0);
 
-  const unitMix = p.unitMix.map((u) => ({
+  const unitMix = presetMix.map((u) => ({
     ...u,
     currentRent: Math.round(u.currentRent * area.rentIndex),
     marketRent: Math.round(u.marketRent * area.rentIndex),

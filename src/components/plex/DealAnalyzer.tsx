@@ -15,6 +15,7 @@ import {
   applyPropertyPreset,
   applyArea,
   applyUnitType,
+  reconcileUnitMixCount,
   AREAS,
   areasByRegion,
   UNIT_TYPES,
@@ -277,23 +278,54 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   const updateUnit = (id: string, patch: Partial<UnitRow>) =>
     set("unitMix", inputs.unitMix.map((u) => (u.id === id ? { ...u, ...patch } : u)));
 
+  const updateUnitCount = (id: string, count: number) => {
+    setInputs((prev) => {
+      const edited = prev.unitMix.map((u) => (u.id === id ? { ...u, count } : u));
+      const unitMix = reconcileUnitMixCount(edited, prev.propertyType, id);
+      return {
+        ...prev,
+        unitMix,
+        numberOfUnits: unitMix.reduce((sum, unit) => sum + unit.count, 0),
+      };
+    });
+  };
+
   const setUnitType = (id: string, label: UnitTypeLabel) =>
     set("unitMix", inputs.unitMix.map((u) => (u.id === id ? applyUnitType(u, label) : u)));
 
   const addUnit = () => {
     const spec = UNIT_TYPES["4½"];
-    set("unitMix", [
-      ...inputs.unitMix,
-      {
-        id: `u${inputs.unitMix.length}-${inputs.unitMix.reduce((s, u) => s + u.count, 0)}`,
-        label: spec.label, count: 1,
-        currentRent: spec.currentRent, marketRent: spec.marketRent, sqft: spec.sqft,
-      },
-    ]);
+    setInputs((prev) => {
+      const id = `u${prev.unitMix.length}-${prev.unitMix.reduce((s, u) => s + u.count, 0)}`;
+      const added = [
+        ...prev.unitMix,
+        {
+          id,
+          label: spec.label, count: 1,
+          currentRent: spec.currentRent, marketRent: spec.marketRent, sqft: spec.sqft,
+        },
+      ];
+      const unitMix = reconcileUnitMixCount(added, prev.propertyType, id);
+      return {
+        ...prev,
+        unitMix,
+        numberOfUnits: unitMix.reduce((sum, unit) => sum + unit.count, 0),
+      };
+    });
   };
 
-  const removeUnit = (id: string) =>
-    set("unitMix", inputs.unitMix.filter((u) => u.id !== id));
+  const removeUnit = (id: string) => {
+    setInputs((prev) => {
+      if (prev.unitMix.length <= 1) return prev;
+      const remaining = prev.unitMix.filter((u) => u.id !== id);
+      const unitMix = reconcileUnitMixCount(remaining, prev.propertyType);
+      return {
+        ...prev,
+        unitMix,
+        numberOfUnits: unitMix.reduce((sum, unit) => sum + unit.count, 0),
+      };
+    });
+  };
 
   // ── APOD editing ──────────────────────────────────────────
   const setApodCurrent = (id: ApodLineId, v: number) => {
@@ -640,7 +672,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                         <td>
                           <div className="plexc-input" style={{ maxWidth: 88 }}>
                             <input type="number" min={0} value={u.count} aria-label={t.colUnits}
-                              onChange={(e) => updateUnit(u.id, { count: parseInt(e.target.value) || 0 })} />
+                              onChange={(e) => updateUnitCount(u.id, parseInt(e.target.value) || 0)} />
                           </div>
                         </td>
                         <td>
