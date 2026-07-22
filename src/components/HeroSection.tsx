@@ -4,12 +4,12 @@ import { useGoToContact } from "../hooks/useGoToContact";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-ultra.mp4";
-const HERO_IMAGE = "/hero-video-poster.webp?v=5";
-const HERO_IMAGE_MEDIUM = "/hero-video-poster-960.webp?v=5";
-const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=5";
-const HERO_IMAGE_AVIF = "/hero-video-poster.avif?v=5";
-const HERO_IMAGE_AVIF_MEDIUM = "/hero-video-poster-960.avif?v=5";
-const HERO_IMAGE_AVIF_MOBILE = "/hero-video-poster-mobile.avif?v=5";
+const HERO_IMAGE = "/hero-video-poster.webp?v=6";
+const HERO_IMAGE_MEDIUM = "/hero-video-poster-1280.webp?v=6";
+const HERO_IMAGE_MOBILE = "/hero-video-poster-mobile.webp?v=6";
+const HERO_IMAGE_AVIF = "/hero-video-poster.avif?v=6";
+const HERO_IMAGE_AVIF_MEDIUM = "/hero-video-poster-1280.avif?v=6";
+const HERO_IMAGE_AVIF_MOBILE = "/hero-video-poster-mobile.avif?v=6";
 
 export function HeroSection() {
   const { t } = useTranslation();
@@ -62,7 +62,7 @@ export function HeroSection() {
         <source
           type="image/avif"
           media="(min-width: 768px)"
-          srcSet={`${HERO_IMAGE_AVIF_MEDIUM} 960w, ${HERO_IMAGE_AVIF} 1200w`}
+          srcSet={`${HERO_IMAGE_AVIF_MEDIUM} 1280w, ${HERO_IMAGE_AVIF} 1920w`}
           sizes="100vw"
         />
         <source
@@ -73,14 +73,14 @@ export function HeroSection() {
         <source
           type="image/webp"
           media="(min-width: 768px)"
-          srcSet={`${HERO_IMAGE_MEDIUM} 960w, ${HERO_IMAGE} 1200w`}
+          srcSet={`${HERO_IMAGE_MEDIUM} 1280w, ${HERO_IMAGE} 1920w`}
           sizes="100vw"
         />
         <img
           src={HERO_IMAGE_MOBILE}
           alt="Gestion immobilière à Montréal par Gestion Velora"
-          width={1200}
-          height={676}
+          width={1920}
+          height={1080}
           decoding="sync"
           fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover"
