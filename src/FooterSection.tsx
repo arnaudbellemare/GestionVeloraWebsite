@@ -234,35 +234,35 @@ export const FooterSection = (): JSX.Element => {
       </div>
 
       {/* 3D City Brand Image - top scrim fades footer black into the skyline */}
-      <div className="relative aspect-[800/446] overflow-hidden bg-black">
+      <div className="relative aspect-[1670/942] overflow-hidden bg-black">
         <picture className="absolute inset-0 block dark:hidden">
           <source
-            srcSet="/images/footer-city-light-800.webp 800w, /images/footer-city-light-1200.webp 1200w, /images/footer-city-light-1600.webp 1600w"
+            srcSet="/images/footer-city-light-800.webp 800w, /images/footer-city-light-1200.webp 1200w, /images/footer-city-light-1600.webp 1600w, /images/footer-city-light.webp 1670w"
             sizes="100vw"
             type="image/webp"
           />
           <img
-            src="/images/footer-city-light.png?v=4"
+            src="/images/footer-city-light.png?v=5"
             alt="Gestion Velora - vue aérienne Montréal"
             className="h-full w-full object-cover"
-            width={800}
-            height={446}
+            width={1670}
+            height={942}
             loading="lazy"
             decoding="async"
           />
         </picture>
         <picture className="absolute inset-0 hidden dark:block">
           <source
-            srcSet="/images/footer-city-dark-800.webp 800w, /images/footer-city-dark-1200.webp 1200w, /images/footer-city-dark-1600.webp 1600w"
+            srcSet="/images/footer-city-dark-800.webp 800w, /images/footer-city-dark-1200.webp 1200w, /images/footer-city-dark-1600.webp 1600w, /images/footer-city-dark.webp 1672w"
             sizes="100vw"
             type="image/webp"
           />
           <img
-            src="/images/footer-city-dark.png?v=4"
+            src="/images/footer-city-dark.png?v=5"
             alt="Gestion Velora - vue aérienne Montréal"
             className="h-full w-full object-cover"
-            width={800}
-            height={446}
+            width={1672}
+            height={941}
             loading="lazy"
             decoding="async"
           />
