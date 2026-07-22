@@ -54,8 +54,12 @@ export function ProjectionChart({
 
   // Equity rides a second scale: it is an order of magnitude larger than the
   // flows, so sharing an axis would flatten the bars into nothing.
-  const eqMax = Math.max(...rows.map((r) => r.equity)) * 1.05 || 1;
-  const eqY = (v: number) => padT + plotH - (v / eqMax) * plotH;
+  const rawEqMin = Math.min(0, ...rows.map((r) => r.equity));
+  const rawEqMax = Math.max(0, ...rows.map((r) => r.equity));
+  const eqMin = rawEqMin < 0 ? rawEqMin * 1.05 : 0;
+  const eqMax = rawEqMax > 0 ? rawEqMax * 1.05 : 1;
+  const eqSpan = eqMax - eqMin || 1;
+  const eqY = (v: number) => padT + plotH - ((v - eqMin) / eqSpan) * plotH;
 
   const noiPath = rows
     .map((r, i) => `${i === 0 ? "M" : "L"} ${padL + bandW * i + bandW / 2} ${y(r.noi)}`)
@@ -120,6 +124,11 @@ export function ProjectionChart({
         <text x={padL + plotW + 8} y={eqY(eqMax) + 10} className="plexc-chart-tick">
           {`${Math.round(eqMax / 1000)}k`}
         </text>
+        {eqMin < 0 && (
+          <text x={padL + plotW + 8} y={eqY(eqMin) - 4} className="plexc-chart-tick">
+            {`${Math.round(eqMin / 1000)}k`}
+          </text>
+        )}
 
         {rows.map((r, i) => (
           <text

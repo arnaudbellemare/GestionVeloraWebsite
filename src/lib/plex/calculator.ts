@@ -1125,11 +1125,10 @@ export function areasByRegion(): { region: Region; keys: string[] }[] {
  * quadruplex $1.1M, single-family $639k. Five-plus is priced off the
  * quadruplex per-door figure, since APCIQ reports plexes as one category.
  *
- * Rents deliberately split two ways, because they are two different markets:
- *   in-place  ≈ CMHC Rental Market Survey occupied stock (2-bed Greater
- *               Montreal average $1,346): what rent-controlled leases collect
- *   market    ≈ current asking rents on listings (2-bed ~$1,826)
- * The gap between them is the value-add the TAL makes you wait for.
+ * Rents deliberately split two ways because they are two different markets.
+ * The shared unit table retains broad CMHC/asking-rent anchors, while these
+ * presets use rounded, internally coherent example rent rolls for the selected
+ * asset. They are examples, not neighbourhood averages or an appraisal.
  *
  * Taxes are estimated off price (Montreal municipal ≈ 0.75%, school ≈ 0.1%)
  * and should be replaced with the actual tax bills before making an offer.
@@ -1156,6 +1155,13 @@ export interface PropertyPreset {
   commonHydro: number;
   insurance: number;
   capexPerUnit: number;
+  /** Day-one work. Kept separate from the later unit-turnover program. */
+  rehabBudget: number;
+  renoCostPerUnit: number;
+  /** Market TGA used for the income approach; zero selects comparable appreciation. */
+  exitCapRate: number;
+  /** Flip-only resale target as a multiple of the asking price. */
+  afterRepairMultiplier?: number;
 }
 
 /** A condo owner holds a unit and a share of the common areas, not a lot. */
@@ -1164,9 +1170,22 @@ export function hasLot(type: PropertyType): boolean {
 }
 
 /** Builds a preset unit row from the shared unit-type table. */
-function unitRow(id: string, label: UnitTypeLabel, count: number): UnitRow {
+function unitRow(
+  id: string,
+  label: UnitTypeLabel,
+  count: number,
+  currentRent?: number,
+  marketRent?: number,
+): UnitRow {
   const s = UNIT_TYPES[label];
-  return { id, label: s.label, count, currentRent: s.currentRent, marketRent: s.marketRent, sqft: s.sqft };
+  return {
+    id,
+    label: s.label,
+    count,
+    currentRent: currentRent ?? s.currentRent,
+    marketRent: marketRent ?? s.marketRent,
+    sqft: s.sqft,
+  };
 }
 
 // Municipal rate now comes from the area; school tax is provincial and flat.
@@ -1176,66 +1195,77 @@ export const PROPERTY_PRESETS: Record<PropertyType, PropertyPreset> = {
   condo: {
     askingPrice: 425000, offerDiscount: 0.02,
     lotSizeSqft: 0, buildingYear: 2008,
-    unitMix: [unitRow('c1', '4½', 1)],
-    financingMode: 'residential', ownerOccupied: false, equityPct: 0.20,
+    unitMix: [unitRow('c1', '4½', 1, 1950, 2100)],
+    financingMode: 'residential', ownerOccupied: false, equityPct: 0.25,
     condoFeesMonthly: 320, snowRemoval: 0, lawnLandscaping: 0, commonHydro: 0,
     insurance: 700, capexPerUnit: 300,
+    rehabBudget: 0, renoCostPerUnit: 0, exitCapRate: 0,
   },
   duplex: {
-    askingPrice: 710000, offerDiscount: 0.02,
+    askingPrice: 710000, offerDiscount: 0.03,
     lotSizeSqft: 2500, buildingYear: 1950,
-    unitMix: [unitRow('d1', '5½', 1), unitRow('d2', '4½', 1)],
-    financingMode: 'residential', ownerOccupied: true, equityPct: 0.05,
+    unitMix: [
+      unitRow('d1', '5½', 1, 1900, 2350),
+      unitRow('d2', '4½', 1, 1650, 2050),
+    ],
+    financingMode: 'residential', ownerOccupied: false, equityPct: 0.25,
     condoFeesMonthly: 0, snowRemoval: 900, lawnLandscaping: 350, commonHydro: 600,
     insurance: 2400, capexPerUnit: 500,
+    rehabBudget: 0, renoCostPerUnit: 15000, exitCapRate: 0.045,
   },
   triplex: {
-    askingPrice: 900000, offerDiscount: 0.025,
+    askingPrice: 900000, offerDiscount: 0.035,
     lotSizeSqft: 2800, buildingYear: 1955,
     unitMix: [
-      unitRow('t1', '4½', 1),
-      unitRow('t2', '5½', 1),
-      unitRow('t3', '5½', 1),
+      unitRow('t1', '4½', 1, 1600, 2000),
+      unitRow('t2', '5½', 1, 1850, 2300),
+      unitRow('t3', '5½', 1, 1850, 2300),
     ],
-    financingMode: 'residential', ownerOccupied: true, equityPct: 0.10,
+    financingMode: 'residential', ownerOccupied: false, equityPct: 0.25,
     condoFeesMonthly: 0, snowRemoval: 1200, lawnLandscaping: 400, commonHydro: 900,
     insurance: 2800, capexPerUnit: 500,
+    rehabBudget: 0, renoCostPerUnit: 17500, exitCapRate: 0.0475,
   },
   quadruplex: {
-    askingPrice: 1100000, offerDiscount: 0.025,
+    askingPrice: 1100000, offerDiscount: 0.04,
     lotSizeSqft: 3600, buildingYear: 1962,
     unitMix: [
-      unitRow('q1', '3½', 1),
-      unitRow('q2', '4½', 1),
-      unitRow('q3', '4½', 1),
-      unitRow('q4', '5½', 1),
+      unitRow('q1', '3½', 1, 1400, 1700),
+      unitRow('q2', '4½', 1, 1600, 2000),
+      unitRow('q3', '4½', 1, 1600, 2000),
+      unitRow('q4', '5½', 1, 1850, 2300),
     ],
-    financingMode: 'residential', ownerOccupied: true, equityPct: 0.10,
+    financingMode: 'residential', ownerOccupied: false, equityPct: 0.25,
     condoFeesMonthly: 0, snowRemoval: 1500, lawnLandscaping: 500, commonHydro: 1200,
     insurance: 3600, capexPerUnit: 550,
+    rehabBudget: 0, renoCostPerUnit: 17500, exitCapRate: 0.05,
   },
   'fiveplex-plus': {
-    // ~$275k/door, carried across from the quadruplex median.
+    // Six-unit example at ~$275k/door, carried across from the plex median.
     askingPrice: 1650000, offerDiscount: 0.03,
     lotSizeSqft: 6000, buildingYear: 1975,
     unitMix: [
-      unitRow('f1', '3½', 1),
-      unitRow('f2', '3½', 1),
-      unitRow('f3', '4½', 1),
-      unitRow('f4', '4½', 1),
-      unitRow('f5', '5½', 1),
+      unitRow('f1', '3½', 1, 1350, 1700),
+      unitRow('f2', '3½', 1, 1350, 1700),
+      unitRow('f3', '4½', 1, 1550, 1950),
+      unitRow('f4', '4½', 1, 1550, 1950),
+      unitRow('f5', '4½', 1, 1550, 1950),
+      unitRow('f6', '5½', 1, 1800, 2250),
     ],
-    financingMode: 'mli-select', ownerOccupied: false, equityPct: 0.20,
+    financingMode: 'commercial', ownerOccupied: false, equityPct: 0.25,
     condoFeesMonthly: 0, snowRemoval: 2200, lawnLandscaping: 700, commonHydro: 1800,
     insurance: 5200, capexPerUnit: 600,
+    rehabBudget: 0, renoCostPerUnit: 20000, exitCapRate: 0.0525,
   },
   'house-flip': {
-    askingPrice: 639000, offerDiscount: 0.06,
+    askingPrice: 639000, offerDiscount: 0.12,
     lotSizeSqft: 4000, buildingYear: 1968,
     unitMix: [{ id: 'h1', label: '6½', count: 1, currentRent: 0, marketRent: 0, sqft: 1400 }],
     financingMode: 'residential', ownerOccupied: false, equityPct: 0.20,
     condoFeesMonthly: 0, snowRemoval: 800, lawnLandscaping: 400, commonHydro: 0,
     insurance: 1800, capexPerUnit: 0,
+    rehabBudget: 75000, renoCostPerUnit: 0, exitCapRate: 0,
+    afterRepairMultiplier: 1.14,
   },
 };
 
@@ -1286,12 +1316,19 @@ export function applyPropertyPreset(
     commonHydro: p.commonHydro,
     insurance: p.insurance,
     capexPerUnit: p.capexPerUnit,
+    rehabBudget: p.rehabBudget,
+    renoCostPerUnit: p.renoCostPerUnit,
+    exitCapRate: p.exitCapRate,
     propertyTaxes: Math.round(purchasePrice * area.taxRate),
     schoolTax: Math.round(purchasePrice * SCHOOL_TAX_RATE),
     // Amortization has to come back inside the insured limit for 1–4 units.
     loanLifeYears: type === 'fiveplex-plus' ? 40 : 25,
-    renoUnitsPerYear: Math.max(1, Math.round(units / 3)),
-    afterRepairValue: type === 'house-flip' ? Math.round(purchasePrice * 1.22) : 0,
+    // A tenant departure is not guaranteed. Keep the baseline in-place and
+    // require the user to opt into a turnover pace explicitly.
+    renoUnitsPerYear: 0,
+    afterRepairValue: type === 'house-flip'
+      ? Math.round(askingPrice * (p.afterRepairMultiplier ?? 1.14))
+      : 0,
     proformaOverrides: {},
   };
 }
@@ -1310,8 +1347,12 @@ const BASE_INPUTS: DealInputs = {
   purchasePrice: 877500,
   buildingYear: 1955,
   lotSizeSqft: 2800,
-  unitMix: [unitRow('u1', '4½', 1), unitRow('u2', '5½', 2)],
-  rehabBudget: 25000,
+  unitMix: [
+    unitRow('t1', '4½', 1, 1600, 2000),
+    unitRow('t2', '5½', 1, 1850, 2300),
+    unitRow('t3', '5½', 1, 1850, 2300),
+  ],
+  rehabBudget: 0,
   numberOfUnits: 3,
   avgMonthlyRentPerUnit: 1415,
   vacancyRate: 0.03,
@@ -1330,13 +1371,13 @@ const BASE_INPUTS: DealInputs = {
   afterRepairValue: 0,
   holdingMonths: 6,
   sellingCostsPct: 0.06,
-  ownerOccupied: true,
-  ownerOccupiedUnitId: 'u1',
+  ownerOccupied: false,
+  ownerOccupiedUnitId: null,
   financingMode: 'residential',
   maxLtv: 0.75,
   dscrTarget: 1.20,
   mliPoints: 70,
-  equityPct: 0.10, // 3–4 units insure to 90% LTV
+  equityPct: 0.25,
 
   pointsOnMortgagePct: 0,
   otherInitialEquitySpent: 0,
@@ -1344,8 +1385,8 @@ const BASE_INPUTS: DealInputs = {
   mortgageCompounding: 'semi-annual',
   loanLifeYears: 25,
   paymentsPerYear: 12,
-  renoUnitsPerYear: 1,
-  renoCostPerUnit: 25000,
+  renoUnitsPerYear: 0,
+  renoCostPerUnit: 17500,
   renoStartYear: 1,
   proformaOverrides: {},
   marginalTaxBracket: 0.4053, // ~$100k combined QC+Fed
@@ -1369,7 +1410,7 @@ const BASE_INPUTS: DealInputs = {
   renewalRate: 0.05, // expected renewal rate
   brrrrRefiLtv: 0.75, // 75% LTV refinance
   exitYear: 10,
-  exitCapRate: 0.05,
+  exitCapRate: 0.0475,
   capitalGainsInclusion: 0.50, // 50% inclusion rate
 };
 

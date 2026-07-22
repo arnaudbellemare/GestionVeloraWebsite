@@ -21,9 +21,20 @@ const canadianMonthly = mortgagePeriodicRate(0.0475, 12, 'semi-annual');
 closeTo(canadianMonthly, Math.pow(1 + 0.0475 / 2, 2 / 12) - 1, 1e-12);
 assert.ok(canadianMonthly < 0.0475 / 12);
 
+// Baselines are conservative investment examples: no invented turnover or
+// duplicate day-one renovation, and conventional equity for 1–4 units.
+assert.equal(DEFAULT_INPUTS.ownerOccupied, false);
+assert.equal(DEFAULT_INPUTS.equityPct, 0.25);
+assert.equal(DEFAULT_INPUTS.rehabBudget, 0);
+assert.equal(DEFAULT_INPUTS.renoUnitsPerYear, 0);
+
 // Owner-occupied financing cannot also collect rent from the occupied unit.
-const occupied = DEFAULT_INPUTS;
-const allRental = { ...occupied, ownerOccupied: false, ownerOccupiedUnitId: null };
+const allRental = DEFAULT_INPUTS;
+const occupied = {
+  ...allRental,
+  ownerOccupied: true,
+  ownerOccupiedUnitId: allRental.unitMix[0]?.id ?? null,
+};
 const occupiedResults = calculateDeal(occupied);
 const allRentalResults = calculateDeal(allRental);
 const occupiedRow = occupied.unitMix.find((row) => row.id === occupied.ownerOccupiedUnitId);
@@ -65,6 +76,9 @@ assert.ok(projection.every((row) => row.ccaDeduction >= 0));
 // shown in the economic-value panel, rather than actual NOI at contract rate.
 const fivePlus = applyPropertyPreset(occupied, 'fiveplex-plus');
 const fivePlusResults = calculateDeal(fivePlus);
+assert.equal(fivePlusResults.totalUnits, 6);
+assert.equal(fivePlus.financingMode, 'commercial');
+assert.equal(fivePlus.renoUnitsPerYear, 0);
 const economicValue = calculateEconomicValue(
   fivePlus,
   fivePlusResults.annualRent,
