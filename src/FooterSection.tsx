@@ -288,6 +288,15 @@ export const FooterSection = (): JSX.Element => {
             <InternalLink to="/editorial-policy" className="hover:text-white transition-colors duration-300">
               {locale === "en" ? "Editorial policy" : "Politique éditoriale"}
             </InternalLink>
+            <InternalLink to="/methodology" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "Methodology" : "Méthodologie"}
+            </InternalLink>
+            <InternalLink to="/sources" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "Sources" : "Sources"}
+            </InternalLink>
+            <InternalLink to="/trust-proof" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "Trust & proof" : "Preuves"}
+            </InternalLink>
             <InternalLink to="/privacy" className="hover:text-white transition-colors duration-300">
               {t("footer.privacy")}
             </InternalLink>

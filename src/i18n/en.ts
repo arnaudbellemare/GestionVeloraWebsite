@@ -560,7 +560,7 @@ export const en = {
     airbnb: {
       title: "Airbnb and short-term rental management",
       subtitle: "Listings, turnovers, guests, permits, and compliance — end to end.",
-      metaTitle: "Airbnb Management Montreal | Gestion Velora",
+      metaTitle: "Airbnb Management Montreal — CITQ & turnovers | Gestion Velora",
       metaDescription:
         "Airbnb management in Montreal: listings, guests, cleaning, maintenance, pricing, and municipal compliance for short-term rentals.",
       description:
@@ -630,7 +630,7 @@ export const en = {
     location: {
       title: "Long-term rental management",
       subtitle: "Screening, rent collection, maintenance, and transparent building reporting.",
-      metaTitle: "Rental Management Montreal | Gestion Velora",
+      metaTitle: "Long-Term Rental Management — leases & TAL | Gestion Velora",
       metaDescription:
         "Rental management in Montreal for landlords: tenant screening, leases, rent collection, maintenance, reports, and TAL follow-up.",
       description:
@@ -715,8 +715,8 @@ export const en = {
 
     "gestion-condo": {
       title: "Condo management in Montreal",
-      subtitle: "Expert condo management for unit owners and condo boards in Montreal",
-      metaTitle: "Condo Management Montreal | Gestion Velora",
+      subtitle: "Condo property manager for condo syndicates and unit owners in Montreal",
+      metaTitle: "Condo Management Montreal — budget & Loi 141 | Gestion Velora",
       metaDescription:
         "Condo management in Montreal: daily administration, finances, maintenance, communication, and support for unit owners.",
       description:
@@ -806,7 +806,7 @@ export const en = {
     "gestion-copropriete": {
       title: "Condo property manager Montreal",
       subtitle: "Your dedicated condo property manager — administration, finances, and compliance",
-      metaTitle: "Condo Property Manager Montreal | Gestion Velora",
+      metaTitle: "Condo Property Manager — full board mandate | Gestion Velora",
       metaDescription:
         "Condo property manager in Montreal for condo boards: governance, budgets, Loi 141 compliance, maintenance, and clear reporting.",
       description:

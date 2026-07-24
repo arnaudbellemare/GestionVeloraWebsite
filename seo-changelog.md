@@ -46,6 +46,7 @@
 | 2026-05-02 | `709f00b` | Dedupe FAQ JSON-LD on `/faq` (runtime vs prerender). |
 | 2026-05-02 | `d3377dc` | Location template internal linking + locations index breadth; sitemap regen. |
 | 2026-05-02 | `9871432` | Expanded location inventory + priority matrix tooling—**review under GEO-SCALE-001**. |
+| 2026-07-24 | _pending_ | GEO audit follow-up. Prerendered pages now emit a crawlable site nav inside `#root` (React replaces it on mount): the delivered homepage HTML went from 16 hrefs / 4 content links to 33, ending orphan status for `/compare` + `/locations` and exposing the trust pages. H2/H3 gain slugified `id` anchors for section-level citation (0% → 100%, 2290 headings, no duplicates). Footer gains `/methodology`, `/sources`, `/trust-proof` so the prerendered nav mirrors real UI. Four service `metaTitle`s per locale differentiated (were 85–89% similar). `llms.txt` + `/services/gestion-condo` keyword coverage. |
 
 ---
 

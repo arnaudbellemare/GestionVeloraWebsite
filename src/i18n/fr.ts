@@ -563,7 +563,7 @@ export const fr = {
     airbnb: {
       title: "Gestion Airbnb et location courte durée",
       subtitle: "Réservations, ménage, voyageurs et conformité locale — clé en main.",
-      metaTitle: "Gestion Airbnb Montréal | Gestion Velora",
+      metaTitle: "Gestion Airbnb Montréal — permis CITQ et accueil | Gestion Velora",
       metaDescription:
         "Gestion Airbnb à Montréal : annonces, voyageurs, ménage, maintenance, tarification et conformité municipale pour locations courte durée.",
       description:
@@ -633,7 +633,7 @@ export const fr = {
     location: {
       title: "Gestion locative longue durée",
       subtitle: "Sélection des locataires, loyers, entretien et rapports clairs pour votre immeuble.",
-      metaTitle: "Gestion locative Montréal | Gestion Velora",
+      metaTitle: "Gestion locative longue durée — baux et TAL | Gestion Velora",
       metaDescription:
         "Gestion locative à Montréal pour propriétaires : sélection des locataires, baux, loyers, entretien, rapports et suivi TAL.",
       description:
@@ -718,12 +718,12 @@ export const fr = {
 
     "gestion-condo": {
       title: "Gestion de condo à Montréal",
-      subtitle: "Experts en gestion de condo pour propriétaires et syndicats à Montréal",
-      metaTitle: "Gestion condo Montréal | Gestion Velora",
+      subtitle: "Gestionnaire de copropriété pour syndicats de copropriété et propriétaires de condo à Montréal",
+      metaTitle: "Gestion de condo Montréal — budget et Loi 141 | Gestion Velora",
       metaDescription:
         "Gestion de condo à Montréal : administration quotidienne, finances, entretien, communication et soutien aux copropriétaires.",
       description:
-        "Vous cherchez une firme de gestion de condo à Montréal ? Gestion Velora assure l'administration complète de votre condo : syndicat de copropriétaires, budget, fonds de prévoyance, entretien des parties communes, assemblée générale et conformité Loi 141. Nos professionnels interviennent dans tous les quartiers de Montréal et la grande région métropolitaine.",
+        "Vous cherchez une firme de gestion de condo à Montréal ? Gestion Velora agit comme gestionnaire de copropriété et assure l'administration complète de votre condo : syndicat de copropriété, budget, fonds de prévoyance, entretien des parties communes, assemblée générale et conformité Loi 141. Nos professionnels interviennent dans tous les quartiers de Montréal et la grande région métropolitaine.",
       offerings: [
         {
           title: "Administration du syndicat de condo",
@@ -809,7 +809,7 @@ export const fr = {
     "gestion-copropriete": {
       title: "Gestionnaire de copropriété à Montréal",
       subtitle: "Votre gestionnaire de copropriété dédié — administration, finances et conformité",
-      metaTitle: "Gestionnaire de copropriété Montréal | Gestion Velora",
+      metaTitle: "Gestionnaire de copropriété — mandat complet CA | Gestion Velora",
       metaDescription:
         "Gestionnaire de copropriété à Montréal pour conseils d'administration : gouvernance, budget, Loi 141, entretien et rapports clairs.",
       description:

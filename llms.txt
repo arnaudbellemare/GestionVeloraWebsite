@@ -78,6 +78,12 @@ Use these three pages as distinct primary intents:
 - [About (EN)](https://www.gestionvelora.com/en/about) — English firm overview
 - [Trust & proof (FR)](https://www.gestionvelora.com/trust-proof) — Verifiable operating and compliance signals
 - [Trust & proof (EN)](https://www.gestionvelora.com/en/trust-proof) — English trust signals
+- [Sources (FR)](https://www.gestionvelora.com/sources) — Primary sources and references behind published figures
+- [Sources (EN)](https://www.gestionvelora.com/en/sources) — English source list
+- [Methodology (FR)](https://www.gestionvelora.com/methodology) — How figures, comparisons, and recommendations are produced
+- [Methodology (EN)](https://www.gestionvelora.com/en/methodology) — English methodology
+- [Editorial policy (FR)](https://www.gestionvelora.com/editorial-policy) — Authorship, review, and correction standards
+- [Editorial policy (EN)](https://www.gestionvelora.com/en/editorial-policy) — English editorial policy
 - [Homepage anchor: Hero](https://www.gestionvelora.com/#hero)
 - [Homepage anchor: Proof stats](https://www.gestionvelora.com/#proof-stats)
 - [Homepage anchor: Testimonials](https://www.gestionvelora.com/#testimonials)
@@ -94,7 +100,8 @@ Use these three pages as distinct primary intents:
 - [Contact](https://www.gestionvelora.com/#contact-form) — Contact form and inquiry submission (embedded on homepage)
 - [Blog (FR)](https://www.gestionvelora.com/blog) — Articles on property management, Quebec law, Airbnb compliance
 - [Blog (EN)](https://www.gestionvelora.com/en/blog) — English editorial content
-- [Privacy](https://www.gestionvelora.com/privacy) — LPRPDE-compliant privacy policy
+- [Privacy (FR)](https://www.gestionvelora.com/privacy) — LPRPDE-compliant privacy policy
+- [Privacy (EN)](https://www.gestionvelora.com/en/privacy) — English privacy policy
 - [RSS](https://www.gestionvelora.com/rss.xml) — Blog feed
 
 ## Service pages

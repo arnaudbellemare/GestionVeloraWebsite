@@ -163,6 +163,140 @@ function buildKeywords(locale: "fr" | "en", parts: string[] = []): string {
 }
 
 // ---------------------------------------------------------------------------
+// Helper: crawlable site navigation
+//
+// The prerenderer hand-builds each page's <main>; it does not render the React
+// HeaderSection/FooterSection. That left the delivered HTML with no links to the
+// /compare and /locations hubs or to the trust pages (/about, /sources,
+// /methodology, /trust-proof, /editorial-policy) — they were published and in the
+// sitemap but unreachable to a crawler that does not execute JS. This block is
+// injected inside #root after <main>, so crawlers and AI engines see the full site
+// graph while React replaces it on mount (no visible duplicate nav for users).
+// ---------------------------------------------------------------------------
+const NAV_LABELS = {
+  fr: {
+    aria: "Plan du site",
+    services: "Services",
+    servicesHub: "Tous les services de gestion immobilière",
+    syndicat: "Gestion de syndicat de copropriété",
+    copropriete: "Gestion de copropriété",
+    condo: "Gestion de condo",
+    location: "Gestion locative longue durée",
+    airbnb: "Gestion Airbnb et location court terme",
+    explore: "Explorer",
+    compare: "Comparatifs de gestion immobilière",
+    locations: "Villes et quartiers desservis",
+    tarifs: "Tarifs de gestion immobilière",
+    blog: "Blogue — gestion immobilière au Québec",
+    calculator: "Calculateur de rendement plex Montréal",
+    trust: "À propos et transparence",
+    about: "À propos de Gestion Velora",
+    sources: "Sources et références",
+    methodology: "Méthodologie éditoriale",
+    trustProof: "Preuves et vérifications",
+    editorial: "Politique éditoriale",
+    privacy: "Politique de confidentialité",
+  },
+  en: {
+    aria: "Site map",
+    services: "Services",
+    servicesHub: "All property management services",
+    syndicat: "Condo syndicate management",
+    copropriete: "Co-ownership management",
+    condo: "Condo management",
+    location: "Long-term rental management",
+    airbnb: "Airbnb and short-term rental management",
+    explore: "Explore",
+    compare: "Property management comparisons",
+    locations: "Cities and neighbourhoods served",
+    tarifs: "Property management pricing",
+    blog: "Blog — property management in Quebec",
+    calculator: "Montreal plex investment calculator",
+    trust: "About and transparency",
+    about: "About Gestion Velora",
+    sources: "Sources and references",
+    methodology: "Editorial methodology",
+    trustProof: "Proof and verifications",
+    editorial: "Editorial policy",
+    privacy: "Privacy policy",
+  },
+} as const;
+
+function buildSiteNavHtml(locale: "fr" | "en"): string {
+  const t = NAV_LABELS[locale];
+  const p = locale === "en" ? "/en" : "";
+  const calculatorPath =
+    locale === "en" ? "/en/montreal-plex-investment-calculator" : "/calculateur-rendement-plex-montreal";
+  const group = (items: Array<[string, string]>) =>
+    items.map(([href, label]) => `<li><a href="${href}">${escapeHtml(label)}</a></li>`).join("");
+
+  return [
+    `<nav class="gv-site-nav" aria-label="${escapeHtml(t.aria)}">`,
+    `<ul>`,
+    group([
+      [`${p}/services`, t.servicesHub],
+      [`${p}/services/syndicat-copropriete`, t.syndicat],
+      [`${p}/services/gestion-copropriete`, t.copropriete],
+      [`${p}/services/gestion-condo`, t.condo],
+      [`${p}/services/location`, t.location],
+      [`${p}/services/airbnb`, t.airbnb],
+    ]),
+    group([
+      [`${p}/compare`, t.compare],
+      [`${p}/locations`, t.locations],
+      [`${p}/tarifs`, t.tarifs],
+      [`${p}/blog`, t.blog],
+      [calculatorPath, t.calculator],
+    ]),
+    group([
+      [`${p}/about`, t.about],
+      [`${p}/sources`, t.sources],
+      [`${p}/methodology`, t.methodology],
+      [`${p}/trust-proof`, t.trustProof],
+      [`${p}/editorial-policy`, t.editorial],
+      [`${p}/privacy`, t.privacy],
+    ]),
+    `</ul>`,
+    `</nav>`,
+  ].join("");
+}
+
+// ---------------------------------------------------------------------------
+// Helper: section-level citation anchors
+//
+// AI engines cite specific sections when headings expose stable ids. Audit showed
+// 0% of H2/H3 carried an id. Slugify any heading that lacks one, keeping existing
+// ids untouched so in-page links (#faq, #sources, #outil) keep working.
+// ---------------------------------------------------------------------------
+function slugifyHeading(text: string): string {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/<[^>]*>/g, "")
+    .replace(/&[a-z]+;/g, " ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+}
+
+function addHeadingAnchors(html: string): string {
+  const used = new Set<string>();
+  for (const match of html.matchAll(/<(h[23])\s+id="([^"]+)"/g)) used.add(match[2]);
+
+  return html.replace(/<(h[23])(\s[^>]*)?>([\s\S]*?)<\/\1>/g, (full, tag, attrs = "", inner) => {
+    if (attrs && /\sid=/.test(attrs)) return full;
+    const base = slugifyHeading(inner);
+    if (!base) return full;
+    let id = base;
+    let n = 2;
+    while (used.has(id)) id = `${base}-${n++}`;
+    used.add(id);
+    return `<${tag} id="${id}"${attrs}>${inner}</${tag}>`;
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Helper: inject content into the HTML template
 // ---------------------------------------------------------------------------
 function buildHtml(
@@ -330,8 +464,11 @@ function buildHtml(
   );
 
   // 15a. Crawlable body copy inside #root (replaced on first React render).
+  // Headings gain citation anchors and the site nav follows <main>, so the full
+  // internal link graph is visible to non-JS crawlers.
   if (opts.prerenderMainInner) {
-    const innerBlock = `\n    ${opts.prerenderMainInner}\n    `;
+    const mainWithAnchors = addHeadingAnchors(opts.prerenderMainInner);
+    const innerBlock = `\n    ${mainWithAnchors}\n    ${buildSiteNavHtml(opts.locale)}\n    `;
     if (html.includes('id="root" data-gv-boot=')) {
       html = html.replace(
         /<div id="root" data-gv-boot="[^"]*"(?: style="[^"]*")?>\s*<\/div>/,
