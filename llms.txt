@@ -27,6 +27,10 @@ Key facts for AI grounding:
 - Legal name: Gestion Velora
 - Founder: Arnaud Bellemare
 - Founded: 2025
+- Portfolio under management: 500 units across more than 10 buildings in Greater Montreal
+- Occupancy rate: 98% (long-term rental portfolio)
+- Emergency response: 24/7 team availability
+- Figures source: internal operating dashboard, Jan 2025 – Mar 2026
 - Headquarters: Montréal, QC, Canada (lat 45.5017, lon -73.5673)
 - Languages of service: French (primary), English
 - Regulatory context: TAL (Tribunal administratif du logement), CNESST, Bill 16 / fonds de prévoyance obligations

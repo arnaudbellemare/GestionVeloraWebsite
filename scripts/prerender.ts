@@ -52,6 +52,8 @@ const DIST = join(process.cwd(), "dist");
 const SITE_URL = "https://www.gestionvelora.com";
 const ORG_ID = `${SITE_URL}/#organization`;
 const AUTHOR_NAME = "Arnaud Bellemare";
+/** Keep in sync with ARTICLE_AUTHOR_SAME_AS in src/config.ts. */
+const AUTHOR_SAME_AS = ["https://ca.linkedin.com/in/gestion-velora-48684b399"] as const;
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/twitter-card.png`;
 const DEFAULT_KEYWORDS = {
@@ -711,7 +713,11 @@ function buildArticleSchema(locale: "fr" | "en", slug: string, base: string) {
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
-      url: SITE_URL,
+      // /about is the actual bio page; the site root said nothing about the author.
+      url: `${SITE_URL}/about`,
+      jobTitle: "Founder, Gestion Velora",
+      worksFor: { "@id": ORG_ID },
+      ...(AUTHOR_SAME_AS.length ? { sameAs: AUTHOR_SAME_AS } : {}),
     },
     publisher: {
       "@type": "Organization",
@@ -1016,8 +1022,19 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
     })
     .join("\n");
 
+  // Visible byline: the AMP variant already carries one, but the standard prerender
+  // shipped none, so an AI engine reading this page saw no named author behind
+  // legal/financial guidance (YMYL). Mirrors the AMP author block.
+  const isEn = locale === "en";
+  const byLabel = isEn ? "Written by" : "Écrit par";
+  const byRole = isEn ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora";
+  const profileHref = isEn ? "/en/about" : "/about";
+  const profileLabel = isEn ? "View author profile" : "Voir le profil auteur";
+  const byline = `  <p class="byline">${escapeHtml(byLabel)} <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a> — ${escapeHtml(byRole)}. <a href="${profileHref}">${escapeHtml(profileLabel)}</a></p>`;
+
   return `<main lang="${lang}">
   <h1>${escapeHtml(loc.title)}</h1>
+${byline}
   <figure>
     <img src="${escapeHtml(absoluteSiteUrl(post.image))}" alt="${escapeHtml(loc.title)}" width="1200" height="900" loading="eager" />
   </figure>
@@ -1838,7 +1855,13 @@ function buildPlexGuideSchemas(loc: "fr" | "en"): object[] {
       description: p.metaDescription,
       url,
       inLanguage: loc === "en" ? "en-CA" : "fr-CA",
-      author: { "@type": "Person", name: AUTHOR_NAME },
+      author: {
+        "@type": "Person",
+        name: AUTHOR_NAME,
+        url: `${SITE_URL}/about`,
+        jobTitle: "Founder, Gestion Velora",
+        worksFor: { "@id": ORG_ID },
+      },
       publisher: { "@id": ORG_ID },
       dateModified: `${FIGURES_VERIFIED}-01`,
       citation: REFERENCE_FIGURES.map((f) => ({

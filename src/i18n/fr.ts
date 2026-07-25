@@ -21,6 +21,7 @@ export const fr = {
 
   // Stats
   stats: {
+    units: "Unités sous gestion",
     buildings: "Immeubles sous gestion",
     occupancy: "Taux d'occupation",
     response: "Équipe de réponse",
@@ -462,7 +463,7 @@ export const fr = {
       metaDescription:
         "Gestion Velora accompagne les syndicats de copropriété à Montréal avec une administration claire, financière et opérationnelle, disponible 24/7.",
       description:
-        "Gestion Velora est une firme spécialisée dans l'administration complète des syndicats de copropriétaires à Montréal. Nous assurons la régie administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Votre gestionnaire attitré assure la transparence pour le conseil d'administration et chaque copropriétaire.",
+        "Gestion Velora est une firme spécialisée dans l'administration complète des syndicats de copropriétaires à Montréal. Nous assurons la régie administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Votre gestionnaire attitré assure la transparence pour le conseil d'administration et chaque copropriétaire. Notre équipe administre 500 unités réparties dans plus de 10 immeubles du Grand Montréal.",
       offerings: [
         {
           title: "Administration de syndicat de copropriété",
@@ -567,7 +568,7 @@ export const fr = {
       metaDescription:
         "Gestion Airbnb à Montréal : annonces, voyageurs, ménage, maintenance, tarification et conformité municipale pour locations courte durée.",
       description:
-        "Gestion Velora s'occupe de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est pris en charge.",
+        "Gestion Velora s'occupe de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est pris en charge. Notre équipe opère 500 unités au total dans le Grand Montréal, avec une disponibilité 24/7 pour les urgences.",
       offerings: [
         {
           title: "Réservations et tarification",
@@ -637,7 +638,7 @@ export const fr = {
       metaDescription:
         "Gestion locative à Montréal pour propriétaires : sélection des locataires, baux, loyers, entretien, rapports et suivi TAL.",
       description:
-        "Gestion Velora gère vos immeubles locatifs à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable.",
+        "Gestion Velora gère vos immeubles locatifs à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable. Sur les 500 unités que nous gérons dans le Grand Montréal, le taux d'occupation se maintient à 98 %.",
       offerings: [
         {
           title: "Sélection des locataires",
@@ -723,7 +724,7 @@ export const fr = {
       metaDescription:
         "Gestion de condo à Montréal : administration quotidienne, finances, entretien, communication et soutien aux copropriétaires.",
       description:
-        "Vous cherchez une firme de gestion de condo à Montréal ? Gestion Velora agit comme gestionnaire de copropriété et assure l'administration complète de votre condo : syndicat de copropriété, budget, fonds de prévoyance, entretien des parties communes, assemblée générale et conformité Loi 141. Nos professionnels interviennent dans tous les quartiers de Montréal et la grande région métropolitaine.",
+        "Vous cherchez une firme de gestion de condo à Montréal ? Gestion Velora agit comme gestionnaire de copropriété et assure l'administration complète de votre condo : syndicat de copropriété, budget, fonds de prévoyance, entretien des parties communes, assemblée générale et conformité Loi 141. Nos professionnels interviennent dans tous les quartiers de Montréal et la grande région métropolitaine, sur un parc de 500 unités suivi par une équipe de réponse disponible 24/7.",
       offerings: [
         {
           title: "Administration du syndicat de condo",
@@ -813,7 +814,7 @@ export const fr = {
       metaDescription:
         "Gestionnaire de copropriété à Montréal pour conseils d'administration : gouvernance, budget, Loi 141, entretien et rapports clairs.",
       description:
-        "Gestion Velora est une firme spécialisée en gestion de copropriété à Montréal. Nos gestionnaires de copropriété prennent en charge l'ensemble des obligations du syndicat : administration, comptabilité, fonds de prévoyance, gestion des parties communes, assemblée générale et conformité à la Loi 141. Nous sommes le partenaire de confiance des conseils d'administration qui souhaitent déléguer la gestion quotidienne à des professionnels.",
+        "Gestion Velora est une firme spécialisée en gestion de copropriété à Montréal. Nos gestionnaires de copropriété prennent en charge l'ensemble des obligations du syndicat : administration, comptabilité, fonds de prévoyance, gestion des parties communes, assemblée générale et conformité à la Loi 141. Nous sommes le partenaire de confiance des conseils d'administration qui souhaitent déléguer la gestion quotidienne à des professionnels. Gestion Velora gère un portefeuille de 500 unités et maintient un taux d'occupation de 98 %.",
       offerings: [
         {
           title: "Rôle et missions du gestionnaire de copropriété",

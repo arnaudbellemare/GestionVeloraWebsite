@@ -5,6 +5,7 @@ import { CountUp } from "./CountUp";
 import { useGoToContact } from "../hooks/useGoToContact";
 
 const statKeys = [
+  { value: "500", key: "units" },
   { value: "10+", key: "buildings" },
   { value: "98%", key: "occupancy" },
   { value: "24/7", key: "response" },
@@ -18,10 +19,10 @@ export function StatsSection() {
   return (
     <section id="proof-stats" className="pt-24 lg:pt-32 pb-12 lg:pb-16 px-6 lg:px-16 bg-nd-canvas scroll-mt-24">
       <div className="max-w-[90rem] mx-auto">
-        <div className="grid grid-cols-2 gap-x-4 gap-y-0 sm:gap-8 lg:grid-cols-4 lg:gap-x-0 lg:gap-y-0 divide-y lg:divide-y-0 lg:divide-x divide-nd-border">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-0 sm:gap-8 lg:grid-cols-5 lg:gap-x-0 lg:gap-y-0 divide-y lg:divide-y-0 lg:divide-x divide-nd-border">
           {statKeys.map((stat, i) => (
             <ScrollReveal key={stat.key} delay={i * 0.08}>
-              <div className="py-6 sm:py-8 lg:py-0 lg:px-12 first:lg:pl-0 last:lg:pr-0 text-center min-w-0">
+              <div className="py-6 sm:py-8 lg:py-0 lg:px-6 xl:px-8 first:lg:pl-0 last:lg:pr-0 text-center min-w-0 max-lg:last:col-span-2">
                 <p
                   className={`font-stat-numeral font-semibold text-3xl sm:text-4xl lg:text-5xl text-nd-display mb-2 leading-none tracking-[-0.02em] ${
                     stat.value === "24/7" ? "tracking-[0em]" : ""
