@@ -46,6 +46,7 @@
 | 2026-05-02 | `709f00b` | Dedupe FAQ JSON-LD on `/faq` (runtime vs prerender). |
 | 2026-05-02 | `d3377dc` | Location template internal linking + locations index breadth; sitemap regen. |
 | 2026-05-02 | `9871432` | Expanded location inventory + priority matrix tooling—**review under GEO-SCALE-001**. |
+| 2026-07-24 | `cca31d7` | Real operating figures (500 units, 98% occupancy, 24/7) across StatsSection, all five service descriptions per locale, Organization JSON-LD, and `llms.txt` grounding facts, with source attribution. Visible byline added to standard prerendered blog posts (previously AMP-only); Article `author.url` repointed from site root to `/about` with `jobTitle`, `worksFor`, `sameAs`. |
 | 2026-07-24 | _pending_ | GEO audit follow-up. Prerendered pages now emit a crawlable site nav inside `#root` (React replaces it on mount): the delivered homepage HTML went from 16 hrefs / 4 content links to 33, ending orphan status for `/compare` + `/locations` and exposing the trust pages. H2/H3 gain slugified `id` anchors for section-level citation (0% → 100%, 2290 headings, no duplicates). Footer gains `/methodology`, `/sources`, `/trust-proof` so the prerendered nav mirrors real UI. Four service `metaTitle`s per locale differentiated (were 85–89% similar). `llms.txt` + `/services/gestion-condo` keyword coverage. |
 
 ---
@@ -55,3 +56,5 @@
 - Mass `FAQPage` injection on pages without matching visible FAQ content.
 - “More pages = more SEO” without uniqueness or demand proof.
 - Claiming CWV fixes alone guarantee ranking changes.
+- **Chasing the text-to-HTML ratio by externalising the inlined CSS.** Decided 2026-07-24. A GEO audit flags the homepage at 5.4% (threshold 10%); 70% of the page is the inlined Tailwind bundle. Measured: 63.5 KB raw but **11.3 KB gzipped**, and the whole document is 18.7 KB gzipped. Externalising would lift the ratio to 16.7% while adding a render-blocking request and undoing the deliberate LCP optimisation in `vite.config.ts`. The ratio is a raw-byte proxy; the audit separately reports `is_thin_content: False` and an evergreen score of 92. **Keep the inline CSS.** Revisit only if LCP headroom appears or the audit starts measuring compressed bytes.
+- **Fabricated `aggregateRating` / `Review` markup.** The site has no customer reviews (`#testimonials` is the partner-logo strip); inventing ratings would breach Google's structured-data policy. Blocked pending real, verifiable review data.
