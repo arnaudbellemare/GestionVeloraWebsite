@@ -18,7 +18,11 @@
         background: transparent;
         color: #ffffff;
       }
-      #root[data-gv-boot="ready"] > main {
+      /* Prerendered crawl shell (see scripts/prerender.ts): <main> + site nav are
+         injected into #root. Keep them in the DOM for crawlers but never visible,
+         otherwise they paint as raw unstyled text until React clears the container. */
+      #root[data-gv-boot="ready"] > main,
+      #root[data-gv-boot="ready"] > .gv-prerender-only {
         position: absolute;
         width: 1px;
         height: 1px;

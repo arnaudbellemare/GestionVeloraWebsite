@@ -233,7 +233,7 @@ function buildSiteNavHtml(locale: "fr" | "en"): string {
     items.map(([href, label]) => `<li><a href="${href}">${escapeHtml(label)}</a></li>`).join("");
 
   return [
-    `<nav class="gv-site-nav" aria-label="${escapeHtml(t.aria)}">`,
+    `<nav class="gv-site-nav gv-prerender-only" aria-label="${escapeHtml(t.aria)}">`,
     `<ul>`,
     group([
       [`${p}/services`, t.servicesHub],
