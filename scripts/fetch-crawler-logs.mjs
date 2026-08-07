@@ -17,7 +17,7 @@
  *   node scripts/fetch-crawler-logs.mjs --out crawler.log
  */
 
-import { list, head } from "@vercel/blob";
+import { list, get } from "@vercel/blob";
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -80,15 +80,14 @@ async function main() {
   let combined = "";
   let bytes = 0;
   for (const b of blobs) {
-    // Private blobs are not fetchable from the URL alone; head() gives a
-    // token-authorised download URL.
-    const meta = await head(b.url, { token });
-    const res = await fetch(meta.downloadUrl ?? b.downloadUrl ?? b.url);
-    if (!res.ok) {
-      console.error(`  ! skip ${b.pathname}: HTTP ${res.status}`);
+    // Private blobs return 403 from a bare URL fetch by design — the read has
+    // to go through get(), which authorises with the store token.
+    const r = await get(b.pathname, { token, access: "private" });
+    if (r.statusCode !== 200 || !r.stream) {
+      console.error(`  ! skip ${b.pathname}: status ${r.statusCode}`);
       continue;
     }
-    const text = await res.text();
+    const text = await new Response(r.stream).text();
     combined += text.endsWith("\n") ? text : text + "\n";
     bytes += b.size;
   }

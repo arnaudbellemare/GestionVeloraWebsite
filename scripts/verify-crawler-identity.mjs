@@ -189,26 +189,41 @@ function parseRecords(text) {
   const records = new Map(); // ip -> Set<ua>
   let structured = 0;
 
-  for (const line of text.split("\n")) {
-    if (!line.includes("CRAWLER")) continue;
+  const add = (ip, ua) => {
+    if (!ip || !parseIp(ip)) return false;
+    if (!records.has(ip)) records.set(ip, new Set());
+    records.get(ip).add(ua ?? "");
+    return true;
+  };
 
-    // Prefer the unwrapped message when this is a Vercel/JSON-wrapped line.
-    let haystack = line;
+  for (const line of text.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    let outer = null;
     try {
-      const outer = JSON.parse(line);
-      if (typeof outer?.message === "string") haystack = outer.message;
+      outer = JSON.parse(trimmed);
     } catch {
-      /* not wrapped — use the raw line */
+      /* not a JSON line */
     }
 
+    // Shape 1: a record written by scripts/fetch-crawler-logs.mjs from the
+    // log drain — already normalised, no CRAWLER prefix.
+    if (outer && typeof outer === "object" && outer.ip && !outer.message) {
+      if (add(outer.ip, outer.ua)) structured++;
+      continue;
+    }
+
+    if (!trimmed.includes("CRAWLER")) continue;
+
+    // Shape 2: `vercel logs --json` wraps the line as {"message":"CRAWLER {…}"}.
+    // Shape 3: a bare `CRAWLER {…}` line.
+    const haystack = typeof outer?.message === "string" ? outer.message : trimmed;
     const i = haystack.indexOf("CRAWLER {");
     if (i === -1) continue;
     try {
       const { ip, ua } = JSON.parse(haystack.slice(i + "CRAWLER ".length));
-      if (!ip || !parseIp(ip)) continue;
-      if (!records.has(ip)) records.set(ip, new Set());
-      records.get(ip).add(ua ?? "");
-      structured++;
+      if (add(ip, ua)) structured++;
     } catch {
       /* truncated line */
     }
