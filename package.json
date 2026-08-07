@@ -13,7 +13,9 @@
     "seo:location-evaluate": "tsx scripts/evaluate-location-pages.ts",
     "seo:vercel-redirects": "node scripts/generate-vercel-location-redirects.mjs",
     "sitemap": "tsx scripts/generate-sitemap.ts",
-    "test:plex": "tsx scripts/verify-plex-calculator.ts"
+    "test:plex": "tsx scripts/verify-plex-calculator.ts",
+    "crawlers:fetch": "node scripts/fetch-crawler-logs.mjs",
+    "crawlers:verify": "node scripts/verify-crawler-identity.mjs --file crawler-drained.log"
   },
   "dependencies": {
     "@vercel/blob": "^2.7.0",
