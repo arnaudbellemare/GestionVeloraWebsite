@@ -56,9 +56,41 @@ const BEST_INTENT_WEIGHTS: Record<string, number> = {
   "gestion-immobiliere-commerciale": 6,
 };
 
+/**
+ * Per-service overrides on CITY_WEIGHTS.
+ *
+ * Sparse on purpose. CITY_WEIGHTS is service-agnostic, which is usually fine —
+ * a dense, expensive borough is a good market for most of these services at
+ * once. An entry belongs here only where something verifiable makes one service
+ * materially weaker or stronger in one city than the shared weight implies.
+ * A hunch about which neighbourhood "feels" strong for a service is not enough;
+ * that is how invented statistics get encoded as if they were measured.
+ */
+const SERVICE_CITY_WEIGHTS: Record<string, Record<string, number>> = {
+  "gestion-airbnb": {
+    // Montréal prohibits short-term tourist rental of a PRINCIPAL RESIDENCE
+    // outright in these three boroughs, while allowing it elsewhere on the
+    // island from 10 June to 10 September with a permit.
+    //
+    // Suppressed rather than retired: commercial "résidence de tourisme" may
+    // still be permitted in certain sectors, and the city does not publish the
+    // list, so the pages are not provably worthless — just a poor use of a
+    // priority slot when the common form of the service is banned there.
+    //
+    // Source: https://montreal.ca/sujets/hebergement-touristique-court-terme
+    lachine: 1,
+    "saint-laurent": 1,
+    "saint-leonard": 1,
+  },
+};
+
 export const PRIORITY_LOCATION_ROUTE_LIMIT = 100;
 
-function cityWeight(citySlug: string): number {
+function cityWeight(citySlug: string, serviceSlug?: string): number {
+  if (serviceSlug) {
+    const override = SERVICE_CITY_WEIGHTS[serviceSlug]?.[citySlug];
+    if (override !== undefined) return override;
+  }
   return CITY_WEIGHTS[citySlug] ?? 4;
 }
 
@@ -71,7 +103,9 @@ function intentWeight(serviceSlug: string): number {
 }
 
 export function locationSeoScore(serviceSlug: string, citySlug: string): number {
-  return cityWeight(citySlug) * 10 + serviceWeight(serviceSlug) * 10 + intentWeight(serviceSlug) * 5;
+  return cityWeight(citySlug, serviceSlug) * 10
+    + serviceWeight(serviceSlug) * 10
+    + intentWeight(serviceSlug) * 5;
 }
 
 // The limit counts slugs, not slug x locale rows. Each slug is scored once and
