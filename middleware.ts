@@ -121,6 +121,13 @@ export default function middleware(request: Request) {
     return next();
   }
 
+  // API routes are not content. Skipping them also keeps the log-drain receiver
+  // from recording its own deliveries, which would feed the drain back to
+  // itself.
+  if (path.startsWith("/api/")) {
+    return next();
+  }
+
   // Page requests only — assets short-circuit above, so this stays signal.
   logCrawlerHit(request, path);
 
