@@ -177,16 +177,34 @@ const UNVERIFIABLE_AGENTS = [
   { owner: "Telegram", re: /TelegramBot/i },
 ];
 
-/** Read `CRAWLER {json}` lines emitted by middleware.ts, else bare IPs. */
+/**
+ * Read `CRAWLER {json}` lines emitted by middleware.ts, else bare IPs.
+ *
+ * `vercel logs --json` wraps each line as {"message":"CRAWLER {...}"}, so the
+ * payload arrives escaped and must be unwrapped before it will parse. Raw
+ * console output (or a log drain writing plain lines) has it unescaped. Both
+ * shapes are accepted.
+ */
 function parseRecords(text) {
   const records = new Map(); // ip -> Set<ua>
   let structured = 0;
 
   for (const line of text.split("\n")) {
-    const i = line.indexOf("CRAWLER {");
+    if (!line.includes("CRAWLER")) continue;
+
+    // Prefer the unwrapped message when this is a Vercel/JSON-wrapped line.
+    let haystack = line;
+    try {
+      const outer = JSON.parse(line);
+      if (typeof outer?.message === "string") haystack = outer.message;
+    } catch {
+      /* not wrapped — use the raw line */
+    }
+
+    const i = haystack.indexOf("CRAWLER {");
     if (i === -1) continue;
     try {
-      const { ip, ua } = JSON.parse(line.slice(i + "CRAWLER ".length));
+      const { ip, ua } = JSON.parse(haystack.slice(i + "CRAWLER ".length));
       if (!ip || !parseIp(ip)) continue;
       if (!records.has(ip)) records.set(ip, new Set());
       records.get(ip).add(ua ?? "");
