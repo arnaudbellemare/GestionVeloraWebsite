@@ -1,3 +1,7 @@
+import {
+  lookupCmhcRent, type CmhcGeoLevel, type CmhcReliability,
+} from './cmhc-rents';
+
 export type PropertyType = 'duplex' | 'triplex' | 'quadruplex' | 'fiveplex-plus' | 'condo' | 'house-flip';
 
 export interface PropertyUnitRule {
@@ -232,6 +236,14 @@ export interface DealInputs {
   inspectionFees: number;
   environmentalAssessment: number;
   titleInsurance: number;
+  /** Lender-ordered appraisal. Routinely required on multi-unit financing. */
+  appraisalFees: number;
+  /**
+   * Mortgage broker fee as a share of the loan. Zero on most residential
+   * deals, where the lender pays the broker; commonly ~1% on CMHC/MLI Select
+   * files, where the borrower does.
+   */
+  mortgageBrokerPct: number;
   // Appreciation
   annualAppreciation: number;
   annualExpenseGrowth: number;
@@ -264,10 +276,27 @@ export interface ClosingCostBreakdown {
   inspectionFees: number;
   environmentalAssessment: number;
   titleInsurance: number;
+  appraisalFees: number;
+  /** mortgageBrokerPct applied to the loan actually advanced. */
+  mortgageBrokerFee: number;
   /** Quebec tax on the insurance premium. Not GST/QST: see INSURANCE_PREMIUM_TAX_RATE. */
   premiumTaxOnCmhc: number;
   totalClosingCosts: number;
   totalCashAtClosing: number; // down payment + closing costs (cash portion)
+}
+
+/** One unit row measured against the CMHC survey average for its size. */
+export interface CmhcUnitComparison {
+  id: string;
+  label: string;
+  count: number;
+  currentRent: number;
+  cmhcRent: number;
+  /** Signed: negative means the unit is under the survey average. */
+  deltaPct: number;
+  reliability: CmhcReliability;
+  geography: string;
+  level: CmhcGeoLevel;
 }
 
 export interface DealResults {
@@ -327,6 +356,21 @@ export interface DealResults {
   irr: number; // levered before-tax IRR over the selected hold
   afterTaxIrr: number;
   npv: number; // NPV at discount rate
+  // ─── CMHC benchmark ───
+  cmhcUnits: CmhcUnitComparison[];
+  /**
+   * Annualized shortfall of the units sitting below the CMHC average, ignoring
+   * those already above it. Units over the benchmark are not netted off: a
+   * sitting tenant's rent cannot be reduced, so their surplus is not available
+   * to offset another unit's gap.
+   */
+  cmhcOptimizationAnnual: number;
+  /** That shortfall as a share of current gross rent. */
+  cmhcOptimizationPct: number;
+  /** Coarsest geography any unit fell back to, for labelling the total. */
+  cmhcGeography: string;
+  cmhcLevel: CmhcGeoLevel;
+
   // ─── Unit mix & proforma (in-place vs. market rents) ───
   totalUnits: number;
   netRSF: number;
@@ -1397,6 +1441,10 @@ const BASE_INPUTS: DealInputs = {
   inspectionFees: 600,
   environmentalAssessment: 0,
   titleInsurance: 350,
+  appraisalFees: 500,
+  // Default off: the residential track opens the calculator, and there the
+  // lender normally pays the broker. The MLI Select presets turn it on.
+  mortgageBrokerPct: 0,
   annualAppreciation: 0.03,
   annualExpenseGrowth: 0.02,
   // 2026 TAL base component. This is not a universal cap: tax, insurance and
@@ -1467,6 +1515,43 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const monthlyRentAll = mix.currentMonthlyRent;
   const annualRent = monthlyRentAll * 12;
   const effectiveGrossIncome = annualRent * (1 - inputs.vacancyRate);
+
+  // ─── CMHC benchmark ───
+  // Measures each unit against the survey average for its size in this area.
+  // Coarser geographies rank higher so the summary label reports the weakest
+  // provenance behind the total rather than the strongest.
+  const geoRank: Record<CmhcGeoLevel, number> = { neighbourhood: 0, zone: 1, cma: 2 };
+  let worstGeo = { geography: '', level: 'neighbourhood' as CmhcGeoLevel, rank: -1 };
+  let cmhcShortfallMonthly = 0;
+
+  const cmhcUnits: CmhcUnitComparison[] = inputs.unitMix.map((u) => {
+    const bedrooms = UNIT_TYPES[u.label as UnitTypeLabel]?.bedrooms ?? 1;
+    const point = lookupCmhcRent(inputs.areaKey, bedrooms);
+    const count = Math.max(0, u.count);
+
+    if (u.currentRent < point.rent) {
+      cmhcShortfallMonthly += (point.rent - u.currentRent) * count;
+    }
+    const rank = geoRank[point.level];
+    if (rank > worstGeo.rank) {
+      worstGeo = { geography: point.geography, level: point.level, rank };
+    }
+
+    return {
+      id: u.id,
+      label: u.label,
+      count,
+      currentRent: u.currentRent,
+      cmhcRent: point.rent,
+      deltaPct: point.rent > 0 ? (u.currentRent - point.rent) / point.rent : 0,
+      reliability: point.reliability,
+      geography: point.geography,
+      level: point.level,
+    };
+  });
+
+  const cmhcOptimizationAnnual = cmhcShortfallMonthly * 12;
+  const cmhcOptimizationPct = annualRent > 0 ? cmhcOptimizationAnnual / annualRent : 0;
 
   // Proforma income: every unit turned over to market rent, unless the
   // statement carries a manual override for that line.
@@ -1593,6 +1678,10 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     }
   }
 
+  // Charged on the loan advanced, so it follows the leverage: a 95% MLI file
+  // carries a materially larger broker fee than a conventional one.
+  const mortgageBrokerFee = baseLoanAmount * inputs.mortgageBrokerPct;
+
   const closingCosts: ClosingCostBreakdown = {
     welcomeTax,
     cmhcPremium: insurancePremium,
@@ -1601,9 +1690,12 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     inspectionFees: inputs.inspectionFees,
     environmentalAssessment: inputs.environmentalAssessment,
     titleInsurance: inputs.titleInsurance,
+    appraisalFees: inputs.appraisalFees,
+    mortgageBrokerFee,
     premiumTaxOnCmhc: premiumTax,
     totalClosingCosts: welcomeTax + inputs.notaryFees + inputs.inspectionFees +
       inputs.environmentalAssessment + inputs.titleInsurance +
+      inputs.appraisalFees + mortgageBrokerFee +
       premiumTax, // cash portion (the premium itself goes on the loan)
     totalCashAtClosing: 0, // calculated below
   };
@@ -1780,8 +1872,11 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const flipSellingCosts = arv * inputs.sellingCostsPct;
   // No welcome tax on the sale side: in Quebec the buyer pays it, not the seller.
   const holdingCosts = (paymentPerPeriod * inputs.holdingMonths) + (totalOperatingExpenses / 12 * inputs.holdingMonths);
+  // Takes the whole closing block rather than re-listing lines: enumerating them
+  // here meant every cost added to ClosingCostBreakdown silently skipped the
+  // flip math. totalClosingCosts already carries the welcome tax.
   const flipTotalCost = inputs.purchasePrice + inputs.rehabBudget + flipSellingCosts +
-    holdingCosts + welcomeTax + inputs.notaryFees + inputs.inspectionFees;
+    holdingCosts + closingCosts.totalClosingCosts;
   const flipProfit = inputs.propertyType === 'house-flip' ? arv - flipTotalCost : 0;
   const flipROI = inputs.propertyType === 'house-flip' && flipTotalCost > 0 ? flipProfit / (equityAmount + inputs.rehabBudget + closingCosts.totalClosingCosts) : 0;
 
@@ -1946,6 +2041,11 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     dscrYear1,
     grm, operatingExpenseRatio, ltv, breakEvenRatio, pricePerDoor, rentToPrice1Pct,
     irr, afterTaxIrr, npv,
+    cmhcUnits,
+    cmhcOptimizationAnnual,
+    cmhcOptimizationPct,
+    cmhcGeography: worstGeo.geography,
+    cmhcLevel: worstGeo.level,
     totalUnits, netRSF, costPerRSF, pricePerUnit: pricePerDoor,
     currentMonthlyRent: monthlyRentAll, proformaMonthlyRent, rentUpsideMonthly,
     purchaseCapRate, proformaCapRate, proformaNoi, proformaCashFlow,
@@ -2128,6 +2228,164 @@ export function calculatePaybackYears(inputs: DealInputs, results: DealResults):
   }
 
   return { cashFlowPayback, totalReturnPayback };
+}
+
+// ─── Financing comparison ──────────────────────────────────────────
+
+export type FinancingScenarioKey =
+  | 'conventional' | 'cmhc-standard' | 'mli-50' | 'mli-70' | 'mli-100';
+
+/**
+ * Indicative rates by track, in the order a broker would quote them.
+ *
+ * Insured money is cheaper than conventional because the lender's risk is
+ * covered, which is most of why MLI Select pencils at all. These are starting
+ * points for comparison, not quotes: an actual rate depends on term, lender
+ * and covenant.
+ */
+export const INDICATIVE_RATES: Record<FinancingScenarioKey, number> = {
+  conventional: 0.0550,
+  'cmhc-standard': 0.0420,
+  'mli-50': 0.0380,
+  'mli-70': 0.0380,
+  'mli-100': 0.0380,
+};
+
+/** Broker fee by track. Conventional files are normally lender-paid. */
+const SCENARIO_BROKER_PCT: Record<FinancingScenarioKey, number> = {
+  conventional: 0,
+  'cmhc-standard': 0.01,
+  'mli-50': 0.01,
+  'mli-70': 0.01,
+  'mli-100': 0.01,
+};
+
+export interface FinancingScenario {
+  key: FinancingScenarioKey;
+  /** True for the track the user currently has selected. */
+  isCurrent: boolean;
+  /** Set when the structure is unavailable for this property, with the reason. */
+  unavailable?: string;
+  downPayment: number;
+  totalCashRequired: number;
+  insurancePremium: number;
+  totalLoan: number;
+  monthlyPayment: number;
+  amortizationYears: number;
+  rate: number;
+  ltv: number;
+  monthlyCashFlow: number;
+  annualCashFlow: number;
+  cashOnCash: number;
+  irr5: number;
+  irr10: number;
+  dscr: number;
+  netSaleYear5: number;
+  netSaleYear10: number;
+}
+
+/** Conventional multi-unit lenders cap leverage here; nothing insures the gap. */
+const CONVENTIONAL_LTV_CAP = 0.75;
+
+/**
+ * Turns a scenario key into the inputs that express that structure.
+ *
+ * On the commercial track the loan is sized from NOI against `maxLtv`, so the
+ * tier's leverage has to be set there. Setting `equityPct` does nothing outside
+ * the residential branch, where the down payment drives the loan instead.
+ */
+function scenarioInputs(base: DealInputs, key: FinancingScenarioKey): DealInputs {
+  const rate = INDICATIVE_RATES[key];
+  const brokerPct = SCENARIO_BROKER_PCT[key];
+
+  if (key === 'conventional') {
+    return {
+      ...base, financingMode: 'commercial', annualInterestRate: rate,
+      renewalRate: rate, loanLifeYears: 25, maxLtv: CONVENTIONAL_LTV_CAP,
+      mortgageBrokerPct: brokerPct,
+    };
+  }
+  if (key === 'cmhc-standard') {
+    return {
+      ...base, financingMode: 'residential', annualInterestRate: rate,
+      renewalRate: rate, loanLifeYears: 25, mortgageBrokerPct: brokerPct,
+    };
+  }
+
+  const points: MliPoints = key === 'mli-100' ? 100 : key === 'mli-70' ? 70 : 50;
+  const terms = mliSelectTerms(points);
+  return {
+    ...base, financingMode: 'mli-select', mliPoints: points,
+    annualInterestRate: rate, renewalRate: rate,
+    loanLifeYears: terms.maxAmortization,
+    // Take the leverage the tier allows; that is the point of buying points.
+    maxLtv: terms.maxLtv,
+    mortgageBrokerPct: brokerPct,
+  };
+}
+
+/**
+ * Why a structure cannot be shown for this property, or undefined if it can.
+ *
+ * The residential branch is the only one that prices CMHC purchase insurance,
+ * and it stops at four units. Standard multi-unit insurance above that exists
+ * in the market but is not modelled here, so the scenario is withheld rather
+ * than rendered with a zero premium that would read as free insurance.
+ */
+function scenarioUnavailable(key: FinancingScenarioKey, units: number): string | undefined {
+  if (key === 'cmhc-standard' && units > 4) {
+    return 'Assurance SCHL standard non modélisée au-delà de 4 logements — voir MLI Select';
+  }
+  return undefined;
+}
+
+/**
+ * Runs every financing structure through the same calculateDeal the headline
+ * numbers use, so the comparison cannot drift from the main analysis.
+ *
+ * IRR is computed at both 5 and 10 years because the ranking genuinely flips
+ * between them: high-leverage MLI tiers look worse on year-1 cash-on-cash and
+ * better on IRR, since less equity is tied up for the same appreciation.
+ */
+export function compareFinancing(inputs: DealInputs): FinancingScenario[] {
+  const keys: FinancingScenarioKey[] = [
+    'conventional', 'cmhc-standard', 'mli-50', 'mli-70', 'mli-100',
+  ];
+
+  const currentKey: FinancingScenarioKey =
+    inputs.financingMode === 'mli-select'
+      ? (inputs.mliPoints >= 100 ? 'mli-100' : inputs.mliPoints >= 70 ? 'mli-70' : 'mli-50')
+      : inputs.financingMode === 'residential' ? 'cmhc-standard' : 'conventional';
+
+  const units = summarizeUnitMix(inputs).totalUnits || inputs.numberOfUnits;
+
+  return keys.map((key) => {
+    const variant = scenarioInputs(inputs, key);
+    const at5 = calculateDeal({ ...variant, exitYear: 5 });
+    const at10 = calculateDeal({ ...variant, exitYear: 10 });
+
+    return {
+      key,
+      isCurrent: key === currentKey,
+      unavailable: scenarioUnavailable(key, units) ?? at5.insuranceNote,
+      downPayment: at5.equityAmount,
+      totalCashRequired: at5.totalEquityInvested,
+      insurancePremium: at5.closingCosts.cmhcPremium,
+      totalLoan: at5.effectiveLoanAmount,
+      monthlyPayment: at5.annualDebtService / 12,
+      amortizationYears: variant.loanLifeYears,
+      rate: variant.annualInterestRate,
+      ltv: at5.ltv,
+      monthlyCashFlow: at5.btCashFlowMonthly,
+      annualCashFlow: at5.btCashFlowYear1,
+      cashOnCash: at5.cashOnCashBtYear1,
+      irr5: at5.irr,
+      irr10: at10.irr,
+      dscr: at5.dscrYear1,
+      netSaleYear5: at5.exitAnalysis.netProfitAfterTax,
+      netSaleYear10: at10.exitAnalysis.netProfitAfterTax,
+    };
+  });
 }
 
 // ─── Deal Analysis / Verdict ───────────────────────────────────────
