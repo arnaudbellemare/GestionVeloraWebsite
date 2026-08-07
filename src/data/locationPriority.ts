@@ -55,26 +55,22 @@ export function locationSeoScore(serviceSlug: string, citySlug: string): number 
   return cityWeight(citySlug) * 10 + serviceWeight(serviceSlug) * 10 + intentWeight(serviceSlug) * 5;
 }
 
+// The limit counts slugs, not slug x locale rows. Each slug is scored once and
+// deduped *before* the slice; ranking rows per locale first would let the fr/en
+// pair of the same slug consume two of the 100 seats and silently halve the
+// indexable set.
 const PRIORITY_LOCATION_SLUGS = Array.from(
   new Set(
-    (["fr", "en"] as const)
-      .flatMap((locale) =>
-        LOCATION_SERVICES.flatMap((service) =>
-          CITIES.map((city) => ({
-            slug: `${service.slug}-${city.slug}`,
-            route:
-              locale === "fr"
-                ? `/location/${service.slug}-${city.slug}`
-                : `/en/location/${service.slug}-${city.slug}`,
-            score: locationSeoScore(service.slug, city.slug),
-          }))
-        )
-      )
+    LOCATION_SERVICES.flatMap((service) =>
+      CITIES.map((city) => ({
+        slug: `${service.slug}-${city.slug}`,
+        score: locationSeoScore(service.slug, city.slug),
+      }))
+    )
       .sort((a, b) => b.score - a.score)
-      .slice(0, PRIORITY_LOCATION_ROUTE_LIMIT)
       .map((entry) => entry.slug)
   )
-);
+).slice(0, PRIORITY_LOCATION_ROUTE_LIMIT);
 
 const PRIORITY_LOCATION_SLUG_SET = new Set(PRIORITY_LOCATION_SLUGS);
 

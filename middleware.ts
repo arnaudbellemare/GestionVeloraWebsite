@@ -10,6 +10,42 @@ const CANONICAL_HOST = "www.gestionvelora.com";
 const APEX_HOST = "gestionvelora.com";
 const PUBLIC_FILE_RE = /\.(?:css|js|mjs|map|json|xml|txt|ico|png|jpe?g|webp|avif|gif|svg|mp4|webm|woff2?|otf|ttf|glb)$/i;
 
+/**
+ * Self-declared crawlers we want an audit trail for. A User-Agent proves
+ * nothing on its own — it is attacker-controlled text — so we record the source
+ * IP alongside it. `scripts/verify-crawler-identity.mjs` consumes these lines
+ * and checks each IP against the operator's announced prefixes (Meta/AS32934)
+ * or forward-confirmed reverse DNS (Google/Bing/OpenAI/Anthropic).
+ *
+ * Without this, nothing about bot traffic is verifiable after the fact: static
+ * pages are served from the CDN without invoking a function, so they produce no
+ * runtime log line, and no log drain is configured to retain one.
+ */
+const CRAWLER_UA_RE =
+  /(meta-external|meta-webindexer|facebookexternalhit|facebookbot|WhatsApp|Twitterbot|Discordbot|Slackbot|TelegramBot|Googlebot|Google-Extended|Bingbot|GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-SearchBot|anthropic-ai|PerplexityBot|Perplexity-User|CCBot|Applebot|Bytespider|Amazonbot)/i;
+
+/**
+ * One JSON line per crawler hit, into Vercel runtime logs. Bots only: human
+ * traffic is never logged, which keeps this both privacy-preserving and
+ * low-volume enough to stay within log retention.
+ */
+function logCrawlerHit(request: Request, path: string): void {
+  const ua = request.headers.get("user-agent");
+  if (!ua || !CRAWLER_UA_RE.test(ua)) return;
+
+  // Vercel sets x-real-ip to the true client IP; x-forwarded-for is a chain
+  // whose leftmost entry is the client. Both are set by the edge, not the
+  // caller, so they cannot be forged by the requester.
+  const ip =
+    request.headers.get("x-real-ip") ??
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+    "unknown";
+
+  console.log(
+    `CRAWLER ${JSON.stringify({ ip, ua, path, ts: new Date().toISOString() })}`
+  );
+}
+
 /** Minimal HTML 404 so bots/users see a real error body, not soft-redirect to home. */
 const NOT_FOUND_HTML = `<!DOCTYPE html>
 <html lang="fr">
@@ -84,6 +120,9 @@ export default function middleware(request: Request) {
   if (PUBLIC_FILE_RE.test(path)) {
     return next();
   }
+
+  // Page requests only — assets short-circuit above, so this stays signal.
+  logCrawlerHit(request, path);
 
   const m = path.match(/^\/(?:en\/)?location\/([^/]+)\/?$/);
   if (!m) {
