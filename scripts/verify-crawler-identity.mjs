@@ -36,6 +36,36 @@ const ASN_OWNERS = [
   { asn: "AS32934", owner: "Meta / Facebook", agents: [/^meta-/i, /facebookexternalhit/i, /facebookbot/i, /WhatsApp/i] },
 ];
 
+/**
+ * Platforms that publish their crawler IP ranges as JSON. Same shape in every
+ * case: {prefixes: [{ipv4Prefix | ipv6Prefix}]}. This is stronger than rDNS
+ * where available — the operator is committing to an explicit list.
+ */
+const PUBLISHED_LISTS = [
+  {
+    owner: "Perplexity",
+    urls: [
+      "https://www.perplexity.ai/perplexitybot.json",
+      "https://www.perplexity.ai/perplexity-user.json",
+    ],
+    agents: [/PerplexityBot/i, /Perplexity-User/i],
+  },
+  {
+    owner: "OpenAI",
+    urls: [
+      "https://openai.com/gptbot.json",
+      "https://openai.com/searchbot.json",
+      "https://openai.com/chatgpt-user.json",
+    ],
+    agents: [/GPTBot/i, /OAI-SearchBot/i, /ChatGPT-User/i],
+  },
+  {
+    owner: "Google",
+    urls: ["https://developers.google.com/static/search/apis/ipranges/googlebot.json"],
+    agents: [/googlebot/i, /google-extended/i],
+  },
+];
+
 /** Platforms verifiable by forward-confirmed reverse DNS. */
 const RDNS_OWNERS = [
   { owner: "Google",    agents: [/googlebot/i, /google-extended/i, /apis-google/i], suffixes: [".googlebot.com", ".google.com", ".googleusercontent.com"] },
@@ -129,6 +159,43 @@ async function fetchAsnPrefixes(asn, refresh) {
       }
     } catch (e) {
       console.error(`  ! whois ${asn} (${flag}) failed: ${e.shortMessage ?? e.message}`);
+    }
+  }
+
+  const list = [...prefixes];
+  if (list.length) {
+    await mkdir(CACHE_DIR, { recursive: true });
+    await writeFile(cacheFile, JSON.stringify({ fetchedAt: Date.now(), prefixes: list }));
+  }
+  return list;
+}
+
+async function fetchPublishedPrefixes(owner, urls, refresh) {
+  const cacheFile = path.join(CACHE_DIR, `published-${owner.replace(/\W+/g, "-")}.json`);
+  if (!refresh) {
+    try {
+      const raw = JSON.parse(await readFile(cacheFile, "utf8"));
+      if (Date.now() - raw.fetchedAt < 24 * 3600e3 && raw.prefixes?.length) return raw.prefixes;
+    } catch {
+      /* cold cache */
+    }
+  }
+
+  const prefixes = new Set();
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, {
+        headers: { "user-agent": "Mozilla/5.0 (crawler-identity-verifier)" },
+        redirect: "follow",
+      });
+      if (!res.ok) continue;
+      const doc = await res.json();
+      for (const p of doc?.prefixes ?? []) {
+        const cidr = p.ipv4Prefix ?? p.ipv6Prefix;
+        if (cidr) prefixes.add(cidr);
+      }
+    } catch (e) {
+      console.error(`  ! ${owner} ${url}: ${e.message}`);
     }
   }
 
@@ -267,6 +334,13 @@ async function main() {
     asnMap.set(o.asn, p);
     console.log(`  ${o.owner} (${o.asn}): ${p.length} prefixes`);
   }
+
+  const publishedMap = new Map();
+  for (const o of PUBLISHED_LISTS) {
+    const p = await fetchPublishedPrefixes(o.owner, o.urls, refresh);
+    publishedMap.set(o.owner, p);
+    console.log(`  ${o.owner} (published list): ${p.length} prefixes`);
+  }
   console.log(`\nChecking ${records.size} unique IP(s)\n`);
 
   const tally = { genuine: 0, spoofed: 0, unverifiable: 0, unknown: 0 };
@@ -286,6 +360,15 @@ async function main() {
       }
     }
     if (!actual) {
+      for (const o of PUBLISHED_LISTS) {
+        const prefixes = publishedMap.get(o.owner) ?? [];
+        if (prefixes.some((c) => inCidr(info, c))) {
+          actual = { owner: o.owner, how: "IP inside published crawler range" };
+          break;
+        }
+      }
+    }
+    if (!actual) {
       for (const o of RDNS_OWNERS) {
         const r = await verifyRdns(ip, o.suffixes);
         if (r.ok) { actual = { owner: o.owner, how: `FCrDNS ${r.detail}` }; break; }
@@ -294,14 +377,16 @@ async function main() {
 
     // Who does the User-Agent claim to be?
     const claimedAsn = ASN_OWNERS.find((o) => o.agents.some((re) => re.test(uaText)));
+    const claimedPub = PUBLISHED_LISTS.find((o) => o.agents.some((re) => re.test(uaText)));
     const claimedRdns = RDNS_OWNERS.find((o) => o.agents.some((re) => re.test(uaText)));
     const claimedUnver = UNVERIFIABLE_AGENTS.find((o) => o.re.test(uaText));
-    const claimed = claimedAsn?.owner ?? claimedRdns?.owner ?? claimedUnver?.owner ?? null;
+    const claimed =
+      claimedAsn?.owner ?? claimedPub?.owner ?? claimedRdns?.owner ?? claimedUnver?.owner ?? null;
 
     let label, note;
     if (claimed && actual && claimed === actual.owner) {
       label = "GENUINE"; note = actual.how; tally.genuine++;
-    } else if (claimed && (claimedAsn || claimedRdns) && !actual) {
+    } else if (claimed && (claimedAsn || claimedPub || claimedRdns) && !actual) {
       let ptr = "no PTR";
       try { ptr = (await dns.reverse(ip)).join(", "); } catch { /* none */ }
       label = "SPOOFED"; note = `claims ${claimed}, but IP is not theirs (rDNS: ${ptr})`; tally.spoofed++;
