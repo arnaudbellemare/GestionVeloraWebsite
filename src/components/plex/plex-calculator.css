@@ -447,3 +447,110 @@
   --pc-bad-bg: #2c1a1b;  --pc-bad-fg: #e08a86;
   --pc-info-bg: #14252f; --pc-info-fg: #7dc0ea;
 }
+
+/* ── CMHC benchmark ──
+   Built entirely on the --pc-* variables so the dark block above retints it
+   without a second set of rules. */
+.plexc-cmhc-cell {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.plexc-cmhc-rent {
+  font-variant-numeric: tabular-nums;
+  color: var(--pc-ink-2);
+}
+
+.plexc-cmhc-delta {
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+/* Under the survey average reads as headroom, not as a fault, so it takes the
+   warn tint rather than the bad one. */
+.plexc-cmhc-delta.is-under { background: var(--pc-warn-bg); color: var(--pc-warn-fg); }
+.plexc-cmhc-delta.is-over  { background: var(--pc-good-bg); color: var(--pc-good-fg); }
+.plexc-cmhc-delta.is-at    { color: var(--pc-ink-3); }
+
+/* Shown only when the figure fell back to a coarser geography. */
+.plexc-cmhc-geo {
+  font-size: 10.5px;
+  color: var(--pc-ink-3);
+  font-style: italic;
+}
+
+.plexc-cmhc-warn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--pc-warn-bg);
+  color: var(--pc-warn-fg);
+  cursor: help;
+}
+
+.plexc-cmhc-panel {
+  margin-top: 22px;
+  padding: 16px 18px;
+  background: var(--pc-sunken);
+  border: 1px solid var(--pc-border);
+  border-radius: 10px;
+}
+
+.plexc-cmhc-headline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.plexc-cmhc-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pc-ink);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.plexc-cmhc-geo-tag {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--pc-ink-3);
+}
+
+.plexc-cmhc-total {
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.plexc-cmhc-total.is-positive { color: var(--pc-good-fg); }
+.plexc-cmhc-total.is-neutral  { color: var(--pc-ink-3); }
+.plexc-cmhc-total-pct { font-size: 13px; }
+
+.plexc-cmhc-note {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--pc-ink-2);
+  margin: 10px 0 0;
+  max-width: 72ch;
+}
+
+.plexc-cmhc-caveat {
+  border-left: 2px solid var(--pc-border-strong);
+  padding-left: 12px;
+}
+
+.plexc-cmhc-source {
+  font-size: 11px;
+  color: var(--pc-ink-3);
+  margin: 10px 0 0;
+}

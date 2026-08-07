@@ -36,6 +36,7 @@ export interface CalcUi {
   proformaCashFlowNote: string;
   unitsSuffix: string;
   perMonth: string;
+  perYear: string;
   overYears: string;
   yrHold: string;
 
@@ -116,6 +117,16 @@ export interface CalcUi {
   colMonthlyUpside: string;
   remove: string;
   total: string;
+
+  // CMHC benchmark
+  colCmhcRent: string;
+  cmhcOptimizationLabel: string;
+  cmhcOptimizationNote: string;
+  cmhcSourceNote: string;
+  cmhcLowReliability: string;
+  cmhcLevelZone: string;
+  cmhcLevelCma: string;
+  cmhcOccupiedCaveat: string;
   addUnitType: string;
   annualUpside: string;
   grmInPlace: string;
@@ -401,6 +412,7 @@ const fr: CalcUi = {
   proformaCashFlowNote: "tous les logements au marché",
   unitsSuffix: "logements",
   perMonth: "/mois",
+  perYear: "/an",
   overYears: "sur",
   yrHold: "ans de détention",
 
@@ -480,6 +492,16 @@ const fr: CalcUi = {
   colMonthlyUpside: "Potentiel mensuel",
   remove: "Retirer",
   total: "Total",
+  colCmhcRent: "Moyenne SCHL",
+  cmhcOptimizationLabel: "Potentiel d'optimisation",
+  cmhcOptimizationNote:
+    "Somme des écarts des logements sous la moyenne SCHL. Les logements déjà au-dessus ne sont pas soustraits : on ne peut pas baisser le loyer d'un locataire en place.",
+  cmhcSourceNote: "SCHL, Enquête sur les logements locatifs — octobre 2025",
+  cmhcLowReliability: "Échantillon mince (cote D) — à utiliser avec prudence",
+  cmhcLevelZone: "zone SCHL",
+  cmhcLevelCma: "moyenne RMR",
+  cmhcOccupiedCaveat:
+    "Moyenne des logements occupés, pas le loyer demandé à la relocation. Sous le contrôle du TAL, l'écart entre les deux est réel : ce repère indique si les baux en place sont sous-évalués, pas ce que vous obtiendrez demain.",
   addUnitType: "Ajouter un type",
   annualUpside: "Potentiel annuel",
   grmInPlace: "Multiplicateur de revenu brut",
@@ -777,6 +799,7 @@ const en: CalcUi = {
   proformaCashFlowNote: "all units at market",
   unitsSuffix: "units",
   perMonth: "/mo",
+  perYear: "/yr",
   overYears: "over",
   yrHold: "yr hold",
 
@@ -856,6 +879,16 @@ const en: CalcUi = {
   colMonthlyUpside: "Monthly upside",
   remove: "Remove",
   total: "Total",
+  colCmhcRent: "CMHC average",
+  cmhcOptimizationLabel: "Optimization potential",
+  cmhcOptimizationNote:
+    "Sum of the gaps on units below the CMHC average. Units already above are not netted off: a sitting tenant's rent cannot be reduced.",
+  cmhcSourceNote: "CMHC Rental Market Survey — October 2025",
+  cmhcLowReliability: "Thin sample (CMHC code D) — use with caution",
+  cmhcLevelZone: "CMHC zone",
+  cmhcLevelCma: "CMA average",
+  cmhcOccupiedCaveat:
+    "Average across occupied units, not asking rent on turnover. Under TAL rent control the gap between the two is real: this benchmarks whether in-place leases are under-set, not what you will get tomorrow.",
   addUnitType: "Add unit type",
   annualUpside: "Annual upside",
   grmInPlace: "GRM (in-place)",

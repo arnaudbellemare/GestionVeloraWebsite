@@ -649,6 +649,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                 <thead>
                   <tr>
                     <th>{t.colType}</th><th>{t.colUnits}</th><th>{t.colInPlaceRent}</th>
+                    <th>{t.colCmhcRent}</th>
                     <th>{t.colMarketRent}</th><th>{t.colSqftPerUnit}</th>
                     <th>{t.colMonthlyUpside}</th><th></th>
                   </tr>
@@ -658,6 +659,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                     const upside = u.count * Math.max(0, u.marketRent - u.currentRent);
                     const typeValue = (UNIT_TYPE_ORDER.includes(u.label as UnitTypeLabel)
                       ? u.label : "4½") as UnitTypeLabel;
+                    const cmhc = results.cmhcUnits.find((c) => c.id === u.id);
                     return (
                       <tr key={u.id}>
                         <td>
@@ -683,6 +685,31 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                             <input type="number" min={0} step={25} value={u.currentRent} aria-label={t.colInPlaceRent}
                               onChange={(e) => updateUnit(u.id, { currentRent: parseFloat(e.target.value) || 0 })} />
                           </div>
+                        </td>
+                        <td>
+                          {cmhc ? (
+                            <div className="plexc-cmhc-cell">
+                              <span className="plexc-cmhc-rent">{f.currency(cmhc.cmhcRent)}</span>
+                              <span
+                                className={
+                                  "plexc-cmhc-delta " +
+                                  (cmhc.deltaPct < -0.02 ? "is-under"
+                                    : cmhc.deltaPct > 0.02 ? "is-over" : "is-at")
+                                }
+                              >
+                                {cmhc.deltaPct >= 0 ? "+" : ""}
+                                {(cmhc.deltaPct * 100).toFixed(0)}%
+                              </span>
+                              {cmhc.level !== "neighbourhood" && (
+                                <span className="plexc-cmhc-geo">
+                                  {cmhc.level === "zone" ? t.cmhcLevelZone : t.cmhcLevelCma}
+                                </span>
+                              )}
+                              {cmhc.reliability === "d" && (
+                                <span className="plexc-cmhc-warn" title={t.cmhcLowReliability}>!</span>
+                              )}
+                            </div>
+                          ) : "-"}
                         </td>
                         <td>
                           <div className="plexc-input" style={{ maxWidth: 130 }}>
@@ -719,6 +746,39 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
             <div style={{ marginTop: 18 }}>
               <button className="plexc-btn" onClick={addUnit}>{t.addUnitType}</button>
             </div>
+
+            <div className="plexc-cmhc-panel">
+              <div className="plexc-cmhc-headline">
+                <span className="plexc-cmhc-title">
+                  {t.cmhcOptimizationLabel}
+                  {/* The CMA geography already reads "Montréal RMR", so only the
+                      zone level needs the qualifier spelled out. */}
+                  <span className="plexc-cmhc-geo-tag">
+                    {results.cmhcGeography}
+                    {results.cmhcLevel === "zone" ? ` · ${t.cmhcLevelZone}` : ""}
+                  </span>
+                </span>
+                <span
+                  className={
+                    "plexc-cmhc-total " +
+                    (results.cmhcOptimizationAnnual > 0 ? "is-positive" : "is-neutral")
+                  }
+                >
+                  {results.cmhcOptimizationAnnual > 0 ? "+" : ""}
+                  {f.currency(results.cmhcOptimizationAnnual)}
+                  {t.perYear}
+                  {results.cmhcOptimizationPct > 0 && (
+                    <span className="plexc-cmhc-total-pct">
+                      {" "}(+{(results.cmhcOptimizationPct * 100).toFixed(1)}%)
+                    </span>
+                  )}
+                </span>
+              </div>
+              <p className="plexc-cmhc-note">{t.cmhcOptimizationNote}</p>
+              <p className="plexc-cmhc-note plexc-cmhc-caveat">{t.cmhcOccupiedCaveat}</p>
+              <p className="plexc-cmhc-source">{t.cmhcSourceNote}</p>
+            </div>
+
             <div className="plexc-grid4" style={{ marginTop: 26 }}>
               <Readout label={t.annualUpside} value={f.currency(results.rentUpsideMonthly * 12)} />
               <Readout label={t.grmInPlace} value={f.number(results.grm, 1)} />
