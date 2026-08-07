@@ -1371,7 +1371,10 @@ function buildLocationsIndexMainHtml(locale: "fr" | "en"): string {
   const priority = LOCATION_SERVICES.flatMap((service) =>
     CITIES.map((city) => ({ service, city, slug: `${service.slug}-${city.slug}` }))
   ).filter((entry) => isPriorityLocationSlug(entry.slug));
-  const links = priority.slice(0, 80).map(({ service, city, slug }) => {
+  // Every priority slug gets a link. The copy below promises this hub leaves no
+  // isolated pages, so a fixed cap here would silently orphan whatever sits
+  // past it whenever PRIORITY_LOCATION_ROUTE_LIMIT grows.
+  const links = priority.map(({ service, city, slug }) => {
     const href = locale === "fr" ? `/location/${slug}` : `/en/location/${slug}`;
     const label = locale === "fr"
       ? `${service.nameFr} à ${city.nameFr}`
