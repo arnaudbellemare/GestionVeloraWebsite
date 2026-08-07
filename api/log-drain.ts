@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import { put } from "@vercel/blob";
 
 /**
@@ -113,36 +114,54 @@ function toRecord(entry: Record<string, any>): CrawlerRecord | null {
   return null;
 }
 
-export default async function handler(request: Request): Promise<Response> {
-  if (request.method !== "POST") {
-    return new Response(JSON.stringify({ error: "method not allowed" }), {
-      status: 405,
-      headers: { "Content-Type": "application/json" },
-    });
+/**
+ * Body parsing is disabled so the exact bytes Vercel signed reach the HMAC.
+ * Anything that re-serialises the payload first would change the digest.
+ */
+export const config = { api: { bodyParser: false } };
+
+function readRawBody(req: IncomingMessage): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    req.on("data", (c: Buffer | string) =>
+      chunks.push(typeof c === "string" ? Buffer.from(c) : c)
+    );
+    req.on("end", () => resolve(Buffer.concat(chunks)));
+    req.on("error", reject);
+  });
+}
+
+function send(res: ServerResponse, status: number, payload: unknown): void {
+  res.statusCode = status;
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify(payload));
+}
+
+export default async function handler(
+  req: IncomingMessage,
+  res: ServerResponse
+): Promise<void> {
+  if (req.method !== "POST") {
+    return send(res, 405, { error: "method not allowed" });
   }
 
-  const raw = await request.text();
+  const rawBuf = await readRawBody(req);
+  const raw = rawBuf.toString("utf-8");
 
   const secret = process.env.LOG_DRAIN_SECRET;
   if (!secret) {
     // Fail closed: without the secret we cannot tell Vercel from anyone else.
     console.error("log-drain: LOG_DRAIN_SECRET is not set; rejecting delivery");
-    return new Response(JSON.stringify({ error: "not configured" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return send(res, 500, { error: "not configured" });
   }
 
-  const expected = crypto
-    .createHmac("sha1", secret)
-    .update(Buffer.from(raw, "utf-8"))
-    .digest("hex");
-  const provided = request.headers.get("x-vercel-signature") ?? "";
+  const expected = crypto.createHmac("sha1", secret).update(rawBuf).digest("hex");
+  const provided = (req.headers["x-vercel-signature"] as string | undefined) ?? "";
   if (!timingSafeEqual(expected, provided)) {
-    return new Response(
-      JSON.stringify({ code: "invalid_signature", error: "signature didn't match" }),
-      { status: 403, headers: { "Content-Type": "application/json" } }
-    );
+    return send(res, 403, {
+      code: "invalid_signature",
+      error: "signature didn't match",
+    });
   }
 
   const entries = parseEntries(raw);
@@ -176,8 +195,5 @@ export default async function handler(request: Request): Promise<Response> {
     }
   }
 
-  return new Response(
-    JSON.stringify({ received: entries.length, stored: records.length }),
-    { status: 200, headers: { "Content-Type": "application/json" } }
-  );
+  return send(res, 200, { received: entries.length, stored: records.length });
 }
