@@ -43,9 +43,12 @@ function radarPrefill(): DealInputs {
   const grossAnnual = number("grossAnnual");
   const monthlyPerUnit = Math.round(grossAnnual / 12 / units);
   const seeded = applyPropertyPreset(DEFAULT_INPUTS, type);
+  const requestedArea = params.get("areaKey") ?? "villeray";
+  const areaKey = AREAS[requestedArea] ? requestedArea : "outside-gma";
   const commercial = units >= 5 || params.get("mixedUse") === "true";
   return {
     ...seeded,
+    areaKey,
     askingPrice: number("askingPrice"),
     purchasePrice: number("purchasePrice"),
     buildingYear: number("buildingYear") || seeded.buildingYear,

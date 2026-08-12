@@ -1070,7 +1070,7 @@ function calculateNPV(cashFlows: number[], discountRate: number): number {
 }
 
 // ─── Area Bank ─────────────────────────────────────────────────────
-export type Region = 'Montréal' | 'South Shore' | 'North Shore';
+export type Region = 'Montréal' | 'South Shore' | 'North Shore' | 'Other Quebec';
 
 export interface AreaSpec {
   name: string;
@@ -1110,6 +1110,9 @@ export interface AreaSpec {
  * rate alone is 0.4631% before borough and service levies).
  */
 export const AREAS: Record<string, AreaSpec> = {
+  // Imported Radar listings elsewhere in Quebec keep their reported figures,
+  // without pretending that a Montreal neighbourhood benchmark applies.
+  'outside-gma':    { name: 'Hors Grand Montréal', region: 'Other Quebec', isMontrealAgglo: false, priceIndex: 1.00, rentIndex: 1.00, taxRate: 0.0070, note: 'Use reported listing figures' },
   // ── Montreal ──
   'plateau':        { name: 'Le Plateau-Mont-Royal', region: 'Montréal', isMontrealAgglo: true, priceIndex: 1.35, rentIndex: 1.15, taxRate: 0.0068, anchored: true, note: 'Duplexes near $1.05M' },
   'rosemont':       { name: 'Rosemont–La Petite-Patrie', region: 'Montréal', isMontrealAgglo: true, priceIndex: 1.18, rentIndex: 1.08, taxRate: 0.0068, anchored: true, note: 'Plexes average $1.02M' },
@@ -1151,7 +1154,7 @@ export const AREAS: Record<string, AreaSpec> = {
   'repentigny':     { name: 'Repentigny', region: 'North Shore', isMontrealAgglo: false, priceIndex: 0.80, rentIndex: 0.85, taxRate: 0.0070 },
 };
 
-export const REGION_ORDER: Region[] = ['Montréal', 'South Shore', 'North Shore'];
+export const REGION_ORDER: Region[] = ['Montréal', 'South Shore', 'North Shore', 'Other Quebec'];
 
 /** Area keys grouped by region, for a grouped picker. */
 export function areasByRegion(): { region: Region; keys: string[] }[] {

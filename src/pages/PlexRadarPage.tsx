@@ -215,7 +215,7 @@ export default function PlexRadarPage() {
             {selected.expense_policy.lines.map((line) => { const removed = selectedExcluded.includes(line.key); return <article className={removed ? "is-removed" : ""} key={line.key}><span><strong>{line.label}</strong><small>{line.rule}</small></span><span><b>{money.format(line.amount)}</b><em>{line.source === "reported" ? t.reported : t.estimated}</em></span>{line.source === "estimated" && <button aria-label={`${removed ? t.add : t.remove}: ${line.label}`} aria-pressed={removed} onClick={() => toggleExpense(selected.listing.listing_id, line.key)}>{removed ? "+" : "−"}</button>}</article>})}
             <small>{t.notice}</small>
           </section>}
-          <div className="radar-actions"><Link to={calculatorUrl(selected, l)}>{t.calculator}</Link><a href={selected.listing.url} target="_blank" rel="noreferrer">{t.source} ↗</a></div>
+          <div className="radar-actions"><Link to={calculatorUrl(selected, l, selectedExcluded)}>{t.calculator}</Link><a href={selected.listing.url} target="_blank" rel="noreferrer">{t.source} ↗</a></div>
         </aside>}
       </section>
 

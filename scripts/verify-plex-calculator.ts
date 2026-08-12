@@ -163,5 +163,19 @@ assert.equal(radarCalculatorUrl.searchParams.get('listingId'), '12345678');
 assert.equal(radarCalculatorUrl.searchParams.get('purchasePrice'), '1000000');
 assert.equal(radarCalculatorUrl.searchParams.get('management'), '5000');
 assert.equal(radarCalculatorUrl.searchParams.get('hydro'), '3000');
+assert.equal(radarCalculatorUrl.searchParams.get('areaKey'), 'villeray');
+
+const radarScenarioUrl = new URL(
+  calculatorUrl(radarDeal, 'fr', ['management', 'utilities']),
+  'https://www.gestionvelora.com',
+);
+assert.equal(radarScenarioUrl.searchParams.get('management'), '0');
+assert.equal(radarScenarioUrl.searchParams.get('hydro'), '0');
+
+const outsideMontrealUrl = new URL(calculatorUrl({
+  ...radarDeal,
+  listing: { ...radarDeal.listing, city: 'Québec (La Haute-Saint-Charles)' },
+}, 'fr'), 'https://www.gestionvelora.com');
+assert.equal(outsideMontrealUrl.searchParams.get('areaKey'), 'outside-gma');
 
 console.log('Plex financial-model invariants passed.');

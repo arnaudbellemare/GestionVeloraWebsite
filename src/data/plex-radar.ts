@@ -163,9 +163,12 @@ export function calculateRadarScenario(deal: RadarDeal, excludedKeys: string[]):
   return { ...base, ...grade(base, commercial) };
 }
 
-export function calculatorUrl(deal: RadarDeal, locale: RadarLocale): string {
+export function calculatorUrl(deal: RadarDeal, locale: RadarLocale, excluded: string[] = []): string {
   const listing = deal.listing;
-  const lines = Object.fromEntries((deal.expense_policy?.lines ?? []).map((line) => [line.key, line.amount]));
+  const lines = Object.fromEntries((deal.expense_policy?.lines ?? []).map((line) => [
+    line.key,
+    line.source === "estimated" && excluded.includes(line.key) ? 0 : line.amount,
+  ]));
   const params = new URLSearchParams({
     source: "plex-radar",
     listingId: listing.listing_id,
@@ -185,9 +188,24 @@ export function calculatorUrl(deal: RadarDeal, locale: RadarLocale): string {
     capex: String(lines.capex ?? 0),
     mixedUse: String(Boolean(listing.mixed_use)),
     city: listing.city,
+    areaKey: calculatorAreaKey(listing.city),
   });
   const path = locale === "en" ? "/en/montreal-plex-investment-calculator" : "/calculateur-rendement-plex-montreal";
   return `${path}?${params.toString()}`;
+}
+
+function calculatorAreaKey(city: string): string {
+  const value = city.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+  const matches: Array<[string, string[]]> = [
+    ["saint-leonard", ["saint-leonard"]], ["hochelaga", ["hochelaga"]],
+    ["ahuntsic", ["ahuntsic"]], ["anjou", ["anjou"]], ["villeray", ["villeray", "saint-michel", "parc-extension"]],
+    ["saint-laurent", ["saint-laurent"]], ["longueuil", ["longueuil"]], ["greenfield-park", ["greenfield park"]],
+    ["laval", ["laval"]], ["boisbriand", ["boisbriand"]], ["brossard", ["brossard"]],
+    ["boucherville", ["boucherville"]], ["chambly", ["chambly"]], ["terrebonne", ["terrebonne"]],
+    ["repentigny", ["repentigny"]], ["mirabel", ["mirabel"]], ["blainville", ["blainville"]],
+  ];
+  return matches.find(([, names]) => names.some((name) => value.includes(name)))?.[0]
+    ?? (value.includes("montreal") ? "villeray" : "outside-gma");
 }
 
 export const RADAR_META = {
