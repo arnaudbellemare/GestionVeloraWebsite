@@ -30,6 +30,7 @@ const copy = {
     results: "résultats", sorted: "Triés par score de rendement", perDoor: "/ porte",
     newDeal: "Nouveau au radar", mixedUse: "usage mixte", close: "Fermer l’analyse",
     prioritize: "À prioriser", analyze: "À analyser", watch: "À surveiller", lowPriority: "Rendement faible",
+    positiveFlow: "CF positif / mois", negativeFlow: "Déficit / mois", neutralFlow: "CF nul / mois",
     cap: "Taux cap.", cash: "Flux / mois", score: "Score", published: "Analyse publiée",
     scenario: "Scénario personnalisé", reported: "Rapporté", estimated: "Estimé",
     expenses: "Dépenses d’exploitation", restore: "Revenir au publié",
@@ -52,6 +53,7 @@ const copy = {
     results: "results", sorted: "Sorted by investment score", perDoor: "/ door",
     newDeal: "New to the radar", mixedUse: "mixed use", close: "Close analysis",
     prioritize: "Prioritize", analyze: "Analyze", watch: "Watch", lowPriority: "Low return",
+    positiveFlow: "Positive CF / mo", negativeFlow: "Deficit / mo", neutralFlow: "Break-even / mo",
     cap: "Cap rate", cash: "Cash flow / mo", score: "Score",
     published: "Published analysis", scenario: "Custom scenario", reported: "Reported", estimated: "Estimated",
     expenses: "Operating expenses", restore: "Restore published", calculator: "Open in the full calculator", source: "View source listing",
@@ -72,6 +74,12 @@ function dealVerdict(score: number, t: typeof copy.fr | typeof copy.en) {
   if (score >= 6) return { label: t.analyze, tone: "analyze" };
   if (score >= 3) return { label: t.watch, tone: "watch" };
   return { label: t.lowPriority, tone: "low" };
+}
+
+function cashFlowState(value: number, t: typeof copy.fr | typeof copy.en) {
+  if (value > 0) return { tone: "positive", label: t.positiveFlow };
+  if (value < 0) return { tone: "negative", label: t.negativeFlow };
+  return { tone: "neutral", label: t.neutralFlow };
 }
 
 export default function PlexRadarPage() {
@@ -156,6 +164,7 @@ export default function PlexRadarPage() {
           <div className="radar-list">
             {filtered.map((deal, index) => {
               const verdict = dealVerdict(deal.live?.score ?? 0, t);
+              const cashFlow = cashFlowState(deal.live?.monthlyCashFlow ?? 0, t);
               const isSelected = selected?.listing.listing_id === deal.listing.listing_id;
               return <article key={deal.listing.listing_id} className={isSelected ? "is-selected" : ""}>
                 <button className="radar-row-main" onClick={() => openDeal(deal.listing.listing_id)} aria-label={`${deal.listing.address} — ${verdict.label}`}>
@@ -163,7 +172,7 @@ export default function PlexRadarPage() {
                   <span className="radar-property"><strong>{deal.listing.address}</strong><small>{deal.listing.property_type} · {deal.listing.city} · {deal.listing.units} {l === "fr" ? "portes" : "doors"}{deal.listing.mixed_use ? ` · ${t.mixedUse}` : ""}</small>{deal.lifecycle?.event_type === "first-seen" && <em>{t.newDeal}</em>}</span>
                   <span className="radar-price"><strong>{money.format(deal.listing.price)}</strong><small>{money.format(deal.listing.price / Math.max(1, deal.listing.units))} {t.perDoor}</small></span>
                   <span className="radar-cap"><strong>{deal.live ? pct.format(deal.live.capRate) : "—"}</strong><small>CAP</small></span>
-                  <span className="radar-flow"><strong>{deal.live ? money.format(deal.live.monthlyCashFlow) : "—"}</strong><small>{l === "fr" ? "CF / mois" : "CF / mo"}</small></span>
+                  <span className={`radar-flow is-${cashFlow.tone}`}><strong>{deal.live ? money.format(deal.live.monthlyCashFlow) : "—"}</strong><small>{cashFlow.label}</small></span>
                   <span className={`radar-verdict is-${verdict.tone}`}>{verdict.label}</span>
                 </button>
               </article>;
@@ -176,7 +185,7 @@ export default function PlexRadarPage() {
           <button className="radar-drawer-close" aria-label={t.close} onClick={() => setDetailOpen(false)}>×</button>
           <div className="radar-analysis-head"><div><p>{selectedExcluded.length ? t.scenario : t.published}</p><h2 id="radar-dossier-title">{selected.listing.address}</h2><small>{selected.listing.city} · {selected.listing.units} portes · {selected.listing.year_built ?? "—"}</small></div><strong>{selected.live.score}<small>/12</small></strong></div>
           <div className="radar-kpis"><article><span>{t.cap}</span><strong>{pct.format(selected.live.capRate)}</strong></article><article><span>Cash-on-cash</span><strong>{pct.format(selected.live.cashOnCash)}</strong></article><article><span>DSCR</span><strong>{selected.live.dscr.toFixed(2)}×</strong></article><article><span>MRB</span><strong>{selected.live.grm.toFixed(1)}×</strong></article></div>
-          <div className="radar-cash"><span>{t.cash}</span><strong>{money.format(selected.live.monthlyCashFlow)}</strong><small>{money.format(selected.live.cashFlowPerDoor)} / porte</small></div>
+          <div className={`radar-cash is-${cashFlowState(selected.live.monthlyCashFlow, t).tone}`}><span>{cashFlowState(selected.live.monthlyCashFlow, t).label}</span><strong>{money.format(selected.live.monthlyCashFlow)}</strong><small>{money.format(selected.live.cashFlowPerDoor)} / porte</small></div>
           {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
             <details><summary>{t.definitionTitle}</summary><p>{t.definition}</p></details>
             {selected.expense_policy.lines.map((line) => { const removed = selectedExcluded.includes(line.key); return <article className={removed ? "is-removed" : ""} key={line.key}><span><strong>{line.label}</strong><small>{line.rule}</small></span><span><b>{money.format(line.amount)}</b><em>{line.source === "reported" ? t.reported : t.estimated}</em></span>{line.source === "estimated" && <button aria-label={`${removed ? t.add : t.remove}: ${line.label}`} aria-pressed={removed} onClick={() => toggleExpense(selected.listing.listing_id, line.key)}>{removed ? "+" : "−"}</button>}</article>})}
