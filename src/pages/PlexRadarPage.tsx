@@ -32,6 +32,10 @@ const copy = {
     prioritize: "À prioriser", analyze: "À analyser", watch: "À surveiller", lowPriority: "Rendement faible",
     positiveFlow: "CF positif / mois", negativeFlow: "Déficit / mois", neutralFlow: "CF nul / mois",
     cap: "Taux cap.", cash: "Flux / mois", score: "Score", published: "Analyse publiée",
+    capHelp: "Revenu net d’exploitation annuel divisé par le prix demandé. Il mesure le rendement de l’immeuble avant financement.",
+    cashOnCashHelp: "Flux de trésorerie annuel après financement divisé par la mise de fonds et les frais initiaux estimés.",
+    dscrHelp: "Revenu net d’exploitation divisé par les paiements annuels de la dette. Au-dessus de 1, l’immeuble couvre sa dette.",
+    grmHelp: "Prix demandé divisé par les revenus locatifs bruts annuels. Un multiple plus bas indique généralement un prix plus favorable par rapport aux revenus.",
     scenario: "Scénario personnalisé", reported: "Rapporté", estimated: "Estimé",
     expenses: "Dépenses d’exploitation", restore: "Revenir au publié",
     calculator: "Analyser dans le calculateur complet", source: "Voir la fiche source",
@@ -55,6 +59,10 @@ const copy = {
     prioritize: "Prioritize", analyze: "Analyze", watch: "Watch", lowPriority: "Low return",
     positiveFlow: "Positive CF / mo", negativeFlow: "Deficit / mo", neutralFlow: "Break-even / mo",
     cap: "Cap rate", cash: "Cash flow / mo", score: "Score",
+    capHelp: "Annual net operating income divided by asking price. It measures the property return before financing.",
+    cashOnCashHelp: "Annual cash flow after financing divided by the estimated down payment and initial cash invested.",
+    dscrHelp: "Net operating income divided by annual debt payments. Above 1 means the property covers its debt.",
+    grmHelp: "Asking price divided by annual gross rental income. A lower multiple generally indicates a more favorable price relative to income.",
     published: "Published analysis", scenario: "Custom scenario", reported: "Reported", estimated: "Estimated",
     expenses: "Operating expenses", restore: "Restore published", calculator: "Open in the full calculator", source: "View source listing",
     definitionTitle: "Understanding estimates", definition: "Management covers an external manager’s fees. Owner-paid utilities cover electricity, heating or common services paid by the owner.",
@@ -80,6 +88,13 @@ function cashFlowState(value: number, t: typeof copy.fr | typeof copy.en) {
   if (value > 0) return { tone: "positive", label: t.positiveFlow };
   if (value < 0) return { tone: "negative", label: t.negativeFlow };
   return { tone: "neutral", label: t.neutralFlow };
+}
+
+function MetricInfo({ id, label, description }: { id: string; label: string; description: string }) {
+  return <span className="radar-metric-info">
+    <button type="button" aria-label={`${label}: ${description}`} aria-describedby={id}>i</button>
+    <span className="radar-metric-tooltip" id={id} role="tooltip">{description}</span>
+  </span>;
 }
 
 export default function PlexRadarPage() {
@@ -188,7 +203,12 @@ export default function PlexRadarPage() {
         {detailOpen && selected?.live && <aside className="radar-analysis is-open" role="dialog" aria-modal="true" aria-labelledby="radar-dossier-title">
           <button className="radar-drawer-close" aria-label={t.close} onClick={() => setDetailOpen(false)}>×</button>
           <div className="radar-analysis-head"><div><p>{selectedExcluded.length ? t.scenario : t.published}</p><h2 id="radar-dossier-title">{selected.listing.address}</h2><small>{selected.listing.city} · {selected.listing.units} portes · {selected.listing.year_built ?? "—"}</small></div><strong>{selected.live.score}<small>/12</small></strong></div>
-          <div className="radar-kpis"><article><span>{t.cap}</span><strong>{pct.format(selected.live.capRate)}</strong></article><article><span>Cash-on-cash</span><strong>{pct.format(selected.live.cashOnCash)}</strong></article><article><span>DSCR</span><strong>{selected.live.dscr.toFixed(2)}×</strong></article><article><span>MRB</span><strong>{selected.live.grm.toFixed(1)}×</strong></article></div>
+          <div className="radar-kpis">
+            <article><div className="radar-kpi-label"><span>{t.cap}</span><MetricInfo id="radar-cap-help" label={t.cap} description={t.capHelp} /></div><strong>{pct.format(selected.live.capRate)}</strong></article>
+            <article><div className="radar-kpi-label"><span>Cash-on-cash</span><MetricInfo id="radar-coc-help" label="Cash-on-cash" description={t.cashOnCashHelp} /></div><strong>{pct.format(selected.live.cashOnCash)}</strong></article>
+            <article><div className="radar-kpi-label"><span>DSCR</span><MetricInfo id="radar-dscr-help" label="DSCR" description={t.dscrHelp} /></div><strong>{selected.live.dscr.toFixed(2)}×</strong></article>
+            <article><div className="radar-kpi-label"><span>MRB</span><MetricInfo id="radar-grm-help" label="MRB" description={t.grmHelp} /></div><strong>{selected.live.grm.toFixed(1)}×</strong></article>
+          </div>
           <div className={`radar-cash is-${cashFlowState(selected.live.monthlyCashFlow, t).tone}`}><span>{cashFlowState(selected.live.monthlyCashFlow, t).label}</span><strong>{money.format(selected.live.monthlyCashFlow)}</strong><small>{money.format(selected.live.cashFlowPerDoor)} / porte</small></div>
           {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
             <details><summary>{t.definitionTitle}</summary><p>{t.definition}</p></details>
