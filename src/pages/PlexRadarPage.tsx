@@ -158,7 +158,11 @@ export default function PlexRadarPage() {
           <div className="radar-filters">
             <input aria-label={t.search} placeholder={t.search} value={query} onChange={(event) => setQuery(event.target.value)} />
             <span className="radar-select"><select aria-label={t.all} value={region} onChange={(event) => setRegion(event.target.value)}>{regions.map((item) => <option key={item}>{item}</option>)}</select></span>
-            <label className="radar-positive"><input type="checkbox" checked={positive} onChange={(event) => setPositive(event.target.checked)} /><span aria-hidden="true" /> {t.positive}</label>
+            <label className="radar-positive">
+              <input type="checkbox" checked={positive} onChange={(event) => setPositive(event.target.checked)} />
+              <span className="radar-switch-track" aria-hidden="true" />
+              <span className="radar-positive-label">{t.positive}</span>
+            </label>
           </div>
           <div className="radar-count"><span>{filtered.length} {t.results}</span><span>{t.sorted}</span></div>
           <div className="radar-list">
