@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocale } from "../context/LocaleContext";
 import {
@@ -21,6 +21,7 @@ const copy = {
     title: "Immeubles à revenus à vendre, analysés chaque jour.",
     intro: "Un premier tri des duplex, triplex, quadruplex et quintuplex récemment publiés, avec rendement, financement québécois et dépenses clairement identifiées.",
     daily: "Parution quotidienne",
+    release: "Parution affichée", latest: "Plus récente", historical: "Parution historique", loadingRelease: "Chargement de la parution…",
     failure: "échec", failures: "échecs", loading: "Chargement…",
     properties: "propriétés",
     analyzed: "analysées",
@@ -52,6 +53,7 @@ const copy = {
     title: "Income properties for sale, analyzed daily.",
     intro: "A first-pass review of newly published duplexes, triplexes, fourplexes and fiveplexes using returns, Quebec financing and clearly identified expenses.",
     daily: "Daily release", properties: "properties", analyzed: "analyzed",
+    release: "Displayed release", latest: "Latest", historical: "Historical release", loadingRelease: "Loading release…",
     failure: "failure", failures: "failures", loading: "Loading…",
     search: "Search a city or address…", all: "All regions", positive: "Positive cash flow",
     results: "results", sorted: "Sorted by investment score", perDoor: "/ door",
@@ -102,6 +104,10 @@ export default function PlexRadarPage() {
   const l = (locale === "en" ? "en" : "fr") as RadarLocale;
   const t = copy[l];
   const [feed, setFeed] = useState<RadarFeed | null>(null);
+  const [releases, setReleases] = useState<string[]>([]);
+  const [loadingRelease, setLoadingRelease] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const historyRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState(false);
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState<string>(t.all);
@@ -112,12 +118,64 @@ export default function PlexRadarPage() {
 
   useEffect(() => {
     const controller = new AbortController();
-    fetch("/api/plex-radar", { signal: controller.signal, cache: "no-store" })
-      .then((response) => response.ok ? response.json() : Promise.reject())
-      .then((payload: RadarFeed) => { setFeed(payload); setSelectedId(payload.deals[0]?.listing.listing_id ?? ""); })
+    const requestedRelease = new URLSearchParams(window.location.search).get("release");
+    const feedUrl = requestedRelease && /^\d{4}-\d{2}-\d{2}$/.test(requestedRelease)
+      ? `/api/plex-radar?release=${encodeURIComponent(requestedRelease)}`
+      : "/api/plex-radar";
+    Promise.all([
+      fetch(feedUrl, { signal: controller.signal, cache: "no-store" }),
+      fetch("/api/plex-radar?history=1", { signal: controller.signal, cache: "no-store" }),
+    ])
+      .then(async ([feedResponse, historyResponse]) => {
+        if (!feedResponse.ok) throw new Error("feed-unavailable");
+        const payload = await feedResponse.json() as RadarFeed;
+        setFeed(payload);
+        setSelectedId(payload.deals[0]?.listing.listing_id ?? "");
+        if (historyResponse.ok) {
+          const history = await historyResponse.json() as { releases?: string[] };
+          setReleases(history.releases ?? []);
+        }
+      })
       .catch(() => { if (!controller.signal.aborted) setError(true); });
     return () => controller.abort();
   }, []);
+
+  const loadRelease = (release: string) => {
+    if (!release || release === feed?.release) return;
+    setHistoryOpen(false);
+    setLoadingRelease(true);
+    setError(false);
+    fetch(`/api/plex-radar?release=${encodeURIComponent(release)}`, { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error("release-unavailable")))
+      .then((payload: RadarFeed) => {
+        setFeed(payload);
+        setSelectedId(payload.deals[0]?.listing.listing_id ?? "");
+        setDetailOpen(false);
+        setExcluded({});
+        const url = new URL(window.location.href);
+        const latestRelease = releases[0];
+        if (latestRelease && payload.release !== latestRelease) url.searchParams.set("release", payload.release);
+        else url.searchParams.delete("release");
+        window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+      })
+      .catch(() => setError(true))
+      .finally(() => setLoadingRelease(false));
+  };
+
+  useEffect(() => {
+    if (!historyOpen) return;
+    const closeHistory = (event: MouseEvent | KeyboardEvent) => {
+      if (event instanceof KeyboardEvent && event.key !== "Escape") return;
+      if (event instanceof MouseEvent && historyRef.current?.contains(event.target as Node)) return;
+      setHistoryOpen(false);
+    };
+    document.addEventListener("mousedown", closeHistory);
+    document.addEventListener("keydown", closeHistory);
+    return () => {
+      document.removeEventListener("mousedown", closeHistory);
+      document.removeEventListener("keydown", closeHistory);
+    };
+  }, [historyOpen]);
 
   useEffect(() => {
     if (!detailOpen) return;
@@ -145,7 +203,11 @@ export default function PlexRadarPage() {
   }).sort((a, b) => (b.live?.score ?? -1) - (a.live?.score ?? -1) || (b.live?.capRate ?? -1) - (a.live?.capRate ?? -1));
   const selected = modeled.find((deal) => deal.listing.listing_id === selectedId) ?? filtered[0] ?? modeled[0];
   const selectedExcluded = selected ? excluded[selected.listing.listing_id] ?? [] : [];
-  const stale = feed ? Date.now() - new Date(feed.generated_at).valueOf() > 30 * 60 * 60 * 1000 : false;
+  const isHistorical = Boolean(feed && releases[0] && feed.release !== releases[0]);
+  const stale = feed && !isHistorical ? Date.now() - new Date(feed.generated_at).valueOf() > 30 * 60 * 60 * 1000 : false;
+  const releaseLabel = (release: string) => new Intl.DateTimeFormat(l === "fr" ? "fr-CA" : "en-CA", {
+    year: "numeric", month: "short", day: "numeric", timeZone: "UTC",
+  }).format(new Date(`${release}T12:00:00Z`));
 
   const toggleExpense = (dealId: string, key: string) => setExcluded((current) => {
     const keys = current[dealId] ?? [];
@@ -163,8 +225,9 @@ export default function PlexRadarPage() {
         <p>{t.kicker}</p><h1>{t.title}</h1><div className="radar-hero-bottom"><p>{t.intro}</p><dl><div><dt>{t.properties}</dt><dd>{feed?.deals.length ?? "—"}</dd></div><div><dt>{t.analyzed}</dt><dd>{modeled.filter((deal) => deal.live).length || "—"}</dd></div></dl></div>
       </header>
       <aside className={`radar-release ${stale || error ? "is-warning" : ""}`}>
-        <strong>{error ? t.unavailable : stale ? t.stale : t.daily}</strong>
-        <span>{feed ? `${feed.release} · ${feed.failure_count ?? 0} ${(feed.failure_count ?? 0) === 1 ? t.failure : t.failures}` : t.loading}</span>
+        <div className="radar-release-status"><strong>{error ? t.unavailable : isHistorical ? t.historical : stale ? t.stale : t.daily}</strong>
+        <span>{loadingRelease ? t.loadingRelease : feed ? `${feed.release} · ${feed.failure_count ?? 0} ${(feed.failure_count ?? 0) === 1 ? t.failure : t.failures}` : t.loading}</span></div>
+        <div className="radar-history-picker" ref={historyRef}><span>{t.release}</span><div className="radar-history-select"><button type="button" aria-haspopup="listbox" aria-expanded={historyOpen} disabled={!feed || loadingRelease || releases.length < 2} onClick={() => setHistoryOpen((open) => !open)}>{feed ? releaseLabel(feed.release) : "—"}</button>{historyOpen && <div className="radar-history-menu" role="listbox" aria-label={t.release}>{releases.map((release, index) => <button type="button" role="option" aria-selected={release === feed?.release} key={release} onClick={() => loadRelease(release)}><span>{releaseLabel(release)}</span>{index === 0 && <small>{t.latest}</small>}</button>)}</div>}</div></div>
         <small>{feed?.expense_policy_version ?? RADAR_META[l].title}</small>
       </aside>
 
