@@ -75,7 +75,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
           .map((blob) => blob.pathname.slice(RELEASE_PREFIX.length).replace(/\.json$/, ""))
           .filter((release) => RELEASE_DATE.test(release))
           .sort((a, b) => b.localeCompare(a));
-        return send(res, 200, { releases }, "public, max-age=60, stale-while-revalidate=300");
+        return send(res, 200, { releases }, "no-store");
       }
       const release = url.searchParams.get("release");
       if (release && !RELEASE_DATE.test(release)) return send(res, 400, { error: "Invalid release date" });

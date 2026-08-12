@@ -106,6 +106,7 @@ export default function PlexRadarPage() {
   const [feed, setFeed] = useState<RadarFeed | null>(null);
   const [releases, setReleases] = useState<string[]>([]);
   const [loadingRelease, setLoadingRelease] = useState(false);
+  const [loadingHistory, setLoadingHistory] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const historyRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState(false);
@@ -124,7 +125,7 @@ export default function PlexRadarPage() {
       : "/api/plex-radar";
     Promise.all([
       fetch(feedUrl, { signal: controller.signal, cache: "no-store" }),
-      fetch("/api/plex-radar?history=1", { signal: controller.signal, cache: "no-store" }),
+      fetch(`/api/plex-radar?history=1&t=${Date.now()}`, { signal: controller.signal, cache: "no-store" }),
     ])
       .then(async ([feedResponse, historyResponse]) => {
         if (!feedResponse.ok) throw new Error("feed-unavailable");
@@ -139,6 +140,26 @@ export default function PlexRadarPage() {
       .catch(() => { if (!controller.signal.aborted) setError(true); });
     return () => controller.abort();
   }, []);
+
+  const openHistory = () => {
+    if (!feed || loadingRelease || loadingHistory) return;
+    if (historyOpen) {
+      setHistoryOpen(false);
+      return;
+    }
+    setLoadingHistory(true);
+    fetch(`/api/plex-radar?history=1&t=${Date.now()}`, { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error("history-unavailable")))
+      .then((payload: { releases?: string[] }) => {
+        setReleases(payload.releases?.length ? payload.releases : [feed.release]);
+        setHistoryOpen(true);
+      })
+      .catch(() => {
+        setReleases((current) => current.length ? current : [feed.release]);
+        setHistoryOpen(true);
+      })
+      .finally(() => setLoadingHistory(false));
+  };
 
   const loadRelease = (release: string) => {
     if (!release || release === feed?.release) return;
@@ -227,7 +248,7 @@ export default function PlexRadarPage() {
       <aside className={`radar-release ${stale || error ? "is-warning" : ""}`}>
         <div className="radar-release-status"><strong>{error ? t.unavailable : isHistorical ? t.historical : stale ? t.stale : t.daily}</strong>
         <span>{loadingRelease ? t.loadingRelease : feed ? `${feed.release} · ${feed.failure_count ?? 0} ${(feed.failure_count ?? 0) === 1 ? t.failure : t.failures}` : t.loading}</span></div>
-        <div className="radar-history-picker" ref={historyRef}><span>{t.release}</span><div className="radar-history-select"><button type="button" aria-haspopup="listbox" aria-expanded={historyOpen} disabled={!feed || loadingRelease || releases.length < 2} onClick={() => setHistoryOpen((open) => !open)}>{feed ? releaseLabel(feed.release) : "—"}</button>{historyOpen && <div className="radar-history-menu" role="listbox" aria-label={t.release}>{releases.map((release, index) => <button type="button" role="option" aria-selected={release === feed?.release} key={release} onClick={() => loadRelease(release)}><span>{releaseLabel(release)}</span>{index === 0 && <small>{t.latest}</small>}</button>)}</div>}</div></div>
+        <div className="radar-history-picker" ref={historyRef}><span>{t.release}</span><div className="radar-history-select"><button type="button" aria-haspopup="listbox" aria-expanded={historyOpen} disabled={!feed || loadingRelease || loadingHistory} onClick={openHistory}>{loadingHistory ? t.loading : feed ? releaseLabel(feed.release) : "—"}</button>{historyOpen && <div className="radar-history-menu" role="listbox" aria-label={t.release}>{(releases.length ? releases : feed ? [feed.release] : []).map((release, index) => <button type="button" role="option" aria-selected={release === feed?.release} key={release} onClick={() => loadRelease(release)}><span>{releaseLabel(release)}</span>{index === 0 && <small>{t.latest}</small>}</button>)}</div>}</div></div>
         <small>{feed?.expense_policy_version ?? RADAR_META[l].title}</small>
       </aside>
 
