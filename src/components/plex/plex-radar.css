@@ -113,7 +113,7 @@
 .radar-select:focus-within { border-color: var(--radar-green); box-shadow: inset 0 0 0 1px var(--radar-green); }
 
 .radar-select { position: relative; display: flex; align-items: center; }
-.radar-select::after { content: "⌄"; position: absolute; top: 50%; right: 14px; color: var(--radar-muted); font-size: 15px; line-height: 1; transform: translateY(-50%); pointer-events: none; }
+.radar-select::after { content: ""; position: absolute; top: 50%; right: 16px; width: 7px; height: 7px; border-right: 1.5px solid var(--radar-muted); border-bottom: 1.5px solid var(--radar-muted); transform: translateY(-70%) rotate(45deg); transform-origin: center; pointer-events: none; }
 .radar-select select { width: 100%; height: 100%; padding: 0 38px 0 14px; border: 0; appearance: none; background: transparent; color: var(--radar-ink); font-size: 14px; outline: 0; }
 
 .radar-positive {
@@ -255,9 +255,12 @@
 .radar-kpis span { display: block; color: var(--radar-muted); font: 8px ui-monospace, monospace; text-transform: uppercase; }
 .radar-kpi-label { display: flex; align-items: center; gap: 5px; }
 .radar-metric-info { position: relative; display: inline-flex !important; }
-.radar-metric-info > button { display: grid; width: 16px; height: 16px; padding: 0; place-items: center; border: 1px solid var(--radar-line-strong); border-radius: 50%; background: transparent; color: var(--radar-muted); font: 700 9px/1 Georgia, serif; cursor: help; }
+.radar-metric-info > button { position: relative; display: grid; width: 18px; height: 18px; padding: 0; place-items: center; border: 0; background: transparent; color: var(--radar-muted); font: 0/1 Georgia, serif; cursor: help; }
+.radar-metric-info > button::before { content: "i"; display: grid; width: 12px; height: 12px; place-items: center; border: 1px solid var(--radar-line-strong); border-radius: 50%; font: 700 7px/1 Georgia, serif; }
 .radar-metric-info > button:hover,
-.radar-metric-info > button:focus-visible { border-color: var(--radar-green); color: var(--radar-green); outline: 0; }
+.radar-metric-info > button:focus-visible { color: var(--radar-green); outline: 2px solid var(--radar-green); outline-offset: 1px; }
+.radar-metric-info > button:hover::before,
+.radar-metric-info > button:focus-visible::before { border-color: var(--radar-green); }
 .radar-metric-tooltip { position: absolute; z-index: 100; bottom: calc(100% + 8px); left: 50%; width: 220px; padding: 10px 12px; border: 1px solid var(--radar-ink); background: var(--radar-ink); color: #fff !important; font: 11px/1.45 sans-serif !important; text-transform: none !important; opacity: 0; visibility: hidden; transform: translate(-50%, 3px); transition: opacity .14s ease, transform .14s ease, visibility .14s; pointer-events: none; }
 .radar-metric-info:hover .radar-metric-tooltip,
 .radar-metric-info:focus-within .radar-metric-tooltip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
