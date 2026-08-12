@@ -44,6 +44,7 @@ import {
   REFERENCE_FIGURES,
   FIGURES_VERIFIED,
 } from "../src/data/plex-calculator.js";
+import { RADAR_META, RADAR_PATHS } from "../src/data/plex-radar.js";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -191,6 +192,7 @@ const NAV_LABELS = {
     tarifs: "Tarifs de gestion immobilière",
     blog: "Blogue — gestion immobilière au Québec",
     calculator: "Calculateur de rendement plex Montréal",
+    radar: "Immeubles à revenus à vendre à Montréal",
     trust: "À propos et transparence",
     about: "À propos de Gestion Velora",
     sources: "Sources et références",
@@ -214,6 +216,7 @@ const NAV_LABELS = {
     tarifs: "Property management pricing",
     blog: "Blog — property management in Quebec",
     calculator: "Montreal plex investment calculator",
+    radar: "Montreal income properties for sale",
     trust: "About and transparency",
     about: "About Gestion Velora",
     sources: "Sources and references",
@@ -249,6 +252,7 @@ function buildSiteNavHtml(locale: "fr" | "en"): string {
       [`${p}/tarifs`, t.tarifs],
       [`${p}/blog`, t.blog],
       [calculatorPath, t.calculator],
+      [locale === "en" ? "/en/montreal-income-properties-for-sale" : "/immeubles-a-revenus-a-vendre-montreal", t.radar],
     ]),
     group([
       [`${p}/about`, t.about],
@@ -1799,6 +1803,20 @@ function buildPlexCalculatorMainHtml(loc: "fr" | "en"): string {
   ].join("");
 }
 
+function buildPlexRadarMainHtml(loc: "fr" | "en"): string {
+  const en = loc === "en";
+  const title = en
+    ? "Montreal income properties for sale, analyzed daily"
+    : "Immeubles à revenus à vendre à Montréal, analysés chaque jour";
+  const intro = en
+    ? "Plex Radar reviews newly published duplexes, triplexes, fourplexes and fiveplexes using reported income, Quebec financing, explicit operating-expense assumptions and data quality."
+    : "Plex Radar analyse les duplex, triplex, quadruplex et quintuplex récemment publiés selon les revenus rapportés, le financement québécois, des hypothèses de dépenses explicites et la qualité des données.";
+  const method = en
+    ? "Each listing separates reported facts from estimates. Visitors can remove estimated insurance, repairs, management, replacement reserves, snow, exterior care or owner-paid utilities to test a scenario without changing the published baseline."
+    : "Chaque fiche distingue les faits rapportés des estimations. On peut retirer l’assurance, les réparations, la gestion, la réserve de remplacement, le déneigement, l’entretien extérieur ou les services publics estimés pour tester un scénario sans modifier le résultat publié.";
+  return `<main><article><p>${en ? "Daily investor tool · Montreal" : "Outil investisseur quotidien · Montréal"}</p><h1>${escapeHtml(title)}</h1><p>${escapeHtml(intro)}</p><section><h2>${en ? "Transparent deal screening" : "Présélection transparente des occasions"}</h2><p>${escapeHtml(method)}</p></section><section><h2>${en ? "Open a listing in the full calculator" : "Ouvrir une fiche dans le calculateur complet"}</h2><p>${en ? "Every property can prefill Gestion Velora’s full Quebec plex investment calculator for a deeper analysis." : "Chaque immeuble peut préremplir le calculateur complet de rendement plex de Gestion Velora pour une analyse approfondie."}</p></section></article></main>`;
+}
+
 function buildPlexGuideMainHtml(loc: "fr" | "en"): string {
   const p = REFERENCE_PAGE[loc];
   const figures = REFERENCE_FIGURES.map(
@@ -2123,6 +2141,31 @@ function buildRoutes(): RouteConfig[] {
       keywords: guide.keywords,
       prerenderMainInner: buildPlexGuideMainHtml(loc),
       pageSchemas: buildPlexGuideSchemas(loc),
+    });
+
+    const radar = RADAR_META[loc];
+    routes.push({
+      path: RADAR_PATHS[loc],
+      locale: loc,
+      frPath: RADAR_PATHS.fr,
+      enPath: RADAR_PATHS.en,
+      title: buildTitle(radar.title),
+      description: radar.description,
+      keywords: loc === "en"
+        ? "Montreal income properties for sale, duplex for sale Montreal, triplex for sale Montreal, real estate investment Montreal"
+        : "immeubles à revenus à vendre Montréal, duplex à vendre Montréal, triplex à vendre Montréal, investissement immobilier Montréal",
+      prerenderMainInner: buildPlexRadarMainHtml(loc),
+      pageSchemas: {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "Plex Radar",
+        applicationCategory: "FinanceApplication",
+        operatingSystem: "Web",
+        url: `${SITE_URL}${RADAR_PATHS[loc]}`,
+        description: radar.description,
+        inLanguage: loc === "en" ? "en-CA" : "fr-CA",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
+      },
     });
   }
 

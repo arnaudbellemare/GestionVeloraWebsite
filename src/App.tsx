@@ -29,6 +29,7 @@ const ServicesIndexPage = lazy(() =>
 const VideoPage = lazy(() => import("./pages/VideoPage").then((m) => ({ default: m.VideoPage })));
 const PlexCalculatorPage = lazy(() => import("./pages/PlexCalculatorPage"));
 const PlexReferencePage = lazy(() => import("./pages/PlexReferencePage"));
+const PlexRadarPage = lazy(() => import("./pages/PlexRadarPage"));
 
 function RouteFallback() {
   return (
@@ -149,6 +150,7 @@ function App() {
                     </Suspense>
                   }
                 />
+                <Route path="immeubles-a-revenus-a-vendre-montreal" element={<Suspense fallback={<RouteFallback />}><PlexRadarPage /></Suspense>} />
                 <Route path="faq" element={<Navigate to="/#faq" replace />} />
                 <Route
                   path="tarifs"
@@ -297,6 +299,7 @@ function App() {
                     </Suspense>
                   }
                 />
+                <Route path="montreal-income-properties-for-sale" element={<Suspense fallback={<RouteFallback />}><PlexRadarPage /></Suspense>} />
                 <Route path="faq" element={<Navigate to="/en/#faq" replace />} />
                 <Route
                   path="tarifs"

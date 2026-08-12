@@ -13,6 +13,7 @@ import {
   CALCULATOR_PAGE,
   REFERENCE_PAGE,
 } from "../data/plex-calculator";
+import { RADAR_META, RADAR_PATHS } from "../data/plex-radar";
 
 const _TITLE_SUFFIX = " | Gestion Velora";
 const _TITLE_MAX = 70;
@@ -242,6 +243,13 @@ export function PageMeta() {
     } else if (pathname === "/privacy" || pathname === "/en/privacy") {
       title = isEn ? "Privacy | Gestion Velora" : "Confidentialité | Gestion Velora";
       description = baseDesc;
+    } else if (pathname === RADAR_PATHS.fr || pathname === RADAR_PATHS.en) {
+      const meta = RADAR_META[isEn ? "en" : "fr"];
+      title = buildTitle(meta.title);
+      description = meta.description;
+      keywords = isEn
+        ? "Montreal income properties for sale, duplex for sale Montreal, triplex for sale Montreal, real estate investment Montreal"
+        : "immeubles à revenus à vendre Montréal, duplex à vendre Montréal, triplex à vendre Montréal, investissement immobilier Montréal";
     } else if (
       pathname === CALCULATOR_PATHS.fr ||
       pathname === CALCULATOR_PATHS.en ||

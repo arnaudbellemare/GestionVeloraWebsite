@@ -14,6 +14,7 @@
 export const LOCALIZED_ROUTE_PAIRS: ReadonlyArray<readonly [fr: string, en: string]> = [
   ["/calculateur-rendement-plex-montreal", "/montreal-plex-investment-calculator"],
   ["/guide-achat-plex-montreal", "/montreal-plex-buyer-guide"],
+  ["/immeubles-a-revenus-a-vendre-montreal", "/montreal-income-properties-for-sale"],
 ] as const;
 
 /**

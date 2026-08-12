@@ -33,6 +33,41 @@ import { ProjectionChart } from "./ProjectionChart";
 
 type Locale = "fr" | "en";
 
+function radarPrefill(): DealInputs {
+  if (typeof window === "undefined") return DEFAULT_INPUTS;
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("source") !== "plex-radar") return DEFAULT_INPUTS;
+  const number = (key: string) => Math.max(0, Number(params.get(key) ?? 0) || 0);
+  const units = Math.max(1, Math.round(number("units")));
+  const type: PropertyType = units >= 5 ? "fiveplex-plus" : units === 4 ? "quadruplex" : units === 3 ? "triplex" : "duplex";
+  const grossAnnual = number("grossAnnual");
+  const monthlyPerUnit = Math.round(grossAnnual / 12 / units);
+  const seeded = applyPropertyPreset(DEFAULT_INPUTS, type);
+  const commercial = units >= 5 || params.get("mixedUse") === "true";
+  return {
+    ...seeded,
+    askingPrice: number("askingPrice"),
+    purchasePrice: number("purchasePrice"),
+    buildingYear: number("buildingYear") || seeded.buildingYear,
+    numberOfUnits: units,
+    unitMix: [{ id: "radar", label: "4½", count: units, currentRent: monthlyPerUnit, marketRent: monthlyPerUnit, sqft: 850 }],
+    propertyTaxes: number("municipalTaxes"),
+    schoolTax: number("schoolTax"),
+    insurance: number("insurance"),
+    snowRemoval: number("snow"),
+    lawnLandscaping: number("lawn"),
+    commonHydro: number("hydro"),
+    repairsMaintenancePct: grossAnnual > 0 ? number("repairs") / grossAnnual : seeded.repairsMaintenancePct,
+    propertyManagementPct: grossAnnual > 0 ? number("management") / grossAnnual : seeded.propertyManagementPct,
+    capexPerUnit: number("capex") / units,
+    financingMode: commercial ? "commercial" : "residential",
+    loanLifeYears: commercial ? 40 : 25,
+    ownerOccupied: false,
+    ownerOccupiedUnitId: null,
+    isMontreal: (params.get("city") ?? "").toLocaleLowerCase("fr-CA").includes("montr"),
+  };
+}
+
 // ─── Primitives ──────────────────────────────────────────────────────
 
 function Field({
@@ -196,7 +231,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   const t: CalcUi = CALC_UI[locale];
   const f = useMemo(() => makeFormatters(locale), [locale]);
 
-  const [inputs, setInputs] = useState<DealInputs>(DEFAULT_INPUTS);
+  const [inputs, setInputs] = useState<DealInputs>(radarPrefill);
   const [tab, setTab] = useState(0);
   const [emailPrompt, setEmailPrompt] = useState(false);
   const [email, setEmail] = useState("");

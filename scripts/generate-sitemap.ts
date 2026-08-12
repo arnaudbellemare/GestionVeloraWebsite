@@ -42,6 +42,7 @@ function buildAllRoutes(): RouteEntry[] {
     ["/privacy", "/en/privacy"],
     ["/calculateur-rendement-plex-montreal", "/en/montreal-plex-investment-calculator"],
     ["/guide-achat-plex-montreal", "/en/montreal-plex-buyer-guide"],
+    ["/immeubles-a-revenus-a-vendre-montreal", "/en/montreal-income-properties-for-sale"],
   ];
   for (const [fr, en] of staticPairs) {
     routes.push({ path: fr, frPath: fr, enPath: en });
@@ -100,6 +101,7 @@ function priority(path: string): string {
 }
 
 function changefreq(path: string): string {
+  if (path.includes("income-properties-for-sale") || path.includes("immeubles-a-revenus-a-vendre")) return "daily";
   if (path === "/" || path === "/en/") return "weekly";
   if (path.startsWith("/location/") || path.startsWith("/en/location/")) return "monthly";
   return "monthly";
