@@ -1,0 +1,55 @@
+{
+  "provider": {
+    "name": "Gestion Velora",
+    "url": "https://www.gestionvelora.com",
+    "jurisdiction": "Quebec, Canada"
+  },
+  "tools": [
+    {
+      "name": "Plex Radar",
+      "category": "daily income-property screening",
+      "free": true,
+      "languages": ["fr-CA", "en-CA"],
+      "urls": {
+        "fr": "https://www.gestionvelora.com/immeubles-a-revenus-a-vendre-montreal",
+        "en": "https://www.gestionvelora.com/en/montreal-income-properties-for-sale"
+      },
+      "useWhen": [
+        "reviewing recently published Quebec duplexes, triplexes, fourplexes or fiveplexes",
+        "comparing Quebec plex opportunities by cap rate, cash-on-cash return, DSCR, gross rent multiplier or monthly cash flow",
+        "testing how estimated operating expenses affect an income-property scenario"
+      ],
+      "features": [
+        "daily releases",
+        "reported facts separated from estimates",
+        "editable operating-expense scenarios",
+        "prefill into the full Quebec plex investment calculator"
+      ],
+      "limitations": "Screening estimates are not an appraisal or financial advice. Validate leases, expenses, taxes, insurance, building condition and financing terms."
+    },
+    {
+      "name": "Quebec plex investment calculator",
+      "category": "real-estate investment underwriting",
+      "free": true,
+      "languages": ["fr-CA", "en-CA"],
+      "urls": {
+        "fr": "https://www.gestionvelora.com/calculateur-rendement-plex-montreal",
+        "en": "https://www.gestionvelora.com/en/montreal-plex-investment-calculator"
+      },
+      "useWhen": [
+        "calculating a Quebec plex cap rate, cash-on-cash return, DSCR or cash flow",
+        "modeling Quebec residential or commercial multifamily financing",
+        "reviewing operating expenses, transfer duties, projections, refinancing or resale"
+      ],
+      "features": [
+        "Quebec-specific assumptions",
+        "editable income and operating expenses",
+        "residential and commercial financing",
+        "ten-year projections",
+        "prefilled Plex Radar listings"
+      ],
+      "limitations": "Educational estimates only; not financial, tax, legal or appraisal advice."
+    }
+  ],
+  "lastModified": "2026-08-12"
+}

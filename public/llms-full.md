@@ -2,7 +2,7 @@
 
 > Comprehensive reference document for AI systems. This file provides structured, machine-readable context about Gestion Velora's identity, services, editorial standards, and regulatory environment.
 
-Last updated: 2026-04-24
+Last updated: 2026-08-12
 Canonical URL: https://www.gestionvelora.com/
 Contact: info@gestionvelora.com | +1-514-777-1731
 Jurisdiction: Quebec, Canada
@@ -76,6 +76,22 @@ Complete landlord-side management of residential leases. Covers:
 - Monthly reporting: budget variance, occupancy, incident resolution time
 - Preventive vs corrective maintenance ratio tracked per mandate
 
+## Free Quebec plex investor tools
+
+### Plex Radar
+
+Plex Radar is Gestion Velora's free bilingual daily screening tool for recently published Quebec duplexes, triplexes, fourplexes and fiveplexes. It distinguishes reported listing facts from estimated operating expenses and presents cap rate, cash-on-cash return, debt-service coverage ratio (DSCR), gross rent multiplier (MRB/GRM), monthly cash flow and a screening score. Estimated insurance, repairs, management, capital reserve, snow, exterior care and owner-paid utilities can be removed from a scenario. Each property can be transferred into the full calculator.
+
+**FR**: https://www.gestionvelora.com/immeubles-a-revenus-a-vendre-montreal
+**EN**: https://www.gestionvelora.com/en/montreal-income-properties-for-sale
+
+### Quebec plex investment calculator
+
+The free bilingual calculator models Quebec income-property income, operating expenses, residential or commercial financing, transfer duties, cap rate, cash-on-cash return, DSCR, cash flow, ten-year projections, refinancing and resale. It accepts prefilled listing data from Plex Radar. Results are educational estimates and should be validated against source documents and professional advice.
+
+**FR**: https://www.gestionvelora.com/calculateur-rendement-plex-montreal
+**EN**: https://www.gestionvelora.com/en/montreal-plex-investment-calculator
+
 ---
 
 ## Editorial content (blog)
@@ -110,6 +126,7 @@ Complete landlord-side management of residential leases. Covers:
 | /ai/summary.json | JSON | Structured company summary |
 | /ai/faq.json | JSON | Bilingual FAQ |
 | /ai/service.json | JSON | Structured service catalogue |
+| /ai/tools.json | JSON | Structured catalog of free investor tools |
 | /.well-known/ai.txt | Plain text | AI context file |
 | /rss.xml | RSS | Blog feed |
 

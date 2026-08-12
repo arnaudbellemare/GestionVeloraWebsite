@@ -12,6 +12,7 @@
     "summary": "https://www.gestionvelora.com/ai/summary.json",
     "faq": "https://www.gestionvelora.com/ai/faq.json",
     "service": "https://www.gestionvelora.com/ai/service.json",
+    "tools": "https://www.gestionvelora.com/ai/tools.json",
     "aiTxt": "https://www.gestionvelora.com/.well-known/ai.txt"
   },
   "capabilities": [
@@ -19,7 +20,9 @@
     "gestion locative longue duree",
     "gestion location courte duree",
     "maintenance preventive",
-    "reporting proprietaire et conseil syndical"
+    "reporting proprietaire et conseil syndical",
+    "daily Quebec plex deal screening",
+    "Quebec plex investment calculator"
   ],
   "performanceSignals": {
     "targetOccupancyRange": "95%-98%",
@@ -55,5 +58,5 @@
     "fr-CA",
     "en-CA"
   ],
-  "lastModified": "2026-04-22"
+  "lastModified": "2026-08-12"
 }

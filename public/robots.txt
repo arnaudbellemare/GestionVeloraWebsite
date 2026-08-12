@@ -9,6 +9,7 @@ Sitemap: https://www.gestionvelora.com/sitemap.xml
 # https://www.gestionvelora.com/ai/summary.json
 # https://www.gestionvelora.com/ai/faq.json
 # https://www.gestionvelora.com/ai/service.json
+# https://www.gestionvelora.com/ai/tools.json
 
 User-agent: Googlebot
 Allow: /

@@ -2164,7 +2164,20 @@ function buildRoutes(): RouteConfig[] {
         url: `${SITE_URL}${RADAR_PATHS[loc]}`,
         description: radar.description,
         inLanguage: loc === "en" ? "en-CA" : "fr-CA",
+        isAccessibleForFree: true,
         offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
+        publisher: { "@id": ORG_ID },
+        areaServed: { "@type": "AdministrativeArea", name: "Québec, Canada" },
+        audience: { "@type": "Audience", audienceType: "Quebec plex investors" },
+        featureList: loc === "en" ? [
+          "Daily income-property screening", "Cap rate", "Cash-on-cash return", "DSCR",
+          "Gross rent multiplier", "Monthly cash flow", "Editable operating-expense scenarios",
+          "Prefill the full Quebec plex investment calculator",
+        ] : [
+          "Présélection quotidienne d’immeubles à revenus", "Taux de capitalisation", "Rendement comptant",
+          "DSCR", "Multiplicateur de revenu brut", "Flux de trésorerie mensuel",
+          "Scénarios de dépenses d’exploitation modifiables", "Préremplissage du calculateur de rendement plex",
+        ],
       },
     });
   }
@@ -2356,6 +2369,7 @@ function buildSitemap(routes: RouteConfig[]): void {
   }
 
   function changefreq(path: string): string {
+    if (path.includes("income-properties-for-sale") || path.includes("immeubles-a-revenus-a-vendre")) return "daily";
     if (path === "/" || path === "/en/") return "weekly";
     if (path.startsWith("/location/") || path.startsWith("/en/location/")) return "monthly";
     return "monthly";

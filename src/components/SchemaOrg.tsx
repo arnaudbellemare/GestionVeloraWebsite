@@ -20,6 +20,7 @@ import {
   REFERENCE_FIGURES,
   FIGURES_VERIFIED,
 } from "../data/plex-calculator";
+import { RADAR_META, RADAR_PATHS } from "../data/plex-radar";
 
 // Inject one or multiple JSON-LD schemas into the document head.
 // When given an array, uses the @graph pattern for clean multi-schema output.
@@ -85,6 +86,42 @@ export function SchemaOrg() {
     // Article + FAQ-free Dataset-style facts, each anchored on the page.
     const isCalculator = path === CALCULATOR_PATHS.fr || path === CALCULATOR_PATHS.en;
     const isGuide = path === REFERENCE_PATHS.fr || path === REFERENCE_PATHS.en;
+    const isRadar = path === RADAR_PATHS.fr || path === RADAR_PATHS.en;
+
+    if (isRadar) {
+      const loc = isEn ? "en" : "fr";
+      const url = `${SITE_URL}${path}`;
+      injectSchema([
+        buildBreadcrumb([
+          { name: bcHome, url: `${base}/` },
+          { name: loc === "en" ? "Montreal income properties for sale" : "Immeubles à revenus à vendre" },
+        ]),
+        {
+          "@type": "WebApplication",
+          "@id": `${url}#app`,
+          name: "Plex Radar",
+          url,
+          applicationCategory: "FinanceApplication",
+          operatingSystem: "Web",
+          inLanguage: isEn ? "en-CA" : "fr-CA",
+          description: RADAR_META[loc].description,
+          isAccessibleForFree: true,
+          offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
+          publisher: { "@id": ORGANIZATION_SCHEMA_ID },
+          areaServed: { "@type": "AdministrativeArea", name: "Québec, Canada" },
+          audience: { "@type": "Audience", audienceType: "Quebec plex investors" },
+          featureList: isEn ? [
+            "Daily income-property screening", "Cap rate", "Cash-on-cash return", "DSCR",
+            "Gross rent multiplier", "Monthly cash flow", "Editable operating-expense scenarios",
+          ] : [
+            "Présélection quotidienne d’immeubles à revenus", "Taux de capitalisation", "Rendement comptant",
+            "DSCR", "Multiplicateur de revenu brut", "Flux de trésorerie mensuel",
+            "Scénarios de dépenses d’exploitation modifiables",
+          ],
+        },
+      ]);
+      return () => removePageSchema();
+    }
 
     if (isCalculator || isGuide) {
       const loc = isEn ? "en" : "fr";

@@ -2,7 +2,7 @@
   "name": "Gestion immobiliere Montreal | Gestion Velora",
   "description": "Gestion Velora offre syndicat de copropriete, gestion Airbnb et location longue duree a Montreal. Administration complete, maintenance proactive et rapports transparents.",
   "url": "https://www.gestionvelora.com",
-  "lastModified": "2026-04-22",
+  "lastModified": "2026-08-12",
   "language": [
     "fr-CA",
     "en-CA"
@@ -11,8 +11,11 @@
     "https://www.gestionvelora.com/",
     "https://www.gestionvelora.com/services",
     "https://www.gestionvelora.com/blog",
+    "https://www.gestionvelora.com/immeubles-a-revenus-a-vendre-montreal",
+    "https://www.gestionvelora.com/calculateur-rendement-plex-montreal",
     "https://www.gestionvelora.com/llms.txt",
     "https://www.gestionvelora.com/ai/service.json",
+    "https://www.gestionvelora.com/ai/tools.json",
     "https://www.gestionvelora.com/#contact-form"
   ],
   "evidenceSources": [
