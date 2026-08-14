@@ -1,4 +1,5 @@
-.radar-page {
+.radar-page,
+.radar-analysis {
   --radar-ink: #12221a;
   --radar-ink-soft: #23352c;
   --radar-muted: #68736d;
@@ -15,6 +16,9 @@
   --radar-red: #a04432;
   --radar-red-bright: #c85a45;
   --radar-red-wash: #f2e4df;
+}
+
+.radar-page {
   min-height: 100vh;
   padding-top: 88px;
   background: var(--radar-paper);
@@ -251,6 +255,7 @@
   overflow: hidden;
   border-left: 1px solid var(--radar-line);
   background: var(--radar-paper-raised);
+  color: var(--radar-ink);
   visibility: hidden;
   transform: translateX(100%);
   transition: transform .24s cubic-bezier(.22, 1, .36, 1), visibility .24s;
