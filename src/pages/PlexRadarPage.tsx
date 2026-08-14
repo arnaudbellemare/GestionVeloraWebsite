@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { useLocale } from "../context/LocaleContext";
 import {
@@ -283,25 +284,33 @@ export default function PlexRadarPage() {
           </div>
         </div>
 
-        {detailOpen && <button className="radar-drawer-scrim" aria-label={t.close} onClick={() => setDetailOpen(false)} />}
-        {detailOpen && selected?.live && <aside className="radar-analysis is-open" role="dialog" aria-modal="true" aria-labelledby="radar-dossier-title">
-          <button className="radar-drawer-close" aria-label={t.close} onClick={() => setDetailOpen(false)}>×</button>
-          <div className="radar-analysis-head"><div><p>{selectedExcluded.length ? t.scenario : t.published}</p><h2 id="radar-dossier-title">{selected.listing.address}</h2><small>{selected.listing.city} · {selected.listing.units} portes · {selected.listing.year_built ?? "—"}</small></div><strong>{selected.live.score}<small>/12</small></strong></div>
-          <div className="radar-kpis">
-            <article><div className="radar-kpi-label"><span>{t.cap}</span><MetricInfo id="radar-cap-help" label={t.cap} description={t.capHelp} /></div><strong>{pct.format(selected.live.capRate)}</strong></article>
-            <article><div className="radar-kpi-label"><span>Cash-on-cash</span><MetricInfo id="radar-coc-help" label="Cash-on-cash" description={t.cashOnCashHelp} /></div><strong>{pct.format(selected.live.cashOnCash)}</strong></article>
-            <article><div className="radar-kpi-label"><span>DSCR</span><MetricInfo id="radar-dscr-help" label="DSCR" description={t.dscrHelp} /></div><strong>{selected.live.dscr.toFixed(2)}×</strong></article>
-            <article><div className="radar-kpi-label"><span>MRB</span><MetricInfo id="radar-grm-help" label="MRB" description={t.grmHelp} /></div><strong>{selected.live.grm.toFixed(1)}×</strong></article>
-          </div>
-          <div className={`radar-cash is-${cashFlowState(selected.live.monthlyCashFlow, t).tone}`}><span>{cashFlowState(selected.live.monthlyCashFlow, t).label}</span><strong>{money.format(selected.live.monthlyCashFlow)}</strong><small>{money.format(selected.live.cashFlowPerDoor)} / porte</small></div>
-          {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
-            <details><summary>{t.definitionTitle}</summary><p>{t.definition}</p></details>
-            {selected.expense_policy.lines.map((line) => { const removed = selectedExcluded.includes(line.key); return <article className={removed ? "is-removed" : ""} key={line.key}><span><strong>{line.label}</strong><small>{line.rule}</small></span><span><b>{money.format(line.amount)}</b><em>{line.source === "reported" ? t.reported : t.estimated}</em></span>{line.source === "estimated" && <button aria-label={`${removed ? t.add : t.remove}: ${line.label}`} aria-pressed={removed} onClick={() => toggleExpense(selected.listing.listing_id, line.key)}>{removed ? "+" : "−"}</button>}</article>})}
-            <small>{t.notice}</small>
-          </section>}
-          <div className="radar-actions"><Link to={calculatorUrl(selected, l, selectedExcluded)}>{t.calculator}</Link><a href={selected.listing.url} target="_blank" rel="noreferrer">{t.source} ↗</a></div>
-        </aside>}
       </section>
+
+      {detailOpen && selected?.live && typeof document !== "undefined" && createPortal(<>
+        <button className="radar-drawer-scrim" aria-label={t.close} onClick={() => setDetailOpen(false)} />
+        <aside className="radar-analysis is-open" role="dialog" aria-modal="true" aria-labelledby="radar-dossier-title">
+          <div className="radar-drawer-toolbar">
+            <span>{l === "fr" ? "Dossier de propriété" : "Property file"}</span>
+            <button className="radar-drawer-close" type="button" autoFocus aria-label={t.close} onClick={() => setDetailOpen(false)}>×</button>
+          </div>
+          <div className="radar-analysis-body">
+            <div className="radar-analysis-head"><div><p>{selectedExcluded.length ? t.scenario : t.published}</p><h2 id="radar-dossier-title">{selected.listing.address}</h2><small>{selected.listing.city} · {selected.listing.units} portes · {selected.listing.year_built ?? "—"}</small></div><strong>{selected.live.score}<small>/12</small></strong></div>
+            <div className="radar-kpis">
+              <article><div className="radar-kpi-label"><span>{t.cap}</span><MetricInfo id="radar-cap-help" label={t.cap} description={t.capHelp} /></div><strong>{pct.format(selected.live.capRate)}</strong></article>
+              <article><div className="radar-kpi-label"><span>Cash-on-cash</span><MetricInfo id="radar-coc-help" label="Cash-on-cash" description={t.cashOnCashHelp} /></div><strong>{pct.format(selected.live.cashOnCash)}</strong></article>
+              <article><div className="radar-kpi-label"><span>DSCR</span><MetricInfo id="radar-dscr-help" label="DSCR" description={t.dscrHelp} /></div><strong>{selected.live.dscr.toFixed(2)}×</strong></article>
+              <article><div className="radar-kpi-label"><span>MRB</span><MetricInfo id="radar-grm-help" label="MRB" description={t.grmHelp} /></div><strong>{selected.live.grm.toFixed(1)}×</strong></article>
+            </div>
+            <div className={`radar-cash is-${cashFlowState(selected.live.monthlyCashFlow, t).tone}`}><span>{cashFlowState(selected.live.monthlyCashFlow, t).label}</span><strong>{money.format(selected.live.monthlyCashFlow)}</strong><small>{money.format(selected.live.cashFlowPerDoor)} / porte</small></div>
+            {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
+              <details><summary>{t.definitionTitle}</summary><p>{t.definition}</p></details>
+              {selected.expense_policy.lines.map((line) => { const removed = selectedExcluded.includes(line.key); return <article className={removed ? "is-removed" : ""} key={line.key}><span><strong>{line.label}</strong><small>{line.rule}</small></span><span><b>{money.format(line.amount)}</b><em>{line.source === "reported" ? t.reported : t.estimated}</em></span>{line.source === "estimated" && <button aria-label={`${removed ? t.add : t.remove}: ${line.label}`} aria-pressed={removed} onClick={() => toggleExpense(selected.listing.listing_id, line.key)}>{removed ? "+" : "−"}</button>}</article>})}
+              <small>{t.notice}</small>
+            </section>}
+            <div className="radar-actions"><Link to={calculatorUrl(selected, l, selectedExcluded)}>{t.calculator}</Link><a href={selected.listing.url} target="_blank" rel="noreferrer">{t.source} ↗</a></div>
+          </div>
+        </aside>
+      </>, document.body)}
 
       <section className="radar-method"><div><p>{t.methodology}</p><h2>{l === "fr" ? "Des règles visibles avant une décision." : "Visible rules before a decision."}</h2></div><p>{t.methodologyBody}</p></section>
       <section className="radar-cta"><div><h2>{t.cta}</h2><p>{t.ctaBody}</p></div><Link to={localePath("/#contact")}>{t.contact}</Link></section>
