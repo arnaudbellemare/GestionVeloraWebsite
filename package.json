@@ -15,7 +15,9 @@
     "sitemap": "tsx scripts/generate-sitemap.ts",
     "test:plex": "tsx scripts/verify-plex-calculator.ts",
     "crawlers:fetch": "node scripts/fetch-crawler-logs.mjs",
-    "crawlers:verify": "node scripts/verify-crawler-identity.mjs --file crawler-drained.log"
+    "crawlers:verify": "node scripts/verify-crawler-identity.mjs --file crawler-drained.log",
+    "crawlers:meta": "node scripts/report-meta-crawlers.mjs",
+    "test:crawlers": "tsx scripts/verify-log-drain.ts"
   },
   "dependencies": {
     "@vercel/blob": "^2.7.0",

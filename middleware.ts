@@ -42,7 +42,13 @@ function logCrawlerHit(request: Request, path: string): void {
     "unknown";
 
   console.log(
-    `CRAWLER ${JSON.stringify({ ip, ua, path, ts: new Date().toISOString() })}`
+    `CRAWLER ${JSON.stringify({
+      ip,
+      ua,
+      path,
+      hostname: new URL(request.url).hostname,
+      ts: new Date().toISOString(),
+    })}`
   );
 }
 

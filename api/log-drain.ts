@@ -35,6 +35,43 @@ interface CrawlerRecord {
   ts: string;
   status?: number;
   source?: string;
+  /** Request hostname; required to separate a team-wide drain by site. */
+  hostname?: string;
+  projectId?: string;
+  deploymentId?: string;
+  /** Shared by proxy/runtime records for the same request when Vercel provides it. */
+  requestId?: string;
+}
+
+function optionalString(value: unknown): string | undefined {
+  return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+function normalizeHostname(value: unknown): string | undefined {
+  const raw = optionalString(value);
+  if (!raw) return undefined;
+
+  // Vercel normally sends a bare host. Accept a URL or host:port defensively so
+  // reporting never splits one domain across several equivalent labels.
+  try {
+    const parsed = new URL(raw.includes("://") ? raw : `https://${raw}`);
+    return parsed.hostname.toLowerCase().replace(/\.$/, "") || undefined;
+  } catch {
+    return raw.toLowerCase().replace(/\.$/, "").replace(/:\d+$/, "") || undefined;
+  }
+}
+
+function requestIdentity(
+  entry: Record<string, any>,
+  proxy: Record<string, any>,
+  fallbackHostname?: unknown,
+): Pick<CrawlerRecord, "hostname" | "projectId" | "deploymentId" | "requestId"> {
+  return {
+    hostname: normalizeHostname(proxy.host ?? entry.host ?? fallbackHostname),
+    projectId: optionalString(entry.projectId ?? proxy.projectId),
+    deploymentId: optionalString(entry.deploymentId ?? proxy.deploymentId),
+    requestId: optionalString(entry.requestId ?? proxy.requestId),
+  };
 }
 
 function timingSafeEqual(a: string, b: string): boolean {
@@ -45,7 +82,7 @@ function timingSafeEqual(a: string, b: string): boolean {
 }
 
 /** Accept both delivery formats: NDJSON, and JSON that may be an array. */
-function parseEntries(raw: string): unknown[] {
+export function parseEntries(raw: string): unknown[] {
   const trimmed = raw.trim();
   if (!trimmed) return [];
 
@@ -70,7 +107,7 @@ function parseEntries(raw: string): unknown[] {
   return out;
 }
 
-function toRecord(entry: Record<string, any>): CrawlerRecord | null {
+export function toRecord(entry: Record<string, any>): CrawlerRecord | null {
   const proxy = entry.proxy ?? {};
   const path: string = proxy.path ?? entry.path ?? "";
   if (path.startsWith(SELF_PATH)) return null;
@@ -88,6 +125,7 @@ function toRecord(entry: Record<string, any>): CrawlerRecord | null {
       ts,
       status: proxy.statusCode ?? entry.statusCode,
       source: entry.source,
+      ...requestIdentity(entry, proxy),
     };
   }
 
@@ -104,6 +142,7 @@ function toRecord(entry: Record<string, any>): CrawlerRecord | null {
           path: payload.path ?? path,
           ts: payload.ts ?? ts,
           source: entry.source,
+          ...requestIdentity(entry, proxy, payload.hostname),
         };
       }
     } catch {
