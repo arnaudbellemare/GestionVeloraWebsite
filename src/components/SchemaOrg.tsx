@@ -20,7 +20,7 @@ import {
   REFERENCE_FIGURES,
   FIGURES_VERIFIED,
 } from "../data/plex-calculator";
-import { RADAR_META, RADAR_PATHS } from "../data/plex-radar";
+import { RADAR_FAQ, RADAR_META, RADAR_PATHS } from "../data/plex-radar";
 
 // Inject one or multiple JSON-LD schemas into the document head.
 // When given an array, uses the @graph pattern for clean multi-schema output.
@@ -119,6 +119,15 @@ export function SchemaOrg() {
             "Scénarios de dépenses d’exploitation modifiables",
           ],
         },
+        {
+          "@type": "FAQPage",
+          "@id": `${url}#faq`,
+          mainEntity: RADAR_FAQ[loc].map((entry) => ({
+            "@type": "Question",
+            name: entry.q,
+            acceptedAnswer: { "@type": "Answer", text: entry.a },
+          })),
+        },
       ]);
       return () => removePageSchema();
     }
@@ -154,6 +163,26 @@ export function SchemaOrg() {
             "@type": "AdministrativeArea",
             name: "Montréal, Québec, Canada",
           },
+          dateModified: `${FIGURES_VERIFIED}-01`,
+          about: (isEn
+            ? [
+                "Montreal transfer duties (welcome tax)",
+                "CMHC multi-unit financing limits",
+                "Quebec rental board (TAL) rent-setting framework",
+                "Capital cost allowance (CCA) recapture at resale",
+              ]
+            : [
+                "Droits de mutation de Montréal (taxe de bienvenue)",
+                "Plafonds de financement SCHL pour immeubles à logements",
+                "Cadre de fixation de loyer du TAL",
+                "Récupération de la déduction pour amortissement (DPA) à la revente",
+              ]
+          ).map((name) => ({ "@type": "Thing", name })),
+          citation: REFERENCE_FIGURES.map((f) => ({
+            "@type": "CreativeWork",
+            name: f.source,
+            url: f.sourceUrl,
+          })),
         });
         graph.push({
           "@type": "FAQPage",

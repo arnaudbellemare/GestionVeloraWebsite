@@ -208,6 +208,98 @@ function calculatorAreaKey(city: string): string {
     ?? (value.includes("montreal") ? "villeray" : "outside-gma");
 }
 
+/**
+ * Metric definitions shown as tooltips on the page and mirrored verbatim in the
+ * prerendered crawl shell (scripts/prerender.ts) so AI engines can quote them.
+ * One source of truth — edit here, both surfaces follow.
+ */
+export const RADAR_METRIC_DEFS = {
+  fr: {
+    cap: { term: "Taux de capitalisation", def: "Revenu net d’exploitation annuel divisé par le prix demandé. Il mesure le rendement de l’immeuble avant financement." },
+    cashOnCash: { term: "Rendement comptant (cash-on-cash)", def: "Flux de trésorerie annuel après financement divisé par la mise de fonds et les frais initiaux estimés." },
+    dscr: { term: "Ratio de couverture de la dette (DSCR)", def: "Revenu net d’exploitation divisé par les paiements annuels de la dette. Au-dessus de 1, l’immeuble couvre sa dette." },
+    grm: { term: "Multiplicateur de revenu brut (MRB)", def: "Prix demandé divisé par les revenus locatifs bruts annuels. Un multiple plus bas indique généralement un prix plus favorable par rapport aux revenus." },
+  },
+  en: {
+    cap: { term: "Cap rate", def: "Annual net operating income divided by asking price. It measures the property return before financing." },
+    cashOnCash: { term: "Cash-on-cash return", def: "Annual cash flow after financing divided by the estimated down payment and initial cash invested." },
+    dscr: { term: "Debt service coverage ratio (DSCR)", def: "Net operating income divided by annual debt payments. Above 1 means the property covers its debt." },
+    grm: { term: "Gross rent multiplier (GRM)", def: "Asking price divided by annual gross rental income. A lower multiple generally indicates a more favorable price relative to income." },
+  },
+} as const;
+
+/**
+ * FAQ rendered on the page and emitted as FAQPage JSON-LD (client + prerender).
+ * Answers state the model's actual rules — keep in sync with
+ * calculateRadarScenario() and the underwriting pipeline when they change.
+ */
+export const RADAR_FAQ: Record<RadarLocale, ReadonlyArray<{ id: string; q: string; a: string }>> = {
+  fr: [
+    {
+      id: "mise-a-jour",
+      q: "À quelle fréquence les immeubles à revenus sont-ils mis à jour?",
+      a: "Une nouvelle parution est publiée chaque jour à partir des duplex, triplex, quadruplex et quintuplex récemment mis en vente au Québec. Les parutions précédentes restent consultables depuis le sélecteur d’historique.",
+    },
+    {
+      id: "donnees",
+      q: "D’où viennent les revenus et les dépenses affichés?",
+      a: "Les revenus, taxes et l’assurance proviennent de la fiche publiée par le courtier lorsqu’ils sont divulgués; ils sont alors marqués « rapporté ». Les dépenses manquantes (réparations, gestion, réserve de remplacement, déneigement, entretien extérieur, services publics) sont estimées selon des règles explicites et marquées « estimé ».",
+    },
+    {
+      id: "score",
+      q: "Comment le score sur 12 est-il calculé?",
+      a: "Six critères valent chacun de 0 à 2 points : taux de capitalisation, rendement comptant, ratio de couverture de la dette, flux de trésorerie par porte, multiplicateur de revenu brut et poids des charges totales. Un score de 9 ou plus signale un immeuble à prioriser, 6 à 8 à analyser, 3 à 5 à surveiller.",
+    },
+    {
+      id: "financement",
+      q: "Quelles hypothèses de financement le radar applique-t-il?",
+      a: "Le modèle suppose une mise de fonds de 25 %, un amortissement de 25 ans pour le résidentiel de 2 à 4 logements et de 40 ans pour les immeubles de 5 logements et plus ou à usage mixte, dont le prêt est aussi limité par un test de couverture de dette de 1,2. Une provision pour inoccupation de 3 % est appliquée aux revenus bruts.",
+    },
+    {
+      id: "verification",
+      q: "Le radar remplace-t-il une vérification diligente?",
+      a: "Non. C’est une présélection : chaque résultat conserve les faits rapportés, les estimations, la règle appliquée et la version du modèle, mais il faut valider les baux, les dépenses réelles, l’état de l’immeuble et les conditions de financement avant d’acheter.",
+    },
+    {
+      id: "calculateur",
+      q: "Peut-on pousser l’analyse d’une fiche plus loin?",
+      a: "Oui. Chaque immeuble peut préremplir le calculateur de rendement plex de Gestion Velora, qui ajoute les droits de mutation de Montréal, les plafonds SCHL, les projections et la revente.",
+    },
+  ],
+  en: [
+    {
+      id: "updates",
+      q: "How often are the income properties updated?",
+      a: "A new release is published every day from recently listed Quebec duplexes, triplexes, fourplexes and fiveplexes. Previous releases remain available from the history selector.",
+    },
+    {
+      id: "data",
+      q: "Where do the displayed income and expenses come from?",
+      a: "Income, taxes and insurance come from the broker's published listing when disclosed and are marked \"reported\". Missing expenses (repairs, management, replacement reserves, snow removal, exterior care, utilities) are estimated with explicit rules and marked \"estimated\".",
+    },
+    {
+      id: "score",
+      q: "How is the score out of 12 calculated?",
+      a: "Six criteria are each worth 0 to 2 points: cap rate, cash-on-cash return, debt service coverage ratio, cash flow per door, gross rent multiplier and total expense load. A score of 9 or more flags a property to prioritize, 6 to 8 to analyze, 3 to 5 to watch.",
+    },
+    {
+      id: "financing",
+      q: "What financing assumptions does the radar apply?",
+      a: "The model assumes a 25% down payment, a 25-year amortization for 2-4 unit residential and 40 years for buildings with 5+ units or mixed use, whose loan is also capped by a 1.2 debt-coverage test. A 3% vacancy allowance is applied to gross income.",
+    },
+    {
+      id: "diligence",
+      q: "Does the radar replace due diligence?",
+      a: "No. It is a screening tool: each result preserves reported facts, estimates, the applied rule and the model version, but leases, actual expenses, building condition and financing terms must be validated before buying.",
+    },
+    {
+      id: "calculator",
+      q: "Can a listing be analyzed in more depth?",
+      a: "Yes. Every property can prefill Gestion Velora's Quebec plex investment calculator, which adds Montreal transfer duties, CMHC loan limits, projections and resale analysis.",
+    },
+  ],
+} as const;
+
 export const RADAR_META = {
   fr: {
     title: "Immeubles à revenus à vendre à Montréal — Analyse quotidienne",

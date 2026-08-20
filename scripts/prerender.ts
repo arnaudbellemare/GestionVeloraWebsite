@@ -44,7 +44,7 @@ import {
   REFERENCE_FIGURES,
   FIGURES_VERIFIED,
 } from "../src/data/plex-calculator.js";
-import { RADAR_META, RADAR_PATHS } from "../src/data/plex-radar.js";
+import { RADAR_FAQ, RADAR_META, RADAR_METRIC_DEFS, RADAR_PATHS } from "../src/data/plex-radar.js";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -474,7 +474,13 @@ function buildHtml(
   // internal link graph is visible to non-JS crawlers.
   if (opts.prerenderMainInner) {
     const mainWithAnchors = addHeadingAnchors(opts.prerenderMainInner);
-    const innerBlock = `\n    ${mainWithAnchors}\n    ${buildSiteNavHtml(opts.locale)}\n    `;
+    // The index.html cloak hides `#root > main` (and `.gv-prerender-only`) once JS
+    // boots. A body that isn't wrapped in <main> escapes that selector and paints
+    // as raw unstyled text until React replaces it, so wrap any bare fragment here.
+    const mainBlock = /^\s*<main[\s>]/.test(mainWithAnchors)
+      ? mainWithAnchors
+      : `<main lang="${opts.locale === "en" ? "en-CA" : "fr-CA"}">${mainWithAnchors}</main>`;
+    const innerBlock = `\n    ${mainBlock}\n    ${buildSiteNavHtml(opts.locale)}\n    `;
     if (html.includes('id="root" data-gv-boot=')) {
       html = html.replace(
         /<div id="root" data-gv-boot="[^"]*"(?: style="[^"]*")?>\s*<\/div>/,
@@ -1814,7 +1820,23 @@ function buildPlexRadarMainHtml(loc: "fr" | "en"): string {
   const method = en
     ? "Each listing separates reported facts from estimates. Visitors can remove estimated insurance, repairs, management, replacement reserves, snow, exterior care or owner-paid utilities to test a scenario without changing the published baseline."
     : "Chaque fiche distingue les faits rapportés des estimations. On peut retirer l’assurance, les réparations, la gestion, la réserve de remplacement, le déneigement, l’entretien extérieur ou les services publics estimés pour tester un scénario sans modifier le résultat publié.";
-  return `<main><article><p>${en ? "Daily investor tool · Montreal" : "Outil investisseur quotidien · Montréal"}</p><h1>${escapeHtml(title)}</h1><p>${escapeHtml(intro)}</p><section><h2>${en ? "Transparent deal screening" : "Présélection transparente des occasions"}</h2><p>${escapeHtml(method)}</p></section><section><h2>${en ? "Open a listing in the full calculator" : "Ouvrir une fiche dans le calculateur complet"}</h2><p>${en ? "Every property can prefill Gestion Velora’s full Quebec plex investment calculator for a deeper analysis." : "Chaque immeuble peut préremplir le calculateur complet de rendement plex de Gestion Velora pour une analyse approfondie."}</p></section></article></main>`;
+  const defs = RADAR_METRIC_DEFS[loc];
+  const metricsDl = (Object.keys(defs) as Array<keyof typeof defs>)
+    .map((key) => `<dt>${escapeHtml(defs[key].term)}</dt><dd>${escapeHtml(defs[key].def)}</dd>`)
+    .join("");
+  const faq = RADAR_FAQ[loc]
+    .map((f) => `<div><h3 id="${f.id}">${escapeHtml(f.q)}</h3><p>${escapeHtml(f.a)}</p></div>`)
+    .join("");
+  const calcHref = CALCULATOR_PATHS[loc];
+  const guideHref = REFERENCE_PATHS[loc];
+  return `<main lang="${en ? "en-CA" : "fr-CA"}"><article><p>${en ? "Daily investor tool · Montreal" : "Outil investisseur quotidien · Montréal"}</p><h1>${escapeHtml(title)}</h1><p>${escapeHtml(intro)}</p>` +
+    `<section><h2>${en ? "Transparent deal screening" : "Présélection transparente des occasions"}</h2><p>${escapeHtml(method)}</p></section>` +
+    `<section><h2>${en ? "Published investment metrics" : "Métriques de rendement publiées"}</h2><p>${en
+      ? "Every underwritten listing publishes the same set of metrics, computed from reported income, Quebec financing assumptions and explicit operating-expense rules:"
+      : "Chaque immeuble analysé publie le même ensemble de métriques, calculées à partir des revenus rapportés, d’hypothèses de financement québécoises et de règles de dépenses explicites :"}</p><dl>${metricsDl}</dl></section>` +
+    `<section><h2>${en ? "Frequently asked questions" : "Questions fréquentes"}</h2>${faq}</section>` +
+    `<section><h2>${en ? "Open a listing in the full calculator" : "Ouvrir une fiche dans le calculateur complet"}</h2><p>${en ? "Every property can prefill Gestion Velora’s full Quebec plex investment calculator for a deeper analysis." : "Chaque immeuble peut préremplir le calculateur complet de rendement plex de Gestion Velora pour une analyse approfondie."}</p>` +
+    `<p><a href="${calcHref}">${en ? "Montreal plex investment calculator" : "Calculateur de rendement plex à Montréal"}</a> · <a href="${guideHref}">${en ? "Montreal plex buyer's guide" : "Guide de l'acheteur de plex à Montréal"}</a></p></section></article></main>`;
 }
 
 function buildPlexGuideMainHtml(loc: "fr" | "en"): string {
@@ -1852,6 +1874,26 @@ function buildPlexCalculatorSchemas(loc: "fr" | "en"): object[] {
       featureList: p.sections.map((s) => s.heading),
       publisher: { "@id": ORG_ID },
       areaServed: { "@type": "AdministrativeArea", name: "Montréal, Québec, Canada" },
+      dateModified: `${FIGURES_VERIFIED}-01`,
+      about: (loc === "en"
+        ? [
+            "Montreal transfer duties (welcome tax)",
+            "CMHC multi-unit financing limits",
+            "Quebec rental board (TAL) rent-setting framework",
+            "Capital cost allowance (CCA) recapture at resale",
+          ]
+        : [
+            "Droits de mutation de Montréal (taxe de bienvenue)",
+            "Plafonds de financement SCHL pour immeubles à logements",
+            "Cadre de fixation de loyer du TAL",
+            "Récupération de la déduction pour amortissement (DPA) à la revente",
+          ]
+      ).map((name) => ({ "@type": "Thing", name })),
+      citation: REFERENCE_FIGURES.map((f) => ({
+        "@type": "CreativeWork",
+        name: f.source,
+        url: f.sourceUrl,
+      })),
     },
     {
       "@type": "FAQPage",
@@ -2155,7 +2197,7 @@ function buildRoutes(): RouteConfig[] {
         ? "Montreal income properties for sale, duplex for sale Montreal, triplex for sale Montreal, real estate investment Montreal"
         : "immeubles à revenus à vendre Montréal, duplex à vendre Montréal, triplex à vendre Montréal, investissement immobilier Montréal",
       prerenderMainInner: buildPlexRadarMainHtml(loc),
-      pageSchemas: {
+      pageSchemas: [{
         "@context": "https://schema.org",
         "@type": "WebApplication",
         name: "Plex Radar",
@@ -2179,6 +2221,16 @@ function buildRoutes(): RouteConfig[] {
           "Scénarios de dépenses d’exploitation modifiables", "Préremplissage du calculateur de rendement plex",
         ],
       },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}${RADAR_PATHS[loc]}#faq`,
+        mainEntity: RADAR_FAQ[loc].map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }],
     });
   }
 

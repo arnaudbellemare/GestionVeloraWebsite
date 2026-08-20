@@ -322,9 +322,15 @@
 .radar-actions a { padding: 13px 15px; border: 1px solid var(--radar-green); color: var(--radar-green); font-size: 11px; font-weight: 700; text-align: center; text-decoration: none; }
 .radar-actions a:first-child { background: var(--radar-green); color: #fff; }
 
-.radar-method, .radar-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 8vw; padding: 70px max(4vw, 32px); border-top: 1px solid var(--radar-line); }
-.radar-method h2, .radar-cta h2 { margin: 12px 0 0; font: 36px/1.05 Georgia, serif; }
+.radar-method, .radar-faq, .radar-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 8vw; padding: 70px max(4vw, 32px); border-top: 1px solid var(--radar-line); }
+.radar-method h2, .radar-faq h2, .radar-cta h2 { margin: 12px 0 0; font: 36px/1.05 Georgia, serif; }
 .radar-method > p, .radar-cta p { color: var(--radar-muted); line-height: 1.6; }
+.radar-faq > div > p { color: var(--radar-green); font: 700 11px/1 ui-monospace, monospace; letter-spacing: .14em; }
+.radar-faq-list details { border-bottom: 1px solid var(--radar-line); }
+.radar-faq-list details:first-child { border-top: 1px solid var(--radar-line); }
+.radar-faq-list summary { padding: 16px 0; font-size: 15px; font-weight: 600; cursor: pointer; }
+.radar-faq-list summary:hover { color: var(--radar-green); }
+.radar-faq-list p { margin: 0 0 18px; color: var(--radar-muted); line-height: 1.6; }
 .radar-cta { align-items: center; background: var(--radar-ink); color: #fff; }
 .radar-cta a { justify-self: end; padding: 13px 18px; border: 1px solid #fff; color: #fff; font-size: 12px; text-decoration: none; }
 .radar-cta p { color: #aab5af; }
@@ -353,7 +359,7 @@
   .radar-flow { align-items: end; }
   .radar-drawer-toolbar { min-height: calc(60px + env(safe-area-inset-top)); padding-right: 10px; padding-left: 24px; }
   .radar-analysis-body { padding: 24px 24px 48px; }
-  .radar-method, .radar-cta { grid-template-columns: 1fr; }
+  .radar-method, .radar-faq, .radar-cta { grid-template-columns: 1fr; }
   .radar-cta a { justify-self: start; }
 }
 
