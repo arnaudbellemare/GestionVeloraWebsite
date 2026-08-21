@@ -245,6 +245,8 @@ export interface DealInputs {
    */
   mortgageBrokerPct: number;
   // Appreciation
+  /** Current market value supported by sold comparables (1–4 units). */
+  comparableValue: number;
   annualAppreciation: number;
   annualExpenseGrowth: number;
   // TAL rent control
@@ -303,6 +305,7 @@ export interface DealResults {
   monthlyRentAll: number;
   annualRent: number;
   effectiveGrossIncome: number;
+  proformaEffectiveGrossIncome: number;
   repairsMaintenanceAnnual: number;
   propertyManagementAnnual: number;
   schoolTaxAnnual: number;
@@ -1258,7 +1261,7 @@ export const PROPERTY_PRESETS: Record<PropertyType, PropertyPreset> = {
     financingMode: 'residential', ownerOccupied: false, equityPct: 0.25,
     condoFeesMonthly: 0, snowRemoval: 900, lawnLandscaping: 350, commonHydro: 600,
     insurance: 2400, capexPerUnit: 500,
-    rehabBudget: 0, renoCostPerUnit: 15000, exitCapRate: 0.045,
+    rehabBudget: 0, renoCostPerUnit: 15000, exitCapRate: 0,
   },
   triplex: {
     askingPrice: 900000, offerDiscount: 0.035,
@@ -1271,7 +1274,7 @@ export const PROPERTY_PRESETS: Record<PropertyType, PropertyPreset> = {
     financingMode: 'residential', ownerOccupied: false, equityPct: 0.25,
     condoFeesMonthly: 0, snowRemoval: 1200, lawnLandscaping: 400, commonHydro: 900,
     insurance: 2800, capexPerUnit: 500,
-    rehabBudget: 0, renoCostPerUnit: 17500, exitCapRate: 0.0475,
+    rehabBudget: 0, renoCostPerUnit: 17500, exitCapRate: 0,
   },
   quadruplex: {
     askingPrice: 1100000, offerDiscount: 0.04,
@@ -1285,7 +1288,7 @@ export const PROPERTY_PRESETS: Record<PropertyType, PropertyPreset> = {
     financingMode: 'residential', ownerOccupied: false, equityPct: 0.25,
     condoFeesMonthly: 0, snowRemoval: 1500, lawnLandscaping: 500, commonHydro: 1200,
     insurance: 3600, capexPerUnit: 550,
-    rehabBudget: 0, renoCostPerUnit: 17500, exitCapRate: 0.05,
+    rehabBudget: 0, renoCostPerUnit: 17500, exitCapRate: 0,
   },
   'fiveplex-plus': {
     // Six-unit example at ~$275k/door, carried across from the plex median.
@@ -1366,6 +1369,9 @@ export function applyPropertyPreset(
     rehabBudget: p.rehabBudget,
     renoCostPerUnit: p.renoCostPerUnit,
     exitCapRate: p.exitCapRate,
+    // Residential plexes trade primarily from sold comparables. The asking
+    // price is only a starting estimate and remains editable in the UI.
+    comparableValue: units <= 4 && type !== 'house-flip' ? askingPrice : 0,
     propertyTaxes: Math.round(purchasePrice * area.taxRate),
     schoolTax: Math.round(purchasePrice * SCHOOL_TAX_RATE),
     // Amortization has to come back inside the insured limit for 1–4 units.
@@ -1448,6 +1454,7 @@ const BASE_INPUTS: DealInputs = {
   // Default off: the residential track opens the calculator, and there the
   // lender normally pays the broker. The MLI Select presets turn it on.
   mortgageBrokerPct: 0,
+  comparableValue: 900000,
   annualAppreciation: 0.03,
   annualExpenseGrowth: 0.02,
   // 2026 TAL base component. This is not a universal cap: tax, insurance and
@@ -2025,6 +2032,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
 
   return {
     monthlyRentAll, annualRent, effectiveGrossIncome,
+    proformaEffectiveGrossIncome: proformaEgi,
     repairsMaintenanceAnnual, propertyManagementAnnual,
     schoolTaxAnnual, condoFeesAnnual,
     totalOperatingExpenses, noi,
@@ -2075,6 +2083,7 @@ export function calculateProjection(
 ): YearProjection[] {
   const projections: YearProjection[] = [];
   const mix = summarizeUnitMix(inputs);
+  const totalUnits = mix.totalUnits || inputs.numberOfUnits;
   const rentalUnits = mix.rentalUnits;
   const rentalShare = rentalUseFraction(inputs);
   const variableExpensePct = inputs.repairsMaintenancePct + inputs.propertyManagementPct;
@@ -2082,7 +2091,9 @@ export function calculateProjection(
     0,
     results.totalOperatingExpenses - results.annualRent * variableExpensePct,
   );
-  let previousPropertyValue = inputs.purchasePrice;
+  let previousPropertyValue = totalUnits <= 4 && inputs.comparableValue > 0
+    ? inputs.comparableValue
+    : inputs.purchasePrice;
   let cumulativeCashFlow = -results.totalEquityInvested;
   let uccBalance = inputs.purchasePrice * inputs.buildingPct * rentalShare;
   let prevRenovated = 0;
@@ -2179,8 +2190,13 @@ export function calculateProjection(
       Math.pow(1 + inputs.annualExpenseGrowth, y) +
       forwardGrossRent * variableExpensePct;
     const forwardNoi = forwardGrossRent * (1 - inputs.vacancyRate) - forwardOpEx;
-    const appreciationValue = inputs.purchasePrice * Math.pow(1 + inputs.annualAppreciation, y);
-    const propertyValue = inputs.exitCapRate > 0
+    // Quebec 1–4 unit plexes are valued from sold comparables; 5+ properties
+    // use the income approach and a market-derived terminal TGA.
+    const comparableBase = totalUnits <= 4 && inputs.comparableValue > 0
+      ? inputs.comparableValue
+      : inputs.purchasePrice;
+    const appreciationValue = comparableBase * Math.pow(1 + inputs.annualAppreciation, y);
+    const propertyValue = totalUnits >= 5 && inputs.exitCapRate > 0
       ? Math.max(0, forwardNoi / inputs.exitCapRate)
       : appreciationValue;
     const equity = propertyValue - loanBalance;

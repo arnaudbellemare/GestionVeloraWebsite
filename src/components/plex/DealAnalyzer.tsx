@@ -51,6 +51,7 @@ function radarPrefill(): DealInputs {
     areaKey,
     askingPrice: number("askingPrice"),
     purchasePrice: number("purchasePrice"),
+    comparableValue: units <= 4 ? number("askingPrice") : 0,
     buildingYear: number("buildingYear") || seeded.buildingYear,
     numberOfUnits: units,
     unitMix: [{ id: "radar", label: "4½", count: units, currentRent: monthlyPerUnit, marketRent: monthlyPerUnit, sqft: 850 }],
@@ -592,21 +593,34 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
           <Kpi label={t.monthlyCarry} value={f.currency(results.paymentPerPeriod + results.totalOperatingExpenses / 12)} />
         </section>
       ) : (
-        <section className="plexc-kpis" aria-label={t.purchaseCap}>
-          <Kpi label={t.purchaseCap} value={f.percent2(results.purchaseCapRate)} tone={capTone} note={t.purchaseCapNote} />
-          <Kpi label={t.proformaCap} value={f.percent2(results.proformaCapRate)} note={t.proformaCapNote} />
-          <Kpi label={t.pricePerUnit} value={f.currency(results.pricePerUnit)} note={`${units} ${t.unitsSuffix}`} />
-          <Kpi label={t.totalEquity} value={f.currency(results.totalEquityInvested)} note={t.totalEquityNote} />
-          <Kpi label={t.cocYear1} value={f.percent2(results.cashOnCashBtYear1)} tone={cocTone} />
-          <Kpi label={t.avgCoc} value={f.percent2(results.avgCashOnCash)} note={`${t.overYears} ${inputs.exitYear} ${locale === "fr" ? "ans" : "yrs"}`} />
-          <Kpi label={t.dscr} value={f.number(results.dscrYear1, 2)} tone={dscrTone} />
-          <Kpi label={t.currentNoi} value={f.currency(results.noi)} />
-          <Kpi label={t.currentCashFlow} value={f.currency(results.btCashFlowYear1)} tone={cfTone} note={`${f.currency(results.btCashFlowMonthly)}${t.perMonth}`} />
-          <Kpi label={t.irr} value={f.percent2(results.irr)} note={`${inputs.exitYear} ${t.yrHold}`} />
-          <Kpi label={t.afterTaxIrr} value={f.percent2(results.afterTaxIrr)} note={`${inputs.exitYear} ${t.yrHold}`} />
-          <Kpi label={t.equityMultiple} value={f.multiple(results.equityMultiple)} />
-          <Kpi label={t.proformaCashFlow} value={f.currency(results.proformaCashFlow)} note={t.proformaCashFlowNote} />
-        </section>
+        <>
+          <section className="plexc-method" aria-labelledby="plexc-valuation-method">
+            <div>
+              <span className="plexc-method-kicker">{t.valuationMethod}</span>
+              <strong id="plexc-valuation-method">
+                {isCommercialProperty ? t.incomeApproach : t.comparableApproach}
+              </strong>
+            </div>
+            <p>{isCommercialProperty ? t.incomeApproachNote : t.comparableApproachNote}</p>
+          </section>
+          <section className="plexc-kpis" aria-label={t.keyMetrics}>
+            <Kpi label={t.purchaseCap} value={f.percent2(results.purchaseCapRate)} tone={capTone} note={t.purchaseCapNote} />
+            <Kpi label={t.proformaCap} value={f.percent2(results.proformaCapRate)} note={t.proformaCapNote} />
+            <Kpi label={t.currentRbe} value={f.currency(results.effectiveGrossIncome)} note={`${t.potential}: ${f.currency(results.proformaEffectiveGrossIncome)}`} />
+            <Kpi label={t.currentNoi} value={f.currency(results.noi)} note={`${t.potential}: ${f.currency(results.proformaNoi)}`} />
+            <Kpi label={t.dscr} value={f.number(results.dscrYear1, 2)} tone={dscrTone} />
+            <Kpi label={t.currentCashFlow} value={f.currency(results.btCashFlowYear1)} tone={cfTone} note={`${f.currency(results.btCashFlowMonthly)}${t.perMonth}`} />
+            <Kpi label={t.proformaCashFlow} value={f.currency(results.proformaCashFlow)} note={t.proformaCashFlowNote} />
+            <Kpi label={t.irr} value={f.percent2(results.irr)} note={`${inputs.exitYear} ${t.yrHold}`} />
+            <Kpi label={t.npv} value={f.accounting(results.npv)} note={`${t.discountedAt} ${f.percent(inputs.discountRate)}`} />
+            <Kpi label={t.afterTaxIrr} value={f.percent2(results.afterTaxIrr)} note={`${inputs.exitYear} ${t.yrHold}`} />
+            <Kpi label={t.cocYear1} value={f.percent2(results.cashOnCashBtYear1)} tone={cocTone} />
+            <Kpi label={t.avgCoc} value={f.percent2(results.avgCashOnCash)} note={`${t.overYears} ${inputs.exitYear} ${locale === "fr" ? "ans" : "yrs"}`} />
+            <Kpi label={t.equityMultiple} value={f.multiple(results.equityMultiple)} />
+            <Kpi label={t.pricePerUnit} value={f.currency(results.pricePerUnit)} note={`${units} ${t.unitsSuffix}`} />
+            <Kpi label={t.totalEquity} value={f.currency(results.totalEquityInvested)} note={t.totalEquityNote} />
+          </section>
+        </>
       )}
 
       {/* ── Tabs ── */}
@@ -640,6 +654,10 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
               <Field label={t.askingPrice} value={inputs.askingPrice} onChange={(v) => set("askingPrice", v)} prefix="$" step={5000} />
               <Field label={t.offerPrice} value={inputs.purchasePrice} onChange={(v) => set("purchasePrice", v)} prefix="$" step={5000}
                 help={discountFromAsk > 0 ? `${f.percent(discountFromAsk)} ${t.belowAsk}` : undefined} />
+              {!isCommercialProperty && (
+                <Field label={t.comparableValue} value={inputs.comparableValue} onChange={(v) => set("comparableValue", v)} prefix="$" step={5000}
+                  help={t.comparableValueHelp} />
+              )}
               <Field label={t.buildingYear} value={inputs.buildingYear} onChange={(v) => set("buildingYear", v)} step={1}
                 help={`${Math.max(0, 2026 - inputs.buildingYear)} ${t.yearsOld}`} />
               {hasLot(inputs.propertyType) ? (
@@ -1103,8 +1121,12 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
               <div className="plexc-grid4">
                 <PctField label={t.marketRentGrowth} value={inputs.annualRentGrowth} onChange={(v) => set("annualRentGrowth", v)} step={0.1} />
                 <PctField label={t.talGuideline} value={inputs.talRentIncrease} onChange={(v) => set("talRentIncrease", v)} step={0.1} help={t.talGuidelineHelp} />
-                <PctField label={t.appreciation} value={inputs.annualAppreciation} onChange={(v) => set("annualAppreciation", v)} step={0.1} />
-                <PctField label={t.exitCapRate} value={inputs.exitCapRate} onChange={(v) => set("exitCapRate", v)} step={0.1} />
+                {!isCommercialProperty && (
+                  <PctField label={t.appreciation} value={inputs.annualAppreciation} onChange={(v) => set("annualAppreciation", v)} step={0.1} help={t.appreciationHelp} />
+                )}
+                {isCommercialProperty && (
+                  <PctField label={t.exitCapRate} value={inputs.exitCapRate} onChange={(v) => set("exitCapRate", v)} step={0.1} help={t.exitCapRateHelp} />
+                )}
                 <PctField label={t.expenseGrowth} value={inputs.annualExpenseGrowth} onChange={(v) => set("annualExpenseGrowth", v)} step={0.1} />
               </div>
               <div style={{ marginTop: 18 }}>
@@ -1202,7 +1224,11 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
             <div className="plexc-grid4">
               <Field label={t.holdPeriod} value={inputs.exitYear} onChange={(v) => set("exitYear", v)} suffix={locale === "fr" ? "ans" : "yrs"} step={1} min={1} max={30} />
               <PctField label={t.sellingCostsPct} value={inputs.sellingCostsPct} onChange={(v) => set("sellingCostsPct", v)} step={0.5} />
-              <PctField label={t.exitCapRate} value={inputs.exitCapRate} onChange={(v) => set("exitCapRate", v)} step={0.1} />
+              {isCommercialProperty ? (
+                <PctField label={t.exitCapRate} value={inputs.exitCapRate} onChange={(v) => set("exitCapRate", v)} step={0.1} help={t.exitCapRateHelp} />
+              ) : (
+                <PctField label={t.appreciation} value={inputs.annualAppreciation} onChange={(v) => set("annualAppreciation", v)} step={0.1} help={t.appreciationHelp} />
+              )}
             </div>
             <div className="plexc-table-wrap" style={{ marginTop: 26 }}>
               <table className="plexc-table">

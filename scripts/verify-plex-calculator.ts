@@ -32,6 +32,8 @@ assert.equal(DEFAULT_INPUTS.ownerOccupied, false);
 assert.equal(DEFAULT_INPUTS.equityPct, 0.25);
 assert.equal(DEFAULT_INPUTS.rehabBudget, 0);
 assert.equal(DEFAULT_INPUTS.renoUnitsPerYear, 0);
+assert.equal(DEFAULT_INPUTS.exitCapRate, 0);
+assert.ok(DEFAULT_INPUTS.comparableValue > 0);
 
 // Owner-occupied financing cannot also collect rent from the occupied unit.
 const allRental = DEFAULT_INPUTS;
@@ -63,11 +65,12 @@ closeTo(
   -occupiedResults.totalEquityInvested + projection[0].btCashFlow - projection[0].renoSpend,
 );
 
-// MREX/TGA valuation is forward-NOI driven: doubling the cap rate halves value.
-const highCapInputs = { ...occupied, exitCapRate: occupied.exitCapRate * 2 };
-const highCapResults = calculateDeal(highCapInputs);
-const highCapProjection = calculateProjection(highCapInputs, highCapResults, 10);
-closeTo(projection[9].propertyValue / 2, highCapProjection[9].propertyValue, 0.02);
+// Residential 1–4 unit valuation follows sold comparables, not a TGA.
+closeTo(
+  projection[9].propertyValue,
+  occupied.comparableValue * Math.pow(1 + occupied.annualAppreciation, 10),
+  0.02,
+);
 
 // CRA restriction: CCA cannot exceed rental income otherwise available or
 // the half-year maximum on the income-producing building share.
@@ -93,6 +96,14 @@ const economicValue = calculateEconomicValue(
 );
 closeTo(fivePlusResults.maxLoanByDscr, economicValue.maxLoan, 0.02);
 closeTo(economicValue.economicValue, economicValue.maxLoan / fivePlus.maxLtv, 0.02);
+
+// MREX/TGA valuation is forward-NOI driven for 5+ units: doubling the TGA
+// halves the projected value.
+const fivePlusProjection = calculateProjection(fivePlus, fivePlusResults, 10);
+const highCapInputs = { ...fivePlus, exitCapRate: fivePlus.exitCapRate * 2 };
+const highCapResults = calculateDeal(highCapInputs);
+const highCapProjection = calculateProjection(highCapInputs, highCapResults, 10);
+closeTo(fivePlusProjection[9].propertyValue / 2, highCapProjection[9].propertyValue, 0.02);
 
 // After-tax return must include annual income tax and disposition tax.
 assert.ok(occupiedResults.afterTaxIrr <= occupiedResults.irr);

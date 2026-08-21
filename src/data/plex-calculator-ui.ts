@@ -28,12 +28,22 @@ export interface CalcUi {
   avgCoc: string;
   dscr: string;
   currentNoi: string;
+  currentRbe: string;
+  potential: string;
   currentCashFlow: string;
   irr: string;
   afterTaxIrr: string;
   equityMultiple: string;
   proformaCashFlow: string;
   proformaCashFlowNote: string;
+  npv: string;
+  discountedAt: string;
+  keyMetrics: string;
+  valuationMethod: string;
+  incomeApproach: string;
+  incomeApproachNote: string;
+  comparableApproach: string;
+  comparableApproachNote: string;
   unitsSuffix: string;
   perMonth: string;
   perYear: string;
@@ -72,6 +82,8 @@ export interface CalcUi {
   propertyTypeHelp: string;
   askingPrice: string;
   offerPrice: string;
+  comparableValue: string;
+  comparableValueHelp: string;
   belowAsk: string;
   buildingYear: string;
   yearsOld: string;
@@ -261,6 +273,7 @@ export interface CalcUi {
   talGuideline: string;
   talGuidelineHelp: string;
   appreciation: string;
+  appreciationHelp: string;
   expenseGrowth: string;
   capAtTal: string;
   taxHeading: string;
@@ -311,6 +324,7 @@ export interface CalcUi {
   holdPeriod: string;
   sellingCostsPct: string;
   exitCapRate: string;
+  exitCapRateHelp: string;
   salePriceYear: string;
   loanBalance: string;
   netSaleProceeds: string;
@@ -393,23 +407,35 @@ const fr: CalcUi = {
   exportEmailSubmit: "Envoyer et télécharger",
   exportEmailNote: "Facultatif. Le fichier se télécharge dans tous les cas.",
 
-  purchaseCap: "Taux de capitalisation",
+  purchaseCap: "TGA actuel",
   purchaseCapNote: "sur le revenu net actuel",
-  proformaCap: "Taux proforma",
+  proformaCap: "TGA potentiel",
   proformaCapNote: "aux loyers du marché",
   pricePerUnit: "Prix par porte",
   totalEquity: "Mise de fonds totale",
   totalEquityNote: "comptant à la clôture",
   cocYear1: "Rendement comptant (an 1)",
   avgCoc: "Rendement comptant moyen",
-  dscr: "Ratio de couverture",
-  currentNoi: "Revenu net actuel",
-  currentCashFlow: "Flux de trésorerie",
+  dscr: "RCD",
+  currentNoi: "RNE actuel",
+  currentRbe: "RBE actuel",
+  potential: "Potentiel",
+  currentCashFlow: "Cash-flow actuel",
   irr: "TRI",
   afterTaxIrr: "TRI après impôt",
   equityMultiple: "Multiple de la mise",
-  proformaCashFlow: "Flux proforma",
+  proformaCashFlow: "Cash-flow potentiel",
   proformaCashFlowNote: "tous les logements au marché",
+  npv: "VAN",
+  discountedAt: "actualisée à",
+  keyMetrics: "Métriques clés de rendement",
+  valuationMethod: "Méthode de valeur",
+  incomeApproach: "5 logements et plus · approche par revenu et TGA",
+  incomeApproachNote:
+    "La valeur projetée capitalise le RNE de l’année suivante au TGA de sortie. Le financement est aussi limité par le RCD exigé par le prêteur.",
+  comparableApproach: "1 à 4 logements · comparables vendus",
+  comparableApproachNote:
+    "La valeur projetée part de la valeur soutenue par des ventes comparables, puis applique l’appréciation prévue. Le TGA reste une métrique de rendement, mais ne détermine pas la valeur de revente.",
   unitsSuffix: "logements",
   perMonth: "/mois",
   perYear: "/an",
@@ -446,6 +472,8 @@ const fr: CalcUi = {
   propertyTypeHelp: "Réinitialise le modèle",
   askingPrice: "Prix demandé",
   offerPrice: "Prix offert",
+  comparableValue: "Valeur selon comparables vendus",
+  comparableValueHelp: "Valeur marchande actuelle estimée à partir de ventes récentes comparables, distincte du prix offert",
   belowAsk: "sous le prix demandé",
   buildingYear: "Année de construction",
   yearsOld: "ans",
@@ -642,7 +670,8 @@ const fr: CalcUi = {
   marketRentGrowth: "Croissance des loyers du marché",
   talGuideline: "Composante de base TAL",
   talGuidelineHelp: "Hypothèse de base seulement; taxes, assurances et travaux admissibles s'ajoutent selon l'immeuble.",
-  appreciation: "Appréciation de repli (si TGA = 0)",
+  appreciation: "Appréciation des comparables",
+  appreciationHelp: "Croissance annuelle de la valeur appuyée par les ventes comparables du secteur",
   expenseGrowth: "Croissance des dépenses",
   capAtTal: "Limiter la croissance de base des loyers en place à l'hypothèse TAL",
   taxHeading: "Traitement fiscal",
@@ -695,6 +724,7 @@ const fr: CalcUi = {
   holdPeriod: "Durée de détention",
   sellingCostsPct: "Frais de vente",
   exitCapRate: "TGA de sortie (revenu net année suivante)",
+  exitCapRateHelp: "Pour 5 logements et plus : RNE stabilisé de l’année suivante ÷ TGA de sortie",
   salePriceYear: "Prix de vente (année",
   loanBalance: "Solde du prêt",
   netSaleProceeds: "Produit net de la vente",
@@ -713,7 +743,7 @@ const fr: CalcUi = {
 
   apodHeading: "Données d'exploitation annuelles",
   apodIntro:
-    "Chaque montant peut être modifié. Modifier la colonne « en place » met à jour la donnée d'origine. Modifier la colonne « proforma » ne change que cette ligne : utile pour les taxes après réévaluation, ou la gestion que vous prévoyez assumer vous-même.",
+    "La colonne « Actuel » reprend les revenus et dépenses d’aujourd’hui. La colonne « Potentiel / futur » projette les loyers du marché et les dépenses à prévoir; chaque montant peut être ajusté, par exemple pour les taxes après réévaluation ou la gestion que vous assumerez vous-même.",
   typedIn: "Saisi",
   typedInOne: "1 montant proforma est saisi à la main plutôt que calculé",
   typedInMany: "montants proforma sont saisis à la main plutôt que calculés",
@@ -721,11 +751,11 @@ const fr: CalcUi = {
   recalculateIt: "Recalculer",
   recalculateThem: "Tout recalculer",
   colLine: "Poste",
-  colInPlace: "En place",
-  colInPlaceSub: "ce qui est perçu aujourd'hui",
+  colInPlace: "Actuel",
+  colInPlaceSub: "revenus et dépenses aujourd'hui",
   colPctGsi: "% du revenu brut",
-  colProforma: "Proforma",
-  colProformaSub: "tous les logements au marché",
+  colProforma: "Potentiel / futur",
+  colProformaSub: "loyers du marché et dépenses prévues",
   colDelta: "Δ",
   colDeltaSub: "le potentiel",
   income: "Revenus",
@@ -780,9 +810,9 @@ const en: CalcUi = {
   exportEmailSubmit: "Send and download",
   exportEmailNote: "Optional. The file downloads either way.",
 
-  purchaseCap: "Purchase cap rate",
+  purchaseCap: "Current cap rate",
   purchaseCapNote: "on in-place NOI",
-  proformaCap: "Proforma cap rate",
+  proformaCap: "Potential cap rate",
   proformaCapNote: "at market rents",
   pricePerUnit: "Price per door",
   totalEquity: "Total equity",
@@ -791,12 +821,24 @@ const en: CalcUi = {
   avgCoc: "Average cash-on-cash",
   dscr: "DSCR",
   currentNoi: "Current NOI",
+  currentRbe: "Current EGI",
+  potential: "Potential",
   currentCashFlow: "Current cash flow",
   irr: "IRR",
   afterTaxIrr: "After-tax IRR",
   equityMultiple: "Equity multiple",
   proformaCashFlow: "Proforma cash flow",
   proformaCashFlowNote: "all units at market",
+  npv: "NPV",
+  discountedAt: "discounted at",
+  keyMetrics: "Key return metrics",
+  valuationMethod: "Valuation method",
+  incomeApproach: "5+ units · income and cap-rate approach",
+  incomeApproachNote:
+    "Projected value capitalizes next year’s NOI at the exit cap rate. Financing is also constrained by the lender’s required DSCR.",
+  comparableApproach: "1–4 units · sold comparables",
+  comparableApproachNote:
+    "Projected value starts from the value supported by comparable sales, then applies expected appreciation. Cap rate remains a return metric but does not set resale value.",
   unitsSuffix: "units",
   perMonth: "/mo",
   perYear: "/yr",
@@ -833,6 +875,8 @@ const en: CalcUi = {
   propertyTypeHelp: "Reseeds the model",
   askingPrice: "Asking price",
   offerPrice: "Offer price",
+  comparableValue: "Value from sold comparables",
+  comparableValueHelp: "Current market value estimated from recent comparable sales, separate from the offer price",
   belowAsk: "below ask",
   buildingYear: "Building year",
   yearsOld: "years old",
@@ -1029,7 +1073,8 @@ const en: CalcUi = {
   marketRentGrowth: "Market rent growth",
   talGuideline: "TAL base component",
   talGuidelineHelp: "Base planning assumption only; property-specific taxes, insurance and eligible work are additional.",
-  appreciation: "Fallback appreciation (if exit cap = 0)",
+  appreciation: "Comparable-sales appreciation",
+  appreciationHelp: "Annual value growth supported by comparable sales in the area",
   expenseGrowth: "Expense growth",
   capAtTal: "Limit in-place base rent growth to the TAL assumption",
   taxHeading: "Tax treatment",
@@ -1082,6 +1127,7 @@ const en: CalcUi = {
   holdPeriod: "Hold period",
   sellingCostsPct: "Selling costs",
   exitCapRate: "Exit cap rate (next-year NOI)",
+  exitCapRateHelp: "For 5+ units: next year’s stabilized NOI divided by the exit cap rate",
   salePriceYear: "Sale price (year",
   loanBalance: "Loan balance",
   netSaleProceeds: "Net sale proceeds",
@@ -1100,7 +1146,7 @@ const en: CalcUi = {
 
   apodHeading: "Annual property operating data",
   apodIntro:
-    "Every figure here can be typed over. Editing the in-place column writes back to the input it came from. Editing the proforma column changes that one line only: useful for taxes after a reassessment, or management you plan to drop by self-managing.",
+    "The Current column shows today’s income and expenses. Potential / future projects market rents and forecast expenses; every figure can be adjusted, for example for reassessed taxes or management you plan to handle yourself.",
   typedIn: "Typed in",
   typedInOne: "1 proforma figure is typed in by hand instead of calculated",
   typedInMany: "proforma figures are typed in by hand instead of calculated",
@@ -1108,11 +1154,11 @@ const en: CalcUi = {
   recalculateIt: "Recalculate it",
   recalculateThem: "Recalculate them",
   colLine: "Line",
-  colInPlace: "In-place",
-  colInPlaceSub: "what it collects today",
+  colInPlace: "Current",
+  colInPlaceSub: "income and expenses today",
   colPctGsi: "% of GSI",
-  colProforma: "Proforma",
-  colProformaSub: "all units at market rent",
+  colProforma: "Potential / future",
+  colProformaSub: "market rents and forecast expenses",
   colDelta: "Δ",
   colDeltaSub: "the upside",
   income: "Income",
