@@ -20,8 +20,8 @@ const pct = new Intl.NumberFormat("fr-CA", { style: "percent", minimumFractionDi
 
 const copy = {
   fr: {
-    kicker: "PLEX RADAR · MONTRÉAL",
-    title: "Immeubles à revenus à vendre, analysés chaque jour.",
+    kicker: "PLEX RADAR PAR GESTION VELORA",
+    title: "Immeubles à revenus à vendre à Montréal, analysés chaque jour.",
     intro: "Un premier tri des duplex, triplex, quadruplex et quintuplex récemment publiés, avec rendement, financement québécois et dépenses clairement identifiées.",
     daily: "Parution quotidienne",
     release: "Parution affichée", latest: "Plus récente", historical: "Parution historique", loadingRelease: "Chargement de la parution…",
@@ -48,8 +48,8 @@ const copy = {
     cta: "Vous avez trouvé un immeuble à analyser?", ctaBody: "Gestion Velora peut valider les dépenses, préparer un budget d’exploitation et accompagner la mise en gestion.", contact: "Parler à Gestion Velora",
   },
   en: {
-    kicker: "PLEX RADAR · MONTREAL",
-    title: "Income properties for sale, analyzed daily.",
+    kicker: "PLEX RADAR BY GESTION VELORA",
+    title: "Montreal income properties for sale, analyzed daily.",
     intro: "A first-pass review of newly published duplexes, triplexes, fourplexes and fiveplexes using returns, Quebec financing and clearly identified expenses.",
     daily: "Daily release", properties: "properties", analyzed: "analyzed",
     release: "Displayed release", latest: "Latest", historical: "Historical release", loadingRelease: "Loading release…",

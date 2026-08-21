@@ -2201,6 +2201,9 @@ function buildRoutes(): RouteConfig[] {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         name: "Plex Radar",
+        alternateName: loc === "en"
+          ? "Montreal income properties for sale"
+          : "Immeubles à revenus à vendre à Montréal",
         applicationCategory: "FinanceApplication",
         operatingSystem: "Web",
         url: `${SITE_URL}${RADAR_PATHS[loc]}`,

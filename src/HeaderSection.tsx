@@ -130,9 +130,11 @@ export const HeaderSection = (): JSX.Element => {
                     className="block px-4 py-3 hover:bg-[#1A1A1A] last:rounded-b-lg border-t border-[#333333]"
                     onClick={() => setServicesOpen(false)}
                   >
-                    <span className="font-sans font-medium text-white block">Plex Radar</span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
+                    <span className="font-sans font-medium text-white block">
                       {locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
+                      {locale === "en" ? "Plex Radar by Gestion Velora" : "Plex Radar par Gestion Velora"}
                     </span>
                   </Link>
                 </div>

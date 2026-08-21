@@ -100,6 +100,9 @@ export function SchemaOrg() {
           "@type": "WebApplication",
           "@id": `${url}#app`,
           name: "Plex Radar",
+          alternateName: loc === "en"
+            ? "Montreal income properties for sale"
+            : "Immeubles à revenus à vendre à Montréal",
           url,
           applicationCategory: "FinanceApplication",
           operatingSystem: "Web",
