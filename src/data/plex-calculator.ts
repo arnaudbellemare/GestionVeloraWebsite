@@ -225,16 +225,16 @@ export interface PlexPageLocale {
 
 export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
   fr: {
-    title: "Calculateur de rendement pour plex à Montréal",
-    metaTitle: "Calculateur de rendement plex Montréal 2026",
+    title: "Calculateur de rendement immobilier pour plex à Montréal",
+    metaTitle: "Calculateur rendement plex : cash flow et TGA",
     metaDescription:
-      "Calculez le rendement d'un duplex ou triplex à Montréal : droits de mutation, mise de fonds SCHL, règles du TAL et DPA. Chiffres 2026 vérifiés.",
+      "Calculez cash flow, TGA, RBE, RNE, RCD, TRI et VAN d'un duplex, triplex ou multilogement à Montréal selon le financement québécois 2026.",
     keywords:
-      "calculateur rendement plex Montréal, calcul rentabilité duplex, triplex Montréal investissement, droits de mutation Montréal, taxe de bienvenue calcul, mise de fonds immeuble à revenus Québec, MLI Select",
+      "calculateur rendement plex Montréal, cash flow immobilier, calcul TGA, RBE RNE RCD, TRI VAN immobilier, calcul rentabilité duplex, triplex Montréal investissement, immeuble à revenus Québec",
     intro:
-      "Un outil gratuit pour évaluer un immeuble à revenus au Québec avec les règles qui s'appliquent réellement ici : le barème de droits de mutation propre à Montréal, les plafonds de prêt de la SCHL selon le nombre de logements, le cadre de fixation de loyer du TAL et la récupération de la DPA à la revente.",
+      "Un outil gratuit pour comparer les revenus actuels aux revenus potentiels, distinguer les dépenses courantes des dépenses futures et mesurer le rendement d'un immeuble à revenus au Québec avec le financement, la fiscalité et les règles du TAL qui s'appliquent réellement ici.",
     summary:
-      "Ce calculateur évalue duplex, triplex, quadruplex, immeubles de 5 logements et plus, copropriétés et projets de revente au Québec. Il applique le barème de droits de mutation de Montréal, les ratios prêt-valeur de la SCHL, une composante de base TAL 2026 ajustable et la déduction pour amortissement de catégorie 1 à 4 %.",
+      "Ce calculateur mesure le cash flow, le TGA, le RBE, le RNE, le RCD, le TRI et la VAN. Pour un immeuble de 1 à 4 logements, la valeur projetée repose sur des comparables vendus; à 5 logements et plus, elle repose sur le revenu net et le TGA. Les revenus et dépenses actuels restent séparés du scénario potentiel.",
     sections: [
       {
         id: "ce-qui-change-au-quebec",
@@ -245,6 +245,15 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
           "Le TAL : la composante de base 2026 est modélisée à 3,1 %, puis les variations propres à l'immeuble — taxes, assurance et 5 % des travaux admissibles — s'ajoutent. Ce n'est pas un plafond universel.",
           "Le financement : à cinq logements, l'immeuble passe du résidentiel au commercial. Le prêt n'est plus fixé par la mise de fonds mais par le ratio de couverture de la dette calculé sur le revenu net.",
           "La DPA : le Canada utilise l'amortissement dégressif de catégorie 1 à 4 %, et la déduction réclamée est récupérée à la vente. C'est un report d'impôt, pas une économie.",
+        ],
+      },
+      {
+        id: "metriques-rendement",
+        heading: "Cash flow, TGA, RBE, RNE, RCD, TRI et VAN",
+        body: [
+          "Le scénario actuel part des loyers réellement encaissés et des dépenses d'exploitation connues. Le scénario potentiel ajoute les loyers atteignables, les travaux prévus, les dépenses futures et le rythme de relocation sans les confondre avec les faits observés aujourd'hui.",
+          "Le revenu brut effectif (RBE) retire la vacance du revenu brut; le revenu net d'exploitation (RNE) retire ensuite les dépenses d'exploitation. Le TGA rapporte ce RNE à la valeur de l'immeuble, le ratio de couverture de la dette (RCD) teste la capacité de payer l'hypothèque, et le cash flow montre ce qui reste après le service de la dette.",
+          "Le taux de rendement interne (TRI) et la valeur actualisée nette (VAN) évaluent toute la période de détention, incluant les travaux, le refinancement et la revente. Sous cinq logements, la revente suit l'approche par comparables; à cinq logements et plus, le RNE stabilisé de l'année suivante est capitalisé au TGA de sortie.",
         ],
       },
       {
@@ -309,16 +318,16 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
     ctaButton: "Parler à l'équipe",
   },
   en: {
-    title: "Montreal plex investment calculator",
-    metaTitle: "Montreal Plex Investment Calculator 2026",
+    title: "Montreal plex and income-property investment calculator",
+    metaTitle: "Montreal Plex Calculator: Cash Flow and Cap Rate",
     metaDescription:
-      "Underwrite a Montreal duplex or triplex with Quebec rules: welcome tax, CMHC down payment caps, TAL rent-fixing rules and CCA. Verified 2026 figures.",
+      "Calculate cash flow, cap rate, EGI, NOI, DSCR, IRR and NPV for a Montreal duplex, triplex or multi-unit property using Quebec financing rules.",
     keywords:
-      "Montreal plex investment calculator, duplex triplex cash flow Quebec, welcome tax calculator Montreal, CMHC down payment multiplex, MLI Select calculator, Quebec rental property returns",
+      "Montreal plex investment calculator, rental property cash flow calculator, cap rate NOI DSCR, real estate IRR NPV, duplex triplex cash flow Quebec, multi-unit property returns",
     intro:
-      "A free tool for underwriting Quebec income property with the rules that actually apply here: Montreal's own welcome-tax schedule, CMHC lending caps by unit count, the TAL rent-fixing framework, and CCA recapture on sale.",
+      "A free tool for comparing in-place and potential income, separating current operating costs from future expenses, and underwriting a Quebec income property with the financing, tax and TAL rules that actually apply here.",
     summary:
-      "This calculator underwrites duplexes, triplexes, quadruplexes, 5+ unit buildings, condos and flips in Quebec. It applies Montreal's welcome-tax schedule, CMHC loan-to-value caps, an editable 2026 TAL base component, and Class 1 capital cost allowance at 4%.",
+      "This calculator measures cash flow, cap rate, effective gross income, NOI, DSCR, IRR and NPV. Projected value for one-to-four-unit properties follows sold comparables; five-plus-unit value follows stabilized NOI and the exit cap rate. Current income and expenses remain separate from the potential scenario.",
     sections: [
       {
         id: "what-is-different-in-quebec",
@@ -329,6 +338,15 @@ export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
           "TAL rent fixing: the model uses 3.1% as the 2026 base component, then property-specific taxes, insurance and 5% of eligible work are additional. It is not a universal ceiling.",
           "Financing: at five units a building stops being residential and becomes commercial. The loan is no longer set by your down payment but by the debt-service coverage the net operating income supports.",
           "CCA: Canada uses declining-balance Class 1 depreciation at 4%, and everything claimed is recaptured on sale. It is a deferral, not a saving.",
+        ],
+      },
+      {
+        id: "return-metrics",
+        heading: "Cash flow, cap rate, EGI, NOI, DSCR, IRR and NPV",
+        body: [
+          "The current scenario starts with rent actually collected and known operating expenses. The potential scenario adds achievable market rent, planned work, future expenses and the expected turnover schedule without presenting those assumptions as current facts.",
+          "Effective gross income (EGI) subtracts vacancy from gross income, and net operating income (NOI) then subtracts operating expenses. Cap rate relates NOI to property value, debt-service coverage ratio (DSCR) tests mortgage capacity, and cash flow shows what remains after debt service.",
+          "Internal rate of return (IRR) and net present value (NPV) evaluate the full holding period, including capital work, refinancing and resale. Under five units, resale follows sold comparables; at five units and above, next year's stabilized NOI is capitalized at the exit cap rate.",
         ],
       },
       {

@@ -11,6 +11,7 @@ This folder holds **governance and measurement templates** for Gestion Velora’
 | `decision-cards.md` | reversible decisions with confidence labels |
 | `gsc-dashboard-handbook.md` | How operators use Search Console segments + annotations |
 | `geo-answer-engine-playbook.md` | Answer-engine visibility workflow based on controlled GEO research |
+| `opportunity-experiments-template.csv` | Private +28/+56-day experiment-ledger template |
 
 Root **`seo-changelog.md`** ties deploys (Git) to SEO outcomes.
 
@@ -27,6 +28,30 @@ Root **`seo-changelog.md`** ties deploys (Git) to SEO outcomes.
 ```bash
 npm run seo:verify
 ```
+
+## Weekly SEO/GEO opportunity audit
+
+The read-only audit compares two consecutive 28-day Search Console windows. It ranks actual click
+regressions, CTR headroom, queries in positions 5–20, unclear query ownership, and likely
+cannibalization. It writes private Markdown, CSV, and JSON artifacts below `.search-data/`; it never
+edits or publishes site content.
+
+```bash
+GSC_SERVICE_ACCOUNT_FILE=/secure/path/key.json npm run seo:gsc-export -- --rolling
+npm run seo:opportunity-audit
+```
+
+The rolling export ends three days before the run by default so it only requests mature Search
+Console data. Override this for reproducible runs with `--end-date YYYY-MM-DD`. The audit defaults
+to a 10-impression signal floor; use `--min-impressions` to change it.
+
+Before approving a recommendation, confirm intent, bilingual ownership, conversions, backlinks,
+canonical signals, and whether an existing page should be refreshed instead. A
+`review_topic_gap` result is an investigation prompt—not permission to generate a page.
+
+Copy `opportunity-experiments-template.csv` into the private `.search-data/` directory to record an
+approved change and its +28/+56-day rechecks. Search queries and experiment results must remain out
+of git.
 
 ## Removed location URLs (301)
 

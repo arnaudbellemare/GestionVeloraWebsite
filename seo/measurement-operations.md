@@ -25,7 +25,7 @@ Perplexity, ChatGPT, Gemini, Copilot, and Claude.
 AI referral counts are a lower bound: native apps and privacy controls can remove the referrer.
 Google AI Overview and AI Mode visits remain combined with ordinary Web search reporting.
 
-## Monthly Search Console export
+## Search Console exports and weekly opportunity audit
 
 1. Create a Google Cloud service account with Search Console API access.
 2. Add its email as a user on `sc-domain:gestionvelora.com` (or set `GSC_SITE_URL` to the verified
@@ -37,6 +37,18 @@ Google AI Overview and AI Mode visits remain combined with ordinary Web search r
 The command writes the previous full month's page, query, page/query, and sitemap data under the
 git-ignored `.search-data/YYYY-MM/` directory. Set `GSC_INSPECTION_URLS_FILE` to a newline-delimited
 URL list to add URL Inspection results.
+
+For the weekly read-only prioritization workflow, run:
+
+```bash
+GSC_SERVICE_ACCOUNT_FILE=/secure/path/key.json npm run seo:gsc-export -- --rolling
+npm run seo:opportunity-audit
+```
+
+The first command stores current and previous 28-day windows under `.search-data/rolling/`; the
+second writes a ranked report under `.search-data/opportunity/`. The score is relative to that run,
+not a traffic forecast. Review every suggested action manually and log approved experiments using
+`seo/opportunity-experiments-template.csv`, with outcome checks at +28 and +56 days.
 
 Search Console has no bulk Page Indexing API. Export the Page Indexing report manually each month
 and save it with the API files. CrUX uses a rolling 28-day window and can withhold URL-level data
