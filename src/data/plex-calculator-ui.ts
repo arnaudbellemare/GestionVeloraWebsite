@@ -84,6 +84,9 @@ export interface CalcUi {
   offerPrice: string;
   comparableValue: string;
   comparableValueHelp: string;
+  comparableFromRadar: string;
+  comparableMissingRadar: string;
+  comparableSales: string;
   belowAsk: string;
   buildingYear: string;
   yearsOld: string;
@@ -156,6 +159,7 @@ export interface CalcUi {
   financingSub: string;
   modeResidential: string;
   modeCommercial: string;
+  modeStandard: string;
   modeMli: string;
   notAvailable5Plus: string;
   commercialStartsAt5: string;
@@ -221,10 +225,28 @@ export interface CalcUi {
   veBelowPrice: string;
   veShortfallNote: string;
   veVariesNote: string;
+  marketGrmInput: string;
+  marketGrmValue: string;
+  marketCapValue: string;
+  selectedValue: string;
+  valueMargin: string;
   colRate: string;
   colPaymentMo: string;
   colCashFlow: string;
   colCoc: string;
+  financingComparison: string;
+  financingComparisonSub: string;
+  scenario: string;
+  currentScenario: string;
+  unavailable: string;
+  cashRequired: string;
+  insurancePremium: string;
+  totalLoan: string;
+  colAmortization: string;
+  irr5: string;
+  irr10: string;
+  netAfterTax5: string;
+  netAfterTax10: string;
 
   // Renovation
   renoHeading: string;
@@ -255,6 +277,8 @@ export interface CalcUi {
   snowRemoval: string;
   landscaping: string;
   commonHydro: string;
+  janitorial: string;
+  heating: string;
   otherExpenses: string;
   capexPerUnit: string;
   repairsMaintenance: string;
@@ -353,7 +377,7 @@ export interface CalcUi {
   colLine: string;
   colInPlace: string;
   colInPlaceSub: string;
-  colPctGsi: string;
+  colPctRbe: string;
   colProforma: string;
   colProformaSub: string;
   colDelta: string;
@@ -368,6 +392,7 @@ export interface CalcUi {
   other: string;
   totalOperatingExpenses: string;
   netOperatingIncome: string;
+  adjustedNetOperatingIncome: string;
   cashFlowBeforeTax: string;
   resetToCalculated: string;
 
@@ -386,6 +411,43 @@ export interface CalcUi {
   colValue: string;
   colLoanBalance: string;
   colEquity: string;
+
+  // Underwriting detail
+  optimizationHeading: string;
+  optimizationCopy: string;
+  financialAnatomy: string;
+  financialAnatomySub: string;
+  marketIndicators: string;
+  metric: string;
+  currentValue: string;
+  potentialValue: string;
+  grm: string;
+  netIncomeMultiplier: string;
+  operatingExpenseRatio: string;
+  cashFlowPerDoor: string;
+  returnMatrix: string;
+  returnMatrixSub: string;
+  horizon: string;
+  beforeTax: string;
+  afterTax: string;
+  afterTaxNpv: string;
+  equityTimeline: string;
+  equityTimelineSub: string;
+  principalPaid: string;
+  cumulativePrincipalPaid: string;
+  interestPaid: string;
+  recovery: string;
+  totalReturnRecovery: string;
+  cashFlowRecovery: string;
+  externalDueDiligence: string;
+  externalDueDiligenceNote: string;
+  score: string;
+  positives: string;
+  warnings: string;
+  verdictStrongBuy: string;
+  verdictBuy: string;
+  verdictHold: string;
+  verdictAvoid: string;
 
   // Verdict + sources
   verdictHeading: string;
@@ -474,6 +536,9 @@ const fr: CalcUi = {
   offerPrice: "Prix offert",
   comparableValue: "Valeur selon comparables vendus",
   comparableValueHelp: "Valeur marchande actuelle estimée à partir de ventes récentes comparables, distincte du prix offert",
+  comparableFromRadar: "Valeur comparable sauvegardée par Plex Radar",
+  comparableMissingRadar: "Plex Radar n'a pas encore de valeur comparable sauvegardée pour cette fiche; entrez une valeur fondée sur des ventes vérifiées.",
+  comparableSales: "ventes comparables",
   belowAsk: "sous le prix demandé",
   buildingYear: "Année de construction",
   yearsOld: "ans",
@@ -547,6 +612,7 @@ const fr: CalcUi = {
     "Sous cinq logements, vous êtes évalué comme du résidentiel et votre mise de fonds détermine le prêt. À cinq et plus, le prêteur calcule à partir du revenu net : c'est le plafond prêt-valeur ou le test de couverture, selon celui qui limite en premier.",
   modeResidential: "Résidentiel (1 à 4)",
   modeCommercial: "Commercial (5+)",
+  modeStandard: "SCHL Standard 5–6",
   modeMli: "SCHL MLI Select",
   notAvailable5Plus: "Non disponible à 5 logements et plus",
   commercialStartsAt5: "Le commercial commence à 5 logements",
@@ -602,6 +668,20 @@ const fr: CalcUi = {
   colPaymentMo: "Paiement / mois",
   colCashFlow: "Flux de trésorerie",
   colCoc: "Rendement comptant",
+  financingComparison: "Comparer les structures de financement",
+  financingComparisonSub:
+    "Comparaison indicative calculée avec le même revenu, les mêmes dépenses et la même sortie. Les taux ne sont pas des offres de prêt.",
+  scenario: "Scénario",
+  currentScenario: "Sélectionné",
+  unavailable: "Non disponible",
+  cashRequired: "Comptant requis",
+  insurancePremium: "Prime d'assurance",
+  totalLoan: "Prêt total",
+  colAmortization: "Amort.",
+  irr5: "TRI 5 ans",
+  irr10: "TRI 10 ans",
+  netAfterTax5: "Net après impôt — an 5",
+  netAfterTax10: "Net après impôt — an 10",
 
   veHeading: "Valeur économique (méthode bancaire)",
   veSub:
@@ -621,6 +701,11 @@ const fr: CalcUi = {
     "Quand la valeur économique est sous le prix d'achat, vous couvrez la totalité de l'écart comptant : la mise de fonds réelle devient prix moins prêt maximal, pas 20 % du prix. À Montréal, le TGA exigé par la banque dépasse largement le TGA du marché, cet écart vient des taux de qualification, pas d'un défaut de l'immeuble.",
   veVariesNote:
     "Chaque prêteur normalise différemment et la valeur économique bouge quotidiennement avec les taux de qualification. Ceci est une version défendable du calcul, pas le chiffre d'une banque précise.",
+  marketGrmInput: "MRB de marché",
+  marketGrmValue: "Valeur par MRB de marché",
+  marketCapValue: "Valeur par TGA de marché",
+  selectedValue: "Valeur retenue",
+  valueMargin: "Marge sur le prix",
 
   renoHeading: "Rénovation et relocation",
   renoSub:
@@ -654,6 +739,8 @@ const fr: CalcUi = {
   snowRemoval: "Déneigement",
   landscaping: "Aménagement paysager",
   commonHydro: "Électricité des communs",
+  janitorial: "Conciergerie",
+  heating: "Chauffage",
   otherExpenses: "Autres dépenses",
   capexPerUnit: "Réserve de capital / logement",
   repairsMaintenance: "Entretien et réparations",
@@ -753,7 +840,7 @@ const fr: CalcUi = {
   colLine: "Poste",
   colInPlace: "Actuel",
   colInPlaceSub: "revenus et dépenses aujourd'hui",
-  colPctGsi: "% du revenu brut",
+  colPctRbe: "% du RBE",
   colProforma: "Potentiel / futur",
   colProformaSub: "loyers du marché et dépenses prévues",
   colDelta: "Δ",
@@ -763,11 +850,12 @@ const fr: CalcUi = {
   vacancyCreditLoss: "Inoccupation et mauvaises créances",
   effectiveGrossIncome: "Revenu brut effectif",
   operatingExpenses: "Dépenses d'exploitation",
-  capexReserve: "Réserve de capital",
+  capexReserve: "Réserve de capital (après RNE)",
   condoFeesLine: "Frais de copropriété",
   other: "Autres",
   totalOperatingExpenses: "Total des dépenses d'exploitation",
   netOperatingIncome: "Revenu net d'exploitation",
+  adjustedNetOperatingIncome: "RNE ajusté après la réserve de capital",
   cashFlowBeforeTax: "Flux de trésorerie avant impôt",
   resetToCalculated: "Saisi à la main : cliquer pour revenir au montant calculé",
 
@@ -787,6 +875,46 @@ const fr: CalcUi = {
   colValue: "Valeur",
   colLoanBalance: "Solde du prêt",
   colEquity: "Équité",
+  optimizationHeading: "Potentiel d'optimisation locative",
+  optimizationCopy:
+    "Écart annuel entre les loyers actuels et les loyers potentiels saisis. La réalisation dépend du roulement, des travaux, des baux et des règles applicables du TAL.",
+  financialAnatomy: "Anatomie financière",
+  financialAnatomySub:
+    "Lecture regroupée du revenu, de l'exploitation, de la dette et du rendement. Les valeurs potentielles utilisent la colonne future de l'état d'exploitation.",
+  marketIndicators: "Indicateurs de marché et d'exploitation",
+  metric: "Indicateur",
+  currentValue: "Actuel",
+  potentialValue: "Potentiel",
+  grm: "MRB — multiplicateur de revenu brut",
+  netIncomeMultiplier: "MRN — multiplicateur de revenu net",
+  operatingExpenseRatio: "Ratio de dépenses",
+  cashFlowPerDoor: "Cash-flow / porte / mois",
+  returnMatrix: "Rendements à 5 et 10 ans",
+  returnMatrixSub:
+    "TRI et VAN recalculés à chaque horizon, avant et après l'impôt estimé sur le revenu locatif, la récupération de DPA et le gain en capital.",
+  horizon: "Horizon",
+  beforeTax: "Avant impôt",
+  afterTax: "Après impôt",
+  afterTaxNpv: "VAN après impôt",
+  equityTimeline: "Amortissement et équité",
+  equityTimelineSub:
+    "Capital et intérêts de chaque année, avec le capital cumulatif, selon l'amortissement sélectionné et le taux de renouvellement prévu.",
+  principalPaid: "Capital remboursé",
+  cumulativePrincipalPaid: "Capital cumulatif",
+  interestPaid: "Intérêts payés",
+  recovery: "Récupération du comptant",
+  totalReturnRecovery: "Par rendement total",
+  cashFlowRecovery: "Par cash-flow seulement",
+  externalDueDiligence: "Vérifications externes non incluses",
+  externalDueDiligenceNote:
+    "Les risques d'inondation, de glissement de terrain, le zonage, la contamination et les services à proximité exigent des sources géospatiales et municipales vérifiées; le calculateur ne les présume pas.",
+  score: "Score",
+  positives: "Forces",
+  warnings: "Points à surveiller",
+  verdictStrongBuy: "Très solide",
+  verdictBuy: "Solide",
+  verdictHold: "À approfondir",
+  verdictAvoid: "Fragile",
 
   verdictHeading: "Où se situe cet immeuble",
   verdictSub:
@@ -877,6 +1005,9 @@ const en: CalcUi = {
   offerPrice: "Offer price",
   comparableValue: "Value from sold comparables",
   comparableValueHelp: "Current market value estimated from recent comparable sales, separate from the offer price",
+  comparableFromRadar: "Comparable value saved by Plex Radar",
+  comparableMissingRadar: "Plex Radar does not yet have a saved comparable value for this listing; enter a value supported by verified sales.",
+  comparableSales: "comparable sales",
   belowAsk: "below ask",
   buildingYear: "Building year",
   yearsOld: "years old",
@@ -950,6 +1081,7 @@ const en: CalcUi = {
     "Under five units you are underwritten as residential and your down payment sets the loan. At five and up the lender sizes off NOI: whichever bites first, the LTV cap or the DSCR test, is the loan you get.",
   modeResidential: "Residential (1–4)",
   modeCommercial: "Commercial (5+)",
+  modeStandard: "CMHC Standard 5–6",
   modeMli: "CMHC MLI Select",
   notAvailable5Plus: "Not available at 5+ units",
   commercialStartsAt5: "Commercial tracks start at 5 units",
@@ -1005,6 +1137,20 @@ const en: CalcUi = {
   colPaymentMo: "Payment / mo",
   colCashFlow: "Cash flow",
   colCoc: "Cash-on-cash",
+  financingComparison: "Compare financing structures",
+  financingComparisonSub:
+    "Indicative comparison using the same income, expenses and exit assumptions. Rates shown are not loan offers.",
+  scenario: "Scenario",
+  currentScenario: "Selected",
+  unavailable: "Unavailable",
+  cashRequired: "Cash required",
+  insurancePremium: "Insurance premium",
+  totalLoan: "Total loan",
+  colAmortization: "Amort.",
+  irr5: "5-year IRR",
+  irr10: "10-year IRR",
+  netAfterTax5: "After-tax net — year 5",
+  netAfterTax10: "After-tax net — year 10",
 
   veHeading: "Economic value (the bank's method)",
   veSub:
@@ -1024,6 +1170,11 @@ const en: CalcUi = {
     "When the economic value sits below the purchase price, you cover the whole gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. In Montreal the cap rate the bank requires sits well above the market cap rate, that gap comes from qualification rates, not from a defect in the building.",
   veVariesNote:
     "Every lender normalizes differently, and economic value moves daily with qualification rates. This is one defensible version of the calculation, not any specific bank's number.",
+  marketGrmInput: "Market GRM",
+  marketGrmValue: "Market GRM value",
+  marketCapValue: "Market cap-rate value",
+  selectedValue: "Selected value",
+  valueMargin: "Margin to price",
 
   renoHeading: "Renovation and turnover",
   renoSub:
@@ -1057,6 +1208,8 @@ const en: CalcUi = {
   snowRemoval: "Snow removal",
   landscaping: "Landscaping",
   commonHydro: "Common hydro",
+  janitorial: "Janitorial",
+  heating: "Heating",
   otherExpenses: "Other expenses",
   capexPerUnit: "CapEx reserve / unit",
   repairsMaintenance: "Repairs & maintenance",
@@ -1156,7 +1309,7 @@ const en: CalcUi = {
   colLine: "Line",
   colInPlace: "Current",
   colInPlaceSub: "income and expenses today",
-  colPctGsi: "% of GSI",
+  colPctRbe: "% of EGI",
   colProforma: "Potential / future",
   colProformaSub: "market rents and forecast expenses",
   colDelta: "Δ",
@@ -1166,11 +1319,12 @@ const en: CalcUi = {
   vacancyCreditLoss: "Vacancy & credit loss",
   effectiveGrossIncome: "Effective gross income",
   operatingExpenses: "Operating expenses",
-  capexReserve: "CapEx reserve",
+  capexReserve: "Capital reserve (below NOI)",
   condoFeesLine: "Condo fees",
   other: "Other",
   totalOperatingExpenses: "Total operating expenses",
   netOperatingIncome: "Net operating income",
+  adjustedNetOperatingIncome: "Adjusted NOI after capital reserve",
   cashFlowBeforeTax: "Cash flow before tax",
   resetToCalculated: "Typed in by hand: click to go back to the calculated figure",
 
@@ -1190,6 +1344,46 @@ const en: CalcUi = {
   colValue: "Value",
   colLoanBalance: "Loan balance",
   colEquity: "Equity",
+  optimizationHeading: "Rental optimization potential",
+  optimizationCopy:
+    "Annual gap between current rents and the potential rents entered. Realization depends on turnover, renovations, leases and applicable rental rules.",
+  financialAnatomy: "Financial anatomy",
+  financialAnatomySub:
+    "A consolidated view of income, operations, debt and returns. Potential values use the future column in the operating statement.",
+  marketIndicators: "Market and operating indicators",
+  metric: "Metric",
+  currentValue: "Current",
+  potentialValue: "Potential",
+  grm: "GRM — gross rent multiplier",
+  netIncomeMultiplier: "NIM — net income multiplier",
+  operatingExpenseRatio: "Operating expense ratio",
+  cashFlowPerDoor: "Cash flow / door / month",
+  returnMatrix: "5- and 10-year returns",
+  returnMatrixSub:
+    "IRR and NPV are recalculated at each horizon, before and after estimated rental income tax, CCA recapture and capital gains tax.",
+  horizon: "Horizon",
+  beforeTax: "Before tax",
+  afterTax: "After tax",
+  afterTaxNpv: "After-tax NPV",
+  equityTimeline: "Amortization and equity",
+  equityTimelineSub:
+    "Annual principal and interest, plus cumulative principal, under the selected amortization and expected renewal rate.",
+  principalPaid: "Principal paid",
+  cumulativePrincipalPaid: "Cumulative principal",
+  interestPaid: "Interest paid",
+  recovery: "Cash recovery",
+  totalReturnRecovery: "From total return",
+  cashFlowRecovery: "From cash flow only",
+  externalDueDiligence: "External due diligence not included",
+  externalDueDiligenceNote:
+    "Flood, landslide, zoning, contamination and nearby-service risks require verified geospatial and municipal sources; the calculator does not presume them.",
+  score: "Score",
+  positives: "Strengths",
+  warnings: "Watch items",
+  verdictStrongBuy: "Very strong",
+  verdictBuy: "Strong",
+  verdictHold: "Needs review",
+  verdictAvoid: "Fragile",
 
   verdictHeading: "Where this deal stands",
   verdictSub:

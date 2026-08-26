@@ -77,6 +77,26 @@ export type RadarMetrics = {
 
 const n = (deal: RadarDeal, key: string) => Number(deal.metrics[key] ?? 0);
 
+/**
+ * Comparable-sale fields are optional because older Radar releases predate
+ * the valuation enrichment. Accept the stable key plus the two legacy names
+ * used by early producer prototypes, without ever substituting asking price.
+ */
+function radarComparableValue(deal: RadarDeal): number {
+  return [
+    "comparable_value",
+    "average_comparable_value",
+    "comparables_average_value",
+  ].map((key) => n(deal, key)).find((value) => value > 0) ?? 0;
+}
+
+function radarComparableCount(deal: RadarDeal): number {
+  return Math.max(0, Math.round([
+    "comparable_count",
+    "comparables_count",
+  ].map((key) => n(deal, key)).find((value) => value > 0) ?? 0));
+}
+
 export function publishedRadarMetrics(deal: RadarDeal): RadarMetrics | null {
   if (deal.status !== "underwritten") return null;
   return {
@@ -190,6 +210,10 @@ export function calculatorUrl(deal: RadarDeal, locale: RadarLocale, excluded: st
     city: listing.city,
     areaKey: calculatorAreaKey(listing.city),
   });
+  const comparableValue = radarComparableValue(deal);
+  const comparableCount = radarComparableCount(deal);
+  if (comparableValue > 0) params.set("comparableValue", String(comparableValue));
+  if (comparableCount > 0) params.set("comparableCount", String(comparableCount));
   const path = locale === "en" ? "/en/montreal-plex-investment-calculator" : "/calculateur-rendement-plex-montreal";
   return `${path}?${params.toString()}`;
 }

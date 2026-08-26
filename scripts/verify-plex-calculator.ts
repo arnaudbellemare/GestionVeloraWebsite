@@ -4,7 +4,11 @@ import {
   applyPropertyPreset,
   calculateDeal,
   calculateEconomicValue,
+  calculateEquityMilestones,
+  calculatePaybackYears,
   calculateProjection,
+  calculateReturnHorizons,
+  compareFinancing,
   mortgagePeriodicRate,
   rentalUseFraction,
 } from '../src/lib/plex/calculator';
@@ -107,6 +111,117 @@ closeTo(fivePlusProjection[9].propertyValue / 2, highCapProjection[9].propertyVa
 
 // After-tax return must include annual income tax and disposition tax.
 assert.ok(occupiedResults.afterTaxIrr <= occupiedResults.irr);
+assert.ok(occupiedResults.afterTaxNpv <= occupiedResults.npv);
+closeTo(
+  occupiedResults.breakEvenRatio,
+  (occupiedResults.totalOperatingExpenses + occupiedResults.annualDebtService) /
+    occupiedResults.effectiveGrossIncome,
+  1e-12,
+);
+closeTo(
+  occupiedResults.noi,
+  occupiedResults.effectiveGrossIncome - occupiedResults.totalOperatingExpenses,
+  1e-12,
+);
+closeTo(
+  occupiedResults.adjustedNoi,
+  occupiedResults.noi - occupiedResults.capexReserveAnnual,
+  1e-12,
+);
+closeTo(
+  occupiedResults.btCashFlowYear1,
+  occupiedResults.adjustedNoi - occupiedResults.annualDebtService,
+  1e-12,
+);
+closeTo(
+  occupiedResults.proformaAdjustedNoi,
+  occupiedResults.proformaNoi - occupiedResults.capexReserveAnnual,
+  1e-12,
+);
+closeTo(
+  occupiedResults.proformaCashFlow,
+  occupiedResults.proformaAdjustedNoi - occupiedResults.annualDebtService,
+  1e-12,
+);
+for (const line of occupiedResults.apod.filter((row) => row.pctOfRbe !== undefined)) {
+  closeTo(line.pctOfRbe ?? 0, Math.abs(line.current) / occupiedResults.effectiveGrossIncome, 1e-12);
+}
+
+// MRN, 5/10-year returns and after-tax VAN all come from the same engine.
+closeTo(
+  fivePlusResults.netIncomeMultiplier,
+  fivePlus.purchasePrice / fivePlusResults.noi,
+  1e-10,
+);
+const returnHorizons = calculateReturnHorizons(fivePlus);
+assert.deepEqual(returnHorizons.map((row) => row.years), [5, 10]);
+for (const horizon of returnHorizons) {
+  const direct = calculateDeal({ ...fivePlus, exitYear: horizon.years });
+  closeTo(horizon.beforeTaxIrr, direct.irr, 1e-12);
+  closeTo(horizon.beforeTaxNpv, direct.npv, 1e-8);
+  closeTo(horizon.afterTaxIrr, direct.afterTaxIrr, 1e-12);
+  closeTo(horizon.afterTaxNpv, direct.afterTaxNpv, 1e-8);
+}
+
+// Financing comparison models Standard for 5–6 units and every available
+// commercial/insured structure respects its DSCR sizing target.
+const financing = compareFinancing(fivePlus);
+assert.deepEqual(financing.map((scenario) => scenario.key), [
+  'conventional', 'cmhc-standard', 'mli-50', 'mli-70', 'mli-100',
+]);
+const standard = financing.find((scenario) => scenario.key === 'cmhc-standard');
+assert.ok(standard && !standard.unavailable);
+assert.ok(standard.insurancePremium > 0);
+assert.equal(standard.amortizationYears, 25);
+for (const scenario of financing.filter((row) => !row.unavailable)) {
+  assert.ok(scenario.dscr >= fivePlus.dscrTarget);
+  assert.ok(Number.isFinite(scenario.irr5));
+  assert.ok(Number.isFinite(scenario.irr10));
+}
+
+// Amortization milestones reconcile to the projection and grow cumulative
+// principal monotonically. The recovery row can safely join the standard set.
+const payback = calculatePaybackYears(fivePlus, fivePlusResults);
+const milestoneYears = [1, 5, 10, ...(payback.totalReturnPayback ? [payback.totalReturnPayback] : [])];
+const milestones = calculateEquityMilestones(fivePlus, fivePlusResults, milestoneYears);
+assert.equal(milestones[0].year, 1);
+assert.ok(milestones.every((row, index) => index === 0 || row.cumulativePrincipalPaid >= milestones[index - 1].cumulativePrincipalPaid));
+closeTo(milestones[0].loanBalance, fivePlusProjection[0].loanBalance, 0.02);
+
+// Empty inputs must render zeroes, not NaN/Infinity, throughout the model.
+const zeroInputs = {
+  ...DEFAULT_INPUTS,
+  askingPrice: 0,
+  purchasePrice: 0,
+  comparableValue: 0,
+  propertyTaxes: 0,
+  schoolTax: 0,
+  insurance: 0,
+  snowRemoval: 0,
+  lawnLandscaping: 0,
+  commonHydro: 0,
+  otherExpenses: 0,
+  capexPerUnit: 0,
+  rehabBudget: 0,
+  unitMix: DEFAULT_INPUTS.unitMix.map((unit) => ({
+    ...unit,
+    currentRent: 0,
+    marketRent: 0,
+  })),
+};
+const zeroResults = calculateDeal(zeroInputs);
+const assertFiniteNumbers = (value: unknown, path = 'result'): void => {
+  if (typeof value === 'number') {
+    assert.ok(Number.isFinite(value), `${path} must be finite`);
+    return;
+  }
+  if (value && typeof value === 'object') {
+    for (const [key, child] of Object.entries(value)) {
+      assertFiniteNumbers(child, `${path}.${key}`);
+    }
+  }
+};
+assertFiniteNumbers(zeroResults);
 
 // Plex Radar scenarios can remove estimates, but never reported facts.
 const radarDeal: RadarDeal = {
@@ -154,6 +269,8 @@ const radarDeal: RadarDeal = {
     annual_debt_service: 58_000,
     loan: 750_000,
     closing_costs: 20_000,
+    comparable_value: 1_281_720,
+    comparable_count: 10,
   },
   analysis: { verdict: 'hold', score: 5, max_score: 12 },
 };
@@ -175,6 +292,18 @@ assert.equal(radarCalculatorUrl.searchParams.get('purchasePrice'), '1000000');
 assert.equal(radarCalculatorUrl.searchParams.get('management'), '5000');
 assert.equal(radarCalculatorUrl.searchParams.get('hydro'), '3000');
 assert.equal(radarCalculatorUrl.searchParams.get('areaKey'), 'villeray');
+assert.equal(radarCalculatorUrl.searchParams.get('comparableValue'), '1281720');
+assert.equal(radarCalculatorUrl.searchParams.get('comparableCount'), '10');
+
+const metricsWithoutComps = { ...radarDeal.metrics };
+delete metricsWithoutComps.comparable_value;
+delete metricsWithoutComps.comparable_count;
+const radarUrlWithoutComps = new URL(calculatorUrl({
+  ...radarDeal,
+  metrics: metricsWithoutComps,
+}, 'fr'), 'https://www.gestionvelora.com');
+assert.equal(radarUrlWithoutComps.searchParams.has('comparableValue'), false);
+assert.equal(radarUrlWithoutComps.searchParams.has('comparableCount'), false);
 
 const radarScenarioUrl = new URL(
   calculatorUrl(radarDeal, 'fr', ['management', 'utilities']),

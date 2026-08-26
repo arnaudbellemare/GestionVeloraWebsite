@@ -54,8 +54,10 @@
   font-size: 12.5px;
   line-height: 1.65;
   color: var(--pc-ink-2);
-  border-left: 2px solid var(--pc-border-strong);
-  padding-left: 14px;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r-sm);
+  background: var(--pc-sunken);
+  padding: 10px 12px;
   margin: 20px 0 0;
 }
 
@@ -172,6 +174,33 @@
 .plexc-v-good { color: var(--pc-good-fg); }
 .plexc-v-warn { color: var(--pc-warn-fg); }
 .plexc-v-bad  { color: var(--pc-bad-fg); }
+
+.plexc-optimization {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.75fr) minmax(280px, 1.5fr);
+  gap: 18px 30px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 16px 18px;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r);
+  background: var(--pc-good-bg);
+}
+.plexc-optimization > div { display: grid; gap: 3px; }
+.plexc-optimization span {
+  font-family: var(--pc-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pc-good-fg);
+}
+.plexc-optimization strong {
+  font-family: var(--pc-mono);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--pc-good-fg);
+}
+.plexc-optimization p { margin: 0; color: var(--pc-ink-2); font-size: 12px; line-height: 1.55; }
 
 /* ── Tabs ── */
 .plexc-tabs {
@@ -338,6 +367,139 @@
 }
 .plexc-row-total td:first-child, .plexc-row-sub td:first-child { color: var(--pc-ink); font-weight: 500; }
 
+.plexc-financing-table tr.is-current td { background: var(--pc-info-bg); }
+.plexc-current-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 7px;
+  border-radius: 50%;
+  background: var(--pc-info-fg);
+}
+.plexc-unavailable {
+  display: block;
+  margin-top: 2px;
+  color: var(--pc-ink-3);
+  font-family: var(--pc-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Underwriting detail ── */
+.plexc-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.plexc-detail-panel {
+  min-width: 0;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r);
+  background: var(--pc-surface);
+  padding: 20px;
+}
+.plexc-detail-panel h4,
+.plexc-verdict h4 {
+  margin: 0 0 12px;
+  color: var(--pc-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+.plexc-detail-panel > p,
+.plexc-detail-heading p {
+  max-width: 70ch;
+  margin: -5px 0 16px;
+  color: var(--pc-ink-2);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.plexc-equity-panel { margin-top: 18px; }
+.plexc-detail-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+.plexc-recovery {
+  display: grid;
+  min-width: 220px;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: var(--pc-r-sm);
+  background: var(--pc-sunken);
+}
+.plexc-recovery span {
+  color: var(--pc-ink-3);
+  font-family: var(--pc-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.plexc-recovery strong { color: var(--pc-ink); font-size: 12px; font-weight: 600; }
+.plexc-recovery small { color: var(--pc-ink-2); font-size: 11px; }
+.plexc-due-diligence {
+  margin-top: 18px;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r);
+  padding: 12px 15px;
+  background: var(--pc-sunken);
+}
+.plexc-due-diligence summary {
+  color: var(--pc-ink-2);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.plexc-due-diligence p { margin: 10px 0 0; color: var(--pc-ink-2); font-size: 12px; }
+
+/* ── Verdict ── */
+.plexc-verdict {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.5fr) repeat(2, minmax(220px, 1fr));
+  gap: 18px;
+}
+.plexc-score,
+.plexc-verdict-list {
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r);
+  padding: 18px;
+  background: var(--pc-surface);
+}
+.plexc-score { display: flex; flex-direction: column; justify-content: center; }
+.plexc-score > span {
+  color: var(--pc-ink-3);
+  font-family: var(--pc-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.plexc-score > strong {
+  color: var(--pc-ink);
+  font-family: var(--pc-mono);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.plexc-score > strong small { color: var(--pc-ink-3); font-size: 15px; }
+.plexc-score > p { margin: 3px 0 0; color: var(--pc-ink-2); font-size: 12px; }
+.plexc-score.is-strong-buy, .plexc-score.is-buy { background: var(--pc-good-bg); }
+.plexc-score.is-hold { background: var(--pc-warn-bg); }
+.plexc-score.is-avoid { background: var(--pc-bad-bg); }
+.plexc-verdict-list ul { list-style: none; padding: 0; margin: 0; }
+.plexc-verdict-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-top: 1px solid var(--pc-border);
+  color: var(--pc-ink-2);
+  font-size: 12px;
+}
+.plexc-verdict-list li:first-child { border-top: none; }
+.plexc-verdict-list li strong { color: var(--pc-good-fg); font-family: var(--pc-mono); font-weight: 500; }
+.plexc-verdict-list li.is-bad strong { color: var(--pc-bad-fg); }
+
 /* ── Editable statement cells ── */
 .plexc-cell {
   display: inline-flex; align-items: center; justify-content: flex-end; gap: 1px;
@@ -434,12 +596,19 @@
 @media (max-width: 1100px) {
   .plexc-kpis { grid-template-columns: repeat(3, 1fr); }
   .plexc-grid4 { grid-template-columns: repeat(2, 1fr); }
+  .plexc-detail-grid { grid-template-columns: 1fr; }
+  .plexc-verdict { grid-template-columns: 1fr 1fr; }
+  .plexc-score { grid-column: 1 / -1; }
 }
 @media (max-width: 680px) {
   .plexc-kpis { grid-template-columns: repeat(2, 1fr); }
-  .plexc-method { grid-template-columns: 1fr; gap: 8px; }
+  .plexc-method, .plexc-optimization { grid-template-columns: 1fr; gap: 8px; }
   .plexc-grid4 { grid-template-columns: 1fr; }
   .plexc-card { padding: 20px; }
+  .plexc-detail-heading { display: block; }
+  .plexc-recovery { margin-bottom: 16px; }
+  .plexc-verdict { grid-template-columns: 1fr; }
+  .plexc-score { grid-column: auto; }
 }
 
 /* Dark mode: the site ships a light/dark toggle. */
@@ -558,8 +727,9 @@
 }
 
 .plexc-cmhc-caveat {
-  border-left: 2px solid var(--pc-border-strong);
-  padding-left: 12px;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r-sm);
+  padding: 8px 10px;
 }
 
 .plexc-cmhc-source {

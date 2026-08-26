@@ -23,9 +23,10 @@ export const PROPERTY_UNIT_RULES: Record<PropertyType, PropertyUnitRule> = {
  * Financing track. Which one applies is driven by unit count in Quebec:
  *  - residential:  1–4 units, residential underwriting, CMHC insurable under 20% down
  *  - commercial:   5+ units, loan sized by the lesser of LTV cap and DSCR constraint
+ *  - cmhc-standard: indicative insured 5–6-unit comparison, 25-year amortization
  *  - mli-select:   5+ units, CMHC MLI Select, points buy higher LTV / longer amortization
  */
-export type FinancingMode = 'residential' | 'commercial' | 'mli-select';
+export type FinancingMode = 'residential' | 'commercial' | 'cmhc-standard' | 'mli-select';
 
 /** MLI Select tiers. Points are earned on affordability, energy efficiency, accessibility. */
 export type MliPoints = 50 | 70 | 100;
@@ -180,6 +181,8 @@ export interface DealInputs {
   snowRemoval: number;
   lawnLandscaping: number;
   commonHydro: number;
+  janitorial: number;
+  heating: number;
   repairsMaintenancePct: number;
   propertyManagementPct: number;
   otherExpenses: number;
@@ -247,6 +250,8 @@ export interface DealInputs {
   // Appreciation
   /** Current market value supported by sold comparables (1–4 units). */
   comparableValue: number;
+  /** Market gross-rent multiplier used as a secondary 5+ value indication. */
+  marketGrm: number;
   annualAppreciation: number;
   annualExpenseGrowth: number;
   // TAL rent control
@@ -310,8 +315,12 @@ export interface DealResults {
   propertyManagementAnnual: number;
   schoolTaxAnnual: number;
   condoFeesAnnual: number;
+  /** Recurring operating costs, excluding the non-cash capital reserve. */
   totalOperatingExpenses: number;
+  /** Standard NOI/RNE before the capital reserve. */
   noi: number;
+  /** Conservative NOI after setting aside the annual capital reserve. */
+  adjustedNoi: number;
   loanAmountPct: number;
   equityAmount: number;
   loanAmount: number;
@@ -351,6 +360,8 @@ export interface DealResults {
   dscrYear1: number;
   // New metrics
   grm: number; // Gross Rent Multiplier
+  /** Price divided by year-one NOI (MRN / net income multiplier). */
+  netIncomeMultiplier: number;
   operatingExpenseRatio: number;
   ltv: number; // Loan-to-Value
   breakEvenRatio: number;
@@ -359,6 +370,7 @@ export interface DealResults {
   irr: number; // levered before-tax IRR over the selected hold
   afterTaxIrr: number;
   npv: number; // NPV at discount rate
+  afterTaxNpv: number;
   // ─── CMHC benchmark ───
   cmhcUnits: CmhcUnitComparison[];
   /**
@@ -385,6 +397,7 @@ export interface DealResults {
   purchaseCapRate: number;
   proformaCapRate: number;
   proformaNoi: number;
+  proformaAdjustedNoi: number;
   proformaCashFlow: number;
   /** Cash-on-cash averaged across the hold, not just year 1. */
   avgCashOnCash: number;
@@ -496,6 +509,7 @@ export interface AmortizationRow {
 export type ApodLineId =
   | 'gsi' | 'vacancy'
   | 'taxes' | 'schoolTax' | 'insurance' | 'snow' | 'landscaping' | 'hydro'
+  | 'janitorial' | 'heating'
   | 'repairs' | 'management' | 'capex' | 'condoFees' | 'other';
 
 /** One line of the Annual Property Operating Data statement. */
@@ -505,8 +519,8 @@ export interface ApodLine {
   proforma: number;
   /** Rendering hint: section headers and subtotals are emphasized. */
   kind: 'header' | 'line' | 'subtotal' | 'total';
-  /** Percent of gross scheduled income, for expense lines. */
-  pctOfGsi?: number;
+  /** Percent of effective gross income (RBE/EGI), for expense lines. */
+  pctOfRbe?: number;
   /** Present on lines the user can edit directly in the statement. */
   id?: ApodLineId;
   /** True when the proforma column currently carries a manual override. */
@@ -721,13 +735,14 @@ export function calculateEconomicValue(
   const mix = summarizeUnitMix(inputs);
   const units = Math.max(1, mix.totalUnits);
 
-  // Bank normalization: strip the owner's management and maintenance, apply
+  // Bank normalization: strip the owner's management, maintenance and
+  // janitorial lines, then apply the lender's standard substitutes.
   // the standard substitutes. Midpoints of the published ranges.
   const normalizedManagement = grossAnnualRent * 0.05;
   const normalizedMaintenance = 500 * units;
   const normalizedJanitorial = 200 * units;
   const normalizedExpenses =
-    actualOperatingExpenses - actualManagement - actualMaintenance +
+    actualOperatingExpenses - actualManagement - actualMaintenance - inputs.janitorial +
     normalizedManagement + normalizedMaintenance + normalizedJanitorial;
 
   // Vacancy is the fourth normalized line, so the lender's own floor applies
@@ -1415,6 +1430,8 @@ const BASE_INPUTS: DealInputs = {
   snowRemoval: 1200,
   lawnLandscaping: 400,
   commonHydro: 900,
+  janitorial: 0,
+  heating: 0,
   repairsMaintenancePct: 0.08,
   propertyManagementPct: 0.05,
   otherExpenses: 0,
@@ -1455,6 +1472,7 @@ const BASE_INPUTS: DealInputs = {
   // lender normally pays the broker. The MLI Select presets turn it on.
   mortgageBrokerPct: 0,
   comparableValue: 900000,
+  marketGrm: 15,
   annualAppreciation: 0.03,
   annualExpenseGrowth: 0.02,
   // 2026 TAL base component. This is not a universal cap: tax, insurance and
@@ -1580,20 +1598,25 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const condoFeesAnnual = inputs.propertyType === 'condo' ? inputs.condoFees * 12 : 0;
   const capexReserveAnnual = inputs.capexPerUnit * totalUnits;
 
-  // Fixed expenses don't move with rent; the percentage-based ones do.
+  // Fixed operating expenses don't move with rent; the percentage-based ones
+  // do. The capital reserve is intentionally kept below NOI: it is prudent
+  // cash planning, but it is neither an operating expense nor tax-deductible
+  // until capital work is actually incurred.
   const fixedExpenses =
     inputs.propertyTaxes +
     inputs.insurance +
     inputs.snowRemoval +
     inputs.lawnLandscaping +
     inputs.commonHydro +
+    inputs.janitorial +
+    inputs.heating +
     inputs.otherExpenses +
     schoolTaxAnnual +
-    condoFeesAnnual +
-    capexReserveAnnual;
+    condoFeesAnnual;
 
   const totalOperatingExpenses = fixedExpenses + repairsMaintenanceAnnual + propertyManagementAnnual;
   const noi = effectiveGrossIncome - totalOperatingExpenses;
+  const adjustedNoi = noi - capexReserveAnnual;
   const economicUnderwriting = calculateEconomicValue(
     inputs,
     annualRent,
@@ -1610,6 +1633,8 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const proformaSnow = ovOr('snow', inputs.snowRemoval);
   const proformaLandscaping = ovOr('landscaping', inputs.lawnLandscaping);
   const proformaHydro = ovOr('hydro', inputs.commonHydro);
+  const proformaJanitorial = ovOr('janitorial', inputs.janitorial);
+  const proformaHeating = ovOr('heating', inputs.heating);
   const proformaRepairs = ovOr('repairs', proformaAnnualRent * inputs.repairsMaintenancePct);
   const proformaMgmt = ovOr('management', proformaAnnualRent * inputs.propertyManagementPct);
   const proformaCapex = ovOr('capex', capexReserveAnnual);
@@ -1618,9 +1643,11 @@ export function calculateDeal(inputs: DealInputs): DealResults {
 
   const proformaOpEx =
     proformaTaxes + proformaSchoolTax + proformaInsurance + proformaSnow +
-    proformaLandscaping + proformaHydro + proformaRepairs + proformaMgmt +
-    proformaCapex + proformaCondoFees + proformaOther;
+    proformaLandscaping + proformaHydro + proformaJanitorial + proformaHeating +
+    proformaRepairs + proformaMgmt +
+    proformaCondoFees + proformaOther;
   const proformaNoi = proformaEgi - proformaOpEx;
+  const proformaAdjustedNoi = proformaNoi - proformaCapex;
 
   // ─── Financing ─────────────────────────────────────────
   // The loan has to be sized before the deal can be costed, because on the
@@ -1656,9 +1683,15 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     // 5+ units: the lender sizes the loan off NOI. Whichever of the LTV cap
     // and the DSCR test bites first is what you get.
     const isMli = inputs.financingMode === 'mli-select';
+    const isStandard = inputs.financingMode === 'cmhc-standard';
+    const standardEligible = isStandard && totalUnits >= 5 && totalUnits <= 6;
     const terms = mliSelectTerms(inputs.mliPoints);
-    const ltvCap = isMli ? Math.min(inputs.maxLtv, terms.maxLtv) : inputs.maxLtv;
-    amortYears = isMli ? Math.min(inputs.loanLifeYears, terms.maxAmortization) : inputs.loanLifeYears;
+    const ltvCap = isMli
+      ? Math.min(inputs.maxLtv, terms.maxLtv)
+      : isStandard ? Math.min(inputs.maxLtv, 0.85) : inputs.maxLtv;
+    amortYears = isMli
+      ? Math.min(inputs.loanLifeYears, terms.maxAmortization)
+      : isStandard ? Math.min(inputs.loanLifeYears, 25) : inputs.loanLifeYears;
 
     // MREX/lender logic: DSCR is applied to normalized RNN at the
     // qualification rate, not the owner's actual NOI at the contract rate.
@@ -1685,6 +1718,14 @@ export function calculateDeal(inputs: DealInputs): DealResults {
         + amortizationSurchargePct(amortYears);
       insurancePremium = baseLoanAmount * mliPremiumPct;
       premiumTax = insurancePremium * INSURANCE_PREMIUM_TAX_RATE;
+    } else if (standardEligible) {
+      insured = true;
+      const actualLtv = inputs.purchasePrice > 0 ? baseLoanAmount / inputs.purchasePrice : 0;
+      mliPremiumPct = multiUnitPremiumPct(actualLtv);
+      insurancePremium = baseLoanAmount * mliPremiumPct;
+      premiumTax = insurancePremium * INSURANCE_PREMIUM_TAX_RATE;
+    } else if (isStandard) {
+      insuranceNote = 'CMHC Standard comparison is limited to 5–6 units in this model';
     }
   }
 
@@ -1764,7 +1805,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const atIncomeYear1 = btIncomeYear1 - incomeTaxYear1;
 
   const annualDebtService = paymentPerPeriod * inputs.paymentsPerYear;
-  const btCashFlowYear1 = noi - annualDebtService;
+  const btCashFlowYear1 = adjustedNoi - annualDebtService;
   const btCashFlowMonthly = btCashFlowYear1 / 12;
   const atCashFlowYear1 = btCashFlowYear1 - incomeTaxYear1;
   const atCashFlowMonthly = atCashFlowYear1 / 12;
@@ -1788,7 +1829,9 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   const grm = annualRent > 0 ? inputs.purchasePrice / annualRent : 0;
   const operatingExpenseRatio = effectiveGrossIncome > 0 ? totalOperatingExpenses / effectiveGrossIncome : 0;
   const ltv = inputs.purchasePrice > 0 ? effectiveLoanAmount / inputs.purchasePrice : 0;
-  const breakEvenRatio = annualRent > 0 ? (totalOperatingExpenses + annualDebtService) / annualRent : 0;
+  const breakEvenRatio = effectiveGrossIncome > 0
+    ? (totalOperatingExpenses + annualDebtService) / effectiveGrossIncome
+    : 0;
   const pricePerDoor = totalUnits > 0 ? inputs.purchasePrice / totalUnits : 0;
   // 1% rule: should be >= 0.01
   const rentToPrice1Pct = inputs.purchasePrice > 0 ? monthlyRentAll / inputs.purchasePrice : 0;
@@ -1796,7 +1839,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   // ─── Purchase vs. proforma pricing ────────────────────
   const purchaseCapRate = inputs.purchasePrice > 0 ? noi / inputs.purchasePrice : 0;
   const proformaCapRate = inputs.purchasePrice > 0 ? proformaNoi / inputs.purchasePrice : 0;
-  const proformaCashFlow = proformaNoi - annualDebtService;
+  const proformaCashFlow = proformaAdjustedNoi - annualDebtService;
   const costPerRSF = netRSF > 0 ? inputs.purchasePrice / netRSF : 0;
   const rentUpsideMonthly = proformaMonthlyRent - monthlyRentAll;
 
@@ -1836,7 +1879,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     : 0;
 
   // ─── APOD (Annual Property Operating Data) ────────────
-  const pctG = (v: number) => (annualRent > 0 ? v / annualRent : 0);
+  const pctRbe = (v: number) => (effectiveGrossIncome > 0 ? v / effectiveGrossIncome : 0);
   const isOv = (id: ApodLineId) => ov[id] !== undefined;
   const apod: ApodLine[] = [
     { label: 'Income', current: 0, proforma: 0, kind: 'header' },
@@ -1855,24 +1898,27 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     { label: 'Effective Gross Income', current: effectiveGrossIncome, proforma: proformaEgi, kind: 'subtotal' },
 
     { label: 'Operating Expenses', current: 0, proforma: 0, kind: 'header' },
-    { id: 'taxes', label: 'Municipal Taxes', current: inputs.propertyTaxes, proforma: proformaTaxes, kind: 'line', pctOfGsi: pctG(inputs.propertyTaxes), overridden: isOv('taxes') },
+    { id: 'taxes', label: 'Municipal Taxes', current: inputs.propertyTaxes, proforma: proformaTaxes, kind: 'line', pctOfRbe: pctRbe(inputs.propertyTaxes), overridden: isOv('taxes') },
     ...(schoolTaxAnnual > 0
-      ? [{ id: 'schoolTax' as const, label: 'School Tax', current: schoolTaxAnnual, proforma: proformaSchoolTax, kind: 'line' as const, pctOfGsi: pctG(schoolTaxAnnual), overridden: isOv('schoolTax') }]
+      ? [{ id: 'schoolTax' as const, label: 'School Tax', current: schoolTaxAnnual, proforma: proformaSchoolTax, kind: 'line' as const, pctOfRbe: pctRbe(schoolTaxAnnual), overridden: isOv('schoolTax') }]
       : []),
-    { id: 'insurance', label: 'Insurance', current: inputs.insurance, proforma: proformaInsurance, kind: 'line', pctOfGsi: pctG(inputs.insurance), overridden: isOv('insurance') },
-    { id: 'snow', label: 'Snow Removal', current: inputs.snowRemoval, proforma: proformaSnow, kind: 'line', pctOfGsi: pctG(inputs.snowRemoval), overridden: isOv('snow') },
-    { id: 'landscaping', label: 'Landscaping', current: inputs.lawnLandscaping, proforma: proformaLandscaping, kind: 'line', pctOfGsi: pctG(inputs.lawnLandscaping), overridden: isOv('landscaping') },
-    { id: 'hydro', label: 'Common Hydro', current: inputs.commonHydro, proforma: proformaHydro, kind: 'line', pctOfGsi: pctG(inputs.commonHydro), overridden: isOv('hydro') },
-    { id: 'repairs', label: 'Repairs & Maintenance', current: repairsMaintenanceAnnual, proforma: proformaRepairs, kind: 'line', pctOfGsi: pctG(repairsMaintenanceAnnual), overridden: isOv('repairs') },
-    { id: 'management', label: 'Property Management', current: propertyManagementAnnual, proforma: proformaMgmt, kind: 'line', pctOfGsi: pctG(propertyManagementAnnual), overridden: isOv('management') },
-    { id: 'capex', label: 'CapEx Reserve', current: capexReserveAnnual, proforma: proformaCapex, kind: 'line', pctOfGsi: pctG(capexReserveAnnual), overridden: isOv('capex') },
+    { id: 'insurance', label: 'Insurance', current: inputs.insurance, proforma: proformaInsurance, kind: 'line', pctOfRbe: pctRbe(inputs.insurance), overridden: isOv('insurance') },
+    { id: 'snow', label: 'Snow Removal', current: inputs.snowRemoval, proforma: proformaSnow, kind: 'line', pctOfRbe: pctRbe(inputs.snowRemoval), overridden: isOv('snow') },
+    { id: 'landscaping', label: 'Landscaping', current: inputs.lawnLandscaping, proforma: proformaLandscaping, kind: 'line', pctOfRbe: pctRbe(inputs.lawnLandscaping), overridden: isOv('landscaping') },
+    { id: 'hydro', label: 'Common Hydro', current: inputs.commonHydro, proforma: proformaHydro, kind: 'line', pctOfRbe: pctRbe(inputs.commonHydro), overridden: isOv('hydro') },
+    { id: 'janitorial', label: 'Janitorial', current: inputs.janitorial, proforma: proformaJanitorial, kind: 'line', pctOfRbe: pctRbe(inputs.janitorial), overridden: isOv('janitorial') },
+    { id: 'heating', label: 'Heating', current: inputs.heating, proforma: proformaHeating, kind: 'line', pctOfRbe: pctRbe(inputs.heating), overridden: isOv('heating') },
+    { id: 'repairs', label: 'Repairs & Maintenance', current: repairsMaintenanceAnnual, proforma: proformaRepairs, kind: 'line', pctOfRbe: pctRbe(repairsMaintenanceAnnual), overridden: isOv('repairs') },
+    { id: 'management', label: 'Property Management', current: propertyManagementAnnual, proforma: proformaMgmt, kind: 'line', pctOfRbe: pctRbe(propertyManagementAnnual), overridden: isOv('management') },
     ...(condoFeesAnnual > 0
-      ? [{ id: 'condoFees' as const, label: 'Condo Fees', current: condoFeesAnnual, proforma: proformaCondoFees, kind: 'line' as const, pctOfGsi: pctG(condoFeesAnnual), overridden: isOv('condoFees') }]
+      ? [{ id: 'condoFees' as const, label: 'Condo Fees', current: condoFeesAnnual, proforma: proformaCondoFees, kind: 'line' as const, pctOfRbe: pctRbe(condoFeesAnnual), overridden: isOv('condoFees') }]
       : []),
-    { id: 'other', label: 'Other', current: inputs.otherExpenses, proforma: proformaOther, kind: 'line', pctOfGsi: pctG(inputs.otherExpenses), overridden: isOv('other') },
+    { id: 'other', label: 'Other', current: inputs.otherExpenses, proforma: proformaOther, kind: 'line', pctOfRbe: pctRbe(inputs.otherExpenses), overridden: isOv('other') },
     { label: 'Total Operating Expenses', current: totalOperatingExpenses, proforma: proformaOpEx, kind: 'subtotal' },
 
     { label: 'Net Operating Income', current: noi, proforma: proformaNoi, kind: 'total' },
+    { id: 'capex', label: 'Capital Reserve', current: capexReserveAnnual, proforma: proformaCapex, kind: 'line', pctOfRbe: pctRbe(capexReserveAnnual), overridden: isOv('capex') },
+    { label: 'Adjusted NOI after Capital Reserve', current: adjustedNoi, proforma: proformaAdjustedNoi, kind: 'subtotal' },
     { label: 'Annual Debt Service', current: -annualDebtService, proforma: -annualDebtService, kind: 'line' },
     { label: 'Cash Flow Before Tax', current: btCashFlowYear1, proforma: proformaCashFlow, kind: 'total' },
   ];
@@ -1960,6 +2006,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     afterTaxCashFlows.push(exitProj[i].atCashFlow - exitProj[i].renoSpend + terminalProceeds);
   }
   const afterTaxIrr = calculateIRR(afterTaxCashFlows);
+  const afterTaxNpv = calculateNPV(afterTaxCashFlows, inputs.discountRate);
 
   const exitAnalysis: ExitAnalysis = {
     salePrice: exitSalePrice,
@@ -2035,7 +2082,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     proformaEffectiveGrossIncome: proformaEgi,
     repairsMaintenanceAnnual, propertyManagementAnnual,
     schoolTaxAnnual, condoFeesAnnual,
-    totalOperatingExpenses, noi,
+    totalOperatingExpenses, noi, adjustedNoi,
     loanAmountPct, equityAmount, loanAmount: baseLoanAmount, effectiveLoanAmount,
     pointsOnMortgageDollar, initialEquityForPurchase, totalEquityInvested,
     totalNumberOfPayments, periodicInterestRate, paymentPerPeriod,
@@ -2050,8 +2097,10 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     rentToPurchaseRatio, capRateYear1, cashOnCashBtYear1,
     atCashOnCashYear1, btCashFlowPerUnitYear1, atCashFlowPerUnitYear1,
     dscrYear1,
-    grm, operatingExpenseRatio, ltv, breakEvenRatio, pricePerDoor, rentToPrice1Pct,
-    irr, afterTaxIrr, npv,
+    grm,
+    netIncomeMultiplier: noi > 0 ? inputs.purchasePrice / noi : 0,
+    operatingExpenseRatio, ltv, breakEvenRatio, pricePerDoor, rentToPrice1Pct,
+    irr, afterTaxIrr, npv, afterTaxNpv,
     cmhcUnits,
     cmhcOptimizationAnnual,
     cmhcOptimizationPct,
@@ -2059,7 +2108,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     cmhcLevel: worstGeo.level,
     totalUnits, netRSF, costPerRSF, pricePerUnit: pricePerDoor,
     currentMonthlyRent: monthlyRentAll, proformaMonthlyRent, rentUpsideMonthly,
-    purchaseCapRate, proformaCapRate, proformaNoi, proformaCashFlow,
+    purchaseCapRate, proformaCapRate, proformaNoi, proformaAdjustedNoi, proformaCashFlow,
     avgCashOnCash, equityMultiple,
     loanSizedBy, maxLoanByLtv, maxLoanByDscr, mliPremiumPct,
     insuranceNote, minDownPayment, belowMinimumDown,
@@ -2077,7 +2126,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
 // ─── Multi-Year Projection ─────────────────────────────────────────
 export function calculateProjection(
   inputs: DealInputs,
-  results: Pick<DealResults, 'annualRent' | 'totalOperatingExpenses' | 'annualDebtService' | 'totalEquityInvested' | 'effectiveLoanAmount' | 'noi' | 'paymentPerPeriod'>,
+  results: Pick<DealResults, 'annualRent' | 'totalOperatingExpenses' | 'annualDebtService' | 'totalEquityInvested' | 'effectiveLoanAmount' | 'noi' | 'paymentPerPeriod'> & Partial<Pick<DealResults, 'capexReserveAnnual'>>,
   years: number = 10,
   effectiveLoan?: number,
 ): YearProjection[] {
@@ -2143,6 +2192,8 @@ export function calculateProjection(
     const fixedOperatingExpenses = fixedOperatingBase *
       Math.pow(1 + inputs.annualExpenseGrowth, y - 1);
     const opEx = fixedOperatingExpenses + annualRent * variableExpensePct;
+    const capitalReserve = (results.capexReserveAnnual ?? inputs.capexPerUnit * totalUnits) *
+      Math.pow(1 + inputs.annualExpenseGrowth, y - 1);
 
     const renoSpend = (unitsRenovated - prevRenovated) * inputs.renoCostPerUnit;
     prevRenovated = unitsRenovated;
@@ -2153,7 +2204,7 @@ export function calculateProjection(
     const yearEnd = y * periodsPerYear;
     const yearRows = amort.slice(yearStart, yearEnd);
     const annualDebtService = yearRows.reduce((s, r) => s + r.payment, 0);
-    const btCashFlow = noi - annualDebtService;
+    const btCashFlow = noi - capitalReserve - annualDebtService;
 
     // CCA for this year
     const { cca: maximumCca } = calculateCCA(
@@ -2249,6 +2300,78 @@ export function calculatePaybackYears(inputs: DealInputs, results: DealResults):
   return { cashFlowPayback, totalReturnPayback };
 }
 
+export interface ReturnHorizon {
+  years: number;
+  beforeTaxIrr: number;
+  beforeTaxNpv: number;
+  afterTaxIrr: number;
+  afterTaxNpv: number;
+}
+
+/**
+ * Re-runs the complete disposition and tax model at standard hold periods.
+ * Keeping this in the engine prevents a dashboard from combining a 5-year
+ * sale with a 10-year tax or mortgage balance by accident.
+ */
+export function calculateReturnHorizons(
+  inputs: DealInputs,
+  horizons: number[] = [5, 10],
+): ReturnHorizon[] {
+  return horizons.map((years) => {
+    const result = calculateDeal({ ...inputs, exitYear: years });
+    return {
+      years,
+      beforeTaxIrr: result.irr,
+      beforeTaxNpv: result.npv,
+      afterTaxIrr: result.afterTaxIrr,
+      afterTaxNpv: result.afterTaxNpv,
+    };
+  });
+}
+
+export interface EquityMilestone {
+  year: number;
+  propertyValue: number;
+  loanBalance: number;
+  principalPaid: number;
+  interestPaid: number;
+  cumulativePrincipalPaid: number;
+  equity: number;
+  annualCashFlow: number;
+}
+
+/** Cumulative debt and equity position at decision-useful years. */
+export function calculateEquityMilestones(
+  inputs: DealInputs,
+  results: DealResults,
+  requestedYears: number[] = [1, 5, 10],
+): EquityMilestone[] {
+  const maxRequested = Math.max(1, ...requestedYears);
+  const projections = calculateProjection(inputs, results, maxRequested);
+  const amortization = calculateAmortization(inputs, results.effectiveLoanAmount);
+
+  return [...new Set(requestedYears)]
+    .filter((year) => year >= 1 && year <= projections.length)
+    .sort((a, b) => a - b)
+    .map((year) => {
+      const projection = projections[year - 1];
+      const yearStart = (year - 1) * inputs.paymentsPerYear;
+      const yearEnd = year * inputs.paymentsPerYear;
+      const debtRows = amortization.slice(yearStart, yearEnd);
+      const cumulativeDebtRows = amortization.slice(0, yearEnd);
+      return {
+        year,
+        propertyValue: projection.propertyValue,
+        loanBalance: projection.loanBalance,
+        principalPaid: debtRows.reduce((sum, row) => sum + row.principal, 0),
+        interestPaid: debtRows.reduce((sum, row) => sum + row.interest, 0),
+        cumulativePrincipalPaid: cumulativeDebtRows.reduce((sum, row) => sum + row.principal, 0),
+        equity: projection.equity,
+        annualCashFlow: projection.btCashFlow - projection.renoSpend,
+      };
+    });
+}
+
 // ─── Financing comparison ──────────────────────────────────────────
 
 export type FinancingScenarioKey =
@@ -2326,8 +2449,9 @@ function scenarioInputs(base: DealInputs, key: FinancingScenarioKey): DealInputs
   }
   if (key === 'cmhc-standard') {
     return {
-      ...base, financingMode: 'residential', annualInterestRate: rate,
-      renewalRate: rate, loanLifeYears: 25, mortgageBrokerPct: brokerPct,
+      ...base, financingMode: 'cmhc-standard', annualInterestRate: rate,
+      renewalRate: rate, loanLifeYears: 25, maxLtv: 0.85, dscrTarget: 1.20,
+      mortgageBrokerPct: brokerPct,
     };
   }
 
@@ -2346,14 +2470,12 @@ function scenarioInputs(base: DealInputs, key: FinancingScenarioKey): DealInputs
 /**
  * Why a structure cannot be shown for this property, or undefined if it can.
  *
- * The residential branch is the only one that prices CMHC purchase insurance,
- * and it stops at four units. Standard multi-unit insurance above that exists
- * in the market but is not modelled here, so the scenario is withheld rather
- * than rendered with a zero premium that would read as free insurance.
+ * The comparison deliberately limits Standard to 5–6 units. Larger properties
+ * remain on conventional commercial or MLI Select in this model.
  */
 function scenarioUnavailable(key: FinancingScenarioKey, units: number): string | undefined {
-  if (key === 'cmhc-standard' && units > 4) {
-    return 'Assurance SCHL standard non modélisée au-delà de 4 logements — voir MLI Select';
+  if (key === 'cmhc-standard' && (units < 5 || units > 6)) {
+    return 'Comparaison SCHL Standard limitée aux immeubles de 5 à 6 logements';
   }
   return undefined;
 }
@@ -2374,7 +2496,8 @@ export function compareFinancing(inputs: DealInputs): FinancingScenario[] {
   const currentKey: FinancingScenarioKey =
     inputs.financingMode === 'mli-select'
       ? (inputs.mliPoints >= 100 ? 'mli-100' : inputs.mliPoints >= 70 ? 'mli-70' : 'mli-50')
-      : inputs.financingMode === 'residential' ? 'cmhc-standard' : 'conventional';
+      : inputs.financingMode === 'cmhc-standard' ? 'cmhc-standard'
+        : inputs.financingMode === 'residential' ? 'cmhc-standard' : 'conventional';
 
   const units = summarizeUnitMix(inputs).totalUnits || inputs.numberOfUnits;
 
