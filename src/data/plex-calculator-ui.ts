@@ -124,6 +124,11 @@ export interface CalcUi {
   // Unit mix
   unitMixHeading: string;
   unitMixSub: string;
+  radarAggregateIncomeTitle: string;
+  radarAggregateIncomeNote: string;
+  confirmRentRoll: string;
+  unitTypeUnknown: string;
+  derivedFromAggregate: string;
   colType: string;
   colUnits: string;
   colInPlaceRent: string;
@@ -142,6 +147,8 @@ export interface CalcUi {
   cmhcLevelZone: string;
   cmhcLevelCma: string;
   cmhcOccupiedCaveat: string;
+  cmhcEstimatedWithoutRentRoll: string;
+  modelEstimate: string;
   addUnitType: string;
   annualUpside: string;
   grmInPlace: string;
@@ -225,11 +232,19 @@ export interface CalcUi {
   veBelowPrice: string;
   veShortfallNote: string;
   veVariesNote: string;
+  marketValueHeading: string;
+  marketValueSub: string;
+  marketCapInput: string;
+  marketCapInputHelp: string;
   marketGrmInput: string;
+  marketGrmInputHelp: string;
   marketGrmValue: string;
   marketCapValue: string;
   selectedValue: string;
   valueMargin: string;
+  marketValueMissing: string;
+  marketGrmSecondary: string;
+  notProvided: string;
   colRate: string;
   colPaymentMo: string;
   colCashFlow: string;
@@ -409,12 +424,17 @@ export interface CalcUi {
   colAtMarket: string;
   colCapOnCost: string;
   colValue: string;
+  colValueAtExitCap: string;
   colLoanBalance: string;
   colEquity: string;
 
   // Underwriting detail
   optimizationHeading: string;
   optimizationCopy: string;
+  optimizationMissing: string;
+  optimizationMissingCopy: string;
+  optimizationEstimatedNone: string;
+  radarEstimatedPotentialNote: string;
   financialAnatomy: string;
   financialAnatomySub: string;
   marketIndicators: string;
@@ -469,7 +489,7 @@ const fr: CalcUi = {
   exportEmailSubmit: "Envoyer et télécharger",
   exportEmailNote: "Facultatif. Le fichier se télécharge dans tous les cas.",
 
-  purchaseCap: "TGA actuel",
+  purchaseCap: "TGA au prix offert",
   purchaseCapNote: "sur le revenu net actuel",
   proformaCap: "TGA potentiel",
   proformaCapNote: "aux loyers du marché",
@@ -494,7 +514,7 @@ const fr: CalcUi = {
   valuationMethod: "Méthode de valeur",
   incomeApproach: "5 logements et plus · approche par revenu et TGA",
   incomeApproachNote:
-    "La valeur projetée capitalise le RNE de l’année suivante au TGA de sortie. Le financement est aussi limité par le RCD exigé par le prêteur.",
+    "La valeur marchande actuelle exige un TGA appuyé par des ventes vérifiées. La valeur projetée utilise séparément votre TGA de sortie; la capacité de financement dépend du RCD du prêteur.",
   comparableApproach: "1 à 4 logements · comparables vendus",
   comparableApproachNote:
     "La valeur projetée part de la valeur soutenue par des ventes comparables, puis applique l’appréciation prévue. Le TGA reste une métrique de rendement, mais ne détermine pas la valeur de revente.",
@@ -577,6 +597,12 @@ const fr: CalcUi = {
   unitMixHeading: "Composition des logements",
   unitMixSub:
     "Le loyer en place est ce que le bail perçoit aujourd'hui. Le loyer du marché est ce que le logement obtient à la relocation. Cet écart est le potentiel de valorisation, et le TAL détermine à quelle vitesse vous le captez.",
+  radarAggregateIncomeTitle: "Estimation à partir des données Centris",
+  radarAggregateIncomeNote:
+    "Le revenu total, le nombre de portes, le type d’immeuble et le secteur donnent une bonne estimation initiale. Le modèle répartit le revenu annoncé sur une composition typique et applique ses loyers locaux; ce ne sont pas les baux réels. Remplacez ces estimations avec le rôle des loyers lorsqu’il est disponible.",
+  confirmRentRoll: "J’ai remplacé les données par les baux réels",
+  unitTypeUnknown: "Type à confirmer",
+  derivedFromAggregate: "dérivé du revenu total annoncé",
   colType: "Type",
   colUnits: "Nombre",
   colInPlaceRent: "Loyer en place",
@@ -595,6 +621,9 @@ const fr: CalcUi = {
   cmhcLevelCma: "moyenne RMR",
   cmhcOccupiedCaveat:
     "Moyenne des logements occupés, pas le loyer demandé à la relocation. Sous le contrôle du TAL, l'écart entre les deux est réel : ce repère indique si les baux en place sont sous-évalués, pas ce que vous obtiendrez demain.",
+  cmhcEstimatedWithoutRentRoll:
+    "Comparaison indicative : la composition et la répartition des loyers sont estimées à partir du type d’immeuble, du secteur et du revenu total Centris. Confirmez-les avec le rôle des loyers.",
+  modelEstimate: "Estimation du modèle",
   addUnitType: "Ajouter un type",
   annualUpside: "Potentiel annuel",
   grmInPlace: "Multiplicateur de revenu brut",
@@ -683,29 +712,38 @@ const fr: CalcUi = {
   netAfterTax5: "Net après impôt — an 5",
   netAfterTax10: "Net après impôt — an 10",
 
-  veHeading: "Valeur économique (méthode bancaire)",
+  veHeading: "Capacité de financement indicative",
   veSub:
-    "À cinq logements et plus, le prêteur ne finance pas votre prix : il finance sa propre valeur. Il normalise quatre postes (gestion, entretien, conciergerie et inoccupation), divise le revenu net normalisé par le ratio de couverture, actualise ce paiement au taux de qualification et obtient le prêt maximal. La valeur économique est ce prêt divisé par le ratio prêt-valeur. Les barèmes normalisés ci-dessous (5 % des revenus, 500 $ et 200 $ par logement, inoccupation plancher de 3 %) sont illustratifs : chaque institution fixe les siens.",
+    "Estimation du prêt que le revenu normalisé peut soutenir selon le RCD, le taux de qualification et le ratio prêt-valeur. Ce calcul sert au financement : ce n’est ni une évaluation marchande ni une promesse de prêt.",
   veNormalizedNoi: "Revenu net normalisé",
   veNormalizedNote: "Après substitution des dépenses par les normes bancaires",
   veQualificationRate: "Taux de qualification",
   veMaxDebtService: "Service de la dette maximal",
   veMaxLoan: "Prêt maximal",
-  veValue: "Valeur économique",
-  veGap: "Écart avec le prix",
-  veCashRequired: "Comptant réellement requis",
+  veValue: "Base de financement indicative",
+  veGap: "Écart de financement avec le prix",
+  veCashRequired: "Mise de fonds requise avant frais",
   veCashShortfall: "Comptant additionnel dû à l'écart",
-  veAbovePrice: "La banque évalue au-dessus de votre prix : le financement suit le prix.",
-  veBelowPrice: "La banque évalue sous votre prix : le prêt est plafonné par sa valeur, pas la vôtre.",
+  veAbovePrice: "Le revenu soutient le financement maximal prévu; le prix demeure la limite.",
+  veBelowPrice: "Le revenu ne soutient pas le financement maximal prévu; davantage de comptant est requis.",
   veShortfallNote:
-    "Quand la valeur économique est sous le prix d'achat, vous couvrez la totalité de l'écart comptant : la mise de fonds réelle devient prix moins prêt maximal, pas 20 % du prix. À Montréal, le TGA exigé par la banque dépasse largement le TGA du marché, cet écart vient des taux de qualification, pas d'un défaut de l'immeuble.",
+    "Quand le prêt maximal est insuffisant, le comptant requis devient le prix moins le prêt maximal, auquel s’ajoutent les frais de clôture.",
   veVariesNote:
-    "Chaque prêteur normalise différemment et la valeur économique bouge quotidiennement avec les taux de qualification. Ceci est une version défendable du calcul, pas le chiffre d'une banque précise.",
-  marketGrmInput: "MRB de marché",
+    "Chaque prêteur normalise différemment. Faites confirmer le revenu reconnu, les dépenses, le taux et le prêt maximal par un prêteur ou un courtier hypothécaire.",
+  marketValueHeading: "Indications de valeur marchande actuelle",
+  marketValueSub:
+    "Pour un immeuble de cinq logements et plus, le TGA de marché doit venir de ventes comparables analysées, d’un évaluateur ou d’un courtier. Le calculateur ne le déduit jamais du prix demandé.",
+  marketCapInput: "TGA de marché actuel vérifié",
+  marketCapInputHelp: "Saisissez un TGA provenant de transactions comparables de 5+ logements ou d’une évaluation. Distinct du TGA de sortie.",
+  marketGrmInput: "MRB de marché vérifié",
+  marketGrmInputHelp: "Saisissez un MRB observé sur des ventes comparables. Laissez à 0 si vous n’avez pas de donnée vérifiée.",
   marketGrmValue: "Valeur par MRB de marché",
   marketCapValue: "Valeur par TGA de marché",
-  selectedValue: "Valeur retenue",
+  selectedValue: "Indication principale par TGA",
   valueMargin: "Marge sur le prix",
+  marketValueMissing: "TGA de marché non renseigné : aucune valeur marchande n’est retenue.",
+  marketGrmSecondary: "Le MRB est un contrôle secondaire; il ne remplace pas la capitalisation du RNE.",
+  notProvided: "Non renseigné",
 
   renoHeading: "Rénovation et relocation",
   renoSub:
@@ -810,8 +848,8 @@ const fr: CalcUi = {
     "La DPA réclamée en cours de détention est récupérée à votre taux marginal complet : c'est un report d'impôt, pas une déduction.",
   holdPeriod: "Durée de détention",
   sellingCostsPct: "Frais de vente",
-  exitCapRate: "TGA de sortie (revenu net année suivante)",
-  exitCapRateHelp: "Pour 5 logements et plus : RNE stabilisé de l’année suivante ÷ TGA de sortie",
+  exitCapRate: "TGA de sortie — scénario",
+  exitCapRateHelp: "Hypothèse de revente distincte du TGA de marché actuel. Le scénario initial n’est pas une donnée de transaction : remplacez-le et testez plusieurs taux.",
   salePriceYear: "Prix de vente (année",
   loanBalance: "Solde du prêt",
   netSaleProceeds: "Produit net de la vente",
@@ -873,15 +911,22 @@ const fr: CalcUi = {
   colAtMarket: "Au marché",
   colCapOnCost: "Taux sur le coût",
   colValue: "Valeur",
+  colValueAtExitCap: "Valeur selon le TGA de sortie",
   colLoanBalance: "Solde du prêt",
   colEquity: "Équité",
   optimizationHeading: "Potentiel d'optimisation locative",
   optimizationCopy:
     "Écart annuel entre les loyers actuels et les loyers potentiels saisis. La réalisation dépend du roulement, des travaux, des baux et des règles applicables du TAL.",
+  optimizationMissing: "Aucun loyer futur distinct saisi",
+  optimizationMissingCopy:
+    "Le calculateur ne conclut pas que le potentiel est nul. Saisissez des loyers de marché vérifiés pour mesurer l’écart locatif.",
+  optimizationEstimatedNone: "Aucun écart positif estimé",
+  radarEstimatedPotentialNote:
+    "Estimation du modèle à partir du revenu total annoncé, d’une composition typique et des loyers locaux. Elle donne un ordre de grandeur; le potentiel confirmé exige les baux, la typologie réelle et des loyers de marché comparables.",
   financialAnatomy: "Anatomie financière",
   financialAnatomySub:
-    "Lecture regroupée du revenu, de l'exploitation, de la dette et du rendement. Les valeurs potentielles utilisent la colonne future de l'état d'exploitation.",
-  marketIndicators: "Indicateurs de marché et d'exploitation",
+    "Le TGA, le MRB et le MRN du sujet sont calculés automatiquement avec le prix offert, les revenus et les dépenses saisis. Ce ne sont pas des taux paritaires provenant de ventes comparables.",
+  marketIndicators: "Ratios du sujet et exploitation",
   metric: "Indicateur",
   currentValue: "Actuel",
   potentialValue: "Potentiel",
@@ -938,7 +983,7 @@ const en: CalcUi = {
   exportEmailSubmit: "Send and download",
   exportEmailNote: "Optional. The file downloads either way.",
 
-  purchaseCap: "Current cap rate",
+  purchaseCap: "Cap rate at offer price",
   purchaseCapNote: "on in-place NOI",
   proformaCap: "Potential cap rate",
   proformaCapNote: "at market rents",
@@ -963,7 +1008,7 @@ const en: CalcUi = {
   valuationMethod: "Valuation method",
   incomeApproach: "5+ units · income and cap-rate approach",
   incomeApproachNote:
-    "Projected value capitalizes next year’s NOI at the exit cap rate. Financing is also constrained by the lender’s required DSCR.",
+    "Current market value requires a cap rate supported by verified sales. Projected value separately uses your exit cap rate; financing capacity depends on the lender’s DSCR.",
   comparableApproach: "1–4 units · sold comparables",
   comparableApproachNote:
     "Projected value starts from the value supported by comparable sales, then applies expected appreciation. Cap rate remains a return metric but does not set resale value.",
@@ -1046,6 +1091,12 @@ const en: CalcUi = {
   unitMixHeading: "Unit mix",
   unitMixSub:
     "In-place rent is what the lease collects today. Market rent is what the unit gets on turnover. That spread is the value-add, and the TAL decides how slowly you capture it.",
+  radarAggregateIncomeTitle: "Estimate based on Centris information",
+  radarAggregateIncomeNote:
+    "Total income, door count, property type and area provide a useful initial estimate. The model allocates advertised income across a typical unit mix and applies local modeled rents; these are not the actual leases. Replace the estimates with the rent roll when it becomes available.",
+  confirmRentRoll: "I replaced these figures with the actual rent roll",
+  unitTypeUnknown: "Type to confirm",
+  derivedFromAggregate: "derived from advertised total income",
   colType: "Type",
   colUnits: "Units",
   colInPlaceRent: "In-place rent",
@@ -1064,6 +1115,9 @@ const en: CalcUi = {
   cmhcLevelCma: "CMA average",
   cmhcOccupiedCaveat:
     "Average across occupied units, not asking rent on turnover. Under TAL rent control the gap between the two is real: this benchmarks whether in-place leases are under-set, not what you will get tomorrow.",
+  cmhcEstimatedWithoutRentRoll:
+    "Indicative comparison: the unit mix and rent allocation are estimated from the property type, area and total Centris income. Confirm them against the rent roll.",
+  modelEstimate: "Model estimate",
   addUnitType: "Add unit type",
   annualUpside: "Annual upside",
   grmInPlace: "GRM (in-place)",
@@ -1152,29 +1206,38 @@ const en: CalcUi = {
   netAfterTax5: "After-tax net — year 5",
   netAfterTax10: "After-tax net — year 10",
 
-  veHeading: "Economic value (the bank's method)",
+  veHeading: "Indicative financing capacity",
   veSub:
-    "At five units and up, the lender does not finance your price, it finances its own value. It normalizes four lines (management, maintenance, janitorial and vacancy), divides the normalized NOI by the coverage ratio, discounts that payment at the qualification rate and gets the maximum loan. The economic value is that loan divided by the loan-to-value ratio. The normalized figures below (5% of revenue, $500 and $200 per unit, vacancy floored at 3%) are illustrative: each institution sets its own.",
+    "Estimate of the loan supported by normalized income under the DSCR, qualification rate and loan-to-value assumptions. This is a financing calculation, not a market appraisal or loan offer.",
   veNormalizedNoi: "Normalized NOI",
   veNormalizedNote: "After substituting the bank's expense standards",
   veQualificationRate: "Qualification rate",
   veMaxDebtService: "Maximum debt service",
   veMaxLoan: "Maximum loan",
-  veValue: "Economic value",
-  veGap: "Gap to price",
-  veCashRequired: "Cash actually required",
+  veValue: "Indicative financing basis",
+  veGap: "Financing gap to price",
+  veCashRequired: "Required down payment before costs",
   veCashShortfall: "Extra cash due to the gap",
-  veAbovePrice: "The bank values it above your price: financing follows the price.",
-  veBelowPrice: "The bank values it below your price: the loan is capped by its number, not yours.",
+  veAbovePrice: "Income supports the modeled maximum financing; price remains the limit.",
+  veBelowPrice: "Income does not support the modeled maximum financing; more cash is required.",
   veShortfallNote:
-    "When the economic value sits below the purchase price, you cover the whole gap in cash: the real down payment becomes price minus maximum loan, not 20% of price. In Montreal the cap rate the bank requires sits well above the market cap rate, that gap comes from qualification rates, not from a defect in the building.",
+    "When the maximum loan is insufficient, required cash becomes price minus maximum loan, plus closing costs.",
   veVariesNote:
-    "Every lender normalizes differently, and economic value moves daily with qualification rates. This is one defensible version of the calculation, not any specific bank's number.",
-  marketGrmInput: "Market GRM",
+    "Every lender normalizes differently. Have the recognized income, expenses, rate and maximum loan confirmed by a lender or mortgage broker.",
+  marketValueHeading: "Current market-value indications",
+  marketValueSub:
+    "For a property with five units or more, the market cap rate must come from analyzed comparable sales, an appraiser or a broker. The calculator never infers it from asking price.",
+  marketCapInput: "Verified current market cap rate",
+  marketCapInputHelp: "Enter a cap rate from comparable 5+ unit sales or an appraisal. Keep it separate from the exit cap rate.",
+  marketGrmInput: "Verified market GRM",
+  marketGrmInputHelp: "Enter a GRM observed in comparable sales. Leave at 0 when no verified figure is available.",
   marketGrmValue: "Market GRM value",
   marketCapValue: "Market cap-rate value",
-  selectedValue: "Selected value",
+  selectedValue: "Primary cap-rate indication",
   valueMargin: "Margin to price",
+  marketValueMissing: "Market cap rate not provided: no market value is selected.",
+  marketGrmSecondary: "GRM is a secondary cross-check; it does not replace NOI capitalization.",
+  notProvided: "Not provided",
 
   renoHeading: "Renovation and turnover",
   renoSub:
@@ -1279,8 +1342,8 @@ const en: CalcUi = {
     "CCA you claimed along the way comes back as recapture at your full marginal rate: it is a deferral, not a deduction.",
   holdPeriod: "Hold period",
   sellingCostsPct: "Selling costs",
-  exitCapRate: "Exit cap rate (next-year NOI)",
-  exitCapRateHelp: "For 5+ units: next year’s stabilized NOI divided by the exit cap rate",
+  exitCapRate: "Exit cap rate — scenario",
+  exitCapRateHelp: "Resale assumption kept separate from the current market cap rate. The initial scenario is not transaction data: replace it and test several rates.",
   salePriceYear: "Sale price (year",
   loanBalance: "Loan balance",
   netSaleProceeds: "Net sale proceeds",
@@ -1342,15 +1405,22 @@ const en: CalcUi = {
   colAtMarket: "At market",
   colCapOnCost: "Cap on cost",
   colValue: "Value",
+  colValueAtExitCap: "Value at the exit cap rate",
   colLoanBalance: "Loan balance",
   colEquity: "Equity",
   optimizationHeading: "Rental optimization potential",
   optimizationCopy:
     "Annual gap between current rents and the potential rents entered. Realization depends on turnover, renovations, leases and applicable rental rules.",
+  optimizationMissing: "No distinct future rents entered",
+  optimizationMissingCopy:
+    "The calculator does not conclude that potential is zero. Enter verified market rents to measure the rental gap.",
+  optimizationEstimatedNone: "No positive gap estimated",
+  radarEstimatedPotentialNote:
+    "Model estimate based on advertised total income, a typical unit mix and local rents. It provides an order of magnitude; confirmed upside requires the leases, actual unit mix and comparable market-rent evidence.",
   financialAnatomy: "Financial anatomy",
   financialAnatomySub:
-    "A consolidated view of income, operations, debt and returns. Potential values use the future column in the operating statement.",
-  marketIndicators: "Market and operating indicators",
+    "The subject property's cap rate, GRM and NIM are calculated automatically from the offer price, entered income and expenses. They are not parity rates from comparable sales.",
+  marketIndicators: "Subject-property and operating ratios",
   metric: "Metric",
   currentValue: "Current",
   potentialValue: "Potential",

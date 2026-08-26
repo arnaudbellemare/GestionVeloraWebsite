@@ -34,50 +34,13 @@ import { REFERENCE_FIGURES } from "../../data/plex-calculator";
 import { CONTACT_FORM_USE_API, WEB3FORMS_ACCESS_KEY } from "../../config";
 import { Select, type SelectOption } from "./Select";
 import { ProjectionChart } from "./ProjectionChart";
+import { createRadarPrefill } from "../../lib/plex/radar-prefill";
 
 type Locale = "fr" | "en";
 
 function radarPrefill(): DealInputs {
   if (typeof window === "undefined") return DEFAULT_INPUTS;
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("source") !== "plex-radar") return DEFAULT_INPUTS;
-  const number = (key: string) => Math.max(0, Number(params.get(key) ?? 0) || 0);
-  const units = Math.max(1, Math.round(number("units")));
-  const type: PropertyType = units >= 5 ? "fiveplex-plus" : units === 4 ? "quadruplex" : units === 3 ? "triplex" : "duplex";
-  const grossAnnual = number("grossAnnual");
-  const monthlyPerUnit = Math.round(grossAnnual / 12 / units);
-  const seeded = applyPropertyPreset(DEFAULT_INPUTS, type);
-  const requestedArea = params.get("areaKey") ?? "villeray";
-  const areaKey = AREAS[requestedArea] ? requestedArea : "outside-gma";
-  const commercial = units >= 5 || params.get("mixedUse") === "true";
-  return {
-    ...seeded,
-    areaKey,
-    askingPrice: number("askingPrice"),
-    purchasePrice: number("purchasePrice"),
-    // Never treat the listing price as a sold-comparable valuation. Radar
-    // passes this only when its saved underwriting contains a real comp value.
-    comparableValue: units <= 4 ? number("comparableValue") : 0,
-    buildingYear: number("buildingYear") || seeded.buildingYear,
-    numberOfUnits: units,
-    unitMix: [{ id: "radar", label: "4½", count: units, currentRent: monthlyPerUnit, marketRent: monthlyPerUnit, sqft: 850 }],
-    propertyTaxes: number("municipalTaxes"),
-    schoolTax: number("schoolTax"),
-    insurance: number("insurance"),
-    snowRemoval: number("snow"),
-    lawnLandscaping: number("lawn"),
-    commonHydro: number("hydro"),
-    janitorial: number("janitorial"),
-    heating: number("heating"),
-    repairsMaintenancePct: grossAnnual > 0 ? number("repairs") / grossAnnual : seeded.repairsMaintenancePct,
-    propertyManagementPct: grossAnnual > 0 ? number("management") / grossAnnual : seeded.propertyManagementPct,
-    capexPerUnit: number("capex") / units,
-    financingMode: commercial ? "commercial" : "residential",
-    loanLifeYears: commercial ? 40 : 25,
-    ownerOccupied: false,
-    ownerOccupiedUnitId: null,
-    isMontreal: (params.get("city") ?? "").toLocaleLowerCase("fr-CA").includes("montr"),
-  };
+  return createRadarPrefill(new URLSearchParams(window.location.search));
 }
 
 // ─── Primitives ──────────────────────────────────────────────────────
@@ -247,6 +210,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   const [tab, setTab] = useState(0);
   const [emailPrompt, setEmailPrompt] = useState(false);
   const [email, setEmail] = useState("");
+  const [rentRollConfirmed, setRentRollConfirmed] = useState(false);
   const radarContext = useMemo(() => {
     if (typeof window === "undefined") return { active: false, comparableCount: 0 };
     const params = new URLSearchParams(window.location.search);
@@ -283,6 +247,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   const isCondo = inputs.propertyType === "condo";
   const isFlip = inputs.propertyType === "house-flip";
   const units = results.totalUnits;
+  const radarModelEstimate = radarContext.active && !rentRollConfirmed;
   const rentalUnits = Math.max(0, units - (inputs.ownerOccupied ? 1 : 0));
   const isCommercialProperty = units >= 5;
   const proformaOperatingExpenses = Math.max(
@@ -301,10 +266,21 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
   const potentialBreakEven = results.proformaEffectiveGrossIncome > 0
     ? (proformaOperatingExpenses + results.annualDebtService) / results.proformaEffectiveGrossIncome
     : 0;
-  const marketGrmValue = results.annualRent * inputs.marketGrm;
-  const marketCapValue = inputs.exitCapRate > 0 ? results.noi / inputs.exitCapRate : 0;
-  const selectedMarketValue = isCommercialProperty ? marketCapValue : inputs.comparableValue;
-  const valueMargin = selectedMarketValue - inputs.purchasePrice;
+  const hasMarketCapRate = isCommercialProperty && inputs.marketCapRate > 0;
+  const hasMarketGrm = isCommercialProperty && inputs.marketGrm > 0;
+  const marketGrmValue = hasMarketGrm ? results.annualRent * inputs.marketGrm : null;
+  const marketCapValue = hasMarketCapRate ? results.noi / inputs.marketCapRate : null;
+  // Income capitalization is primary for 5+ properties. MRB remains a
+  // cross-check and never silently becomes the selected valuation.
+  const selectedMarketValue = isCommercialProperty ? marketCapValue : inputs.comparableValue || null;
+  const valueMargin = selectedMarketValue === null
+    ? null
+    : selectedMarketValue - inputs.purchasePrice;
+  const hasRentPotential = inputs.unitMix.some((unit) =>
+    unit.count > 0 && unit.marketRent > unit.currentRent + 1,
+  );
+  const hasPotentialScenario = hasRentPotential ||
+    Object.keys(inputs.proformaOverrides ?? {}).length > 0;
   const scoreMaximum = isFlip ? 9 : isCommercialProperty ? 17 : 16;
   const score100 = Math.round((analysis.score / scoreMaximum) * 100);
   const verdictText = {
@@ -569,8 +545,20 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
       else rows.push([q(label), q(line.current.toFixed(0)), q(line.proforma.toFixed(0))]);
     }
     rows.push([]);
+    rows.push([q(t.marketIndicators), q(t.currentValue)]);
+    rows.push([q(t.purchaseCap), q(f.percent2(results.purchaseCapRate))]);
+    rows.push([q(t.grm), q(`${f.number(results.grm, 2)}×`)]);
+    rows.push([q(t.netIncomeMultiplier), q(`${f.number(results.netIncomeMultiplier, 2)}×`)]);
+    if (isCommercialProperty) {
+      rows.push([q(t.marketCapInput), q(hasMarketCapRate ? f.percent2(inputs.marketCapRate) : t.notProvided)]);
+      rows.push([q(t.marketCapValue), q(marketCapValue === null ? t.notProvided : f.currency(marketCapValue))]);
+      rows.push([q(t.marketGrmInput), q(hasMarketGrm ? `${f.number(inputs.marketGrm, 2)}×` : t.notProvided)]);
+      rows.push([q(t.marketGrmValue), q(marketGrmValue === null ? t.notProvided : f.currency(marketGrmValue))]);
+      rows.push([q(t.exitCapRate), q(f.percent2(inputs.exitCapRate))]);
+    }
+    rows.push([]);
     rows.push([q(t.colYear), q(t.colGrossRent), q(t.colNoi), q(t.colDebtService),
-      q(t.colCashFlow), q(t.colRenoSpend), q(t.colValue), q(t.colLoanBalance), q(t.colEquity)]);
+      q(t.colCashFlow), q(t.colRenoSpend), q(isCommercialProperty ? t.colValueAtExitCap : t.colValue), q(t.colLoanBalance), q(t.colEquity)]);
     for (const p of projection) {
       rows.push([q(p.year), q(p.annualRent.toFixed(0)), q(p.noi.toFixed(0)),
         q(p.annualDebtService.toFixed(0)), q(p.btCashFlow.toFixed(0)), q(p.renoSpend.toFixed(0)),
@@ -686,18 +674,22 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
           </section>
           <section className="plexc-kpis" aria-label={t.keyMetrics}>
             <Kpi label={t.currentCashFlow} value={f.currency(results.btCashFlowYear1)} tone={cfTone} note={`${f.currency(results.btCashFlowMonthly)}${t.perMonth}`} />
-            <Kpi label={t.currentNoi} value={f.currency(results.noi)} note={`${t.potential}: ${f.currency(results.proformaNoi)}`} />
+            <Kpi label={t.currentNoi} value={f.currency(results.noi)} note={`${t.potential}: ${hasPotentialScenario ? f.currency(results.proformaNoi) : t.notProvided}`} />
             <Kpi label={t.dscr} value={f.number(results.dscrYear1, 2)} tone={dscrTone} note={`≥ ${f.number(inputs.dscrTarget, 2)}`} />
-            <Kpi label={t.purchaseCap} value={f.percent2(results.purchaseCapRate)} tone={capTone} note={`${t.potential}: ${f.percent2(results.proformaCapRate)}`} />
+            <Kpi label={t.purchaseCap} value={f.percent2(results.purchaseCapRate)} tone={capTone} note={`${t.potential}: ${hasPotentialScenario ? f.percent2(results.proformaCapRate) : t.notProvided}`} />
             <Kpi label={t.totalEquity} value={f.currency(results.totalEquityInvested)} note={t.totalEquityNote} />
             <Kpi label={t.score} value={`${score100} / 100`} tone={analysis.verdict === "strong-buy" || analysis.verdict === "buy" ? "good" : analysis.verdict === "hold" ? "warn" : "bad"} note={verdictText} />
           </section>
-          <section className="plexc-optimization" aria-label={t.optimizationHeading}>
+          <section className={`plexc-optimization${hasRentPotential ? "" : " is-missing"}`} aria-label={t.optimizationHeading}>
             <div>
               <span>{t.optimizationHeading}</span>
-              <strong>+{f.currency(results.rentUpsideMonthly * 12)}{t.perYear}</strong>
+              <strong>{hasRentPotential
+                ? `${radarModelEstimate ? "≈ " : "+"}${f.currency(results.rentUpsideMonthly * 12)}${t.perYear}`
+                : radarModelEstimate ? t.optimizationEstimatedNone : t.optimizationMissing}</strong>
             </div>
-            <p>{t.optimizationCopy}</p>
+            <p>{hasRentPotential
+              ? radarModelEstimate ? t.radarEstimatedPotentialNote : t.optimizationCopy
+              : radarModelEstimate ? t.radarEstimatedPotentialNote : t.optimizationMissingCopy}</p>
           </section>
         </>
       )}
@@ -783,6 +775,17 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
           <div className="plexc-card">
             <h3>{t.unitMixHeading}</h3>
             <p className="plexc-sub">{t.unitMixSub}</p>
+            {radarModelEstimate && (
+              <div className="plexc-banner plexc-rent-roll-banner" role="status">
+                <div>
+                  <strong>{t.radarAggregateIncomeTitle}</strong>
+                  <p>{t.radarAggregateIncomeNote}</p>
+                </div>
+                <button className="plexc-btn" onClick={() => setRentRollConfirmed(true)}>
+                  {t.confirmRentRoll}
+                </button>
+              </div>
+            )}
             <div className="plexc-table-wrap">
               <table className="plexc-table">
                 <thead>
@@ -796,17 +799,22 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                 <tbody>
                   {inputs.unitMix.map((u) => {
                     const upside = u.count * Math.max(0, u.marketRent - u.currentRent);
-                    const typeValue = (UNIT_TYPE_ORDER.includes(u.label as UnitTypeLabel)
-                      ? u.label : "4½") as UnitTypeLabel;
+                    const knownType = UNIT_TYPE_ORDER.includes(u.label as UnitTypeLabel);
+                    const typeValue = knownType ? u.label : "unknown";
+                    const rowTypeOptions: SelectOption<string>[] = knownType
+                      ? unitTypeOptions
+                      : [{ value: "unknown", label: t.unitTypeUnknown }, ...unitTypeOptions];
                     const cmhc = results.cmhcUnits.find((c) => c.id === u.id);
                     return (
                       <tr key={u.id}>
                         <td>
                           <div style={{ maxWidth: 140 }}>
-                            <Select<UnitTypeLabel>
+                            <Select<string>
                               value={typeValue}
-                              options={unitTypeOptions}
-                              onChange={(v) => setUnitType(u.id, v)}
+                              options={rowTypeOptions}
+                              onChange={(v) => {
+                                if (v !== "unknown") setUnitType(u.id, v as UnitTypeLabel);
+                              }}
                               ariaLabel={t.colType}
                               compact full
                             />
@@ -821,9 +829,14 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                         <td>
                           <div className="plexc-input" style={{ maxWidth: 130 }}>
                             <span className="plexc-affix">$</span>
-                            <input type="number" min={0} step={25} value={u.currentRent} aria-label={t.colInPlaceRent}
+                            <input type="number" min={0} step={25}
+                              value={radarModelEstimate && u.id.startsWith("radar-") ? u.currentRent.toFixed(2) : u.currentRent}
+                              aria-label={t.colInPlaceRent}
                               onChange={(e) => updateUnit(u.id, { currentRent: parseFloat(e.target.value) || 0 })} />
                           </div>
+                          {radarModelEstimate && u.id.startsWith("radar-") && (
+                            <span className="plexc-derived-rent">{t.derivedFromAggregate}</span>
+                          )}
                         </td>
                         <td>
                           {cmhc ? (
@@ -853,17 +866,21 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                         <td>
                           <div className="plexc-input" style={{ maxWidth: 130 }}>
                             <span className="plexc-affix">$</span>
-                            <input type="number" min={0} step={25} value={u.marketRent} aria-label={t.colMarketRent}
+                            <input type="number" min={0} step={25}
+                              value={u.marketRent === 0 ? "" : u.marketRent}
+                              placeholder="—" aria-label={t.colMarketRent}
                               onChange={(e) => updateUnit(u.id, { marketRent: parseFloat(e.target.value) || 0 })} />
                           </div>
                         </td>
                         <td>
                           <div className="plexc-input" style={{ maxWidth: 110 }}>
-                            <input type="number" min={0} step={25} value={u.sqft} aria-label={t.colSqftPerUnit}
+                            <input type="number" min={0} step={25}
+                              value={u.sqft === 0 ? "" : u.sqft}
+                              placeholder="—" aria-label={t.colSqftPerUnit}
                               onChange={(e) => updateUnit(u.id, { sqft: parseFloat(e.target.value) || 0 })} />
                           </div>
                         </td>
-                        <td>{upside > 0 ? f.currency(upside) : "-"}</td>
+                        <td>{upside > 0 ? `${radarModelEstimate ? "≈ " : ""}${f.currency(upside)}` : "—"}</td>
                         <td>
                           <button className="plexc-btn" onClick={() => removeUnit(u.id)}>{t.remove}</button>
                         </td>
@@ -874,9 +891,10 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                     <td>{t.total}</td>
                     <td>{units}</td>
                     <td>{f.currency(results.currentMonthlyRent)}</td>
-                    <td>{f.currency(results.proformaMonthlyRent)}</td>
+                    <td>—</td>
+                    <td>{`${radarModelEstimate ? "≈ " : ""}${f.currency(results.proformaMonthlyRent)}`}</td>
                     <td>{results.netRSF > 0 ? f.number(results.netRSF) : "-"}</td>
-                    <td>{f.currency(results.rentUpsideMonthly)}</td>
+                    <td>{results.rentUpsideMonthly > 0 ? `${radarModelEstimate ? "≈ " : ""}${f.currency(results.rentUpsideMonthly)}` : "—"}</td>
                     <td></td>
                   </tr>
                 </tbody>
@@ -888,8 +906,9 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
 
             <div className="plexc-cmhc-panel">
               <div className="plexc-cmhc-headline">
-                <span className="plexc-cmhc-title">
-                  {t.cmhcOptimizationLabel}
+                  <span className="plexc-cmhc-title">
+                    {t.cmhcOptimizationLabel}
+                    {radarModelEstimate && <span className="plexc-tag plexc-tag-warn">{t.modelEstimate}</span>}
                   {/* The CMA geography already reads "Montréal RMR", so only the
                       zone level needs the qualifier spelled out. */}
                   <span className="plexc-cmhc-geo-tag">
@@ -903,7 +922,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                     (results.cmhcOptimizationAnnual > 0 ? "is-positive" : "is-neutral")
                   }
                 >
-                  {results.cmhcOptimizationAnnual > 0 ? "+" : ""}
+                  {radarModelEstimate ? "≈ " : results.cmhcOptimizationAnnual > 0 ? "+" : ""}
                   {f.currency(results.cmhcOptimizationAnnual)}
                   {t.perYear}
                   {results.cmhcOptimizationPct > 0 && (
@@ -914,15 +933,17 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                 </span>
               </div>
               <p className="plexc-cmhc-note">{t.cmhcOptimizationNote}</p>
+              {radarModelEstimate && <p className="plexc-cmhc-note plexc-cmhc-caveat">{t.cmhcEstimatedWithoutRentRoll}</p>}
               <p className="plexc-cmhc-note plexc-cmhc-caveat">{t.cmhcOccupiedCaveat}</p>
               <p className="plexc-cmhc-source">{t.cmhcSourceNote}</p>
             </div>
 
             <div className="plexc-grid4" style={{ marginTop: 26 }}>
-              <Readout label={t.annualUpside} value={f.currency(results.rentUpsideMonthly * 12)} />
+              <Readout label={t.annualUpside} value={`${radarModelEstimate ? "≈ " : ""}${f.currency(results.rentUpsideMonthly * 12)}`} />
               <Readout label={t.grmInPlace} value={f.number(results.grm, 1)} />
               <Readout label={t.onePercentRule} value={f.percent2(results.rentToPrice1Pct)} />
-              <Readout label={t.avgRentPerUnit} value={units > 0 ? f.currency(results.currentMonthlyRent / units) : "-"} />
+              <Readout label={t.avgRentPerUnit} value={units > 0 ? f.currency(results.currentMonthlyRent / units) : "-"}
+                help={radarModelEstimate ? t.derivedFromAggregate : undefined} />
             </div>
           </div>
         )}
@@ -1077,20 +1098,33 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
             </div>
 
             {economicValue && (
+              <>
+              <div className="plexc-card">
+                <h3>{t.marketValueHeading}</h3>
+                <p className="plexc-sub">{t.marketValueSub}</p>
+                <div className="plexc-grid4">
+                  <PctField label={t.marketCapInput} value={inputs.marketCapRate} onChange={(v) => set("marketCapRate", v)} step={0.05} help={t.marketCapInputHelp} />
+                  <Field label={t.marketGrmInput} value={inputs.marketGrm} onChange={(v) => set("marketGrm", v)} suffix="×" step={0.1} min={0} help={t.marketGrmInputHelp} />
+                  <Readout label={t.marketCapValue} value={marketCapValue === null ? "—" : f.currency(marketCapValue)} />
+                  <Readout label={t.marketGrmValue} value={marketGrmValue === null ? "—" : f.currency(marketGrmValue)} />
+                  <Readout label={t.selectedValue} value={selectedMarketValue === null ? "—" : f.currency(selectedMarketValue)} />
+                  <Readout label={t.valueMargin} value={valueMargin === null ? "—" : f.accounting(valueMargin)} />
+                </div>
+                <p className="plexc-note">
+                  {!hasMarketCapRate && <><span className="plexc-tag plexc-tag-warn">{t.notProvided}</span> {t.marketValueMissing} </>}
+                  {t.marketGrmSecondary}
+                </p>
+              </div>
+
               <div className="plexc-card">
                 <h3>{t.veHeading}</h3>
                 <p className="plexc-sub">{t.veSub}</p>
                 <div className="plexc-grid4">
-                  <Field label={t.marketGrmInput} value={inputs.marketGrm} onChange={(v) => set("marketGrm", v)} suffix="×" step={0.1} min={0} />
                   <Readout label={t.veNormalizedNoi} value={f.currency(economicValue.normalizedNoi)} />
                   <Readout label={t.veQualificationRate} value={f.percent2(economicValue.qualificationRate)} />
                   <Readout label={t.veMaxDebtService} value={f.currency(economicValue.maxAnnualDebtService)} />
                   <Readout label={t.veMaxLoan} value={f.currency(economicValue.maxLoan)} />
                   <Readout label={t.veValue} value={f.currency(economicValue.economicValue)} />
-                  <Readout label={t.marketGrmValue} value={f.currency(marketGrmValue)} />
-                  <Readout label={t.marketCapValue} value={f.currency(marketCapValue)} />
-                  <Readout label={t.selectedValue} value={f.currency(selectedMarketValue)} />
-                  <Readout label={t.valueMargin} value={f.accounting(valueMargin)} />
                   <Readout label={t.veGap} value={f.accounting(economicValue.gapToPrice)} />
                   <Readout label={t.veCashRequired} value={f.currency(economicValue.requiredCash)} />
                   {economicValue.cashShortfall > 0 && (
@@ -1105,6 +1139,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                 </p>
                 <p className="plexc-note">{t.veVariesNote}</p>
               </div>
+              </>
             )}
 
             {isCommercialProperty && (
@@ -1440,7 +1475,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                   <th>{t.colLine}</th>
                   <th>{t.colInPlace}<span className="plexc-th-sub">{t.colInPlaceSub}</span></th>
                   <th>{t.colPctRbe}</th>
-                  <th>{t.colProforma}<span className="plexc-th-sub">{t.colProformaSub}</span></th>
+                  <th>{t.colProforma}<span className="plexc-th-sub">{hasPotentialScenario ? t.colProformaSub : t.optimizationMissing}</span></th>
                   <th>{t.colDelta}<span className="plexc-th-sub">{t.colDeltaSub}</span></th>
                 </tr>
               </thead>
@@ -1516,13 +1551,13 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                     <tr><th>{t.metric}</th><th>{t.currentValue}</th><th>{t.potentialValue}</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>{t.purchaseCap}</td><td>{f.percent2(results.purchaseCapRate)}</td><td>{f.percent2(results.proformaCapRate)}</td></tr>
-                    <tr><td>{t.grm}</td><td>{f.number(results.grm, 2)}×</td><td>{f.number(potentialGrm, 2)}×</td></tr>
-                    <tr><td>{t.netIncomeMultiplier}</td><td>{f.number(results.netIncomeMultiplier, 2)}×</td><td>{f.number(potentialMrn, 2)}×</td></tr>
-                    <tr><td>{t.operatingExpenseRatio}</td><td>{f.percent2(results.operatingExpenseRatio)}</td><td>{f.percent2(potentialExpenseRatio)}</td></tr>
-                    <tr><td>{t.breakEvenRatio}</td><td>{f.percent2(results.breakEvenRatio)}</td><td>{f.percent2(potentialBreakEven)}</td></tr>
+                    <tr><td>{t.purchaseCap}</td><td>{f.percent2(results.purchaseCapRate)}</td><td>{hasPotentialScenario ? f.percent2(results.proformaCapRate) : "—"}</td></tr>
+                    <tr><td>{t.grm}</td><td>{f.number(results.grm, 2)}×</td><td>{hasPotentialScenario ? `${f.number(potentialGrm, 2)}×` : "—"}</td></tr>
+                    <tr><td>{t.netIncomeMultiplier}</td><td>{f.number(results.netIncomeMultiplier, 2)}×</td><td>{hasPotentialScenario ? `${f.number(potentialMrn, 2)}×` : "—"}</td></tr>
+                    <tr><td>{t.operatingExpenseRatio}</td><td>{f.percent2(results.operatingExpenseRatio)}</td><td>{hasPotentialScenario ? f.percent2(potentialExpenseRatio) : "—"}</td></tr>
+                    <tr><td>{t.breakEvenRatio}</td><td>{f.percent2(results.breakEvenRatio)}</td><td>{hasPotentialScenario ? f.percent2(potentialBreakEven) : "—"}</td></tr>
                     <tr><td>{t.pricePerUnit}</td><td>{f.currency(results.pricePerDoor)}</td><td>—</td></tr>
-                    <tr><td>{t.cashFlowPerDoor}</td><td>{f.accounting(units > 0 ? results.btCashFlowMonthly / units : 0)}</td><td>{f.accounting(units > 0 ? results.proformaCashFlow / 12 / units : 0)}</td></tr>
+                    <tr><td>{t.cashFlowPerDoor}</td><td>{f.accounting(units > 0 ? results.btCashFlowMonthly / units : 0)}</td><td>{hasPotentialScenario ? f.accounting(units > 0 ? results.proformaCashFlow / 12 / units : 0) : "—"}</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1568,7 +1603,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
               <table className="plexc-table">
                 <thead>
                   <tr>
-                    <th>{t.colYear}</th><th>{t.colValue}</th><th>{t.colLoanBalance}</th>
+                    <th>{t.colYear}</th><th>{isCommercialProperty ? t.colValueAtExitCap : t.colValue}</th><th>{t.colLoanBalance}</th>
                     <th>{t.principalPaid}</th><th>{t.interestPaid}</th><th>{t.cumulativePrincipalPaid}</th><th>{t.colEquity}</th><th>{t.colCashFlow}</th>
                   </tr>
                 </thead>
@@ -1623,7 +1658,7 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
                 <tr>
                   <th>{t.colYear}</th><th>{t.colGrossRent}</th><th>{t.colNoi}</th>
                   <th>{t.colDebtService}</th><th>{t.colCashFlow}</th><th>{t.colRenoSpend}</th>
-                  <th>{t.colAtMarket}</th><th>{t.colCapOnCost}</th><th>{t.colValue}</th>
+                  <th>{t.colAtMarket}</th><th>{t.colCapOnCost}</th><th>{isCommercialProperty ? t.colValueAtExitCap : t.colValue}</th>
                   <th>{t.colLoanBalance}</th><th>{t.colEquity}</th>
                 </tr>
               </thead>

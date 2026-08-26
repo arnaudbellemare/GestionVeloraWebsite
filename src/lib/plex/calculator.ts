@@ -250,7 +250,9 @@ export interface DealInputs {
   // Appreciation
   /** Current market value supported by sold comparables (1–4 units). */
   comparableValue: number;
-  /** Market gross-rent multiplier used as a secondary 5+ value indication. */
+  /** Current market cap rate supported by verified 5+ sales or an appraisal. */
+  marketCapRate: number;
+  /** Market gross-rent multiplier from verified sales; secondary indication only. */
   marketGrm: number;
   annualAppreciation: number;
   annualExpenseGrowth: number;
@@ -270,7 +272,7 @@ export interface DealInputs {
   brrrrRefiLtv: number; // refinance LTV after rehab (typically 75-80%)
   // Exit / Sale
   exitYear: number; // planned sale year for exit analysis
-  /** Market-derived terminal capitalization rate applied to forward stabilized NOI. */
+  /** User-controlled terminal capitalization-rate scenario applied to forward stabilized NOI. */
   exitCapRate: number;
   capitalGainsInclusion: number; // 50% in Canada (66.7% proposed for >$250k)
 }
@@ -1384,6 +1386,10 @@ export function applyPropertyPreset(
     rehabBudget: p.rehabBudget,
     renoCostPerUnit: p.renoCostPerUnit,
     exitCapRate: p.exitCapRate,
+    // Market parity assumptions belong to a specific property, geography and
+    // valuation date. Never carry them across a property-type reset.
+    marketCapRate: 0,
+    marketGrm: 0,
     // Residential plexes trade primarily from sold comparables. The asking
     // price is only a starting estimate and remains editable in the UI.
     comparableValue: units <= 4 && type !== 'house-flip' ? askingPrice : 0,
@@ -1472,7 +1478,8 @@ const BASE_INPUTS: DealInputs = {
   // lender normally pays the broker. The MLI Select presets turn it on.
   mortgageBrokerPct: 0,
   comparableValue: 900000,
-  marketGrm: 15,
+  marketCapRate: 0,
+  marketGrm: 0,
   annualAppreciation: 0.03,
   annualExpenseGrowth: 0.02,
   // 2026 TAL base component. This is not a universal cap: tax, insurance and
@@ -1552,9 +1559,13 @@ export function calculateDeal(inputs: DealInputs): DealResults {
   let worstGeo = { geography: '', level: 'neighbourhood' as CmhcGeoLevel, rank: -1 };
   let cmhcShortfallMonthly = 0;
 
-  const cmhcUnits: CmhcUnitComparison[] = inputs.unitMix.map((u) => {
-    const bedrooms = UNIT_TYPES[u.label as UnitTypeLabel]?.bedrooms ?? 1;
-    const point = lookupCmhcRent(inputs.areaKey, bedrooms);
+  const cmhcUnits = inputs.unitMix.flatMap<CmhcUnitComparison>((u) => {
+    const unitType = UNIT_TYPES[u.label as UnitTypeLabel];
+    // Aggregate Radar imports deliberately have no unit type. Do not silently
+    // turn an unknown mix into a one-bedroom CMHC comparison.
+    if (!unitType) return [];
+
+    const point = lookupCmhcRent(inputs.areaKey, unitType.bedrooms);
     const count = Math.max(0, u.count);
 
     if (u.currentRent < point.rent) {
@@ -1565,7 +1576,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
       worstGeo = { geography: point.geography, level: point.level, rank };
     }
 
-    return {
+    return [{
       id: u.id,
       label: u.label,
       count,
@@ -1575,7 +1586,7 @@ export function calculateDeal(inputs: DealInputs): DealResults {
       reliability: point.reliability,
       geography: point.geography,
       level: point.level,
-    };
+    }];
   });
 
   const cmhcOptimizationAnnual = cmhcShortfallMonthly * 12;
@@ -2229,8 +2240,9 @@ export function calculateProjection(
     const endPeriod = Math.min(y * periodsPerYear, amort.length);
     const loanBalance = endPeriod > 0 && endPeriod <= amort.length ? amort[endPeriod - 1].closingBalance : 0;
 
-    // MREX-style income logic: value the building from forward stabilized NOI
-    // and a market-derived TGA (exit cap), rather than compounding its price.
+    // Income-approach scenario: value the building from forward stabilized NOI
+    // and the user's terminal TGA, rather than compounding its price. This exit
+    // assumption is deliberately separate from the verified current market TGA.
     const forwardCashRent = rentalUnits > 0
       ? rentForYear(y + 1, rentalUnits, mix.avgCurrentRent, mix.avgMarketRent)
       : 0;
@@ -2242,7 +2254,7 @@ export function calculateProjection(
       forwardGrossRent * variableExpensePct;
     const forwardNoi = forwardGrossRent * (1 - inputs.vacancyRate) - forwardOpEx;
     // Quebec 1–4 unit plexes are valued from sold comparables; 5+ properties
-    // use the income approach and a market-derived terminal TGA.
+    // use the income approach and the terminal TGA scenario.
     const comparableBase = totalUnits <= 4 && inputs.comparableValue > 0
       ? inputs.comparableValue
       : inputs.purchasePrice;

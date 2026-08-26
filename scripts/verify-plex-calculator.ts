@@ -17,6 +17,7 @@ import {
   calculatorUrl,
   type RadarDeal,
 } from '../src/data/plex-radar';
+import { createRadarPrefill } from '../src/lib/plex/radar-prefill';
 
 const closeTo = (actual: number, expected: number, tolerance = 0.01) => {
   assert.ok(
@@ -37,6 +38,8 @@ assert.equal(DEFAULT_INPUTS.equityPct, 0.25);
 assert.equal(DEFAULT_INPUTS.rehabBudget, 0);
 assert.equal(DEFAULT_INPUTS.renoUnitsPerYear, 0);
 assert.equal(DEFAULT_INPUTS.exitCapRate, 0);
+assert.equal(DEFAULT_INPUTS.marketCapRate, 0);
+assert.equal(DEFAULT_INPUTS.marketGrm, 0);
 assert.ok(DEFAULT_INPUTS.comparableValue > 0);
 
 // Owner-occupied financing cannot also collect rent from the occupied unit.
@@ -153,6 +156,9 @@ closeTo(
   fivePlus.purchasePrice / fivePlusResults.noi,
   1e-10,
 );
+closeTo(fivePlusResults.grm, fivePlus.purchasePrice / fivePlusResults.annualRent, 1e-12);
+closeTo(fivePlusResults.purchaseCapRate, fivePlusResults.noi / fivePlus.purchasePrice, 1e-12);
+closeTo(fivePlusResults.netIncomeMultiplier, 1 / fivePlusResults.purchaseCapRate, 1e-10);
 const returnHorizons = calculateReturnHorizons(fivePlus);
 assert.deepEqual(returnHorizons.map((row) => row.years), [5, 10]);
 for (const horizon of returnHorizons) {
@@ -271,6 +277,8 @@ const radarDeal: RadarDeal = {
     closing_costs: 20_000,
     comparable_value: 1_281_720,
     comparable_count: 10,
+    market_cap_rate: 0.041,
+    market_grm: 17.2,
   },
   analysis: { verdict: 'hold', score: 5, max_score: 12 },
 };
@@ -294,16 +302,42 @@ assert.equal(radarCalculatorUrl.searchParams.get('hydro'), '3000');
 assert.equal(radarCalculatorUrl.searchParams.get('areaKey'), 'villeray');
 assert.equal(radarCalculatorUrl.searchParams.get('comparableValue'), '1281720');
 assert.equal(radarCalculatorUrl.searchParams.get('comparableCount'), '10');
+assert.equal(radarCalculatorUrl.searchParams.get('marketCapRate'), '0.041');
+assert.equal(radarCalculatorUrl.searchParams.get('marketGrm'), '17.2');
+
+// Centris provides aggregate advertised income, door count, property type and
+// area. Radar preserves the exact total while building an explicitly modeled
+// unit mix and local-rent estimate; rentable area remains unknown.
+const radarInputs = createRadarPrefill(radarCalculatorUrl.searchParams);
+assert.equal(radarInputs.unitMix.reduce((sum, unit) => sum + unit.count, 0), 5);
+assert.ok(radarInputs.unitMix.every((unit) => unit.marketRent > 0));
+assert.ok(radarInputs.unitMix.every((unit) => unit.sqft === 0));
+closeTo(
+  radarInputs.unitMix.reduce((sum, unit) => sum + unit.currentRent * unit.count * 12, 0),
+  100_000,
+  1e-8,
+);
+const radarResults = calculateDeal(radarInputs);
+closeTo(radarResults.annualRent, 100_000, 1e-8);
+closeTo(radarResults.grm, radarInputs.purchasePrice / 100_000, 1e-12);
+closeTo(radarResults.purchaseCapRate, radarResults.noi / radarInputs.purchasePrice, 1e-12);
+assert.equal(radarResults.netRSF, 0);
+assert.equal(radarResults.cmhcUnits.length, radarInputs.unitMix.length);
+assert.ok(radarResults.rentUpsideMonthly > 0);
 
 const metricsWithoutComps = { ...radarDeal.metrics };
 delete metricsWithoutComps.comparable_value;
 delete metricsWithoutComps.comparable_count;
+delete metricsWithoutComps.market_cap_rate;
+delete metricsWithoutComps.market_grm;
 const radarUrlWithoutComps = new URL(calculatorUrl({
   ...radarDeal,
   metrics: metricsWithoutComps,
 }, 'fr'), 'https://www.gestionvelora.com');
 assert.equal(radarUrlWithoutComps.searchParams.has('comparableValue'), false);
 assert.equal(radarUrlWithoutComps.searchParams.has('comparableCount'), false);
+assert.equal(radarUrlWithoutComps.searchParams.has('marketCapRate'), false);
+assert.equal(radarUrlWithoutComps.searchParams.has('marketGrm'), false);
 
 const radarScenarioUrl = new URL(
   calculatorUrl(radarDeal, 'fr', ['management', 'utilities']),

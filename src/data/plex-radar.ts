@@ -97,6 +97,17 @@ function radarComparableCount(deal: RadarDeal): number {
   ].map((key) => n(deal, key)).find((value) => value > 0) ?? 0));
 }
 
+/** Optional verified market assumptions produced outside the subject listing. */
+function radarMarketCapRate(deal: RadarDeal): number {
+  return ["market_cap_rate", "market_tga"].map((key) => n(deal, key))
+    .find((value) => value > 0) ?? 0;
+}
+
+function radarMarketGrm(deal: RadarDeal): number {
+  return ["market_grm", "market_mrb"].map((key) => n(deal, key))
+    .find((value) => value > 0) ?? 0;
+}
+
 export function publishedRadarMetrics(deal: RadarDeal): RadarMetrics | null {
   if (deal.status !== "underwritten") return null;
   return {
@@ -214,6 +225,10 @@ export function calculatorUrl(deal: RadarDeal, locale: RadarLocale, excluded: st
   const comparableCount = radarComparableCount(deal);
   if (comparableValue > 0) params.set("comparableValue", String(comparableValue));
   if (comparableCount > 0) params.set("comparableCount", String(comparableCount));
+  const marketCapRate = radarMarketCapRate(deal);
+  const marketGrm = radarMarketGrm(deal);
+  if (marketCapRate > 0) params.set("marketCapRate", String(marketCapRate));
+  if (marketGrm > 0) params.set("marketGrm", String(marketGrm));
   const path = locale === "en" ? "/en/montreal-plex-investment-calculator" : "/calculateur-rendement-plex-montreal";
   return `${path}?${params.toString()}`;
 }
