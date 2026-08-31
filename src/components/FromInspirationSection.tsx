@@ -60,8 +60,18 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
   }, []);
 
   const items = [
-    { name: "Résidence Saint-Denis", image: "/images/portfolio/syndicat-enticy-thumb.webp" },
-    { name: "Immeuble Papineau", image: "/images/portfolio/le-beaumont-thumb.webp" },
+    {
+      name: "Résidence Saint-Denis",
+      image: "/images/portfolio/syndicat-enticy-thumb.webp",
+      alt: t("fromInspiration.enticyThumbAlt"),
+      title: t("fromInspiration.enticyThumbTitle"),
+    },
+    {
+      name: "Immeuble Papineau",
+      image: "/images/portfolio/le-beaumont-thumb.webp",
+      alt: t("fromInspiration.beaumontThumbAlt"),
+      title: t("fromInspiration.beaumontThumbTitle"),
+    },
   ];
 
   return (
@@ -87,7 +97,8 @@ function ArchiveMockup({ t }: { t: (k: string) => string }) {
             <div className="flex items-center gap-2 min-w-0">
               <img
                 src={item.image}
-                alt={item.name}
+                alt={item.alt}
+                title={item.title}
                 className="h-8 w-8 rounded object-cover shrink-0 bg-neutral-200 dark:bg-neutral-700"
                 width={32}
                 height={32}

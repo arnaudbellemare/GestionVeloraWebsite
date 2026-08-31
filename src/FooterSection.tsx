@@ -300,6 +300,9 @@ export const FooterSection = (): JSX.Element => {
             <InternalLink to="/privacy" className="hover:text-white transition-colors duration-300">
               {t("footer.privacy")}
             </InternalLink>
+            <InternalLink to="/terms" className="hover:text-white transition-colors duration-300">
+              {locale === "en" ? "Terms of use" : "Conditions d’utilisation"}
+            </InternalLink>
             <a
               href="https://www.rgcq.org/"
               target="_blank"

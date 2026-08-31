@@ -84,7 +84,8 @@ export function HeroSection() {
         />
         <img
           src={HERO_IMAGE_MOBILE}
-          alt="Gestion immobilière à Montréal par Gestion Velora"
+          alt={t("hero.imageAlt")}
+          title={t("hero.imageTitle")}
           width={1920}
           height={1080}
           decoding="sync"
@@ -133,6 +134,7 @@ export function HeroSection() {
           <span>{t("hero.trustLine")}</span>{" "}
           <a
             href="#testimonials"
+            title={t("hero.trustLink")}
             className="text-white/85 underline underline-offset-2 decoration-white/25 hover:text-white hover:decoration-white/50"
           >
             {t("hero.trustLink")}
@@ -145,6 +147,7 @@ export function HeroSection() {
           <a
             href={contactHref}
             onClick={goToContact}
+            title={t("hero.ctaContact")}
             className="inline-flex items-center justify-center px-6 sm:px-9 py-3 sm:py-3.5 rounded-full min-h-[44px] w-full sm:w-auto font-sans font-semibold text-xs sm:text-sm uppercase tracking-[0.1em] sm:tracking-[0.12em] text-white bg-black/40 backdrop-blur-md border border-white/45 shadow-[0_4px_28px_rgba(0,0,0,0.25)] hover:bg-black/55 hover:border-white/60 hover:shadow-[0_8px_36px_rgba(0,0,0,0.3)] active:bg-black/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
           >
             {t("hero.ctaContact")}
@@ -154,6 +157,7 @@ export function HeroSection() {
           </p>
           <a
             href="#specification"
+            title={t("hero.ctaDiscover")}
             className="inline-flex items-center justify-center sm:justify-center px-2 py-1 text-[11px] sm:text-xs text-white/55 hover:text-white/90 font-mono uppercase tracking-[0.14em] underline underline-offset-[0.25em] decoration-white/25 hover:decoration-white/45"
           >
             {t("hero.ctaDiscover")}

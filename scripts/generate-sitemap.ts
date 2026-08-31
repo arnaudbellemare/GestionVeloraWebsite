@@ -18,7 +18,29 @@ import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { TRUST_PAGE_PATHS_FR } from "../src/data/trust-pages.js";
 
 const SITE_URL = "https://www.gestionvelora.com";
+const DEFAULT_LAST_MODIFIED = "2026-08-20";
+const LAST_MODIFIED_BY_PATH = new Map<string, string>([
+  ["/", "2026-08-30"],
+  ["/en/", "2026-08-30"],
+  ["/terms", "2026-08-30"],
+  ["/en/terms", "2026-08-30"],
+  ["/calculateur-rendement-plex-montreal", "2026-08-24"],
+  ["/en/montreal-plex-investment-calculator", "2026-08-24"],
+  ["/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
+  ["/en/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
+]);
 const SERVICE_SLUGS = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"];
+const HOMEPAGE_IMAGE_PATHS = [
+  "/logo-80.webp",
+  "/hero-video-poster-mobile.webp?v=6",
+  "/images/portfolio/le-beaumont-display.webp",
+  "/images/portfolio/syndicat-enticy-display.webp",
+  "/images/portfolio/loft-saint-paul-display.webp",
+  "/images/airbnb-service.webp",
+  "/images/portfolio/syndicat-enticy-thumb.webp",
+  "/images/portfolio/le-beaumont-thumb.webp",
+  "/hero-gestion-velora-1200.webp",
+] as const;
 
 const TRUST_SITEMAP_PATHS = new Set(TRUST_PAGE_PATHS_FR.flatMap((fr) => [fr, `/en${fr}`]));
 
@@ -26,6 +48,7 @@ interface RouteEntry {
   path: string;
   frPath: string;
   enPath: string;
+  images?: readonly string[];
 }
 
 function buildAllRoutes(): RouteEntry[] {
@@ -40,13 +63,15 @@ function buildAllRoutes(): RouteEntry[] {
     ["/blog", "/en/blog"],
     ["/tarifs", "/en/tarifs"],
     ["/privacy", "/en/privacy"],
+    ["/terms", "/en/terms"],
     ["/calculateur-rendement-plex-montreal", "/en/montreal-plex-investment-calculator"],
     ["/guide-achat-plex-montreal", "/en/montreal-plex-buyer-guide"],
     ["/immeubles-a-revenus-a-vendre-montreal", "/en/montreal-income-properties-for-sale"],
   ];
   for (const [fr, en] of staticPairs) {
-    routes.push({ path: fr, frPath: fr, enPath: en });
-    routes.push({ path: en, frPath: fr, enPath: en });
+    const images = fr === "/" ? HOMEPAGE_IMAGE_PATHS : undefined;
+    routes.push({ path: fr, frPath: fr, enPath: en, images });
+    routes.push({ path: en, frPath: fr, enPath: en, images });
   }
 
   for (const fr of TRUST_PAGE_PATHS_FR) {
@@ -108,7 +133,6 @@ function changefreq(path: string): string {
 }
 
 function main() {
-  const today = new Date().toISOString().slice(0, 10);
   const routes = buildAllRoutes();
   const seen = new Set<string>();
   const entries: string[] = [];
@@ -120,6 +144,9 @@ function main() {
     const loc = `${SITE_URL}${route.path}`;
     const frHref = `${SITE_URL}${route.frPath}`;
     const enHref = `${SITE_URL}${route.enPath}`;
+    const imageEntries = (route.images ?? [])
+      .map((path) => `    <image:image><image:loc>${SITE_URL}${path}</image:loc></image:image>\n`)
+      .join("");
 
     entries.push(
       `  <url>\n` +
@@ -127,7 +154,8 @@ function main() {
         `    <xhtml:link rel="alternate" hreflang="fr-CA" href="${frHref}" />\n` +
         `    <xhtml:link rel="alternate" hreflang="en-CA" href="${enHref}" />\n` +
         `    <xhtml:link rel="alternate" hreflang="x-default" href="${frHref}" />\n` +
-        `    <lastmod>${today}</lastmod>\n` +
+        imageEntries +
+        `    <lastmod>${LAST_MODIFIED_BY_PATH.get(route.path) ?? DEFAULT_LAST_MODIFIED}</lastmod>\n` +
         `    <changefreq>${changefreq(route.path)}</changefreq>\n` +
         `    <priority>${priority(route.path)}</priority>\n` +
         `  </url>`
@@ -136,7 +164,7 @@ function main() {
 
   const xml =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
-    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n` +
     entries.join("\n") +
     "\n" +
     `</urlset>\n`;

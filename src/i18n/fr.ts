@@ -10,6 +10,8 @@ export const fr = {
     ctaDiscover: "Voir ce que nous faisons",
     ctaContact: "Parler à l'équipe",
     ctaSubline: "Première réponse sous un jour ouvrable.",
+    imageAlt: "Vue aérienne d’un immeuble résidentiel montréalais avec terrasses et piscine",
+    imageTitle: "Gestion immobilière résidentielle à Montréal — Gestion Velora",
   },
   heroPartners: [
     "Groupe Velora",
@@ -31,6 +33,24 @@ export const fr = {
     sourcesLabel: "Sources des donnees :",
     sourceInternal: "Tableau de bord operationnel interne (janv. 2025 - mars 2026)",
     sourceCmhc: "References SCHL sur le marche locatif (RMR de Montreal)",
+    answerHeading: "Que fait Gestion Velora pour un immeuble à Montréal ?",
+    answerLead: "Réponse courte :",
+    answerBody:
+      "Gestion Velora prend en charge l’administration, le suivi financier, la coordination de l’entretien et les communications pour les syndicats de copropriété, les locations longue durée et les propriétés Airbnb du Grand Montréal.",
+    sourcesHeading: "Quelles sources appuient nos informations ?",
+    sourcesIntro:
+      "Nos repères réglementaires et de marché renvoient aux sources publiques officielles suivantes; nos résultats opérationnels proviennent de notre tableau de bord interne.",
+    citationCmhc: "SCHL — données du Rapport sur le marché locatif",
+    citationQuebec: "LégisQuébec — Code civil du Québec et copropriété divise",
+    citationMontreal: "Ville de Montréal — hébergement touristique de courte durée",
+    citationCitq: "CITQ — enregistrement des établissements d’hébergement touristique",
+    verifiedBy: "Contenu vérifié par",
+    authorRole: "fondateur de Gestion Velora et membre du RGCQ",
+    updated: "Mis à jour le 30 août 2026",
+    trustLinksIntro: "Vérifier notre transparence :",
+    contactLink: "contact",
+    privacyLink: "confidentialité",
+    termsLink: "conditions d’utilisation",
   },
 
   // WhoWeAre
@@ -45,18 +65,24 @@ export const fr = {
         location: "Montréal",
         name: "Le Beaumont",
         image: "/images/portfolio/le-beaumont-display.webp",
+        imageAlt: "Façade en pierre et balcons du Beaumont, copropriété à Montréal",
+        imageTitle: "Le Beaumont — gestion de copropriété à Montréal | Gestion Velora",
       },
       {
         category: "Copropriété",
         location: "Montréal",
         name: "Syndicat de copropriété Enticy",
         image: "/images/portfolio/syndicat-enticy-display.webp",
+        imageAlt: "Tour résidentielle Enticy au centre-ville de Montréal, vue au crépuscule",
+        imageTitle: "Enticy — gestion de syndicat de copropriété à Montréal | Gestion Velora",
       },
       {
         category: "Airbnb",
         location: "Vieux-Montréal",
         name: "Loft Saint-Paul",
         image: "/images/portfolio/loft-saint-paul-display.webp",
+        imageAlt: "Intérieur lumineux du Loft Saint-Paul dans le Vieux-Montréal",
+        imageTitle: "Loft Saint-Paul — gestion Airbnb dans le Vieux-Montréal | Gestion Velora",
       },
     ],
   },
@@ -89,6 +115,12 @@ export const fr = {
       "Gestion des réservations, coordination des entrées et sorties, ménage et maintenance. Maximisez vos revenus en toute sérénité.",
     locationDetails:
       "Sélection des locataires, rédaction des baux, suivi des loyers et des entretiens. Une gestion locative professionnelle et humaine.",
+    syndicatImageAlt: "Tour résidentielle Enticy à Montréal au crépuscule",
+    syndicatImageTitle: "Gestion de syndicat de copropriété à Montréal | Gestion Velora",
+    airbnbImageAlt: "Salon meublé et lumineux d’un appartement locatif à Montréal",
+    airbnbImageTitle: "Gestion Airbnb à Montréal | Gestion Velora",
+    locationImageAlt: "Façade en pierre d’un immeuble résidentiel avec balcons à Montréal",
+    locationImageTitle: "Gestion locative longue durée à Montréal | Gestion Velora",
     viewPage: "Voir la page →",
     hint: "Cliquez sur une carte ou survolez pour voir les détails",
   },
@@ -105,6 +137,7 @@ export const fr = {
     about: "À propos",
     contact: "Contact",
     login: "Connexion",
+    brandTitle: "Gestion Velora — gestion immobilière à Montréal",
     syndicat: "Syndicat de copropriété",
     syndicatDesc: "Administration complète et transparence pour chaque copropriété.",
     airbnb: "Airbnb",
@@ -145,6 +178,10 @@ export const fr = {
     marieWriting: "Marie écrit…",
     reply: "Répondre",
     reportLabel: "Rapport financier, Immeuble Saint-Laurent • T3 2024",
+    enticyThumbAlt: "Miniature d’un immeuble résidentiel dans le dossier Résidence Saint-Denis",
+    enticyThumbTitle: "Dossier Résidence Saint-Denis — portail de gestion immobilière",
+    beaumontThumbAlt: "Miniature d’un immeuble montréalais dans le dossier Immeuble Papineau",
+    beaumontThumbTitle: "Dossier Immeuble Papineau — portail de gestion immobilière",
     dashboard: "Tableau de bord en direct",
     dashboardDesc:
       "Rapports financiers, graphiques animés et collaboration en temps réel. Tout votre pilotage en un coup d'œil.",
@@ -159,6 +196,8 @@ export const fr = {
     label: "Notre processus",
     title: "Une approche complète pour votre patrimoine immobilier.",
     cta: "Commencer",
+    imageAlt: "Immeuble multilogement en brique sur une rue résidentielle de Montréal",
+    imageTitle: "Gestion d’immeuble multilogement à Montréal | Gestion Velora",
     steps: [
       {
         step: "Étape 01",
@@ -447,6 +486,32 @@ export const fr = {
     contactTitle: "Contact",
     contactText:
       "Pour toute question concernant cette politique ou vos données personnelles, contactez-nous à info@gestionvelora.com.",
+  },
+
+  // Terms
+  terms: {
+    backHome: "← Retour à l'accueil",
+    title: "Conditions d’utilisation",
+    effectiveDate: "Dernière mise à jour : 30 août 2026",
+    intro:
+      "Les présentes conditions encadrent l’utilisation du site de Gestion Velora. Les services de gestion immobilière font l’objet d’une proposition et d’un contrat distincts.",
+    useTitle: "Utilisation du site",
+    useText:
+      "Vous pouvez consulter le site à des fins d’information et communiquer avec nous au sujet de nos services. Toute utilisation frauduleuse, abusive ou portant atteinte au fonctionnement du site est interdite.",
+    informationTitle: "Information générale",
+    informationText:
+      "Le contenu présente des renseignements généraux sur la gestion immobilière au Québec. Il ne remplace pas un avis juridique, comptable, fiscal ou technique adapté à votre situation. Consultez les sources officielles et un professionnel qualifié lorsque nécessaire.",
+    intellectualTitle: "Propriété intellectuelle",
+    intellectualText:
+      "Les textes, visuels, marques et éléments du site appartiennent à Gestion Velora ou sont utilisés avec autorisation. Leur reproduction substantielle exige une autorisation écrite préalable.",
+    linksTitle: "Liens externes",
+    linksText:
+      "Le site contient des liens vers des organismes publics et des partenaires. Gestion Velora ne contrôle pas leur contenu, leur disponibilité ni leurs politiques.",
+    liabilityTitle: "Limitation de responsabilité",
+    liabilityText:
+      "Gestion Velora s’efforce de maintenir une information exacte et actuelle, sans garantir que chaque contenu soit exempt d’erreur. Les décisions immobilières doivent être validées selon les faits, documents et règles applicables au dossier.",
+    contactTitle: "Contact",
+    contactText: "Pour toute question concernant ces conditions, écrivez-nous à",
   },
 
   // Common

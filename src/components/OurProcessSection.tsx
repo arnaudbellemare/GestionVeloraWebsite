@@ -34,6 +34,7 @@ export function OurProcessSection() {
           <a
             href={contactHref}
             onClick={goToContact}
+            title={t("ourProcess.cta")}
             className="inline-flex items-center gap-2 self-start lg:self-auto border border-nd-border-visible text-nd-primary px-5 py-3 text-[10px] tracking-[0.12em] uppercase font-mono hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
           >
             <span className="text-sm" aria-hidden>
@@ -109,7 +110,8 @@ export function OurProcessSection() {
                 src="/hero-gestion-velora-1200.webp"
                 srcSet="/hero-gestion-velora-800.webp 800w, /hero-gestion-velora-1200.webp 1200w"
                 sizes="(max-width: 1023px) 100vw, 50vw"
-                alt="Gestion immobilière Montréal | Gestion Velora"
+                alt={t("ourProcess.imageAlt")}
+                title={t("ourProcess.imageTitle")}
                 className="absolute inset-0 w-full h-full object-cover object-center opacity-90 grayscale contrast-[1.05] [clip-path:polygon(0_0,100%_0,100%_100%,0_100%)] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%,0_32%)]"
                 width={1200}
                 height={670}

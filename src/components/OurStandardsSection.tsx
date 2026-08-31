@@ -120,6 +120,7 @@ export function OurStandardsSection() {
           <a
             href={contactHref}
             onClick={goToContact}
+            title={t("ourStandards.cta")}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/70 text-white font-sans font-medium text-sm bg-white/5 hover:bg-white hover:text-black transition-colors"
           >
             {t("ourStandards.cta")}

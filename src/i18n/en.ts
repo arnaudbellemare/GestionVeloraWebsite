@@ -10,6 +10,8 @@ export const en = {
     ctaDiscover: "See how we work",
     ctaContact: "Talk to the team",
     ctaSubline: "Get a first response within one business day.",
+    imageAlt: "Aerial view of a Montreal residential building with terraces and a pool",
+    imageTitle: "Residential property management in Montreal — Gestion Velora",
   },
   heroPartners: [
     "Groupe Velora",
@@ -31,6 +33,24 @@ export const en = {
     sourcesLabel: "Data sources:",
     sourceInternal: "Internal operating dashboard (Jan 2025 - Mar 2026)",
     sourceCmhc: "CMHC rental market baselines (Montreal CMA)",
+    answerHeading: "What does Gestion Velora do for a Montreal property?",
+    answerLead: "Short answer:",
+    answerBody:
+      "Gestion Velora handles administration, financial follow-up, maintenance coordination, and communications for condo boards, long-term rentals, and Airbnb properties across Greater Montreal.",
+    sourcesHeading: "Which sources support our information?",
+    sourcesIntro:
+      "Our regulatory and market benchmarks point to the following official public sources; operational results come from our internal dashboard.",
+    citationCmhc: "CMHC — Rental Market Report data",
+    citationQuebec: "LégisQuébec — Civil Code of Québec and divided co-ownership",
+    citationMontreal: "City of Montreal — short-term tourist accommodation",
+    citationCitq: "CITQ — tourist accommodation registration",
+    verifiedBy: "Content reviewed by",
+    authorRole: "founder of Gestion Velora and RGCQ member",
+    updated: "Updated August 30, 2026",
+    trustLinksIntro: "Review our trust information:",
+    contactLink: "contact",
+    privacyLink: "privacy",
+    termsLink: "terms of use",
   },
 
   // WhoWeAre - SEO: property management Montreal, condo management, Airbnb management Montreal
@@ -45,18 +65,24 @@ export const en = {
         location: "Montreal",
         name: "Le Beaumont",
         image: "/images/portfolio/le-beaumont-display.webp",
+        imageAlt: "Stone façade and balconies of Le Beaumont, a Montreal condo property",
+        imageTitle: "Le Beaumont — condo property management in Montreal | Gestion Velora",
       },
       {
         category: "Condo",
         location: "Montreal",
         name: "Syndicat de copropriété Enticy",
         image: "/images/portfolio/syndicat-enticy-display.webp",
+        imageAlt: "Enticy residential tower in downtown Montreal at dusk",
+        imageTitle: "Enticy — condo board management in Montreal | Gestion Velora",
       },
       {
         category: "Airbnb",
         location: "Old Montreal",
         name: "Loft Saint-Paul",
         image: "/images/portfolio/loft-saint-paul-display.webp",
+        imageAlt: "Bright interior of Loft Saint-Paul in Old Montreal",
+        imageTitle: "Loft Saint-Paul — Airbnb management in Old Montreal | Gestion Velora",
       },
     ],
   },
@@ -89,6 +115,12 @@ export const en = {
       "Reservations, check-in/out coordination, cleaning and maintenance. Maximize revenue with peace of mind.",
     locationDetails:
       "Tenant screening, lease drafting, rent and maintenance follow-up. Professional, human rental management.",
+    syndicatImageAlt: "Enticy residential tower in Montreal at dusk",
+    syndicatImageTitle: "Condo board management in Montreal | Gestion Velora",
+    airbnbImageAlt: "Bright furnished living room in a Montreal rental apartment",
+    airbnbImageTitle: "Airbnb management in Montreal | Gestion Velora",
+    locationImageAlt: "Stone façade of a Montreal residential building with balconies",
+    locationImageTitle: "Long-term rental management in Montreal | Gestion Velora",
     viewPage: "View page →",
     hint: "Click a card or hover to see details",
   },
@@ -105,6 +137,7 @@ export const en = {
     about: "About",
     contact: "Contact",
     login: "Log in",
+    brandTitle: "Gestion Velora — property management in Montreal",
     syndicat: "Condo management",
     syndicatDesc: "Full administration and transparency for every condo board.",
     airbnb: "Airbnb",
@@ -145,6 +178,10 @@ export const en = {
     marieWriting: "Marie is typing…",
     reply: "Reply",
     reportLabel: "Financial report, Saint-Laurent Building • Q3 2024",
+    enticyThumbAlt: "Residential building thumbnail in the Résidence Saint-Denis file",
+    enticyThumbTitle: "Résidence Saint-Denis file — property management portal",
+    beaumontThumbAlt: "Montreal building thumbnail in the Immeuble Papineau file",
+    beaumontThumbTitle: "Immeuble Papineau file — property management portal",
     dashboard: "Live dashboard",
     dashboardDesc:
       "Financial reports, animated charts, and real-time collaboration. Your full oversight at a glance.",
@@ -158,6 +195,8 @@ export const en = {
     label: "Our process",
     title: "An end-to-end approach to your property portfolio.",
     cta: "Get started",
+    imageAlt: "Brick multi-unit residential building on a Montreal street",
+    imageTitle: "Multi-unit property management in Montreal | Gestion Velora",
     steps: [
       {
         step: "Step 01",
@@ -444,6 +483,32 @@ export const en = {
     contactTitle: "Contact",
     contactText:
       "For any questions regarding this policy or your personal data, contact us at info@gestionvelora.com.",
+  },
+
+  // Terms
+  terms: {
+    backHome: "← Back to home",
+    title: "Terms of use",
+    effectiveDate: "Last updated: August 30, 2026",
+    intro:
+      "These terms govern use of the Gestion Velora website. Property management services are covered by a separate proposal and written agreement.",
+    useTitle: "Website use",
+    useText:
+      "You may browse the site for information and contact us about our services. Fraudulent, abusive, or disruptive use of the website is prohibited.",
+    informationTitle: "General information",
+    informationText:
+      "The website provides general information about property management in Quebec. It is not a substitute for legal, accounting, tax, or technical advice tailored to your situation. Consult official sources and a qualified professional when required.",
+    intellectualTitle: "Intellectual property",
+    intellectualText:
+      "The website’s text, visuals, marks, and other elements belong to Gestion Velora or are used with permission. Substantial reproduction requires prior written authorization.",
+    linksTitle: "External links",
+    linksText:
+      "The website links to public bodies and partners. Gestion Velora does not control their content, availability, or policies.",
+    liabilityTitle: "Limitation of liability",
+    liabilityText:
+      "Gestion Velora works to keep information accurate and current but cannot guarantee that every item is error-free. Property decisions must be validated against the facts, documents, and rules applicable to the specific matter.",
+    contactTitle: "Contact",
+    contactText: "For questions about these terms, email us at",
   },
 
   // Common

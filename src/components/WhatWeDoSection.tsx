@@ -21,9 +21,27 @@ const serviceTagKeys = [
 ];
 
 const serviceData = [
-  { slug: "syndicat-copropriete", labelKey: "whatWeDo.syndicat", detailsKey: "whatWeDo.syndicatDetails" },
-  { slug: "airbnb", labelKey: "whatWeDo.airbnb", detailsKey: "whatWeDo.airbnbDetails" },
-  { slug: "location", labelKey: "whatWeDo.location", detailsKey: "whatWeDo.locationDetails" },
+  {
+    slug: "syndicat-copropriete",
+    labelKey: "whatWeDo.syndicat",
+    detailsKey: "whatWeDo.syndicatDetails",
+    imageAltKey: "whatWeDo.syndicatImageAlt",
+    imageTitleKey: "whatWeDo.syndicatImageTitle",
+  },
+  {
+    slug: "airbnb",
+    labelKey: "whatWeDo.airbnb",
+    detailsKey: "whatWeDo.airbnbDetails",
+    imageAltKey: "whatWeDo.airbnbImageAlt",
+    imageTitleKey: "whatWeDo.airbnbImageTitle",
+  },
+  {
+    slug: "location",
+    labelKey: "whatWeDo.location",
+    detailsKey: "whatWeDo.locationDetails",
+    imageAltKey: "whatWeDo.locationImageAlt",
+    imageTitleKey: "whatWeDo.locationImageTitle",
+  },
 ];
 
 const serviceImages = [
@@ -73,6 +91,7 @@ export function WhatWeDoSection() {
             <InternalLink
               key={s.slug}
               to={`/services/${s.slug}`}
+              title={t(s.labelKey)}
               className="relative w-[min(340px,90vw)] sm:w-[280px] md:w-[320px] lg:w-[360px] xl:w-[400px] rounded-2xl overflow-hidden cursor-pointer block"
               style={{ zIndex: isExpanded ? 10 : 1 }}
             >
@@ -88,7 +107,8 @@ export function WhatWeDoSection() {
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-nd-border-visible">
                   <img
                     src={serviceImages[i]}
-                    alt={t(s.labelKey) + " Montréal | Gestion Velora"}
+                    alt={t(s.imageAltKey)}
+                    title={t(s.imageTitleKey)}
                     className="w-full h-full object-cover transition-opacity duration-200"
                     style={{ opacity: isExpanded ? 0.35 : 1 }}
                     width={900}

@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.gestionvelora.com/</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/" />
-    <lastmod>2026-08-20</lastmod>
+    <image:image><image:loc>https://www.gestionvelora.com/logo-80.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/hero-video-poster-mobile.webp?v=6</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/le-beaumont-display.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/syndicat-enticy-display.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/loft-saint-paul-display.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/airbnb-service.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/syndicat-enticy-thumb.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/le-beaumont-thumb.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/hero-gestion-velora-1200.webp</image:loc></image:image>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -14,7 +23,16 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/" />
-    <lastmod>2026-08-20</lastmod>
+    <image:image><image:loc>https://www.gestionvelora.com/logo-80.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/hero-video-poster-mobile.webp?v=6</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/le-beaumont-display.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/syndicat-enticy-display.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/loft-saint-paul-display.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/airbnb-service.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/syndicat-enticy-thumb.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/le-beaumont-thumb.webp</image:loc></image:image>
+    <image:image><image:loc>https://www.gestionvelora.com/hero-gestion-velora-1200.webp</image:loc></image:image>
+    <lastmod>2026-08-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -699,6 +717,24 @@
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/privacy" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/privacy" />
     <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/terms</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/terms" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/terms" />
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/terms" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/terms" />
+    <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

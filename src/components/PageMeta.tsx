@@ -243,6 +243,11 @@ export function PageMeta() {
     } else if (pathname === "/privacy" || pathname === "/en/privacy") {
       title = isEn ? "Privacy | Gestion Velora" : "Confidentialité | Gestion Velora";
       description = baseDesc;
+    } else if (pathname === "/terms" || pathname === "/en/terms") {
+      title = isEn ? "Terms of Use | Gestion Velora" : "Conditions d’utilisation | Gestion Velora";
+      description = isEn
+        ? "Terms governing use of the Gestion Velora website and its general property management information."
+        : "Conditions encadrant l’utilisation du site Gestion Velora et de ses informations générales en gestion immobilière.";
     } else if (pathname === RADAR_PATHS.fr || pathname === RADAR_PATHS.en) {
       const meta = RADAR_META[isEn ? "en" : "fr"];
       title = buildTitle(meta.title);

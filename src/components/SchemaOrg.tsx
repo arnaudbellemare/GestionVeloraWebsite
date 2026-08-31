@@ -22,6 +22,26 @@ import {
 } from "../data/plex-calculator";
 import { RADAR_FAQ, RADAR_META, RADAR_PATHS } from "../data/plex-radar";
 
+const HOMEPAGE_DATE_MODIFIED = "2026-08-30";
+const HOMEPAGE_CITATIONS = [
+  {
+    name: "CMHC Rental Market Report data",
+    url: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables",
+  },
+  {
+    name: "Civil Code of Québec — divided co-ownership",
+    url: "https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991",
+  },
+  {
+    name: "City of Montreal — short-term tourist accommodation",
+    url: "https://montreal.ca/sujets/hebergement-touristique-court-terme",
+  },
+  {
+    name: "CITQ — tourist accommodation registration",
+    url: "https://www.citq.qc.ca/",
+  },
+] as const;
+
 // Inject one or multiple JSON-LD schemas into the document head.
 // When given an array, uses the @graph pattern for clean multi-schema output.
 function injectSchema(data: object | object[]) {
@@ -373,6 +393,19 @@ export function SchemaOrg() {
         "@id": `${canonical}#faq`,
         url: canonical,
         inLanguage: isEn ? "en-CA" : "fr-CA",
+        author: {
+          "@type": "Person",
+          name: ARTICLE_AUTHOR_NAME,
+          url: ARTICLE_AUTHOR_URL,
+          ...(ARTICLE_AUTHOR_SAME_AS.length ? { sameAs: ARTICLE_AUTHOR_SAME_AS } : {}),
+          worksFor: { "@id": ORGANIZATION_SCHEMA_ID },
+        },
+        dateModified: HOMEPAGE_DATE_MODIFIED,
+        citation: HOMEPAGE_CITATIONS.map((source) => ({
+          "@type": "CreativeWork",
+          name: source.name,
+          url: source.url,
+        })),
         mainEntity: faqItems.map((item) => ({
           "@type": "Question",
           name: item.question,

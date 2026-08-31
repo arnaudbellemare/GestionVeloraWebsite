@@ -53,11 +53,13 @@ export const HeaderSection = (): JSX.Element => {
           <InternalLink
             to="/"
             aria-label="Gestion Velora"
+            title={`Gestion Velora — ${t("nav.home")}`}
             className="flex items-center gap-0.5 shrink-0 -m-1 p-1 rounded-lg"
           >
             <img
               src="/logo-80.webp"
               alt="Gestion Velora"
+              title={t("nav.brandTitle")}
               className="h-10 w-10 object-contain"
               width={40}
               height={40}
@@ -72,6 +74,7 @@ export const HeaderSection = (): JSX.Element => {
           <nav className="hidden md:flex items-center gap-0.5 ml-2 pl-2 border-l border-[#333333]">
             <InternalLink
               to="/"
+              title={t("nav.home")}
               className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
             >
               {t("nav.home")}
@@ -104,6 +107,7 @@ export const HeaderSection = (): JSX.Element => {
                     <InternalLink
                       key={s.to}
                       to={s.to}
+                      title={t(s.labelKey)}
                       className="block px-4 py-3 hover:bg-[#1A1A1A] first:rounded-t-lg last:rounded-b-lg border-b border-[#222222] last:border-0"
                       onClick={() => setServicesOpen(false)}
                     >
@@ -117,6 +121,7 @@ export const HeaderSection = (): JSX.Element => {
                       InternalLink's automatic /en prefixing. */}
                   <Link
                     to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
+                    title={t("nav.plexCalc")}
                     className="block px-4 py-3 hover:bg-[#1A1A1A] last:rounded-b-lg border-t border-[#333333]"
                     onClick={() => setServicesOpen(false)}
                   >
@@ -127,6 +132,7 @@ export const HeaderSection = (): JSX.Element => {
                   </Link>
                   <Link
                     to={locale === "en" ? RADAR_PATHS.en : RADAR_PATHS.fr}
+                    title={locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
                     className="block px-4 py-3 hover:bg-[#1A1A1A] last:rounded-b-lg border-t border-[#333333]"
                     onClick={() => setServicesOpen(false)}
                   >
@@ -142,12 +148,14 @@ export const HeaderSection = (): JSX.Element => {
             </div>
             <InternalLink
               to="/blog"
+              title={t("nav.insights")}
               className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
             >
               {t("nav.insights")}
             </InternalLink>
             <InternalLink
               to="/about"
+              title={t("nav.about")}
               className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
             >
               {t("nav.about")}
@@ -199,6 +207,7 @@ export const HeaderSection = (): JSX.Element => {
           <a
             href={contactHref}
             onClick={goToContact}
+            title={t("nav.contact")}
             className="hidden sm:inline-flex items-center px-4 py-2 rounded-full border border-[#444444] text-[#E8E8E8] font-sans font-medium text-sm hover:bg-[#1A1A1A]"
           >
             {t("nav.contact")}
@@ -207,6 +216,7 @@ export const HeaderSection = (): JSX.Element => {
             href={PORTAL_URLS.service}
             target="_blank"
             rel="noopener noreferrer"
+            title={t("nav.login")}
             className="hidden sm:inline-flex items-center px-4 py-2 rounded-full bg-white text-black font-sans font-medium text-sm hover:bg-white/90"
           >
             {t("nav.login")}
@@ -216,7 +226,7 @@ export const HeaderSection = (): JSX.Element => {
 
       {mobileOpen && (
         <div className="md:hidden mt-2 ml-4 py-4 px-4 rounded-2xl bg-[#111111] border border-[#333333] w-[calc(100%-2rem)] max-w-sm flex flex-col gap-1 animate-fade-in">
-          <InternalLink to="/" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+          <InternalLink to="/" title={t("nav.home")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
             {t("nav.home")}
           </InternalLink>
           <div className="py-2">
@@ -228,6 +238,7 @@ export const HeaderSection = (): JSX.Element => {
                 <InternalLink
                   key={s.to}
                   to={s.to}
+                  title={t(s.labelKey)}
                   className="font-sans text-[#E8E8E8] py-1.5 text-sm"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -236,6 +247,7 @@ export const HeaderSection = (): JSX.Element => {
               ))}
               <Link
                 to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
+                title={t("nav.plexCalc")}
                 className="font-sans text-[#E8E8E8] py-1.5 text-sm"
                 onClick={() => setMobileOpen(false)}
               >
@@ -243,6 +255,7 @@ export const HeaderSection = (): JSX.Element => {
               </Link>
               <Link
                 to={locale === "en" ? RADAR_PATHS.en : RADAR_PATHS.fr}
+                title={locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
                 className="font-sans text-[#E8E8E8] py-1.5 text-sm"
                 onClick={() => setMobileOpen(false)}
               >
@@ -250,19 +263,20 @@ export const HeaderSection = (): JSX.Element => {
               </Link>
             </div>
           </div>
-          <InternalLink to="/blog" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+          <InternalLink to="/blog" title={t("nav.insights")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
             {t("nav.insights")}
           </InternalLink>
-          <InternalLink to="/about" className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+          <InternalLink to="/about" title={t("nav.about")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
             {t("nav.about")}
           </InternalLink>
-          <a href={contactHref} onClick={goToContact} className="font-sans text-[#E8E8E8] py-2">
+          <a href={contactHref} onClick={goToContact} title={t("nav.contact")} className="font-sans text-[#E8E8E8] py-2">
             {t("nav.contact")}
           </a>
           <a
             href={PORTAL_URLS.service}
             target="_blank"
             rel="noopener noreferrer"
+            title={t("nav.login")}
             className="font-sans text-[#E8E8E8] py-2"
             onClick={() => setMobileOpen(false)}
           >

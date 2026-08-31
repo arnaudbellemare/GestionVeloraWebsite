@@ -10,6 +10,8 @@ export function WhoWeAreSection() {
     location: string;
     name: string;
     image: string;
+    imageAlt: string;
+    imageTitle: string;
   }[];
 
   return (
@@ -33,6 +35,7 @@ export function WhoWeAreSection() {
             <a
               href={contactHref}
               onClick={goToContact}
+              title={t("whoWeAre.cta")}
               className="inline-flex items-center gap-2 border border-nd-border-visible text-nd-primary px-5 py-3 text-[10px] tracking-[0.12em] uppercase font-mono hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors whitespace-nowrap"
             >
               {t("whoWeAre.cta")}
@@ -45,32 +48,37 @@ export function WhoWeAreSection() {
           {projects.map((project, i) => (
             <ScrollReveal key={project.name} delay={i * 0.1}>
               <article id={`portfolio-${i + 1}`} className="group">
-                <div className="aspect-[4/5] rounded-lg overflow-hidden mb-4 bg-nd-border border border-nd-border">
-                  <img
-                    key={`${project.name}-${project.image}`}
-                    src={project.image}
-                    alt={project.name}
-                    className="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-95"
-                    width={800}
-                    height={1000}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                    fetchPriority={i === 0 ? "high" : "auto"}
-                  />
-                </div>
-                <div className="flex items-center justify-between mb-1">
-                  <p className="font-mono text-[9px] tracking-[0.12em] uppercase text-nd-secondary">
-                    {project.category}
-                    <span className="mx-1">/</span>
-                    {project.location}
-                  </p>
-                  <span className="text-nd-muted text-xs" aria-hidden="true">
-                    ↗
-                  </span>
-                </div>
-                <h3 id={`projet-${i + 1}`} className="font-sans font-medium text-lg text-nd-primary">
-                  {project.name}
-                </h3>
+                <figure>
+                  <div className="aspect-[4/5] rounded-lg overflow-hidden mb-4 bg-nd-border border border-nd-border">
+                    <img
+                      key={`${project.name}-${project.image}`}
+                      src={project.image}
+                      alt={project.imageAlt}
+                      title={project.imageTitle}
+                      className="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-95"
+                      width={800}
+                      height={1000}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      fetchPriority={i === 0 ? "high" : "auto"}
+                    />
+                  </div>
+                  <figcaption>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="font-mono text-[9px] tracking-[0.12em] uppercase text-nd-secondary">
+                        {project.category}
+                        <span className="mx-1">/</span>
+                        {project.location}
+                      </p>
+                      <span className="text-nd-muted text-xs" aria-hidden="true">
+                        ↗
+                      </span>
+                    </div>
+                    <h3 id={`projet-${i + 1}`} className="font-sans font-medium text-lg text-nd-primary">
+                      {project.name}
+                    </h3>
+                  </figcaption>
+                </figure>
               </article>
             </ScrollReveal>
           ))}

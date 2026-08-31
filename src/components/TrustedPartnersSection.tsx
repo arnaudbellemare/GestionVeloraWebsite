@@ -82,6 +82,7 @@ export function TrustedPartnersSection() {
               <a
                 href={contactHref}
                 onClick={goToContact}
+                title={t("trustedPartners.seeMore")}
                 className="font-sans text-sm font-medium text-nd-secondary hover:text-nd-display dark:hover:text-white underline underline-offset-2 inline-flex items-center gap-1"
               >
                 {t("trustedPartners.seeMore")}

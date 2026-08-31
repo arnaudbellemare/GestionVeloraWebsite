@@ -53,10 +53,55 @@ const DIST = join(process.cwd(), "dist");
 const SITE_URL = "https://www.gestionvelora.com";
 const ORG_ID = `${SITE_URL}/#organization`;
 const AUTHOR_NAME = "Arnaud Bellemare";
+const HOMEPAGE_DATE_MODIFIED = "2026-08-30";
+const DEFAULT_SITEMAP_LAST_MODIFIED = "2026-08-20";
+const SITEMAP_LAST_MODIFIED_BY_PATH = new Map<string, string>([
+  ["/", HOMEPAGE_DATE_MODIFIED],
+  ["/en/", HOMEPAGE_DATE_MODIFIED],
+  ["/terms", HOMEPAGE_DATE_MODIFIED],
+  ["/en/terms", HOMEPAGE_DATE_MODIFIED],
+  ["/calculateur-rendement-plex-montreal", "2026-08-24"],
+  ["/en/montreal-plex-investment-calculator", "2026-08-24"],
+  ["/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
+  ["/en/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
+]);
 /** Keep in sync with ARTICLE_AUTHOR_SAME_AS in src/config.ts. */
 const AUTHOR_SAME_AS = ["https://ca.linkedin.com/in/gestion-velora-48684b399"] as const;
+const HOMEPAGE_CITATIONS = [
+  {
+    url: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables",
+    fr: "SCHL — données du Rapport sur le marché locatif",
+    en: "CMHC — Rental Market Report data",
+  },
+  {
+    url: "https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991",
+    fr: "LégisQuébec — Code civil du Québec et copropriété divise",
+    en: "LégisQuébec — Civil Code of Québec and divided co-ownership",
+  },
+  {
+    url: "https://montreal.ca/sujets/hebergement-touristique-court-terme",
+    fr: "Ville de Montréal — hébergement touristique de courte durée",
+    en: "City of Montreal — short-term tourist accommodation",
+  },
+  {
+    url: "https://www.citq.qc.ca/",
+    fr: "CITQ — enregistrement des établissements d’hébergement touristique",
+    en: "CITQ — tourist accommodation registration",
+  },
+] as const;
 const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/twitter-card.png`;
+const HOMEPAGE_IMAGE_PATHS = [
+  "/logo-80.webp",
+  "/hero-video-poster-mobile.webp?v=6",
+  "/images/portfolio/le-beaumont-display.webp",
+  "/images/portfolio/syndicat-enticy-display.webp",
+  "/images/portfolio/loft-saint-paul-display.webp",
+  "/images/airbnb-service.webp",
+  "/images/portfolio/syndicat-enticy-thumb.webp",
+  "/images/portfolio/le-beaumont-thumb.webp",
+  "/hero-gestion-velora-1200.webp",
+] as const;
 const DEFAULT_KEYWORDS = {
   fr: "gestion immobilière Montréal, gestion copropriété, syndicat de copropriété, gestion locative, gestion Airbnb",
   en: "property management Montreal, condo board management, rental management, Airbnb management, Gestion Velora",
@@ -200,6 +245,8 @@ const NAV_LABELS = {
     trustProof: "Preuves et vérifications",
     editorial: "Politique éditoriale",
     privacy: "Politique de confidentialité",
+    terms: "Conditions d’utilisation",
+    contact: "Contact et demande de proposition",
   },
   en: {
     aria: "Site map",
@@ -224,6 +271,8 @@ const NAV_LABELS = {
     trustProof: "Proof and verifications",
     editorial: "Editorial policy",
     privacy: "Privacy policy",
+    terms: "Terms of use",
+    contact: "Contact and request a proposal",
   },
 } as const;
 
@@ -261,6 +310,8 @@ function buildSiteNavHtml(locale: "fr" | "en"): string {
       [`${p}/trust-proof`, t.trustProof],
       [`${p}/editorial-policy`, t.editorial],
       [`${p}/privacy`, t.privacy],
+      [`${p}/terms`, t.terms],
+      [`${p}/#contact-form`, t.contact],
     ]),
     `</ul>`,
     `</nav>`,
@@ -616,6 +667,19 @@ function buildHomepageFaqPageSchema(locale: "fr" | "en") {
     "@id": `${canonical}#faq`,
     url: canonical,
     inLanguage: locale === "fr" ? "fr-CA" : "en-CA",
+    author: {
+      "@type": "Person",
+      name: AUTHOR_NAME,
+      url: `${SITE_URL}/about`,
+      sameAs: [...AUTHOR_SAME_AS],
+      worksFor: { "@id": ORG_ID },
+    },
+    dateModified: HOMEPAGE_DATE_MODIFIED,
+    citation: HOMEPAGE_CITATIONS.map((source) => ({
+      "@type": "CreativeWork",
+      name: source[locale],
+      url: source.url,
+    })),
     mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.question,
@@ -1062,9 +1126,11 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
       : "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
   const lead =
     locale === "fr"
-      ? "Gestion Velora accompagne syndicats de copropriété, propriétaires locatifs et hôtes Airbnb dans le Grand Montréal : rapports mensuels transparents, équipe joignable en tout temps et entretien planifié."
-      : "Gestion Velora supports condo boards, residential landlords, and Airbnb hosts across Greater Montreal with transparent monthly reports, round-the-clock availability, and planned maintenance.";
-  const svcTitle = locale === "fr" ? "Trois portes d'entrée" : "Three ways we help";
+      ? "Réponse directe : Gestion Velora est une firme de gestion immobilière qui prend en charge l’administration, le suivi financier, l’entretien et les communications pour les syndicats de copropriété, les propriétaires locatifs et les hôtes Airbnb du Grand Montréal."
+      : "Direct answer: Gestion Velora is a property management firm handling administration, financial follow-up, maintenance, and communications for condo boards, residential landlords, and Airbnb hosts across Greater Montreal.";
+  const svcTitle = locale === "fr"
+    ? "Quels services de gestion immobilière offrons-nous à Montréal ?"
+    : "Which property management services do we provide in Montreal?";
   const svcLis =
     locale === "fr"
       ? [
@@ -1081,6 +1147,24 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   const faqSub = t.faq.subtitle as string;
   const items = t.faqItems as { question: string; answer: string }[];
   const insightsTitle = locale === "fr" ? "Articles recents" : "Recent insights";
+  const sourcesTitle = locale === "fr"
+    ? "Quelles sources appuient nos informations ?"
+    : "Which sources support our information?";
+  const sourcesIntro = locale === "fr"
+    ? "Nos repères réglementaires et de marché renvoient à des organismes publics; les résultats opérationnels affichés proviennent du tableau de bord interne de Gestion Velora."
+    : "Our regulatory and market benchmarks point to public bodies; displayed operating results come from Gestion Velora’s internal dashboard.";
+  const citationLis = HOMEPAGE_CITATIONS.map(
+    (source) => `    <li><cite><a href="${source.url}" rel="noopener external">${escapeHtml(source[locale])}</a></cite></li>`,
+  ).join("\n");
+  const byline = locale === "fr"
+    ? `Écrit et vérifié par <a rel="author" href="/about"><strong>${AUTHOR_NAME}</strong></a>, fondateur de Gestion Velora et membre du RGCQ. Mis à jour le <time datetime="${HOMEPAGE_DATE_MODIFIED}">30 août 2026</time>.`
+    : `Written and reviewed by <a rel="author" href="/en/about"><strong>${AUTHOR_NAME}</strong></a>, founder of Gestion Velora and RGCQ member. Updated <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 30, 2026</time>.`;
+  const trustTitle = locale === "fr"
+    ? "Comment vérifier notre expertise ou nous contacter ?"
+    : "How can you verify our expertise or contact us?";
+  const trustCopy = locale === "fr"
+    ? `Consultez <a href="/about">le profil du fondateur</a>, <a href="/sources">nos sources et références</a>, <a href="/privacy">notre politique de confidentialité</a> et <a href="/terms">nos conditions d’utilisation</a>, ou <a href="/#contact-form">contactez l’équipe</a>.`
+    : `Review <a href="/en/about">the founder profile</a>, <a href="/en/sources">our sources and references</a>, <a href="/en/privacy">our privacy policy</a>, and <a href="/en/terms">our terms of use</a>, or <a href="/en/#contact-form">contact the team</a>.`;
   const insightLinks = blogPosts
     .slice(0, 4)
     .map((post) => {
@@ -1100,6 +1184,7 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   const svcUl = svcLis.map((line) => `    <li>${escapeHtml(line)}</li>`).join("\n");
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
+  <p class="byline">${byline}</p>
   <p>${escapeHtml(lead)}</p>
   <h2>${escapeHtml(svcTitle)}</h2>
   <ul>
@@ -1111,10 +1196,21 @@ ${svcUl}
 ${insightLinks}
   </ul>
   </section>
+  <section id="sources-page-accueil">
+  <h2>${escapeHtml(sourcesTitle)}</h2>
+  <p>${escapeHtml(sourcesIntro)}</p>
+  <ul>
+${citationLis}
+  </ul>
+  </section>
   <section id="faq">
   <h2>${escapeHtml(faqTitle)}</h2>
   <p>${escapeHtml(faqSub)}</p>
 ${faqBlocks}
+  </section>
+  <section id="confiance-et-contact">
+  <h2>${escapeHtml(trustTitle)}</h2>
+  <p>${trustCopy}</p>
   </section>
 </main>`;
 }
@@ -1430,6 +1526,38 @@ function buildPrivacyMainHtml(locale: "fr" | "en"): string {
   <p>Data is not sold. It is used to communicate with the person who submitted the request, evaluate a potential mandate, improve internal operations, and comply with applicable obligations. Technical tools on the site may also generate aggregated analytics data to understand page performance.</p>
   <h2>Your choices</h2>
   <p>You may request access, correction, or deletion of your information by contacting Gestion Velora. Requests are handled according to the operating context and applicable retention requirements.</p>
+</main>`;
+}
+
+function buildTermsMainHtml(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  if (locale === "fr") {
+    return `<main lang="${lang}">
+  <h1>Conditions d’utilisation</h1>
+  <p>Dernière mise à jour : <time datetime="${HOMEPAGE_DATE_MODIFIED}">30 août 2026</time>.</p>
+  <p>Ces conditions encadrent l’utilisation du site de Gestion Velora. Les services de gestion immobilière font l’objet d’une proposition et d’un contrat distincts.</p>
+  <h2>Utilisation du site</h2>
+  <p>Le site peut être consulté à des fins d’information et pour communiquer avec Gestion Velora. Toute utilisation frauduleuse, abusive ou perturbant son fonctionnement est interdite.</p>
+  <h2>Information générale</h2>
+  <p>Le contenu ne remplace pas un avis juridique, comptable, fiscal ou technique adapté à une situation particulière. Les décisions immobilières doivent être validées auprès des sources officielles et de professionnels qualifiés.</p>
+  <h2>Propriété intellectuelle et liens externes</h2>
+  <p>Les textes, visuels et marques appartiennent à Gestion Velora ou sont utilisés avec autorisation. Les organismes externes liés depuis le site contrôlent leurs propres contenus et politiques.</p>
+  <h2>Contact</h2>
+  <p>Pour toute question, écrivez à <a href="mailto:info@gestionvelora.com">info@gestionvelora.com</a>.</p>
+</main>`;
+  }
+  return `<main lang="${lang}">
+  <h1>Terms of use</h1>
+  <p>Last updated: <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 30, 2026</time>.</p>
+  <p>These terms govern use of the Gestion Velora website. Property management services are covered by a separate proposal and written agreement.</p>
+  <h2>Website use</h2>
+  <p>The website may be used for information and to contact Gestion Velora. Fraudulent, abusive, or disruptive use is prohibited.</p>
+  <h2>General information</h2>
+  <p>The content is not a substitute for legal, accounting, tax, or technical advice tailored to a particular situation. Property decisions should be validated against official sources and with qualified professionals.</p>
+  <h2>Intellectual property and external links</h2>
+  <p>Text, visuals, and marks belong to Gestion Velora or are used with permission. External organizations linked from the website control their own content and policies.</p>
+  <h2>Contact</h2>
+  <p>For questions, email <a href="mailto:info@gestionvelora.com">info@gestionvelora.com</a>.</p>
 </main>`;
 }
 
@@ -1951,6 +2079,8 @@ interface RouteConfig {
   ampPath?: string;
   robots?: string;
   includeInSitemap?: boolean;
+  /** Images that belong to this page and should be discoverable through the image sitemap extension. */
+  sitemapImages?: readonly string[];
   pageSchemas: object | object[] | null;
   /** Page-specific noscript HTML to replace the homepage noscript block (homepage only; prefer prerenderMainInner elsewhere). */
   noscriptBody?: string;
@@ -2010,6 +2140,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/",
     title: frHomeTitle,
     description: frHomeDesc,
+    sitemapImages: HOMEPAGE_IMAGE_PATHS,
     pageSchemas: buildHomepageFaqPageSchema("fr"),
     prerenderMainInner: buildHomepageMainHtml("fr"),
   });
@@ -2020,6 +2151,7 @@ function buildRoutes(): RouteConfig[] {
     enPath: "/en/",
     title: enHomeTitle,
     description: enHomeDesc,
+    sitemapImages: HOMEPAGE_IMAGE_PATHS,
     pageSchemas: buildHomepageFaqPageSchema("en"),
     prerenderMainInner: buildHomepageMainHtml("en"),
   });
@@ -2370,6 +2502,30 @@ function buildRoutes(): RouteConfig[] {
     pageSchemas: null,
   });
 
+  // --- Terms of use ---
+  routes.push({
+    path: "/terms",
+    locale: "fr",
+    frPath: "/terms",
+    enPath: "/en/terms",
+    title: "Conditions d’utilisation | Gestion Velora",
+    description:
+      "Conditions encadrant l’utilisation du site Gestion Velora et de ses informations générales en gestion immobilière.",
+    prerenderMainInner: buildTermsMainHtml("fr"),
+    pageSchemas: null,
+  });
+  routes.push({
+    path: "/en/terms",
+    locale: "en",
+    frPath: "/terms",
+    enPath: "/en/terms",
+    title: "Terms of Use | Gestion Velora",
+    description:
+      "Terms governing use of the Gestion Velora website and its general property management information.",
+    prerenderMainInner: buildTermsMainHtml("en"),
+    pageSchemas: null,
+  });
+
   // --- Tarifs ---
   routes.push({
     path: "/tarifs",
@@ -2406,8 +2562,6 @@ function buildRoutes(): RouteConfig[] {
 // Sitemap generator — runs after every build so the file never goes stale
 // ---------------------------------------------------------------------------
 function buildSitemap(routes: RouteConfig[]): void {
-  const today = new Date().toISOString().slice(0, 10);
-
   function priority(path: string): string {
     const trustPaths = new Set(
       (["/about", "/editorial-policy", "/sources", "/methodology", "/trust-proof"] as const).flatMap((fr) => [fr, `/en${fr}`])
@@ -2441,6 +2595,9 @@ function buildSitemap(routes: RouteConfig[]): void {
     const loc = `${SITE_URL}${route.path}`;
     const frHref = `${SITE_URL}${route.frPath}`;
     const enHref = `${SITE_URL}${route.enPath}`;
+    const imageEntries = (route.sitemapImages ?? [])
+      .map((path) => `    <image:image><image:loc>${escapeHtml(absoluteSiteUrl(path))}</image:loc></image:image>\n`)
+      .join("");
 
     entries.push(
       `  <url>\n` +
@@ -2448,7 +2605,8 @@ function buildSitemap(routes: RouteConfig[]): void {
       `    <xhtml:link rel="alternate" hreflang="fr-CA" href="${frHref}" />\n` +
       `    <xhtml:link rel="alternate" hreflang="en-CA" href="${enHref}" />\n` +
       `    <xhtml:link rel="alternate" hreflang="x-default" href="${frHref}" />\n` +
-      `    <lastmod>${today}</lastmod>\n` +
+      imageEntries +
+      `    <lastmod>${SITEMAP_LAST_MODIFIED_BY_PATH.get(route.path) ?? DEFAULT_SITEMAP_LAST_MODIFIED}</lastmod>\n` +
       `    <changefreq>${changefreq(route.path)}</changefreq>\n` +
       `    <priority>${priority(route.path)}</priority>\n` +
       `  </url>`
@@ -2457,7 +2615,7 @@ function buildSitemap(routes: RouteConfig[]): void {
 
   const xml =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
-    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n` +
     entries.join("\n") + "\n" +
     `</urlset>\n`;
 
