@@ -122,13 +122,13 @@ export function ServicesIndexPage() {
             </p>
             <div className="flex flex-wrap gap-3">
               <InternalLink
-                to="/#contact-form"
+                to="/contact"
                 className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full bg-waabi-pink text-white font-sans font-semibold text-sm hover:bg-waabi-pink/90 transition-colors"
               >
                 {isEn ? "Request a Quote" : "Demander une soumission"}
               </InternalLink>
               <InternalLink
-                to="/#contact-form"
+                to="/contact"
                 className="inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-full border border-black/20 dark:border-white/20 text-black/85 dark:text-white/85 font-sans text-sm hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               >
                 {isEn ? "Book a Consultation" : "Planifier une consultation"}

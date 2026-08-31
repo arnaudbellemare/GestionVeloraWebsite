@@ -248,6 +248,11 @@ export function PageMeta() {
       description = isEn
         ? "Terms governing use of the Gestion Velora website and its general property management information."
         : "Conditions encadrant l’utilisation du site Gestion Velora et de ses informations générales en gestion immobilière.";
+    } else if (pathname === "/contact" || pathname === "/en/contact") {
+      title = isEn ? "Contact Gestion Velora | Montreal" : "Contact Gestion Velora | Montréal";
+      description = isEn
+        ? "Contact Gestion Velora for condo board, rental, or Airbnb property management in Greater Montreal. Initial response within one business day."
+        : "Contactez Gestion Velora pour la gestion de copropriété, location ou Airbnb dans le Grand Montréal. Première réponse sous un jour ouvrable.";
     } else if (pathname === RADAR_PATHS.fr || pathname === RADAR_PATHS.en) {
       const meta = RADAR_META[isEn ? "en" : "fr"];
       title = buildTitle(meta.title);

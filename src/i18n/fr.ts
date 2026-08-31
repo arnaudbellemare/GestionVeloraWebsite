@@ -34,9 +34,9 @@ export const fr = {
     sourceInternal: "Tableau de bord operationnel interne (janv. 2025 - mars 2026)",
     sourceCmhc: "References SCHL sur le marche locatif (RMR de Montreal)",
     answerHeading: "Que fait Gestion Velora pour un immeuble à Montréal ?",
-    answerLead: "Réponse courte :",
+    answerLead: "Gestion Velora est une firme de gestion immobilière à Montréal.",
     answerBody:
-      "Gestion Velora prend en charge l’administration, le suivi financier, la coordination de l’entretien et les communications pour les syndicats de copropriété, les locations longue durée et les propriétés Airbnb du Grand Montréal.",
+      "Elle prend en charge l’administration, le suivi financier, la coordination de l’entretien et les communications pour les syndicats de copropriété, les locations longue durée et les propriétés Airbnb du Grand Montréal.",
     sourcesHeading: "Quelles sources appuient nos informations ?",
     sourcesIntro:
       "Nos repères réglementaires et de marché renvoient aux sources publiques officielles suivantes; nos résultats opérationnels proviennent de notre tableau de bord interne.",
@@ -46,7 +46,7 @@ export const fr = {
     citationCitq: "CITQ — enregistrement des établissements d’hébergement touristique",
     verifiedBy: "Contenu vérifié par",
     authorRole: "fondateur de Gestion Velora et membre du RGCQ",
-    updated: "Mis à jour le 30 août 2026",
+    updated: "Mis à jour le 31 août 2026",
     trustLinksIntro: "Vérifier notre transparence :",
     contactLink: "contact",
     privacyLink: "confidentialité",
@@ -366,6 +366,13 @@ export const fr = {
     toolDesc:
       "Analysez un immeuble à revenus avec les règles du Québec : droits de mutation de Montréal, mise de fonds SCHL, cadre de fixation du TAL, valeur économique bancaire. Gratuit, sans inscription.",
     toolCta: "Ouvrir le calculateur",
+  },
+
+  contactPage: {
+    backHome: "Retour à l’accueil",
+    title: "Contactez Gestion Velora à Montréal",
+    answer:
+      "Gestion Velora répond aux demandes des syndicats de copropriété, des propriétaires locatifs et des hôtes Airbnb du Grand Montréal. Attendez-vous à une première réponse sous un jour ouvrable.",
   },
 
   // Contact

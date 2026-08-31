@@ -53,13 +53,16 @@ const DIST = join(process.cwd(), "dist");
 const SITE_URL = "https://www.gestionvelora.com";
 const ORG_ID = `${SITE_URL}/#organization`;
 const AUTHOR_NAME = "Arnaud Bellemare";
-const HOMEPAGE_DATE_MODIFIED = "2026-08-30";
+const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
+const TERMS_EFFECTIVE_DATE = "2026-08-30";
 const DEFAULT_SITEMAP_LAST_MODIFIED = "2026-08-20";
 const SITEMAP_LAST_MODIFIED_BY_PATH = new Map<string, string>([
   ["/", HOMEPAGE_DATE_MODIFIED],
   ["/en/", HOMEPAGE_DATE_MODIFIED],
-  ["/terms", HOMEPAGE_DATE_MODIFIED],
-  ["/en/terms", HOMEPAGE_DATE_MODIFIED],
+  ["/terms", TERMS_EFFECTIVE_DATE],
+  ["/en/terms", TERMS_EFFECTIVE_DATE],
+  ["/contact", HOMEPAGE_DATE_MODIFIED],
+  ["/en/contact", HOMEPAGE_DATE_MODIFIED],
   ["/calculateur-rendement-plex-montreal", "2026-08-24"],
   ["/en/montreal-plex-investment-calculator", "2026-08-24"],
   ["/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
@@ -311,7 +314,7 @@ function buildSiteNavHtml(locale: "fr" | "en"): string {
       [`${p}/editorial-policy`, t.editorial],
       [`${p}/privacy`, t.privacy],
       [`${p}/terms`, t.terms],
-      [`${p}/#contact-form`, t.contact],
+      [`${p}/contact`, t.contact],
     ]),
     `</ul>`,
     `</nav>`,
@@ -589,8 +592,8 @@ function buildHtml(
     `"target": "${baseForLocale}/blog?query={search_term_string}"`
   );
   html = html.replace(
-    /"urlTemplate": "https:\/\/www\.gestionvelora\.com\/#contact-form"/,
-    `"urlTemplate": "${baseForLocale}/#contact-form"`
+    /"urlTemplate": "https:\/\/www\.gestionvelora\.com\/contact"/,
+    `"urlTemplate": "${baseForLocale}/contact"`
   );
   html = html.replace(
     /"urlTemplate": "https:\/\/www\.gestionvelora\.com\/services"/,
@@ -898,7 +901,7 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
         .join("\n");
       const contactBlock =
         sectionIndex === 1
-          ? `\n      <aside class="callout">\n        <p>${escapeHtml(isEn ? enRaw.blog.contactQuestion : frRaw.blog.contactQuestion)}</p>\n        <a class="button" href="${isEn ? "/en/#contact-form" : "/#contact-form"}">${escapeHtml(
+          ? `\n      <aside class="callout">\n        <p>${escapeHtml(isEn ? enRaw.blog.contactQuestion : frRaw.blog.contactQuestion)}</p>\n        <a class="button" href="${isEn ? "/en/contact" : "/contact"}">${escapeHtml(
               isEn ? enRaw.blog.contactUs : frRaw.blog.contactUs
             )}</a>\n      </aside>`
           : "";
@@ -993,7 +996,7 @@ ${related}
     </section>
     <section class="final">
       <p>${escapeHtml(isEn ? enRaw.blog.contactQuestion : frRaw.blog.contactQuestion)}</p>
-      <a class="button" href="${isEn ? "/en/#contact-form" : "/#contact-form"}">${escapeHtml(ctaText)}</a>
+      <a class="button" href="${isEn ? "/en/contact" : "/contact"}">${escapeHtml(ctaText)}</a>
     </section>
   </article>
 </body>
@@ -1126,8 +1129,8 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
       : "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
   const lead =
     locale === "fr"
-      ? "Réponse directe : Gestion Velora est une firme de gestion immobilière qui prend en charge l’administration, le suivi financier, l’entretien et les communications pour les syndicats de copropriété, les propriétaires locatifs et les hôtes Airbnb du Grand Montréal."
-      : "Direct answer: Gestion Velora is a property management firm handling administration, financial follow-up, maintenance, and communications for condo boards, residential landlords, and Airbnb hosts across Greater Montreal.";
+      ? "Gestion Velora est une firme de gestion immobilière à Montréal. Elle prend en charge l’administration, le suivi financier, l’entretien et les communications pour les syndicats de copropriété, les propriétaires locatifs et les hôtes Airbnb du Grand Montréal."
+      : "Gestion Velora is a property management firm in Montreal. It handles administration, financial follow-up, maintenance, and communications for condo boards, residential landlords, and Airbnb hosts across Greater Montreal.";
   const svcTitle = locale === "fr"
     ? "Quels services de gestion immobilière offrons-nous à Montréal ?"
     : "Which property management services do we provide in Montreal?";
@@ -1157,14 +1160,14 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
     (source) => `    <li><cite><a href="${source.url}" rel="noopener external">${escapeHtml(source[locale])}</a></cite></li>`,
   ).join("\n");
   const byline = locale === "fr"
-    ? `Écrit et vérifié par <a rel="author" href="/about"><strong>${AUTHOR_NAME}</strong></a>, fondateur de Gestion Velora et membre du RGCQ. Mis à jour le <time datetime="${HOMEPAGE_DATE_MODIFIED}">30 août 2026</time>.`
-    : `Written and reviewed by <a rel="author" href="/en/about"><strong>${AUTHOR_NAME}</strong></a>, founder of Gestion Velora and RGCQ member. Updated <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 30, 2026</time>.`;
+    ? `Écrit et vérifié par <a rel="author" href="/about"><strong>${AUTHOR_NAME}</strong></a>, fondateur de Gestion Velora et membre du RGCQ. Mis à jour le <time datetime="${HOMEPAGE_DATE_MODIFIED}">31 août 2026</time>.`
+    : `Written and reviewed by <a rel="author" href="/en/about"><strong>${AUTHOR_NAME}</strong></a>, founder of Gestion Velora and RGCQ member. Updated <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 31, 2026</time>.`;
   const trustTitle = locale === "fr"
     ? "Comment vérifier notre expertise ou nous contacter ?"
     : "How can you verify our expertise or contact us?";
   const trustCopy = locale === "fr"
-    ? `Consultez <a href="/about">le profil du fondateur</a>, <a href="/sources">nos sources et références</a>, <a href="/privacy">notre politique de confidentialité</a> et <a href="/terms">nos conditions d’utilisation</a>, ou <a href="/#contact-form">contactez l’équipe</a>.`
-    : `Review <a href="/en/about">the founder profile</a>, <a href="/en/sources">our sources and references</a>, <a href="/en/privacy">our privacy policy</a>, and <a href="/en/terms">our terms of use</a>, or <a href="/en/#contact-form">contact the team</a>.`;
+    ? `Consultez <a href="/about">le profil du fondateur</a>, <a href="/sources">nos sources et références</a>, <a href="/privacy">notre politique de confidentialité</a> et <a href="/terms">nos conditions d’utilisation</a>, ou <a href="/contact">contactez l’équipe</a>.`
+    : `Review <a href="/en/about">the founder profile</a>, <a href="/en/sources">our sources and references</a>, <a href="/en/privacy">our privacy policy</a>, and <a href="/en/terms">our terms of use</a>, or <a href="/en/contact">contact the team</a>.`;
   const insightLinks = blogPosts
     .slice(0, 4)
     .map((post) => {
@@ -1184,8 +1187,8 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   const svcUl = svcLis.map((line) => `    <li>${escapeHtml(line)}</li>`).join("\n");
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
-  <p class="byline">${byline}</p>
   <p>${escapeHtml(lead)}</p>
+  <p class="byline">${byline}</p>
   <h2>${escapeHtml(svcTitle)}</h2>
   <ul>
 ${svcUl}
@@ -1529,12 +1532,40 @@ function buildPrivacyMainHtml(locale: "fr" | "en"): string {
 </main>`;
 }
 
+function buildContactMainHtml(locale: "fr" | "en"): string {
+  const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  if (locale === "fr") {
+    return `<main lang="${lang}">
+  <h1>Contactez Gestion Velora à Montréal</h1>
+  <p>Gestion Velora répond aux demandes des syndicats de copropriété, des propriétaires locatifs et des hôtes Airbnb du Grand Montréal. Attendez-vous à une première réponse sous un jour ouvrable.</p>
+  <h2>Comment joindre notre équipe ?</h2>
+  <address>
+    <p><a href="tel:+15147771731">(514) 777-1731</a></p>
+    <p><a href="mailto:info@gestionvelora.com">info@gestionvelora.com</a></p>
+    <p>Montréal, Québec</p>
+  </address>
+  <p><a href="/contact#contact-form">Envoyer une demande de gestion immobilière</a></p>
+</main>`;
+  }
+  return `<main lang="${lang}">
+  <h1>Contact Gestion Velora in Montreal</h1>
+  <p>Gestion Velora responds to inquiries from condo boards, residential landlords, and Airbnb hosts across Greater Montreal. Expect an initial response within one business day.</p>
+  <h2>How can you reach our team?</h2>
+  <address>
+    <p><a href="tel:+15147771731">(514) 777-1731</a></p>
+    <p><a href="mailto:info@gestionvelora.com">info@gestionvelora.com</a></p>
+    <p>Montreal, Quebec</p>
+  </address>
+  <p><a href="/en/contact#contact-form">Send a property management inquiry</a></p>
+</main>`;
+}
+
 function buildTermsMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
   if (locale === "fr") {
     return `<main lang="${lang}">
   <h1>Conditions d’utilisation</h1>
-  <p>Dernière mise à jour : <time datetime="${HOMEPAGE_DATE_MODIFIED}">30 août 2026</time>.</p>
+  <p>Dernière mise à jour : <time datetime="${TERMS_EFFECTIVE_DATE}">30 août 2026</time>.</p>
   <p>Ces conditions encadrent l’utilisation du site de Gestion Velora. Les services de gestion immobilière font l’objet d’une proposition et d’un contrat distincts.</p>
   <h2>Utilisation du site</h2>
   <p>Le site peut être consulté à des fins d’information et pour communiquer avec Gestion Velora. Toute utilisation frauduleuse, abusive ou perturbant son fonctionnement est interdite.</p>
@@ -1548,7 +1579,7 @@ function buildTermsMainHtml(locale: "fr" | "en"): string {
   }
   return `<main lang="${lang}">
   <h1>Terms of use</h1>
-  <p>Last updated: <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 30, 2026</time>.</p>
+  <p>Last updated: <time datetime="${TERMS_EFFECTIVE_DATE}">August 30, 2026</time>.</p>
   <p>These terms govern use of the Gestion Velora website. Property management services are covered by a separate proposal and written agreement.</p>
   <h2>Website use</h2>
   <p>The website may be used for information and to contact Gestion Velora. Fraudulent, abusive, or disruptive use is prohibited.</p>
@@ -2500,6 +2531,48 @@ function buildRoutes(): RouteConfig[] {
     description: enHomeDesc,
     prerenderMainInner: buildPrivacyMainHtml("en"),
     pageSchemas: null,
+  });
+
+  // --- Contact ---
+  routes.push({
+    path: "/contact",
+    locale: "fr",
+    frPath: "/contact",
+    enPath: "/en/contact",
+    title: "Contact Gestion Velora | Montréal",
+    description:
+      "Contactez Gestion Velora pour la gestion de copropriété, location ou Airbnb dans le Grand Montréal. Première réponse sous un jour ouvrable.",
+    prerenderMainInner: buildContactMainHtml("fr"),
+    pageSchemas: {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "@id": `${SITE_URL}/contact#contact-page`,
+      url: `${SITE_URL}/contact`,
+      name: "Contact Gestion Velora",
+      inLanguage: "fr-CA",
+      about: { "@id": ORG_ID },
+      dateModified: HOMEPAGE_DATE_MODIFIED,
+    },
+  });
+  routes.push({
+    path: "/en/contact",
+    locale: "en",
+    frPath: "/contact",
+    enPath: "/en/contact",
+    title: "Contact Gestion Velora | Montreal",
+    description:
+      "Contact Gestion Velora for condo board, rental, or Airbnb property management in Greater Montreal. Initial response within one business day.",
+    prerenderMainInner: buildContactMainHtml("en"),
+    pageSchemas: {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "@id": `${SITE_URL}/en/contact#contact-page`,
+      url: `${SITE_URL}/en/contact`,
+      name: "Contact Gestion Velora",
+      inLanguage: "en-CA",
+      about: { "@id": ORG_ID },
+      dateModified: HOMEPAGE_DATE_MODIFIED,
+    },
   });
 
   // --- Terms of use ---

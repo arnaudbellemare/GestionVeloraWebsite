@@ -14,7 +14,7 @@
     <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/syndicat-enticy-thumb.webp</image:loc></image:image>
     <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/le-beaumont-thumb.webp</image:loc></image:image>
     <image:image><image:loc>https://www.gestionvelora.com/hero-gestion-velora-1200.webp</image:loc></image:image>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -32,7 +32,7 @@
     <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/syndicat-enticy-thumb.webp</image:loc></image:image>
     <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/le-beaumont-thumb.webp</image:loc></image:image>
     <image:image><image:loc>https://www.gestionvelora.com/hero-gestion-velora-1200.webp</image:loc></image:image>
-    <lastmod>2026-08-30</lastmod>
+    <lastmod>2026-08-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -717,6 +717,24 @@
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/privacy" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/privacy" />
     <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/contact" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/contact" />
+    <lastmod>2026-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/contact" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/contact" />
+    <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

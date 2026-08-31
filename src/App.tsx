@@ -13,6 +13,7 @@ const TrustDocumentPage = lazy(() =>
 );
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage").then((m) => ({ default: m.PrivacyPage })));
 const TermsPage = lazy(() => import("./pages/TermsPage").then((m) => ({ default: m.TermsPage })));
+const ContactPage = lazy(() => import("./pages/ContactPage").then((m) => ({ default: m.ContactPage })));
 const BlogPage = lazy(() => import("./pages/BlogPage").then((m) => ({ default: m.BlogPage })));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage").then((m) => ({ default: m.BlogPostPage })));
 const CompareIndexPage = lazy(() =>
@@ -178,6 +179,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="contact"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <ContactPage />
+                    </Suspense>
+                  }
+                />
+                <Route
                   path="about"
                   element={
                     <Suspense fallback={<RouteFallback />}>
@@ -331,6 +340,14 @@ function App() {
                   element={
                     <Suspense fallback={<RouteFallback />}>
                       <TermsPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="contact"
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <ContactPage />
                     </Suspense>
                   }
                 />

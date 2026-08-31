@@ -149,5 +149,5 @@ Gestion Velora grounds its content in the following authoritative sources:
 
 - **Email**: info@gestionvelora.com
 - **Phone**: +1-514-777-1731
-- **Contact form**: https://www.gestionvelora.com/#contact-form
+- **Contact page and form**: https://www.gestionvelora.com/contact
 - **Service area**: Greater Montreal and Quebec metropolitan region

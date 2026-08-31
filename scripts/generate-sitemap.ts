@@ -20,10 +20,12 @@ import { TRUST_PAGE_PATHS_FR } from "../src/data/trust-pages.js";
 const SITE_URL = "https://www.gestionvelora.com";
 const DEFAULT_LAST_MODIFIED = "2026-08-20";
 const LAST_MODIFIED_BY_PATH = new Map<string, string>([
-  ["/", "2026-08-30"],
-  ["/en/", "2026-08-30"],
+  ["/", "2026-08-31"],
+  ["/en/", "2026-08-31"],
   ["/terms", "2026-08-30"],
   ["/en/terms", "2026-08-30"],
+  ["/contact", "2026-08-31"],
+  ["/en/contact", "2026-08-31"],
   ["/calculateur-rendement-plex-montreal", "2026-08-24"],
   ["/en/montreal-plex-investment-calculator", "2026-08-24"],
   ["/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
@@ -64,6 +66,7 @@ function buildAllRoutes(): RouteEntry[] {
     ["/tarifs", "/en/tarifs"],
     ["/privacy", "/en/privacy"],
     ["/terms", "/en/terms"],
+    ["/contact", "/en/contact"],
     ["/calculateur-rendement-plex-montreal", "/en/montreal-plex-investment-calculator"],
     ["/guide-achat-plex-montreal", "/en/montreal-plex-buyer-guide"],
     ["/immeubles-a-revenus-a-vendre-montreal", "/en/montreal-income-properties-for-sale"],

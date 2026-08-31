@@ -1,8 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLocale } from "../context/LocaleContext";
-import { EN_PREFIX } from "../i18n";
-
 const CONTACT_HASH = "contact-form";
 
 function scrollToContactTarget() {
@@ -12,31 +10,30 @@ function scrollToContactTarget() {
 }
 
 /**
- * Hash links to #contact often no-op on the homepage with React Router.
- * Scrolls to the contact form when present, else the #contact section.
+ * Opens the dedicated, crawlable contact route and scrolls to its form.
  */
 export function useGoToContact() {
   const navigate = useNavigate();
   const location = useLocation();
   const { locale } = useLocale();
-  const homePath = locale === "fr" ? "/" : EN_PREFIX;
-  const contactHref = `${homePath}#${CONTACT_HASH}`;
+  const contactPath = locale === "fr" ? "/contact" : "/en/contact";
+  const contactHref = `${contactPath}#${CONTACT_HASH}`;
 
   const goToContact = useCallback(
     (e?: React.MouseEvent) => {
       e?.preventDefault();
-      const onHome = location.pathname === homePath;
-      if (onHome) {
+      const onContactPage = location.pathname === contactPath;
+      if (onContactPage) {
         scrollToContactTarget();
-        void navigate({ pathname: homePath, hash: CONTACT_HASH }, { replace: true });
+        void navigate({ pathname: contactPath, hash: CONTACT_HASH }, { replace: true });
       } else {
-        void navigate({ pathname: homePath, hash: CONTACT_HASH });
+        void navigate({ pathname: contactPath, hash: CONTACT_HASH });
         window.setTimeout(() => {
           scrollToContactTarget();
         }, 320);
       }
     },
-    [homePath, location.pathname, navigate]
+    [contactPath, location.pathname, navigate]
   );
 
   return { contactHref, goToContact };

@@ -303,7 +303,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
     internalLinks: [
       { labelEn: "Condo board management", labelFr: "Gestion de syndicat", to: "/services/syndicat-copropriete" },
       { labelEn: "Pricing", labelFr: "Tarifs", to: "/tarifs" },
-      { labelEn: "Contact", labelFr: "Contact", to: "/#contact-form" },
+      { labelEn: "Contact", labelFr: "Contact", to: "/contact" },
     ],
   },
   {
@@ -510,7 +510,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       { labelEn: "Airbnb management", labelFr: "Gestion Airbnb", to: "/services/airbnb" },
       { labelEn: "Rental management", labelFr: "Gestion locative", to: "/services/location" },
       { labelEn: "Pricing", labelFr: "Tarifs", to: "/tarifs" },
-      { labelEn: "Contact", labelFr: "Contact", to: "/#contact-form" },
+      { labelEn: "Contact", labelFr: "Contact", to: "/contact" },
     ],
   },
   {
@@ -716,7 +716,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
     internalLinks: [
       { labelEn: "Rental management", labelFr: "Gestion locative", to: "/services/location" },
       { labelEn: "Pricing", labelFr: "Tarifs", to: "/tarifs" },
-      { labelEn: "Contact", labelFr: "Contact", to: "/#contact-form" },
+      { labelEn: "Contact", labelFr: "Contact", to: "/contact" },
     ],
   },
   {
@@ -963,7 +963,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       { labelEn: "All services", labelFr: "Tous les services", to: "/services" },
       { labelEn: "Pricing", labelFr: "Tarifs", to: "/tarifs" },
       { labelEn: "Condo board management", labelFr: "Gestion de syndicat", to: "/services/syndicat-copropriete" },
-      { labelEn: "Contact", labelFr: "Contact", to: "/#contact-form" },
+      { labelEn: "Contact", labelFr: "Contact", to: "/contact" },
     ],
   },
 ];

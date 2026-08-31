@@ -116,6 +116,6 @@ Contact: info@gestionvelora.com | +1-514-777-1731
 - TAL rental framework: https://www.tal.gouv.qc.ca/
 
 ## Conversion CTAs
-- Request a quote: https://www.gestionvelora.com/#contact-form
+- Request a quote: https://www.gestionvelora.com/contact
 - Request a consultation: mailto:info@gestionvelora.com
 - Book a call: tel:+15147771731

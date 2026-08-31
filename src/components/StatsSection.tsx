@@ -96,7 +96,7 @@ export function StatsSection() {
               Arnaud Bellemare
             </InternalLink>{" "}
             — {t("stats.authorRole")}. {" "}
-            <time dateTime="2026-08-30">{t("stats.updated")}</time>.
+            <time dateTime="2026-08-31">{t("stats.updated")}</time>.
           </p>
           <p className="mt-2 font-sans text-xs text-nd-secondary">
             {t("stats.trustLinksIntro")} {" "}

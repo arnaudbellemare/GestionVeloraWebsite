@@ -34,9 +34,9 @@ export const en = {
     sourceInternal: "Internal operating dashboard (Jan 2025 - Mar 2026)",
     sourceCmhc: "CMHC rental market baselines (Montreal CMA)",
     answerHeading: "What does Gestion Velora do for a Montreal property?",
-    answerLead: "Short answer:",
+    answerLead: "Gestion Velora is a property management firm in Montreal.",
     answerBody:
-      "Gestion Velora handles administration, financial follow-up, maintenance coordination, and communications for condo boards, long-term rentals, and Airbnb properties across Greater Montreal.",
+      "It handles administration, financial follow-up, maintenance coordination, and communications for condo boards, long-term rentals, and Airbnb properties across Greater Montreal.",
     sourcesHeading: "Which sources support our information?",
     sourcesIntro:
       "Our regulatory and market benchmarks point to the following official public sources; operational results come from our internal dashboard.",
@@ -46,7 +46,7 @@ export const en = {
     citationCitq: "CITQ — tourist accommodation registration",
     verifiedBy: "Content reviewed by",
     authorRole: "founder of Gestion Velora and RGCQ member",
-    updated: "Updated August 30, 2026",
+    updated: "Updated August 31, 2026",
     trustLinksIntro: "Review our trust information:",
     contactLink: "contact",
     privacyLink: "privacy",
@@ -363,6 +363,13 @@ export const en = {
     toolDesc:
       "Underwrite an income property with Quebec's rules: Montreal welcome tax, CMHC down payment caps, the TAL rent-fixing framework, and the bank's economic value. Free, no sign-up.",
     toolCta: "Open the calculator",
+  },
+
+  contactPage: {
+    backHome: "Back to home",
+    title: "Contact Gestion Velora in Montreal",
+    answer:
+      "Gestion Velora responds to inquiries from condo boards, residential landlords, and Airbnb hosts across Greater Montreal. Expect an initial response within one business day.",
   },
 
   // Contact

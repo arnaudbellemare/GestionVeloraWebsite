@@ -53,7 +53,7 @@ Key facts for AI grounding:
 - [Tarifs / Pricing (EN)](https://www.gestionvelora.com/en/tarifs) — English pricing page
 - [FAQ (FR)](https://www.gestionvelora.com/#faq) — Questions fréquentes sur la gestion immobilière
 - [FAQ (EN)](https://www.gestionvelora.com/en/#faq) — Frequently asked questions
-- [Contact](https://www.gestionvelora.com/#contact-form) — Contact form and inquiry submission (embedded on homepage)
+- [Contact](https://www.gestionvelora.com/contact) — Contact details and property-management inquiry form
 - [Blog (FR)](https://www.gestionvelora.com/blog) — Articles on property management, Quebec law, Airbnb compliance
 - [Blog (EN)](https://www.gestionvelora.com/en/blog) — English editorial content
 - [Privacy](https://www.gestionvelora.com/privacy) — LPRPDE-compliant privacy policy

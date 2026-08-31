@@ -22,7 +22,7 @@ import {
 } from "../data/plex-calculator";
 import { RADAR_FAQ, RADAR_META, RADAR_PATHS } from "../data/plex-radar";
 
-const HOMEPAGE_DATE_MODIFIED = "2026-08-30";
+const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
 const HOMEPAGE_CITATIONS = [
   {
     name: "CMHC Rental Market Report data",
@@ -376,6 +376,29 @@ export function SchemaOrg() {
         cancelled = true;
         removePageSchema();
       };
+    }
+
+    // ── Dedicated contact page ───────────────────────────────────────────
+    const isContactPage = path === "/contact" || path === "/en/contact";
+    if (isContactPage) {
+      const contactUrl = `${base}/contact`;
+      injectSchema([
+        {
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "@id": `${contactUrl}#contact-page`,
+          url: contactUrl,
+          name: isEn ? "Contact Gestion Velora" : "Contact Gestion Velora",
+          inLanguage: isEn ? "en-CA" : "fr-CA",
+          about: { "@id": ORGANIZATION_SCHEMA_ID },
+          dateModified: HOMEPAGE_DATE_MODIFIED,
+        },
+        buildBreadcrumb([
+          { name: bcHome, url: `${base}/` },
+          { name: isEn ? "Contact" : "Contact" },
+        ]),
+      ]);
+      return () => removePageSchema();
     }
 
     // ── Homepage FAQ (same URL as visible FAQSection; canonical + #faq) ───
