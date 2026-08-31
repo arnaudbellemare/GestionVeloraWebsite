@@ -9,7 +9,7 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { useGoToContact } from "../hooks/useGoToContact";
-import { SITE_URL } from "../config";
+import { INDEX_ROBOTS, SITE_URL } from "../config";
 import { COMPARISON_PAGES } from "../data/comparisons";
 import { isPriorityLocationSlug } from "../data/locationPriority";
 
@@ -133,7 +133,7 @@ export function LocationPage() {
     setMeta("og:locale", isEn ? "en_CA" : "fr_CA", true);
     setMeta("twitter:title", title);
     setMeta("twitter:description", desc);
-    setMeta("robots", isPriorityLocation ? "index, follow" : "noindex, follow");
+    setMeta("robots", isPriorityLocation ? INDEX_ROBOTS : "noindex, follow");
 
     if (isPriorityLocation) {
       injectLocationSchema({

@@ -1,6 +1,7 @@
 export const en = {
   // Hero
   hero: {
+    eyebrow: "Property management in Montreal",
     line1: "Your property,",
     line2: "in all tranquility.",
     subtitle:
@@ -103,8 +104,8 @@ export const en = {
 
   // WhatWeDo - keywords: property management Montreal, condo management, Airbnb management
   whatWeDo: {
-    title: "Management tailored to",
-    titleItalic: "every type.",
+    title: "Property management services for",
+    titleItalic: "every need.",
     subtitle: "condo boards, Airbnb, long-term rentals, a custom approach for every property",
     syndicat: "Condo management",
     airbnb: "Airbnb",
@@ -291,7 +292,7 @@ export const en = {
 
   // Insights
   insights: {
-    title: "Insights.",
+    title: "Property management insights.",
     subtitle: "Thoughts and news on property management.",
     viewServices: "Explore our services →",
     seeAll: "See all",
@@ -301,7 +302,7 @@ export const en = {
 
   // FAQ
   faq: {
-    title: "Frequently asked questions",
+    title: "Property management FAQs",
     subtitle:
       "Straight answers on Montreal residential real estate: condo boards, long-term rentals, and short-term stays.",
   },

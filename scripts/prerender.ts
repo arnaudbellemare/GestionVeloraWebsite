@@ -51,6 +51,8 @@ import { RADAR_FAQ, RADAR_META, RADAR_METRIC_DEFS, RADAR_PATHS } from "../src/da
 // ---------------------------------------------------------------------------
 const DIST = join(process.cwd(), "dist");
 const SITE_URL = "https://www.gestionvelora.com";
+const INDEX_ROBOTS =
+  "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 const ORG_ID = `${SITE_URL}/#organization`;
 const AUTHOR_NAME = "Arnaud Bellemare";
 const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
@@ -502,15 +504,22 @@ function buildHtml(
     `<meta name="twitter:image" content="${opts.twitterImage}"`
   );
 
+  html = html.replace(
+    /<meta name="twitter:image:alt" content="[^"]*"/,
+    `<meta name="twitter:image:alt" content="${escapeHtml(opts.title)}"`
+  );
+
   html = html.replace(/\s*<link rel="amphtml" href="[^"]*"\s*\/?>/g, "");
   if (opts.ampHtmlHref) {
     html = html.replace("</head>", `  <link rel="amphtml" href="${opts.ampHtmlHref}" />\n</head>`);
   }
 
   html = html.replace(/\s*<meta name="robots" content="[^"]*"\s*\/?>/g, "");
-  if (opts.robots) {
-    html = html.replace("</head>", `  <meta name="robots" content="${opts.robots}" />\n</head>`);
-  }
+  const robotsContent = opts.robots ?? INDEX_ROBOTS;
+  html = html.replace(
+    "</head>",
+    `  <meta name="robots" content="${robotsContent}" />\n</head>`,
+  );
 
   // 15. hreflang links (replace all three at once via a block match)
   const hreflangBlock = [

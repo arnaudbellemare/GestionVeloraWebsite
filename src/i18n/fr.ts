@@ -1,6 +1,7 @@
 export const fr = {
   // Hero
   hero: {
+    eyebrow: "Gestion immobilière à Montréal",
     line1: "Votre tranquillité.",
     line2: "Notre affaire.",
     subtitle:
@@ -103,8 +104,8 @@ export const fr = {
 
   // WhatWeDo
   whatWeDo: {
-    title: "Une gestion adaptée à",
-    titleItalic: "chaque type.",
+    title: "Des services de gestion immobilière pour",
+    titleItalic: "chaque besoin.",
     subtitle: "syndicats, Airbnb, locations longue durée, une approche sur mesure pour chaque bien",
     syndicat: "Syndicat de copropriété",
     airbnb: "Airbnb",
@@ -294,7 +295,7 @@ export const fr = {
 
   // Insights
   insights: {
-    title: "Conseils.",
+    title: "Conseils en gestion immobilière.",
     subtitle: "Réflexions et actualités sur la gestion immobilière.",
     viewServices: "Voir nos services →",
     seeAll: "Voir tout",
@@ -304,7 +305,7 @@ export const fr = {
 
   // FAQ
   faq: {
-    title: "Questions fréquentes",
+    title: "Questions fréquentes sur la gestion immobilière",
     subtitle:
       "Réponses aux questions les plus posées sur l'immobilier résidentiel à Montréal : copropriété, location et court séjour.",
   },

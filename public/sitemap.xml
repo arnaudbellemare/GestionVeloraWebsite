@@ -2017,6 +2017,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-saint-jean-sur-richelieu</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-jean-sur-richelieu" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-jean-sur-richelieu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-jean-sur-richelieu" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-saint-jean-sur-richelieu</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-jean-sur-richelieu" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-jean-sur-richelieu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-jean-sur-richelieu" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/location/gestion-locative-blainville</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-blainville" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-blainville" />
@@ -2053,6 +2071,96 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-mascouche</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-mascouche" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-mascouche" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-mascouche" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-mascouche</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-mascouche" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-mascouche" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-mascouche" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-chateauguay</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-chateauguay" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-chateauguay" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-chateauguay" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-chateauguay</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-chateauguay" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-chateauguay" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-chateauguay" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-saint-jerome</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-jerome" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-jerome" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-jerome" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-saint-jerome</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-jerome" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-jerome" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-jerome" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-varennes</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-varennes" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-varennes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-varennes" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-varennes</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-varennes" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-varennes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-varennes" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-saint-hyacinthe</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-hyacinthe" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-hyacinthe" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-hyacinthe" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-saint-hyacinthe</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-hyacinthe" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-hyacinthe" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-hyacinthe" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/location/gestion-locative-westmount</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-westmount" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-westmount" />
@@ -2066,6 +2174,114 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-westmount" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-westmount" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-westmount" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-outremont</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-outremont" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-outremont" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-outremont" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-outremont</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-outremont" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-outremont" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-outremont" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-mont-royal</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-mont-royal" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-mont-royal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-mont-royal" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-mont-royal</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-mont-royal" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-mont-royal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-mont-royal" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-cote-saint-luc</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-cote-saint-luc" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-cote-saint-luc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-cote-saint-luc" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-cote-saint-luc</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-cote-saint-luc" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-cote-saint-luc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-cote-saint-luc" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-dollard-des-ormeaux</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-dollard-des-ormeaux" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-dollard-des-ormeaux" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-dollard-des-ormeaux" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-dollard-des-ormeaux</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-dollard-des-ormeaux" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-dollard-des-ormeaux" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-dollard-des-ormeaux" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-kirkland</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-kirkland" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-kirkland" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-kirkland" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-kirkland</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-kirkland" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-kirkland" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-kirkland" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-pointe-claire</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-pointe-claire" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-pointe-claire" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-pointe-claire" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-pointe-claire</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-pointe-claire" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-pointe-claire" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-pointe-claire" />
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -2107,6 +2323,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-lachine</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-lachine" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-lachine" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-lachine" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-lachine</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-lachine" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-lachine" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-lachine" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/location/gestion-locative-plateau-mont-royal</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-plateau-mont-royal" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-plateau-mont-royal" />
@@ -2125,6 +2359,186 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-rosemont-la-petite-patrie</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-rosemont-la-petite-patrie" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-rosemont-la-petite-patrie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-rosemont-la-petite-patrie" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-rosemont-la-petite-patrie</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-rosemont-la-petite-patrie" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-rosemont-la-petite-patrie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-rosemont-la-petite-patrie" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-villeray-saint-michel-parc-extension</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-villeray-saint-michel-parc-extension" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-villeray-saint-michel-parc-extension" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-villeray-saint-michel-parc-extension" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-villeray-saint-michel-parc-extension</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-villeray-saint-michel-parc-extension" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-villeray-saint-michel-parc-extension" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-villeray-saint-michel-parc-extension" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-cote-des-neiges-notre-dame-de-grace</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-cote-des-neiges-notre-dame-de-grace" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-cote-des-neiges-notre-dame-de-grace" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-cote-des-neiges-notre-dame-de-grace" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-cote-des-neiges-notre-dame-de-grace</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-cote-des-neiges-notre-dame-de-grace" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-cote-des-neiges-notre-dame-de-grace" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-cote-des-neiges-notre-dame-de-grace" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-mercier-hochelaga-maisonneuve</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-mercier-hochelaga-maisonneuve" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-mercier-hochelaga-maisonneuve" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-mercier-hochelaga-maisonneuve" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-mercier-hochelaga-maisonneuve</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-mercier-hochelaga-maisonneuve" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-mercier-hochelaga-maisonneuve" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-mercier-hochelaga-maisonneuve" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-riviere-des-prairies-pointe-aux-trembles</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-riviere-des-prairies-pointe-aux-trembles" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-riviere-des-prairies-pointe-aux-trembles" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-riviere-des-prairies-pointe-aux-trembles" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-riviere-des-prairies-pointe-aux-trembles</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-riviere-des-prairies-pointe-aux-trembles" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-riviere-des-prairies-pointe-aux-trembles" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-riviere-des-prairies-pointe-aux-trembles" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-ahuntsic-cartierville</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-ahuntsic-cartierville" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-ahuntsic-cartierville" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-ahuntsic-cartierville" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-ahuntsic-cartierville</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-ahuntsic-cartierville" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-ahuntsic-cartierville" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-ahuntsic-cartierville" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-saint-leonard</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-leonard" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-leonard" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-leonard" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-saint-leonard</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-leonard" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-leonard" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-leonard" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-anjou</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-anjou" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-anjou" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-anjou" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-anjou</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-anjou" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-anjou" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-anjou" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-montreal-nord</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-montreal-nord" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-montreal-nord" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-montreal-nord" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-montreal-nord</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-montreal-nord" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-montreal-nord" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-montreal-nord" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-pierrefonds-roxboro</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-pierrefonds-roxboro" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-pierrefonds-roxboro" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-pierrefonds-roxboro" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-pierrefonds-roxboro</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-pierrefonds-roxboro" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-pierrefonds-roxboro" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-pierrefonds-roxboro" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/location/gestion-locative-lasalle</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-lasalle" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-lasalle" />
@@ -2138,6 +2552,24 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-lasalle" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-lasalle" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-lasalle" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-sud-ouest</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-sud-ouest" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-sud-ouest" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-sud-ouest" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-sud-ouest</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-sud-ouest" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-sud-ouest" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-sud-ouest" />
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -2197,6 +2629,42 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-deux-montagnes</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-deux-montagnes" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-deux-montagnes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-deux-montagnes" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-deux-montagnes</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-deux-montagnes" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-deux-montagnes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-deux-montagnes" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-sainte-therese</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-sainte-therese" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-sainte-therese" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-sainte-therese" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-sainte-therese</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-sainte-therese" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-sainte-therese" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-sainte-therese" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/location/gestion-locative-saint-eustache</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-eustache" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-eustache" />
@@ -2210,6 +2678,78 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-saint-eustache" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-saint-eustache" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-saint-eustache" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-beaconsfield</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-beaconsfield" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-beaconsfield" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-beaconsfield" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-beaconsfield</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-beaconsfield" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-beaconsfield" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-beaconsfield" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-dorval</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-dorval" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-dorval" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-dorval" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-dorval</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-dorval" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-dorval" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-dorval" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-montreal-ouest</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-montreal-ouest" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-montreal-ouest" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-montreal-ouest" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-montreal-ouest</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-montreal-ouest" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-montreal-ouest" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-montreal-ouest" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-hampstead</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-hampstead" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-hampstead" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-hampstead" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-hampstead</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-hampstead" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-hampstead" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-hampstead" />
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -2246,6 +2786,168 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-sainte-julie" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-sainte-julie" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-sainte-julie" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-beloeil</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-beloeil" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-beloeil" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-beloeil" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-beloeil</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-beloeil" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-beloeil" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-beloeil" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-bois-des-filion</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-bois-des-filion" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-bois-des-filion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-bois-des-filion" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-bois-des-filion</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-bois-des-filion" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-bois-des-filion" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-bois-des-filion" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-candiac</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-candiac" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-candiac" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-candiac" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-candiac</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-candiac" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-candiac" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-candiac" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-carignan</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-carignan" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-carignan" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-carignan" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-carignan</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-carignan" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-carignan" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-carignan" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-chambly</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-chambly" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-chambly" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-chambly" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-chambly</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-chambly" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-chambly" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-chambly" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-charlemagne</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-charlemagne" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-charlemagne" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-charlemagne" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-charlemagne</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-charlemagne" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-charlemagne" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-charlemagne" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-delson</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-delson" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-delson" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-delson" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-delson</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-delson" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-delson" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-delson" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-la-prairie</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-la-prairie" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-la-prairie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-la-prairie" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-la-prairie</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-la-prairie" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-la-prairie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-la-prairie" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-locative-lassomption</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-lassomption" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-lassomption" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-lassomption" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-locative-lassomption</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-locative-lassomption" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-locative-lassomption" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-locative-lassomption" />
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -2377,6 +3079,96 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/location/gestion-airbnb-blainville</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-blainville" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-blainville" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-blainville" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-airbnb-blainville</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-blainville" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-blainville" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-blainville" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-airbnb-mirabel</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-mirabel" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-mirabel" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-mirabel" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-airbnb-mirabel</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-mirabel" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-mirabel" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-mirabel" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-airbnb-westmount</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-westmount" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-westmount" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-westmount" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-airbnb-westmount</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-westmount" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-westmount" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-westmount" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-airbnb-plateau-mont-royal</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-plateau-mont-royal" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-plateau-mont-royal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-plateau-mont-royal" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-airbnb-plateau-mont-royal</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-plateau-mont-royal" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-plateau-mont-royal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-plateau-mont-royal" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-airbnb-ville-marie</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-ville-marie" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-ville-marie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-ville-marie" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-airbnb-ville-marie</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-ville-marie" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-ville-marie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-ville-marie" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/location/gestion-airbnb-saint-lambert</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-saint-lambert" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-saint-lambert" />
@@ -2395,6 +3187,42 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/location/gestion-airbnb-boisbriand</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-boisbriand" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-boisbriand" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-boisbriand" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-airbnb-boisbriand</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-boisbriand" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-boisbriand" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-boisbriand" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-airbnb-saint-eustache</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-saint-eustache" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-saint-eustache" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-saint-eustache" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-airbnb-saint-eustache</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-saint-eustache" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-saint-eustache" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-saint-eustache" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/location/gestion-airbnb-saint-bruno-de-montarville</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-saint-bruno-de-montarville" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-saint-bruno-de-montarville" />
@@ -2408,6 +3236,24 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-saint-bruno-de-montarville" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-saint-bruno-de-montarville" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-saint-bruno-de-montarville" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-airbnb-sainte-julie</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-sainte-julie" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-sainte-julie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-sainte-julie" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-airbnb-sainte-julie</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-airbnb-sainte-julie" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-airbnb-sainte-julie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-airbnb-sainte-julie" />
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -2557,6 +3403,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.gestionvelora.com/location/conformite-loi-16-saint-bruno-de-montarville</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/conformite-loi-16-saint-bruno-de-montarville" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/conformite-loi-16-saint-bruno-de-montarville" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/conformite-loi-16-saint-bruno-de-montarville" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/conformite-loi-16-saint-bruno-de-montarville</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/conformite-loi-16-saint-bruno-de-montarville" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/conformite-loi-16-saint-bruno-de-montarville" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/conformite-loi-16-saint-bruno-de-montarville" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-montreal</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-montreal" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-immobiliere-commerciale-montreal" />
@@ -2570,6 +3434,42 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-montreal" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-immobiliere-commerciale-montreal" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-montreal" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-laval</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-laval" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-immobiliere-commerciale-laval" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-laval" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-immobiliere-commerciale-laval</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-laval" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-immobiliere-commerciale-laval" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-laval" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-longueuil</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-longueuil" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-immobiliere-commerciale-longueuil" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-longueuil" />
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/location/gestion-immobiliere-commerciale-longueuil</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-longueuil" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/gestion-immobiliere-commerciale-longueuil" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/gestion-immobiliere-commerciale-longueuil" />
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

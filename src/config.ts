@@ -22,6 +22,11 @@ export const ARTICLE_AUTHOR_SAME_AS = [
 /** Default social cards for pages without dedicated assets. */
 export const DEFAULT_OG_IMAGE: string = `${SITE_URL}/og-image.png`;
 export const DEFAULT_TWITTER_IMAGE: string = `${SITE_URL}/twitter-card.png`;
+export const TWITTER_SITE = "@gestionvelora" as const;
+
+/** Allow full-size image, text, and video previews on indexable search results. */
+export const INDEX_ROBOTS =
+  "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" as const;
 
 /**
  * Portal URLs for ManagerSyndicat and ServiceSyndicat.

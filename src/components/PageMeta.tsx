@@ -2,7 +2,13 @@ import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "../context/LocaleContext";
-import { DEFAULT_OG_IMAGE, DEFAULT_TWITTER_IMAGE, SITE_URL } from "../config";
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TWITTER_IMAGE,
+  INDEX_ROBOTS,
+  SITE_URL,
+  TWITTER_SITE,
+} from "../config";
 import { blogCoverUrl } from "../lib/blogImages";
 import { getComparisonBySlug } from "../data/comparisons";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
@@ -95,8 +101,9 @@ function applyDocumentMeta(opts: {
   document.title = title;
   setMeta("description", description);
   setMeta("keywords", keywords ?? DEFAULT_KEYWORDS[isEn ? "en" : "fr"]);
-  setMeta("robots", robots ?? "index, follow");
+  setMeta("robots", robots ?? INDEX_ROBOTS);
   setMeta("twitter:card", "summary_large_image");
+  setMeta("twitter:site", TWITTER_SITE);
   setMeta("og:title", title, true);
   setMeta("og:description", description, true);
   setMeta("og:url", url, true);
@@ -107,6 +114,7 @@ function applyDocumentMeta(opts: {
   setMeta("twitter:description", description);
   setMeta("twitter:url", url);
   setMeta("twitter:image", twitterImage);
+  setMeta("twitter:image:alt", title);
 }
 
 export function PageMeta() {
@@ -130,7 +138,7 @@ export function PageMeta() {
     const robots =
       pathname.startsWith("/video/") || pathname.startsWith("/en/video/")
         ? "noindex, follow"
-        : "index, follow";
+        : INDEX_ROBOTS;
 
     const isBlogPostPath =
       Boolean(slug) &&

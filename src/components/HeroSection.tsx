@@ -114,6 +114,9 @@ export function HeroSection() {
         <h1
           className="font-playfair font-semibold text-[clamp(2.25rem,6vw,4rem)] lg:text-[clamp(3rem,7vw,4.75rem)] leading-[1.08] tracking-[-0.02em] text-white mb-6"
         >
+          <span className="mb-4 block font-sans text-xs font-semibold uppercase tracking-[0.16em] text-white/75 lg:text-sm">
+            {t("hero.eyebrow")}
+          </span>
           <span className="block">
             {t("hero.line1")}
           </span>

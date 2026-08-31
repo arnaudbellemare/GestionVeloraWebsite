@@ -84,7 +84,7 @@ const SERVICE_CITY_WEIGHTS: Record<string, Record<string, number>> = {
   },
 };
 
-export const PRIORITY_LOCATION_ROUTE_LIMIT = 100;
+export const PRIORITY_LOCATION_ROUTE_LIMIT = 150;
 
 function cityWeight(citySlug: string, serviceSlug?: string): number {
   if (serviceSlug) {
@@ -110,7 +110,7 @@ export function locationSeoScore(serviceSlug: string, citySlug: string): number 
 
 // The limit counts slugs, not slug x locale rows. Each slug is scored once and
 // deduped *before* the slice; ranking rows per locale first would let the fr/en
-// pair of the same slug consume two of the 100 seats and silently halve the
+// pair of the same slug consume two seats and silently halve the
 // indexable set.
 const PRIORITY_LOCATION_SLUGS = Array.from(
   new Set(
