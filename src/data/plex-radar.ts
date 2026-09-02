@@ -46,7 +46,14 @@ export type RadarDeal = {
     lines: RadarExpenseLine[];
   };
   metrics: Record<string, number | string>;
-  analysis: { verdict: string; score: number; max_score: number };
+  /** Underwriting assumptions the producer applied (vacancy_rate, management_pct, repairs_pct…). */
+  assumptions?: Record<string, number | string>;
+  analysis: {
+    verdict: string;
+    score: number;
+    max_score: number;
+    factors?: Array<{ label: string; value: number | string; status: "good" | "warning" | "bad" }>;
+  };
   lifecycle?: { event_type: string; changes: Array<{ field: string; before: unknown; after: unknown }> };
 };
 
@@ -157,26 +164,57 @@ function grade(metrics: Omit<RadarMetrics, "score" | "verdict">, commercial: boo
   return { score, verdict: score >= 9 ? "strong-buy" : score >= 6 ? "buy" : score >= 3 ? "hold" : "avoid" };
 }
 
-export function calculateRadarScenario(deal: RadarDeal, excludedKeys: string[]): RadarMetrics | null {
+/** Published model constants, mirrored from the producer's assumptions block. */
+export const RADAR_MODEL = {
+  vacancyRate: 0.03,
+  contractRate: 0.0475,
+  qualificationRate: 0.0675,
+  dscrTarget: 1.2,
+  maxLtv: 0.75,
+} as const;
+
+/**
+ * What-if adjustments layered on the published scenario. Each is optional so
+ * the unmodified call reproduces the published figures exactly.
+ */
+export type RadarShocks = {
+  /** Added to the contract and qualification rates, e.g. 0.01 for +1 point. */
+  rateDelta?: number;
+  /** Replaces the 3% vacancy allowance. */
+  vacancyRate?: number;
+  /** Replaces the advertised gross income, e.g. rents lifted to the CMHC average. */
+  grossIncome?: number;
+};
+
+export function calculateRadarScenario(deal: RadarDeal, excludedKeys: string[], shocks: RadarShocks = {}): RadarMetrics | null {
   const listing = deal.listing;
-  const gross = listing.potential_gross_income ?? 0;
-  if (deal.status !== "underwritten" || gross <= 0) return null;
+  const advertised = listing.potential_gross_income ?? 0;
+  if (deal.status !== "underwritten" || advertised <= 0) return null;
+  const gross = shocks.grossIncome && shocks.grossIncome > 0 ? shocks.grossIncome : advertised;
+  const occupancy = 1 - Math.min(0.99, Math.max(0, shocks.vacancyRate ?? RADAR_MODEL.vacancyRate));
+  const rateDelta = shocks.rateDelta ?? 0;
   const excluded = new Set(excludedKeys);
   const removedLines = deal.expense_policy?.lines.filter((line) => line.source === "estimated" && excluded.has(line.key)) ?? [];
   const removed = removedLines.reduce((sum, line) => sum + line.amount, 0);
-  const operatingExpenses = Math.max(0, n(deal, "operating_expenses") - removed);
-  const noi = gross * 0.97 - operatingExpenses;
+  // Management and repairs are policy percentages of income; scale them when
+  // the income itself is shocked so a rent lift does not read as pure profit.
+  const incomeLinked = (deal.expense_policy?.lines ?? [])
+    .filter((line) => line.source === "estimated" && (line.key === "management" || line.key === "repairs") && !excluded.has(line.key))
+    .reduce((sum, line) => sum + line.amount, 0);
+  const incomeScale = gross / advertised - 1;
+  const operatingExpenses = Math.max(0, n(deal, "operating_expenses") - removed + incomeLinked * incomeScale);
+  const noi = gross * occupancy - operatingExpenses;
   const commercial = listing.units >= 5 || Boolean(listing.mixed_use) || (listing.commercial_units ?? 0) > 0;
   const years = commercial ? 40 : 25;
-  let loan = listing.price * 0.75;
+  let loan = listing.price * RADAR_MODEL.maxLtv;
   if (commercial) {
     const lenderKeys = new Set(["insurance", "capex", "snow", "lawn", "utilities"]);
     const lenderRemoved = removedLines.filter((line) => lenderKeys.has(line.key)).reduce((sum, line) => sum + line.amount, 0);
-    const normalizedExpenses = Math.max(0, n(deal, "normalized_expenses") - lenderRemoved);
-    const normalizedNoi = gross * 0.97 - normalizedExpenses;
-    loan = Math.min(loan, presentValue(periodicRate(0.0675), years * 12, Math.max(0, normalizedNoi) / 1.2 / 12));
+    const normalizedExpenses = Math.max(0, n(deal, "normalized_expenses") - lenderRemoved + incomeLinked * incomeScale);
+    const normalizedNoi = gross * occupancy - normalizedExpenses;
+    loan = Math.min(loan, presentValue(periodicRate(RADAR_MODEL.qualificationRate + rateDelta), years * 12, Math.max(0, normalizedNoi) / RADAR_MODEL.dscrTarget / 12));
   }
-  const annualDebtService = payment(periodicRate(0.0475), years * 12, loan) * 12;
+  const annualDebtService = payment(periodicRate(RADAR_MODEL.contractRate + rateDelta), years * 12, loan) * 12;
   const annualCashFlow = noi - annualDebtService;
   const totalEquity = listing.price - loan + n(deal, "closing_costs");
   const base = {
@@ -233,18 +271,37 @@ export function calculatorUrl(deal: RadarDeal, locale: RadarLocale, excluded: st
   return `${path}?${params.toString()}`;
 }
 
-function calculatorAreaKey(city: string): string {
+/**
+ * Maps a Centris city label ("Montréal (Rosemont/La Petite-Patrie)", "Laval
+ * (Chomedey)", "Brossard") onto the calculator's AREAS key. Boroughs without a
+ * calculator area of their own (Ville-Marie, Pierrefonds, Westmount…) fall back
+ * to the CMA-level key `montreal-cma`, which the CMHC lookup resolves to the
+ * Montréal RMR average; everything off-island and outside the covered suburbs
+ * is `outside-gma` and keeps its reported figures.
+ */
+export function calculatorAreaKey(city: string): string {
   const value = city.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
   const matches: Array<[string, string[]]> = [
-    ["saint-leonard", ["saint-leonard"]], ["hochelaga", ["hochelaga"]],
-    ["ahuntsic", ["ahuntsic"]], ["anjou", ["anjou"]], ["villeray", ["villeray", "saint-michel", "parc-extension"]],
-    ["saint-laurent", ["saint-laurent"]], ["longueuil", ["longueuil"]], ["greenfield-park", ["greenfield park"]],
-    ["laval", ["laval"]], ["boisbriand", ["boisbriand"]], ["brossard", ["brossard"]],
-    ["boucherville", ["boucherville"]], ["chambly", ["chambly"]], ["terrebonne", ["terrebonne"]],
-    ["repentigny", ["repentigny"]], ["mirabel", ["mirabel"]], ["blainville", ["blainville"]],
+    // Montréal boroughs
+    ["plateau", ["plateau"]], ["rosemont", ["rosemont", "petite-patrie"]], ["sud-ouest", ["sud-ouest"]],
+    ["verdun", ["verdun"]], ["cdn-ndg", ["cote-des-neiges", "notre-dame-de-grace"]],
+    ["villeray", ["villeray", "saint-michel", "parc-extension"]], ["saint-laurent", ["saint-laurent"]],
+    ["ahuntsic", ["ahuntsic", "cartierville"]], ["hochelaga", ["hochelaga", "mercier"]],
+    ["lasalle", ["lasalle"]], ["anjou", ["anjou"]], ["saint-leonard", ["saint-leonard"]],
+    ["lachine", ["lachine"]], ["rdp-pat", ["riviere-des-prairies", "pointe-aux-trembles", "montreal-est"]],
+    ["montreal-nord", ["montreal-nord"]],
+    // Rive-Sud
+    ["saint-lambert", ["saint-lambert"]], ["boucherville", ["boucherville"]], ["saint-bruno", ["saint-bruno"]],
+    ["brossard", ["brossard"]], ["candiac", ["candiac"]], ["la-prairie", ["la prairie"]],
+    ["greenfield-park", ["greenfield park"]], ["saint-hubert", ["saint-hubert"]], ["longueuil", ["longueuil"]],
+    ["chambly", ["chambly"]],
+    // Laval et couronne nord
+    ["laval", ["laval"]], ["rosemere", ["rosemere"]], ["blainville", ["blainville", "sainte-therese"]],
+    ["boisbriand", ["boisbriand"]], ["mirabel", ["mirabel"]], ["terrebonne", ["terrebonne"]],
+    ["mascouche", ["mascouche"]], ["saint-eustache", ["saint-eustache"]], ["repentigny", ["repentigny"]],
   ];
   return matches.find(([, names]) => names.some((name) => value.includes(name)))?.[0]
-    ?? (value.includes("montreal") ? "villeray" : "outside-gma");
+    ?? (value.includes("montreal") ? "montreal-cma" : "outside-gma");
 }
 
 /**
@@ -258,12 +315,16 @@ export const RADAR_METRIC_DEFS = {
     cashOnCash: { term: "Rendement comptant (cash-on-cash)", def: "Flux de trésorerie annuel après financement divisé par la mise de fonds et les frais initiaux estimés." },
     dscr: { term: "Ratio de couverture de la dette (DSCR)", def: "Revenu net d’exploitation divisé par les paiements annuels de la dette. Au-dessus de 1, l’immeuble couvre sa dette." },
     grm: { term: "Multiplicateur de revenu brut (MRB)", def: "Prix demandé divisé par les revenus locatifs bruts annuels. Un multiple plus bas indique généralement un prix plus favorable par rapport aux revenus." },
+    relative: { term: "Rang relatif (sur 100)", def: "Position de l’immeuble parmi les immeubles comparables publiés au cours des 60 derniers jours dans la même région et la même classe (2 à 4 logements ou 5 et plus). Moyenne de trois percentiles : taux de capitalisation, flux de trésorerie par porte et prix par porte. 50 correspond à la médiane du marché observé." },
+    rentGap: { term: "Écart de loyer SCHL", def: "Loyer moyen en place (revenus bruts annoncés divisés par le nombre de portes) comparé au loyer moyen de l’Enquête sur les logements locatifs de la SCHL pour le secteur, pondéré selon une composition typique de logements. Un écart positif signale des baux sous la moyenne des logements occupés, donc un potentiel d’optimisation lors des roulements." },
   },
   en: {
     cap: { term: "Cap rate", def: "Annual net operating income divided by asking price. It measures the property return before financing." },
     cashOnCash: { term: "Cash-on-cash return", def: "Annual cash flow after financing divided by the estimated down payment and initial cash invested." },
     dscr: { term: "Debt service coverage ratio (DSCR)", def: "Net operating income divided by annual debt payments. Above 1 means the property covers its debt." },
     grm: { term: "Gross rent multiplier (GRM)", def: "Asking price divided by annual gross rental income. A lower multiple generally indicates a more favorable price relative to income." },
+    relative: { term: "Relative rank (out of 100)", def: "Where the property sits among comparable listings published over the last 60 days in the same region and class (2–4 units or 5+). Average of three percentiles: cap rate, cash flow per door and price per door. 50 is the median of the observed market." },
+    rentGap: { term: "CMHC rent gap", def: "Average in-place rent (advertised gross income divided by doors) compared with the CMHC Rental Market Survey average for the area, weighted by a typical unit mix. A positive gap flags leases below the occupied-unit average, hence optimization potential on turnover." },
   },
 } as const;
 
@@ -286,8 +347,13 @@ export const RADAR_FAQ: Record<RadarLocale, ReadonlyArray<{ id: string; q: strin
     },
     {
       id: "score",
-      q: "Comment le score sur 12 est-il calculé?",
-      a: "Six critères valent chacun de 0 à 2 points : taux de capitalisation, rendement comptant, ratio de couverture de la dette, flux de trésorerie par porte, multiplicateur de revenu brut et poids des charges totales. Un score de 9 ou plus signale un immeuble à prioriser, 6 à 8 à analyser, 3 à 5 à surveiller.",
+      q: "Comment le rang relatif et le score sur 12 sont-ils calculés?",
+      a: "Le rang relatif (sur 100) situe l’immeuble parmi les immeubles comparables publiés au cours des 60 derniers jours dans la même région et la même classe : c’est la moyenne de trois percentiles, taux de capitalisation, flux de trésorerie par porte et prix par porte. 80 et plus signale le haut du marché observé, 60 à 79 au-dessus du marché, 40 à 59 dans le marché. Le score sur 12 reste affiché : six critères absolus valent chacun de 0 à 2 points (taux de capitalisation, rendement comptant, couverture de la dette, flux par porte, multiplicateur de revenu brut et poids des charges), mais ses seuils, calibrés sur des marchés à rendement élevé, sont rarement atteints au Québec.",
+    },
+    {
+      id: "loyers-schl",
+      q: "Que signifie l’écart de loyer SCHL?",
+      a: "Le radar divise les revenus bruts annoncés par le nombre de portes pour obtenir le loyer moyen en place, puis le compare au loyer moyen de l’Enquête sur les logements locatifs de la SCHL pour le secteur, pondéré selon une composition typique de logements. Cette moyenne porte sur les logements occupés, donc en dessous des loyers demandés à la relocation : un immeuble sous la moyenne SCHL a des baux clairement sous-optimisés. Le potentiel affiché ne compte que les portes sous la moyenne, car un loyer en place ne peut pas être réduit. La comparaison n’est offerte que dans la région métropolitaine de Montréal couverte par l’enquête.",
     },
     {
       id: "financement",
@@ -318,8 +384,13 @@ export const RADAR_FAQ: Record<RadarLocale, ReadonlyArray<{ id: string; q: strin
     },
     {
       id: "score",
-      q: "How is the score out of 12 calculated?",
-      a: "Six criteria are each worth 0 to 2 points: cap rate, cash-on-cash return, debt service coverage ratio, cash flow per door, gross rent multiplier and total expense load. A score of 9 or more flags a property to prioritize, 6 to 8 to analyze, 3 to 5 to watch.",
+      q: "How are the relative rank and the score out of 12 calculated?",
+      a: "The relative rank (out of 100) places the property among comparable listings published over the last 60 days in the same region and class: it averages three percentiles, cap rate, cash flow per door and price per door. 80 and above flags the top of the observed market, 60 to 79 above market, 40 to 59 in line with it. The score out of 12 remains visible: six absolute criteria are each worth 0 to 2 points (cap rate, cash-on-cash, debt coverage, cash flow per door, gross rent multiplier and expense load), but its thresholds, calibrated on high-yield markets, are rarely met in Quebec.",
+    },
+    {
+      id: "cmhc-rents",
+      q: "What does the CMHC rent gap mean?",
+      a: "The radar divides advertised gross income by the number of doors to get the average in-place rent, then compares it with the CMHC Rental Market Survey average for the area, weighted by a typical unit mix. That average covers occupied units, so it sits below turnover asking rents: a building under the CMHC average has clearly under-set leases. The displayed upside counts only doors below the average, since an in-place rent cannot be reduced. The comparison is offered only within the Montréal metropolitan area covered by the survey.",
     },
     {
       id: "financing",

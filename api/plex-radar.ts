@@ -1,11 +1,21 @@
 import crypto from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { get, list, put } from "@vercel/blob";
+import type { RadarFeed } from "../src/data/plex-radar.js";
+import {
+  BENCHMARKS_VERSION,
+  BENCHMARK_WINDOW_DAYS,
+  buildBenchmarks,
+  type RadarBenchmarks,
+} from "../src/lib/plex/radar-benchmarks.js";
 
 const BLOB_PATH = "plex-radar/latest.json";
 const RELEASE_PREFIX = "plex-radar/releases/";
+const BENCHMARKS_PATH = "plex-radar/benchmarks.json";
 const MAX_BYTES = 2_000_000;
 const RELEASE_DATE = /^\d{4}-\d{2}-\d{2}$/;
+/** Upper bound on releases folded into one benchmark build (daily × window). */
+const MAX_BENCHMARK_RELEASES = BENCHMARK_WINDOW_DAYS + 5;
 
 function send(res: ServerResponse, status: number, payload: unknown, cache = "no-store") {
   res.statusCode = status;
@@ -39,11 +49,12 @@ function releasePath(release: string) {
 
 async function streamBlob(res: ServerResponse, pathname: string) {
   const result = await get(pathname, { access: "private", useCache: false });
-  if (!result) return false;
+  const stream = result?.stream;
+  if (!stream) return false;
   res.statusCode = 200;
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "public, max-age=60, stale-while-revalidate=300");
-  const reader = result.stream.getReader();
+  const reader = stream.getReader();
   while (true) {
     const { done, value } = await reader.read();
     if (done) break;
@@ -51,6 +62,51 @@ async function streamBlob(res: ServerResponse, pathname: string) {
   }
   res.end();
   return true;
+}
+
+async function readJson<T>(pathname: string): Promise<T | null> {
+  const result = await get(pathname, { access: "private", useCache: false });
+  const stream = result?.stream;
+  if (!stream) return null;
+  const text = await new Response(stream).text();
+  return JSON.parse(text) as T;
+}
+
+async function listReleases(): Promise<string[]> {
+  const result = await list({ prefix: RELEASE_PREFIX, limit: 500 });
+  return result.blobs
+    .map((blob) => blob.pathname.slice(RELEASE_PREFIX.length).replace(/\.json$/, ""))
+    .filter((release) => RELEASE_DATE.test(release))
+    .sort((a, b) => b.localeCompare(a));
+}
+
+/**
+ * Rebuilds the relative-scoring tables from the trailing window of releases
+ * and stores them. Called after each publish and lazily when a reader finds
+ * the stored tables missing or behind the latest release.
+ */
+async function rebuildBenchmarks(releases: string[]): Promise<RadarBenchmarks | null> {
+  const latest = releases[0];
+  if (!latest) return null;
+  const cutoff = Date.parse(`${latest}T00:00:00Z`) - BENCHMARK_WINDOW_DAYS * 86_400_000;
+  const window = releases
+    .filter((release) => Date.parse(`${release}T00:00:00Z`) >= cutoff)
+    .slice(0, MAX_BENCHMARK_RELEASES);
+  const feeds = (await Promise.all(window.map((release) => readJson<RadarFeed>(releasePath(release)))))
+    .filter((feed): feed is RadarFeed => Boolean(feed && Array.isArray(feed.deals)));
+  if (feeds.length === 0) return null;
+  const benchmarks = buildBenchmarks(feeds);
+  await put(BENCHMARKS_PATH, JSON.stringify(benchmarks), {
+    access: "private", contentType: "application/json", allowOverwrite: true,
+  });
+  return benchmarks;
+}
+
+async function currentBenchmarks(): Promise<RadarBenchmarks | null> {
+  const releases = await listReleases();
+  const stored = await readJson<RadarBenchmarks>(BENCHMARKS_PATH).catch(() => null);
+  if (stored && stored.version === BENCHMARKS_VERSION && stored.release === releases[0]) return stored;
+  return rebuildBenchmarks(releases);
 }
 
 async function body(req: IncomingMessage): Promise<Buffer> {
@@ -70,12 +126,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     try {
       const url = new URL(req.url ?? "/api/plex-radar", "https://www.gestionvelora.com");
       if (url.searchParams.get("history") === "1") {
-        const result = await list({ prefix: RELEASE_PREFIX, limit: 500 });
-        const releases = result.blobs
-          .map((blob) => blob.pathname.slice(RELEASE_PREFIX.length).replace(/\.json$/, ""))
-          .filter((release) => RELEASE_DATE.test(release))
-          .sort((a, b) => b.localeCompare(a));
-        return send(res, 200, { releases }, "no-store");
+        return send(res, 200, { releases: await listReleases() }, "no-store");
+      }
+      if (url.searchParams.get("benchmarks") === "1") {
+        const benchmarks = await currentBenchmarks();
+        if (!benchmarks) return send(res, 404, { error: "No release published" });
+        return send(res, 200, benchmarks, "public, max-age=300, stale-while-revalidate=3600");
       }
       const release = url.searchParams.get("release");
       if (release && !RELEASE_DATE.test(release)) return send(res, 400, { error: "Invalid release date" });
@@ -102,7 +158,18 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (!archiveOnly) {
         await put(BLOB_PATH, raw, { access: "private", contentType: "application/json", allowOverwrite: true });
       }
-      return send(res, 200, { release: payload.release, generated_at: payload.generated_at, listings: payload.deals.length, archive_only: archiveOnly });
+      // Best effort: a benchmark failure must never fail the publish. Readers
+      // rebuild lazily if the stored tables lag the latest release.
+      let benchmarks: string | null = null;
+      try {
+        benchmarks = (await rebuildBenchmarks(await listReleases()))?.release ?? null;
+      } catch (error) {
+        console.error("plex-radar benchmarks rebuild failed", { release: payload.release, error });
+      }
+      return send(res, 200, {
+        release: payload.release, generated_at: payload.generated_at, listings: payload.deals.length,
+        archive_only: archiveOnly, benchmarks,
+      });
     } catch (error) {
       if (error instanceof Error && error.message === "payload-too-large") return send(res, 413, { error: "Payload too large" });
       const incidentId = crypto.randomUUID();
@@ -114,4 +181,4 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   return send(res, 405, { error: "Method not allowed" });
 }
 
-export const config = { maxDuration: 15 };
+export const config = { maxDuration: 30 };

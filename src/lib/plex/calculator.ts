@@ -1149,6 +1149,9 @@ export const AREAS: Record<string, AreaSpec> = {
   'lachine':        { name: 'Lachine', region: 'Montréal', isMontrealAgglo: true, priceIndex: 0.85, rentIndex: 0.92, taxRate: 0.0068 },
   'rdp-pat':        { name: 'Rivière-des-Prairies–P.-a.-T.', region: 'Montréal', isMontrealAgglo: true, priceIndex: 0.80, rentIndex: 0.88, taxRate: 0.0068 },
   'montreal-nord':  { name: 'Montréal-Nord', region: 'Montréal', isMontrealAgglo: true, priceIndex: 0.80, rentIndex: 0.88, taxRate: 0.0068, anchored: true, note: 'Duplexes $550–650k, yields 5–6%' },
+  // Island boroughs without a benchmark of their own (Ville-Marie, Pierrefonds,
+  // Westmount…): Montréal welcome-tax schedule, CMA-median price and rent.
+  'montreal-cma':   { name: 'Montréal (autre secteur)', region: 'Montréal', isMontrealAgglo: true, priceIndex: 1.00, rentIndex: 1.00, taxRate: 0.0068, note: 'CMA median; no borough benchmark' },
 
   // ── South Shore ──
   'saint-lambert':  { name: 'Saint-Lambert', region: 'South Shore', isMontrealAgglo: false, priceIndex: 1.10, rentIndex: 1.00, taxRate: 0.0072 },

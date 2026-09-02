@@ -14,10 +14,26 @@ import {
 } from '../src/lib/plex/calculator';
 import {
   calculateRadarScenario,
+  calculatorAreaKey,
   calculatorUrl,
+  publishedRadarMetrics,
   type RadarDeal,
+  type RadarFeed,
 } from '../src/data/plex-radar';
 import { createRadarPrefill } from '../src/lib/plex/radar-prefill';
+import {
+  BENCHMARK_MIN_SAMPLE,
+  TYPICAL_BEDROOMS,
+  buildBenchmarks,
+  cmhcRentSignal,
+  percentileOf,
+  poolKey,
+  quantiles,
+  relativeRank,
+  relativeTier,
+  resolvePool,
+} from '../src/lib/plex/radar-benchmarks';
+import { PROPERTY_PRESETS, UNIT_TYPES } from '../src/lib/plex/calculator';
 
 const closeTo = (actual: number, expected: number, tolerance = 0.01) => {
   assert.ok(
@@ -299,7 +315,9 @@ assert.equal(radarCalculatorUrl.searchParams.get('listingId'), '12345678');
 assert.equal(radarCalculatorUrl.searchParams.get('purchasePrice'), '1000000');
 assert.equal(radarCalculatorUrl.searchParams.get('management'), '5000');
 assert.equal(radarCalculatorUrl.searchParams.get('hydro'), '3000');
-assert.equal(radarCalculatorUrl.searchParams.get('areaKey'), 'villeray');
+// A bare "Montréal" has no borough: it gets the island-wide fallback area,
+// not a specific neighbourhood's price and rent indices.
+assert.equal(radarCalculatorUrl.searchParams.get('areaKey'), 'montreal-cma');
 assert.equal(radarCalculatorUrl.searchParams.get('comparableValue'), '1281720');
 assert.equal(radarCalculatorUrl.searchParams.get('comparableCount'), '10');
 assert.equal(radarCalculatorUrl.searchParams.get('marketCapRate'), '0.041');
@@ -351,5 +369,153 @@ const outsideMontrealUrl = new URL(calculatorUrl({
   listing: { ...radarDeal.listing, city: 'Québec (La Haute-Saint-Charles)' },
 }, 'fr'), 'https://www.gestionvelora.com');
 assert.equal(outsideMontrealUrl.searchParams.get('areaKey'), 'outside-gma');
+
+// ─── Centris city → calculator area ─────────────────────────────────────────
+// Every Montréal borough that has a calculator area must resolve to it; the
+// earlier mapper sent Plateau, Rosemont, Sud-Ouest, CDN-NDG, Verdun, LaSalle,
+// Lachine, RDP-PAT and Montréal-Nord listings to Villeray's benchmarks.
+const boroughCases: Array<[string, string]> = [
+  ['Montréal (Le Plateau-Mont-Royal)', 'plateau'],
+  ['Montréal (Rosemont/La Petite-Patrie)', 'rosemont'],
+  ['Montréal (Le Sud-Ouest)', 'sud-ouest'],
+  ['Montréal (Verdun/Île-des-Soeurs)', 'verdun'],
+  ['Montréal (Côte-des-Neiges/Notre-Dame-de-Grâce)', 'cdn-ndg'],
+  ['Montréal (Villeray/Saint-Michel/Parc-Extension)', 'villeray'],
+  ['Montréal (Mercier/Hochelaga-Maisonneuve)', 'hochelaga'],
+  ['Montréal (Ahuntsic-Cartierville)', 'ahuntsic'],
+  ['Montréal (LaSalle)', 'lasalle'],
+  ['Montréal (Lachine)', 'lachine'],
+  ['Montréal (Rivière-des-Prairies/Pointe-aux-Trembles)', 'rdp-pat'],
+  ['Montréal (Montréal-Nord)', 'montreal-nord'],
+  ['Montréal (Saint-Léonard)', 'saint-leonard'],
+  ['Montréal (Ville-Marie)', 'montreal-cma'],
+  ['Montréal (Pierrefonds-Roxboro)', 'montreal-cma'],
+  ['Laval (Chomedey)', 'laval'],
+  ['Longueuil (Le Vieux-Longueuil)', 'longueuil'],
+  ['Saint-Hubert', 'saint-hubert'],
+  ['Mascouche', 'mascouche'],
+  ['Salaberry-de-Valleyfield', 'outside-gma'],
+  ['Québec (Sainte-Foy/Sillery/Cap-Rouge)', 'outside-gma'],
+];
+for (const [city, expected] of boroughCases) {
+  assert.equal(calculatorAreaKey(city), expected, `area for ${city}`);
+}
+
+// The Radar's typical bedroom mix must stay in step with the calculator presets
+// it claims to mirror, or the CMHC weighting silently drifts.
+for (const type of ['duplex', 'triplex', 'quadruplex', 'fiveplex-plus'] as const) {
+  const presetBedrooms = PROPERTY_PRESETS[type].unitMix.flatMap((row) =>
+    Array.from({ length: row.count }, () => UNIT_TYPES[row.label].bedrooms));
+  assert.deepEqual([...TYPICAL_BEDROOMS[type]].sort(), [...presetBedrooms].sort(), `typical mix for ${type}`);
+}
+
+// ─── Relative benchmarks ────────────────────────────────────────────────────
+assert.deepEqual(quantiles([1, 2, 3, 4, 5], 5), [1, 2, 3, 4, 5]);
+assert.deepEqual(quantiles([10], 3), [10, 10, 10]);
+const table = quantiles([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 11);
+assert.equal(percentileOf(table, 0), 0);
+assert.equal(percentileOf(table, 1), 0);
+assert.equal(percentileOf(table, 6), 50);
+assert.equal(percentileOf(table, 6.5), 55);
+assert.equal(percentileOf(table, 11), 100);
+assert.equal(percentileOf(table, 50), 100);
+// Flat runs resolve to their midpoint rather than the first or last match.
+assert.equal(percentileOf([0, 5, 5, 5, 10], 5), 50);
+
+const radarListing = (id: string, region: string, units: number, price: number, gross: number, cap: number, cfDoor: number): RadarDeal => ({
+  ...radarDeal,
+  listing: { ...radarDeal.listing, listing_id: id, region, units, price, potential_gross_income: gross, mixed_use: false, commercial_units: 0 },
+  metrics: { ...radarDeal.metrics, cap_rate: cap, monthly_cash_flow_per_door: cfDoor, price_per_door: price / units, grm: price / gross },
+});
+const regionA = Array.from({ length: 20 }, (_, i) => radarListing(`a${i}`, 'Montréal (Île)', 3, 900_000 + i * 10_000, 60_000 + i * 1_000, 0.03 + i * 0.001, -200 + i * 20));
+const regionB = Array.from({ length: 5 }, (_, i) => radarListing(`b${i}`, 'Mauricie', 2, 200_000 + i * 5_000, 24_000 + i * 500, 0.06 + i * 0.002, 100 + i * 10));
+const older: RadarFeed = { release: '2026-08-01', generated_at: '2026-08-01T10:00:00Z', deals: regionA.slice(0, 10) };
+const newer: RadarFeed = { release: '2026-08-19', generated_at: '2026-08-19T10:00:00Z', deals: [...regionA.slice(10), ...regionB] };
+// A listing republished in a later release counts once, at the newer figures.
+const republished: RadarFeed = { release: '2026-08-20', generated_at: '2026-08-20T10:00:00Z', deals: [radarListing('a0', 'Montréal (Île)', 3, 850_000, 60_000, 0.05, 50)] };
+const stale: RadarFeed = { release: '2026-05-01', generated_at: '2026-05-01T10:00:00Z', deals: regionB.map((deal) => ({ ...deal, listing: { ...deal.listing, listing_id: `old-${deal.listing.listing_id}` } })) };
+const benchmarks = buildBenchmarks([older, newer, republished, stale]);
+assert.equal(benchmarks.release, '2026-08-20');
+assert.deepEqual(benchmarks.releases, ['2026-08-20', '2026-08-19', '2026-08-01'], 'releases outside the 60-day window are excluded');
+assert.equal(benchmarks.listing_count, 25);
+const islandPool = benchmarks.pools[poolKey('Montréal (Île)', 'residential')];
+assert.ok(islandPool && islandPool.count === 20);
+assert.equal(islandPool.quantiles.capRate.length, 21);
+assert.ok(islandPool.quantiles.capRate.every((value, index, all) => index === 0 || value >= all[index - 1]), 'quantiles ascend');
+closeTo(islandPool.quantiles.capRate[20], 0.05, 1e-9, );
+assert.equal(benchmarks.pools[poolKey('Mauricie', 'residential')].count, 5);
+assert.equal(benchmarks.pools[poolKey(null, 'residential')].count, 25);
+assert.equal(benchmarks.pools[poolKey(null, null)].count, 25);
+
+// Region with enough listings resolves to itself; a thin region falls back to
+// the province-wide pool of the same class rather than being scored on five.
+assert.equal(resolvePool(benchmarks, 'Montréal (Île)', 'residential')?.scope, 'region');
+assert.ok(BENCHMARK_MIN_SAMPLE > 5);
+assert.equal(resolvePool(benchmarks, 'Mauricie', 'residential')?.scope, 'class');
+assert.equal(resolvePool(benchmarks, 'Nulle part', 'commercial')?.scope, 'all');
+
+const bestIsland = regionA[19];
+const worstIsland = regionA[1];
+const bestRank = relativeRank(bestIsland, publishedRadarMetrics(bestIsland)!, benchmarks);
+const worstRank = relativeRank(worstIsland, publishedRadarMetrics(worstIsland)!, benchmarks);
+assert.ok(bestRank && worstRank);
+assert.equal(bestRank.pool.scope, 'region');
+assert.ok(bestRank.score > worstRank.score);
+assert.ok(bestRank.components.find((c) => c.key === 'yield')!.percentile > 90);
+// Price per door is oriented so a cheaper door scores higher.
+assert.ok(worstRank.components.find((c) => c.key === 'price')!.percentile > bestRank.components.find((c) => c.key === 'price')!.percentile);
+assert.equal(relativeTier(80), 'top');
+assert.equal(relativeTier(79), 'above');
+assert.equal(relativeTier(40), 'inline');
+assert.equal(relativeTier(39), 'below');
+assert.equal(relativeRank(bestIsland, publishedRadarMetrics(bestIsland)!, null), null);
+
+// ─── CMHC rent signal ───────────────────────────────────────────────────────
+const belowMarket: RadarDeal = {
+  ...radarDeal,
+  listing: { ...radarDeal.listing, city: 'Montréal (Villeray/Saint-Michel/Parc-Extension)', region: 'Montréal (Île)', units: 3, potential_gross_income: 3 * 900 * 12, price: 800_000 },
+  assumptions: { vacancy_rate: 0.03, management_pct: 0.05, repairs_pct: 0.08 },
+};
+const belowSignal = cmhcRentSignal(belowMarket, calculatorAreaKey(belowMarket.listing.city), { noi: 20_000 });
+assert.ok(belowSignal.applies);
+if (belowSignal.applies) {
+  closeTo(belowSignal.inPlaceRent, 900, 1e-9);
+  assert.ok(belowSignal.benchmarkRent > 900);
+  assert.ok(belowSignal.gapPct > 0);
+  closeTo(belowSignal.upsideAnnual, (belowSignal.benchmarkRent - 900) * 36, 1e-6);
+  closeTo(belowSignal.capAtBenchmark, (20_000 + belowSignal.upsideAnnual * 0.84) / 800_000, 1e-9);
+  assert.equal(belowSignal.geography, 'Villeray');
+}
+// Above the average there is no upside: sitting tenants' rents cannot drop.
+const aboveMarket: RadarDeal = { ...belowMarket, listing: { ...belowMarket.listing, potential_gross_income: 3 * 2_500 * 12 } };
+const aboveSignal = cmhcRentSignal(aboveMarket, calculatorAreaKey(aboveMarket.listing.city), { noi: 40_000 });
+assert.ok(aboveSignal.applies && aboveSignal.gapPct < 0 && aboveSignal.upsideAnnual === 0);
+if (aboveSignal.applies) closeTo(aboveSignal.capAtBenchmark, 40_000 / 800_000, 1e-9);
+// Unknown island borough still benchmarks against the CMA average.
+const villeMarie = { ...belowMarket, listing: { ...belowMarket.listing, city: 'Montréal (Ville-Marie)' } };
+const villeMarieSignal = cmhcRentSignal(villeMarie, calculatorAreaKey(villeMarie.listing.city), { noi: 20_000 });
+assert.ok(villeMarieSignal.applies && villeMarieSignal.level === 'cma');
+// Outside the survey the signal declines rather than borrowing Montréal rents.
+const quebecCity = { ...belowMarket, listing: { ...belowMarket.listing, city: 'Québec (Sainte-Foy)', region: 'Capitale-Nationale' } };
+assert.deepEqual(cmhcRentSignal(quebecCity, calculatorAreaKey(quebecCity.listing.city), { noi: 20_000 }), { applies: false, reason: 'no-benchmark' });
+const noIncome = { ...belowMarket, listing: { ...belowMarket.listing, potential_gross_income: null } };
+assert.deepEqual(cmhcRentSignal(noIncome, 'villeray', { noi: 0 }), { applies: false, reason: 'no-income' });
+
+// ─── Scenario shocks ────────────────────────────────────────────────────────
+const shockBase = calculateRadarScenario(radarDeal, [])!;
+const rateShock = calculateRadarScenario(radarDeal, [], { rateDelta: 0.01 })!;
+const vacancyShock = calculateRadarScenario(radarDeal, [], { vacancyRate: 0.05 })!;
+const rentLift = calculateRadarScenario(radarDeal, [], { grossIncome: 110_000 })!;
+assert.ok(rateShock.annualDebtService > shockBase.annualDebtService);
+assert.ok(rateShock.loan <= shockBase.loan, 'higher qualification rate cannot enlarge a DSCR-sized loan');
+assert.equal(rateShock.noi, shockBase.noi);
+assert.ok(vacancyShock.noi < shockBase.noi);
+closeTo(vacancyShock.noi, 100_000 * 0.95 - 33_000, 1e-9);
+// Lifted rents carry their management share (5% of income line) with them.
+closeTo(rentLift.operatingExpenses, 33_000 + 5_000 * 0.1, 1e-9);
+closeTo(rentLift.noi, 110_000 * 0.97 - 33_500, 1e-9);
+assert.ok(rentLift.capRate > shockBase.capRate);
+// No shocks reproduces the unmodified scenario exactly.
+assert.deepEqual(calculateRadarScenario(radarDeal, [], {}), shockBase);
 
 console.log('Plex financial-model invariants passed.');
