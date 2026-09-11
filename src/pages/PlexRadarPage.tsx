@@ -11,6 +11,7 @@ import {
   calculatorUrl,
   publishedRadarMetrics,
   type RadarDeal,
+  type RadarExpenseLine,
   type RadarFeed,
   type RadarLocale,
   type RadarMetrics,
@@ -68,6 +69,9 @@ const copy = {
     rentUnavailable: "Comparaison SCHL offerte uniquement dans la RMR de Montréal couverte par l’enquête.",
     lowReliability: "Échantillon SCHL mince (code d) : à utiliser avec prudence.",
     criteria: (score: number) => `Critères publiés · score ${score}/12`,
+    scenarioCriteria: (score: number) => `Critères du scénario · score ${score}/12`,
+    noi: "Revenu net d’exploitation", adjustedNoi: "RNE après réserve", belowNoi: "Sous le RNE : réduit le flux, pas le taux cap.",
+    reserveNote: "La réserve de remplacement est présentée sous le revenu net d’exploitation, comme dans le calculateur complet. Elle réduit le flux de trésorerie et le rendement comptant, mais ni le taux de capitalisation ni la couverture de la dette.",
     factorLabels: { cap_rate: "Taux de capitalisation", cash_on_cash: "Rendement comptant", dscr: "Couverture de la dette", monthly_cash_flow_per_door: "Flux par porte", grm: "Multiplicateur de revenu brut", break_even_ratio: "Poids des charges", expense_ratio: "Poids des charges" } as Record<string, string>,
     positiveFlow: "CF positif / mois", negativeFlow: "Déficit / mois", neutralFlow: "CF nul / mois",
     cap: "Taux cap.", cash: "Flux / mois", score: "Score", published: "Analyse publiée",
@@ -112,6 +116,9 @@ const copy = {
     rentUnavailable: "CMHC comparison is only available inside the Montréal CMA covered by the survey.",
     lowReliability: "Thin CMHC sample (code d): use with caution.",
     criteria: (score: number) => `Published criteria · score ${score}/12`,
+    scenarioCriteria: (score: number) => `Scenario criteria · score ${score}/12`,
+    noi: "Net operating income", adjustedNoi: "NOI after reserve", belowNoi: "Below NOI: lowers cash flow, not the cap rate.",
+    reserveNote: "The replacement reserve sits below net operating income, as in the full calculator. It reduces cash flow and cash-on-cash, but neither the cap rate nor debt coverage.",
     factorLabels: { cap_rate: "Cap rate", cash_on_cash: "Cash-on-cash", dscr: "Debt coverage", monthly_cash_flow_per_door: "Cash flow per door", grm: "Gross rent multiplier", break_even_ratio: "Expense load", expense_ratio: "Expense load" } as Record<string, string>,
     positiveFlow: "Positive CF / mo", negativeFlow: "Deficit / mo", neutralFlow: "Break-even / mo",
     cap: "Cap rate", cash: "Cash flow / mo", score: "Score",
@@ -201,6 +208,14 @@ function MetricInfo({ id, label, description }: { id: string; label: string; des
     <button type="button" aria-label={`${label}: ${description}`} aria-describedby={id}>i</button>
     <span className="radar-metric-tooltip" id={id} role="tooltip">{description}</span>
   </span>;
+}
+
+function ExpenseLine({ line, removed, t, note, onToggle }: { line: RadarExpenseLine; removed: boolean; t: Copy; note?: string; onToggle: () => void }) {
+  return <article className={removed ? "is-removed" : ""}>
+    <span><strong>{line.label}</strong><small>{line.rule}</small>{note && <small>{note}</small>}</span>
+    <span><b>{money.format(line.amount)}</b><em>{line.source === "reported" ? t.reported : t.estimated}</em></span>
+    {line.source === "estimated" && <button aria-label={`${removed ? t.add : t.remove}: ${line.label}`} aria-pressed={removed} onClick={onToggle}>{removed ? "+" : "−"}</button>}
+  </article>;
 }
 
 const PRICE_CAPS = [500_000, 750_000, 1_000_000, 1_500_000, 2_500_000];
@@ -499,17 +514,20 @@ export default function PlexRadarPage() {
               </> : <p className="radar-rent-flat">{t.rentUnavailable}</p>}
             </section>
 
-            {selected.analysis.factors && selected.analysis.factors.length > 0 && <details className="radar-factors">
-              <summary>{t.criteria(selected.analysis.score)}</summary>
+            {selected.live.factors.length > 0 && <details className="radar-factors">
+              <summary>{selected.modified ? t.scenarioCriteria(selected.live.score) : t.criteria(selected.live.score)}</summary>
               <ul>
-                {selected.analysis.factors.map((factor) => <li key={factor.label} className={`is-${factor.status}`}><i aria-hidden="true" /><span>{t.factorLabels[factor.label] ?? factor.label.replace(/_/g, " ")}</span><b>{factorValue(factor.label, factor.value)}</b></li>)}
+                {selected.live.factors.map((factor) => <li key={factor.label} className={`is-${factor.status}`}><i aria-hidden="true" /><span>{t.factorLabels[factor.label] ?? factor.label.replace(/_/g, " ")}</span><b>{factorValue(factor.label, factor.value)}</b></li>)}
               </ul>
             </details>}
 
             {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
               <details><summary>{t.definitionTitle}</summary><p>{t.definition}</p></details>
-              {selected.expense_policy.lines.map((line) => { const removed = selectedExcluded.includes(line.key); return <article className={removed ? "is-removed" : ""} key={line.key}><span><strong>{line.label}</strong><small>{line.rule}</small></span><span><b>{money.format(line.amount)}</b><em>{line.source === "reported" ? t.reported : t.estimated}</em></span>{line.source === "estimated" && <button aria-label={`${removed ? t.add : t.remove}: ${line.label}`} aria-pressed={removed} onClick={() => toggleExpense(selected.listing.listing_id, line.key)}>{removed ? "+" : "−"}</button>}</article>})}
+              {selected.expense_policy.lines.filter((line) => line.key !== "capex").map((line) => <ExpenseLine key={line.key} line={line} removed={selectedExcluded.includes(line.key)} t={t} onToggle={() => toggleExpense(selected.listing.listing_id, line.key)} />)}
+              <div className="radar-noi"><div><p>{t.noi}</p><strong>{money.format(selected.live.noi)}</strong></div><div><p>{t.adjustedNoi}</p><strong>{money.format(selected.live.adjustedNoi)}</strong></div></div>
+              {selected.expense_policy.lines.filter((line) => line.key === "capex").map((line) => <ExpenseLine key={line.key} line={line} removed={selectedExcluded.includes(line.key)} t={t} note={t.belowNoi} onToggle={() => toggleExpense(selected.listing.listing_id, line.key)} />)}
               <small>{t.notice}</small>
+              <small>{t.reserveNote}</small>
             </section>}
             <div className="radar-actions"><Link to={calculatorUrl(selected, l, selectedExcluded)}>{t.calculator}</Link><a href={selected.listing.url} target="_blank" rel="noreferrer">{t.source} ↗</a></div>
           </div>

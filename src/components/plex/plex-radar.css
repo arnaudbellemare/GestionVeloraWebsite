@@ -386,6 +386,9 @@
 .radar-expenses article.is-removed b { text-decoration: line-through; }
 .radar-expenses article.is-removed button { background: var(--radar-green); color: #fff; }
 .radar-expenses > small { display: block; margin-top: 10px; color: var(--radar-muted); font-size: 8px; line-height: 1.4; }
+.radar-expenses > div.radar-noi { margin-top: 12px; padding: 12px 0 4px; border-top: 2px solid var(--radar-ink); }
+.radar-expenses > div.radar-noi > div:last-child { text-align: right; }
+.radar-expenses > div.radar-noi strong { font-size: 16px; }
 .radar-actions { display: grid; gap: 8px; margin-top: 22px; }
 .radar-actions a { padding: 13px 15px; border: 1px solid var(--radar-green); color: var(--radar-green); font-size: 11px; font-weight: 700; text-align: center; text-decoration: none; }
 .radar-actions a:first-child { background: var(--radar-green); color: #fff; }

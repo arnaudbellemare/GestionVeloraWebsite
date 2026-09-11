@@ -1,4 +1,4 @@
-import type { RadarDeal, RadarFeed, RadarMetrics } from "../../data/plex-radar";
+import { publishedRadarMetrics, type RadarDeal, type RadarFeed, type RadarMetrics } from "../../data/plex-radar.js";
 import {
   CMHC_SURVEY_PERIOD,
   CMHC_SURVEY_PERIOD_EN,
@@ -25,7 +25,8 @@ import {
  * kilobytes rather than the ~350 KB per daily release.
  */
 
-export const BENCHMARKS_VERSION = "plex-radar-benchmarks/1.0.0";
+/** Bumped when the sampled metrics change, so stored tables are rebuilt. */
+export const BENCHMARKS_VERSION = "plex-radar-benchmarks/1.1.0";
 export const BENCHMARK_WINDOW_DAYS = 60;
 /** Below this many listings a pool is skipped and a broader one is used. */
 export const BENCHMARK_MIN_SAMPLE = 15;
@@ -83,9 +84,14 @@ function sampleOf(deal: RadarDeal): Sample | null {
   if (deal.status !== "underwritten") return null;
   const gross = deal.listing.potential_gross_income ?? 0;
   if (gross <= 0 || deal.listing.price <= 0 || deal.listing.units <= 0) return null;
+  if (deal.metrics.cap_rate === undefined || deal.metrics.monthly_cash_flow_per_door === undefined) return null;
+  // Read through the shared normalisation so releases that carried the capital
+  // reserve inside operating expenses pool with current ones on the same NOI basis.
+  const published = publishedRadarMetrics(deal);
+  if (!published) return null;
   const n = (key: string) => Number(deal.metrics[key]);
-  const capRate = n("cap_rate");
-  const cashFlowPerDoor = n("monthly_cash_flow_per_door");
+  const capRate = published.capRate;
+  const cashFlowPerDoor = published.cashFlowPerDoor;
   const pricePerDoor = Number.isFinite(n("price_per_door")) && n("price_per_door") > 0
     ? n("price_per_door")
     : deal.listing.price / deal.listing.units;

@@ -67,6 +67,8 @@ export type RadarFeed = {
   deals: RadarDeal[];
 };
 
+export type RadarFactor = { label: string; value: number | string; status: "good" | "warning" | "bad" };
+
 export type RadarMetrics = {
   capRate: number;
   cashOnCash: number;
@@ -74,12 +76,22 @@ export type RadarMetrics = {
   grm: number;
   monthlyCashFlow: number;
   cashFlowPerDoor: number;
+  /** Standard NOI: effective gross income less operating expenses, before the capital reserve. */
   noi: number;
+  /** Recurring operating expenses. The capital reserve is not one of them. */
   operatingExpenses: number;
+  /** Annual replacement reserve, set aside below NOI and charged only to cash flow. */
+  capexReserve: number;
+  /** Conservative NOI after the capital reserve: what cash flow runs from. */
+  adjustedNoi: number;
+  /** (Operating expenses + debt service) ÷ effective gross income. */
+  breakEvenRatio: number;
   annualDebtService: number;
   loan: number;
   score: number;
   verdict: string;
+  /** The six published criteria, each graded good / warning / bad. */
+  factors: RadarFactor[];
 };
 
 const n = (deal: RadarDeal, key: string) => Number(deal.metrics[key] ?? 0);
@@ -115,22 +127,133 @@ function radarMarketGrm(deal: RadarDeal): number {
     .find((value) => value > 0) ?? 0;
 }
 
+function isCommercialListing(listing: RadarListing): boolean {
+  return listing.units >= 5 || Boolean(listing.mixed_use) || (listing.commercial_units ?? 0) > 0;
+}
+
+/** Amount of the policy's replacement-reserve line, or 0 when the release has none. */
+function radarReserveLine(deal: RadarDeal): number {
+  return deal.expense_policy?.lines.find((line) => line.key === "capex")?.amount ?? 0;
+}
+
+/**
+ * Releases underwritten before plex-screening/2.2.0 folded the replacement
+ * reserve into `operating_expenses`, so their NOI, cap rate and DSCR were
+ * understated relative to the full calculator, which keeps the reserve below
+ * NOI. Such releases are recognised by the absence of the `capex_reserve`
+ * metric and normalised here, so every surface reads the same statement.
+ */
+export function radarReserveInsideExpenses(deal: RadarDeal): boolean {
+  return deal.metrics.capex_reserve === undefined && radarReserveLine(deal) > 0;
+}
+
+export type RadarStandardFigures = {
+  /** True when the published statement had to be re-based (legacy release). */
+  normalized: boolean;
+  operatingExpenses: number;
+  /** Lender-normalised expenses (management, maintenance and janitorial substituted). */
+  normalizedExpenses: number;
+  capexReserve: number;
+  noi: number;
+};
+
+/** Operating statement of a published deal with the capital reserve below NOI. */
+export function radarStandardFigures(deal: RadarDeal): RadarStandardFigures {
+  const normalized = radarReserveInsideExpenses(deal);
+  const reserve = normalized ? radarReserveLine(deal) : n(deal, "capex_reserve");
+  const shift = normalized ? reserve : 0;
+  const operatingExpenses = Math.max(0, n(deal, "operating_expenses") - shift);
+  const publishedNormalized = n(deal, "normalized_expenses") || n(deal, "operating_expenses");
+  return {
+    normalized,
+    operatingExpenses,
+    normalizedExpenses: Math.max(0, publishedNormalized - shift),
+    capexReserve: Math.max(0, reserve),
+    noi: n(deal, "noi") + shift,
+  };
+}
+
+/** Published model constants, used when a release carries no stored assumptions. */
+export const RADAR_MODEL = {
+  vacancyRate: 0.03,
+  contractRate: 0.0475,
+  /** Lender stress rate: contract + 2 points, floored at 5.25%. */
+  qualificationRate: 0.0675,
+  dscrTarget: 1.2,
+  maxLtv: 0.75,
+  downPaymentPct: 0.25,
+  residentialAmortizationYears: 25,
+  commercialAmortizationYears: 40,
+} as const;
+
+export type RadarAssumptions = {
+  vacancyRate: number;
+  contractRate: number;
+  qualificationRate: number;
+  dscrTarget: number;
+  maxLtv: number;
+  downPaymentPct: number;
+  amortizationYears: number;
+};
+
+/**
+ * Financing and vacancy assumptions the producer stored with the deal, so a
+ * historical release is re-run under its own rules rather than today's. Each
+ * field falls back to the published model when the release predates it.
+ */
+export function radarAssumptions(deal: RadarDeal): RadarAssumptions {
+  const stored = (key: string, fallback: number) => {
+    const value = Number(deal.assumptions?.[key]);
+    return Number.isFinite(value) && value > 0 ? value : fallback;
+  };
+  const commercial = isCommercialListing(deal.listing);
+  const contractRate = stored("annual_interest_rate", RADAR_MODEL.contractRate);
+  const publishedQualification = n(deal, "qualification_rate");
+  return {
+    vacancyRate: Math.min(0.99, Math.max(0, Number(deal.assumptions?.vacancy_rate ?? RADAR_MODEL.vacancyRate) || 0)),
+    contractRate,
+    qualificationRate: commercial
+      ? (publishedQualification > 0 ? publishedQualification : Math.max(contractRate + 0.02, 0.0525))
+      : contractRate,
+    dscrTarget: stored("dscr_target", RADAR_MODEL.dscrTarget),
+    maxLtv: stored("max_ltv", RADAR_MODEL.maxLtv),
+    downPaymentPct: stored("down_payment_pct", RADAR_MODEL.downPaymentPct),
+    amortizationYears: commercial
+      ? stored("commercial_amortization_years", RADAR_MODEL.commercialAmortizationYears)
+      : stored("residential_amortization_years", RADAR_MODEL.residentialAmortizationYears),
+  };
+}
+
 export function publishedRadarMetrics(deal: RadarDeal): RadarMetrics | null {
   if (deal.status !== "underwritten") return null;
-  return {
-    capRate: n(deal, "cap_rate"),
+  const listing = deal.listing;
+  const figures = radarStandardFigures(deal);
+  const annualDebtService = n(deal, "annual_debt_service");
+  const egi = n(deal, "effective_gross_income")
+    || (listing.potential_gross_income ?? 0) * (1 - radarAssumptions(deal).vacancyRate);
+  const base = {
+    capRate: figures.normalized ? (listing.price > 0 ? figures.noi / listing.price : 0) : n(deal, "cap_rate"),
     cashOnCash: n(deal, "cash_on_cash"),
-    dscr: n(deal, "dscr"),
+    dscr: figures.normalized ? (annualDebtService > 0 ? figures.noi / annualDebtService : 0) : n(deal, "dscr"),
     grm: n(deal, "grm"),
     monthlyCashFlow: n(deal, "monthly_cash_flow"),
     cashFlowPerDoor: n(deal, "monthly_cash_flow_per_door"),
-    noi: n(deal, "noi"),
-    operatingExpenses: n(deal, "operating_expenses"),
-    annualDebtService: n(deal, "annual_debt_service"),
+    noi: figures.noi,
+    operatingExpenses: figures.operatingExpenses,
+    capexReserve: figures.capexReserve,
+    adjustedNoi: figures.noi - figures.capexReserve,
+    breakEvenRatio: !figures.normalized && deal.metrics.break_even_ratio !== undefined
+      ? n(deal, "break_even_ratio")
+      : (egi > 0 ? (figures.operatingExpenses + annualDebtService) / egi : 0),
+    annualDebtService,
     loan: n(deal, "loan"),
-    score: deal.analysis.score,
-    verdict: deal.analysis.verdict,
   };
+  // A legacy release was graded on the reserve-laden statement; regrade it on
+  // the normalised one so the score agrees with the metrics shown beside it.
+  const graded = figures.normalized
+    ? grade(base, isCommercialListing(listing))
+    : { score: deal.analysis.score, verdict: deal.analysis.verdict, factors: deal.analysis.factors ?? [] };
+  return { ...base, ...graded };
 }
 
 function periodicRate(annualRate: number) {
@@ -149,29 +272,24 @@ function presentValue(rate: number, periods: number, periodicPayment: number) {
   return periodicPayment * (1 - Math.pow(1 + rate, -periods)) / rate;
 }
 
-function grade(metrics: Omit<RadarMetrics, "score" | "verdict">, commercial: boolean) {
+/** Mirrors the producer's `_score`: six criteria, 0–2 points each. */
+function grade(metrics: Omit<RadarMetrics, "score" | "verdict" | "factors">, commercial: boolean) {
   let score = 0;
-  const points = (value: number, good: number, warning: number, reverse = false) => {
-    if (reverse ? value <= good : value >= good) score += 2;
-    else if (reverse ? value <= warning : value >= warning) score += 1;
+  const factors: RadarFactor[] = [];
+  const points = (label: string, value: number, good: number, warning: number, reverse = false) => {
+    let status: RadarFactor["status"] = "bad";
+    if (reverse ? value <= good : value >= good) { score += 2; status = "good"; }
+    else if (reverse ? value <= warning : value >= warning) { score += 1; status = "warning"; }
+    factors.push({ label, value, status });
   };
-  points(metrics.capRate, commercial ? 0.07 : 0.08, 0.05);
-  points(metrics.cashOnCash, commercial ? 0.08 : 0.10, commercial ? 0.04 : 0.05);
-  points(metrics.dscr, commercial ? 1.3 : 1.25, commercial ? 1.1 : 1);
-  points(metrics.cashFlowPerDoor, commercial ? 150 : 200, 0);
-  points(metrics.grm, 10, 15, true);
-  points((metrics.operatingExpenses + metrics.annualDebtService) / Math.max(1, metrics.noi + metrics.operatingExpenses), 0.8, 1, true);
-  return { score, verdict: score >= 9 ? "strong-buy" : score >= 6 ? "buy" : score >= 3 ? "hold" : "avoid" };
+  points("cap_rate", metrics.capRate, commercial ? 0.07 : 0.08, 0.05);
+  points("cash_on_cash", metrics.cashOnCash, commercial ? 0.08 : 0.10, commercial ? 0.04 : 0.05);
+  points("dscr", metrics.dscr, commercial ? 1.3 : 1.25, commercial ? 1.1 : 1);
+  points("monthly_cash_flow_per_door", metrics.cashFlowPerDoor, commercial ? 150 : 200, 0);
+  points("grm", metrics.grm, 10, 15, true);
+  points("break_even_ratio", metrics.breakEvenRatio, 0.8, 1, true);
+  return { score, verdict: score >= 9 ? "strong-buy" : score >= 6 ? "buy" : score >= 3 ? "hold" : "avoid", factors };
 }
-
-/** Published model constants, mirrored from the producer's assumptions block. */
-export const RADAR_MODEL = {
-  vacancyRate: 0.03,
-  contractRate: 0.0475,
-  qualificationRate: 0.0675,
-  dscrTarget: 1.2,
-  maxLtv: 0.75,
-} as const;
 
 /**
  * What-if adjustments layered on the published scenario. Each is optional so
@@ -180,42 +298,61 @@ export const RADAR_MODEL = {
 export type RadarShocks = {
   /** Added to the contract and qualification rates, e.g. 0.01 for +1 point. */
   rateDelta?: number;
-  /** Replaces the 3% vacancy allowance. */
+  /** Replaces the release's vacancy allowance. */
   vacancyRate?: number;
   /** Replaces the advertised gross income, e.g. rents lifted to the CMHC average. */
   grossIncome?: number;
 };
 
+/**
+ * Re-runs a published deal under the release's own assumptions with estimated
+ * lines removed and optional shocks applied. The statement follows the full
+ * calculator: NOI, cap rate and DSCR are taken before the replacement reserve,
+ * which is charged only to cash flow (and therefore to cash-on-cash and the
+ * per-door figures).
+ */
 export function calculateRadarScenario(deal: RadarDeal, excludedKeys: string[], shocks: RadarShocks = {}): RadarMetrics | null {
   const listing = deal.listing;
   const advertised = listing.potential_gross_income ?? 0;
-  if (deal.status !== "underwritten" || advertised <= 0) return null;
+  if (deal.status !== "underwritten" || advertised <= 0 || listing.price <= 0 || listing.units <= 0) return null;
+  const model = radarAssumptions(deal);
   const gross = shocks.grossIncome && shocks.grossIncome > 0 ? shocks.grossIncome : advertised;
-  const occupancy = 1 - Math.min(0.99, Math.max(0, shocks.vacancyRate ?? RADAR_MODEL.vacancyRate));
+  const vacancy = Math.min(0.99, Math.max(0, shocks.vacancyRate ?? model.vacancyRate));
+  const effectiveGrossIncome = gross * (1 - vacancy);
   const rateDelta = shocks.rateDelta ?? 0;
   const excluded = new Set(excludedKeys);
-  const removedLines = deal.expense_policy?.lines.filter((line) => line.source === "estimated" && excluded.has(line.key)) ?? [];
-  const removed = removedLines.reduce((sum, line) => sum + line.amount, 0);
+  const lines = deal.expense_policy?.lines ?? [];
+  const sum = (items: RadarExpenseLine[]) => items.reduce((total, line) => total + line.amount, 0);
+  const removedLines = lines.filter((line) => line.source === "estimated" && excluded.has(line.key));
+  const removedOperating = sum(removedLines.filter((line) => line.key !== "capex"));
+  const removedReserve = sum(removedLines.filter((line) => line.key === "capex"));
   // Management and repairs are policy percentages of income; scale them when
   // the income itself is shocked so a rent lift does not read as pure profit.
-  const incomeLinked = (deal.expense_policy?.lines ?? [])
-    .filter((line) => line.source === "estimated" && (line.key === "management" || line.key === "repairs") && !excluded.has(line.key))
-    .reduce((sum, line) => sum + line.amount, 0);
+  const incomeLinked = sum(lines.filter((line) =>
+    line.source === "estimated" && (line.key === "management" || line.key === "repairs") && !excluded.has(line.key)));
   const incomeScale = gross / advertised - 1;
-  const operatingExpenses = Math.max(0, n(deal, "operating_expenses") - removed + incomeLinked * incomeScale);
-  const noi = gross * occupancy - operatingExpenses;
-  const commercial = listing.units >= 5 || Boolean(listing.mixed_use) || (listing.commercial_units ?? 0) > 0;
-  const years = commercial ? 40 : 25;
-  let loan = listing.price * RADAR_MODEL.maxLtv;
+  const figures = radarStandardFigures(deal);
+  const operatingExpenses = Math.max(0, figures.operatingExpenses - removedOperating + incomeLinked * incomeScale);
+  const capexReserve = Math.max(0, figures.capexReserve - removedReserve);
+  const noi = effectiveGrossIncome - operatingExpenses;
+  const commercial = isCommercialListing(listing);
+  const periods = model.amortizationYears * 12;
+  let loan = listing.price * (commercial ? model.maxLtv : 1 - model.downPaymentPct);
   if (commercial) {
-    const lenderKeys = new Set(["insurance", "capex", "snow", "lawn", "utilities"]);
-    const lenderRemoved = removedLines.filter((line) => lenderKeys.has(line.key)).reduce((sum, line) => sum + line.amount, 0);
-    const normalizedExpenses = Math.max(0, n(deal, "normalized_expenses") - lenderRemoved + incomeLinked * incomeScale);
-    const normalizedNoi = gross * occupancy - normalizedExpenses;
-    loan = Math.min(loan, presentValue(periodicRate(RADAR_MODEL.qualificationRate + rateDelta), years * 12, Math.max(0, normalizedNoi) / RADAR_MODEL.dscrTarget / 12));
+    // The lender substitutes its own management, maintenance and janitorial
+    // lines, so only the remaining estimates move its normalised statement,
+    // and an income shock moves it by the lender's 5% management share alone.
+    const lenderKeys = new Set(["insurance", "snow", "lawn", "utilities"]);
+    const lenderRemoved = sum(removedLines.filter((line) => lenderKeys.has(line.key)));
+    const normalizedExpenses = Math.max(0, figures.normalizedExpenses - lenderRemoved + (gross - advertised) * 0.05);
+    const normalizedNoi = gross * (1 - Math.max(vacancy, 0.03)) - normalizedExpenses;
+    const byDscr = presentValue(
+      periodicRate(model.qualificationRate + rateDelta), periods, Math.max(0, normalizedNoi) / model.dscrTarget / 12,
+    );
+    loan = Math.min(loan, byDscr);
   }
-  const annualDebtService = payment(periodicRate(RADAR_MODEL.contractRate + rateDelta), years * 12, loan) * 12;
-  const annualCashFlow = noi - annualDebtService;
+  const annualDebtService = payment(periodicRate(model.contractRate + rateDelta), periods, loan) * 12;
+  const annualCashFlow = noi - capexReserve - annualDebtService;
   const totalEquity = listing.price - loan + n(deal, "closing_costs");
   const base = {
     capRate: noi / listing.price,
@@ -226,6 +363,9 @@ export function calculateRadarScenario(deal: RadarDeal, excludedKeys: string[], 
     cashFlowPerDoor: annualCashFlow / 12 / listing.units,
     noi,
     operatingExpenses,
+    capexReserve,
+    adjustedNoi: noi - capexReserve,
+    breakEvenRatio: effectiveGrossIncome > 0 ? (operatingExpenses + annualDebtService) / effectiveGrossIncome : 0,
     annualDebtService,
     loan,
   };
@@ -311,17 +451,17 @@ export function calculatorAreaKey(city: string): string {
  */
 export const RADAR_METRIC_DEFS = {
   fr: {
-    cap: { term: "Taux de capitalisation", def: "Revenu net d’exploitation annuel divisé par le prix demandé. Il mesure le rendement de l’immeuble avant financement." },
-    cashOnCash: { term: "Rendement comptant (cash-on-cash)", def: "Flux de trésorerie annuel après financement divisé par la mise de fonds et les frais initiaux estimés." },
-    dscr: { term: "Ratio de couverture de la dette (DSCR)", def: "Revenu net d’exploitation divisé par les paiements annuels de la dette. Au-dessus de 1, l’immeuble couvre sa dette." },
+    cap: { term: "Taux de capitalisation", def: "Revenu net d’exploitation annuel (avant la réserve de remplacement) divisé par le prix demandé. Il mesure le rendement de l’immeuble avant financement." },
+    cashOnCash: { term: "Rendement comptant (cash-on-cash)", def: "Flux de trésorerie annuel après financement et réserve de remplacement, divisé par la mise de fonds et les frais initiaux estimés." },
+    dscr: { term: "Ratio de couverture de la dette (DSCR)", def: "Revenu net d’exploitation (avant la réserve de remplacement) divisé par les paiements annuels de la dette. Au-dessus de 1, l’immeuble couvre sa dette." },
     grm: { term: "Multiplicateur de revenu brut (MRB)", def: "Prix demandé divisé par les revenus locatifs bruts annuels. Un multiple plus bas indique généralement un prix plus favorable par rapport aux revenus." },
     relative: { term: "Rang relatif (sur 100)", def: "Position de l’immeuble parmi les immeubles comparables publiés au cours des 60 derniers jours dans la même région et la même classe (2 à 4 logements ou 5 et plus). Moyenne de trois percentiles : taux de capitalisation, flux de trésorerie par porte et prix par porte. 50 correspond à la médiane du marché observé." },
     rentGap: { term: "Écart de loyer SCHL", def: "Loyer moyen en place (revenus bruts annoncés divisés par le nombre de portes) comparé au loyer moyen de l’Enquête sur les logements locatifs de la SCHL pour le secteur, pondéré selon une composition typique de logements. Un écart positif signale des baux sous la moyenne des logements occupés, donc un potentiel d’optimisation lors des roulements." },
   },
   en: {
-    cap: { term: "Cap rate", def: "Annual net operating income divided by asking price. It measures the property return before financing." },
-    cashOnCash: { term: "Cash-on-cash return", def: "Annual cash flow after financing divided by the estimated down payment and initial cash invested." },
-    dscr: { term: "Debt service coverage ratio (DSCR)", def: "Net operating income divided by annual debt payments. Above 1 means the property covers its debt." },
+    cap: { term: "Cap rate", def: "Annual net operating income (before the replacement reserve) divided by asking price. It measures the property return before financing." },
+    cashOnCash: { term: "Cash-on-cash return", def: "Annual cash flow after financing and the replacement reserve, divided by the estimated down payment and initial cash invested." },
+    dscr: { term: "Debt service coverage ratio (DSCR)", def: "Net operating income (before the replacement reserve) divided by annual debt payments. Above 1 means the property covers its debt." },
     grm: { term: "Gross rent multiplier (GRM)", def: "Asking price divided by annual gross rental income. A lower multiple generally indicates a more favorable price relative to income." },
     relative: { term: "Relative rank (out of 100)", def: "Where the property sits among comparable listings published over the last 60 days in the same region and class (2–4 units or 5+). Average of three percentiles: cap rate, cash flow per door and price per door. 50 is the median of the observed market." },
     rentGap: { term: "CMHC rent gap", def: "Average in-place rent (advertised gross income divided by doors) compared with the CMHC Rental Market Survey average for the area, weighted by a typical unit mix. A positive gap flags leases below the occupied-unit average, hence optimization potential on turnover." },
@@ -343,7 +483,7 @@ export const RADAR_FAQ: Record<RadarLocale, ReadonlyArray<{ id: string; q: strin
     {
       id: "donnees",
       q: "D’où viennent les revenus et les dépenses affichés?",
-      a: "Les revenus, taxes et l’assurance proviennent de la fiche publiée par le courtier lorsqu’ils sont divulgués; ils sont alors marqués « rapporté ». Les dépenses manquantes (réparations, gestion, réserve de remplacement, déneigement, entretien extérieur, services publics) sont estimées selon des règles explicites et marquées « estimé ».",
+      a: "Les revenus, taxes et l’assurance proviennent de la fiche publiée par le courtier lorsqu’ils sont divulgués; ils sont alors marqués « rapporté ». Les dépenses manquantes (réparations, gestion, réserve de remplacement, déneigement, entretien extérieur, services publics) sont estimées selon des règles explicites et marquées « estimé ». La réserve de remplacement est présentée sous le revenu net d’exploitation, comme dans le calculateur complet : elle réduit le flux de trésorerie, mais ni le taux de capitalisation ni la couverture de la dette.",
     },
     {
       id: "score",
@@ -380,7 +520,7 @@ export const RADAR_FAQ: Record<RadarLocale, ReadonlyArray<{ id: string; q: strin
     {
       id: "data",
       q: "Where do the displayed income and expenses come from?",
-      a: "Income, taxes and insurance come from the broker's published listing when disclosed and are marked \"reported\". Missing expenses (repairs, management, replacement reserves, snow removal, exterior care, utilities) are estimated with explicit rules and marked \"estimated\".",
+      a: "Income, taxes and insurance come from the broker's published listing when disclosed and are marked \"reported\". Missing expenses (repairs, management, replacement reserves, snow removal, exterior care, utilities) are estimated with explicit rules and marked \"estimated\". The replacement reserve sits below net operating income, as in the full calculator: it reduces cash flow, but neither the cap rate nor debt coverage.",
     },
     {
       id: "score",

@@ -4,6 +4,9 @@ import {
   applyPropertyPreset,
   calculateDeal,
   calculateEconomicValue,
+  calculateWelcomeTax,
+  mliSelectTerms,
+  multiUnitPremiumPct,
   calculateEquityMilestones,
   calculatePaybackYears,
   calculateProjection,
@@ -13,11 +16,15 @@ import {
   rentalUseFraction,
 } from '../src/lib/plex/calculator';
 import {
+  RADAR_MODEL,
   calculateRadarScenario,
   calculatorAreaKey,
   calculatorUrl,
   publishedRadarMetrics,
+  radarAssumptions,
+  radarReserveInsideExpenses,
   type RadarDeal,
+  type RadarExpenseLine,
   type RadarFeed,
 } from '../src/data/plex-radar';
 import { createRadarPrefill } from '../src/lib/plex/radar-prefill';
@@ -517,5 +524,274 @@ closeTo(rentLift.noi, 110_000 * 0.97 - 33_500, 1e-9);
 assert.ok(rentLift.capRate > shockBase.capRate);
 // No shocks reproduces the unmodified scenario exactly.
 assert.deepEqual(calculateRadarScenario(radarDeal, [], {}), shockBase);
+
+// ─── Capital reserve below NOI: Radar ↔ calculator parity ───────────────────
+// Rebuilds a producer (plex-screening/2.2.0) deal from its published rules so
+// the website can be checked against the exact statement the feed carries.
+const pmt = (rate: number, periods: number, principal: number) =>
+  rate === 0 ? principal / periods : principal * rate * Math.pow(1 + rate, periods) / (Math.pow(1 + rate, periods) - 1);
+const pv = (rate: number, periods: number, paymentPerPeriod: number) =>
+  rate === 0 ? paymentPerPeriod * periods : paymentPerPeriod * (1 - Math.pow(1 + rate, -periods)) / rate;
+const PRODUCER_ASSUMPTIONS = {
+  vacancy_rate: 0.03, repairs_pct: 0.08, management_pct: 0.05, capex_per_unit: 500, down_payment_pct: 0.25,
+  annual_interest_rate: 0.0475, residential_amortization_years: 25, commercial_amortization_years: 40,
+  dscr_target: 1.2, max_ltv: 0.75, mortgage_compounding: 'semi-annual', payments_per_year: 12,
+  notary_fees: 2000, inspection_fees: 600, title_insurance: 350, appraisal_fees: 500,
+};
+type ProducerSpec = {
+  id: string; type: string; price: number; units: number; gross: number; year: number;
+  municipal: number; school: number;
+  insurance: number; repairsPct: number; managementPct: number; capexPerUnit: number;
+  snow: number; lawn: number; utilities: number;
+  rate?: number; amortization?: number;
+};
+function producerDeal(spec: ProducerSpec): RadarDeal {
+  const commercial = spec.units >= 5;
+  const line = (key: string, label: string, amount: number, source: RadarExpenseLine['source'] = 'estimated'): RadarExpenseLine =>
+    ({ key, label, amount, source, rule: 'test' });
+  const lines = [
+    line('municipal_taxes', 'Taxes municipales', spec.municipal, 'reported'),
+    line('school_taxes', 'Taxes scolaires', spec.school, 'reported'),
+    line('insurance', 'Assurance', spec.insurance),
+    line('repairs', 'Entretien et réparations', spec.gross * spec.repairsPct),
+    line('management', 'Gestion', spec.gross * spec.managementPct),
+    line('capex', 'Réserve de remplacement', spec.units * spec.capexPerUnit),
+    line('snow', 'Déneigement', spec.snow),
+    line('lawn', 'Entretien extérieur', spec.lawn),
+    line('utilities', 'Services publics propriétaire', spec.utilities),
+  ];
+  const total = lines.reduce((sum, l) => sum + l.amount, 0);
+  const capex = spec.units * spec.capexPerUnit;
+  const operatingExpenses = total - capex;
+  const egi = spec.gross * 0.97;
+  const noi = egi - operatingExpenses;
+  const rate = spec.rate ?? 0.0475;
+  const years = spec.amortization ?? (commercial ? 40 : 25);
+  const periodic = mortgagePeriodicRate(rate, 12, 'semi-annual');
+  let normalizedExpenses = operatingExpenses;
+  let normalizedNoi = noi;
+  let qualificationRate = rate;
+  let byDscr = 0;
+  const byLtv = spec.price * (commercial ? 0.75 : 0.75);
+  let loan = byLtv;
+  let loanSizedBy: 'ltv' | 'dscr' | 'down-payment' = 'down-payment';
+  if (commercial) {
+    normalizedExpenses = operatingExpenses - spec.gross * spec.managementPct - spec.gross * spec.repairsPct
+      + spec.gross * 0.05 + spec.units * 500 + spec.units * 200;
+    normalizedNoi = spec.gross * 0.97 - normalizedExpenses;
+    qualificationRate = Math.max(rate + 0.02, 0.0525);
+    byDscr = pv(mortgagePeriodicRate(qualificationRate, 12, 'semi-annual'), years * 12, Math.max(0, normalizedNoi) / 1.2 / 12);
+    loan = Math.min(byLtv, byDscr);
+    loanSizedBy = byDscr < byLtv ? 'dscr' : 'ltv';
+  }
+  const annualDebtService = pmt(periodic, years * 12, loan) * 12;
+  const annualCashFlow = noi - capex - annualDebtService;
+  const closingCosts = calculateWelcomeTax(spec.price, true) + 2000 + 600 + 350 + 500;
+  const totalEquity = spec.price - loan + closingCosts;
+  const metrics = {
+    gross_income: spec.gross, effective_gross_income: egi, operating_expenses: operatingExpenses,
+    capex_reserve: capex, adjusted_noi: noi - capex, normalized_expenses: normalizedExpenses, noi,
+    cap_rate: noi / spec.price, grm: spec.price / spec.gross, price_per_door: spec.price / spec.units,
+    loan, loan_sized_by: loanSizedBy, max_loan_by_ltv: byLtv, max_loan_by_dscr: byDscr,
+    normalized_noi: normalizedNoi, qualification_rate: qualificationRate,
+    annual_debt_service: annualDebtService, annual_cash_flow: annualCashFlow,
+    monthly_cash_flow: annualCashFlow / 12, monthly_cash_flow_per_door: annualCashFlow / 12 / spec.units,
+    cash_on_cash: totalEquity > 0 ? annualCashFlow / totalEquity : 0,
+    dscr: annualDebtService > 0 ? noi / annualDebtService : 0,
+    break_even_ratio: (operatingExpenses + annualDebtService) / egi,
+    total_equity: totalEquity, closing_costs: closingCosts,
+  };
+  const draft: RadarDeal = {
+    listing: {
+      listing_id: spec.id, url: `https://www.centris.ca/fr/plex/${spec.id}`, property_type: spec.type,
+      address: `1 rue Test`, city: 'Montréal (Villeray/Saint-Michel/Parc-Extension)', region: 'Montréal (Île)',
+      price: spec.price, units: spec.units, residential_units: spec.units, commercial_units: 0, mixed_use: false,
+      potential_gross_income: spec.gross, municipal_taxes: spec.municipal, school_taxes: spec.school,
+      insurance: null, year_built: spec.year, listed_at: '2026-09-11',
+    },
+    status: 'underwritten',
+    assumptions: { ...PRODUCER_ASSUMPTIONS, annual_interest_rate: rate,
+      residential_amortization_years: commercial ? 25 : years, commercial_amortization_years: commercial ? years : 40 },
+    expense_policy: {
+      version: 'quebec-plex-expenses/1.1.0', building_age: 2026 - spec.year,
+      reported_total: spec.municipal + spec.school, estimated_total: total - spec.municipal - spec.school, total, lines,
+    },
+    metrics,
+    analysis: { verdict: 'avoid', score: 0, max_score: 12, factors: [] },
+  };
+  // The producer grades on the same six criteria the website re-derives.
+  const graded = calculateRadarScenario(draft, [])!;
+  return { ...draft, analysis: { verdict: graded.verdict, score: graded.score, max_score: 12, factors: graded.factors } };
+}
+/** The same deal as plex-screening/2.1.0 published it: reserve folded into expenses and NOI. */
+function legacyRelease(deal: RadarDeal, id = `${deal.listing.listing_id}-legacy`): RadarDeal {
+  const capex = Number(deal.metrics.capex_reserve);
+  const metrics: Record<string, number | string> = { ...deal.metrics };
+  delete metrics.capex_reserve;
+  delete metrics.adjusted_noi;
+  metrics.operating_expenses = Number(metrics.operating_expenses) + capex;
+  metrics.normalized_expenses = Number(metrics.normalized_expenses) + capex;
+  metrics.noi = Number(metrics.noi) - capex;
+  metrics.cap_rate = Number(metrics.noi) / deal.listing.price;
+  metrics.dscr = Number(metrics.noi) / Number(metrics.annual_debt_service);
+  metrics.break_even_ratio = (Number(metrics.operating_expenses) + Number(metrics.annual_debt_service)) / Number(metrics.effective_gross_income);
+  return {
+    ...deal,
+    listing: { ...deal.listing, listing_id: id },
+    expense_policy: { ...deal.expense_policy!, version: 'quebec-plex-expenses/1.0.0' },
+    metrics,
+    analysis: { verdict: 'avoid', score: 0, max_score: 12, factors: [] },
+  };
+}
+const NUMERIC_KEYS = ['capRate', 'cashOnCash', 'dscr', 'grm', 'monthlyCashFlow', 'cashFlowPerDoor', 'noi', 'operatingExpenses', 'capexReserve', 'adjustedNoi', 'breakEvenRatio', 'annualDebtService', 'loan'] as const;
+
+// Duplex, 66 years old: 11% repairs, $900/door reserve, insurance +10% (producer rules).
+const duplex = producerDeal({
+  id: 'res-2026', type: 'Duplex', price: 800_000, units: 2, gross: 36_000, year: 1960,
+  municipal: 5_000, school: 500, insurance: 2_640, repairsPct: 0.11, managementPct: 0.05, capexPerUnit: 900,
+  snow: 900, lawn: 350, utilities: 600,
+});
+const duplexPublished = publishedRadarMetrics(duplex)!;
+const duplexScenario = calculateRadarScenario(duplex, [])!;
+assert.equal(radarReserveInsideExpenses(duplex), false);
+closeTo(duplexPublished.operatingExpenses, 15_750, 1e-9);
+closeTo(duplexPublished.capexReserve, 1_800, 1e-9);
+closeTo(duplexPublished.noi, 34_920 - 15_750, 1e-9);
+closeTo(duplexPublished.adjustedNoi, duplexPublished.noi - 1_800, 1e-9);
+closeTo(duplexPublished.capRate, duplexPublished.noi / 800_000, 1e-12);
+closeTo(duplexPublished.dscr, duplexPublished.noi / duplexPublished.annualDebtService, 1e-12);
+closeTo(duplexPublished.breakEvenRatio, (15_750 + duplexPublished.annualDebtService) / 34_920, 1e-12);
+// Cash flow is the conservative figure: NOI less the reserve less debt service.
+closeTo(duplexPublished.monthlyCashFlow * 12, duplexPublished.adjustedNoi - duplexPublished.annualDebtService, 1e-8);
+// The unmodified scenario reproduces the published statement to the cent.
+for (const key of NUMERIC_KEYS) closeTo(duplexScenario[key], duplexPublished[key], 1e-8);
+assert.equal(duplexScenario.score, duplexPublished.score);
+assert.deepEqual(duplexScenario.factors.map((f) => f.label), ['cap_rate', 'cash_on_cash', 'dscr', 'monthly_cash_flow_per_door', 'grm', 'break_even_ratio']);
+
+// Removing the reserve from a scenario raises cash flow only: NOI, cap rate,
+// DSCR and the loan are untouched because the reserve was never above NOI.
+const duplexNoReserve = calculateRadarScenario(duplex, ['capex'])!;
+assert.equal(duplexNoReserve.capexReserve, 0);
+closeTo(duplexNoReserve.noi, duplexScenario.noi, 1e-9);
+closeTo(duplexNoReserve.capRate, duplexScenario.capRate, 1e-12);
+closeTo(duplexNoReserve.dscr, duplexScenario.dscr, 1e-12);
+closeTo(duplexNoReserve.loan, duplexScenario.loan, 1e-9);
+closeTo(duplexNoReserve.monthlyCashFlow - duplexScenario.monthlyCashFlow, 1_800 / 12, 1e-9);
+// Removing an operating estimate moves NOI and cap rate as before.
+const duplexNoSnow = calculateRadarScenario(duplex, ['snow'])!;
+closeTo(duplexNoSnow.noi - duplexScenario.noi, 900, 1e-9);
+closeTo(duplexNoSnow.operatingExpenses, 15_750 - 900, 1e-9);
+
+// A release underwritten before 2.2.0 reads the same statement once normalised,
+// including its regrade, so history and today's releases rank on one basis.
+const duplexLegacy = legacyRelease(duplex);
+assert.equal(radarReserveInsideExpenses(duplexLegacy), true);
+const duplexLegacyPublished = publishedRadarMetrics(duplexLegacy)!;
+const duplexLegacyScenario = calculateRadarScenario(duplexLegacy, [])!;
+for (const key of NUMERIC_KEYS) {
+  closeTo(duplexLegacyPublished[key], duplexPublished[key], 1e-8);
+  closeTo(duplexLegacyScenario[key], duplexScenario[key], 1e-8);
+}
+assert.equal(duplexLegacyPublished.score, duplexPublished.score);
+assert.equal(duplexLegacyPublished.verdict, duplexPublished.verdict);
+// Reserve inside expenses can also move the grade: cap rate 4.6% vs 5.0%.
+const boundary = producerDeal({
+  id: 'res-boundary', type: 'Duplex', price: 380_000, units: 2, gross: 36_000, year: 1960,
+  municipal: 5_000, school: 500, insurance: 2_640, repairsPct: 0.11, managementPct: 0.05, capexPerUnit: 900,
+  snow: 900, lawn: 350, utilities: 600,
+});
+const boundaryLegacy = legacyRelease(boundary);
+assert.ok(Number(boundaryLegacy.metrics.cap_rate) < 0.05 && Number(boundary.metrics.cap_rate) >= 0.05);
+assert.equal(publishedRadarMetrics(boundaryLegacy)!.score, publishedRadarMetrics(boundary)!.score);
+assert.equal(publishedRadarMetrics(boundaryLegacy)!.factors.find((f) => f.label === 'cap_rate')!.status, 'warning');
+
+// Benchmarks sample the normalised cap rate, so a legacy release pools with a
+// current one at the same value.
+const mixedFeed: RadarFeed = { release: '2026-09-11', generated_at: '2026-09-11T10:00:00Z', deals: [duplex, duplexLegacy] };
+const mixedBenchmarks = buildBenchmarks([mixedFeed]);
+const mixedPool = mixedBenchmarks.pools[poolKey(null, null)];
+assert.equal(mixedPool.count, 2);
+closeTo(mixedPool.quantiles.capRate[0], duplexPublished.capRate, 1e-7);
+closeTo(mixedPool.quantiles.capRate[20], duplexPublished.capRate, 1e-7);
+
+// Stored release assumptions drive the scenario; a release without them falls
+// back to the published model, and one underwritten at 6% over 30 years does not.
+const duplexNoAssumptions = { ...duplex, assumptions: undefined };
+assert.deepEqual(radarAssumptions(duplexNoAssumptions), {
+  vacancyRate: RADAR_MODEL.vacancyRate, contractRate: RADAR_MODEL.contractRate, qualificationRate: RADAR_MODEL.contractRate,
+  dscrTarget: RADAR_MODEL.dscrTarget, maxLtv: RADAR_MODEL.maxLtv, downPaymentPct: RADAR_MODEL.downPaymentPct,
+  amortizationYears: RADAR_MODEL.residentialAmortizationYears,
+});
+for (const key of NUMERIC_KEYS) closeTo(calculateRadarScenario(duplexNoAssumptions, [])![key], duplexScenario[key], 1e-8);
+const duplexDearMoney = producerDeal({
+  id: 'res-6pct', type: 'Duplex', price: 800_000, units: 2, gross: 36_000, year: 1960,
+  municipal: 5_000, school: 500, insurance: 2_640, repairsPct: 0.11, managementPct: 0.05, capexPerUnit: 900,
+  snow: 900, lawn: 350, utilities: 600, rate: 0.06, amortization: 30,
+});
+assert.equal(radarAssumptions(duplexDearMoney).contractRate, 0.06);
+assert.equal(radarAssumptions(duplexDearMoney).amortizationYears, 30);
+const dearScenario = calculateRadarScenario(duplexDearMoney, [])!;
+closeTo(dearScenario.annualDebtService, Number(duplexDearMoney.metrics.annual_debt_service), 1e-8);
+assert.notEqual(Math.round(dearScenario.annualDebtService), Math.round(duplexScenario.annualDebtService));
+
+// Opening the Radar deal in the full calculator must reproduce its cap rate,
+// DSCR and cash flow exactly: both now keep the reserve below NOI.
+const duplexInputs = createRadarPrefill(new URL(calculatorUrl(duplex, 'fr'), 'https://www.gestionvelora.com').searchParams);
+const duplexCalc = calculateDeal(duplexInputs);
+closeTo(duplexCalc.totalOperatingExpenses, duplexPublished.operatingExpenses, 1e-6);
+closeTo(duplexCalc.capexReserveAnnual, duplexPublished.capexReserve, 1e-9);
+closeTo(duplexCalc.noi, duplexPublished.noi, 1e-6);
+closeTo(duplexCalc.purchaseCapRate, duplexPublished.capRate, 1e-9);
+closeTo(duplexCalc.dscrYear1, duplexPublished.dscr, 1e-9);
+closeTo(duplexCalc.annualDebtService, duplexPublished.annualDebtService, 1e-6);
+closeTo(duplexCalc.btCashFlowYear1, duplexPublished.monthlyCashFlow * 12, 1e-6);
+closeTo(duplexCalc.cashOnCashBtYear1, duplexPublished.cashOnCash, 1e-9);
+closeTo(duplexCalc.breakEvenRatio, duplexPublished.breakEvenRatio, 1e-9);
+closeTo(duplexCalc.closingCosts.totalClosingCosts, Number(duplex.metrics.closing_costs), 1e-6);
+
+// Five doors, DSCR-sized: the lender-normalised statement also excludes the
+// reserve, on both sides, so the loan and DSCR agree.
+const quintuplex = producerDeal({
+  id: 'com-2026', type: 'Quintuplex', price: 1_200_000, units: 5, gross: 100_000, year: 1990,
+  municipal: 8_000, school: 1_000, insurance: 5_200, repairsPct: 0.09, managementPct: 0.06, capexPerUnit: 700,
+  snow: 2_200, lawn: 700, utilities: 1_800,
+});
+assert.equal(quintuplex.metrics.loan_sized_by, 'dscr');
+const quintuplexPublished = publishedRadarMetrics(quintuplex)!;
+const quintuplexScenario = calculateRadarScenario(quintuplex, [])!;
+for (const key of NUMERIC_KEYS) closeTo(quintuplexScenario[key], quintuplexPublished[key], 1e-6);
+closeTo(calculateRadarScenario(quintuplex, ['capex'])!.loan, quintuplexScenario.loan, 1e-6);
+const quintuplexLegacy = legacyRelease(quintuplex);
+for (const key of NUMERIC_KEYS) closeTo(calculateRadarScenario(quintuplexLegacy, [])![key], quintuplexScenario[key], 1e-6);
+closeTo(publishedRadarMetrics(quintuplexLegacy)!.noi, quintuplexPublished.noi, 1e-8);
+closeTo(publishedRadarMetrics(quintuplexLegacy)!.capRate, quintuplexPublished.capRate, 1e-12);
+const quintuplexInputs = createRadarPrefill(new URL(calculatorUrl(quintuplex, 'fr'), 'https://www.gestionvelora.com').searchParams);
+assert.equal(quintuplexInputs.financingMode, 'commercial');
+const quintuplexCalc = calculateDeal(quintuplexInputs);
+assert.equal(quintuplexCalc.loanSizedBy, 'dscr');
+closeTo(quintuplexCalc.totalOperatingExpenses, quintuplexPublished.operatingExpenses, 1e-6);
+closeTo(quintuplexCalc.noi, quintuplexPublished.noi, 1e-6);
+closeTo(quintuplexCalc.loanAmount, quintuplexPublished.loan, 1e-4);
+closeTo(quintuplexCalc.purchaseCapRate, quintuplexPublished.capRate, 1e-9);
+closeTo(quintuplexCalc.dscrYear1, quintuplexPublished.dscr, 1e-9);
+closeTo(quintuplexCalc.btCashFlowYear1, quintuplexPublished.monthlyCashFlow * 12, 1e-4);
+closeTo(quintuplexCalc.cashOnCashBtYear1, quintuplexPublished.cashOnCash, 1e-9);
+
+// Door-count boundary: a listing published with fewer doors than its type
+// (a 1-door "Duplex" from a release before the producer's floor) keeps its
+// income and its single door; the calculator must not invent a second one.
+const oneDoor = { ...duplex, listing: { ...duplex.listing, units: 1, residential_units: 1 } };
+const oneDoorInputs = createRadarPrefill(new URL(calculatorUrl(oneDoor, 'fr'), 'https://www.gestionvelora.com').searchParams);
+assert.equal(oneDoorInputs.unitMix.reduce((sum, unit) => sum + unit.count, 0), 1);
+closeTo(calculateDeal(oneDoorInputs).annualRent, 36_000, 1e-8);
+
+// ─── CMHC multi-unit premiums (schedule effective 14 July 2025) ────────────
+assert.deepEqual([0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95].map(multiUnitPremiumPct), [0.0260, 0.0285, 0.0335, 0.0435, 0.0535, 0.0590, 0.0615]);
+assert.ok([0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95].every((ltv, index, all) => index === 0 || multiUnitPremiumPct(ltv) > multiUnitPremiumPct(all[index - 1])));
+assert.deepEqual(mliSelectTerms(50), { maxLtv: 0.85, maxAmortization: 40, premiumDiscount: 0.10 });
+assert.deepEqual(mliSelectTerms(70), { maxLtv: 0.95, maxAmortization: 40, premiumDiscount: 0.20 });
+assert.deepEqual(mliSelectTerms(100), { maxLtv: 0.95, maxAmortization: 50, premiumDiscount: 0.30 });
+const mli100 = calculateDeal({ ...fivePlus, financingMode: 'mli-select', mliPoints: 100, maxLtv: 0.95, loanLifeYears: 50 });
+closeTo(mli100.mliPremiumPct, (multiUnitPremiumPct(mli100.loanAmountPct) + 0.0125) * 0.70, 1e-12);
 
 console.log('Plex financial-model invariants passed.');

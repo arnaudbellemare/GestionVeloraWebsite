@@ -602,9 +602,13 @@ export function rentalUseFraction(inputs: DealInputs): number {
 // ─── CMHC MLI Select ───────────────────────────────────────────────
 /**
  * MLI Select trades points (affordability, energy efficiency, accessibility)
- * for leverage and amortization. Figures below are the published tier
- * structure; premiums are ESTIMATES: CMHC prices each file individually and
- * the actual premium comes back on the certificate of insurance.
+ * for leverage and amortization. Tiers below are CMHC's published structure
+ * for EXISTING properties (cmhc-schl.gc.ca, MLI Select): 50 points buys 85%
+ * LTV over 40 years, 70 points lifts leverage to 95% at the same amortization,
+ * and 100 points adds the 50-year amortization and limited recourse. New
+ * construction differs (95% loan-to-cost from 50 points, 45 years at 70) and
+ * is not modelled here. Premiums are ESTIMATES: CMHC prices each file on its
+ * own risk and the actual premium comes back on the certificate of insurance.
  */
 export function mliSelectTerms(points: MliPoints): {
   maxLtv: number;
@@ -612,26 +616,28 @@ export function mliSelectTerms(points: MliPoints): {
   premiumDiscount: number;
 } {
   if (points >= 100) return { maxLtv: 0.95, maxAmortization: 50, premiumDiscount: 0.30 };
-  if (points >= 70) return { maxLtv: 0.90, maxAmortization: 45, premiumDiscount: 0.20 };
+  if (points >= 70) return { maxLtv: 0.95, maxAmortization: 40, premiumDiscount: 0.20 };
   return { maxLtv: 0.85, maxAmortization: 40, premiumDiscount: 0.10 };
 }
 
 /**
- * Base CMHC multi-unit premium by LTV, before any MLI Select discount.
- *
- * KNOWN TO UNDERSTATE. CMHC repriced multi-unit insurance on risk on 14 July
- * 2025 and effective premiums rose in the large majority of files: reported
- * cases moved from roughly 2.8% to near 5.4% after discounts. This table
- * predates that schedule, so treat every premium it produces as a floor.
+ * Base CMHC multi-unit premium by LTV for standard rental housing (purchase
+ * or refinance, not construction), before surcharges and any MLI Select
+ * discount. Source: CMHC "Multi-unit Fees and Premiums", effective 14 July
+ * 2025, the risk-based schedule that replaced the earlier 1.75%–4.50% grid.
+ * Bands above 85% LTV exist only through MLI Select. Construction loans run
+ * roughly 0.55–0.85 points higher per band and other shelter models (student,
+ * seniors, supportive housing) far higher; neither is modelled. Planning bands
+ * only: the premium on a given file is set by CMHC on that file.
  */
 export function multiUnitPremiumPct(ltv: number): number {
-  if (ltv <= 0.65) return 0.0175;
-  if (ltv <= 0.70) return 0.0200;
-  if (ltv <= 0.75) return 0.0250;
-  if (ltv <= 0.80) return 0.0300;
-  if (ltv <= 0.85) return 0.0375;
-  if (ltv <= 0.90) return 0.0425;
-  return 0.0450;
+  if (ltv <= 0.65) return 0.0260;
+  if (ltv <= 0.70) return 0.0285;
+  if (ltv <= 0.75) return 0.0335;
+  if (ltv <= 0.80) return 0.0435;
+  if (ltv <= 0.85) return 0.0535;
+  if (ltv <= 0.90) return 0.0590;
+  return 0.0615;
 }
 
 /**
@@ -1727,9 +1733,10 @@ export function calculateDeal(inputs: DealInputs): DealResults {
     if (isMli) {
       insured = true;
       const actualLtv = inputs.purchasePrice > 0 ? baseLoanAmount / inputs.purchasePrice : 0;
-      // Points discount the base premium; long amortization adds it back.
-      mliPremiumPct = multiUnitPremiumPct(actualLtv) * (1 - terms.premiumDiscount)
-        + amortizationSurchargePct(amortYears);
+      // The extended-amortization surcharge is added to the base rate, and the
+      // points discount then applies to the surcharged rate (CMHC fee schedule).
+      mliPremiumPct = (multiUnitPremiumPct(actualLtv) + amortizationSurchargePct(amortYears))
+        * (1 - terms.premiumDiscount);
       insurancePremium = baseLoanAmount * mliPremiumPct;
       premiumTax = insurancePremium * INSURANCE_PREMIUM_TAX_RATE;
     } else if (standardEligible) {

@@ -686,7 +686,7 @@ const fr: CalcUi = {
   annualDebtService: "Service de la dette annuel",
   premiumTaxLine: "Taxe sur la prime d'assurance (9 %)",
   premiumNote:
-    "La prime d'assurance est capitalisée dans le prêt; la taxe sur la prime est payable comptant à la clôture. Les taux de prime sont des estimations : la SCHL tarifie chaque dossier individuellement.",
+    "La prime d'assurance est capitalisée dans le prêt; la taxe sur la prime est payable comptant à la clôture. Les taux de prime multilogement suivent la grille SCHL en vigueur depuis le 14 juillet 2025 (bandes de planification) : la SCHL tarifie chaque dossier individuellement.",
   stressTest: "Test de résistance à",
   passes: "Réussi",
   fails: "Échoué",
@@ -1180,7 +1180,7 @@ const en: CalcUi = {
   annualDebtService: "Annual debt service",
   premiumTaxLine: "Tax on the insurance premium (9%)",
   premiumNote:
-    "The insurance premium is capitalized into the loan; the tax on it is payable in cash at closing. Premium rates are estimates: CMHC prices each file individually.",
+    "The insurance premium is capitalized into the loan; the tax on it is payable in cash at closing. Multi-unit premium rates follow the CMHC schedule in force since July 14, 2025 (planning bands): CMHC prices each file individually.",
   stressTest: "Stress test at",
   passes: "Passes",
   fails: "Fails",
