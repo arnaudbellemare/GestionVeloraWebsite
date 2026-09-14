@@ -3,29 +3,225 @@
   <channel>
     <title>Gestion Velora Insights</title>
     <link>https://www.gestionvelora.com/</link>
-    <description>Insights on Montreal property management, condo administration, and rental optimization.</description>
+    <description>Conseils sur la gestion immobilière, la copropriété et la location au Québec.</description>
     <language>fr-ca</language>
-    <lastBuildDate>Wed, 22 Apr 2026 18:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2026 12:00:00 GMT</lastBuildDate>
     <item>
-      <title>Avenir gestion immobiliere intelligente 2026</title>
+      <title>Loi 16 en copropriété : échéances et plan de conformité 2025–2028</title>
+      <link>https://www.gestionvelora.com/blog/loi-16-copropriete-quebec-echeances-conformite</link>
+      <guid>https://www.gestionvelora.com/blog/loi-16-copropriete-quebec-echeances-conformite</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Ce que chaque syndicat doit faire pour le carnet d'entretien, l'étude du fonds de prévoyance et les nouvelles règles de transparence.</description>
+    </item>
+    <item>
+      <title>Présenter l'étude du fonds de prévoyance en assemblée de copropriété</title>
+      <link>https://www.gestionvelora.com/blog/etude-fonds-prevoyance-assemblee-coproprietaires</link>
+      <guid>https://www.gestionvelora.com/blog/etude-fonds-prevoyance-assemblee-coproprietaires</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Une méthode claire pour transformer l'étude sur 25 ans en décisions, cotisations et communications compréhensibles.</description>
+    </item>
+    <item>
+      <title>Budget de copropriété : calculer les frais de condo sans déficit caché</title>
+      <link>https://www.gestionvelora.com/blog/budget-frais-condo-charges-communes-quebec</link>
+      <guid>https://www.gestionvelora.com/blog/budget-frais-condo-charges-communes-quebec</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Comment bâtir les charges communes avec le budget courant, le fonds de prévoyance et le fonds d'auto assurance.</description>
+    </item>
+    <item>
+      <title>Fonds d'auto assurance en copropriété : franchise, calcul et dégâts d'eau</title>
+      <link>https://www.gestionvelora.com/blog/fonds-auto-assurance-copropriete-franchise-calcul</link>
+      <guid>https://www.gestionvelora.com/blog/fonds-auto-assurance-copropriete-franchise-calcul</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>La formule québécoise, les franchises exclues et les contrôles à faire avant le renouvellement d'assurance.</description>
+    </item>
+    <item>
+      <title>Dossier TAL du propriétaire : liste complète des documents et preuves</title>
+      <link>https://www.gestionvelora.com/blog/dossier-tal-proprietaire-liste-documents-preuves</link>
+      <guid>https://www.gestionvelora.com/blog/dossier-tal-proprietaire-liste-documents-preuves</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>La liste pratique pour préparer, déposer, notifier et présenter un dossier de propriétaire au Tribunal administratif du logement.</description>
+    </item>
+    <item>
+      <title>Loyer impayé au TAL : jugement, deuxième chance et nouvelle demande</title>
+      <link>https://www.gestionvelora.com/blog/non-paiement-loyer-tal-deuxieme-chance-recours</link>
+      <guid>https://www.gestionvelora.com/blog/non-paiement-loyer-tal-deuxieme-chance-recours</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Ce qui arrive réellement après un non-paiement : recouvrement, résiliation, paiement avant jugement et récidive.</description>
+    </item>
+    <item>
+      <title>Retrouver un locataire parti sans laisser d'adresse au Québec</title>
+      <link>https://www.gestionvelora.com/blog/retrouver-locataire-parti-sans-adresse-enquete-civile</link>
+      <guid>https://www.gestionvelora.com/blog/retrouver-locataire-parti-sans-adresse-enquete-civile</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Comment documenter le départ, chercher une adresse légalement et notifier une réclamation au bon débiteur.</description>
+    </item>
+    <item>
+      <title>Vendre une créance de loyer impayé à GJQ : ce qu'il faut vérifier</title>
+      <link>https://www.gestionvelora.com/blog/vendre-creance-loyer-impaye-gjq</link>
+      <guid>https://www.gestionvelora.com/blog/vendre-creance-loyer-impaye-gjq</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>La cession de créance expliquée : offre, documents, transfert du recouvrement et points à comparer avant de signer.</description>
+    </item>
+    <item>
+      <title>Locataire parti sans avis ou logement endommagé : marche à suivre</title>
+      <link>https://www.gestionvelora.com/blog/locataire-quitte-sans-avis-logement-endommage</link>
+      <guid>https://www.gestionvelora.com/blog/locataire-quitte-sans-avis-logement-endommage</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Les étapes pour sécuriser le logement, préserver la preuve, relouer rapidement et réclamer les pertes justifiées.</description>
+    </item>
+    <item>
+      <title>Vérification d'un locataire au Québec : SOQUIJ, crédit et références</title>
+      <link>https://www.gestionvelora.com/blog/verification-locataire-soquij-credit-references</link>
+      <guid>https://www.gestionvelora.com/blog/verification-locataire-soquij-credit-references</guid>
+      <pubDate>Mon, 14 Sep 2026 12:00:00 GMT</pubDate>
+      <description>Une méthode rigoureuse et légale pour confirmer l'identité, le crédit, les références et les décisions TAL d'un candidat.</description>
+    </item>
+    <item>
+      <title>L'avenir de la gestion immobilière intelligente à Montréal en 2026</title>
       <link>https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026</link>
       <guid>https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026</guid>
       <pubDate>Sun, 15 Feb 2026 12:00:00 GMT</pubDate>
-      <description>Tendances, donnees et execution terrain pour la gestion immobiliere a Montreal.</description>
+      <description>Les tendances qui transformeront la gestion immobilière à Montréal : technologie, données et expérience locataire.</description>
     </item>
     <item>
-      <title>Maintenance preventive economise millions</title>
+      <title>Maintenance préventive à Montréal : pourquoi ça économise des millions</title>
       <link>https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions</link>
       <guid>https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions</guid>
-      <pubDate>Sun, 01 Mar 2026 12:00:00 GMT</pubDate>
-      <description>Comment structurer un plan de maintenance qui reduit les interventions majeures.</description>
+      <pubDate>Wed, 14 Jan 2026 12:00:00 GMT</pubDate>
+      <description>Une stratégie de maintenance proactive réduit les coûts et prolonge la durée de vie des actifs immobiliers.</description>
     </item>
     <item>
-      <title>Maximiser le NOI avec une approche data</title>
+      <title>Maximiser le NOI à Montréal : approche basée sur les données</title>
       <link>https://www.gestionvelora.com/blog/maximiser-noi-approche-donnees</link>
       <guid>https://www.gestionvelora.com/blog/maximiser-noi-approche-donnees</guid>
       <pubDate>Wed, 10 Dec 2025 12:00:00 GMT</pubDate>
-      <description>Methodes pragmatiques pour augmenter la performance operationnelle des immeubles.</description>
+      <description>Comment l'analyse des données aide les propriétaires et syndicats à optimiser le revenu net d'exploitation.</description>
+    </item>
+    <item>
+      <title>L'expérience locataire à Montréal : le nouvel avantage concurrentiel</title>
+      <link>https://www.gestionvelora.com/blog/experience-locataire-avantage-concurrentiel</link>
+      <guid>https://www.gestionvelora.com/blog/experience-locataire-avantage-concurrentiel</guid>
+      <pubDate>Tue, 18 Nov 2025 12:00:00 GMT</pubDate>
+      <description>Dans un marché compétitif, la qualité de l'expérience locataire fait la différence.</description>
+    </item>
+    <item>
+      <title>Gestion de copropriété à Montréal : ce qu'il faut savoir sur la réglementation</title>
+      <link>https://www.gestionvelora.com/blog/gestion-copropriete-montreal-reglementation</link>
+      <guid>https://www.gestionvelora.com/blog/gestion-copropriete-montreal-reglementation</guid>
+      <pubDate>Wed, 08 Oct 2025 12:00:00 GMT</pubDate>
+      <description>La Loi sur la copropriété et les règlements municipaux encadrent la gestion des syndicats.</description>
+    </item>
+    <item>
+      <title>Airbnb à Montréal : permis, réglementation et bonnes pratiques</title>
+      <link>https://www.gestionvelora.com/blog/airbnb-montreal-permis-reglementation</link>
+      <guid>https://www.gestionvelora.com/blog/airbnb-montreal-permis-reglementation</guid>
+      <pubDate>Fri, 12 Sep 2025 12:00:00 GMT</pubDate>
+      <description>Tout savoir sur la légalité et les exigences pour louer en courte durée à Montréal.</description>
+    </item>
+    <item>
+      <title>Comment choisir son gestionnaire immobilier à Montréal</title>
+      <link>https://www.gestionvelora.com/blog/choisir-gestionnaire-immobilier-montreal</link>
+      <guid>https://www.gestionvelora.com/blog/choisir-gestionnaire-immobilier-montreal</guid>
+      <pubDate>Wed, 20 Aug 2025 12:00:00 GMT</pubDate>
+      <description>Les critères à considérer pour sélectionner un gestionnaire fiable et compétent.</description>
+    </item>
+    <item>
+      <title>Fonds de prévoyance en copropriété à Montréal : obligations et bonnes pratiques au Québec</title>
+      <link>https://www.gestionvelora.com/blog/fonds-prevoyance-copropriete-quebec</link>
+      <guid>https://www.gestionvelora.com/blog/fonds-prevoyance-copropriete-quebec</guid>
+      <pubDate>Fri, 18 Jul 2025 12:00:00 GMT</pubDate>
+      <description>La constitution et la gestion du fonds de prévoyance sont cruciales pour la pérennité de la copropriété.</description>
+    </item>
+    <item>
+      <title>Comment fonctionne un syndicat de copropriété ?</title>
+      <link>https://www.gestionvelora.com/blog/syndicat-copropriete-fonctionnement</link>
+      <guid>https://www.gestionvelora.com/blog/syndicat-copropriete-fonctionnement</guid>
+      <pubDate>Tue, 10 Mar 2026 12:00:00 GMT</pubDate>
+      <description>Le syndicat de copropriété est l'entité légale qui administre les parties communes d'un immeuble. Voici comment il fonctionne concrètement.</description>
+    </item>
+    <item>
+      <title>Combien coûte un gestionnaire de copropriété à Montréal ?</title>
+      <link>https://www.gestionvelora.com/blog/cout-gestionnaire-copropriete-montreal</link>
+      <guid>https://www.gestionvelora.com/blog/cout-gestionnaire-copropriete-montreal</guid>
+      <pubDate>Wed, 18 Mar 2026 12:00:00 GMT</pubDate>
+      <description>Le coût d'un gestionnaire de copropriété à Montréal varie selon la taille de l'immeuble et les services requis. Voici ce que vous devez savoir.</description>
+    </item>
+    <item>
+      <title>Gestion de condo : autogestion ou gestionnaire professionnel ?</title>
+      <link>https://www.gestionvelora.com/blog/gestion-condo-autogestion-ou-gestionnaire</link>
+      <guid>https://www.gestionvelora.com/blog/gestion-condo-autogestion-ou-gestionnaire</guid>
+      <pubDate>Wed, 25 Mar 2026 12:00:00 GMT</pubDate>
+      <description>Faut-il autogérer votre condo ou faire appel à un gestionnaire professionnel ? Ce guide compare les deux options pour vous aider à décider.</description>
+    </item>
+    <item>
+      <title>Loi 141 : obligations des syndicats de copropriété au Québec</title>
+      <link>https://www.gestionvelora.com/blog/loi-141-obligations-syndicat-copropriete</link>
+      <guid>https://www.gestionvelora.com/blog/loi-141-obligations-syndicat-copropriete</guid>
+      <pubDate>Thu, 02 Apr 2026 12:00:00 GMT</pubDate>
+      <description>La Loi 141 encadre surtout l'assurance du syndicat, la valeur de reconstruction et le fonds d'auto assurance. Voici les règles à distinguer de la Loi 16.</description>
+    </item>
+    <item>
+      <title>6 façons d'augmenter la valeur de votre condo à Montréal</title>
+      <link>https://www.gestionvelora.com/blog/augmenter-valeur-condo-montreal</link>
+      <guid>https://www.gestionvelora.com/blog/augmenter-valeur-condo-montreal</guid>
+      <pubDate>Sun, 05 Apr 2026 12:00:00 GMT</pubDate>
+      <description>Vous souhaitez augmenter la valeur de votre condo à Montréal ? Ces six stratégies éprouvées vous aideront à maximiser votre retour lors de la revente.</description>
+    </item>
+    <item>
+      <title>Obligations du conseil d'administration d'une copropriété</title>
+      <link>https://www.gestionvelora.com/blog/obligations-conseil-administration-copropriete</link>
+      <guid>https://www.gestionvelora.com/blog/obligations-conseil-administration-copropriete</guid>
+      <pubDate>Wed, 08 Apr 2026 12:00:00 GMT</pubDate>
+      <description>Le conseil d'administration d'une copropriété au Québec a des obligations légales précises. Voici ce que chaque administrateur doit connaître.</description>
+    </item>
+    <item>
+      <title>Assemblée générale de copropriété : guide complet pour les syndicats</title>
+      <link>https://www.gestionvelora.com/blog/assemblee-generale-copropriete-guide</link>
+      <guid>https://www.gestionvelora.com/blog/assemblee-generale-copropriete-guide</guid>
+      <pubDate>Sun, 12 Apr 2026 12:00:00 GMT</pubDate>
+      <description>L'assemblée générale annuelle est obligatoire pour tout syndicat de copropriété. Voici comment préparer une AGA valide, claire et efficace.</description>
+    </item>
+    <item>
+      <title>Comment choisir son gestionnaire de condo à Montréal</title>
+      <link>https://www.gestionvelora.com/blog/choisir-gestionnaire-condo-montreal</link>
+      <guid>https://www.gestionvelora.com/blog/choisir-gestionnaire-condo-montreal</guid>
+      <pubDate>Wed, 15 Apr 2026 12:00:00 GMT</pubDate>
+      <description>Choisir le bon gestionnaire de condo à Montréal est une décision importante pour votre syndicat. Voici les critères essentiels et les questions à poser.</description>
+    </item>
+    <item>
+      <title>Relevé 31 (RL-31) au Québec : guide complet pour les propriétaires</title>
+      <link>https://www.gestionvelora.com/blog/releve-31-rl31-guide-proprietaires-locataires-quebec</link>
+      <guid>https://www.gestionvelora.com/blog/releve-31-rl31-guide-proprietaires-locataires-quebec</guid>
+      <pubDate>Mon, 27 Apr 2026 12:00:00 GMT</pubDate>
+      <description>Le relevé 31 est un feuillet fiscal que tout propriétaire québécois doit remettre à ses locataires avant le 28 février. Voici tout ce qu'il faut savoir.</description>
+    </item>
+    <item>
+      <title>Augmentation de loyer 2026 au Québec : calcul TAL, avis et délais</title>
+      <link>https://www.gestionvelora.com/blog/augmentation-loyer-montreal-regles-calcul-tal</link>
+      <guid>https://www.gestionvelora.com/blog/augmentation-loyer-montreal-regles-calcul-tal</guid>
+      <pubDate>Mon, 27 Apr 2026 12:00:00 GMT</pubDate>
+      <description>Augmentation de loyer 2026 au Québec : base TAL de 3,1 %, calcul réel, formulaire d'avis, délais de réponse et procédure après un refus.</description>
+    </item>
+    <item>
+      <title>Bail de logement au Québec : guide complet pour les propriétaires</title>
+      <link>https://www.gestionvelora.com/blog/bail-logement-quebec-guide-complet-proprietaires</link>
+      <guid>https://www.gestionvelora.com/blog/bail-logement-quebec-guide-complet-proprietaires</guid>
+      <pubDate>Mon, 27 Apr 2026 12:00:00 GMT</pubDate>
+      <description>Le bail résidentiel au Québec est un formulaire TAL obligatoire. Clauses, case G, renouvellement : les points clés pour propriétaires.</description>
+    </item>
+    <item>
+      <title>REQ et NEQ : vérifier le registre d'un gestionnaire immobilier au Québec</title>
+      <link>https://www.gestionvelora.com/blog/req-neq-verifier-gestionnaire-immobilier-montreal</link>
+      <guid>https://www.gestionvelora.com/blog/req-neq-verifier-gestionnaire-immobilier-montreal</guid>
+      <pubDate>Mon, 27 Apr 2026 12:00:00 GMT</pubDate>
+      <description>Avant de confier votre immeuble à un gestionnaire, vérifiez son NEQ au Registraire des entreprises du Québec (REQ). Voici comment faire et pourquoi c'est essentiel.</description>
+    </item>
+    <item>
+      <title>Nickel &amp; Krome : l'entreprise de nettoyage avec qui nous travaillons à Montréal</title>
+      <link>https://www.gestionvelora.com/blog/partenaire-nettoyage-nickel-krome-montreal</link>
+      <guid>https://www.gestionvelora.com/blog/partenaire-nettoyage-nickel-krome-montreal</guid>
+      <pubDate>Mon, 04 May 2026 12:00:00 GMT</pubDate>
+      <description>Gestion Velora s'associe à Nickel &amp; Krome, compagnie de nettoyage spécialisée en post-construction et en entretien résidentiel à Montréal et Laval.</description>
     </item>
   </channel>
 </rss>

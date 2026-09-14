@@ -3,11 +3,75 @@
 Canonical URL (FR): https://www.gestionvelora.com/blog
 Canonical URL (EN): https://www.gestionvelora.com/en/blog
 
-Gestion Velora publishes practical, evidence-based articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, tenant experience, and Airbnb regulations.
+Gestion Velora publishes practical, evidence-based articles on property management in Montreal: TAL preparation, tenant screening, unpaid-rent recovery, condo compliance, preventive maintenance, NOI optimization, tenant experience, and Airbnb regulations.
 
 Each article has a concise brief (40-60 words, answer-first), question-based section headings, verifiable facts, and ISO publication/update dates.
 
 ---
+
+## New Condo Governance Guides — September 2026
+
+### Quebec Law 16 Deadlines and Compliance Plan
+**FR:** https://www.gestionvelora.com/blog/loi-16-copropriete-quebec-echeances-conformite
+**EN:** https://www.gestionvelora.com/en/blog/loi-16-copropriete-quebec-echeances-conformite
+
+Current 2025–2028 timeline for the maintenance log, reserve fund study, qualified independent professionals, owner access, annual updates, and contribution-setting after the annual meeting.
+
+### Presenting the Reserve Fund Study at the Owners' Meeting
+**FR:** https://www.gestionvelora.com/blog/etude-fonds-prevoyance-assemblee-coproprietaires
+**EN:** https://www.gestionvelora.com/en/blog/etude-fonds-prevoyance-assemblee-coproprietaires
+
+Meeting package, 25-year funding scenarios, owner consultation, the board's decision-making role, special contributions, minutes, and the 30-day post-meeting step.
+
+### Building a Quebec Condo Budget and Condo Fees
+**FR:** https://www.gestionvelora.com/blog/budget-frais-condo-charges-communes-quebec
+**EN:** https://www.gestionvelora.com/en/blog/budget-frais-condo-charges-communes-quebec
+
+Operational method for separating current expenses, reserve-fund deposits, and self-insurance contributions; applying fractional shares; presenting variances; and monitoring cash flow monthly.
+
+### Self-Insurance Fund, Deductibles, and Water Damage
+**FR:** https://www.gestionvelora.com/blog/fonds-auto-assurance-copropriete-franchise-calcul
+**EN:** https://www.gestionvelora.com/en/blog/fonds-auto-assurance-copropriete-franchise-calcul
+
+Explains the exact annual contribution formula, the $100,000 rule, excluded earthquake and flood deductibles, why the premium is not the deductible, and what to verify for water-damage coverage.
+
+## New Landlord Risk Guides — September 2026
+
+### TAL Document and Evidence Checklist
+**FR:** https://www.gestionvelora.com/blog/dossier-tal-proprietaire-liste-documents-preuves
+**EN:** https://www.gestionvelora.com/en/blog/dossier-tal-proprietaire-liste-documents-preuves
+
+Complete preparation checklist for a landlord's TAL file: lease documents, rent ledger, notices, notification proof, exhibits, photographs, invoices, witnesses, and co-owner or authorized-signatory issues.
+
+### Unpaid Rent, Judgment, and a Repeat TAL Application
+**FR:** https://www.gestionvelora.com/blog/non-paiement-loyer-tal-deuxieme-chance-recours
+**EN:** https://www.gestionvelora.com/en/blog/non-paiement-loyer-tal-deuxieme-chance-recours
+
+Explains default, the more-than-three-week termination remedy, payment before judgment, conditional relief, and why a later default can require another TAL proceeding rather than producing an automatic eviction.
+
+### Finding a Tenant Who Left Without an Address
+**FR:** https://www.gestionvelora.com/blog/retrouver-locataire-parti-sans-adresse-enquete-civile
+**EN:** https://www.gestionvelora.com/en/blog/retrouver-locataire-parti-sans-adresse-enquete-civile
+
+Steps for documenting a departure, protecting personal information, verifying a civil investigator's licence, and evaluating the Centre d'Enquêtes Civiles du Québec as a third-party tracing service.
+
+### Selling an Unpaid-Rent Claim to GJQ
+**FR:** https://www.gestionvelora.com/blog/vendre-creance-loyer-impaye-gjq
+**EN:** https://www.gestionvelora.com/en/blog/vendre-creance-loyer-impaye-gjq
+
+Due-diligence guide to claim eligibility, documents, assignment terms, price, recourse, privacy, and comparing a sale to direct collection. GJQ is presented as an independent third party, not an endorsed or guaranteed solution.
+
+### Tenant Leaves Without Notice or Damages the Unit
+**FR:** https://www.gestionvelora.com/blog/locataire-quitte-sans-avis-logement-endommage
+**EN:** https://www.gestionvelora.com/en/blog/locataire-quitte-sans-avis-logement-endommage
+
+Evidence and mitigation checklist for confirming possession, recording unit condition, separating damage from ordinary wear, calculating loss, re-renting, and filing the appropriate claim.
+
+### Tenant Screening with SOQUIJ, Credit, and References
+**FR:** https://www.gestionvelora.com/blog/verification-locataire-soquij-credit-references
+**EN:** https://www.gestionvelora.com/en/blog/verification-locataire-soquij-credit-references
+
+Privacy-conscious screening sequence using identity matching, SOQUIJ party-name searches, consent-based credit checks, and verified former-landlord references. Search results are treated as evidence to interpret, not an automatic acceptance or refusal rule.
 
 ## All Articles
 

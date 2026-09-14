@@ -107,6 +107,26 @@ Complete landlord-side management of residential leases. Covers tenant screening
 
 ## Blog articles
 
+- [Loi 16 copropriete : echeances 2025-2028 (FR)](https://www.gestionvelora.com/blog/loi-16-copropriete-quebec-echeances-conformite) — Maintenance log, reserve study, transition deadline, and compliance plan
+- [Quebec Law 16 condo deadlines: 2025-2028 (EN)](https://www.gestionvelora.com/en/blog/loi-16-copropriete-quebec-echeances-conformite)
+- [Presenter l'etude du fonds de prevoyance en AGA (FR)](https://www.gestionvelora.com/blog/etude-fonds-prevoyance-assemblee-coproprietaires) — Owner consultation, funding scenarios, and the board's decision
+- [Presenting a condo reserve fund study at the AGM (EN)](https://www.gestionvelora.com/en/blog/etude-fonds-prevoyance-assemblee-coproprietaires)
+- [Budget et frais de condo au Quebec (FR)](https://www.gestionvelora.com/blog/budget-frais-condo-charges-communes-quebec) — Operations, reserve funding, self-insurance, allocation, and monthly controls
+- [Quebec condo budget and fees (EN)](https://www.gestionvelora.com/en/blog/budget-frais-condo-charges-communes-quebec)
+- [Fonds d'auto assurance : franchise et calcul (FR)](https://www.gestionvelora.com/blog/fonds-auto-assurance-copropriete-franchise-calcul) — Annual formula, $100,000 rule, and water-damage deductibles
+- [Condo self-insurance fund: deductible calculation (EN)](https://www.gestionvelora.com/en/blog/fonds-auto-assurance-copropriete-franchise-calcul)
+- [Dossier TAL : documents et preuves du proprietaire (FR)](https://www.gestionvelora.com/blog/dossier-tal-proprietaire-liste-documents-preuves) — Complete evidence and filing checklist for landlords and co-owners
+- [TAL file: landlord documents and evidence (EN)](https://www.gestionvelora.com/en/blog/dossier-tal-proprietaire-liste-documents-preuves)
+- [Loyer impaye au TAL : jugement et deuxieme recours (FR)](https://www.gestionvelora.com/blog/non-paiement-loyer-tal-deuxieme-chance-recours) — Payment before judgment, conditional relief, and later defaults
+- [Unpaid rent at the TAL: judgment and repeat claim (EN)](https://www.gestionvelora.com/en/blog/non-paiement-loyer-tal-deuxieme-chance-recours)
+- [Retrouver un locataire parti sans adresse (FR)](https://www.gestionvelora.com/blog/retrouver-locataire-parti-sans-adresse-enquete-civile) — Lawful debtor tracing and civil-investigator due diligence
+- [Find a Quebec tenant who left no address (EN)](https://www.gestionvelora.com/en/blog/retrouver-locataire-parti-sans-adresse-enquete-civile)
+- [Vendre une creance de loyer impaye a GJQ (FR)](https://www.gestionvelora.com/blog/vendre-creance-loyer-impaye-gjq) — Claim-sale eligibility, terms, privacy, and alternatives
+- [Sell an unpaid-rent claim to GJQ (EN)](https://www.gestionvelora.com/en/blog/vendre-creance-loyer-impaye-gjq)
+- [Depart sans avis ou logement endommage (FR)](https://www.gestionvelora.com/blog/locataire-quitte-sans-avis-logement-endommage) — Possession, evidence, damage, and mitigation checklist
+- [Tenant leaves without notice or damages the unit (EN)](https://www.gestionvelora.com/en/blog/locataire-quitte-sans-avis-logement-endommage)
+- [Verification locataire : SOQUIJ, credit et references (FR)](https://www.gestionvelora.com/blog/verification-locataire-soquij-credit-references) — Consent-based, identity-matched tenant screening
+- [Tenant screening: SOQUIJ, credit, and references (EN)](https://www.gestionvelora.com/en/blog/verification-locataire-soquij-credit-references)
 - [Avenir gestion immobiliere intelligente 2026 (FR)](https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026) — AI and technology trends shaping property management in 2026
 - [The future of smart property management 2026 (EN)](https://www.gestionvelora.com/en/blog/avenir-gestion-immobiliere-intelligente-2026)
 - [Maintenance preventive economise millions (FR)](https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions) — How preventive maintenance reduces long-term costs for condo boards

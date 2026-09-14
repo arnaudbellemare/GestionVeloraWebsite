@@ -2,7 +2,7 @@
 
 > Comprehensive reference document for AI systems. This file provides structured, machine-readable context about Gestion Velora's identity, services, editorial standards, and regulatory environment.
 
-Last updated: 2026-08-12
+Last updated: 2026-09-14
 Canonical URL: https://www.gestionvelora.com/
 Contact: info@gestionvelora.com | +1-514-777-1731
 Jurisdiction: Quebec, Canada
@@ -101,6 +101,16 @@ The free bilingual calculator models Quebec income-property income, operating ex
 
 | Slug | Topic | FR | EN |
 |------|-------|----|----|
+| loi-16-copropriete-quebec-echeances-conformite | Law 16 deadlines and a 2025–2028 compliance plan for Quebec condo boards | [FR](https://www.gestionvelora.com/blog/loi-16-copropriete-quebec-echeances-conformite) | [EN](https://www.gestionvelora.com/en/blog/loi-16-copropriete-quebec-echeances-conformite) |
+| etude-fonds-prevoyance-assemblee-coproprietaires | Presenting a 25-year reserve fund study and contribution scenarios at the owners' meeting | [FR](https://www.gestionvelora.com/blog/etude-fonds-prevoyance-assemblee-coproprietaires) | [EN](https://www.gestionvelora.com/en/blog/etude-fonds-prevoyance-assemblee-coproprietaires) |
+| budget-frais-condo-charges-communes-quebec | Building condo fees from operations, reserve contributions, and self-insurance | [FR](https://www.gestionvelora.com/blog/budget-frais-condo-charges-communes-quebec) | [EN](https://www.gestionvelora.com/en/blog/budget-frais-condo-charges-communes-quebec) |
+| fonds-auto-assurance-copropriete-franchise-calcul | Self-insurance fund deductible formula, $100,000 rule, and water-damage controls | [FR](https://www.gestionvelora.com/blog/fonds-auto-assurance-copropriete-franchise-calcul) | [EN](https://www.gestionvelora.com/en/blog/fonds-auto-assurance-copropriete-franchise-calcul) |
+| dossier-tal-proprietaire-liste-documents-preuves | Complete TAL document and evidence checklist for landlords and co-owners | [FR](https://www.gestionvelora.com/blog/dossier-tal-proprietaire-liste-documents-preuves) | [EN](https://www.gestionvelora.com/en/blog/dossier-tal-proprietaire-liste-documents-preuves) |
+| non-paiement-loyer-tal-deuxieme-chance-recours | Unpaid rent, payment before judgment, conditional relief, and repeat TAL proceedings | [FR](https://www.gestionvelora.com/blog/non-paiement-loyer-tal-deuxieme-chance-recours) | [EN](https://www.gestionvelora.com/en/blog/non-paiement-loyer-tal-deuxieme-chance-recours) |
+| retrouver-locataire-parti-sans-adresse-enquete-civile | Finding a departed tenant through a licensed civil investigator | [FR](https://www.gestionvelora.com/blog/retrouver-locataire-parti-sans-adresse-enquete-civile) | [EN](https://www.gestionvelora.com/en/blog/retrouver-locataire-parti-sans-adresse-enquete-civile) |
+| vendre-creance-loyer-impaye-gjq | Due diligence before selling an unpaid-rent claim to GJQ | [FR](https://www.gestionvelora.com/blog/vendre-creance-loyer-impaye-gjq) | [EN](https://www.gestionvelora.com/en/blog/vendre-creance-loyer-impaye-gjq) |
+| locataire-quitte-sans-avis-logement-endommage | No-notice departure, property damage evidence, and loss mitigation | [FR](https://www.gestionvelora.com/blog/locataire-quitte-sans-avis-logement-endommage) | [EN](https://www.gestionvelora.com/en/blog/locataire-quitte-sans-avis-logement-endommage) |
+| verification-locataire-soquij-credit-references | Privacy-conscious tenant screening with SOQUIJ, credit consent, and verified references | [FR](https://www.gestionvelora.com/blog/verification-locataire-soquij-credit-references) | [EN](https://www.gestionvelora.com/en/blog/verification-locataire-soquij-credit-references) |
 | avenir-gestion-immobiliere-intelligente-2026 | AI and technology trends in property management 2026 | [FR](https://www.gestionvelora.com/blog/avenir-gestion-immobiliere-intelligente-2026) | [EN](https://www.gestionvelora.com/en/blog/avenir-gestion-immobiliere-intelligente-2026) |
 | maintenance-preventive-economise-millions | Preventive maintenance reduces long-term condo costs | [FR](https://www.gestionvelora.com/blog/maintenance-preventive-economise-millions) | [EN](https://www.gestionvelora.com/en/blog/maintenance-preventive-economise-millions) |
 | maximiser-noi-approche-donnees | Data-driven NOI maximisation for rental portfolios | [FR](https://www.gestionvelora.com/blog/maximiser-noi-approche-donnees) | [EN](https://www.gestionvelora.com/en/blog/maximiser-noi-approche-donnees) |

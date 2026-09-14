@@ -1,4 +1,6 @@
 import { blogCoverPath } from "../lib/blogImages";
+import { condoGovernanceBlogPosts } from "./blog-condo-governance";
+import { tenantRiskBlogPosts } from "./blog-tenant-risk";
 
 export interface BlogSection {
   heading: string;
@@ -35,6 +37,8 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  ...condoGovernanceBlogPosts,
+  ...tenantRiskBlogPosts,
   {
     slug: "avenir-gestion-immobiliere-intelligente-2026",
     image: blogCoverPath("cover-future-management.webp"),
@@ -652,7 +656,7 @@ export const blogPosts: BlogPost[] = [
     slug: "fonds-prevoyance-copropriete-quebec",
     image: blogCoverPath("cover-reserve-fund.webp"),
     datePublished: "2025-07-18",
-    dateModified: "2026-04-01",
+    dateModified: "2026-09-14",
     fr: {
       category: "Finance",
       date: "Juillet 2025",
@@ -674,9 +678,9 @@ export const blogPosts: BlogPost[] = [
         {
           heading: "Pourquoi l'étude de réserve est-elle le document de référence ?",
           paragraphs: [
-            "L'étude de réserve traduit l'état des composantes majeures de l'immeuble en coûts de remplacement estimés et en délais probables. C'est la base sur laquelle le syndicat ajuste les cotisations annuelles et priorise les travaux à venir. Sans ce document à jour, les décisions de l'assemblée sur les cotisations et les travaux reposent sur des estimations informelles qui peuvent s'avérer gravement erronées.",
+            "L'étude de réserve traduit l'état des composantes majeures de l'immeuble en coûts de remplacement estimés et en délais probables. C'est la base sur laquelle le syndicat ajuste les cotisations annuelles et priorise les travaux à venir. Sans ce document à jour, la consultation de l'assemblée et la décision du conseil sur les cotisations reposent sur des estimations informelles qui peuvent s'avérer gravement erronées.",
             [
-              "Sans mise à jour régulière (souvent recommandée aux trois à cinq ans), le fonds peut être structurellement sous-alimenté malgré des comptes qui semblent en ordre à court terme. Pour les syndicats montréalais cherchant un appui dans la ",
+              "Depuis le règlement entré en vigueur en 2025, le conseil doit obtenir une étude tous les cinq ans. Sans ce cycle, le fonds peut être structurellement sous-alimenté malgré des comptes qui semblent en ordre à court terme. Pour les syndicats montréalais cherchant un appui dans la ",
               { text: "gestion de copropriété professionnelle", to: "/services/syndicat-copropriete" },
               ", l'accompagnement sur les études de réserve et la planification pluriannuelle est l'un des aspects les plus précieux.",
             ],
@@ -701,7 +705,7 @@ export const blogPosts: BlogPost[] = [
       excerpt:
         "Establishing and managing the reserve fund is crucial for condo sustainability.",
       brief:
-        "Quebec condo boards must maintain a reserve fund for major common-area replacements (roofing, elevators, façade, mechanicals), sized by a reserve study updated every three to five years. An underfunded reserve is a hidden liability that weakens unit sale prices. This article explains how reserve studies set contribution targets and how proactive AGM communication prevents the surprise special assessments that erode owner trust.",
+        "Quebec condo boards must maintain a reserve fund for major common-area replacements, sized by a professional study obtained every five years. An underfunded reserve is a hidden liability that weakens unit values. This article explains how the study sets contribution targets and how clear annual-meeting communication helps prevent surprise special assessments.",
       sections: [
         {
           heading: "What is the reserve fund for?",
@@ -714,9 +718,9 @@ export const blogPosts: BlogPost[] = [
         {
           heading: "Why is the reserve study the reference document?",
           paragraphs: [
-            "The reserve study translates major building component condition into estimated replacement costs and probable timelines, the foundation for adjusting annual contributions and prioritizing upcoming work. Without a current document, AGM decisions on contributions and capital work rest on informal estimates that may prove seriously inaccurate.",
+            "The reserve study translates major building component condition into estimated replacement costs and probable timelines, the foundation for adjusting annual contributions and prioritizing upcoming work. Without a current document, owner consultation and the board's contribution decision rest on informal estimates that may prove seriously inaccurate.",
             [
-              "Without regular updates (typically recommended every three to five years), the fund can be structurally underfunded despite short-term accounts that appear in order. For Montreal boards seeking support in ",
+              "Under the regulation effective in 2025, the board must obtain a study every five years. Without that cycle, the fund can be structurally underfunded despite short-term accounts that appear in order. For Montreal boards seeking support in ",
               { text: "professional condo management", to: "/services/syndicat-copropriete" },
               ", guidance on reserve studies and multi-year financial planning is one of the most valuable areas of professional support.",
             ],
@@ -1008,45 +1012,53 @@ export const blogPosts: BlogPost[] = [
     slug: "loi-141-obligations-syndicat-copropriete",
     image: blogCoverPath("cover-law141.webp"),
     datePublished: "2026-04-02",
-    dateModified: "2026-04-20",
+    dateModified: "2026-09-14",
     fr: {
       category: "Réglementation",
       date: "Avril 2026",
       title: "Loi 141 : obligations des syndicats de copropriété au Québec",
       metaTitle: "Loi 141 syndicat copropriété Québec",
-      excerpt: "La Loi 141 impose de nouvelles obligations aux syndicats de copropriété québécois. Voici ce que votre CA doit savoir et faire pour être conforme.",
-      brief: "La Loi 141 (2018, en vigueur 2022) oblige les syndicats de copropriété québécois à constituer un fonds de prévoyance suffisant basé sur une étude actuarielle, à tenir un carnet d'entretien et à s'assurer que les assurances couvrent adéquatement la valeur à neuf de l'immeuble. Ces obligations s'appliquent à toutes les copropriétés divises, quelle que soit leur taille.",
+      excerpt: "La Loi 141 encadre surtout l'assurance du syndicat, la valeur de reconstruction et le fonds d'auto assurance. Voici les règles à distinguer de la Loi 16.",
+      brief: "La Loi 141 a renforcé l'assurance des copropriétés : couverture de l'immeuble, valeur de reconstruction évaluée au moins tous les cinq ans, responsabilité civile et fonds d'auto assurance. Le carnet d'entretien et l'étude du fonds de prévoyance relèvent plutôt de la Loi 16 et de son règlement entré en vigueur en 2025.",
       sections: [
         {
-          heading: "Quelles sont les principales obligations introduites par la Loi 141 ?",
+          heading: "Quelle différence entre la Loi 141 et la Loi 16 ?",
           paragraphs: [
             [
-              "Adoptée en 2018, la Loi 141 (Loi visant principalement à améliorer l'encadrement du secteur financier) a profondément réformé les règles applicables aux ",
+              "Adoptée en 2018, la Loi 141 a surtout réformé l'assurance des ",
               { text: "syndicats de copropriété", to: "/services/syndicat-copropriete" },
-              " québécois. Ses dispositions relatives aux fonds de prévoyance et à l'entretien des immeubles sont entrées en vigueur progressivement entre 2020 et 2022. Trois obligations majeures en découlent.",
+              " : couverture de l'immeuble, valeur de reconstruction, responsabilité civile, franchises et fonds d'auto assurance. Ses mesures sont entrées en vigueur progressivement entre 2020 et 2022.",
             ],
-            "Première obligation : l'étude de fonds de prévoyance. Le syndicat doit mandater un professionnel qualifié (ingénieur, technicien en bâtiment ou expert en évaluation) pour réaliser une étude déterminant le montant des contributions annuelles nécessaires pour financer les travaux majeurs prévus sur 25 ans. Cette étude doit être renouvelée tous les 5 ans. Elle remplace l'ancienne règle du minimum de 5 % des charges communes, qui était souvent insuffisante.",
-            "Deuxième obligation : le carnet d'entretien. Le syndicat doit tenir à jour un registre documentant l'état de chaque composante majeure de l'immeuble (toiture, plomberie, systèmes mécaniques, façade), les travaux effectués et les travaux planifiés. Ce document est consultable par tout copropriétaire et doit être remis à l'acheteur lors d'une transaction immobilière.",
+            "Le carnet d'entretien et l'étude du fonds de prévoyance ne sont pas des obligations de la Loi 141. Ils proviennent de la Loi 16 et du règlement sur la gestion des copropriétés divises entré en vigueur le 14 août 2025. Mélanger les deux lois mène à de mauvais échéanciers et à des mandats professionnels incomplets.",
+            [
+              "Le conseil devrait maintenir deux calendriers liés : un calendrier Loi 141 pour l'assurance, l'évaluation de reconstruction et le fonds d'auto assurance; un calendrier ",
+              { text: "Loi 16 pour le carnet et l'étude", to: "/blog/loi-16-copropriete-quebec-echeances-conformite" },
+              ". Les trois fonds demeurent intégrés au même exercice budgétaire annuel.",
+            ],
           ],
         },
         {
           heading: "Les assurances : ce que la Loi 141 exige des syndicats",
           paragraphs: [
-            "La Loi 141 a également renforcé les obligations d'assurance des syndicats. Le syndicat doit maintenant s'assurer à la valeur de remplacement à neuf (full replacement cost) de l'immeuble, incluant les parties communes et les améliorations apportées aux parties privatives. Un évaluateur agréé doit estimer cette valeur au moins une fois tous les trois ans.",
-            "Les copropriétaires individuels doivent, quant à eux, obtenir une assurance habitation (partie privative) qui couvre leur franchise et les améliorations locatives. La Loi 141 a introduit la notion de franchise collective : en cas de sinistre impliquant une partie privative, la franchise de l'assurance collective peut être réclamée auprès du copropriétaire responsable.",
-            "Ces nouvelles règles d'assurance ont complexifié la gestion des sinistres dans les copropriétés. Un gestionnaire professionnel maîtrise ces mécanismes et peut coordonner efficacement les réclamations entre l'assureur du syndicat et ceux des copropriétaires, évitant les litiges coûteux.",
+            [
+              "L'article 1073 du ",
+              { text: "Code civil du Québec", to: "https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991?langCont=fr" },
+              " oblige le syndicat à assurer tout l'immeuble, y compris les parties privatives, contre les risques usuels. Les améliorations apportées par un copropriétaire sont exclues lorsqu'elles peuvent être identifiées par rapport à la description de la partie privative.",
+            ],
+            "Le montant assuré doit permettre la reconstruction selon les normes, usages et règles de l'art applicables au moment du sinistre. Cette valeur est évaluée au moins tous les cinq ans par un évaluateur agréé, et non tous les trois ans. Le syndicat souscrit aussi les assurances de responsabilité prévues pour le syndicat, le conseil, le gérant et les personnes chargées de l'assemblée.",
+            "Chaque copropriétaire doit détenir une assurance responsabilité d'au moins 1 million de dollars lorsque l'immeuble compte moins de 13 fractions résidentielles ou commerciales, et 2 millions lorsqu'il en compte 13 ou plus. Une réclamation contre un copropriétaire après un sinistre n'est pas automatique : elle dépend notamment de la faute, de la preuve et des règles du Code civil.",
           ],
         },
         {
-          heading: "Comment se conformer à la Loi 141 sans se noyer dans la bureaucratie ?",
+          heading: "Comment gérer les franchises et le fonds d'auto assurance ?",
           paragraphs: [
-            "La première étape est de réaliser une étude de fonds de prévoyance si ce n'est pas encore fait. Plusieurs firmes spécialisées offrent ce service à Montréal. Le coût varie entre 2 000 $ et 8 000 $ selon la taille de l'immeuble, mais c'est un investissement qui protège le syndicat de toute contestation légale sur l'insuffisance de ses réserves.",
+            "Le syndicat constitue un fonds d'auto assurance liquide et disponible à court terme. Ce fonds paie les franchises de la police collective et certains dommages aux biens assurables du syndicat lorsque ni l'assurance ni le fonds de prévoyance ne peuvent les couvrir. Il est distinct du budget courant et du fonds de prévoyance.",
             [
-              "La deuxième étape est de mettre en place le carnet d'entretien. Un ",
-              { text: "gestionnaire de copropriété professionnel", to: "/services/gestion-copropriete" },
-              " peut vous aider à structurer ce document et à le tenir à jour. Il sert aussi d'outil de planification pour les travaux à venir, permettant au syndicat d'anticiper les dépenses plutôt que de les subir.",
+              "Sa contribution minimale est calculée chaque année à partir de la franchise la plus élevée, sauf celles relatives aux tremblements de terre et aux inondations. Notre ",
+              { text: "guide du fonds d'auto assurance", to: "/blog/fonds-auto-assurance-copropriete-franchise-calcul" },
+              " présente la formule, le seuil de 100 000 $ et les contrôles à faire pour les dégâts d'eau.",
             ],
-            "Gestion Velora intègre le suivi de la conformité Loi 141 dans tous ses mandats de gestion de syndicat. Nos clients reçoivent des alertes proactives lorsque des renouvellements d'études ou des mises à jour de carnet sont requis, évitant ainsi toute non-conformité.",
+            "Au renouvellement, le conseil vérifie la valeur de reconstruction, toutes les franchises, les exclusions, les avenants et le solde réel du fonds. Après un sinistre, il documente chaque retrait et planifie la reconstitution. Un courtier, l'évaluateur et le gestionnaire ont des rôles complémentaires, mais le conseil conserve la responsabilité de décider et de rendre compte.",
           ],
         },
       ],
@@ -1056,39 +1068,47 @@ export const blogPosts: BlogPost[] = [
       date: "April 2026",
       title: "Law 141: condo board obligations in Quebec explained",
       metaTitle: "Law 141 condo board Quebec",
-      excerpt: "Law 141 introduced major new obligations for Quebec condo boards. Here is what your board needs to know and do to stay compliant.",
-      brief: "Law 141 (2018, in force 2022) requires Quebec condo boards to build an adequate reserve fund based on an actuarial study, maintain a building maintenance log, and insure the building at full replacement cost. These obligations apply to all divided co-ownerships regardless of size.",
+      excerpt: "Law 141 principally governs syndicate insurance, reconstruction value, and the self-insurance fund. Here is how it differs from Law 16.",
+      brief: "Law 141 strengthened Quebec condo insurance: whole-building coverage, reconstruction value assessed at least every five years, liability insurance, and a self-insurance fund. The maintenance log and reserve fund study instead arise from Law 16 and its regulation effective in 2025. Boards need separate compliance calendars for these connected duties.",
       sections: [
         {
-          heading: "What are the main obligations introduced by Law 141?",
+          heading: "What is the difference between Law 141 and Law 16?",
           paragraphs: [
             [
-              "Adopted in 2018, Law 141 profoundly reformed rules applicable to Quebec ",
+              "Adopted in 2018, Law 141 principally reformed insurance rules for Quebec ",
               { text: "condo boards (syndicats)", to: "/services/syndicat-copropriete" },
-              ". Its provisions on reserve funds and building maintenance came into force progressively between 2020 and 2022. Three major obligations result from it.",
+              ": building coverage, reconstruction value, liability, deductibles, and the self-insurance fund. Its measures came into force progressively between 2020 and 2022.",
             ],
-            "First obligation: the reserve fund study. The board must hire a qualified professional (engineer, building technician, or evaluator) to conduct a study determining the annual contributions needed to fund planned major work over 25 years. This study must be renewed every 5 years. It replaces the old rule of a minimum 5% of condo fees, which was often insufficient.",
-            "Second obligation: the maintenance log (carnet d'entretien). The board must keep an updated register documenting the condition of each major building component (roof, plumbing, mechanical systems, façade), work completed, and planned work. Any owner may consult it, and it must be provided to buyers during a real estate transaction.",
+            "The maintenance log and reserve fund study are not Law 141 obligations. They arise from Law 16 and the divided co-ownership management regulation effective August 14, 2025. Confusing the two statutes produces incorrect deadlines and incomplete professional mandates.",
+            [
+              "The board should maintain two connected calendars: a Law 141 calendar for insurance, reconstruction valuation, and the self-insurance fund; and a ",
+              { text: "Law 16 calendar for the log and study", to: "/en/blog/loi-16-copropriete-quebec-echeances-conformite" },
+              ". All three funds still meet in the same annual budgeting exercise.",
+            ],
           ],
         },
         {
           heading: "Insurance: what Law 141 requires from condo boards",
           paragraphs: [
-            "Law 141 also strengthened insurance obligations. The board must insure the building at full replacement cost, including common areas and improvements made to private portions. A certified appraiser must estimate this value at least once every three years.",
-            "Individual unit owners must carry condo insurance covering their deductible and leasehold improvements. Law 141 introduced the collective deductible concept: in a claim involving a private portion, the collective insurance deductible can be recovered from the responsible owner.",
-            "These new insurance rules have made claims management more complex. A professional manager understands these mechanisms and can efficiently coordinate claims between the board's insurer and individual owners' insurers, avoiding costly disputes.",
+            [
+              "Article 1073 of the ",
+              { text: "Civil Code of Québec", to: "https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991?langCont=fr" },
+              " requires the syndicate to insure the entire building, including private portions, against usual risks. Owner improvements are excluded when they can be identified against the description of the private portion.",
+            ],
+            "The insured amount must provide for reconstruction under the standards, practices, and rules of the art applicable at the time of loss. A certified appraiser assesses that value at least every five years, not every three years. The syndicate also carries the required liability coverage for the syndicate, board, manager, and people responsible for the owners' meeting.",
+            "Each owner must carry at least $1 million in liability coverage where the building has fewer than 13 residential or commercial fractions and $2 million where it has 13 or more. Recovery against an owner after a claim is not automatic; it depends on fault, evidence, and the Civil Code rules.",
           ],
         },
         {
-          heading: "How to comply with Law 141 without drowning in bureaucracy?",
+          heading: "How should deductibles and the self-insurance fund be managed?",
           paragraphs: [
-            "The first step is commissioning a reserve fund study if you haven't already. Several specialized firms offer this service in Montreal. Costs range from $2,000 to $8,000 depending on building size — a worthwhile investment that protects the board from legal challenges about reserve adequacy.",
+            "The syndicate maintains a liquid self-insurance fund available on short notice. It pays collective-policy deductibles and certain damage to insurable syndicate property when neither insurance proceeds nor the reserve fund can cover it. It remains separate from operating cash and the reserve fund.",
             [
-              "The second step is implementing the maintenance log. A ",
-              { text: "professional condo property manager", to: "/services/gestion-copropriete" },
-              " can help structure and maintain this document. It also serves as a planning tool for upcoming work, letting the board anticipate expenses rather than react to them.",
+              "Its annual minimum contribution is calculated from the highest deductible, excluding earthquake and flood deductibles. Our ",
+              { text: "self-insurance fund guide", to: "/en/blog/fonds-auto-assurance-copropriete-franchise-calcul" },
+              " explains the formula, the $100,000 threshold, and water-damage controls.",
             ],
-            "Gestion Velora integrates Law 141 compliance monitoring into all condo board management mandates. Clients receive proactive alerts when study renewals or log updates are required, preventing any non-compliance.",
+            "At renewal, the board checks reconstruction value, every deductible, exclusions, endorsements, and the fund's actual balance. After a claim, it records each withdrawal and plans replenishment. The broker, appraiser, and manager have complementary roles, but the board remains responsible for deciding and reporting to owners.",
           ],
         },
       ],

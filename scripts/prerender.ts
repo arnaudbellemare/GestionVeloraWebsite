@@ -70,6 +70,10 @@ const SITEMAP_LAST_MODIFIED_BY_PATH = new Map<string, string>([
   ["/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
   ["/en/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
 ]);
+for (const post of blogPosts) {
+  SITEMAP_LAST_MODIFIED_BY_PATH.set(`/blog/${post.slug}`, post.dateModified);
+  SITEMAP_LAST_MODIFIED_BY_PATH.set(`/en/blog/${post.slug}`, post.dateModified);
+}
 /** Keep in sync with ARTICLE_AUTHOR_SAME_AS in src/config.ts. */
 const AUTHOR_SAME_AS = ["https://ca.linkedin.com/in/gestion-velora-48684b399"] as const;
 const HOMEPAGE_CITATIONS = [
@@ -2708,6 +2712,44 @@ function buildSitemap(routes: RouteConfig[]): void {
   console.log(`  ✓ sitemap.xml — ${entries.length} URLs written`);
 }
 
+function buildRss(): void {
+  const latestModified = blogPosts.reduce(
+    (latest, post) => (post.dateModified > latest ? post.dateModified : latest),
+    blogPosts[0]?.dateModified ?? new Date().toISOString().slice(0, 10),
+  );
+  const items = blogPosts
+    .map((post) => {
+      const url = `${SITE_URL}/blog/${post.slug}`;
+      const published = new Date(`${post.datePublished}T12:00:00Z`).toUTCString();
+      return (
+        `    <item>\n` +
+        `      <title>${escapeHtml(post.fr.title)}</title>\n` +
+        `      <link>${url}</link>\n` +
+        `      <guid>${url}</guid>\n` +
+        `      <pubDate>${published}</pubDate>\n` +
+        `      <description>${escapeHtml(post.fr.excerpt)}</description>\n` +
+        `    </item>`
+      );
+    })
+    .join("\n");
+  const xml =
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<rss version="2.0">\n` +
+    `  <channel>\n` +
+    `    <title>Gestion Velora Insights</title>\n` +
+    `    <link>${SITE_URL}/</link>\n` +
+    `    <description>Conseils sur la gestion immobilière, la copropriété et la location au Québec.</description>\n` +
+    `    <language>fr-ca</language>\n` +
+    `    <lastBuildDate>${new Date(`${latestModified}T12:00:00Z`).toUTCString()}</lastBuildDate>\n` +
+    `${items}\n` +
+    `  </channel>\n` +
+    `</rss>\n`;
+
+  writeFileSync(join(DIST, "rss.xml"), xml, "utf-8");
+  writeFileSync(join(process.cwd(), "public", "rss.xml"), xml, "utf-8");
+  console.log(`  ✓ rss.xml — ${blogPosts.length} articles written`);
+}
+
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
@@ -2783,6 +2825,7 @@ async function main() {
 
   // Auto-generate sitemap from all routes so it never goes stale
   buildSitemap(routes);
+  buildRss();
 
   console.log(`\n✅ Prerendered ${count} routes.\n`);
 }
