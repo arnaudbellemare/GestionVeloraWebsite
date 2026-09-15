@@ -524,7 +524,7 @@ export default function PlexRadarPage() {
               </ul>
             </details>}
 
-            {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong><small className={`radar-ratio is-${expenseRatioBand(selected.live.expenseRatio)}`}>{pct0.format(selected.live.expenseRatio)} {t.expenseRatio} · {t.ratioBand[expenseRatioBand(selected.live.expenseRatio)]}</small></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
+            {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong><small className={`radar-ratio is-${expenseRatioBand(selected.live.expenseRatio)}`}>{pct.format(selected.live.expenseRatio)} {t.expenseRatio} · {t.ratioBand[expenseRatioBand(selected.live.expenseRatio)]}</small></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
               <details><summary>{t.definitionTitle}</summary><p>{t.definition}</p></details>
               {selected.expense_policy.lines.filter((line) => line.key !== "capex").map((line) => <ExpenseLine key={line.key} line={line} removed={selectedExcluded.includes(line.key)} t={t} onToggle={() => toggleExpense(selected.listing.listing_id, line.key)} />)}
               <div className="radar-noi"><div><p>{t.noi}</p><strong>{money.format(selected.live.noi)}</strong></div><div><p>{t.adjustedNoi}</p><strong>{money.format(selected.live.adjustedNoi)}</strong></div></div>
