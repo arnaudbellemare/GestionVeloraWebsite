@@ -9,6 +9,7 @@ import {
   calculateRadarScenario,
   calculatorAreaKey,
   calculatorUrl,
+  expenseRatioBand,
   publishedRadarMetrics,
   type RadarDeal,
   type RadarExpenseLine,
@@ -77,6 +78,7 @@ const copy = {
     cap: "Taux cap.", cash: "Flux / mois", score: "Score", published: "Analyse publiée",
     scenario: "Scénario personnalisé", reported: "Rapporté", estimated: "Estimé",
     expenses: "Dépenses d’exploitation", restore: "Revenir au publié",
+    expenseRatio: "des revenus bruts", ratioBand: { thin: "sous la norme de 30 à 40 %", typical: "dans la norme de 30 à 40 %", heavy: "au-dessus de la norme de 30 à 40 %" },
     calculator: "Analyser dans le calculateur complet", source: "Voir la fiche source",
     definitionTitle: "Comprendre les estimations",
     definition: "Gestion couvre les honoraires d’un gestionnaire externe. Services publics propriétaire couvre l’électricité, le chauffage ou les services communs payés par le propriétaire.",
@@ -123,6 +125,7 @@ const copy = {
     positiveFlow: "Positive CF / mo", negativeFlow: "Deficit / mo", neutralFlow: "Break-even / mo",
     cap: "Cap rate", cash: "Cash flow / mo", score: "Score",
     published: "Published analysis", scenario: "Custom scenario", reported: "Reported", estimated: "Estimated",
+    expenseRatio: "of gross income", ratioBand: { thin: "below the 30–40% norm", typical: "within the 30–40% norm", heavy: "above the 30–40% norm" },
     expenses: "Operating expenses", restore: "Restore published", calculator: "Open in the full calculator", source: "View source listing",
     definitionTitle: "Understanding estimates", definition: "Management covers an external manager’s fees. Owner-paid utilities cover electricity, heating or common services paid by the owner.",
     remove: "Remove from scenario", add: "Restore in scenario", notice: "The − button removes an estimate from the scenario only. Reported facts and the published result remain unchanged.",
@@ -521,7 +524,7 @@ export default function PlexRadarPage() {
               </ul>
             </details>}
 
-            {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
+            {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong><small className={`radar-ratio is-${expenseRatioBand(selected.live.expenseRatio)}`}>{pct0.format(selected.live.expenseRatio)} {t.expenseRatio} · {t.ratioBand[expenseRatioBand(selected.live.expenseRatio)]}</small></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
               <details><summary>{t.definitionTitle}</summary><p>{t.definition}</p></details>
               {selected.expense_policy.lines.filter((line) => line.key !== "capex").map((line) => <ExpenseLine key={line.key} line={line} removed={selectedExcluded.includes(line.key)} t={t} onToggle={() => toggleExpense(selected.listing.listing_id, line.key)} />)}
               <div className="radar-noi"><div><p>{t.noi}</p><strong>{money.format(selected.live.noi)}</strong></div><div><p>{t.adjustedNoi}</p><strong>{money.format(selected.live.adjustedNoi)}</strong></div></div>

@@ -80,6 +80,8 @@ export type RadarMetrics = {
   noi: number;
   /** Recurring operating expenses. The capital reserve is not one of them. */
   operatingExpenses: number;
+  /** Operating expenses ÷ advertised gross income. Normalised Quebec plex statements land between 30 % and 40 %. */
+  expenseRatio: number;
   /** Annual replacement reserve, set aside below NOI and charged only to cash flow. */
   capexReserve: number;
   /** Conservative NOI after the capital reserve: what cash flow runs from. */
@@ -173,6 +175,22 @@ export function radarStandardFigures(deal: RadarDeal): RadarStandardFigures {
   };
 }
 
+/**
+ * Share of gross income that normalised operating expenses occupy on Quebec
+ * plex stock: the 30–40 % rule of thumb. A statement below the band is
+ * usually missing lines (management, maintenance, snow); one above it is
+ * carrying heating or an unusual tax load.
+ */
+export const EXPENSE_RATIO_BAND = { low: 0.30, high: 0.40 } as const;
+
+export type ExpenseRatioBand = "thin" | "typical" | "heavy";
+
+export function expenseRatioBand(ratio: number): ExpenseRatioBand {
+  if (ratio < EXPENSE_RATIO_BAND.low) return "thin";
+  if (ratio > EXPENSE_RATIO_BAND.high) return "heavy";
+  return "typical";
+}
+
 /** Published model constants, used when a release carries no stored assumptions. */
 export const RADAR_MODEL = {
   vacancyRate: 0.03,
@@ -231,6 +249,7 @@ export function publishedRadarMetrics(deal: RadarDeal): RadarMetrics | null {
   const annualDebtService = n(deal, "annual_debt_service");
   const egi = n(deal, "effective_gross_income")
     || (listing.potential_gross_income ?? 0) * (1 - radarAssumptions(deal).vacancyRate);
+  const gross = listing.potential_gross_income ?? 0;
   const base = {
     capRate: figures.normalized ? (listing.price > 0 ? figures.noi / listing.price : 0) : n(deal, "cap_rate"),
     cashOnCash: n(deal, "cash_on_cash"),
@@ -240,6 +259,7 @@ export function publishedRadarMetrics(deal: RadarDeal): RadarMetrics | null {
     cashFlowPerDoor: n(deal, "monthly_cash_flow_per_door"),
     noi: figures.noi,
     operatingExpenses: figures.operatingExpenses,
+    expenseRatio: gross > 0 ? figures.operatingExpenses / gross : 0,
     capexReserve: figures.capexReserve,
     adjustedNoi: figures.noi - figures.capexReserve,
     breakEvenRatio: !figures.normalized && deal.metrics.break_even_ratio !== undefined
@@ -363,6 +383,7 @@ export function calculateRadarScenario(deal: RadarDeal, excludedKeys: string[], 
     cashFlowPerDoor: annualCashFlow / 12 / listing.units,
     noi,
     operatingExpenses,
+    expenseRatio: operatingExpenses / gross,
     capexReserve,
     adjustedNoi: noi - capexReserve,
     breakEvenRatio: effectiveGrossIncome > 0 ? (operatingExpenses + annualDebtService) / effectiveGrossIncome : 0,

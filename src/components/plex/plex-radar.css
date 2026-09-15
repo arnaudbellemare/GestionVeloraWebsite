@@ -373,6 +373,9 @@
 .radar-expenses > div { display: flex; align-items: end; justify-content: space-between; }
 .radar-expenses > div > div p { margin: 0 0 5px; color: var(--radar-muted); font: 9px ui-monospace, monospace; text-transform: uppercase; }
 .radar-expenses > div > div strong { font: 22px Georgia, serif; }
+.radar-expenses > div > div small.radar-ratio { display: block; margin-top: 4px; color: var(--radar-muted); font-size: 9px; }
+.radar-expenses small.radar-ratio.is-typical { color: var(--radar-green); }
+.radar-expenses small.radar-ratio.is-thin, .radar-expenses small.radar-ratio.is-heavy { color: var(--radar-amber); }
 .radar-expenses > div > button { border: 0; background: none; color: var(--radar-green); font-size: 10px; cursor: pointer; }
 .radar-expenses details { margin: 14px 0; padding: 10px; border: 1px solid var(--radar-line); color: var(--radar-muted); font-size: 9px; }
 .radar-expenses details summary { color: var(--radar-ink); font-weight: 700; cursor: pointer; }

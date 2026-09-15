@@ -20,6 +20,7 @@ import {
   calculateRadarScenario,
   calculatorAreaKey,
   calculatorUrl,
+  expenseRatioBand,
   publishedRadarMetrics,
   radarAssumptions,
   radarReserveInsideExpenses,
@@ -314,6 +315,13 @@ assert.ok(radarWithoutEstimates.noi > radarBase.noi);
 assert.ok(radarWithoutEstimates.capRate > radarBase.capRate);
 assert.equal(radarWithoutReportedTaxes.operatingExpenses, radarBase.operatingExpenses);
 assert.equal(radarWithoutReportedTaxes.noi, radarBase.noi);
+// The expense ratio reads against advertised gross income, the basis of the 30–40 % rule.
+closeTo(radarBase.expenseRatio, radarBase.operatingExpenses / 100_000, 1e-12);
+closeTo(radarWithoutEstimates.expenseRatio, radarBase.expenseRatio - 0.08, 1e-12);
+assert.equal(expenseRatioBand(0.29), "thin");
+assert.equal(expenseRatioBand(0.30), "typical");
+assert.equal(expenseRatioBand(0.40), "typical");
+assert.equal(expenseRatioBand(0.41), "heavy");
 
 const radarCalculatorUrl = new URL(calculatorUrl(radarDeal, 'fr'), 'https://www.gestionvelora.com');
 assert.equal(radarCalculatorUrl.pathname, '/calculateur-rendement-plex-montreal');
