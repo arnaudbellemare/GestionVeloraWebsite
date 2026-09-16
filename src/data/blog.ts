@@ -1867,7 +1867,7 @@ export const blogPosts: BlogPost[] = [
             [
               "Pour les promoteurs et gestionnaires qui cherchent une compagnie de nettoyage fiable à Montréal, Nickel & Krome représente un choix solide. N'hésitez pas à les contacter directement via leur site ",
               { text: "nickelandkrome.ca", to: "https://nickelandkrome.ca" },
-              " ou par téléphone au +1-514-973-3311.",
+              " ou par téléphone au +1-514-974-3311.",
             ],
             [
               "Gestion Velora recommande Nickel & Krome à nos clients qui en font la demande. Si vous gérez un immeuble à Montréal ou Laval et souhaitez en savoir plus sur notre réseau de partenaires de confiance, ",
@@ -1916,7 +1916,7 @@ export const blogPosts: BlogPost[] = [
             [
               "For developers and managers looking for a reliable cleaning company in Montreal, Nickel & Krome is a solid choice. Contact them directly through their website ",
               { text: "nickelandkrome.ca", to: "https://nickelandkrome.ca" },
-              " or by phone at +1-514-973-3311.",
+              " or by phone at +1-514-974-3311.",
             ],
             [
               "Gestion Velora recommends Nickel & Krome to clients who request it. If you manage a building in Montreal or Laval and want to learn more about our trusted partner network, ",
