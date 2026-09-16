@@ -12,6 +12,8 @@ import {
   calculateProjection,
   calculateReturnHorizons,
   compareFinancing,
+  calculateCreditMarketImpact,
+  DEFAULT_CREDIT_MARKET_ASSUMPTIONS,
   mortgagePeriodicRate,
   rentalUseFraction,
 } from '../src/lib/plex/calculator';
@@ -29,6 +31,7 @@ import {
   type RadarFeed,
 } from '../src/data/plex-radar';
 import { createRadarPrefill } from '../src/lib/plex/radar-prefill';
+import { parseBocMarketData, parseYahooBrent } from '../src/lib/plex/credit-market-data';
 import {
   BENCHMARK_MIN_SAMPLE,
   TYPICAL_BEDROOMS,
@@ -49,6 +52,23 @@ const closeTo = (actual: number, expected: number, tolerance = 0.01) => {
     `Expected ${actual} to be within ${tolerance} of ${expected}`,
   );
 };
+
+// Public-market payloads are parsed defensively before they reach the UI.
+const parsedBoc = parseBocMarketData({ observations: [{
+  d: '2026-09-15',
+  'BD.CDN.5YR.DQ.YLD': { v: '3.65' },
+  V39079: { v: '2.25' },
+}] });
+assert.equal(parsedBoc.gocFiveYear?.value, 3.65);
+assert.equal(parsedBoc.policyRate?.value, 2.25);
+assert.equal(parseBocMarketData({ observations: [] }).gocFiveYear, null);
+const parsedBrent = parseYahooBrent({ chart: { result: [{ meta: {
+  regularMarketPrice: 105.11,
+  regularMarketTime: 1_789_572_242,
+} }] } });
+assert.equal(parsedBrent?.value, 105.11);
+assert.ok(parsedBrent?.asOf.startsWith('2026-'));
+assert.equal(parseYahooBrent({ chart: { result: [] } }), null);
 
 // Canadian fixed-rate convention: nominal semi-annual converted to monthly.
 const canadianMonthly = mortgagePeriodicRate(0.0475, 12, 'semi-annual');
@@ -127,6 +147,45 @@ const economicValue = calculateEconomicValue(
 );
 closeTo(fivePlusResults.maxLoanByDscr, economicValue.maxLoan, 0.02);
 closeTo(economicValue.economicValue, economicValue.maxLoan / fivePlus.maxLtv, 0.02);
+
+// Credit-market transmission: GoC yield + funding spreads produces the
+// indicative insured rate and carries that rate through payment, cash flow,
+// DSCR and commercial loan sizing independently of the market-data transport.
+const creditBase = calculateCreditMarketImpact(
+  fivePlus,
+  fivePlusResults,
+  DEFAULT_CREDIT_MARKET_ASSUMPTIONS,
+);
+closeTo(creditBase.indicativeRate, 0.0463, 1e-12);
+
+const higherGoC = calculateCreditMarketImpact(fivePlus, fivePlusResults, {
+  ...DEFAULT_CREDIT_MARKET_ASSUMPTIONS,
+  gocFiveYearYield: DEFAULT_CREDIT_MARKET_ASSUMPTIONS.gocFiveYearYield + 0.005,
+});
+assert.ok(higherGoC.monthlyPayment > creditBase.monthlyPayment);
+assert.ok(higherGoC.annualCashFlow < creditBase.annualCashFlow);
+assert.ok(higherGoC.maxLoanByDscr < creditBase.maxLoanByDscr);
+
+const debtConstrainedInputs = {
+  ...fivePlus,
+  askingPrice: fivePlus.askingPrice * 3,
+  purchasePrice: fivePlus.purchasePrice * 3,
+  maxLtv: 0.95,
+};
+const debtConstrainedResults = calculateDeal(debtConstrainedInputs);
+const withoutBuffer = calculateCreditMarketImpact(
+  debtConstrainedInputs,
+  debtConstrainedResults,
+  DEFAULT_CREDIT_MARKET_ASSUMPTIONS,
+);
+const withBuffer = calculateCreditMarketImpact(debtConstrainedInputs, debtConstrainedResults, {
+  ...DEFAULT_CREDIT_MARKET_ASSUMPTIONS,
+  qualificationBufferBps: 100,
+});
+closeTo(withBuffer.indicativeRate, withoutBuffer.indicativeRate, 1e-12);
+closeTo(withBuffer.monthlyPayment, withoutBuffer.monthlyPayment, 1e-8);
+assert.ok(withBuffer.maxLoan < withoutBuffer.maxLoan);
+assert.ok(withBuffer.maxLoanByDscr < withoutBuffer.maxLoanByDscr);
 
 // MREX/TGA valuation is forward-NOI driven for 5+ units: doubling the TGA
 // halves the projected value.
@@ -252,6 +311,11 @@ const assertFiniteNumbers = (value: unknown, path = 'result'): void => {
   }
 };
 assertFiniteNumbers(zeroResults);
+assertFiniteNumbers(calculateCreditMarketImpact(
+  zeroInputs,
+  zeroResults,
+  DEFAULT_CREDIT_MARKET_ASSUMPTIONS,
+), 'creditMarketImpact');
 
 // Plex Radar scenarios can remove estimates, but never reported facts.
 const radarDeal: RadarDeal = {

@@ -821,6 +821,130 @@ export function sizeCommercialLoan(
   return { loan, byLtv, byDscr, constraint: byDscr < byLtv ? 'dscr' : 'ltv' };
 }
 
+// ─── Credit-market transmission ────────────────────────────────────
+
+/**
+ * Editable market assumptions behind an indicative insured mortgage rate.
+ * They deliberately live outside DealInputs: this is a scenario layered over
+ * the deal. The engine stays independent of whether a value was loaded from a
+ * public source or entered manually, so provenance remains explicit in the UI.
+ */
+export interface CreditMarketAssumptions {
+  /** Five-year Government of Canada bond yield, expressed as a decimal. */
+  gocFiveYearYield: number;
+  /** Canada Mortgage Bond spread over the GoC yield, in basis points. */
+  cmbSpreadBps: number;
+  /** Lender spread over the CMB funding level, in basis points. */
+  lenderSpreadBps: number;
+  /** Optional underwriting cushion added to the indicative mortgage rate. */
+  qualificationBufferBps: number;
+}
+
+export const DEFAULT_CREDIT_MARKET_ASSUMPTIONS: CreditMarketAssumptions = {
+  gocFiveYearYield: 0.0368,
+  cmbSpreadBps: 17.5,
+  lenderSpreadBps: 77.5,
+  qualificationBufferBps: 0,
+};
+
+export interface CreditMarketImpact {
+  indicativeRate: number;
+  qualificationRate: number;
+  rateDeltaBps: number;
+  monthlyPayment: number;
+  annualDebtService: number;
+  annualDebtServiceDelta: number;
+  dscr: number;
+  annualCashFlow: number;
+  annualCashFlowDelta: number;
+  maxLoan: number;
+  maxLoanByLtv: number;
+  maxLoanByDscr: number;
+  financingGap: number;
+  loanCapacityDelta: number;
+  loanSizedBy: 'ltv' | 'dscr';
+}
+
+/**
+ * Translates a bond yield and funding spreads into deal-level consequences.
+ * The current mortgage balance is repriced at the indicative rate for payment,
+ * DSCR and cash-flow comparisons. Commercial capacity is then re-sized against
+ * lender-normalized NOI at the optional qualification cushion.
+ */
+export function calculateCreditMarketImpact(
+  inputs: DealInputs,
+  results: Pick<DealResults,
+    'currentMonthlyRent' | 'totalOperatingExpenses' | 'propertyManagementAnnual' |
+    'repairsMaintenanceAnnual' | 'effectiveLoanAmount' | 'adjustedNoi' | 'noi' |
+    'annualDebtService' | 'btCashFlowYear1' | 'loanAmount'>,
+  assumptions: CreditMarketAssumptions,
+): CreditMarketImpact {
+  const indicativeRate = Math.max(
+    0,
+    assumptions.gocFiveYearYield +
+      (assumptions.cmbSpreadBps + assumptions.lenderSpreadBps) / 10_000,
+  );
+  const qualificationRate = Math.max(
+    0,
+    indicativeRate + assumptions.qualificationBufferBps / 10_000,
+  );
+  const paymentsPerYear = Math.max(1, inputs.paymentsPerYear);
+  const amortizationYears = Math.max(1, inputs.loanLifeYears);
+  const periodicRate = mortgagePeriodicRate(
+    indicativeRate, paymentsPerYear, inputs.mortgageCompounding,
+  );
+  const monthlyPayment = pmt(
+    periodicRate,
+    amortizationYears * paymentsPerYear,
+    Math.max(0, results.effectiveLoanAmount),
+  );
+  const annualDebtService = monthlyPayment * paymentsPerYear;
+  const dscr = annualDebtService > 0 ? results.noi / annualDebtService : 0;
+  const annualCashFlow = results.adjustedNoi - annualDebtService;
+
+  const underwriting = calculateEconomicValue(
+    inputs,
+    results.currentMonthlyRent * 12,
+    results.totalOperatingExpenses,
+    results.propertyManagementAnnual,
+    results.repairsMaintenanceAnnual,
+  );
+  const mliTerms = mliSelectTerms(inputs.mliPoints);
+  const ltvCap = inputs.financingMode === 'mli-select'
+    ? Math.min(inputs.maxLtv, mliTerms.maxLtv)
+    : inputs.financingMode === 'cmhc-standard'
+      ? Math.min(inputs.maxLtv, 0.85)
+      : inputs.maxLtv;
+  const sized = sizeCommercialLoan(
+    underwriting.normalizedNoi,
+    inputs.purchasePrice,
+    ltvCap,
+    inputs.dscrTarget,
+    qualificationRate,
+    amortizationYears,
+    paymentsPerYear,
+    inputs.mortgageCompounding,
+  );
+
+  return {
+    indicativeRate,
+    qualificationRate,
+    rateDeltaBps: (indicativeRate - inputs.annualInterestRate) * 10_000,
+    monthlyPayment,
+    annualDebtService,
+    annualDebtServiceDelta: annualDebtService - results.annualDebtService,
+    dscr,
+    annualCashFlow,
+    annualCashFlowDelta: annualCashFlow - results.btCashFlowYear1,
+    maxLoan: sized.loan,
+    maxLoanByLtv: sized.byLtv,
+    maxLoanByDscr: sized.byDscr,
+    financingGap: Math.max(0, inputs.purchasePrice - sized.loan),
+    loanCapacityDelta: sized.loan - results.loanAmount,
+    loanSizedBy: sized.constraint,
+  };
+}
+
 // ─── Quebec Welcome Tax (Droits de mutation) ───────────────────────
 /**
  * Reference date for every externally-sourced rate in this file. All of these

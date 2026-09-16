@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import {
   DealInputs,
   UnitRow,
@@ -27,6 +27,9 @@ import {
   calculatePaybackYears,
   calculateEquityMilestones,
   compareFinancing,
+  calculateCreditMarketImpact,
+  DEFAULT_CREDIT_MARKET_ASSUMPTIONS,
+  type CreditMarketAssumptions,
 } from "../../lib/plex/calculator";
 import { makeFormatters } from "../../lib/plex/format";
 import { CALC_UI, type CalcUi } from "../../data/plex-calculator-ui";
@@ -35,6 +38,7 @@ import { CONTACT_FORM_USE_API, WEB3FORMS_ACCESS_KEY } from "../../config";
 import { Select, type SelectOption } from "./Select";
 import { ProjectionChart } from "./ProjectionChart";
 import { createRadarPrefill } from "../../lib/plex/radar-prefill";
+import type { CreditMarketSnapshot } from "../../lib/plex/credit-market-data";
 
 type Locale = "fr" | "en";
 
@@ -205,12 +209,25 @@ function MoneyCell({
 export function DealAnalyzer({ locale }: { locale: Locale }) {
   const t: CalcUi = CALC_UI[locale];
   const f = useMemo(() => makeFormatters(locale), [locale]);
+  const marketDate = useCallback((value: string) => {
+    const date = new Date(value.length === 10 ? `${value}T12:00:00Z` : value);
+    if (!Number.isFinite(date.getTime())) return value;
+    return new Intl.DateTimeFormat(locale === "fr" ? "fr-CA" : "en-CA", {
+      year: "numeric", month: "short", day: "numeric", timeZone: "America/Toronto",
+    }).format(date);
+  }, [locale]);
 
   const [inputs, setInputs] = useState<DealInputs>(radarPrefill);
   const [tab, setTab] = useState(0);
   const [emailPrompt, setEmailPrompt] = useState(false);
   const [email, setEmail] = useState("");
   const [rentRollConfirmed, setRentRollConfirmed] = useState(false);
+  const [creditMarket, setCreditMarket] = useState<CreditMarketAssumptions>(
+    DEFAULT_CREDIT_MARKET_ASSUMPTIONS,
+  );
+  const [creditMarketSnapshot, setCreditMarketSnapshot] = useState<CreditMarketSnapshot | null>(null);
+  const [creditMarketLoading, setCreditMarketLoading] = useState(false);
+  const [creditMarketUnavailable, setCreditMarketUnavailable] = useState(false);
   const radarContext = useMemo(() => {
     if (typeof window === "undefined") return { active: false, comparableCount: 0 };
     const params = new URLSearchParams(window.location.search);
@@ -303,6 +320,46 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
       : null),
     [inputs, results, isCommercialProperty],
   );
+  const creditMarketImpact = useMemo(
+    () => calculateCreditMarketImpact(inputs, results, creditMarket),
+    [inputs, results, creditMarket],
+  );
+  const setCreditMarketField = useCallback(
+    <K extends keyof CreditMarketAssumptions>(field: K, value: CreditMarketAssumptions[K]) => {
+      setCreditMarket((previous) => ({ ...previous, [field]: value }));
+    },
+    [],
+  );
+  const loadCreditMarket = useCallback(async (signal?: AbortSignal) => {
+    setCreditMarketLoading(true);
+    setCreditMarketUnavailable(false);
+    try {
+      const response = await fetch("/api/credit-market", { signal });
+      if (!response.ok) throw new Error(`market-data-${response.status}`);
+      const snapshot = await response.json() as CreditMarketSnapshot;
+      setCreditMarketSnapshot(snapshot);
+      setCreditMarketUnavailable(!snapshot.gocFiveYear);
+      if (snapshot.gocFiveYear && Number.isFinite(snapshot.gocFiveYear.value)) {
+        setCreditMarket((previous) => ({
+          ...previous,
+          gocFiveYearYield: snapshot.gocFiveYear!.value / 100,
+        }));
+      }
+    } catch (error) {
+      if (!(error instanceof DOMException && error.name === "AbortError")) {
+        setCreditMarketUnavailable(true);
+      }
+    } finally {
+      if (!signal?.aborted) setCreditMarketLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isCommercialProperty) return;
+    const controller = new AbortController();
+    void loadCreditMarket(controller.signal);
+    return () => controller.abort();
+  }, [isCommercialProperty, loadCreditMarket]);
 
   const areaOptions: SelectOption<string>[] = useMemo(
     () => areasByRegion().flatMap(({ region, keys }) =>
@@ -555,6 +612,28 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
       rows.push([q(t.marketGrmInput), q(hasMarketGrm ? `${f.number(inputs.marketGrm, 2)}×` : t.notProvided)]);
       rows.push([q(t.marketGrmValue), q(marketGrmValue === null ? t.notProvided : f.currency(marketGrmValue))]);
       rows.push([q(t.exitCapRate), q(f.percent2(inputs.exitCapRate))]);
+      rows.push([]);
+      rows.push([q(t.creditMarketHeading), q(t.currentValue)]);
+      rows.push([q(t.creditMarketManual), q("")]);
+      rows.push([q(t.creditMarketGoc), q(f.percent2(creditMarket.gocFiveYearYield))]);
+      rows.push([q(t.creditMarketCmb), q(`${f.number(creditMarket.cmbSpreadBps, 1)} ${locale === "fr" ? "pb" : "bps"}`)]);
+      rows.push([q(t.creditMarketLender), q(`${f.number(creditMarket.lenderSpreadBps, 1)} ${locale === "fr" ? "pb" : "bps"}`)]);
+      rows.push([q(t.creditMarketBuffer), q(`${f.number(creditMarket.qualificationBufferBps, 1)} ${locale === "fr" ? "pb" : "bps"}`)]);
+      rows.push([q(t.creditMarketRate), q(f.percent2(creditMarketImpact.indicativeRate))]);
+      rows.push([q(t.creditMarketQualificationRate), q(f.percent2(creditMarketImpact.qualificationRate))]);
+      rows.push([q(t.monthlyPayment), q(creditMarketImpact.monthlyPayment.toFixed(0))]);
+      rows.push([q(t.creditMarketDscr), q(f.number(creditMarketImpact.dscr, 2))]);
+      rows.push([q(t.creditMarketCashFlow), q(creditMarketImpact.annualCashFlow.toFixed(0))]);
+      rows.push([q(t.creditMarketCashFlowDelta), q(creditMarketImpact.annualCashFlowDelta.toFixed(0))]);
+      rows.push([q(t.creditMarketMaxLoan), q(creditMarketImpact.maxLoan.toFixed(0))]);
+      rows.push([q(t.creditMarketGap), q(creditMarketImpact.financingGap.toFixed(0))]);
+      rows.push([q(t.creditMarketCapacityDelta), q(creditMarketImpact.loanCapacityDelta.toFixed(0))]);
+      if (creditMarketSnapshot?.policyRate) {
+        rows.push([q(t.creditMarketPolicyRate), q(f.percent2(creditMarketSnapshot.policyRate.value / 100)), q(creditMarketSnapshot.policyRate.asOf), q(creditMarketSnapshot.policyRate.source)]);
+      }
+      if (creditMarketSnapshot?.brentUsd) {
+        rows.push([q(t.creditMarketBrent), q(creditMarketSnapshot.brentUsd.value.toFixed(2)), q(creditMarketSnapshot.brentUsd.asOf), q(creditMarketSnapshot.brentUsd.source)]);
+      }
     }
     rows.push([]);
     rows.push([q(t.colYear), q(t.colGrossRent), q(t.colNoi), q(t.colDebtService),
@@ -1096,6 +1175,184 @@ export function DealAnalyzer({ locale }: { locale: Locale }) {
 : {f.currencyDetailed(results.stressTestPayment)}{t.perMonth}.
               </p>
             </div>
+
+            {isCommercialProperty && (
+              <div className="plexc-card plexc-credit-market">
+                <div className="plexc-credit-head">
+                  <div>
+                    <h3>{t.creditMarketHeading}</h3>
+                    <p className="plexc-sub">{t.creditMarketSub}</p>
+                  </div>
+                  <span className={`plexc-tag ${creditMarketUnavailable ? "plexc-tag-warn" : "plexc-tag-info"}`}>
+                    {creditMarketLoading
+                      ? t.creditMarketLoading
+                      : creditMarketUnavailable
+                        ? t.creditMarketManual
+                        : t.creditMarketLive}
+                  </span>
+                </div>
+
+                {creditMarketSnapshot && (
+                  <div className="plexc-credit-context">
+                    {creditMarketSnapshot.gocFiveYear && (
+                      <article>
+                        <span>{t.creditMarketGoc}</span>
+                        <strong>{f.percent2(creditMarketSnapshot.gocFiveYear.value / 100)}</strong>
+                        <small>{t.creditMarketAsOf} {marketDate(creditMarketSnapshot.gocFiveYear.asOf)}</small>
+                      </article>
+                    )}
+                    {creditMarketSnapshot.policyRate && (
+                      <article>
+                        <span>{t.creditMarketPolicyRate}</span>
+                        <strong>{f.percent2(creditMarketSnapshot.policyRate.value / 100)}</strong>
+                        <small>{t.creditMarketAsOf} {marketDate(creditMarketSnapshot.policyRate.asOf)}</small>
+                      </article>
+                    )}
+                    {creditMarketSnapshot.brentUsd && (
+                      <article>
+                        <span>{t.creditMarketBrent}</span>
+                        <strong>{f.number(creditMarketSnapshot.brentUsd.value, 2)} $</strong>
+                        <small>{t.creditMarketAsOf} {marketDate(creditMarketSnapshot.brentUsd.asOf)}</small>
+                      </article>
+                    )}
+                    <div className="plexc-credit-sources">
+                      <span>{t.creditMarketSources}</span>
+                      {creditMarketSnapshot.gocFiveYear && (
+                        <a href={creditMarketSnapshot.gocFiveYear.sourceUrl} target="_blank" rel="noreferrer">
+                          {creditMarketSnapshot.gocFiveYear.source}
+                        </a>
+                      )}
+                      {creditMarketSnapshot.brentUsd && (
+                        <a href={creditMarketSnapshot.brentUsd.sourceUrl} target="_blank" rel="noreferrer">
+                          {creditMarketSnapshot.brentUsd.source}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {creditMarketUnavailable && (
+                  <p className="plexc-credit-unavailable" role="status">{t.creditMarketUnavailable}</p>
+                )}
+
+                <div className="plexc-grid4">
+                  <PctField
+                    label={t.creditMarketGoc}
+                    value={creditMarket.gocFiveYearYield}
+                    onChange={(value) => setCreditMarketField("gocFiveYearYield", value)}
+                    step={0.01}
+                  />
+                  <Field
+                    label={t.creditMarketCmb}
+                    value={creditMarket.cmbSpreadBps}
+                    onChange={(value) => setCreditMarketField("cmbSpreadBps", Math.max(0, value))}
+                    suffix={locale === "fr" ? "pb" : "bps"}
+                    step={1}
+                    min={0}
+                  />
+                  <Field
+                    label={t.creditMarketLender}
+                    value={creditMarket.lenderSpreadBps}
+                    onChange={(value) => setCreditMarketField("lenderSpreadBps", Math.max(0, value))}
+                    suffix={locale === "fr" ? "pb" : "bps"}
+                    step={1}
+                    min={0}
+                  />
+                  <Field
+                    label={t.creditMarketBuffer}
+                    value={creditMarket.qualificationBufferBps}
+                    onChange={(value) => setCreditMarketField("qualificationBufferBps", Math.max(0, value))}
+                    suffix={locale === "fr" ? "pb" : "bps"}
+                    step={5}
+                    min={0}
+                  />
+                </div>
+
+                <div className="plexc-credit-chain" aria-label={t.creditMarketRate}>
+                  <div className="plexc-credit-node">
+                    <span>{t.creditMarketGoc}</span>
+                    <strong>{f.percent2(creditMarket.gocFiveYearYield)}</strong>
+                  </div>
+                  <span className="plexc-credit-operator" aria-hidden="true">+</span>
+                  <div className="plexc-credit-node">
+                    <span>{t.creditMarketCmb}</span>
+                    <strong>{f.number(creditMarket.cmbSpreadBps, 0)} {locale === "fr" ? "pb" : "bps"}</strong>
+                  </div>
+                  <span className="plexc-credit-operator" aria-hidden="true">+</span>
+                  <div className="plexc-credit-node">
+                    <span>{t.creditMarketLender}</span>
+                    <strong>{f.number(creditMarket.lenderSpreadBps, 0)} {locale === "fr" ? "pb" : "bps"}</strong>
+                  </div>
+                  <span className="plexc-credit-operator" aria-hidden="true">=</span>
+                  <div className="plexc-credit-node is-result">
+                    <span>{t.creditMarketRate}</span>
+                    <strong>{f.percent2(creditMarketImpact.indicativeRate)}</strong>
+                  </div>
+                </div>
+
+                <div className="plexc-grid4 plexc-credit-results">
+                  <Readout
+                    label={t.creditMarketQualificationRate}
+                    value={f.percent2(creditMarketImpact.qualificationRate)}
+                  />
+                  <Readout
+                    label={t.creditMarketRateDelta}
+                    value={`${creditMarketImpact.rateDeltaBps >= 0 ? "+" : ""}${f.number(creditMarketImpact.rateDeltaBps, 0)} ${locale === "fr" ? "pb" : "bps"}`}
+                  />
+                  <Readout
+                    label={t.monthlyPayment}
+                    value={f.currencyDetailed(creditMarketImpact.monthlyPayment)}
+                  />
+                  <Readout
+                    label={t.creditMarketDscr}
+                    value={f.number(creditMarketImpact.dscr, 2)}
+                  />
+                  <Readout
+                    label={t.creditMarketCashFlow}
+                    value={f.accounting(creditMarketImpact.annualCashFlow)}
+                  />
+                  <Readout
+                    label={t.creditMarketCashFlowDelta}
+                    value={f.accounting(creditMarketImpact.annualCashFlowDelta)}
+                  />
+                  <Readout
+                    label={t.creditMarketMaxLoan}
+                    value={f.currency(creditMarketImpact.maxLoan)}
+                    help={creditMarketImpact.loanSizedBy === "dscr" ? t.byDscrTest : t.byLtvCap}
+                  />
+                  <Readout
+                    label={t.creditMarketGap}
+                    value={f.currency(creditMarketImpact.financingGap)}
+                  />
+                </div>
+
+                <div className="plexc-credit-action">
+                  <p>
+                    <span className={`plexc-tag ${creditMarketImpact.dscr >= inputs.dscrTarget ? "plexc-tag-good" : "plexc-tag-bad"}`}>
+                      {creditMarketImpact.dscr >= inputs.dscrTarget ? t.creditMarketPass : t.creditMarketFail}
+                    </span>{" "}
+                    {t.creditMarketCapacityDelta}: <strong>{f.accounting(creditMarketImpact.loanCapacityDelta)}</strong>
+                  </p>
+                  <div>
+                    <button
+                      type="button"
+                      className="plexc-btn"
+                      disabled={creditMarketLoading}
+                      onClick={() => void loadCreditMarket()}
+                    >
+                      {t.creditMarketRefresh}
+                    </button>
+                    <button
+                      type="button"
+                      className="plexc-btn plexc-btn-primary"
+                      onClick={() => set("annualInterestRate", creditMarketImpact.indicativeRate)}
+                    >
+                      {t.creditMarketApply}
+                    </button>
+                  </div>
+                </div>
+                <p className="plexc-note">{t.creditMarketMechanics}</p>
+              </div>
+            )}
 
             {economicValue && (
               <>

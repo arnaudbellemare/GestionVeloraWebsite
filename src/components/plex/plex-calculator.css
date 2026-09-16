@@ -107,6 +107,8 @@
 }
 .plexc-btn:hover { background: var(--pc-sunken); }
 .plexc-btn:active { transform: scale(0.98); }
+.plexc-btn:focus-visible { outline: 2px solid var(--pc-ink); outline-offset: 2px; }
+.plexc-btn:disabled { opacity: 0.5; cursor: wait; transform: none; }
 /* Filled button: near-black on white in light mode, and a true white button
    with black text in dark mode. Uses its own pair rather than --pc-ink so the
    dark variant is pure white rather than the warm off-white used for text. */
@@ -241,6 +243,145 @@
 .plexc-block { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--pc-border); }
 
 .plexc-grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 22px; }
+
+/* ── Credit-market transmission ──
+   The rate chain is the section's signature: assumptions read left-to-right
+   as funding mechanics, then resolve into the rate used by the deal model. */
+.plexc-credit-market { display: grid; gap: 22px; }
+.plexc-credit-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.plexc-credit-head .plexc-sub { margin-bottom: 0; }
+.plexc-credit-head .plexc-tag { flex: none; margin-top: 2px; }
+.plexc-credit-context {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(130px, 0.75fr);
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r-sm);
+  background: var(--pc-border);
+  gap: 1px;
+  overflow: hidden;
+}
+.plexc-credit-context article,
+.plexc-credit-sources {
+  min-width: 0;
+  padding: 13px 14px;
+  background: var(--pc-surface);
+}
+.plexc-credit-context article { display: grid; gap: 2px; }
+.plexc-credit-context article > span,
+.plexc-credit-sources > span {
+  color: var(--pc-ink-3);
+  font-family: var(--pc-mono);
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.plexc-credit-context article strong {
+  overflow: hidden;
+  color: var(--pc-ink);
+  font-family: var(--pc-mono);
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.plexc-credit-context article small { color: var(--pc-ink-3); font-size: 10px; }
+.plexc-credit-sources { display: grid; align-content: center; gap: 2px; }
+.plexc-credit-sources a {
+  overflow: hidden;
+  color: var(--pc-info-fg);
+  font-size: 11px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.plexc-credit-sources a:hover { text-decoration: underline; }
+.plexc-credit-unavailable {
+  margin: -4px 0 0;
+  padding: 10px 12px;
+  border-radius: var(--pc-r-sm);
+  background: var(--pc-warn-bg);
+  color: var(--pc-warn-fg);
+  font-size: 12px;
+}
+.plexc-credit-chain {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1.15fr);
+  align-items: stretch;
+  gap: 10px;
+}
+.plexc-credit-node {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  min-height: 78px;
+  padding: 12px 14px;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r-sm);
+  background: var(--pc-sunken);
+}
+.plexc-credit-node span {
+  overflow: hidden;
+  color: var(--pc-ink-3);
+  font-family: var(--pc-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.plexc-credit-node strong {
+  overflow: hidden;
+  margin-top: 4px;
+  color: var(--pc-ink);
+  font-family: var(--pc-mono);
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.plexc-credit-node.is-result {
+  border-color: var(--pc-border-strong);
+  background: var(--pc-surface);
+}
+.plexc-credit-node.is-result strong { font-size: 22px; }
+.plexc-credit-operator {
+  align-self: center;
+  color: var(--pc-ink-3);
+  font-family: var(--pc-mono);
+  font-size: 16px;
+}
+.plexc-credit-results {
+  padding: 18px;
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-r-sm);
+  background: var(--pc-sunken);
+}
+.plexc-credit-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--pc-border);
+}
+.plexc-credit-action p { margin: 0; color: var(--pc-ink-2); font-size: 13px; }
+.plexc-credit-action strong {
+  color: var(--pc-ink);
+  font-family: var(--pc-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+.plexc-credit-action .plexc-btn { flex: none; }
+.plexc-credit-action > div { display: flex; flex: none; gap: 8px; }
+.plexc-credit-market > .plexc-note { margin-top: -2px; }
 
 /* ── Fields ── */
 .plexc-field label {
@@ -615,6 +756,13 @@
   .plexc-detail-grid { grid-template-columns: 1fr; }
   .plexc-verdict { grid-template-columns: 1fr 1fr; }
   .plexc-score { grid-column: 1 / -1; }
+  .plexc-credit-chain {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+  .plexc-credit-context { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .plexc-credit-sources { grid-column: 1 / -1; }
+  .plexc-credit-chain .plexc-credit-operator:nth-of-type(3) { display: none; }
+  .plexc-credit-node.is-result { grid-column: 1 / -1; }
 }
 @media (max-width: 680px) {
   .plexc-kpis { grid-template-columns: repeat(2, 1fr); }
@@ -625,6 +773,20 @@
   .plexc-recovery { margin-bottom: 16px; }
   .plexc-verdict { grid-template-columns: 1fr; }
   .plexc-score { grid-column: auto; }
+  .plexc-credit-head, .plexc-credit-action { align-items: stretch; flex-direction: column; }
+  .plexc-credit-head .plexc-tag { align-self: flex-start; margin-top: 0; white-space: normal; }
+  .plexc-credit-chain { grid-template-columns: 1fr; }
+  .plexc-credit-chain .plexc-credit-operator,
+  .plexc-credit-chain .plexc-credit-operator:nth-of-type(3) {
+    display: block;
+    justify-self: center;
+    line-height: 1;
+  }
+  .plexc-credit-node.is-result { grid-column: auto; }
+  .plexc-credit-context { grid-template-columns: 1fr; }
+  .plexc-credit-sources { grid-column: auto; }
+  .plexc-credit-action > div { flex-direction: column; }
+  .plexc-credit-action .plexc-btn { width: 100%; }
 }
 
 /* Dark mode: the site ships a light/dark toggle. */

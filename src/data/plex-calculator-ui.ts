@@ -213,6 +213,34 @@ export interface CalcUi {
   stressTest: string;
   passes: string;
   fails: string;
+  creditMarketHeading: string;
+  creditMarketSub: string;
+  creditMarketManual: string;
+  creditMarketLive: string;
+  creditMarketLoading: string;
+  creditMarketUnavailable: string;
+  creditMarketPolicyRate: string;
+  creditMarketBrent: string;
+  creditMarketAsOf: string;
+  creditMarketRefresh: string;
+  creditMarketSources: string;
+  creditMarketGoc: string;
+  creditMarketCmb: string;
+  creditMarketLender: string;
+  creditMarketBuffer: string;
+  creditMarketRate: string;
+  creditMarketQualificationRate: string;
+  creditMarketRateDelta: string;
+  creditMarketDscr: string;
+  creditMarketCashFlow: string;
+  creditMarketCashFlowDelta: string;
+  creditMarketMaxLoan: string;
+  creditMarketGap: string;
+  creditMarketCapacityDelta: string;
+  creditMarketApply: string;
+  creditMarketPass: string;
+  creditMarketFail: string;
+  creditMarketMechanics: string;
   renewalSensitivity: string;
   renewalSub: string;
 
@@ -690,6 +718,36 @@ const fr: CalcUi = {
   stressTest: "Test de résistance à",
   passes: "Réussi",
   fails: "Échoué",
+  creditMarketHeading: "Transmission du marché du crédit",
+  creditMarketSub:
+    "Suivez les repères économiques publics, transformez le rendement obligataire et les spreads en taux assuré indicatif, puis mesurez l'effet sur ce deal.",
+  creditMarketManual: "Repli manuel — données en direct indisponibles",
+  creditMarketLive: "GoC public · spreads modifiables",
+  creditMarketLoading: "Chargement du marché…",
+  creditMarketUnavailable: "Le rendement GoC 5 ans en direct est temporairement indisponible. Les hypothèses demeurent modifiables manuellement.",
+  creditMarketPolicyRate: "Taux directeur BdC",
+  creditMarketBrent: "Brent (USD/baril)",
+  creditMarketAsOf: "Au",
+  creditMarketRefresh: "Actualiser les données",
+  creditMarketSources: "Sources publiques",
+  creditMarketGoc: "GoC 5 ans",
+  creditMarketCmb: "Spread CMB",
+  creditMarketLender: "Spread prêteur",
+  creditMarketBuffer: "Marge de qualification",
+  creditMarketRate: "Taux assuré indicatif",
+  creditMarketQualificationRate: "Taux de qualification",
+  creditMarketRateDelta: "Écart avec le taux du deal",
+  creditMarketDscr: "RCD au taux de marché",
+  creditMarketCashFlow: "Flux annuel au taux de marché",
+  creditMarketCashFlowDelta: "Variation du flux annuel",
+  creditMarketMaxLoan: "Prêt maximal soutenu",
+  creditMarketGap: "Comptant requis avant frais",
+  creditMarketCapacityDelta: "Variation de capacité",
+  creditMarketApply: "Appliquer ce taux au financement",
+  creditMarketPass: "Le RCD respecte la cible",
+  creditMarketFail: "Le RCD est sous la cible",
+  creditMarketMechanics:
+    "Le taux directeur n'entre pas directement dans cette chaîne. Le calcul additionne le rendement GoC 5 ans, le spread CMB et le spread prêteur. La capacité est ensuite recalculée avec le RNE normalisé, le RCD cible, le RPV maximal et la marge de qualification saisie. Les événements macroéconomiques ne sont pas prédits ici : leur effet est capté seulement lorsqu'ils modifient ces hypothèses.",
   renewalSensitivity: "Sensibilité au renouvellement",
   renewalSub:
     "Votre terme se termine et la totalité du solde est refinancée au taux du moment. C'est le principal risque d'une détention au Canada.",
@@ -1184,6 +1242,36 @@ const en: CalcUi = {
   stressTest: "Stress test at",
   passes: "Passes",
   fails: "Fails",
+  creditMarketHeading: "Credit-market transmission",
+  creditMarketSub:
+    "Track public economic benchmarks, translate the bond yield and funding spreads into an indicative insured rate, then measure the effect on this deal.",
+  creditMarketManual: "Manual fallback — live data unavailable",
+  creditMarketLive: "Public GoC · editable spreads",
+  creditMarketLoading: "Loading market data…",
+  creditMarketUnavailable: "The live five-year GoC yield is temporarily unavailable. The assumptions remain editable manually.",
+  creditMarketPolicyRate: "BoC policy rate",
+  creditMarketBrent: "Brent (USD/barrel)",
+  creditMarketAsOf: "As of",
+  creditMarketRefresh: "Refresh market data",
+  creditMarketSources: "Public sources",
+  creditMarketGoc: "5-year GoC",
+  creditMarketCmb: "CMB spread",
+  creditMarketLender: "Lender spread",
+  creditMarketBuffer: "Qualification cushion",
+  creditMarketRate: "Indicative insured rate",
+  creditMarketQualificationRate: "Qualification rate",
+  creditMarketRateDelta: "Difference from deal rate",
+  creditMarketDscr: "DSCR at market rate",
+  creditMarketCashFlow: "Annual cash flow at market rate",
+  creditMarketCashFlowDelta: "Annual cash-flow change",
+  creditMarketMaxLoan: "Maximum supported loan",
+  creditMarketGap: "Cash required before costs",
+  creditMarketCapacityDelta: "Capacity change",
+  creditMarketApply: "Apply this rate to financing",
+  creditMarketPass: "DSCR meets the target",
+  creditMarketFail: "DSCR is below the target",
+  creditMarketMechanics:
+    "The policy rate does not enter this chain directly. The model adds the five-year GoC yield, CMB spread and lender spread. It then re-sizes capacity using normalized NOI, target DSCR, maximum LTV and the entered qualification cushion. This section does not forecast macro events; it captures them only when they change these assumptions.",
   renewalSensitivity: "Renewal sensitivity",
   renewalSub:
     "Your term ends and the whole balance reprices at the rate of the day. This is the single largest risk in a Canadian hold.",
