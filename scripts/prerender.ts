@@ -27,6 +27,11 @@ import { blogPosts, type RichParagraph } from "../src/data/blog.js";
 import { COMPARISON_PAGES } from "../src/data/comparisons.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy.js";
+import {
+  ARTICLE_AUTHOR_BIO,
+  ARTICLE_AUTHOR_NAME,
+  ARTICLE_AUTHOR_SAME_AS,
+} from "../src/data/author.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
 import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
@@ -54,7 +59,7 @@ const SITE_URL = "https://www.gestionvelora.com";
 const INDEX_ROBOTS =
   "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 const ORG_ID = `${SITE_URL}/#organization`;
-const AUTHOR_NAME = "Arnaud Bellemare";
+const AUTHOR_NAME = ARTICLE_AUTHOR_NAME;
 const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
 const TERMS_EFFECTIVE_DATE = "2026-08-30";
 const DEFAULT_SITEMAP_LAST_MODIFIED = "2026-08-20";
@@ -74,8 +79,6 @@ for (const post of blogPosts) {
   SITEMAP_LAST_MODIFIED_BY_PATH.set(`/blog/${post.slug}`, post.dateModified);
   SITEMAP_LAST_MODIFIED_BY_PATH.set(`/en/blog/${post.slug}`, post.dateModified);
 }
-/** Keep in sync with ARTICLE_AUTHOR_SAME_AS in src/config.ts. */
-const AUTHOR_SAME_AS = ["https://ca.linkedin.com/in/gestion-velora-48684b399"] as const;
 const HOMEPAGE_CITATIONS = [
   {
     url: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables",
@@ -686,8 +689,9 @@ function buildHomepageFaqPageSchema(locale: "fr" | "en") {
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
+      description: ARTICLE_AUTHOR_BIO[locale],
       url: `${SITE_URL}/about`,
-      sameAs: [...AUTHOR_SAME_AS],
+      sameAs: [...ARTICLE_AUTHOR_SAME_AS],
       worksFor: { "@id": ORG_ID },
     },
     dateModified: HOMEPAGE_DATE_MODIFIED,
@@ -803,11 +807,12 @@ function buildArticleSchema(locale: "fr" | "en", slug: string, base: string) {
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
+      description: ARTICLE_AUTHOR_BIO[locale],
       // /about is the actual bio page; the site root said nothing about the author.
       url: `${SITE_URL}/about`,
       jobTitle: "Founder, Gestion Velora",
       worksFor: { "@id": ORG_ID },
-      ...(AUTHOR_SAME_AS.length ? { sameAs: AUTHOR_SAME_AS } : {}),
+      ...(ARTICLE_AUTHOR_SAME_AS.length ? { sameAs: ARTICLE_AUTHOR_SAME_AS } : {}),
     },
     publisher: {
       "@type": "Organization",
@@ -932,9 +937,7 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
   const relatedTitle = isEn ? enRaw.blog.relatedPostsTitle : frRaw.blog.relatedPostsTitle;
   const authorLabel = isEn ? "Written by" : "Écrit par";
   const authorRole = isEn ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora";
-  const authorBio = isEn
-    ? "Property management professional specializing in condo boards, long-term rentals, and short-term rentals in Greater Montreal."
-    : "Professionnel de la gestion immobilière spécialisé en syndicats de copropriété, location longue durée et Airbnb dans le Grand Montréal.";
+  const authorBio = ARTICLE_AUTHOR_BIO[locale];
   const ctaText = isEn ? enRaw.blog.planifyCall : frRaw.blog.planifyCall;
 
   return `<!doctype html>
@@ -1120,7 +1123,7 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   const byRole = isEn ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora";
   const profileHref = isEn ? "/en/about" : "/about";
   const profileLabel = isEn ? "View author profile" : "Voir le profil auteur";
-  const byline = `  <p class="byline">${escapeHtml(byLabel)} <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a> — ${escapeHtml(byRole)}. <a href="${profileHref}">${escapeHtml(profileLabel)}</a></p>`;
+  const byline = `  <aside class="byline"><p>${escapeHtml(byLabel)} <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a> — ${escapeHtml(byRole)}. <a href="${profileHref}">${escapeHtml(profileLabel)}</a></p><p>${escapeHtml(ARTICLE_AUTHOR_BIO[locale])}</p></aside>`;
 
   return `<main lang="${lang}">
   <h1>${escapeHtml(loc.title)}</h1>
@@ -1173,8 +1176,8 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
     (source) => `    <li><cite><a href="${source.url}" rel="noopener external">${escapeHtml(source[locale])}</a></cite></li>`,
   ).join("\n");
   const byline = locale === "fr"
-    ? `Écrit et vérifié par <a rel="author" href="/about"><strong>${AUTHOR_NAME}</strong></a>, fondateur de Gestion Velora et membre du RGCQ. Mis à jour le <time datetime="${HOMEPAGE_DATE_MODIFIED}">31 août 2026</time>.`
-    : `Written and reviewed by <a rel="author" href="/en/about"><strong>${AUTHOR_NAME}</strong></a>, founder of Gestion Velora and RGCQ member. Updated <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 31, 2026</time>.`;
+    ? `Rédigé par <a rel="author" href="/about"><strong>${AUTHOR_NAME}</strong></a>. ${escapeHtml(ARTICLE_AUTHOR_BIO.fr)} Mis à jour le <time datetime="${HOMEPAGE_DATE_MODIFIED}">31 août 2026</time>.`
+    : `Written by <a rel="author" href="/en/about"><strong>${AUTHOR_NAME}</strong></a>. ${escapeHtml(ARTICLE_AUTHOR_BIO.en)} Updated <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 31, 2026</time>.`;
   const trustTitle = locale === "fr"
     ? "Comment vérifier notre expertise ou nous contacter ?"
     : "How can you verify our expertise or contact us?";
@@ -2093,6 +2096,7 @@ function buildPlexGuideSchemas(loc: "fr" | "en"): object[] {
       author: {
         "@type": "Person",
         name: AUTHOR_NAME,
+        description: ARTICLE_AUTHOR_BIO[loc],
         url: `${SITE_URL}/about`,
         jobTitle: "Founder, Gestion Velora",
         worksFor: { "@id": ORG_ID },

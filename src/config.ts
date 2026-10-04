@@ -1,3 +1,5 @@
+import { ARTICLE_AUTHOR_NAME, ARTICLE_AUTHOR_SAME_AS } from "./data/author";
+
 /** Canonical site origin (metadata, JSON-LD, Article author URL). */
 export const SITE_URL = "https://www.gestionvelora.com";
 
@@ -7,15 +9,11 @@ export const ORGANIZATION_SCHEMA_ID = `${SITE_URL}/#organization` as const;
 export const PUBLISHER_LOGO_URL = `${SITE_URL}/logo.png?v=10` as const;
 
 /** Article `author` in JSON-LD (Person). */
-export const ARTICLE_AUTHOR_NAME = "Arnaud Bellemare";
+export { ARTICLE_AUTHOR_NAME, ARTICLE_AUTHOR_SAME_AS };
 export const ARTICLE_AUTHOR_URL = `${SITE_URL}/about`;
 
 /** Brand entity URLs used in JSON-LD `sameAs`. */
 export const ORGANIZATION_SAME_AS = [
-  "https://ca.linkedin.com/in/gestion-velora-48684b399",
-] as const;
-
-export const ARTICLE_AUTHOR_SAME_AS = [
   "https://ca.linkedin.com/in/gestion-velora-48684b399",
 ] as const;
 

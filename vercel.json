@@ -151,12 +151,37 @@
   "redirects": [
     {
       "source": "/faq",
-      "destination": "/#faq",
+      "destination": "https://www.gestionvelora.com/#faq",
+      "permanent": true
+    },
+    {
+      "source": "/faq/",
+      "destination": "https://www.gestionvelora.com/#faq",
       "permanent": true
     },
     {
       "source": "/en/faq",
-      "destination": "/en/#faq",
+      "destination": "https://www.gestionvelora.com/en/#faq",
+      "permanent": true
+    },
+    {
+      "source": "/en/faq/",
+      "destination": "https://www.gestionvelora.com/en/#faq",
+      "permanent": true
+    },
+    {
+      "source": "/en/en/faq",
+      "destination": "https://www.gestionvelora.com/en/#faq",
+      "permanent": true
+    },
+    {
+      "source": "/en/en/faq/",
+      "destination": "https://www.gestionvelora.com/en/#faq",
+      "permanent": true
+    },
+    {
+      "source": "/en/en/blog/",
+      "destination": "https://www.gestionvelora.com/en/blog",
       "permanent": true
     },
     {
@@ -172,17 +197,17 @@
     },
     {
       "source": "/en/en/:path*",
-      "destination": "/en/:path*",
+      "destination": "https://www.gestionvelora.com/en/:path*",
       "permanent": true
     },
     {
       "source": "/blog/",
-      "destination": "/blog",
+      "destination": "https://www.gestionvelora.com/blog",
       "permanent": true
     },
     {
       "source": "/en/blog/",
-      "destination": "/en/blog",
+      "destination": "https://www.gestionvelora.com/en/blog",
       "permanent": true
     }
   ],

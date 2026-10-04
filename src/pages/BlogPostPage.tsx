@@ -5,6 +5,7 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { ARTICLE_AUTHOR_NAME } from "../config";
+import { ARTICLE_AUTHOR_BIO } from "../data/author";
 import { useLocale } from "../context/LocaleContext";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { getPostBySlug, getRelatedPosts, type RichParagraph } from "../data/blog";
@@ -181,9 +182,7 @@ export function BlogPostPage() {
               </div>
             </div>
             <p className="font-sans text-sm text-black/60 dark:text-white/60 leading-relaxed mt-4 max-w-lg">
-              {locale === "en"
-                ? "Property management professional specializing in condo boards, long-term rentals, and short-term rentals in Greater Montreal."
-                : "Professionnel de la gestion immobilière spécialisé en syndicats de copropriété, location longue durée et Airbnb dans le Grand Montréal."}
+              {ARTICLE_AUTHOR_BIO[locale]}
             </p>
             <InternalLink
               to={locale === "en" ? "/en/about" : "/about"}

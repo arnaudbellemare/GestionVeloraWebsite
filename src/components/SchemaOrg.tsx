@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { blogCoverUrl } from "../lib/blogImages";
 import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
+import { ARTICLE_AUTHOR_BIO } from "../data/author";
 import {
   ARTICLE_AUTHOR_NAME,
   ARTICLE_AUTHOR_SAME_AS,
@@ -224,7 +225,12 @@ export function SchemaOrg() {
           description: guide.metaDescription,
           url,
           inLanguage: isEn ? "en-CA" : "fr-CA",
-          author: { "@type": "Person", name: ARTICLE_AUTHOR_NAME, url: ARTICLE_AUTHOR_URL },
+          author: {
+            "@type": "Person",
+            name: ARTICLE_AUTHOR_NAME,
+            description: ARTICLE_AUTHOR_BIO[loc],
+            url: ARTICLE_AUTHOR_URL,
+          },
           publisher: { "@id": ORGANIZATION_SCHEMA_ID },
           // Dated because every figure on the page is annually indexed.
           dateModified: `${FIGURES_VERIFIED}-01`,
@@ -350,6 +356,7 @@ export function SchemaOrg() {
                 author: {
                   "@type": "Person",
                   name: ARTICLE_AUTHOR_NAME,
+                  description: ARTICLE_AUTHOR_BIO[isEn ? "en" : "fr"],
                   url: ARTICLE_AUTHOR_URL,
                   ...(ARTICLE_AUTHOR_SAME_AS.length ? { sameAs: ARTICLE_AUTHOR_SAME_AS } : {}),
                 },
@@ -419,6 +426,7 @@ export function SchemaOrg() {
         author: {
           "@type": "Person",
           name: ARTICLE_AUTHOR_NAME,
+          description: ARTICLE_AUTHOR_BIO[isEn ? "en" : "fr"],
           url: ARTICLE_AUTHOR_URL,
           ...(ARTICLE_AUTHOR_SAME_AS.length ? { sameAs: ARTICLE_AUTHOR_SAME_AS } : {}),
           worksFor: { "@id": ORGANIZATION_SCHEMA_ID },

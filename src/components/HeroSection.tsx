@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGoToContact } from "../hooks/useGoToContact";
+import { InternalLink } from "./InternalLink";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-bg-desktop-fast.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-bg-mobile-ultra.mp4";
@@ -14,7 +15,6 @@ const HERO_IMAGE_AVIF_MOBILE = "/hero-video-poster-mobile.avif?v=6";
 export function HeroSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
-  const heroPartners = t("heroPartners", { returnObjects: true }) as string[];
   const [videoReady, setVideoReady] = useState(false);
   const [videoSrc, setVideoSrc] = useState("");
 
@@ -135,13 +135,13 @@ export function HeroSection() {
           className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50 max-w-xl mb-10 sm:mx-auto"
         >
           <span>{t("hero.trustLine")}</span>{" "}
-          <a
-            href="#testimonials"
+          <InternalLink
+            to="/about"
             title={t("hero.trustLink")}
             className="text-white/85 underline underline-offset-2 decoration-white/25 hover:text-white hover:decoration-white/50"
           >
             {t("hero.trustLink")}
-          </a>
+          </InternalLink>
         </p>
 
         <div
@@ -168,18 +168,6 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="relative z-[2] w-full pb-12 lg:pb-16 px-6 lg:px-16">
-        <div className="max-w-[90rem] mx-auto flex flex-wrap justify-start sm:justify-center items-center gap-6 lg:gap-10">
-          {heroPartners.map((name) => (
-            <span
-              key={name}
-              className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/45"
-            >
-              {name}
-            </span>
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

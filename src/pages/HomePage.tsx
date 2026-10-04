@@ -37,11 +37,6 @@ const OurProcessSection = lazy(() =>
     default: module.OurProcessSection,
   }))
 );
-const TrustedPartnersSection = lazy(() =>
-  import("../components/TrustedPartnersSection").then((module) => ({
-    default: module.TrustedPartnersSection,
-  }))
-);
 const TeamSection = lazy(() =>
   import("../components/TeamSection").then((module) => ({
     default: module.TeamSection,
@@ -141,10 +136,6 @@ function DeferredHomeSections() {
       <SectionSpacer />
       <ViewportSection minHeight={760}>
         <OurProcessSection />
-      </ViewportSection>
-      <SectionSpacer />
-      <ViewportSection minHeight={620}>
-        <TrustedPartnersSection />
       </ViewportSection>
       <SectionSpacer />
       <ViewportSection minHeight={620}>

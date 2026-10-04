@@ -1,3 +1,5 @@
+import { ARTICLE_AUTHOR_BIO } from "../data/author";
+
 export const fr = {
   // Hero
   hero: {
@@ -6,22 +8,14 @@ export const fr = {
     line2: "Notre affaire.",
     subtitle:
       "Syndicats, Airbnb et location : une équipe disponible 24/7, rapports clairs et processus rigoureux.",
-    trustLine: "Ils nous font confiance.",
-    trustLink: "Voir les témoignages",
+    trustLine: "Membre du RGCQ.",
+    trustLink: "Rencontrer le fondateur",
     ctaDiscover: "Voir ce que nous faisons",
     ctaContact: "Parler à l'équipe",
     ctaSubline: "Première réponse sous un jour ouvrable.",
     imageAlt: "Vue aérienne d’un immeuble résidentiel montréalais avec terrasses et piscine",
     imageTitle: "Gestion immobilière résidentielle à Montréal — Gestion Velora",
   },
-  heroPartners: [
-    "Groupe Velora",
-    "Atlas Immobilier",
-    "Crown Properties",
-    "Pinnacle Gestion",
-    "Vertex Capital",
-  ],
-
   // Stats
   stats: {
     units: "Unités sous gestion",
@@ -229,32 +223,16 @@ export const fr = {
 
   // TeamSection
   teamSection: {
-    label: "Direction",
-    title: "L’équipe Velora, à votre service.",
-    intro:
-      "Des années d’expérience en administration de propriétés à Montréal. Une vision fondée sur la transparence, la rigueur et la relation humaine avec chaque client.",
+    label: "Fondateur",
+    title: "Rencontrez Arnaud Bellemare.",
+    intro: "Fondateur de Gestion Velora et auteur de ses guides en gestion immobilière.",
+    profileLink: "Lire le profil du fondateur",
     members: [
       {
         name: "Arnaud Bellemare",
         role: "FONDATEUR · MEMBRE RGCQ",
-        bio: "Fondateur de Gestion Velora et membre du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec). Gestion proactive et transparente, centrée sur la valorisation durable de chaque immeuble dans le Grand Montréal.",
+        bio: ARTICLE_AUTHOR_BIO.fr,
       },
-    ],
-  },
-
-  // TrustedPartners
-  trustedPartners: {
-    label: "Témoignages",
-    title: "Ce que disent nos clients à Montréal.",
-    subtitle: "Syndicats de copropriété et propriétaires font confiance à Gestion Velora.",
-    seeMore: "Voir plus de témoignages",
-    ctaJourney: "Nous contacter",
-    partners: [
-      { name: "Résidence du Parc", quote: "Gestion Velora a complètement transformé notre façon de gérer cette propriété.", author: "John Smith", role: "Président du syndicat de copropriété", evidence: "Sondage client T4 2025 (n=12 administrateurs)." },
-      { name: "Atlas Immobilier", quote: "La transparence et les rapports que nous recevons sont sans précédent.", author: "Marie Dubois", role: "Directrice", evidence: "Revue d'audit des rapports mensuels, 2025." },
-      { name: "Crown Properties", quote: "Nos taux d'occupation sont passés de 91% à 98,5% la première année.", author: "Élise Villeneuve", role: "Associée", evidence: "Tableau de bord KPI interne portefeuille, 2025-2026." },
-      { name: "Pinnacle Gestion", quote: "Une équipe réactive et des processus éprouvés qui font la différence.", author: "Pierre Martin", role: "Directeur général", evidence: "Journaux de niveaux de service, 2025." },
-      { name: "Nickel & Krome", quote: "Nous travaillons avec Gestion Velora et ils savent vraiment faire avancer les choses sans complexité. Un partenariat fluide, clair et professionnel.", author: "Karim Alyan", role: "Nickel & Krome", evidence: "Collaboration partenaire active, 2025-2026.", website: "nickelandkrome.ca" },
     ],
   },
 

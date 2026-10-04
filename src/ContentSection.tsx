@@ -266,42 +266,6 @@ export const ContentSection = (): JSX.Element => {
         </div>
       </section>
 
-      {/* Testimonial */}
-      <section className="py-32 px-6 lg:px-12 border-t border-black/5 dark:border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          <ScrollReveal className="lg:w-1/2">
-            <div className="rounded-3xl aspect-[4/5] overflow-hidden bg-gradient-to-br from-mid-green/30 to-velora-dark/30 dark:from-velora-green/30 dark:to-velora-dark">
-              <img
-                src="/image.png"
-                alt="Témoignage"
-                className="w-full h-full object-cover"
-                width={1200}
-                height={1500}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal className="lg:w-1/2">
-            <blockquote className="font-serif text-3xl md:text-4xl text-velora-dark dark:text-white leading-snug mb-10">
-              « Gestion Velora a complètement transformé notre façon de gérer
-              cette propriété. Les visualisations de données sont claires et
-              intuitives, et la plateforme est très facile à utiliser. Je ne peux
-              pas imaginer gérer mon syndicat sans elle. »
-            </blockquote>
-            <footer>
-              <cite className="font-sans font-semibold text-velora-dark dark:text-white not-italic">
-                John Smith
-              </cite>
-              <p className="font-sans text-sm text-velora-muted dark:text-white/60 mt-1">
-                Président du syndicat de copropriété
-              </p>
-            </footer>
-          </ScrollReveal>
-        </div>
-      </section>
-
       {/* Custom Solutions */}
       <section className="py-32 px-6 lg:px-12 border-t border-black/5 dark:border-white/5">
         <div className="max-w-7xl mx-auto">

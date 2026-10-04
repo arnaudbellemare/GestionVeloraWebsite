@@ -1,3 +1,5 @@
+import { ARTICLE_AUTHOR_BIO } from "../data/author";
+
 export const en = {
   // Hero
   hero: {
@@ -6,22 +8,14 @@ export const en = {
     line2: "in all tranquility.",
     subtitle:
       "Condo boards, Airbnb hosts, and landlords - 24/7 support, clear reporting, and rigorous processes.",
-    trustLine: "They trust us.",
-    trustLink: "Read testimonials",
+    trustLine: "RGCQ member.",
+    trustLink: "Meet the founder",
     ctaDiscover: "See how we work",
     ctaContact: "Talk to the team",
     ctaSubline: "Get a first response within one business day.",
     imageAlt: "Aerial view of a Montreal residential building with terraces and a pool",
     imageTitle: "Residential property management in Montreal — Gestion Velora",
   },
-  heroPartners: [
-    "Groupe Velora",
-    "Atlas Immobilier",
-    "Crown Properties",
-    "Pinnacle Gestion",
-    "Vertex Capital",
-  ],
-
   // Stats - conversion language: 98% occupancy, 24/7, transparent
   stats: {
     units: "Units under management",
@@ -227,31 +221,16 @@ export const en = {
   },
 
   teamSection: {
-    label: "Leadership",
-    title: "The Velora team, at your service.",
-    intro:
-      "Years of experience in property administration in Montreal. A vision built on transparency, rigor, and genuine relationships with every client.",
+    label: "Founder",
+    title: "Meet Arnaud Bellemare.",
+    intro: "Founder of Gestion Velora and author of its property management guides.",
+    profileLink: "Read the founder’s profile",
     members: [
       {
         name: "Arnaud Bellemare",
         role: "FOUNDER · RGCQ MEMBER",
-        bio: "Founder of Gestion Velora and member of RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec’s reference body for condominium governance. Proactive, transparent management focused on maximizing every building’s value in Greater Montreal.",
+        bio: ARTICLE_AUTHOR_BIO.en,
       },
-    ],
-  },
-
-  trustedPartners: {
-    label: "Testimonials",
-    title: "What our clients say in Montreal.",
-    subtitle: "Condo boards and property owners trust Gestion Velora.",
-    seeMore: "See more testimonials",
-    ctaJourney: "Contact us",
-    partners: [
-      { name: "Résidence du Parc", quote: "Gestion Velora completely transformed how we manage this property.", author: "John Smith", role: "Condo board president", evidence: "Client survey, Q4 2025 (n=12 board members)." },
-      { name: "Atlas Immobilier", quote: "The transparency and reports we receive are unprecedented.", author: "Marie Dubois", role: "Director", evidence: "Monthly reporting audit review, 2025." },
-      { name: "Crown Properties", quote: "Our occupancy rates went from 91% to 98.5% in the first year.", author: "Élise Villeneuve", role: "Partner", evidence: "Internal portfolio KPI dashboard, 2025-2026." },
-      { name: "Pinnacle Gestion", quote: "A responsive team and proven processes that make the difference.", author: "Pierre Martin", role: "General manager", evidence: "Service-level review logs, 2025." },
-      { name: "Nickel & Krome", quote: "We work with Gestion Velora and they really know how to make things go well without complexity. A smooth, clear and professional partnership.", author: "Karim Alyan", role: "Nickel & Krome", evidence: "Active partner collaboration, 2025-2026.", website: "nickelandkrome.ca" },
     ],
   },
 
