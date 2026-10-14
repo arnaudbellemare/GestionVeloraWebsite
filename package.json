@@ -14,6 +14,7 @@
     "test:seo-opportunity": "tsx scripts/verify-seo-opportunity-audit.ts",
     "seo:location-evaluate": "tsx scripts/evaluate-location-pages.ts",
     "seo:vercel-redirects": "node scripts/generate-vercel-location-redirects.mjs",
+    "seo:indexnow": "node scripts/indexnow-ping.mjs",
     "sitemap": "tsx scripts/generate-sitemap.ts",
     "test:plex": "tsx scripts/verify-plex-calculator.ts",
     "crawlers:fetch": "node scripts/fetch-crawler-logs.mjs",

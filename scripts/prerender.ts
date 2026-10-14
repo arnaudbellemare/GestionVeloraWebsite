@@ -62,7 +62,7 @@ const INDEX_ROBOTS =
   "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 const ORG_ID = `${SITE_URL}/#organization`;
 const AUTHOR_NAME = ARTICLE_AUTHOR_NAME;
-const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
+const HOMEPAGE_DATE_MODIFIED = "2026-10-14";
 const TERMS_EFFECTIVE_DATE = "2026-08-30";
 const DEFAULT_SITEMAP_LAST_MODIFIED = "2026-08-20";
 const SITEMAP_LAST_MODIFIED_BY_PATH = new Map<string, string>([

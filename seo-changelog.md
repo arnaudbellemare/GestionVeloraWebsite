@@ -6,6 +6,12 @@
 
 ---
 
+## Recent changes
+
+- **Entity consistency and AI-discovery hygiene (2026-10-14).** `public/llms.txt` is now the only llms.txt (root copies deleted; they were never deployed). `public/llms-full.md` and `public/llms.txt` describe a service-area business with no public street address, matching `index.html` JSON-LD since commit `8ee239e`. Homepage `WebSite`/`WebPage` `dateModified` and `HOMEPAGE_DATE_MODIFIED` bumped to the repositioning date. Organization `sameAs` adds the Nickel & Krome partner listing. IndexNow key file at `public/<key>.txt` plus `npm run seo:indexnow -- --since YYYY-MM-DD --submit` (Bing/Yandex/Naver/Seznam; Google ignores IndexNow). `npm run seo:verify` now fails on dateModified < datePublished, stale root llms files, or a missing key file. Still open: Google Business Profile, Bing Places, Apple Business Connect, Yelp and an RGCQ member URL for `sameAs`; GBP must use the same service-area wording. See `claudedocs/geo-ai-visibility-playbook.md`.
+
+---
+
 ## Recheck discipline
 
 | Artifact | Next full review |
