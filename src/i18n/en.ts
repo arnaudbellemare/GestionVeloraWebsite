@@ -453,6 +453,9 @@ export const en = {
     contactQuestion: "Your building deserves structured management. Get a free proposal within 24h.",
     planifyCall: "Get a free proposal",
     contactUs: "Talk to the team",
+    sourcesTitle: "Sources and methodology",
+    datasetIntro: "Raw study data:",
+    datasetLicence: "free to reuse with attribution to Gestion Velora and a link to this page.",
   },
 
   // Privacy

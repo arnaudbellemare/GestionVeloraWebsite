@@ -14,7 +14,7 @@
     <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/syndicat-enticy-thumb.webp</image:loc></image:image>
     <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/le-beaumont-thumb.webp</image:loc></image:image>
     <image:image><image:loc>https://www.gestionvelora.com/hero-gestion-velora-1200.webp</image:loc></image:image>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -32,7 +32,7 @@
     <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/syndicat-enticy-thumb.webp</image:loc></image:image>
     <image:image><image:loc>https://www.gestionvelora.com/images/portfolio/le-beaumont-thumb.webp</image:loc></image:image>
     <image:image><image:loc>https://www.gestionvelora.com/hero-gestion-velora-1200.webp</image:loc></image:image>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -323,6 +323,24 @@
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/blog/etude-frais-gestion-immobiliere-quebec-2026</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/blog/etude-frais-gestion-immobiliere-quebec-2026" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/blog/etude-frais-gestion-immobiliere-quebec-2026" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/blog/etude-frais-gestion-immobiliere-quebec-2026" />
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.gestionvelora.com/en/blog/etude-frais-gestion-immobiliere-quebec-2026</loc>
+    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/blog/etude-frais-gestion-immobiliere-quebec-2026" />
+    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/blog/etude-frais-gestion-immobiliere-quebec-2026" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/blog/etude-frais-gestion-immobiliere-quebec-2026" />
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.gestionvelora.com/blog/loi-16-copropriete-quebec-echeances-conformite</loc>
@@ -905,7 +923,7 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/contact" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/contact" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/contact" />
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -914,7 +932,7 @@
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/contact" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/contact" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/contact" />
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -23,7 +23,7 @@ import { join } from "path";
 // ---------------------------------------------------------------------------
 // Import app data sources directly — same source of truth as the React app
 // ---------------------------------------------------------------------------
-import { blogPosts, type RichParagraph } from "../src/data/blog.js";
+import { blogPosts, type BlogPost, type BlogTable, type RichParagraph } from "../src/data/blog.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
@@ -62,7 +62,7 @@ const INDEX_ROBOTS =
   "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 const ORG_ID = `${SITE_URL}/#organization`;
 const AUTHOR_NAME = ARTICLE_AUTHOR_NAME;
-const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
+const HOMEPAGE_DATE_MODIFIED = "2026-10-14";
 const TERMS_EFFECTIVE_DATE = "2026-08-30";
 const DEFAULT_SITEMAP_LAST_MODIFIED = "2026-08-20";
 const SITEMAP_LAST_MODIFIED_BY_PATH = new Map<string, string>([
@@ -864,6 +864,71 @@ function richToAmpHtml(para: RichParagraph, locale: "fr" | "en"): string {
     .join("");
 }
 
+/** Plain HTML table shared by the AMP page and the noscript prerender. */
+function tableToHtml(table: BlogTable): string {
+  const head = table.columns.map((c) => `<th scope="col">${escapeHtml(c)}</th>`).join("");
+  const body = table.rows
+    .map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`)
+    .join("\n");
+  const note = table.note ? `<p class="note">${escapeHtml(table.note)}</p>` : "";
+  return `<figure class="data"><figcaption>${escapeHtml(table.caption)}</figcaption><table><thead><tr>${head}</tr></thead><tbody>\n${body}\n</tbody></table>${note}</figure>`;
+}
+
+/** Sources, dataset links and suggested citation for a data study. */
+function studyToHtml(post: BlogPost, locale: "fr" | "en"): string {
+  const loc = post[locale];
+  if (!loc.study) return "";
+  const t = locale === "en" ? enRaw : frRaw;
+  const sources = loc.study.sources
+    .map(
+      (src) =>
+        `<li><cite><a href="${escapeHtml(src.url)}" rel="noopener external">${escapeHtml(src.label)}</a></cite>${
+          src.date ? ` — ${escapeHtml(src.date)}` : ""
+        }</li>`
+    )
+    .join("\n");
+  const dataset = post.dataset
+    ? `<p>${escapeHtml(t.blog.datasetIntro)} <a href="${escapeHtml(post.dataset.csv)}" download>CSV</a> · <a href="${escapeHtml(
+        post.dataset.json
+      )}" download>JSON</a> — ${escapeHtml(t.blog.datasetLicence)}</p>`
+    : "";
+  const citeLabel = locale === "en" ? "Cite this study" : "Citer cette étude";
+  return `<section class="sources" id="post-sources"><h2>${escapeHtml(t.blog.sourcesTitle)}</h2><p>${escapeHtml(
+    loc.study.methodology
+  )}</p><ol>\n${sources}\n</ol>${dataset}<aside class="brief"><p class="eyebrow">${citeLabel}</p><p>${escapeHtml(
+    loc.study.citation
+  )}</p></aside></section>`;
+}
+
+/** schema.org Dataset for a study with downloadable data; feeds Google Dataset Search. */
+function buildDatasetSchema(post: BlogPost, locale: "fr" | "en", base: string) {
+  if (!post.dataset) return null;
+  const loc = post[locale];
+  const articleUrl = `${base}/blog/${post.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: post.dataset.name[locale],
+    description: post.dataset.description[locale],
+    url: articleUrl,
+    sameAs: articleUrl,
+    license: "https://creativecommons.org/licenses/by/4.0/",
+    isAccessibleForFree: true,
+    datePublished: post.datePublished,
+    dateModified: post.dateModified,
+    inLanguage: locale === "en" ? "en-CA" : "fr-CA",
+    spatialCoverage: { "@type": "Place", name: "Québec, Canada" },
+    temporalCoverage: "2025-10/2026-10",
+    creator: { "@type": "Organization", "@id": ORG_ID, name: "Gestion Velora", url: SITE_URL },
+    publisher: { "@type": "Organization", "@id": ORG_ID, name: "Gestion Velora", url: SITE_URL },
+    citation: loc.study?.citation,
+    distribution: [
+      { "@type": "DataDownload", encodingFormat: "text/csv", contentUrl: `${SITE_URL}${post.dataset.csv}` },
+      { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: `${SITE_URL}${post.dataset.json}` },
+    ],
+  };
+}
+
 function schemaToJsonLd(schema: object | object[] | null): string {
   if (!schema) return "";
   const schemas = Array.isArray(schema) ? schema : [schema];
@@ -892,6 +957,7 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
   const ampUrl = `${SITE_URL}${ampPath}`;
   const title = buildTitle(loc.metaTitle ?? loc.title);
   const schema = buildArticleSchema(locale, slug, base);
+  const datasetSchema = buildDatasetSchema(post, locale, base);
   const bc = getBreadcrumbLabels(locale);
   const schemaJson = schemaToJsonLd(
     schema
@@ -902,6 +968,7 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
             { name: bc.insights, url: `${base}/blog` },
             { name: loc.title },
           ]),
+          ...(datasetSchema ? [datasetSchema] : []),
         ]
       : null
   );
@@ -916,9 +983,9 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
     .join(" <span aria-hidden=\"true\">·</span> ");
   const sections = loc.sections
     .map((section, sectionIndex) => {
-      const paras = section.paragraphs
-        .map((p) => `      <p>${richToAmpHtml(p, locale)}</p>`)
-        .join("\n");
+      const paras =
+        section.paragraphs.map((p) => `      <p>${richToAmpHtml(p, locale)}</p>`).join("\n") +
+        (section.table ? `\n      ${tableToHtml(section.table)}` : "");
       const contactBlock =
         sectionIndex === 1
           ? `\n      <aside class="callout">\n        <p>${escapeHtml(isEn ? enRaw.blog.contactQuestion : frRaw.blog.contactQuestion)}</p>\n        <a class="button" href="${isEn ? "/en/contact" : "/contact"}">${escapeHtml(
@@ -981,6 +1048,14 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
     .related ul{padding-left:18px}
     .related li{margin:0 0 14px}
     .related span{display:block;color:var(--muted);font-size:13px}
+    .data{margin:22px 0;overflow-x:auto}
+    .data figcaption,.note{font-size:13px;color:var(--muted);margin:0 0 8px}
+    .data table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+    .data th,.data td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+    .data th{background:#fff}
+    .sources{border-top:1px solid var(--line);margin-top:46px;padding-top:28px}
+    .sources ol{padding-left:20px}
+    .sources li{margin:0 0 10px;font-size:15px}
     @media(max-width:560px){.wrap{padding:24px 18px 52px}h1{font-size:34px}.excerpt{font-size:20px}p{font-size:17px}}
   </style>
   ${schemaJson ? `<script type="application/ld+json">\n${schemaJson}\n  </script>` : ""}
@@ -1000,6 +1075,7 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
       <amp-img src="${escapeHtml(post.image)}" width="1200" height="800" layout="responsive" alt="${escapeHtml(loc.title)}"></amp-img>
     </div>
 ${sections}
+${studyToHtml(post, locale)}
     <section class="author">
       <p class="eyebrow">${escapeHtml(authorLabel)}</p>
       <p><strong>${escapeHtml(AUTHOR_NAME)}</strong>${escapeHtml(authorRole)}</p>
@@ -1118,13 +1194,19 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   const loc = post[locale];
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
 
-  const sectionHtml = loc.sections
-    .slice(0, 4)
+  // Data studies ship every section, table and source in the static HTML so a
+  // crawler or citing journalist gets the numbers without running the app.
+  const isStudy = Boolean(loc.study);
+  const sectionHtml = (isStudy ? loc.sections : loc.sections.slice(0, 4))
     .map((section) => {
-      const firstPara = section.paragraphs[0] ? richToText(section.paragraphs[0]).slice(0, 600) : "";
-      return `  <h2>${escapeHtml(section.heading)}</h2>\n  <p>${escapeHtml(firstPara)}</p>`;
+      const paras = isStudy
+        ? section.paragraphs.map((p) => `  <p>${escapeHtml(richToText(p))}</p>`).join("\n")
+        : `  <p>${escapeHtml(section.paragraphs[0] ? richToText(section.paragraphs[0]).slice(0, 600) : "")}</p>`;
+      const table = section.table ? `\n  ${tableToHtml(section.table)}` : "";
+      return `  <h2>${escapeHtml(section.heading)}</h2>\n${paras}${table}`;
     })
     .join("\n");
+  const studyHtml = studyToHtml(post, locale);
 
   // Visible byline: the AMP variant already carries one, but the standard prerender
   // shipped none, so an AI engine reading this page saw no named author behind
@@ -1144,6 +1226,7 @@ ${byline}
   </figure>
   <p>${escapeHtml(loc.brief)}</p>
 ${sectionHtml}
+${studyHtml}
 </main>`;
 }
 
@@ -2549,6 +2632,8 @@ function buildRoutes(): RouteConfig[] {
 
     const frArticle = buildArticleSchema("fr", slug, SITE_URL);
     const enArticle = buildArticleSchema("en", slug, `${SITE_URL}/en`);
+    const frDataset = buildDatasetSchema(post, "fr", SITE_URL);
+    const enDataset = buildDatasetSchema(post, "en", `${SITE_URL}/en`);
 
     routes.push({
       path: `/blog/${slug}`,
@@ -2570,6 +2655,7 @@ function buildRoutes(): RouteConfig[] {
               { name: frBc.insights, url: `${SITE_URL}/blog` },
               { name: post.fr.title },
             ]),
+            ...(frDataset ? [frDataset] : []),
           ]
         : null,
     });
@@ -2593,6 +2679,7 @@ function buildRoutes(): RouteConfig[] {
               { name: enBc.insights, url: `${SITE_URL}/en/blog` },
               { name: post.en.title },
             ]),
+            ...(enDataset ? [enDataset] : []),
           ]
         : null,
     });

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { BlogPostCover } from "../components/BlogPostCover";
@@ -8,7 +9,7 @@ import { ARTICLE_AUTHOR_NAME } from "../config";
 import { ARTICLE_AUTHOR_BIO } from "../data/author";
 import { useLocale } from "../context/LocaleContext";
 import { useGoToContact } from "../hooks/useGoToContact";
-import { getPostBySlug, getRelatedPosts, type RichParagraph } from "../data/blog";
+import { getPostBySlug, getRelatedPosts, type BlogTable, type RichParagraph } from "../data/blog";
 import { LeadCaptureSection } from "../components/LeadCaptureSection";
 import { getLocalizedService, SERVICE_SLUGS } from "../data/services";
 
@@ -49,6 +50,75 @@ function RichPara({ p, id }: { p: RichParagraph; id: string }) {
         )
       )}
     </p>
+  );
+}
+
+function DataTable({ table, id }: { table: BlogTable; id: string }) {
+  return (
+    <figure className="mt-6 not-prose">
+      <figcaption className="font-mono text-[10px] uppercase tracking-[0.12em] text-black/45 dark:text-white/45 mb-2">
+        {table.caption}
+      </figcaption>
+      <div className="overflow-x-auto rounded-2xl border border-black/10 dark:border-white/15">
+        <table className="w-full min-w-[32rem] text-left text-sm font-sans border-collapse">
+          <thead className="bg-black/[0.04] dark:bg-white/[0.06]">
+            <tr>
+              {table.columns.map((c, i) => (
+                <th
+                  key={`${id}-h-${i}`}
+                  scope="col"
+                  className="px-4 py-3 font-semibold text-nd-display align-bottom"
+                >
+                  {c}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {table.rows.map((row, r) => (
+              <tr key={`${id}-r-${r}`} className="border-t border-black/10 dark:border-white/10">
+                {row.map((cell, c) => (
+                  <td key={`${id}-r-${r}-c-${c}`} className="px-4 py-3 align-top text-black/80 dark:text-white/80">
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {table.note && (
+        <p className="mt-2 font-sans text-xs text-black/55 dark:text-white/55 leading-relaxed">{table.note}</p>
+      )}
+    </figure>
+  );
+}
+
+function CitationBox({ citation, locale }: { citation: string; locale: "fr" | "en" }) {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(citation);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+  return (
+    <div className="mt-6 rounded-2xl border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/[0.04] px-5 py-4">
+      <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-black/45 dark:text-white/45 mb-2">
+        {locale === "en" ? "Cite this study" : "Citer cette étude"}
+      </p>
+      <p className="font-sans text-sm text-black/85 dark:text-white/85 leading-relaxed break-words">{citation}</p>
+      <button
+        type="button"
+        onClick={copy}
+        className="mt-3 inline-flex px-4 py-2 rounded-full border border-black/15 dark:border-white/20 font-sans text-xs font-semibold text-nd-display hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+      >
+        {copied ? (locale === "en" ? "Copied" : "Copié") : locale === "en" ? "Copy citation" : "Copier la citation"}
+      </button>
+    </div>
   );
 }
 
@@ -138,6 +208,7 @@ export function BlogPostPage() {
                     <RichPara key={`${section.heading}-${i}`} p={p} id={`${section.heading}-${i}`} />
                   ))}
                 </div>
+                {section.table && <DataTable table={section.table} id={`table-${sectionIndex}`} />}
                 {sectionIndex === 1 && (
                   <div className="mt-8 p-5 lg:p-6 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10">
                     <p className="font-sans text-sm text-black/70 dark:text-white/70 mb-3">
@@ -156,6 +227,49 @@ export function BlogPostPage() {
             </ScrollReveal>
           ))}
         </div>
+
+        {post.study && (
+          <ScrollReveal delay={0.12}>
+            <section id="post-sources" className="mt-16 pt-10 border-t border-black/10 dark:border-white/10 scroll-mt-24">
+              <h2 className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-4 leading-snug tracking-[-0.02em]">
+                {t("blog.sourcesTitle")}
+              </h2>
+              <p className="font-sans text-base text-black/75 dark:text-white/75 leading-relaxed mb-5">
+                {post.study.methodology}
+              </p>
+              <ol className="list-decimal pl-5 space-y-2 font-sans text-sm text-black/80 dark:text-white/80">
+                {post.study.sources.map((src) => (
+                  <li key={src.url}>
+                    <a
+                      href={src.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-waabi-pink hover:underline underline-offset-2"
+                    >
+                      {src.label}
+                    </a>
+                    {src.date && <span className="text-black/55 dark:text-white/55"> — {src.date}</span>}
+                  </li>
+                ))}
+              </ol>
+              {post.dataset && (
+                <p className="mt-5 font-sans text-sm text-black/75 dark:text-white/75">
+                  {t("blog.datasetIntro")}{" "}
+                  <a href={post.dataset.csv} download className="text-waabi-pink font-medium hover:underline underline-offset-2">
+                    CSV
+                  </a>
+                  {" · "}
+                  <a href={post.dataset.json} download className="text-waabi-pink font-medium hover:underline underline-offset-2">
+                    JSON
+                  </a>
+                  {" — "}
+                  {t("blog.datasetLicence")}
+                </p>
+              )}
+              <CitationBox citation={post.study.citation} locale={locale} />
+            </section>
+          </ScrollReveal>
+        )}
 
         <LeadCaptureSection variant="blog" />
 
