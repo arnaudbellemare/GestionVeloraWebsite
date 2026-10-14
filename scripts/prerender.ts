@@ -29,6 +29,7 @@ import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy.js";
 import { getAirbnbLocationRule, getAirbnbServiceRules } from "../src/data/shortTermRentalRules.js";
+import { getSyndicateLocalSection } from "../src/data/syndicateLocalProfiles.js";
 import {
   ARTICLE_AUTHOR_BIO,
   ARTICLE_AUTHOR_NAME,
@@ -1094,11 +1095,29 @@ function buildLocationMainHtml(
   <p><a href="${escapeHtml(rule.source.url)}">${escapeHtml(rule.source.label)}</a></p>`;
   }
 
+  let localFigures = "";
+  if (svc.slug === "syndicat-copropriete") {
+    const local = getSyndicateLocalSection(city.slug, cityName, locale);
+    if (local) {
+      localFigures = `  <h2>${escapeHtml(local.title)}</h2>
+  <ul>
+${local.facts.map((fact) => `    <li>${escapeHtml(fact)}</li>`).join("\n")}
+  </ul>
+  <h3>${locale === "fr" ? "Ce que ça change pour un syndicat" : "What it means for a condo board"}</h3>
+${local.points.map((point) => `  <p>${escapeHtml(point)}</p>`).join("\n")}
+  <p>${escapeHtml(local.checkedLabel)}</p>
+  <ul>
+${local.sources.map((source) => `    <li><a href="${escapeHtml(source.url)}">${escapeHtml(source.label)}</a></li>`).join("\n")}
+  </ul>`;
+    }
+  }
+
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(desc)}</p>
 ${localLead}
 ${strRule}
+${localFigures}
   <h2>${escapeHtml(inclTitle)}</h2>
   <p>${escapeHtml(inclDesc)}</p>
   <ul>
