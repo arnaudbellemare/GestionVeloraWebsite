@@ -55,6 +55,37 @@ export interface ComparisonInternalLink {
   to: string;
 }
 
+/**
+ * The decision block rendered directly under the H1, before any table.
+ * Each line names a concrete condition (building size, role, regulatory
+ * trigger) the reader can recognise. It is also what answer engines quote.
+ */
+export interface ComparisonVerdict {
+  chooseVeloraEn: string;
+  chooseVeloraFr: string;
+  chooseAlternativeEn: string;
+  chooseAlternativeFr: string;
+  notWorthSwitchingEn: string;
+  notWorthSwitchingFr: string;
+}
+
+/**
+ * One entry of the page's research sheet.
+ * - `firsthand`: Gestion Velora's own published pages or operations.
+ * - `published`: a third party's own published page (never a characterisation).
+ * - `regulatory`: a statute, regulation, or government guidance page.
+ */
+export type ComparisonSourceBasis = "firsthand" | "published" | "regulatory";
+
+export interface ComparisonSource {
+  nameEn: string;
+  nameFr: string;
+  url: string;
+  basis: ComparisonSourceBasis;
+  /** ISO date the link and the claim it supports were last checked. */
+  dateChecked: string;
+}
+
 export interface ComparisonAlternative {
   name: string;
   isVelora?: boolean;
@@ -70,6 +101,17 @@ export interface ComparisonAlternative {
 
 export interface ComparisonPageData {
   slug: string;
+  /** ISO date the page first went live. */
+  datePublished: string;
+  /** ISO date of the last content change. Bump only with a real change. */
+  dateModified: string;
+  /** ISO date the visible claims were last reviewed against their sources. */
+  factsCheckedOn: string;
+  /** Two sentences: what was checked firsthand, what was only read. */
+  methodEn: string;
+  methodFr: string;
+  verdict: ComparisonVerdict;
+  sources: ComparisonSource[];
   titleEn: string;
   titleFr: string;
   descriptionEn: string;
@@ -102,12 +144,38 @@ export interface ComparisonPageData {
 export const COMPARISON_PAGES: ComparisonPageData[] = [
   {
     slug: "gestionnaire-vs-autogestion-condo",
+    datePublished: "2026-07-03",
+    dateModified: "2026-10-14",
+    factsCheckedOn: "2026-10-14",
+    methodEn:
+      "Gestion Velora's fee basis and 6-unit minimum were read from its own pricing page on the date shown. The self-management side describes board obligations under the Civil Code of Québec and is not a test of any other firm.",
+    methodFr:
+      "La base tarifaire et le minimum de 6 unités de Gestion Velora proviennent de sa page Tarifs à la date indiquée. Le volet autogestion décrit les obligations du conseil selon le Code civil du Québec et ne constitue pas un test d'une autre firme.",
+    verdict: {
+      chooseVeloraEn:
+        "Choose a professional manager if no director can carry the treasurer and vendor-follow-up role, or if the building has more than about 12 units and its Loi 16 deliverables (maintenance logbook, reserve-fund study) are still outstanding.",
+      chooseVeloraFr:
+        "Choisissez un gestionnaire si aucun administrateur ne peut porter la trésorerie et le suivi des fournisseurs, ou si l'immeuble compte plus d'une douzaine d'unités et que ses livrables Loi 16 (carnet d'entretien, étude du fonds de prévoyance) restent à produire.",
+      chooseAlternativeEn:
+        "Stay self-managed if the building has fewer than 6 units, few incidents, and a director with accounting and vendor experience who intends to stay on the board. Gestion Velora does not take mandates under 6 units.",
+      chooseAlternativeFr:
+        "Restez en autogestion si l'immeuble compte moins de 6 unités, peu d'incidents, et un administrateur expérimenté en comptabilité et en fournisseurs qui compte rester au CA. Gestion Velora n'accepte pas de mandat sous 6 unités.",
+      notWorthSwitchingEn:
+        "Switching is probably not worth it if your current setup already produces annual financial statements, keeps the register current, and follows a dated compliance calendar, and the only pain is occasional admin work.",
+      notWorthSwitchingFr:
+        "Changer n'en vaut probablement pas la peine si votre fonctionnement actuel produit déjà des états financiers annuels, tient le registre à jour et suit un calendrier de conformité daté, et que le seul irritant est de l'administration ponctuelle.",
+    },
+    sources: [
+      { nameEn: "Gestion Velora pricing page", nameFr: "Page Tarifs de Gestion Velora", url: "/tarifs", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Gestion Velora condo board management service", nameFr: "Service de gestion de syndicat de Gestion Velora", url: "/services/syndicat-copropriete", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Civil Code of Québec, Book IV, divided co-ownership", nameFr: "Code civil du Québec, Livre IV, copropriété divise", url: "https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991", basis: "regulatory", dateChecked: "2026-10-14" },
+    ],
     titleEn: "Condo manager vs self-management in Montreal",
     titleFr: "Gestionnaire de copropriete vs autogestion a Montreal",
     descriptionEn:
-      "Compare condo manager vs self-management in Montreal across cost, compliance risk, response time, and board workload.",
+      "Choose a condo manager if no director can carry treasury and vendor follow-up, or above 12 units with Loi 16 work pending; stay self-managed under 6 units.",
     descriptionFr:
-      "Comparatif gestionnaire de copropriete vs autogestion a Montreal: cout, conformite, delai de reponse et charge du CA.",
+      "Choisissez un gestionnaire si aucun administrateur ne peut porter trésorerie et fournisseurs, ou au-delà de 12 unités; restez en autogestion sous 6 unités.",
     h1En: "Condo manager vs self-management in Montreal",
     h1Fr: "Gestionnaire de copropriete vs autogestion a Montreal",
     heroEn: "The professional-management alternative for condo boards that need compliance discipline without losing strategic control.",
@@ -308,12 +376,43 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
   },
   {
     slug: "airbnb-vs-location-longue-duree-montreal",
+    datePublished: "2026-07-03",
+    dateModified: "2026-10-14",
+    factsCheckedOn: "2026-10-14",
+    methodEn:
+      "Gestion Velora's short-term management fee range was read from its own pricing page on the date shown. Regulatory statements point to the City of Montréal, CITQ, and TAL pages linked below; check them before acting, as the rules have changed more than once. No competitor's service was tested.",
+    methodFr:
+      "La fourchette d'honoraires de gestion courte durée de Gestion Velora provient de sa page Tarifs à la date indiquée. Les énoncés réglementaires renvoient aux pages de la Ville de Montréal, de la CITQ et du TAL ci-dessous; vérifiez-les avant d'agir, car les règles ont changé plus d'une fois. Aucun service concurrent n'a été testé.",
+    verdict: {
+      chooseVeloraEn:
+        "Choose managed short-term rental only if the unit is eligible in its borough and under the building's declaration of co-ownership, you can accept income that varies by season, and you want someone else handling guest messaging, turnovers, and CITQ registration.",
+      chooseVeloraFr:
+        "Choisissez la courte durée gérée seulement si l'unité est admissible dans son arrondissement et selon la déclaration de copropriété, si vous acceptez un revenu qui varie selon la saison, et si vous voulez confier messages voyageurs, rotations et enregistrement CITQ à quelqu'un d'autre.",
+      chooseAlternativeEn:
+        "Choose long-term rental if you need predictable monthly income, if the unit is your principal residence or sits in a sector where short-term rental is not permitted, or if you cannot absorb empty weeks.",
+      chooseAlternativeFr:
+        "Choisissez la location longue durée si vous avez besoin d'un revenu mensuel prévisible, si l'unité est votre résidence principale ou se trouve dans un secteur où la courte durée n'est pas permise, ou si vous ne pouvez pas absorber des semaines vides.",
+      notWorthSwitchingEn:
+        "Switching from long-term to short-term is probably not worth it while a tenant is in place: Québec residential leases renew by default, and ending one to change rental strategy is not a routine step. Compare net operating income after cleaning, platform fees, management, and vacancy, not gross revenue.",
+      notWorthSwitchingFr:
+        "Passer de la longue à la courte durée n'en vaut probablement pas la peine tant qu'un locataire est en place: au Québec, le bail résidentiel se renouvelle par défaut, et y mettre fin pour changer de stratégie n'est pas une démarche courante. Comparez le revenu net après ménage, frais de plateforme, gestion et vacance, pas le revenu brut.",
+    },
+    sources: [
+      { nameEn: "Gestion Velora pricing page", nameFr: "Page Tarifs de Gestion Velora", url: "/tarifs", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Gestion Velora Airbnb management service", nameFr: "Service de gestion Airbnb de Gestion Velora", url: "/services/gestion-airbnb", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "City of Montréal, renting your principal residence to tourists (updated September 11, 2026)", nameFr: "Ville de Montréal, louer sa résidence principale à des touristes (mis à jour le 11 septembre 2026)", url: "https://montreal.ca/demarches/louer-sa-residence-principale-des-touristes", basis: "regulatory", dateChecked: "2026-10-14" },
+      { nameEn: "City of Montréal, operating a commercial tourist residence (updated September 10, 2026)", nameFr: "Ville de Montréal, exploiter une résidence de tourisme commerciale (mis à jour le 10 septembre 2026)", url: "https://montreal.ca/demarches/exploiter-une-residence-de-tourisme-commerciale", basis: "regulatory", dateChecked: "2026-10-14" },
+      { nameEn: "Gouvernement du Québec, registering a tourist accommodation establishment (updated September 24, 2026)", nameFr: "Gouvernement du Québec, enregistrer un établissement d'hébergement touristique (mis à jour le 24 septembre 2026)", url: "https://www.quebec.ca/tourisme-loisirs-sport/hebergement-touristique/enregistrement", basis: "regulatory", dateChecked: "2026-10-14" },
+      { nameEn: "CITQ, tourist accommodation registration", nameFr: "CITQ, enregistrement des établissements d'hébergement touristique", url: "https://www.citq.qc.ca/", basis: "regulatory", dateChecked: "2026-10-14" },
+      { nameEn: "Tribunal administratif du logement (TAL)", nameFr: "Tribunal administratif du logement (TAL)", url: "https://www.tal.gouv.qc.ca/", basis: "regulatory", dateChecked: "2026-10-14" },
+      { nameEn: "CMHC Rental Market Report data tables", nameFr: "SCHL, tableaux de données du Rapport sur le marché locatif", url: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables", basis: "published", dateChecked: "2026-10-14" },
+    ],
     titleEn: "Airbnb vs long-term rental in Montreal",
     titleFr: "Airbnb vs location longue duree a Montreal",
     descriptionEn:
-      "Compare Airbnb vs long-term rental in Montreal across revenue volatility, regulation, workload, pricing, and NOI stability.",
+      "Choose managed Airbnb only if the unit is eligible in its borough and you accept seasonal income; choose long-term rental for predictable rent.",
     descriptionFr:
-      "Comparatif Airbnb vs location longue duree a Montreal: revenus, reglementation, charge operationnelle, prix et stabilite NOI.",
+      "Airbnb géré seulement si l'unité est admissible dans son arrondissement et que vous acceptez un revenu saisonnier; sinon la longue durée pour un loyer prévisible.",
     h1En: "Airbnb vs long-term rental in Montreal",
     h1Fr: "Airbnb vs location longue duree a Montreal",
     heroEn: "The rental-strategy guide for owners who need stronger NOI without underestimating regulation and daily operations.",
@@ -353,6 +452,26 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       "La gestion directe garde le controle complet aux proprietaires tres impliques.",
     ],
     sections: [
+      {
+        headingEn: "Montréal rules that settle the question first",
+        headingFr: "Les règles montréalaises qui tranchent d'abord",
+        bodyEn:
+          "Before any revenue comparison, check whether the unit may legally be rented short-term. According to the City of Montréal page updated September 11, 2026, renting your principal residence to tourists requires a city operating permit renewed every year, is allowed only from June 10 to September 10, and for a total of 31 days or less within that window. It is not allowed at all in Lachine, Saint-Laurent and Saint-Léonard.",
+        bodyFr:
+          "Avant toute comparaison de revenus, vérifiez si l'unité peut légalement être louée à court terme. Selon la page de la Ville de Montréal mise à jour le 11 septembre 2026, louer sa résidence principale à des touristes exige un permis d'exploitation municipal renouvelé chaque année, n'est autorisé que du 10 juin au 10 septembre, et pour un total de 31 jours ou moins pendant cette période. C'est interdit à Lachine, Saint-Laurent et Saint-Léonard.",
+        pointsEn: [
+          "Principal residence: one reservation at a time, no meals served, and the owner must live on site. A tenant needs a lease that allows it or the landlord's written authorisation.",
+          "A unit that is not your principal residence (commercial tourist residence) is allowed only in certain sectors of Montréal, with a certificate of occupancy from the borough. Several boroughs prohibit it outright.",
+          "Provincial registration is required for any paid stay of 31 days or less. The file includes a municipal compliance document, liability insurance of at least 2 000 000 $ per event and, in divided co-ownership, the syndicate's authorisation form. So read the declaration of co-ownership first.",
+          "2026 registration fees published by the Québec government: 54 $ for a principal residence, 156 $ for a general tourist establishment. Advertising without the registration number is an offence.",
+        ],
+        pointsFr: [
+          "Résidence principale: une seule réservation à la fois, aucun repas servi, et le propriétaire doit habiter sur place. Un locataire doit avoir un bail qui l'autorise ou l'autorisation écrite de son propriétaire.",
+          "Une unité qui n'est pas votre résidence principale (résidence de tourisme commerciale) n'est permise que dans certains secteurs de Montréal, avec un certificat d'occupation de l'arrondissement. Plusieurs arrondissements l'interdisent entièrement.",
+          "L'enregistrement provincial est obligatoire pour tout séjour payant de 31 jours ou moins. Le dossier comprend un document de conformité municipale, une assurance responsabilité civile d'au moins 2 000 000 $ par événement et, en copropriété divise, le formulaire d'autorisation du syndicat. Lisez donc la déclaration de copropriété en premier.",
+          "Droits d'enregistrement 2026 publiés par le gouvernement du Québec: 54 $ pour une résidence principale, 156 $ pour un établissement d'hébergement touristique général. Annoncer sans numéro d'enregistrement est une infraction.",
+        ],
+      },
       {
         headingEn: "Revenue profile",
         headingFr: "Profil de revenus",
@@ -515,12 +634,39 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
   },
   {
     slug: "gestion-locative-interne-vs-externalisee",
+    datePublished: "2026-07-03",
+    dateModified: "2026-10-14",
+    factsCheckedOn: "2026-10-14",
+    methodEn:
+      "Gestion Velora's service scope and fee basis were read from its own service and pricing pages on the date shown. The in-house side describes a landlord's obligations under Québec rental law and typical staffing patterns; it is not a test of any specific employer or firm.",
+    methodFr:
+      "La portée de service et la base tarifaire de Gestion Velora proviennent de ses pages Services et Tarifs à la date indiquée. Le volet interne décrit les obligations d'un locateur selon le droit locatif québécois et des modèles d'équipe courants; ce n'est pas un test d'un employeur ou d'une firme en particulier.",
+    verdict: {
+      chooseVeloraEn:
+        "Choose outsourced management if you own 6 or more units across more than one building, no one on your side can answer repair requests and tenant calls during business hours, or you need monthly owner reports a lender or partner can read.",
+      chooseVeloraFr:
+        "Choisissez la gestion externalisée si vous détenez 6 unités ou plus réparties dans plus d'un immeuble, si personne de votre côté ne peut répondre aux demandes de réparation et aux appels de locataires pendant les heures ouvrables, ou si vous avez besoin de rapports mensuels lisibles par un prêteur ou un partenaire.",
+      chooseAlternativeEn:
+        "Keep an in-house team if you already employ a dedicated manager or on-site staff whose daily presence the buildings justify, and your reporting is already lender-ready.",
+      chooseAlternativeFr:
+        "Gardez une équipe interne si vous employez déjà un gestionnaire dédié ou du personnel sur place dont la présence quotidienne est justifiée par les immeubles, et si vos rapports sont déjà prêts pour un prêteur.",
+      notWorthSwitchingEn:
+        "Switching is probably not worth it if your portfolio is one small building you live in or near, vacancy is low, and the hours you spend on it are hours you want to spend.",
+      notWorthSwitchingFr:
+        "Changer n'en vaut probablement pas la peine si votre portefeuille se limite à un petit immeuble que vous habitez ou qui est près de chez vous, si la vacance est faible, et si les heures que vous y consacrez sont des heures que vous voulez y consacrer.",
+    },
+    sources: [
+      { nameEn: "Gestion Velora pricing page", nameFr: "Page Tarifs de Gestion Velora", url: "/tarifs", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Gestion Velora rental management service", nameFr: "Service de gestion locative de Gestion Velora", url: "/services/gestion-locative", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Tribunal administratif du logement (TAL)", nameFr: "Tribunal administratif du logement (TAL)", url: "https://www.tal.gouv.qc.ca/", basis: "regulatory", dateChecked: "2026-10-14" },
+      { nameEn: "CMHC Rental Market Report data tables", nameFr: "SCHL, tableaux de données du Rapport sur le marché locatif", url: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables", basis: "published", dateChecked: "2026-10-14" },
+    ],
     titleEn: "In-house vs outsourced rental management",
     titleFr: "Gestion locative interne vs externalisee",
     descriptionEn:
-      "Compare in-house vs outsourced rental management in Montreal across control, service quality, staffing, reporting, and NOI stability.",
+      "Choose outsourced rental management from 6 units across several buildings or when no one can take tenant calls; keep an in-house team if it is already staffed.",
     descriptionFr:
-      "Comparatif gestion locative interne vs externalisee a Montreal: controle, service, equipe, reporting et stabilite NOI.",
+      "Gestion locative externalisée dès 6 unités sur plusieurs immeubles ou quand personne ne peut prendre les appels locataires; gardez l'interne si l'équipe existe.",
     h1En: "In-house vs outsourced rental management in Montreal",
     h1Fr: "Gestion locative interne vs externalisee a Montreal",
     heroEn: "The outsourcing alternative for owners who need operational depth without building a larger internal team.",
@@ -721,12 +867,45 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
   },
   {
     slug: "meilleures-alternatives-gestion-immobiliere-montreal",
+    datePublished: "2026-07-03",
+    dateModified: "2026-10-14",
+    factsCheckedOn: "2026-10-14",
+    methodEn:
+      "Gestion Velora's fee basis and scope were read from its own pricing and methodology pages on the date shown. Each other firm's description restates only what that firm's own website published on the same date; the pages are linked below. Gestion Velora has not tested their services, and nothing here is an assessment of quality. Confirm scope, exclusions and pricing with each firm before signing.",
+    methodFr:
+      "La base tarifaire et la portée de Gestion Velora proviennent de ses pages Tarifs et Méthodologie à la date indiquée. La description de chaque autre firme reprend uniquement ce que son propre site web publiait à la même date; les pages sont liées ci-dessous. Gestion Velora n'a pas testé leurs services, et rien ici n'évalue leur qualité. Confirmez portée, exclusions et prix auprès de chaque firme avant de signer.",
+    verdict: {
+      chooseVeloraEn:
+        "Choose Gestion Velora if you want one firm across condo boards, long-term rental, and short-term rental, a published per-unit fee basis, and the tradeoffs written down before you sign.",
+      chooseVeloraFr:
+        "Choisissez Gestion Velora si vous voulez une seule firme pour syndicat, location longue durée et courte durée, une base tarifaire par unité publiée, et des compromis écrits noir sur blanc avant de signer.",
+      chooseAlternativeEn:
+        "Choose another firm on this list if your only need is syndicate administration for a very large building, or if a resident app matters more to the board than advisory support. Confirm scope, exclusions, and pricing directly with each firm; this page does not rate their service quality.",
+      chooseAlternativeFr:
+        "Choisissez une autre firme de cette liste si votre seul besoin est l'administration syndicale d'un très grand immeuble, ou si une application résidents compte plus pour le CA que l'accompagnement-conseil. Confirmez portée, exclusions et prix directement auprès de chaque firme; cette page n'évalue pas la qualité de leur service.",
+      notWorthSwitchingEn:
+        "Switching managers is probably not worth it if your current firm delivers financial statements on time, keeps the register and maintenance logbook current, and answers emergencies. A cheaper quote rarely offsets a bad handover.",
+      notWorthSwitchingFr:
+        "Changer de gestionnaire n'en vaut probablement pas la peine si votre firme actuelle livre les états financiers à temps, tient le registre et le carnet d'entretien à jour, et répond aux urgences. Un devis moins cher compense rarement une mauvaise transition.",
+    },
+    sources: [
+      { nameEn: "Gestion Velora pricing page", nameFr: "Page Tarifs de Gestion Velora", url: "/tarifs", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Gestion Velora methodology page", nameFr: "Page Méthodologie de Gestion Velora", url: "/methodology", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Gestion Velora condo board management service", nameFr: "Service de gestion de syndicat de Gestion Velora", url: "/services/syndicat-copropriete", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Civil Code of Québec, Book IV, divided co-ownership", nameFr: "Code civil du Québec, Livre IV, copropriété divise", url: "https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991", basis: "regulatory", dateChecked: "2026-10-14" },
+      { nameEn: "Gestion AlphaCondo, services page", nameFr: "Gestion AlphaCondo, page Services", url: "https://www.gestionalphacondo.com/services", basis: "published", dateChecked: "2026-10-14" },
+      { nameEn: "SolutionCondo, homepage", nameFr: "SolutionCondo, page d'accueil", url: "https://www.solutioncondo.com/", basis: "published", dateChecked: "2026-10-14" },
+      { nameEn: "SolutionCondo, hourly rates and disbursements", nameFr: "SolutionCondo, taux horaires et débours", url: "https://www.solutioncondo.com/services-gestion-copropriete/taux-horaires-et-debours/", basis: "published", dateChecked: "2026-10-14" },
+      { nameEn: "SolutionCondo, Programme Harmonie (long-term rental)", nameFr: "SolutionCondo, Programme Harmonie (location long terme)", url: "https://www.solutioncondo.com/gestion-locative-programme-harmonie/", basis: "published", dateChecked: "2026-10-14" },
+      { nameEn: "Condo Stratégis, condo syndicate management and pricing", nameFr: "Condo Stratégis, gestion de syndicat et tarifs", url: "https://condostrategis.ca/gestion-de-syndicat-de-copropriete/", basis: "published", dateChecked: "2026-10-14" },
+      { nameEn: "Laucandrique, homepage", nameFr: "Laucandrique, page d'accueil", url: "https://laucandrique.ca/", basis: "published", dateChecked: "2026-10-14" },
+    ],
     titleEn: "Best property management alternatives in Montreal",
     titleFr: "Meilleures alternatives en gestion immobiliere a Montreal",
     descriptionEn:
-      "Fair Montreal property management alternatives: Gestion Velora plus four real competitors compared by fit, strengths, cautions, and pricing signals.",
+      "Choose Gestion Velora for one firm across condo, rental and Airbnb with published fees; a condo-only specialist for a very large syndicate. Four Montréal firms.",
     descriptionFr:
-      "Alternatives en gestion immobiliere a Montreal: Gestion Velora et quatre concurrents reels compares par fit, forces, limites et signaux de prix.",
+      "Gestion Velora pour une seule firme syndicat, locatif et Airbnb avec tarifs publiés; un spécialiste copropriété pour un très grand syndicat. Quatre firmes listées.",
     h1En: "Best property management alternatives in Montreal",
     h1Fr: "Meilleures alternatives en gestion immobiliere a Montreal",
     heroEn: "The Montreal property management alternatives list for owners who need fit, not a one-sided vendor pitch.",
@@ -770,9 +949,9 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
         headingEn: "How to use this alternatives list",
         headingFr: "Comment utiliser cette liste d'alternatives",
         bodyEn:
-          "Shortlist by property type, reporting expectations, service urgency, and governance needs. Then compare proposal scope line by line.",
+          "Inclusion rule: a firm is listed when its own website, read on October 14, 2026, names condo syndicate management as a service and the Greater Montréal area as a territory, and its pages were consistent enough to quote. Firms whose site names another region as its territory, or whose site still carried template placeholder content on that date, were left out. Shortlist by property type, reporting expectations, service urgency, and governance needs, then compare proposal scope line by line.",
         bodyFr:
-          "Shortlistez selon type d'actif, attentes de reporting, urgence de service et gouvernance. Comparez ensuite les devis ligne par ligne.",
+          "Règle d'inclusion: une firme figure ici si son propre site web, lu le 14 octobre 2026, nomme la gestion de syndicat de copropriété comme service et le Grand Montréal comme territoire, et si ses pages étaient assez cohérentes pour être citées. Les firmes dont le site nomme une autre région comme territoire, ou dont le site contenait encore du contenu de gabarit à cette date, ont été écartées. Shortlistez selon type d'actif, attentes de reporting, urgence de service et gouvernance, puis comparez les devis ligne par ligne.",
         pointsEn: [
           "Ask each firm where they are strongest and where they are not the right fit.",
           "Compare management fee, exclusions, emergency handling, and reporting cadence.",
@@ -831,10 +1010,10 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       {
         itemEn: "Monthly management fee",
         itemFr: "Honoraires mensuels",
-        veloraEn: "Quoted by asset type, unit count, and operating scope.",
-        veloraFr: "Devis selon actif, nombre d'unites et portee operationnelle.",
-        alternativeEn: "Ranges vary widely by provider and exclusions.",
-        alternativeFr: "Varie fortement selon fournisseur et exclusions.",
+        veloraEn: "Condo management published at 33 to 36 $ per unit per month, 6-unit minimum, up to 40 $ with app and portal integrations (pricing page).",
+        veloraFr: "Gestion de copropriété publiée à 33 à 36 $ par unité par mois, minimum 6 unités, jusqu'à 40 $ avec intégrations applicatives (page Tarifs).",
+        alternativeEn: "Condo Stratégis publishes 36 $, 33 $ or 31 $ per unit per month for 1-, 2- or 3-year contracts. SolutionCondo publishes hourly rates and disbursements but no management fee. Gestion AlphaCondo and Laucandrique publish no pricing.",
+        alternativeFr: "Condo Stratégis publie 36 $, 33 $ ou 31 $ par unité par mois selon un contrat de 1, 2 ou 3 ans. SolutionCondo publie des taux horaires et débours mais aucun honoraire de gestion. Gestion AlphaCondo et Laucandrique ne publient aucun prix.",
         noteEn: "Ask what is included before comparing price.",
         noteFr: "Demandez ce qui est inclus avant de comparer le prix.",
       },
@@ -879,58 +1058,58 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       {
         name: "Gestion Velora",
         isVelora: true,
-        bestForEn: "Owners and condo boards that want documented operations, practical responsiveness, and clear tradeoff advice.",
-        bestForFr: "Proprietaires et syndicats qui veulent operations documentees, reactivite pratique et conseils clairs.",
-        notBestForEn: "Buyers whose only criterion is the lowest possible direct fee.",
-        notBestForFr: "Acheteurs dont le seul critere est le plus bas frais direct.",
-        strengthsEn: ["Multi-service lens across condo, rental, and Airbnb.", "Clear reporting and conversion-focused owner communication."],
-        strengthsFr: ["Vision multi-services: copropriete, locatif et Airbnb.", "Reporting clair et communication orientee decisions."],
+        bestForEn: "Owners and condo boards that want one firm across condo syndicates, long-term rental and short-term rental, with a published per-unit fee basis and the tradeoffs written down.",
+        bestForFr: "Propriétaires et syndicats qui veulent une seule firme pour la copropriété, la location longue durée et la courte durée, avec une base tarifaire par unité publiée et des compromis écrits.",
+        notBestForEn: "Buildings under 6 units, or buyers whose only criterion is the lowest possible direct fee.",
+        notBestForFr: "Immeubles de moins de 6 unités, ou acheteurs dont le seul critère est le plus bas frais direct.",
+        strengthsEn: ["Condo management published at 33 to 36 $ per unit per month on the pricing page.", "Condo, long-term rental and short-term rental under one operating team."],
+        strengthsFr: ["Gestion de copropriété publiée à 33 à 36 $ par unité par mois sur la page Tarifs.", "Copropriété, location longue durée et courte durée sous une même équipe."],
         cautionsEn: ["Ask for the exact scope and cadence that match your building."],
-        cautionsFr: ["Demandez la portee et la cadence exactes adaptees a votre immeuble."],
+        cautionsFr: ["Demandez la portée et la cadence exactes adaptées à votre immeuble."],
       },
       {
         name: "Gestion AlphaCondo",
-        bestForEn: "Condo corporations around Montreal and Laval looking for a specialized coproperty-management provider.",
-        bestForFr: "Syndicats a Montreal et Laval qui veulent une firme specialisee en copropriete.",
-        notBestForEn: "Owners whose main need is mixed rental, Airbnb, or commercial operations.",
-        notBestForFr: "Proprietaires dont le besoin principal est locatif, Airbnb ou commercial mixte.",
-        strengthsEn: ["Strong condo positioning.", "Good fit for boards that prioritize syndicate administration."],
-        strengthsFr: ["Positionnement copropriete fort.", "Bon fit pour CA centres sur l'administration syndicale."],
-        cautionsEn: ["Verify scope if your mandate spans rental or short-term operations."],
-        cautionsFr: ["Validez la portee si votre mandat couvre locatif ou courte duree."],
-      },
-      {
-        name: "Habitanium",
-        bestForEn: "Boards that value tech-forward condo management and extended support coverage.",
-        bestForFr: "CA qui valorisent une gestion copropriete technologique et un soutien etendu.",
-        notBestForEn: "Owners who prefer a smaller, less platform-led operating style.",
-        notBestForFr: "Proprietaires qui preferent une approche plus petite et moins plateforme.",
-        strengthsEn: ["AI and 24/7 positioning.", "Coverage across Montreal, Laval, and the North Shore."],
-        strengthsFr: ["Positionnement IA et 24/7.", "Couverture Montreal, Laval et Rive-Nord."],
-        cautionsEn: ["Ask how platform features translate into daily board workload reduction."],
-        cautionsFr: ["Demandez comment la plateforme reduit concretement la charge du CA."],
-      },
-      {
-        name: "Gestion MR",
-        bestForEn: "Syndicates that want a focused condo-administration specialist.",
-        bestForFr: "Syndicats qui veulent un specialiste de l'administration copropriete.",
-        notBestForEn: "Owners looking for broader rental or short-term rental operating support.",
-        notBestForFr: "Proprietaires cherchant un support locatif ou courte duree plus large.",
-        strengthsEn: ["Specialized syndicate-management focus.", "Relevant for governance and administrative follow-up."],
-        strengthsFr: ["Focus specialise en gestion de syndicat.", "Pertinent pour gouvernance et suivi administratif."],
-        cautionsEn: ["Compare service cadence, emergency handling, and reporting examples."],
-        cautionsFr: ["Comparez cadence de service, urgences et exemples de rapports."],
+        bestForEn: "Condo syndicates in the Greater Montréal area that want full delegation. Its site offers two formulas: complete management (financial, administrative and operational) or an external administrator seat on the board.",
+        bestForFr: "Syndicats de copropriété du Grand Montréal qui veulent tout déléguer. Son site propose deux formules: gestion complète (financière, administrative et opérationnelle) ou un administrateur externe au CA.",
+        notBestForEn: "Owners who also need long-term or short-term rental management; neither is offered on its site.",
+        notBestForFr: "Propriétaires qui ont aussi besoin de gestion locative longue ou courte durée; ni l'une ni l'autre n'est offerte sur son site.",
+        strengthsEn: ["Two published formulas: complete management or an external administrator on the board.", "Its site states 24h/7 emergency handling for buildings under management."],
+        strengthsFr: ["Deux formules publiées: gestion complète ou administrateur externe au CA.", "Son site indique des urgences 24h/7 pour les immeubles sous gestion."],
+        cautionsEn: ["No pricing published; request a quote.", "Territory stated as Greater Montréal; confirm your city."],
+        cautionsFr: ["Aucun prix publié; demandez une soumission.", "Territoire indiqué: Grand Montréal; confirmez votre ville."],
       },
       {
         name: "SolutionCondo",
-        bestForEn: "Condo boards that prioritize real-time condo-management systems and resident-facing workflows.",
-        bestForFr: "CA qui priorisent des systemes temps reel et workflows coproprietaires.",
-        notBestForEn: "Owners who need a single partner for mixed condo, rental, and Airbnb strategy.",
-        notBestForFr: "Proprietaires qui veulent un seul partenaire pour copropriete, locatif et Airbnb.",
-        strengthsEn: ["Recognizable condo-management positioning.", "Strong fit when app-enabled board communication matters."],
-        strengthsFr: ["Positionnement copropriete reconnu.", "Bon fit quand l'app et la communication CA comptent beaucoup."],
-        cautionsEn: ["Confirm pricing, onboarding, and what work remains with the board."],
-        cautionsFr: ["Confirmez prix, onboarding et travail restant au CA."],
+        bestForEn: "Condo boards choosing between complete, partial or self-managed formulas. Its site also lists a 24h/7 emergency call service and a long-term rental program for condo units (Programme Harmonie).",
+        bestForFr: "Syndicats qui choisissent entre gestion complète, partielle ou autogestion. Son site présente aussi un service d'appels d'urgence 24h/7 et un programme de location long terme pour les unités de copropriété (Programme Harmonie).",
+        notBestForEn: "Owners looking for short-term rental management; it is not mentioned on its site.",
+        notBestForFr: "Propriétaires qui cherchent de la gestion de location courte durée; elle n'est pas mentionnée sur son site.",
+        strengthsEn: ["Publishes an hourly-rate and disbursement schedule for 2026 and 2027.", "Montréal office; complete, partial or self-management formulas."],
+        strengthsFr: ["Publie une grille de taux horaires et de débours pour 2026 et 2027.", "Bureau à Montréal; formules complète, partielle ou autogestion."],
+        cautionsEn: ["No monthly management fee or per-unit price is published; the schedule covers hourly rates and disbursements only.", "No service territory is stated; confirm coverage."],
+        cautionsFr: ["Aucun honoraire mensuel ni prix par unité publié; la grille couvre seulement taux horaires et débours.", "Aucun territoire de service indiqué; confirmez la couverture."],
+      },
+      {
+        name: "Condo Stratégis",
+        bestForEn: "Small and mid-size syndicates in Greater Montréal. Its site publishes per-unit monthly pricing by contract length: 36 $ for 1 year, 33 $ for 2 years, 31 $ for 3 years, and offers reserve-fund studies.",
+        bestForFr: "Petits et moyens syndicats du Grand Montréal. Son site publie un prix mensuel par unité selon la durée du contrat: 36 $ pour 1 an, 33 $ pour 2 ans, 31 $ pour 3 ans, et offre des études de fonds de prévoyance.",
+        notBestForEn: "Owners needing rental or short-term rental management, or very large syndicates; its site targets small and medium syndicates.",
+        notBestForFr: "Propriétaires qui ont besoin de gestion locative ou courte durée, ou très grands syndicats; son site cible les petits et moyens syndicats.",
+        strengthsEn: ["Published per-unit pricing, the only firm on this list other than Gestion Velora to do so.", "States RGCQ membership on its site."],
+        strengthsFr: ["Prix par unité publié, la seule firme de cette liste avec Gestion Velora à le faire.", "Indique être membre du RGCQ sur son site."],
+        cautionsEn: ["The published rates carry an asterisk; confirm what each contract includes and the custom-quote conditions.", "Decide the contract term you want before comparing the three rates."],
+        cautionsFr: ["Les tarifs publiés portent un astérisque; confirmez ce que chaque contrat inclut et les conditions de soumission.", "Fixez la durée de contrat voulue avant de comparer les trois tarifs."],
+      },
+      {
+        name: "Laucandrique",
+        bestForEn: "Syndicates under 25 units (its Essentiel formula) or over 25 units (Classique). Its site names Greater Montréal, the Eastern Townships and the Laurentians, with offices in Brossard and Mont-Tremblant.",
+        bestForFr: "Syndicats de moins de 25 unités (formule Essentiel) ou de plus de 25 unités (Classique). Son site nomme le Grand Montréal, l'Estrie et les Laurentides, avec des bureaux à Brossard et Mont-Tremblant.",
+        notBestForEn: "Owners needing rental or short-term rental management; not offered on its site.",
+        notBestForFr: "Propriétaires qui ont besoin de gestion locative ou courte durée; non offerte sur son site.",
+        strengthsEn: ["Formulas split by unit count, plus Maintenance and Technique divisions and an emergency service.", "Its homepage states more than 35 years of operation."],
+        strengthsFr: ["Formules selon le nombre d'unités, plus des divisions Maintenance et Technique et un service d'urgence.", "Sa page d'accueil indique plus de 35 ans d'activité."],
+        cautionsEn: ["No pricing published.", "Head office in Brossard; confirm the local team for a building on the island of Montréal."],
+        cautionsFr: ["Aucun prix publié.", "Siège social à Brossard; confirmez l'équipe locale pour un immeuble sur l'île de Montréal."],
       },
     ],
     faqs: [
@@ -938,9 +1117,9 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
         questionEn: "Who are the best property management alternatives in Montreal?",
         questionFr: "Quelles sont les meilleures alternatives en gestion immobiliere a Montreal?",
         answerEn:
-          "A fair shortlist can include Gestion Velora, Gestion AlphaCondo, Habitanium, Gestion MR, and SolutionCondo, depending on property type and operating needs.",
+          "A fair shortlist can include Gestion Velora, Gestion AlphaCondo, SolutionCondo, Condo Stratégis and Laucandrique, depending on property type, unit count and whether you also need rental management.",
         answerFr:
-          "Une shortlist honnete peut inclure Gestion Velora, Gestion AlphaCondo, Habitanium, Gestion MR et SolutionCondo selon le type d'actif et les besoins.",
+          "Une shortlist honnête peut inclure Gestion Velora, Gestion AlphaCondo, SolutionCondo, Condo Stratégis et Laucandrique, selon le type d'actif, le nombre d'unités et le besoin ou non de gestion locative.",
       },
       {
         questionEn: "Should I choose the cheapest property manager?",
@@ -970,4 +1149,15 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
 
 export function getComparisonBySlug(slug: string): ComparisonPageData | null {
   return COMPARISON_PAGES.find((page) => page.slug === slug) ?? null;
+}
+
+/** Format an ISO date for the visible byline, timezone-safe (dates are calendar dates, not instants). */
+export function formatComparisonDate(iso: string, locale: "fr" | "en"): string {
+  const date = new Date(`${iso}T00:00:00Z`);
+  return new Intl.DateTimeFormat(locale === "fr" ? "fr-CA" : "en-CA", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(date);
 }

@@ -22,6 +22,8 @@ import {
   FIGURES_VERIFIED,
 } from "../data/plex-calculator";
 import { RADAR_FAQ, RADAR_META, RADAR_PATHS } from "../data/plex-radar";
+import { getComparisonBySlug } from "../data/comparisons";
+import { buildComparisonSchemas } from "../data/comparisonSchema";
 
 const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
 const HOMEPAGE_CITATIONS = [
@@ -383,6 +385,23 @@ export function SchemaOrg() {
         cancelled = true;
         removePageSchema();
       };
+    }
+
+    // ── Comparison guides (/compare/:slug) ───────────────────────────────
+    // Article + FAQPage + BreadcrumbList, with the page's research-sheet
+    // sources as `citation`. Same builder as the prerender script.
+    const compareMatch = path.match(/^\/(?:en\/)?compare\/([^/]+)\/?$/);
+    if (compareMatch) {
+      const comparison = getComparisonBySlug(compareMatch[1]);
+      if (comparison) {
+        injectSchema(
+          buildComparisonSchemas(comparison, isEn ? "en" : "fr", SITE_URL, {
+            home: bcHome,
+            hub: isEn ? "Comparison guides" : "Guides comparatifs",
+          }),
+        );
+        return () => removePageSchema();
+      }
     }
 
     // ── Dedicated contact page ───────────────────────────────────────────

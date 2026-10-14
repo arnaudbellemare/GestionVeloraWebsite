@@ -24,7 +24,8 @@ import { join } from "path";
 // Import app data sources directly — same source of truth as the React app
 // ---------------------------------------------------------------------------
 import { blogPosts, type RichParagraph } from "../src/data/blog.js";
-import { COMPARISON_PAGES } from "../src/data/comparisons.js";
+import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
+import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy.js";
 import {
@@ -1303,6 +1304,49 @@ ${links}
 </main>`;
 }
 
+/** Verdict block + visible byline for a comparison page, placed directly under the H1. */
+function buildComparisonVerdictHtml(locale: "fr" | "en", page: ComparisonPageData): string {
+  const isEn = locale === "en";
+  const v = page.verdict;
+  const lines = isEn
+    ? [v.chooseVeloraEn, v.chooseAlternativeEn, v.notWorthSwitchingEn]
+    : [v.chooseVeloraFr, v.chooseAlternativeFr, v.notWorthSwitchingFr];
+  const profileHref = isEn ? "/en/about" : "/about";
+  const checked = formatComparisonDate(page.factsCheckedOn, locale);
+  const updated = formatComparisonDate(page.dateModified, locale);
+  const byline = isEn
+    ? `Written by <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a>, founder, Gestion Velora. Facts checked <time datetime="${page.factsCheckedOn}">${escapeHtml(checked)}</time>. Updated <time datetime="${page.dateModified}">${escapeHtml(updated)}</time>.`
+    : `Rédigé par <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a>, fondateur, Gestion Velora. Faits vérifiés le <time datetime="${page.factsCheckedOn}">${escapeHtml(checked)}</time>. Mis à jour le <time datetime="${page.dateModified}">${escapeHtml(updated)}</time>.`;
+  return `  <h2>${isEn ? "Which should you choose?" : "Que choisir?"}</h2>
+  <ul>
+${lines.map((line) => `    <li>${escapeHtml(line)}</li>`).join("\n")}
+  </ul>
+  <aside class="byline"><p>${byline}</p></aside>`;
+}
+
+/** "Sources and method" block for a comparison page: the research sheet, rendered. */
+function buildComparisonSourcesHtml(locale: "fr" | "en", page: ComparisonPageData): string {
+  const isEn = locale === "en";
+  const basisLabel = (basis: ComparisonPageData["sources"][number]["basis"]) => {
+    if (basis === "firsthand") return isEn ? "Firsthand (Gestion Velora)" : "Première main (Gestion Velora)";
+    if (basis === "regulatory") return isEn ? "Regulatory source" : "Source réglementaire";
+    return isEn ? "Third-party published" : "Publié par un tiers";
+  };
+  const items = page.sources
+    .map((source) => {
+      const href = /^https?:/.test(source.url) ? source.url : isEn ? `/en${source.url}` : source.url;
+      const name = isEn ? source.nameEn : source.nameFr;
+      const checked = formatComparisonDate(source.dateChecked, locale);
+      return `    <li><a href="${escapeHtml(href)}">${escapeHtml(name)}</a> — ${escapeHtml(basisLabel(source.basis))} · ${isEn ? "Checked" : "Vérifié le"} <time datetime="${source.dateChecked}">${escapeHtml(checked)}</time></li>`;
+    })
+    .join("\n");
+  return `  <h2>${isEn ? "Sources and method" : "Sources et méthode"}</h2>
+  <p>${escapeHtml(isEn ? page.methodEn : page.methodFr)}</p>
+  <ul>
+${items}
+  </ul>`;
+}
+
 function buildComparisonMainHtml(locale: "fr" | "en", page: (typeof COMPARISON_PAGES)[0]): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
   const h1 = locale === "fr" ? page.h1Fr : page.h1En;
@@ -1393,6 +1437,7 @@ ${page.alternatives
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(hero)}</p>
+${buildComparisonVerdictHtml(locale, page)}
   <p>${escapeHtml(desc)}</p>
   <h2>${locale === "fr" ? "Meilleur pour" : "Best for"}</h2>
   <ul>
@@ -1429,6 +1474,7 @@ ${storyActionsHtml}
   <p>${escapeHtml(storyDisclosure)}</p>
   <h2>FAQ</h2>
 ${faqsHtml}
+${buildComparisonSourcesHtml(locale, page)}
   <h2>${locale === "fr" ? "Pages internes utiles" : "Helpful internal links"}</h2>
   <ul>
 ${linksHtml}
@@ -2318,7 +2364,7 @@ function buildRoutes(): RouteConfig[] {
       description: page.descriptionFr,
       keywords: buildKeywords("fr", [page.h1Fr, page.titleFr, ...page.whereAlternativeWinsFr]),
       prerenderMainInner: buildComparisonMainHtml("fr", page),
-      pageSchemas: null,
+      pageSchemas: buildComparisonSchemas(page, "fr", SITE_URL, { home: "Accueil", hub: "Guides comparatifs" }),
     });
     routes.push({
       path: `/en/compare/${page.slug}`,
@@ -2329,7 +2375,7 @@ function buildRoutes(): RouteConfig[] {
       description: page.descriptionEn,
       keywords: buildKeywords("en", [page.h1En, page.titleEn, ...page.whereAlternativeWinsEn]),
       prerenderMainInner: buildComparisonMainHtml("en", page),
-      pageSchemas: null,
+      pageSchemas: buildComparisonSchemas(page, "en", SITE_URL, { home: "Home", hub: "Comparison guides" }),
     });
   }
 
