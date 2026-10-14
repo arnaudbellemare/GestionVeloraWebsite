@@ -68,16 +68,10 @@ const BEST_INTENT_WEIGHTS: Record<string, number> = {
  */
 const SERVICE_CITY_WEIGHTS: Record<string, Record<string, number>> = {
   "gestion-airbnb": {
-    // Montréal prohibits short-term tourist rental of a PRINCIPAL RESIDENCE
-    // outright in these three boroughs, while allowing it elsewhere on the
-    // island from 10 June to 10 September with a permit.
-    //
-    // Suppressed rather than retired: commercial "résidence de tourisme" may
-    // still be permitted in certain sectors, and the city does not publish the
-    // list, so the pages are not provably worthless — just a poor use of a
-    // priority slot when the common form of the service is banned there.
-    //
-    // Source: https://montreal.ca/sujets/hebergement-touristique-court-terme
+    // These three slugs were retired on 2026-10-14 (301 to the Airbnb
+    // service page; see locationRoutePolicy.ts for the sources). The weights
+    // stay so the ranking cannot pull them back into a priority slot if the
+    // retirement list is ever edited.
     lachine: 1,
     "saint-laurent": 1,
     "saint-leonard": 1,

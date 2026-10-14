@@ -12,6 +12,8 @@ import { useGoToContact } from "../hooks/useGoToContact";
 import { INDEX_ROBOTS, SITE_URL } from "../config";
 import { COMPARISON_PAGES } from "../data/comparisons";
 import { isPriorityLocationSlug } from "../data/locationPriority";
+import { getAirbnbLocationRule } from "../data/shortTermRentalRules";
+import { isRetiredLocationSlug } from "../data/locationRoutePolicy";
 
 /** Explicit definitional lead per service — GEO/AEO “definition in first ~300 words”. */
 const SERVICE_DEFINITION: Record<string, { fr: (cityFr: string) => string; en: (cityEn: string) => string }> = {
@@ -245,7 +247,12 @@ export function LocationPage() {
     (s) => s !== loc.service.slug
   );
   const localePrefix = isEn ? "/en" : "";
-  const nearbyCities = CITIES.filter((city) => city.slug !== loc.city.slug && city.region === loc.city.region).slice(0, 3);
+  const nearbyCities = CITIES.filter(
+    (city) =>
+      city.slug !== loc.city.slug &&
+      city.region === loc.city.region &&
+      !isRetiredLocationSlug(`${loc.service.slug}-${city.slug}`),
+  ).slice(0, 3);
   const serviceComparisons = COMPARISON_PAGES.slice(0, 2);
 
   const defEntry = SERVICE_DEFINITION[loc.service.slug];
@@ -427,6 +434,35 @@ export function LocationPage() {
           </div>
         </section>
       )}
+
+      {loc.service.slug === "gestion-airbnb" && (() => {
+        const rule = getAirbnbLocationRule(loc.city.slug, isEn ? loc.city.nameEn : loc.city.nameFr, isEn ? "en" : "fr");
+        return (
+          <section
+            id="location-str-rules"
+            aria-labelledby="location-str-rules-heading"
+            className="px-6 lg:px-16 py-10 lg:py-12 bg-nd-surface border-y border-nd-border"
+          >
+            <div className="max-w-[90rem] mx-auto max-w-4xl">
+              <h2
+                id="location-str-rules-heading"
+                className="font-sans font-semibold text-sm uppercase tracking-[0.12em] text-nd-secondary mb-3"
+              >
+                {rule.title}
+              </h2>
+              <p className="font-sans text-base text-nd-display leading-relaxed max-w-4xl">{rule.text}</p>
+              <a
+                href={rule.source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-3 font-sans text-sm text-nd-secondary underline underline-offset-2 hover:text-nd-display"
+              >
+                {rule.source.label}
+              </a>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Features list */}
       <section id="location-included" className="py-20 lg:py-28 px-6 lg:px-16 bg-nd-canvas">

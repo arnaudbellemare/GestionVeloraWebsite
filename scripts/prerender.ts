@@ -28,6 +28,7 @@ import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from 
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy.js";
+import { getAirbnbLocationRule, getAirbnbServiceRules } from "../src/data/shortTermRentalRules.js";
 import {
   ARTICLE_AUTHOR_BIO,
   ARTICLE_AUTHOR_NAME,
@@ -1085,10 +1086,19 @@ function buildLocationMainHtml(
         ? `<p>${escapeHtml(city.localLeadEn)}</p>`
         : "";
 
+  let strRule = "";
+  if (svc.slug === "gestion-airbnb") {
+    const rule = getAirbnbLocationRule(city.slug, cityName, locale);
+    strRule = `  <h2>${escapeHtml(rule.title)}</h2>
+  <p>${escapeHtml(rule.text)}</p>
+  <p><a href="${escapeHtml(rule.source.url)}">${escapeHtml(rule.source.label)}</a></p>`;
+  }
+
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(desc)}</p>
 ${localLead}
+${strRule}
   <h2>${escapeHtml(inclTitle)}</h2>
   <p>${escapeHtml(inclDesc)}</p>
   <ul>
@@ -1528,10 +1538,24 @@ function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
       ? `<p>Pour comparer ce mandat avec les autres options, consultez aussi <a href="/services">tous les services</a>, <a href="/tarifs">les tarifs</a> et <a href="/blog">les articles de gestion immobilière</a>.</p>`
       : `<p>To compare this mandate with other options, see <a href="/en/services">all services</a>, <a href="/en/tarifs">pricing</a>, and <a href="/en/blog">property management articles</a>.</p>`;
   const h1 = svc.subtitle || svc.title;
+  let rulesHtml = "";
+  if (slug === "airbnb") {
+    const rules = getAirbnbServiceRules(locale);
+    rulesHtml = `  <h2>${escapeHtml(rules.title)}</h2>
+  <p>${escapeHtml(rules.body)}</p>
+  <ul>
+${rules.points.map((point) => `    <li>${escapeHtml(point)}</li>`).join("\n")}
+  </ul>
+  <p>${escapeHtml(rules.checkedLabel)}</p>
+  <ul>
+${rules.sources.map((source) => `    <li><a href="${escapeHtml(source.url)}">${escapeHtml(source.label)}</a></li>`).join("\n")}
+  </ul>`;
+  }
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   ${svc.subtitle && svc.subtitle !== svc.title ? `<p>${escapeHtml(svc.title)}</p>` : ""}
   <p>${escapeHtml(svc.description)}</p>
+${rulesHtml}
 ${offeringHtml}
 ${serviceLinks}
 </main>`;
