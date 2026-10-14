@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { blogCoverUrl } from "../lib/blogImages";
 import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
+import { ARTICLE_AUTHOR_BIO } from "../data/author";
 import {
   ARTICLE_AUTHOR_NAME,
   ARTICLE_AUTHOR_SAME_AS,
@@ -21,6 +22,8 @@ import {
   FIGURES_VERIFIED,
 } from "../data/plex-calculator";
 import { RADAR_FAQ, RADAR_META, RADAR_PATHS } from "../data/plex-radar";
+import { getComparisonBySlug } from "../data/comparisons";
+import { buildComparisonSchemas } from "../data/comparisonSchema";
 
 const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
 const HOMEPAGE_CITATIONS = [
@@ -224,7 +227,12 @@ export function SchemaOrg() {
           description: guide.metaDescription,
           url,
           inLanguage: isEn ? "en-CA" : "fr-CA",
-          author: { "@type": "Person", name: ARTICLE_AUTHOR_NAME, url: ARTICLE_AUTHOR_URL },
+          author: {
+            "@type": "Person",
+            name: ARTICLE_AUTHOR_NAME,
+            description: ARTICLE_AUTHOR_BIO[loc],
+            url: ARTICLE_AUTHOR_URL,
+          },
           publisher: { "@id": ORGANIZATION_SCHEMA_ID },
           // Dated because every figure on the page is annually indexed.
           dateModified: `${FIGURES_VERIFIED}-01`,
@@ -350,6 +358,7 @@ export function SchemaOrg() {
                 author: {
                   "@type": "Person",
                   name: ARTICLE_AUTHOR_NAME,
+                  description: ARTICLE_AUTHOR_BIO[isEn ? "en" : "fr"],
                   url: ARTICLE_AUTHOR_URL,
                   ...(ARTICLE_AUTHOR_SAME_AS.length ? { sameAs: ARTICLE_AUTHOR_SAME_AS } : {}),
                 },
@@ -376,6 +385,23 @@ export function SchemaOrg() {
         cancelled = true;
         removePageSchema();
       };
+    }
+
+    // ── Comparison guides (/compare/:slug) ───────────────────────────────
+    // Article + FAQPage + BreadcrumbList, with the page's research-sheet
+    // sources as `citation`. Same builder as the prerender script.
+    const compareMatch = path.match(/^\/(?:en\/)?compare\/([^/]+)\/?$/);
+    if (compareMatch) {
+      const comparison = getComparisonBySlug(compareMatch[1]);
+      if (comparison) {
+        injectSchema(
+          buildComparisonSchemas(comparison, isEn ? "en" : "fr", SITE_URL, {
+            home: bcHome,
+            hub: isEn ? "Comparison guides" : "Guides comparatifs",
+          }),
+        );
+        return () => removePageSchema();
+      }
     }
 
     // ── Dedicated contact page ───────────────────────────────────────────
@@ -419,6 +445,7 @@ export function SchemaOrg() {
         author: {
           "@type": "Person",
           name: ARTICLE_AUTHOR_NAME,
+          description: ARTICLE_AUTHOR_BIO[isEn ? "en" : "fr"],
           url: ARTICLE_AUTHOR_URL,
           ...(ARTICLE_AUTHOR_SAME_AS.length ? { sameAs: ARTICLE_AUTHOR_SAME_AS } : {}),
           worksFor: { "@id": ORGANIZATION_SCHEMA_ID },

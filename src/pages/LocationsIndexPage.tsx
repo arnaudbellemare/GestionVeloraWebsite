@@ -5,6 +5,7 @@ import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
 import { CITIES, LOCATION_SERVICES } from "../data/locations";
+import { isRetiredLocationSlug } from "../data/locationRoutePolicy";
 
 export function LocationsIndexPage() {
   const { t } = useTranslation();
@@ -51,7 +52,7 @@ export function LocationsIndexPage() {
                   {isEn ? `Region: ${city.region}` : `Region : ${city.region}`}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                  {LOCATION_SERVICES.map((service) => {
+                  {LOCATION_SERVICES.filter((service) => !isRetiredLocationSlug(`${service.slug}-${city.slug}`)).map((service) => {
                     const pageSlug = `${service.slug}-${city.slug}`;
                     return (
                       <InternalLink

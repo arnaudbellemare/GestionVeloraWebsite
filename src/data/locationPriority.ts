@@ -68,23 +68,29 @@ const BEST_INTENT_WEIGHTS: Record<string, number> = {
  */
 const SERVICE_CITY_WEIGHTS: Record<string, Record<string, number>> = {
   "gestion-airbnb": {
-    // Montréal prohibits short-term tourist rental of a PRINCIPAL RESIDENCE
-    // outright in these three boroughs, while allowing it elsewhere on the
-    // island from 10 June to 10 September with a permit.
-    //
-    // Suppressed rather than retired: commercial "résidence de tourisme" may
-    // still be permitted in certain sectors, and the city does not publish the
-    // list, so the pages are not provably worthless — just a poor use of a
-    // priority slot when the common form of the service is banned there.
-    //
-    // Source: https://montreal.ca/sujets/hebergement-touristique-court-terme
+    // These three slugs were retired on 2026-10-14 (301 to the Airbnb
+    // service page; see locationRoutePolicy.ts for the sources). The weights
+    // stay so the ranking cannot pull them back into a priority slot if the
+    // retirement list is ever edited.
     lachine: 1,
     "saint-laurent": 1,
     "saint-leonard": 1,
   },
 };
 
-export const PRIORITY_LOCATION_ROUTE_LIMIT = 150;
+/**
+ * Only syndicate pages are indexable, and only for the 20 cities in
+ * CITY_WEIGHTS (every other city scores 4, so the top 20 syndicate slugs are
+ * exactly those). Decided 2026-10-14: Gestion Velora is a syndicate
+ * specialist, and the location template is identical from city to city once
+ * the name is swapped, so 150 indexable pages read as filler. Every other
+ * location page still renders, with `noindex, follow`, and stays out of the
+ * sitemap. Raise the limit only for a city whose page carries real local
+ * detail.
+ */
+const INDEXABLE_LOCATION_SERVICES: ReadonlySet<string> = new Set(["syndicat-copropriete"]);
+
+export const PRIORITY_LOCATION_ROUTE_LIMIT = 20;
 
 function cityWeight(citySlug: string, serviceSlug?: string): number {
   if (serviceSlug) {
@@ -114,7 +120,7 @@ export function locationSeoScore(serviceSlug: string, citySlug: string): number 
 // indexable set.
 const PRIORITY_LOCATION_SLUGS = Array.from(
   new Set(
-    LOCATION_SERVICES.flatMap((service) =>
+    LOCATION_SERVICES.filter((service) => INDEXABLE_LOCATION_SERVICES.has(service.slug)).flatMap((service) =>
       CITIES.map((city) => ({
         slug: `${service.slug}-${city.slug}`,
         score: locationSeoScore(service.slug, city.slug),

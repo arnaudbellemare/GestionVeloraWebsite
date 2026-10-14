@@ -5,8 +5,15 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
-import { getComparisonBySlug } from "../data/comparisons";
+import { ARTICLE_AUTHOR_NAME } from "../config";
+import { formatComparisonDate, getComparisonBySlug, type ComparisonSourceBasis } from "../data/comparisons";
 import { useGoToContact } from "../hooks/useGoToContact";
+
+function basisLabel(basis: ComparisonSourceBasis, isEn: boolean): string {
+  if (basis === "firsthand") return isEn ? "Firsthand (Gestion Velora)" : "Première main (Gestion Velora)";
+  if (basis === "regulatory") return isEn ? "Regulatory source" : "Source réglementaire";
+  return isEn ? "Third-party published" : "Publié par un tiers";
+}
 
 function StatusMark({ positive }: { positive: boolean }) {
   return (
@@ -58,8 +65,36 @@ export function ComparisonPage() {
               <p className="font-sans text-xl lg:text-2xl text-black/78 dark:text-white/78 max-w-4xl mb-5 leading-snug">
                 {copy(page.heroEn, page.heroFr)}
               </p>
-              <p className="font-sans text-base lg:text-lg text-black/68 dark:text-white/68 max-w-3xl mb-8 leading-relaxed">
-                {copy(page.descriptionEn, page.descriptionFr)}
+              <section
+                id="comparison-verdict"
+                aria-labelledby="comparison-verdict-heading"
+                className="border border-black/10 dark:border-white/10 bg-white dark:bg-white/[0.02] p-5 lg:p-6 max-w-4xl mb-6"
+              >
+                <h2 id="comparison-verdict-heading" className="font-sans font-semibold text-sm uppercase tracking-[0.08em] text-black/55 dark:text-white/55 mb-4">
+                  {isEn ? "Which should you choose?" : "Que choisir?"}
+                </h2>
+                <ul className="space-y-3">
+                  {[
+                    copy(page.verdict.chooseVeloraEn, page.verdict.chooseVeloraFr),
+                    copy(page.verdict.chooseAlternativeEn, page.verdict.chooseAlternativeFr),
+                    copy(page.verdict.notWorthSwitchingEn, page.verdict.notWorthSwitchingFr),
+                  ].map((line) => (
+                    <li key={line} className="flex items-start gap-3 font-sans text-base lg:text-lg text-nd-display leading-relaxed">
+                      <span className="mt-2.5 h-1.5 w-1.5 rounded-full bg-nd-primary shrink-0" aria-hidden />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+              <p className="font-sans text-sm text-black/60 dark:text-white/60 max-w-3xl mb-8 leading-relaxed">
+                {isEn ? "Written by " : "Rédigé par "}
+                <InternalLink to="/about" className="text-nd-display underline underline-offset-2">
+                  {ARTICLE_AUTHOR_NAME}
+                </InternalLink>
+                {isEn ? ", founder, Gestion Velora. Facts checked " : ", fondateur, Gestion Velora. Faits vérifiés le "}
+                <time dateTime={page.factsCheckedOn}>{formatComparisonDate(page.factsCheckedOn, locale)}</time>
+                {isEn ? ". Updated " : ". Mis à jour le "}
+                <time dateTime={page.dateModified}>{formatComparisonDate(page.dateModified, locale)}</time>.
               </p>
               <a
                 href={contactHref}
@@ -351,6 +386,47 @@ export function ComparisonPage() {
               </details>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="comparison-sources" className="px-6 lg:px-16 py-16 lg:py-20">
+        <div className="max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-14">
+          <div>
+            <p className="font-sans text-sm uppercase tracking-[0.08em] text-black/55 dark:text-white/55 mb-3">
+              {isEn ? "Sources and method" : "Sources et méthode"}
+            </p>
+            <h2 className="font-sans font-semibold text-3xl lg:text-4xl text-nd-display leading-tight">
+              {isEn ? "How this comparison was checked" : "Comment ce comparatif a été vérifié"}
+            </h2>
+            <p className="mt-4 font-sans text-sm lg:text-base text-black/70 dark:text-white/70 leading-relaxed">
+              {copy(page.methodEn, page.methodFr)}
+            </p>
+          </div>
+          <ul className="divide-y divide-black/10 dark:divide-white/10 border-y border-black/10 dark:border-white/10">
+            {page.sources.map((source) => {
+              const isExternal = /^https?:/.test(source.url);
+              const name = copy(source.nameEn, source.nameFr);
+              const linkClass = "font-sans font-semibold text-base text-nd-display underline underline-offset-2";
+              return (
+                <li key={source.url} className="py-4 flex flex-col gap-1">
+                  {isExternal ? (
+                    <a href={source.url} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                      {name}
+                    </a>
+                  ) : (
+                    <InternalLink to={source.url} className={linkClass}>
+                      {name}
+                    </InternalLink>
+                  )}
+                  <span className="font-sans text-xs text-black/55 dark:text-white/55">
+                    {basisLabel(source.basis, isEn)}
+                    {isEn ? " · Checked " : " · Vérifié le "}
+                    <time dateTime={source.dateChecked}>{formatComparisonDate(source.dateChecked, locale)}</time>
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </section>
 

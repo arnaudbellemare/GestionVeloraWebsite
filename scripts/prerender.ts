@@ -24,9 +24,16 @@ import { join } from "path";
 // Import app data sources directly — same source of truth as the React app
 // ---------------------------------------------------------------------------
 import { blogPosts, type RichParagraph } from "../src/data/blog.js";
-import { COMPARISON_PAGES } from "../src/data/comparisons.js";
+import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
+import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy.js";
+import { getAirbnbLocationRule, getAirbnbServiceRules } from "../src/data/shortTermRentalRules.js";
+import {
+  ARTICLE_AUTHOR_BIO,
+  ARTICLE_AUTHOR_NAME,
+  ARTICLE_AUTHOR_SAME_AS,
+} from "../src/data/author.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
 import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
@@ -54,8 +61,8 @@ const SITE_URL = "https://www.gestionvelora.com";
 const INDEX_ROBOTS =
   "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 const ORG_ID = `${SITE_URL}/#organization`;
-const AUTHOR_NAME = "Arnaud Bellemare";
-const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
+const AUTHOR_NAME = ARTICLE_AUTHOR_NAME;
+const HOMEPAGE_DATE_MODIFIED = "2026-10-14";
 const TERMS_EFFECTIVE_DATE = "2026-08-30";
 const DEFAULT_SITEMAP_LAST_MODIFIED = "2026-08-20";
 const SITEMAP_LAST_MODIFIED_BY_PATH = new Map<string, string>([
@@ -74,8 +81,6 @@ for (const post of blogPosts) {
   SITEMAP_LAST_MODIFIED_BY_PATH.set(`/blog/${post.slug}`, post.dateModified);
   SITEMAP_LAST_MODIFIED_BY_PATH.set(`/en/blog/${post.slug}`, post.dateModified);
 }
-/** Keep in sync with ARTICLE_AUTHOR_SAME_AS in src/config.ts. */
-const AUTHOR_SAME_AS = ["https://ca.linkedin.com/in/gestion-velora-48684b399"] as const;
 const HOMEPAGE_CITATIONS = [
   {
     url: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables",
@@ -686,8 +691,9 @@ function buildHomepageFaqPageSchema(locale: "fr" | "en") {
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
+      description: ARTICLE_AUTHOR_BIO[locale],
       url: `${SITE_URL}/about`,
-      sameAs: [...AUTHOR_SAME_AS],
+      sameAs: [...ARTICLE_AUTHOR_SAME_AS],
       worksFor: { "@id": ORG_ID },
     },
     dateModified: HOMEPAGE_DATE_MODIFIED,
@@ -803,11 +809,12 @@ function buildArticleSchema(locale: "fr" | "en", slug: string, base: string) {
     author: {
       "@type": "Person",
       name: AUTHOR_NAME,
+      description: ARTICLE_AUTHOR_BIO[locale],
       // /about is the actual bio page; the site root said nothing about the author.
       url: `${SITE_URL}/about`,
       jobTitle: "Founder, Gestion Velora",
       worksFor: { "@id": ORG_ID },
-      ...(AUTHOR_SAME_AS.length ? { sameAs: AUTHOR_SAME_AS } : {}),
+      ...(ARTICLE_AUTHOR_SAME_AS.length ? { sameAs: ARTICLE_AUTHOR_SAME_AS } : {}),
     },
     publisher: {
       "@type": "Organization",
@@ -932,9 +939,7 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
   const relatedTitle = isEn ? enRaw.blog.relatedPostsTitle : frRaw.blog.relatedPostsTitle;
   const authorLabel = isEn ? "Written by" : "Écrit par";
   const authorRole = isEn ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora";
-  const authorBio = isEn
-    ? "Property management professional specializing in condo boards, long-term rentals, and short-term rentals in Greater Montreal."
-    : "Professionnel de la gestion immobilière spécialisé en syndicats de copropriété, location longue durée et Airbnb dans le Grand Montréal.";
+  const authorBio = ARTICLE_AUTHOR_BIO[locale];
   const ctaText = isEn ? enRaw.blog.planifyCall : frRaw.blog.planifyCall;
 
   return `<!doctype html>
@@ -1081,10 +1086,19 @@ function buildLocationMainHtml(
         ? `<p>${escapeHtml(city.localLeadEn)}</p>`
         : "";
 
+  let strRule = "";
+  if (svc.slug === "gestion-airbnb") {
+    const rule = getAirbnbLocationRule(city.slug, cityName, locale);
+    strRule = `  <h2>${escapeHtml(rule.title)}</h2>
+  <p>${escapeHtml(rule.text)}</p>
+  <p><a href="${escapeHtml(rule.source.url)}">${escapeHtml(rule.source.label)}</a></p>`;
+  }
+
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(desc)}</p>
 ${localLead}
+${strRule}
   <h2>${escapeHtml(inclTitle)}</h2>
   <p>${escapeHtml(inclDesc)}</p>
   <ul>
@@ -1120,7 +1134,7 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   const byRole = isEn ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora";
   const profileHref = isEn ? "/en/about" : "/about";
   const profileLabel = isEn ? "View author profile" : "Voir le profil auteur";
-  const byline = `  <p class="byline">${escapeHtml(byLabel)} <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a> — ${escapeHtml(byRole)}. <a href="${profileHref}">${escapeHtml(profileLabel)}</a></p>`;
+  const byline = `  <aside class="byline"><p>${escapeHtml(byLabel)} <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a> — ${escapeHtml(byRole)}. <a href="${profileHref}">${escapeHtml(profileLabel)}</a></p><p>${escapeHtml(ARTICLE_AUTHOR_BIO[locale])}</p></aside>`;
 
   return `<main lang="${lang}">
   <h1>${escapeHtml(loc.title)}</h1>
@@ -1138,12 +1152,12 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   const t = locale === "fr" ? frRaw : enRaw;
   const h1 =
     locale === "fr"
-      ? "Gestion immobilière Montréal | Gestion Velora"
-      : "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
+      ? "Gestionnaire de syndicats de copropriété à Montréal"
+      : "Condo syndicate management in Montreal";
   const lead =
     locale === "fr"
-      ? "Gestion Velora est une firme de gestion immobilière à Montréal. Elle prend en charge l’administration, le suivi financier, l’entretien et les communications pour les syndicats de copropriété, les propriétaires locatifs et les hôtes Airbnb du Grand Montréal."
-      : "Gestion Velora is a property management firm in Montreal. It handles administration, financial follow-up, maintenance, and communications for condo boards, residential landlords, and Airbnb hosts across Greater Montreal.";
+      ? "Gestion Velora est une firme spécialisée en gestion de syndicats de copropriété dans le Grand Montréal : assemblées, fonds de prévoyance, conformité Loi 16, fournisseurs et rapports financiers. Elle offre aussi la gestion locative longue durée et la gestion Airbnb."
+      : "Gestion Velora specialises in managing condo syndicates across Greater Montreal: general meetings, reserve funds, Bill 16 compliance, vendors, and financial reporting. It also offers long-term rental and Airbnb management.";
   const svcTitle = locale === "fr"
     ? "Quels services de gestion immobilière offrons-nous à Montréal ?"
     : "Which property management services do we provide in Montreal?";
@@ -1173,8 +1187,8 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
     (source) => `    <li><cite><a href="${source.url}" rel="noopener external">${escapeHtml(source[locale])}</a></cite></li>`,
   ).join("\n");
   const byline = locale === "fr"
-    ? `Écrit et vérifié par <a rel="author" href="/about"><strong>${AUTHOR_NAME}</strong></a>, fondateur de Gestion Velora et membre du RGCQ. Mis à jour le <time datetime="${HOMEPAGE_DATE_MODIFIED}">31 août 2026</time>.`
-    : `Written and reviewed by <a rel="author" href="/en/about"><strong>${AUTHOR_NAME}</strong></a>, founder of Gestion Velora and RGCQ member. Updated <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 31, 2026</time>.`;
+    ? `Rédigé par <a rel="author" href="/about"><strong>${AUTHOR_NAME}</strong></a>. ${escapeHtml(ARTICLE_AUTHOR_BIO.fr)} Mis à jour le <time datetime="${HOMEPAGE_DATE_MODIFIED}">31 août 2026</time>.`
+    : `Written by <a rel="author" href="/en/about"><strong>${AUTHOR_NAME}</strong></a>. ${escapeHtml(ARTICLE_AUTHOR_BIO.en)} Updated <time datetime="${HOMEPAGE_DATE_MODIFIED}">August 31, 2026</time>.`;
   const trustTitle = locale === "fr"
     ? "Comment vérifier notre expertise ou nous contacter ?"
     : "How can you verify our expertise or contact us?";
@@ -1300,6 +1314,49 @@ ${links}
 </main>`;
 }
 
+/** Verdict block + visible byline for a comparison page, placed directly under the H1. */
+function buildComparisonVerdictHtml(locale: "fr" | "en", page: ComparisonPageData): string {
+  const isEn = locale === "en";
+  const v = page.verdict;
+  const lines = isEn
+    ? [v.chooseVeloraEn, v.chooseAlternativeEn, v.notWorthSwitchingEn]
+    : [v.chooseVeloraFr, v.chooseAlternativeFr, v.notWorthSwitchingFr];
+  const profileHref = isEn ? "/en/about" : "/about";
+  const checked = formatComparisonDate(page.factsCheckedOn, locale);
+  const updated = formatComparisonDate(page.dateModified, locale);
+  const byline = isEn
+    ? `Written by <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a>, founder, Gestion Velora. Facts checked <time datetime="${page.factsCheckedOn}">${escapeHtml(checked)}</time>. Updated <time datetime="${page.dateModified}">${escapeHtml(updated)}</time>.`
+    : `Rédigé par <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a>, fondateur, Gestion Velora. Faits vérifiés le <time datetime="${page.factsCheckedOn}">${escapeHtml(checked)}</time>. Mis à jour le <time datetime="${page.dateModified}">${escapeHtml(updated)}</time>.`;
+  return `  <h2>${isEn ? "Which should you choose?" : "Que choisir?"}</h2>
+  <ul>
+${lines.map((line) => `    <li>${escapeHtml(line)}</li>`).join("\n")}
+  </ul>
+  <aside class="byline"><p>${byline}</p></aside>`;
+}
+
+/** "Sources and method" block for a comparison page: the research sheet, rendered. */
+function buildComparisonSourcesHtml(locale: "fr" | "en", page: ComparisonPageData): string {
+  const isEn = locale === "en";
+  const basisLabel = (basis: ComparisonPageData["sources"][number]["basis"]) => {
+    if (basis === "firsthand") return isEn ? "Firsthand (Gestion Velora)" : "Première main (Gestion Velora)";
+    if (basis === "regulatory") return isEn ? "Regulatory source" : "Source réglementaire";
+    return isEn ? "Third-party published" : "Publié par un tiers";
+  };
+  const items = page.sources
+    .map((source) => {
+      const href = /^https?:/.test(source.url) ? source.url : isEn ? `/en${source.url}` : source.url;
+      const name = isEn ? source.nameEn : source.nameFr;
+      const checked = formatComparisonDate(source.dateChecked, locale);
+      return `    <li><a href="${escapeHtml(href)}">${escapeHtml(name)}</a> — ${escapeHtml(basisLabel(source.basis))} · ${isEn ? "Checked" : "Vérifié le"} <time datetime="${source.dateChecked}">${escapeHtml(checked)}</time></li>`;
+    })
+    .join("\n");
+  return `  <h2>${isEn ? "Sources and method" : "Sources et méthode"}</h2>
+  <p>${escapeHtml(isEn ? page.methodEn : page.methodFr)}</p>
+  <ul>
+${items}
+  </ul>`;
+}
+
 function buildComparisonMainHtml(locale: "fr" | "en", page: (typeof COMPARISON_PAGES)[0]): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
   const h1 = locale === "fr" ? page.h1Fr : page.h1En;
@@ -1390,6 +1447,7 @@ ${page.alternatives
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(hero)}</p>
+${buildComparisonVerdictHtml(locale, page)}
   <p>${escapeHtml(desc)}</p>
   <h2>${locale === "fr" ? "Meilleur pour" : "Best for"}</h2>
   <ul>
@@ -1426,6 +1484,7 @@ ${storyActionsHtml}
   <p>${escapeHtml(storyDisclosure)}</p>
   <h2>FAQ</h2>
 ${faqsHtml}
+${buildComparisonSourcesHtml(locale, page)}
   <h2>${locale === "fr" ? "Pages internes utiles" : "Helpful internal links"}</h2>
   <ul>
 ${linksHtml}
@@ -1479,10 +1538,24 @@ function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
       ? `<p>Pour comparer ce mandat avec les autres options, consultez aussi <a href="/services">tous les services</a>, <a href="/tarifs">les tarifs</a> et <a href="/blog">les articles de gestion immobilière</a>.</p>`
       : `<p>To compare this mandate with other options, see <a href="/en/services">all services</a>, <a href="/en/tarifs">pricing</a>, and <a href="/en/blog">property management articles</a>.</p>`;
   const h1 = svc.subtitle || svc.title;
+  let rulesHtml = "";
+  if (slug === "airbnb") {
+    const rules = getAirbnbServiceRules(locale);
+    rulesHtml = `  <h2>${escapeHtml(rules.title)}</h2>
+  <p>${escapeHtml(rules.body)}</p>
+  <ul>
+${rules.points.map((point) => `    <li>${escapeHtml(point)}</li>`).join("\n")}
+  </ul>
+  <p>${escapeHtml(rules.checkedLabel)}</p>
+  <ul>
+${rules.sources.map((source) => `    <li><a href="${escapeHtml(source.url)}">${escapeHtml(source.label)}</a></li>`).join("\n")}
+  </ul>`;
+  }
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   ${svc.subtitle && svc.subtitle !== svc.title ? `<p>${escapeHtml(svc.title)}</p>` : ""}
   <p>${escapeHtml(svc.description)}</p>
+${rulesHtml}
 ${offeringHtml}
 ${serviceLinks}
 </main>`;
@@ -2093,6 +2166,7 @@ function buildPlexGuideSchemas(loc: "fr" | "en"): object[] {
       author: {
         "@type": "Person",
         name: AUTHOR_NAME,
+        description: ARTICLE_AUTHOR_BIO[loc],
         url: `${SITE_URL}/about`,
         jobTitle: "Founder, Gestion Velora",
         worksFor: { "@id": ORG_ID },
@@ -2170,12 +2244,12 @@ function buildRoutes(): RouteConfig[] {
   const routes: RouteConfig[] = [];
 
   // --- Homepage ---
-  const frHomeTitle = "Gestion immobilière Montréal | Gestion Velora";
+  const frHomeTitle = "Gestionnaire de copropriété à Montréal | Gestion Velora";
   const frHomeDesc =
-    "Gestion immobilière à Montréal pour copropriétés, locations longue durée et Airbnb. Rapports clairs, soutien 24/7 et entretien proactif.";
-  const enHomeTitle = "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
+    "Gestionnaire de syndicats de copropriété du Grand Montréal : AGA, fonds de prévoyance, Loi 16, fournisseurs et rapports. Aussi location et Airbnb.";
+  const enHomeTitle = "Condo Syndicate Manager in Montreal | Gestion Velora";
   const enHomeDesc =
-    "Montreal property operations for condo boards, short-term rentals, and long-term rentals. Transparent reporting, 24/7 support, and proactive maintenance.";
+    "Gestion Velora manages condo syndicates across Greater Montreal: AGMs, reserve funds, Bill 16, vendors and reporting. Rental and Airbnb management too.";
 
   routes.push({
     path: "/",
@@ -2314,7 +2388,7 @@ function buildRoutes(): RouteConfig[] {
       description: page.descriptionFr,
       keywords: buildKeywords("fr", [page.h1Fr, page.titleFr, ...page.whereAlternativeWinsFr]),
       prerenderMainInner: buildComparisonMainHtml("fr", page),
-      pageSchemas: null,
+      pageSchemas: buildComparisonSchemas(page, "fr", SITE_URL, { home: "Accueil", hub: "Guides comparatifs" }),
     });
     routes.push({
       path: `/en/compare/${page.slug}`,
@@ -2325,7 +2399,7 @@ function buildRoutes(): RouteConfig[] {
       description: page.descriptionEn,
       keywords: buildKeywords("en", [page.h1En, page.titleEn, ...page.whereAlternativeWinsEn]),
       prerenderMainInner: buildComparisonMainHtml("en", page),
-      pageSchemas: null,
+      pageSchemas: buildComparisonSchemas(page, "en", SITE_URL, { home: "Home", hub: "Comparison guides" }),
     });
   }
 

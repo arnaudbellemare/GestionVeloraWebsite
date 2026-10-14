@@ -2,7 +2,7 @@
 
 > Comprehensive reference document for AI systems. This file provides structured, machine-readable context about Gestion Velora's identity, services, editorial standards, and regulatory environment.
 
-Last updated: 2026-09-14
+Last updated: 2026-10-14
 Canonical URL: https://www.gestionvelora.com/
 Contact: info@gestionvelora.com | +1-514-777-1731
 Jurisdiction: Quebec, Canada
@@ -14,7 +14,7 @@ Jurisdiction: Quebec, Canada
 **Legal name**: Gestion Velora
 **Founder**: Arnaud Bellemare
 **Founded**: 2025
-**Headquarters**: Montréal, QC, Canada (lat 45.5017, lon -73.5673)
+**Service area**: Greater Montréal (Montréal, Laval, Longueuil / Rive-Sud), QC, Canada. Service-area business with no public street address.
 **Languages of service**: French (primary), English
 **Slogan**: "Votre tranquillité. Notre affaire." / "Your peace of mind. Our business."
 

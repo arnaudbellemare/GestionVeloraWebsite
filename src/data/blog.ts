@@ -837,8 +837,8 @@ export const blogPosts: BlogPost[] = [
       category: "Tarifs",
       date: "Mars 2026",
       title: "Combien coûte un gestionnaire de copropriété à Montréal ?",
-      metaTitle: "Gestionnaire copropriété : coût à Montréal",
-      excerpt: "Le coût d'un gestionnaire de copropriété à Montréal varie selon la taille de l'immeuble et les services requis. Voici ce que vous devez savoir.",
+      metaTitle: "Coût d'un gestionnaire de copropriété à Montréal",
+      excerpt: "À Montréal, les tarifs 2026 publiés par Gestion Velora sont de 33 $ à 36 $ par unité par mois, jusqu'à 40 $ avec portails. Voyez les services inclus.",
       brief: "En 2026, Gestion Velora publie une base tarifaire claire pour les syndicats de copropriété : généralement 33 $ à 36 $ / unité / mois, jusqu'à 40 $ / unité / mois avec intégrations applicatives et portails. Le coût final dépend de la taille, de la complexité du mandat et des services inclus.",
       sections: [
         {
@@ -879,8 +879,8 @@ export const blogPosts: BlogPost[] = [
       category: "Pricing",
       date: "March 2026",
       title: "How much does a condo property manager cost in Montreal?",
-      metaTitle: "Condo manager cost Montreal",
-      excerpt: "The cost of a condo property manager in Montreal depends on building size and services required. Here is what you need to know before signing.",
+      metaTitle: "Condo Management Fees Montreal: 2026 Pricing",
+      excerpt: "Gestion Velora's published 2026 condo management fees in Montreal are typically $33–$36 per unit per month, up to $40 with portals. See included services.",
       brief: "In 2026, Gestion Velora publishes clear condo board pricing: typically $33-$36 per unit/month, up to $40 per unit/month with app and portal integrations. Final cost depends on building size, mandate complexity, reporting needs, and included services.",
       sections: [
         {

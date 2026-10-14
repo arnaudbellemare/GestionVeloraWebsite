@@ -7,6 +7,7 @@ import { ScrollReveal } from "../components/ScrollReveal";
 import { useLocale } from "../context/LocaleContext";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
+import { getAirbnbServiceRules } from "../data/shortTermRentalRules";
 
 function toAnchorId(title: string) {
   const slug = title
@@ -195,6 +196,54 @@ export function ServicePage() {
           </div>
         </div>
       </section>
+
+      {service.slug === "airbnb" && (() => {
+        const rules = getAirbnbServiceRules(isEn ? "en" : "fr");
+        return (
+          <section
+            id="service-str-rules"
+            className="py-10 lg:py-12 bg-nd-surface border-b border-nd-border"
+            aria-labelledby="service-str-rules-heading"
+          >
+            <div className="max-w-[90rem] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-8 lg:gap-14">
+              <div>
+                <h2
+                  id="service-str-rules-heading"
+                  className="font-sans font-medium text-xl lg:text-2xl text-nd-display tracking-[-0.02em] mb-4"
+                >
+                  {rules.title}
+                </h2>
+                <p className="font-sans text-sm lg:text-base text-black/75 dark:text-white/75 leading-relaxed">{rules.body}</p>
+                <p className="mt-4 font-sans text-xs text-black/55 dark:text-white/55 leading-relaxed">{rules.checkedLabel}</p>
+              </div>
+              <div>
+                <ul className="space-y-3">
+                  {rules.points.map((point) => (
+                    <li key={point} className="font-sans text-sm lg:text-base text-black/80 dark:text-white/80 flex items-start gap-3 leading-relaxed">
+                      <span className="text-waabi-pink mt-0.5 shrink-0">•</span>
+                      <span className="flex-1">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+                <ul className="mt-6 space-y-1.5">
+                  {rules.sources.map((source) => (
+                    <li key={source.url}>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-sans text-xs lg:text-sm text-black/65 dark:text-white/65 underline underline-offset-2 hover:text-waabi-pink"
+                      >
+                        {source.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {serviceFaq.length > 0 && (
         <section

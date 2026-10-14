@@ -3,6 +3,8 @@
  * Content is mirrored FR + EN for Layout + hreflang parity with the rest of the site.
  */
 
+import { ARTICLE_AUTHOR_BIO, ARTICLE_AUTHOR_LINKEDIN } from "./author";
+
 export type TrustPageId =
   | "about"
   | "editorial-policy"
@@ -59,9 +61,19 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
     fr: {
       metaTitle: "À propos de Gestion Velora | Firme de gestion immobilière à Montréal",
       metaDescription:
-        "Gestion Velora est une firme de gestion immobilière à Montréal : syndicats de copropriété, gestion locative et Airbnb dans le Grand Montréal.",
+        "Arnaud Bellemare est fondateur de Gestion Velora et membre du RGCQ. Il écrit sur la gouvernance de copropriété, la gestion locative et la réglementation immobilière au Québec.",
       title: "À propos de Gestion Velora",
       sections: [
+        {
+          heading: "Fondateur et auteur",
+          blocks: [
+            { kind: "p", text: ARTICLE_AUTHOR_BIO.fr },
+            {
+              kind: "linkList",
+              items: [{ label: "Profil LinkedIn d’Arnaud Bellemare", href: ARTICLE_AUTHOR_LINKEDIN }],
+            },
+          ],
+        },
         {
           heading: "Notre mission",
           blocks: [
@@ -145,9 +157,19 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
     en: {
       metaTitle: "About Gestion Velora | Montreal Property Management Firm",
       metaDescription:
-        "Gestion Velora is a Montreal property management firm serving condo boards, long-term rentals, and short-term rentals across Greater Montreal.",
+        "Arnaud Bellemare founded Gestion Velora and is a member of RGCQ. He writes about condo governance, rental management, and Quebec property regulations.",
       title: "About Gestion Velora",
       sections: [
+        {
+          heading: "Founder and author",
+          blocks: [
+            { kind: "p", text: ARTICLE_AUTHOR_BIO.en },
+            {
+              kind: "linkList",
+              items: [{ label: "Arnaud Bellemare on LinkedIn", href: ARTICLE_AUTHOR_LINKEDIN }],
+            },
+          ],
+        },
         {
           heading: "Our mission",
           blocks: [
