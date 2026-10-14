@@ -3,11 +3,11 @@ import { ARTICLE_AUTHOR_BIO } from "../data/author";
 export const fr = {
   // Hero
   hero: {
-    eyebrow: "Gestion immobilière à Montréal",
+    eyebrow: "Gestion de copropriété à Montréal",
     line1: "Votre tranquillité.",
     line2: "Notre affaire.",
     subtitle:
-      "Syndicats, Airbnb et location : une équipe disponible 24/7, rapports clairs et processus rigoureux.",
+      "Spécialistes des syndicats de copropriété : AGA, fonds de prévoyance et Loi 16. Aussi location et Airbnb, avec une équipe disponible 24/7.",
     trustLine: "Membre du RGCQ.",
     trustLink: "Rencontrer le fondateur",
     ctaDiscover: "Voir ce que nous faisons",

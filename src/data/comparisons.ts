@@ -876,13 +876,13 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       "La base tarifaire et la portée de Gestion Velora proviennent de ses pages Tarifs et Méthodologie à la date indiquée. La description de chaque autre firme reprend uniquement ce que son propre site web publiait à la même date; les pages sont liées ci-dessous. Gestion Velora n'a pas testé leurs services, et rien ici n'évalue leur qualité. Confirmez portée, exclusions et prix auprès de chaque firme avant de signer.",
     verdict: {
       chooseVeloraEn:
-        "Choose Gestion Velora if you want one firm across condo boards, long-term rental, and short-term rental, a published per-unit fee basis, and the tradeoffs written down before you sign.",
+        "Choose Gestion Velora if your condo board wants a syndicate specialist with a published per-unit fee (33 to 36 $ per unit per month, 6-unit minimum), with rental or Airbnb management from the same firm if owners need it.",
       chooseVeloraFr:
-        "Choisissez Gestion Velora si vous voulez une seule firme pour syndicat, location longue durée et courte durée, une base tarifaire par unité publiée, et des compromis écrits noir sur blanc avant de signer.",
+        "Choisissez Gestion Velora si votre syndicat veut un spécialiste de la copropriété avec un tarif par unité publié (33 à 36 $ par unité par mois, minimum 6 unités), et la gestion locative ou Airbnb chez la même firme si des copropriétaires en ont besoin.",
       chooseAlternativeEn:
-        "Choose another firm on this list if your only need is syndicate administration for a very large building, or if a resident app matters more to the board than advisory support. Confirm scope, exclusions, and pricing directly with each firm; this page does not rate their service quality.",
+        "Choose another firm on this list if you want a lower published rate in exchange for a 2- or 3-year contract (Condo Stratégis), an external administrator seat on the board rather than full delegation (Gestion AlphaCondo), or a local office off the island of Montréal (Laucandrique). Confirm scope, exclusions, and pricing directly with each firm; this page does not rate their service quality.",
       chooseAlternativeFr:
-        "Choisissez une autre firme de cette liste si votre seul besoin est l'administration syndicale d'un très grand immeuble, ou si une application résidents compte plus pour le CA que l'accompagnement-conseil. Confirmez portée, exclusions et prix directement auprès de chaque firme; cette page n'évalue pas la qualité de leur service.",
+        "Choisissez une autre firme de cette liste si vous voulez un tarif publié plus bas en échange d'un contrat de 2 ou 3 ans (Condo Stratégis), un administrateur externe au CA plutôt qu'une délégation complète (Gestion AlphaCondo), ou un bureau hors de l'île de Montréal (Laucandrique). Confirmez portée, exclusions et prix directement auprès de chaque firme; cette page n'évalue pas la qualité de leur service.",
       notWorthSwitchingEn:
         "Switching managers is probably not worth it if your current firm delivers financial statements on time, keeps the register and maintenance logbook current, and answers emergencies. A cheaper quote rarely offsets a bad handover.",
       notWorthSwitchingFr:
@@ -903,9 +903,9 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
     titleEn: "Best property management alternatives in Montreal",
     titleFr: "Meilleures alternatives en gestion immobiliere a Montreal",
     descriptionEn:
-      "Choose Gestion Velora for one firm across condo, rental and Airbnb with published fees; a condo-only specialist for a very large syndicate. Four Montréal firms.",
+      "Choose Gestion Velora for a condo-syndicate specialist with published per-unit fees; Condo Stratégis for multi-year rates. Four Montréal-area firms compared.",
     descriptionFr:
-      "Gestion Velora pour une seule firme syndicat, locatif et Airbnb avec tarifs publiés; un spécialiste copropriété pour un très grand syndicat. Quatre firmes listées.",
+      "Gestion Velora pour un spécialiste des syndicats avec tarifs par unité publiés; Condo Stratégis pour un contrat pluriannuel. Quatre firmes comparées.",
     h1En: "Best property management alternatives in Montreal",
     h1Fr: "Meilleures alternatives en gestion immobiliere a Montreal",
     heroEn: "The Montreal property management alternatives list for owners who need fit, not a one-sided vendor pitch.",
@@ -1058,12 +1058,12 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       {
         name: "Gestion Velora",
         isVelora: true,
-        bestForEn: "Owners and condo boards that want one firm across condo syndicates, long-term rental and short-term rental, with a published per-unit fee basis and the tradeoffs written down.",
-        bestForFr: "Propriétaires et syndicats qui veulent une seule firme pour la copropriété, la location longue durée et la courte durée, avec une base tarifaire par unité publiée et des compromis écrits.",
+        bestForEn: "Condo boards that want a syndicate specialist with a published per-unit fee basis and the tradeoffs written down; rental and short-term rental management are available from the same team.",
+        bestForFr: "Syndicats qui veulent un spécialiste de la copropriété, avec une base tarifaire par unité publiée et des compromis écrits; la gestion locative et courte durée est offerte par la même équipe.",
         notBestForEn: "Buildings under 6 units, or buyers whose only criterion is the lowest possible direct fee.",
         notBestForFr: "Immeubles de moins de 6 unités, ou acheteurs dont le seul critère est le plus bas frais direct.",
-        strengthsEn: ["Condo management published at 33 to 36 $ per unit per month on the pricing page.", "Condo, long-term rental and short-term rental under one operating team."],
-        strengthsFr: ["Gestion de copropriété publiée à 33 à 36 $ par unité par mois sur la page Tarifs.", "Copropriété, location longue durée et courte durée sous une même équipe."],
+        strengthsEn: ["Condo management published at 33 to 36 $ per unit per month on the pricing page.", "Syndicate management first; long-term and short-term rental available from the same team."],
+        strengthsFr: ["Gestion de copropriété publiée à 33 à 36 $ par unité par mois sur la page Tarifs.", "La gestion de syndicat d'abord; location longue et courte durée offertes par la même équipe."],
         cautionsEn: ["Ask for the exact scope and cadence that match your building."],
         cautionsFr: ["Demandez la portée et la cadence exactes adaptées à votre immeuble."],
       },

@@ -125,11 +125,11 @@ export function PageMeta() {
 
   const isEn = locale === "en";
   const baseTitle = isEn
-    ? "Property Management Montreal | Gestion Velora"
-    : "Gestion immobilière Montréal | Gestion Velora";
+    ? "Condo Syndicate Manager in Montreal | Gestion Velora"
+    : "Gestionnaire de copropriété à Montréal | Gestion Velora";
   const baseDesc = isEn
-    ? "Montreal property operations for condo boards, short-term rentals, and long-term rentals. Transparent reporting, 24/7 support, and proactive maintenance."
-    : "Gestion immobilière à Montréal pour copropriétés, locations longue durée et Airbnb. Rapports clairs, soutien 24/7 et entretien proactif.";
+    ? "Gestion Velora manages condo syndicates across Greater Montreal: AGMs, reserve funds, Bill 16, vendors and reporting. Rental and Airbnb management too."
+    : "Gestionnaire de syndicats de copropriété du Grand Montréal : AGA, fonds de prévoyance, Loi 16, fournisseurs et rapports. Aussi location et Airbnb.";
 
   useEffect(() => {
     document.documentElement.lang = isEn ? "en-CA" : "fr-CA";

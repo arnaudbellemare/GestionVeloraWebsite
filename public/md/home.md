@@ -5,7 +5,7 @@ Canonical URL (EN): https://www.gestionvelora.com/en/
 
 ## What is Gestion Velora? (EN)
 
-Gestion Velora is a property management company based in Montreal, Quebec. We manage condo boards (syndicats de copropriete), Airbnb short-term rentals, and long-term residential rentals across the Greater Montreal area.
+Gestion Velora is a condo syndicate (syndicat de copropriete) management firm serving Greater Montreal, Quebec. Condo board administration is our core work; we also manage long-term residential rentals and Airbnb short-term rentals.
 
 We structure administration, maintenance, and compliance with clear financial reporting, centralized communication, and 24/7 operational response for urgent situations.
 

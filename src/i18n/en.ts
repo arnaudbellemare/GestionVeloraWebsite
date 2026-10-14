@@ -3,11 +3,11 @@ import { ARTICLE_AUTHOR_BIO } from "../data/author";
 export const en = {
   // Hero
   hero: {
-    eyebrow: "Property management in Montreal",
+    eyebrow: "Condo management in Montreal",
     line1: "Your property,",
     line2: "in all tranquility.",
     subtitle:
-      "Condo boards, Airbnb hosts, and landlords - 24/7 support, clear reporting, and rigorous processes.",
+      "Condo syndicate specialists: AGMs, reserve funds, and Bill 16. Rental and Airbnb management too, with a team available 24/7.",
     trustLine: "RGCQ member.",
     trustLink: "Meet the founder",
     ctaDiscover: "See how we work",

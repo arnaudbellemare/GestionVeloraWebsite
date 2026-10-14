@@ -1152,12 +1152,12 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   const t = locale === "fr" ? frRaw : enRaw;
   const h1 =
     locale === "fr"
-      ? "Gestion immobilière Montréal | Gestion Velora"
-      : "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
+      ? "Gestionnaire de syndicats de copropriété à Montréal"
+      : "Condo syndicate management in Montreal";
   const lead =
     locale === "fr"
-      ? "Gestion Velora est une firme de gestion immobilière à Montréal. Elle prend en charge l’administration, le suivi financier, l’entretien et les communications pour les syndicats de copropriété, les propriétaires locatifs et les hôtes Airbnb du Grand Montréal."
-      : "Gestion Velora is a property management firm in Montreal. It handles administration, financial follow-up, maintenance, and communications for condo boards, residential landlords, and Airbnb hosts across Greater Montreal.";
+      ? "Gestion Velora est une firme spécialisée en gestion de syndicats de copropriété dans le Grand Montréal : assemblées, fonds de prévoyance, conformité Loi 16, fournisseurs et rapports financiers. Elle offre aussi la gestion locative longue durée et la gestion Airbnb."
+      : "Gestion Velora specialises in managing condo syndicates across Greater Montreal: general meetings, reserve funds, Bill 16 compliance, vendors, and financial reporting. It also offers long-term rental and Airbnb management.";
   const svcTitle = locale === "fr"
     ? "Quels services de gestion immobilière offrons-nous à Montréal ?"
     : "Which property management services do we provide in Montreal?";
@@ -2244,12 +2244,12 @@ function buildRoutes(): RouteConfig[] {
   const routes: RouteConfig[] = [];
 
   // --- Homepage ---
-  const frHomeTitle = "Gestion immobilière Montréal | Gestion Velora";
+  const frHomeTitle = "Gestionnaire de copropriété à Montréal | Gestion Velora";
   const frHomeDesc =
-    "Gestion immobilière à Montréal pour copropriétés, locations longue durée et Airbnb. Rapports clairs, soutien 24/7 et entretien proactif.";
-  const enHomeTitle = "Gestion Velora — Property Management Montreal (Condo, Rental, Airbnb)";
+    "Gestionnaire de syndicats de copropriété du Grand Montréal : AGA, fonds de prévoyance, Loi 16, fournisseurs et rapports. Aussi location et Airbnb.";
+  const enHomeTitle = "Condo Syndicate Manager in Montreal | Gestion Velora";
   const enHomeDesc =
-    "Montreal property operations for condo boards, short-term rentals, and long-term rentals. Transparent reporting, 24/7 support, and proactive maintenance.";
+    "Gestion Velora manages condo syndicates across Greater Montreal: AGMs, reserve funds, Bill 16, vendors and reporting. Rental and Airbnb management too.";
 
   routes.push({
     path: "/",

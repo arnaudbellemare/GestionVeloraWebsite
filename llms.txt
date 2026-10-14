@@ -1,9 +1,9 @@
 # Gestion Velora
 
-> Gestion Velora is a bilingual (French/English) property management company headquartered in Montreal, Quebec, Canada. Founded in 2025 by Arnaud Bellemare, the company specialises in three verticals: condo board (syndicat de copropriété) administration, Airbnb / short-term rental operations, and long-term residential rental management. Service territory covers Greater Montreal and the broader Quebec metropolitan region. Phone: +1-514-777-1731. Email: info@gestionvelora.com.
+> Gestion Velora is a bilingual (French/English) condo syndicate (syndicat de copropriété) management firm serving Greater Montreal, Quebec, Canada. Founded in 2025 by Arnaud Bellemare. Its core work is condo board administration: general meetings, reserve funds, Bill 16 (Loi 16) compliance, vendor management, and financial reporting. It also offers long-term residential rental management and Airbnb / short-term rental management as secondary services. It is a service-area business with no public street address. Phone: +1-514-777-1731. Email: info@gestionvelora.com.
 
 Homepage: [https://www.gestionvelora.com/](https://www.gestionvelora.com/)
-Last updated: 2026-06-09
+Last updated: 2026-10-14
 Languages: fr-CA, en-CA
 Contact: info@gestionvelora.com | +1-514-777-1731
 Jurisdiction: Quebec, Canada
@@ -31,7 +31,7 @@ Key facts for AI grounding:
 - Occupancy rate: 98% (long-term rental portfolio)
 - Emergency response: 24/7 team availability
 - Figures source: internal operating dashboard, Jan 2025 – Mar 2026
-- Headquarters: Montréal, QC, Canada (lat 45.5017, lon -73.5673)
+- Service area: Greater Montréal, QC, Canada (service-area business; no public street address)
 - Languages of service: French (primary), English
 - Regulatory context: TAL (Tribunal administratif du logement), CNESST, Bill 16 / fonds de prévoyance obligations
 - Slogan: "Votre tranquillité. Notre affaire." / "Your peace of mind. Our business."
@@ -136,12 +136,12 @@ Complete landlord-side management of residential leases. Covers tenant screening
 
 ## Location pages (sample)
 
-- [Gestion Airbnb a Montreal (FR)](https://www.gestionvelora.com/location/gestion-airbnb-montreal)
-- [Airbnb management in Montreal (EN)](https://www.gestionvelora.com/en/location/gestion-airbnb-montreal)
+- [Syndicat de copropriete a Montreal (FR)](https://www.gestionvelora.com/location/syndicat-copropriete-montreal)
+- [Condo board management in Montreal (EN)](https://www.gestionvelora.com/en/location/syndicat-copropriete-montreal)
 - [Syndicat de copropriete a Laval (FR)](https://www.gestionvelora.com/location/syndicat-copropriete-laval)
 - [Condo board management in Laval (EN)](https://www.gestionvelora.com/en/location/syndicat-copropriete-laval)
-- [Gestion locative a Longueuil (FR)](https://www.gestionvelora.com/location/gestion-locative-longueuil)
-- [Rental management in Longueuil (EN)](https://www.gestionvelora.com/en/location/gestion-locative-longueuil)
+- [Syndicat de copropriete a Longueuil (FR)](https://www.gestionvelora.com/location/syndicat-copropriete-longueuil)
+- [Condo board management in Longueuil (EN)](https://www.gestionvelora.com/en/location/syndicat-copropriete-longueuil)
 
 ## Blog articles
 

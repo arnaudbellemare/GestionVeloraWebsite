@@ -149,12 +149,6 @@ export function LocationPage() {
             description: desc,
             image: img,
             telephone: "+1-514-777-1731",
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: loc.city.nameFr,
-              addressRegion: "QC",
-              addressCountry: "CA",
-            },
             areaServed: {
               "@type": "City",
               name: loc.city.nameFr,
