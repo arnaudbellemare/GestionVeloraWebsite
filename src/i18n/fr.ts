@@ -455,6 +455,9 @@ export const fr = {
     contactQuestion: "Votre immeuble mérite une gestion structurée. Obtenez une proposition gratuite sous 24h.",
     planifyCall: "Obtenir une proposition gratuite",
     contactUs: "Parler à l’équipe",
+    sourcesTitle: "Sources et méthodologie",
+    datasetIntro: "Données brutes de l’étude :",
+    datasetLicence: "réutilisation libre avec mention « Gestion Velora » et lien vers cette page.",
   },
 
   // Privacy
