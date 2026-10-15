@@ -13,6 +13,7 @@ import { INDEX_ROBOTS, SITE_URL } from "../config";
 import { COMPARISON_PAGES } from "../data/comparisons";
 import { isPriorityLocationSlug } from "../data/locationPriority";
 import { getAirbnbLocationRule } from "../data/shortTermRentalRules";
+import { getSyndicateLocalSection } from "../data/syndicateLocalProfiles";
 import { isRetiredLocationSlug } from "../data/locationRoutePolicy";
 
 /** Explicit definitional lead per service — GEO/AEO “definition in first ~300 words”. */
@@ -453,6 +454,64 @@ export function LocationPage() {
               >
                 {rule.source.label}
               </a>
+            </div>
+          </section>
+        );
+      })()}
+
+      {loc.service.slug === "syndicat-copropriete" && (() => {
+        const local = getSyndicateLocalSection(loc.city.slug, isEn ? loc.city.nameEn : loc.city.nameFr, isEn ? "en" : "fr");
+        if (!local) return null;
+        return (
+          <section
+            id="location-local-figures"
+            aria-labelledby="location-local-figures-heading"
+            className="px-6 lg:px-16 py-14 lg:py-20 bg-nd-canvas border-b border-nd-border"
+          >
+            <div className="max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+              <div>
+                <h2
+                  id="location-local-figures-heading"
+                  className="font-sans font-medium text-2xl lg:text-3xl text-nd-display leading-[1.15] tracking-[-0.02em] mb-6"
+                >
+                  {local.title}
+                </h2>
+                <ul className="space-y-3">
+                  {local.facts.map((fact) => (
+                    <li key={fact} className="font-sans text-base text-nd-secondary leading-relaxed flex items-start gap-3">
+                      <span className="text-waabi-pink mt-0.5 shrink-0">•</span>
+                      <span className="flex-1">{fact}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-sans font-semibold text-sm uppercase tracking-[0.12em] text-nd-secondary mb-4">
+                  {isEn ? "What it means for a condo board" : "Ce que ça change pour un syndicat"}
+                </h3>
+                <ul className="space-y-4">
+                  {local.points.map((point) => (
+                    <li key={point} className="font-sans text-base text-nd-display leading-relaxed">
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 font-sans text-xs text-nd-secondary">{local.checkedLabel}</p>
+                <ul className="mt-2 space-y-1">
+                  {local.sources.map((source) => (
+                    <li key={source.label}>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-sans text-xs text-nd-secondary underline underline-offset-2 hover:text-nd-display"
+                      >
+                        {source.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </section>
         );

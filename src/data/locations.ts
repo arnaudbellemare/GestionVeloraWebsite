@@ -333,7 +333,7 @@ export const LOCATION_FEATURES: Record<string, { fr: string[]; en: string[] }> =
   "syndicat-copropriete": {
     fr: [
       "Administration et convocation des assemblées générales",
-      "Gestion des fonds de prévoyance conformément à la Loi 141",
+      "Gestion du fonds de prévoyance conformément à la Loi 16 (étude du fonds aux 5 ans)",
       "Suivi des travaux majeurs et appels d'offres",
       "Rapports financiers trimestriels",
       "Communication avec les copropriétaires 24/7",
@@ -341,7 +341,7 @@ export const LOCATION_FEATURES: Record<string, { fr: string[]; en: string[] }> =
     ],
     en: [
       "Administration and convening of general assemblies",
-      "Reserve fund management compliant with Loi 141",
+      "Reserve fund management under Bill 16 (reserve fund study every 5 years)",
       "Major work follow-up and tendering",
       "Quarterly financial reports",
       "24/7 owner communication",
