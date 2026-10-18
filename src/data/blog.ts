@@ -1,10 +1,47 @@
 import { blogCoverPath } from "../lib/blogImages";
 import { condoGovernanceBlogPosts } from "./blog-condo-governance";
+import { feeStudyBlogPosts } from "./blog-fee-study-2026";
 import { tenantRiskBlogPosts } from "./blog-tenant-risk";
+
+/** A data table rendered after a section's paragraphs (fee studies, benchmarks). */
+export interface BlogTable {
+  caption: string;
+  columns: string[];
+  rows: string[][];
+  /** Footnote under the table: source, method, caveats. */
+  note?: string;
+}
 
 export interface BlogSection {
   heading: string;
   paragraphs: RichParagraph[];
+  table?: BlogTable;
+}
+
+/** A primary source cited by a data study. */
+export interface BlogSource {
+  label: string;
+  url: string;
+  /** Date the source was published or consulted, as displayed. */
+  date?: string;
+}
+
+/** Extra blocks for data-driven studies: suggested citation, embed line, sources. */
+export interface BlogStudy {
+  /** One-line suggested citation, e.g. "Gestion Velora (2026). Étude …" */
+  citation: string;
+  /** Short methodology statement shown under the sources. */
+  methodology: string;
+  sources: BlogSource[];
+}
+
+/** Downloadable raw data behind a study (paths under /public). */
+export interface BlogDataset {
+  csv: string;
+  json: string;
+  /** Dataset name for JSON-LD, per locale. */
+  name: { fr: string; en: string };
+  description: { fr: string; en: string };
 }
 
 /** A segment within a rich paragraph: plain text or an internal link */
@@ -23,6 +60,7 @@ export interface BlogPostLocale {
   /** 40–60 words, answer-first for AEO */
   brief: string;
   sections: BlogSection[];
+  study?: BlogStudy;
 }
 
 export interface BlogPost {
@@ -32,11 +70,14 @@ export interface BlogPost {
   datePublished: string;
   /** ISO 8601 date (last update) */
   dateModified: string;
+  /** Present on data studies: raw data published alongside the article. */
+  dataset?: BlogDataset;
   fr: BlogPostLocale;
   en: BlogPostLocale;
 }
 
 export const blogPosts: BlogPost[] = [
+  ...feeStudyBlogPosts,
   ...condoGovernanceBlogPosts,
   ...tenantRiskBlogPosts,
   {
@@ -1942,6 +1983,8 @@ export type BlogPostView = {
   excerpt: string;
   brief: string;
   sections: BlogSection[];
+  study?: BlogStudy;
+  dataset?: BlogDataset;
 };
 
 export function getPostBySlug(slug: string, locale: "fr" | "en" = "fr"): BlogPostView | undefined {
@@ -1960,6 +2003,8 @@ export function getPostBySlug(slug: string, locale: "fr" | "en" = "fr"): BlogPos
     excerpt: loc.excerpt,
     brief: loc.brief,
     sections: loc.sections,
+    study: loc.study,
+    dataset: post.dataset,
   };
 }
 
