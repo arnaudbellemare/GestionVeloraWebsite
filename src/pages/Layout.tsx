@@ -43,8 +43,28 @@ function DeferredFooterSection() {
 
     observer.observe(node);
 
+    // Also mount once the page is idle after load, so the footer's links exist
+    // for crawlers and visitors that never scroll. Still off the critical path.
+    let idleHandle: number | undefined;
+    let timer: number | undefined;
+    const scheduleIdleRender = () => {
+      if ("requestIdleCallback" in window) {
+        idleHandle = window.requestIdleCallback(renderFooter, { timeout: 4000 });
+      } else {
+        timer = setTimeout(renderFooter, 2000) as unknown as number;
+      }
+    };
+    if (document.readyState === "complete") {
+      scheduleIdleRender();
+    } else {
+      window.addEventListener("load", scheduleIdleRender, { once: true });
+    }
+
     return () => {
       observer?.disconnect();
+      window.removeEventListener("load", scheduleIdleRender);
+      if (idleHandle !== undefined) window.cancelIdleCallback(idleHandle);
+      if (timer !== undefined) clearTimeout(timer);
     };
   }, [shouldRender]);
 

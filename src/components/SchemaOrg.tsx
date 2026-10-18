@@ -24,6 +24,7 @@ import {
 import { RADAR_FAQ, RADAR_META, RADAR_PATHS } from "../data/plex-radar";
 import { getComparisonBySlug } from "../data/comparisons";
 import { buildComparisonSchemas } from "../data/comparisonSchema";
+import { getHubBreadcrumbLabel } from "../data/hubBreadcrumbs";
 
 const HOMEPAGE_DATE_MODIFIED = "2026-08-31";
 const HOMEPAGE_CITATIONS = [
@@ -100,8 +101,13 @@ export function SchemaOrg() {
     };
   }
 
+  const hubLabel = getHubBreadcrumbLabel(path);
+
   useEffect(() => {
     let cancelled = false;
+    const hubBreadcrumb = hubLabel
+      ? buildBreadcrumb([{ name: bcHome, url: `${base}/` }, { name: hubLabel }])
+      : null;
 
     // ── Plex calculator & buyer guide ─────────────────────────────────────────
     // The calculator publishes WebApplication + FAQPage so answer engines can
@@ -261,7 +267,7 @@ export function SchemaOrg() {
 
     if (isServicesHub) {
       const services = getLocalizedServices(t);
-      injectSchema({
+      injectSchema([{
         "@context": "https://schema.org",
         "@type": "ItemList",
         name: t("servicesHub.schemaName"),
@@ -276,7 +282,7 @@ export function SchemaOrg() {
             url: `${base}/services/${svc.slug}`,
           },
         })),
-      });
+      }, ...(hubBreadcrumb ? [hubBreadcrumb] : [])]);
       return () => removePageSchema();
     }
 
@@ -323,7 +329,7 @@ export function SchemaOrg() {
           const description = isEn
             ? "Practical articles on property management in Montreal: condo compliance, preventive maintenance, NOI optimization, Airbnb regulation."
             : "Articles pratiques sur la gestion immobilière à Montréal : conformité copropriété, maintenance préventive, optimisation du NOI, réglementation Airbnb.";
-          injectSchema({
+          injectSchema([{
             "@context": "https://schema.org",
             "@type": "ItemList",
             name,
@@ -339,7 +345,7 @@ export function SchemaOrg() {
                 image: blogCoverUrl(post.image),
               },
             })),
-          });
+          }, ...(hubBreadcrumb ? [hubBreadcrumb] : [])]);
           return;
         }
         if (slug) {
@@ -503,9 +509,13 @@ export function SchemaOrg() {
       return () => removePageSchema();
     }
 
-    removePageSchema();
+    if (hubBreadcrumb) {
+      injectSchema(hubBreadcrumb);
+    } else {
+      removePageSchema();
+    }
     return () => removePageSchema();
-  }, [path, slug, t, bcHome, bcServices, bcInsights, base, isEn]);
+  }, [path, slug, t, bcHome, bcServices, bcInsights, base, isEn, hubLabel]);
 
   return null;
 }

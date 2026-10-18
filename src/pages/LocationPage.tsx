@@ -15,6 +15,7 @@ import { isPriorityLocationSlug } from "../data/locationPriority";
 import { getAirbnbLocationRule } from "../data/shortTermRentalRules";
 import { getSyndicateLocalSection } from "../data/syndicateLocalProfiles";
 import { isRetiredLocationSlug } from "../data/locationRoutePolicy";
+import { buildLocationPageSchema } from "../data/locationSchema";
 
 /** Explicit definitional lead per service — GEO/AEO “definition in first ~300 words”. */
 const SERVICE_DEFINITION: Record<string, { fr: (cityFr: string) => string; en: (cityEn: string) => string }> = {
@@ -139,37 +140,7 @@ export function LocationPage() {
     setMeta("robots", isPriorityLocation ? INDEX_ROBOTS : "noindex, follow");
 
     if (isPriorityLocation) {
-      injectLocationSchema({
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "LocalBusiness",
-            "@id": `${url}#localbusiness`,
-            name: "Gestion Velora",
-            url: url,
-            description: desc,
-            image: img,
-            telephone: "+1-514-777-1731",
-            areaServed: {
-              "@type": "City",
-              name: loc.city.nameFr,
-            },
-            serviceType: isEn ? loc.service.nameEn : loc.service.nameFr,
-          },
-          {
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: isEn ? "Home" : "Accueil", item: SITE_URL },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: isEn ? loc.service.nameEn : loc.service.nameFr,
-                item: url,
-              },
-            ],
-          },
-        ],
-      });
+      injectLocationSchema(buildLocationPageSchema(loc, isEn ? "en" : "fr", SITE_URL, t("breadcrumb.home")));
     } else {
       document.getElementById("schema-org-location")?.remove();
     }
@@ -177,7 +148,7 @@ export function LocationPage() {
     return () => {
       document.getElementById("schema-org-location")?.remove();
     };
-  }, [isEn, isPriorityLocation, loc, locationSlug]);
+  }, [isEn, isPriorityLocation, loc, locationSlug, t]);
 
   useEffect(() => {
     if (loc) return;

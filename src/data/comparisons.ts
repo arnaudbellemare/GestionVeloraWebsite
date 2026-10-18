@@ -399,7 +399,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
     },
     sources: [
       { nameEn: "Gestion Velora pricing page", nameFr: "Page Tarifs de Gestion Velora", url: "/tarifs", basis: "firsthand", dateChecked: "2026-10-14" },
-      { nameEn: "Gestion Velora Airbnb management service", nameFr: "Service de gestion Airbnb de Gestion Velora", url: "/services/gestion-airbnb", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Gestion Velora Airbnb management service", nameFr: "Service de gestion Airbnb de Gestion Velora", url: "/services/airbnb", basis: "firsthand", dateChecked: "2026-10-14" },
       { nameEn: "City of Montréal, renting your principal residence to tourists (updated September 11, 2026)", nameFr: "Ville de Montréal, louer sa résidence principale à des touristes (mis à jour le 11 septembre 2026)", url: "https://montreal.ca/demarches/louer-sa-residence-principale-des-touristes", basis: "regulatory", dateChecked: "2026-10-14" },
       { nameEn: "City of Montréal, operating a commercial tourist residence (updated September 10, 2026)", nameFr: "Ville de Montréal, exploiter une résidence de tourisme commerciale (mis à jour le 10 septembre 2026)", url: "https://montreal.ca/demarches/exploiter-une-residence-de-tourisme-commerciale", basis: "regulatory", dateChecked: "2026-10-14" },
       { nameEn: "Gouvernement du Québec, registering a tourist accommodation establishment (updated September 24, 2026)", nameFr: "Gouvernement du Québec, enregistrer un établissement d'hébergement touristique (mis à jour le 24 septembre 2026)", url: "https://www.quebec.ca/tourisme-loisirs-sport/hebergement-touristique/enregistrement", basis: "regulatory", dateChecked: "2026-10-14" },
@@ -657,7 +657,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
     },
     sources: [
       { nameEn: "Gestion Velora pricing page", nameFr: "Page Tarifs de Gestion Velora", url: "/tarifs", basis: "firsthand", dateChecked: "2026-10-14" },
-      { nameEn: "Gestion Velora rental management service", nameFr: "Service de gestion locative de Gestion Velora", url: "/services/gestion-locative", basis: "firsthand", dateChecked: "2026-10-14" },
+      { nameEn: "Gestion Velora rental management service", nameFr: "Service de gestion locative de Gestion Velora", url: "/services/location", basis: "firsthand", dateChecked: "2026-10-14" },
       { nameEn: "Tribunal administratif du logement (TAL)", nameFr: "Tribunal administratif du logement (TAL)", url: "https://www.tal.gouv.qc.ca/", basis: "regulatory", dateChecked: "2026-10-14" },
       { nameEn: "CMHC Rental Market Report data tables", nameFr: "SCHL, tableaux de données du Rapport sur le marché locatif", url: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables", basis: "published", dateChecked: "2026-10-14" },
     ],

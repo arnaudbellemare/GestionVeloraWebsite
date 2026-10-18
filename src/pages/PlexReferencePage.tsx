@@ -6,6 +6,7 @@ import {
   CALCULATOR_PATHS,
   type PlexLocale,
 } from "../data/plex-calculator";
+import { RADAR_PATHS } from "../data/plex-radar";
 
 /**
  * The citable companion to the calculator.
@@ -85,6 +86,12 @@ export default function PlexReferencePage() {
           className="inline-block rounded-md bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-700 dark:bg-white dark:text-neutral-900"
         >
           {l === "fr" ? "Ouvrir le calculateur" : "Open the calculator"}
+        </Link>
+        <Link
+          to={l === "fr" ? RADAR_PATHS.fr : RADAR_PATHS.en}
+          className="ml-3 inline-block rounded-md border border-neutral-300 px-5 py-2.5 text-sm font-medium transition hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+        >
+          {l === "fr" ? "Immeubles à revenus à vendre" : "Income properties for sale"}
         </Link>
       </aside>
     </main>
