@@ -8,6 +8,12 @@
       "port": 5173
     },
     {
+      "name": "vite-preview",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "preview", "--", "--port", "4173", "--strictPort"],
+      "port": 4173
+    },
+    {
       "name": "vercel-dev",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["vercel", "dev", "--listen", "3000", "--yes"],

@@ -250,7 +250,9 @@ export function PageMeta() {
         : "Conseils sur la gestion immobilière à Montréal : copropriété, Airbnb, location, réglementation, entretien et rentabilité.";
     } else if (pathname === "/privacy" || pathname === "/en/privacy") {
       title = isEn ? "Privacy | Gestion Velora" : "Confidentialité | Gestion Velora";
-      description = baseDesc;
+      description = isEn
+        ? "What information Gestion Velora collects, how it is used, and how to request access, correction or deletion of your data. Your data is never sold."
+        : "Ce que Gestion Velora recueille, à quoi servent ces renseignements et comment en demander l'accès, la correction ou la suppression. Aucune donnée n'est vendue.";
     } else if (pathname === "/terms" || pathname === "/en/terms") {
       title = isEn ? "Terms of Use | Gestion Velora" : "Conditions d’utilisation | Gestion Velora";
       description = isEn

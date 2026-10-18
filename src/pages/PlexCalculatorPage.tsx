@@ -6,6 +6,7 @@ import {
   REFERENCE_PATHS,
   type PlexLocale,
 } from "../data/plex-calculator";
+import { RADAR_PATHS } from "../data/plex-radar";
 import "../components/plex/plex-calculator.css";
 
 // The analyzer pulls in the whole engine; keep it out of the initial bundle so
@@ -105,6 +106,12 @@ export default function PlexCalculatorPage() {
             className="inline-block rounded-md border border-neutral-300 px-4 py-2 text-sm font-medium transition hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             {l === "fr" ? "Voir le guide et les chiffres 2026" : "See the guide and 2026 figures"}
+          </Link>
+          <Link
+            to={l === "fr" ? RADAR_PATHS.fr : RADAR_PATHS.en}
+            className="ml-3 inline-block rounded-md border border-neutral-300 px-4 py-2 text-sm font-medium transition hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+          >
+            {l === "fr" ? "Immeubles à revenus à vendre" : "Income properties for sale"}
           </Link>
         </section>
 

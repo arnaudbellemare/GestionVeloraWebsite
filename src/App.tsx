@@ -36,7 +36,7 @@ const PlexRadarPage = lazy(() => import("./pages/PlexRadarPage"));
 function RouteFallback() {
   return (
     <div
-      className="flex-1 min-h-[50vh] w-full bg-nd-canvas flex items-center justify-center"
+      className="flex-1 min-h-screen w-full bg-nd-canvas flex items-center justify-center"
       aria-busy="true"
       aria-label="Chargement"
     >

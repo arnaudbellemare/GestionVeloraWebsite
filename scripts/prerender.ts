@@ -30,6 +30,7 @@ import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy.js";
 import { getAirbnbLocationRule, getAirbnbServiceRules } from "../src/data/shortTermRentalRules.js";
 import { getSyndicateLocalSection } from "../src/data/syndicateLocalProfiles.js";
+import { getHubBreadcrumbLabel } from "../src/data/hubBreadcrumbs.js";
 import {
   ARTICLE_AUTHOR_BIO,
   ARTICLE_AUTHOR_NAME,
@@ -2070,6 +2071,7 @@ function buildPlexCalculatorMainHtml(loc: "fr" | "en"): string {
     `<section><h2 id="faq">${loc === "fr" ? "Questions fréquentes" : "Frequently asked questions"}</h2>${faq}</section>`,
     `<section><h2 id="sources">${loc === "fr" ? "Chiffres de référence" : "Reference figures"}</h2><ul>${figures}</ul></section>`,
     `<p><a href="${guideHref}">${loc === "fr" ? "Guide de l'acheteur de plex à Montréal" : "Montreal plex buyer's guide"}</a></p>`,
+    `<p><a href="${RADAR_PATHS[loc]}">${loc === "fr" ? "Immeubles à revenus à vendre" : "Income properties for sale"}</a></p>`,
   ].join("");
 }
 
@@ -2117,6 +2119,7 @@ function buildPlexGuideMainHtml(loc: "fr" | "en"): string {
     `<p>${escapeHtml(p.figuresNote)}</p>`,
     figures,
     `<p><a href="${CALCULATOR_PATHS[loc]}">${loc === "fr" ? "Ouvrir le calculateur de rendement" : "Open the investment calculator"}</a></p>`,
+    `<p><a href="${RADAR_PATHS[loc]}">${loc === "fr" ? "Immeubles à revenus à vendre" : "Income properties for sale"}</a></p>`,
   ].join("");
 }
 
@@ -2624,7 +2627,8 @@ function buildRoutes(): RouteConfig[] {
     frPath: "/privacy",
     enPath: "/en/privacy",
     title: "Politique de confidentialité | Gestion Velora",
-    description: frHomeDesc,
+    description:
+      "Ce que Gestion Velora recueille, à quoi servent ces renseignements et comment en demander l'accès, la correction ou la suppression. Aucune donnée n'est vendue.",
     prerenderMainInner: buildPrivacyMainHtml("fr"),
     pageSchemas: null,
   });
@@ -2634,7 +2638,8 @@ function buildRoutes(): RouteConfig[] {
     frPath: "/privacy",
     enPath: "/en/privacy",
     title: "Privacy Policy | Gestion Velora",
-    description: enHomeDesc,
+    description:
+      "What information Gestion Velora collects, how it is used, and how to request access, correction or deletion of your data. Your data is never sold.",
     prerenderMainInner: buildPrivacyMainHtml("en"),
     pageSchemas: null,
   });
@@ -2733,6 +2738,26 @@ function buildRoutes(): RouteConfig[] {
   routes.push(...buildLocationRoutes());
 
   routes.push(...buildTrustDocumentRoutes());
+
+  // Home > page breadcrumbs for hub and utility pages, matching SchemaOrg.
+  for (const route of routes) {
+    const label = getHubBreadcrumbLabel(route.path);
+    if (!label) continue;
+    const existing = route.pageSchemas
+      ? Array.isArray(route.pageSchemas)
+        ? route.pageSchemas
+        : [route.pageSchemas]
+      : [];
+    if (JSON.stringify(existing).includes('"BreadcrumbList"')) continue;
+    const t = route.locale === "en" ? enRaw : frRaw;
+    route.pageSchemas = [
+      ...existing,
+      buildBreadcrumbSchema([
+        { name: t.breadcrumb.home, url: route.locale === "en" ? `${SITE_URL}/en/` : `${SITE_URL}/` },
+        { name: label },
+      ]),
+    ];
+  }
 
   return routes;
 }

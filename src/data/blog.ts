@@ -1510,7 +1510,7 @@ export const blogPosts: BlogPost[] = [
             "Une erreur — montant de loyer incorrect ou mauvaise adresse — peut priver le locataire d'une portion de son crédit d'impôt pour solidarité et entraîner un avis de cotisation de Revenu Québec. Le propriétaire doit alors émettre un relevé corrigé et le transmettre à Revenu Québec avec une copie au locataire.",
             [
               "Un ",
-              { text: "gestionnaire immobilier professionnel", to: "/services/gestion-locative" },
+              { text: "gestionnaire immobilier professionnel", to: "/services/location" },
               " comme Gestion Velora intègre la production des RL-31 dans son mandat annuel. Tous les relevés sont générés, vérifiés et transmis avant la date limite, sans que le propriétaire ait à s'en préoccuper. Cette prise en charge évite les erreurs, les oublis et les pénalités associées.",
             ],
           ],
@@ -1548,7 +1548,7 @@ export const blogPosts: BlogPost[] = [
             "An error — wrong rent amount or incorrect address — can reduce the tenant's solidarity tax credit and trigger a Revenu Québec assessment. The landlord must then issue a corrected RL-31 and transmit it to Revenu Québec with a copy to the tenant.",
             [
               "A professional ",
-              { text: "property manager", to: "/services/gestion-locative" },
+              { text: "property manager", to: "/services/location" },
               " like Gestion Velora includes RL-31 production in the standard annual mandate. All slips are generated, verified, and submitted before the deadline — at no extra effort for the landlord. This eliminates errors, omissions, and associated penalties.",
             ],
           ],
@@ -1596,7 +1596,7 @@ export const blogPosts: BlogPost[] = [
             ],
             [
               "Conservez une preuve de réception valide, par exemple un envoi recommandé ou une remise en mains propres avec accusé. Un ",
-              { text: "gestionnaire immobilier professionnel", to: "/services/gestion-locative" },
+              { text: "gestionnaire immobilier professionnel", to: "/services/location" },
               " peut centraliser les dates de renouvellement, les calculs, les avis et les preuves de réception pour chaque logement, particulièrement lorsqu'un immeuble comporte plusieurs échéances de bail.",
             ],
           ],
@@ -1638,7 +1638,7 @@ export const blogPosts: BlogPost[] = [
             "The written notice must identify the proposed change, state the new rent or the increase in dollars or percentage, give the effective date and one-month refusal period, reproduce the mandatory regulatory text, and be dated and signed. Keep valid proof of receipt, such as registered mail or hand delivery with an acknowledgment.",
             [
               "A professional ",
-              { text: "property manager", to: "/services/gestion-locative" },
+              { text: "property manager", to: "/services/location" },
               " can centralize renewal dates, calculations, notices and proof of receipt for every unit, particularly when a building has several lease-expiry dates.",
             ],
           ],
@@ -1686,7 +1686,7 @@ export const blogPosts: BlogPost[] = [
             "Les clauses particulières (section K du formulaire) peuvent ajouter des conditions spécifiques : interdiction de fumer, politique concernant les animaux de compagnie, règles d'utilisation des parties communes. Ces clauses doivent cependant respecter la Charte des droits et libertés et le Code civil — une clause interdisant tout animal de compagnie peut être contestée si elle est appliquée de façon discriminatoire.",
             [
               "Les pièges les plus fréquents : omettre la case G (loyer précédent), rédiger des clauses non conformes au Code civil, négliger d'inclure les règlements de l'immeuble en annexe, et oublier de remettre un exemplaire signé au locataire. Un ",
-              { text: "gestionnaire locatif professionnel", to: "/services/gestion-locative" },
+              { text: "gestionnaire locatif professionnel", to: "/services/location" },
               " prépare et fait signer les baux en conformité avec la législation en vigueur, évitant ainsi les litiges coûteux.",
             ],
           ],
@@ -1724,7 +1724,7 @@ export const blogPosts: BlogPost[] = [
             "Special clauses (section K) can add unit-specific conditions: no-smoking rules, pet policies, common area usage rules. These must comply with the Charter of Human Rights and Freedoms and the Civil Code — a total pet ban may be challenged if applied discriminatorily.",
             [
               "Common landlord pitfalls: omitting box G (previous rent), drafting clauses that violate the Civil Code, failing to include building rules as annexes, and not giving the tenant a signed copy. A professional ",
-              { text: "rental property manager", to: "/services/gestion-locative" },
+              { text: "rental property manager", to: "/services/location" },
               " prepares and executes leases in full compliance with current legislation, preventing costly disputes.",
             ],
           ],
@@ -1768,7 +1768,7 @@ export const blogPosts: BlogPost[] = [
             "Un gestionnaire immobilier peut aussi être assujetti à d'autres obligations selon la nature de ses activités : s'il agit comme courtier immobilier ou gère des fonds en fiducie, il doit détenir une licence de l'OACIQ. La gestion locative pure ne requiert pas de licence OACIQ, mais l'immatriculation au REQ reste obligatoire.",
             [
               "Lors de votre évaluation d'un ",
-              { text: "gestionnaire immobilier à Montréal", to: "/services/gestion-locative" },
+              { text: "gestionnaire immobilier à Montréal", to: "/services/location" },
               ", demandez son NEQ et vérifiez-le vous-même. Un gestionnaire établi n'aura aucune réticence à vous fournir cette information. Si un prestataire hésite à divulguer son NEQ ou si sa fiche REQ présente des irrégularités, considérez cela comme un signal d'alarme.",
             ],
           ],
@@ -1806,7 +1806,7 @@ export const blogPosts: BlogPost[] = [
             "A property manager may also face additional registration requirements: if they act as a real estate broker or hold funds in trust, they must hold an OACIQ license. Pure rental management doesn't require OACIQ licensing, but REQ registration remains mandatory.",
             [
               "When evaluating a ",
-              { text: "Montreal property manager", to: "/services/gestion-locative" },
+              { text: "Montreal property manager", to: "/services/location" },
               ", ask for their NEQ and verify it yourself. An established manager will have no hesitation providing this. If a service provider hesitates to disclose their NEQ or their REQ profile shows irregularities, treat this as a red flag.",
             ],
           ],
