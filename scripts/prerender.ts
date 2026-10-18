@@ -38,7 +38,8 @@ import {
 } from "../src/data/author.js";
 import { fr as frRaw } from "../src/i18n/fr.js";
 import { en as enRaw } from "../src/i18n/en.js";
-import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES } from "../src/data/locations.js";
+import { CITIES, LOCATION_SERVICES, LOCATION_FEATURES, resolveLocation } from "../src/data/locations.js";
+import { buildLocationPageSchema } from "../src/data/locationSchema.js";
 import {
   TRUST_PAGES,
   getTrustPageLocale,
@@ -1779,191 +1780,6 @@ ${sectionHtml}
 </main>`;
 }
 
-function buildLocationServiceSchema(
-  locale: "fr" | "en",
-  svc: typeof LOCATION_SERVICES[0],
-  city: typeof CITIES[0],
-  base: string
-) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: fillLoc(locale === "fr" ? svc.h1Fr : svc.h1En, city, locale),
-    description: fillLoc(locale === "fr" ? svc.descFr : svc.descEn, city, locale),
-    provider: { "@id": ORG_ID },
-    url: `${base}/location/${svc.slug}-${city.slug}`,
-    areaServed: { "@type": "City", name: locale === "fr" ? city.nameFr : city.nameEn },
-  };
-}
-
-function buildLocationFaqSchema(
-  locale: "fr" | "en",
-  svc: typeof LOCATION_SERVICES[0],
-  city: typeof CITIES[0]
-): object {
-  const cityName = locale === "fr" ? city.nameFr : city.nameEn;
-
-  const qaMap: Record<string, { q: string; a: string }[]> = {
-    "gestion-airbnb":
-      locale === "fr"
-        ? [
-            {
-              q: `Faut-il un permis pour faire Airbnb à ${cityName} ?`,
-              a: `Au Québec, la location courte durée requiert un classement de Tourisme Québec. Des règles de zonage municipales s'appliquent également dans la grande région de Montréal. Gestion Velora gère la conformité réglementaire complète pour tous ses mandats de location courte durée à ${cityName}.`,
-            },
-            {
-              q: `Que comprend la gestion Airbnb à ${cityName} ?`,
-              a: `Gestion Velora prend en charge les annonces, les réservations, l'accueil des voyageurs, la coordination du ménage, la tarification dynamique et la conformité réglementaire pour vos locations courte durée à ${cityName}.`,
-            },
-            {
-              q: `Quel est le tarif de gestion Airbnb à ${cityName} ?`,
-              a: `Les honoraires de gestion Airbnb de Gestion Velora sont calculés en pourcentage des revenus générés. Contactez-nous pour un devis personnalisé selon le type de propriété et la fréquence d'occupation à ${cityName}.`,
-            },
-          ]
-        : [
-            {
-              q: `Do I need a permit for Airbnb in ${cityName}?`,
-              a: `In Quebec, short-term rentals require a Tourisme Québec classification certificate. Municipal zoning rules apply in the Greater Montreal area. Gestion Velora manages full regulatory compliance for all short-term rental mandates in ${cityName}.`,
-            },
-            {
-              q: `What does Airbnb management in ${cityName} include?`,
-              a: `Gestion Velora handles listings, bookings, guest check-in, cleaning coordination, dynamic pricing, and regulatory compliance for short-term rentals in ${cityName}.`,
-            },
-            {
-              q: `How much does Airbnb management cost in ${cityName}?`,
-              a: `Gestion Velora's Airbnb management fees are calculated as a percentage of generated revenue. Contact us for a personalized quote based on your property type and occupancy frequency in ${cityName}.`,
-            },
-          ],
-    "syndicat-copropriete":
-      locale === "fr"
-        ? [
-            {
-              q: `Quelles sont les obligations du syndicat de copropriété à ${cityName} ?`,
-              a: `Un syndicat de copropriété à ${cityName} doit tenir une assemblée générale annuelle, gérer un fonds de prévoyance conforme à la Loi 141, entretenir les parties communes et respecter les obligations de la Loi sur la copropriété (RLRQ c. C-6.1). Gestion Velora structure ces cycles de conformité pour chaque mandat.`,
-            },
-            {
-              q: `Que comprend la gestion d'un syndicat de copropriété à ${cityName} ?`,
-              a: `La gestion de syndicat par Gestion Velora comprend l'administration et la convocation des assemblées, la gestion du fonds de prévoyance, le suivi des travaux majeurs, les rapports financiers trimestriels et la communication 24/7 avec les copropriétaires à ${cityName}.`,
-            },
-            {
-              q: `Pourquoi faire appel à un gestionnaire de copropriété à ${cityName} ?`,
-              a: `Un gestionnaire professionnel réduit les risques de non-conformité réglementaire, structure les cycles de maintenance préventive, et libère les administrateurs bénévoles des tâches opérationnelles courantes. À ${cityName}, Gestion Velora assure transparence et réactivité à chaque mandat.`,
-            },
-          ]
-        : [
-            {
-              q: `What are condo board obligations in ${cityName}?`,
-              a: `A condo board in ${cityName} must hold an annual general meeting, maintain a reserve fund compliant with Bill 16, maintain common areas, and follow Quebec's Condo Act (C-6.1). Gestion Velora structures all compliance cycles for each mandate.`,
-            },
-            {
-              q: `What does condo board management in ${cityName} include?`,
-              a: `Gestion Velora's condo management includes AGM coordination, reserve fund management, major work oversight, quarterly financial reports, and 24/7 owner communication for condo boards in ${cityName}.`,
-            },
-            {
-              q: `Why hire a condo manager in ${cityName}?`,
-              a: `A professional manager reduces regulatory non-compliance risk, structures preventive maintenance cycles, and frees volunteer administrators from day-to-day operations. In ${cityName}, Gestion Velora delivers transparency and responsiveness on every mandate.`,
-            },
-          ],
-    "gestion-locative":
-      locale === "fr"
-        ? [
-            {
-              q: `Que comprend la gestion locative à ${cityName} ?`,
-              a: `La gestion locative de Gestion Velora à ${cityName} comprend la sélection rigoureuse des locataires, la rédaction des baux, la collecte des loyers, la coordination de l'entretien, et les rapports financiers mensuels pour chaque immeuble.`,
-            },
-            {
-              q: `Comment réduire le roulement locatif à ${cityName} ?`,
-              a: `Le roulement locatif se réduit par une communication prévisible, des délais de réponse clairs aux demandes d'entretien, et un état des lieux rigoureux à l'entrée et à la sortie. Gestion Velora applique ces standards sur chaque mandat locatif à ${cityName}.`,
-            },
-            {
-              q: `Quel est le tarif de gestion locative à ${cityName} ?`,
-              a: `Les honoraires de gestion locative varient selon le nombre d'unités, leur type et les services requis. Contactez Gestion Velora pour un devis personnalisé adapté à votre immeuble à ${cityName}.`,
-            },
-          ]
-        : [
-            {
-              q: `What does rental management in ${cityName} include?`,
-              a: `Gestion Velora's rental management in ${cityName} covers rigorous tenant screening, lease drafting, rent collection, maintenance coordination, and monthly financial reports for each building.`,
-            },
-            {
-              q: `How do you reduce tenant turnover in ${cityName}?`,
-              a: `Tenant turnover is reduced through predictable communication, clear maintenance response timelines, and rigorous move-in and move-out inspections. Gestion Velora applies these standards on every rental mandate in ${cityName}.`,
-            },
-            {
-              q: `What is the cost of rental management in ${cityName}?`,
-              a: `Rental management fees vary by number of units, property type, and required services. Contact Gestion Velora for a personalized quote tailored to your building in ${cityName}.`,
-            },
-          ],
-    "conformite-loi-16":
-      locale === "fr"
-        ? [
-            {
-              q: `Que comprend la mise en conformité Loi 16 à ${cityName} ?`,
-              a: `La conformité Loi 16 pour les syndicats de copropriété à ${cityName} comprend le carnet d'entretien de l'immeuble, l'étude du fonds de prévoyance, le registre de copropriété et l'attestation lors de vente d'unité. Gestion Velora structure ces obligations pour chaque syndicat afin de respecter les échéances réglementaires prévues jusqu'en 2027.`,
-            },
-            {
-              q: `Quand les syndicats de ${cityName} doivent-ils être conformes à la Loi 16 ?`,
-              a: `La Loi 16 est entrée en vigueur le 14 août 2025 avec des délais de transition de 1 à 3 ans selon les obligations. Les syndicats à ${cityName} doivent être pleinement conformes d'ici 2027 au plus tard. Gestion Velora planifie le calendrier de conformité de chaque mandat dès la signature.`,
-            },
-            {
-              q: `Que se passe-t-il si un syndicat à ${cityName} n'est pas conforme à la Loi 16 ?`,
-              a: `Le non-respect de la Loi 16 expose les administrateurs de syndicat à des poursuites civiles et peut bloquer les transactions immobilières dans l'immeuble. À ${cityName}, Gestion Velora accompagne les syndicats en retard de conformité pour régulariser leur situation et éviter toute exposition légale.`,
-            },
-          ]
-        : [
-            {
-              q: `What does Bill 16 compliance in ${cityName} include?`,
-              a: `Bill 16 compliance for condo boards in ${cityName} covers the building maintenance logbook, reserve fund study, condo register, and unit sale attestation. Gestion Velora structures these obligations for each mandate to meet all regulatory deadlines through 2027.`,
-            },
-            {
-              q: `When must condo boards in ${cityName} be fully compliant with Bill 16?`,
-              a: `Bill 16 came into force on August 14, 2025, with transition periods of 1 to 3 years depending on the obligation. Condo boards in ${cityName} must be fully compliant by 2027 at the latest. Gestion Velora builds a compliance calendar into every mandate from signing.`,
-            },
-            {
-              q: `What happens if a condo board in ${cityName} is not compliant with Bill 16?`,
-              a: `Non-compliance with Bill 16 exposes condo board administrators to civil liability and can block real estate transactions in the building. In ${cityName}, Gestion Velora helps boards in a compliance backlog to regularize their situation quickly and avoid legal exposure.`,
-            },
-          ],
-    "gestion-immobiliere-commerciale":
-      locale === "fr"
-        ? [
-            {
-              q: `Que comprend la gestion immobilière commerciale à ${cityName} ?`,
-              a: `Gestion Velora gère les baux commerciaux, les relations avec les locataires commerciaux, l'entretien préventif des espaces et l'optimisation du rendement pour les propriétaires d'immeubles commerciaux à ${cityName}.`,
-            },
-            {
-              q: `Comment optimiser le rendement d'un immeuble commercial à ${cityName} ?`,
-              a: `L'optimisation passe par un suivi mensuel du NOI, des baux bien structurés, la maîtrise des charges communes et une maintenance préventive rigoureuse. Gestion Velora accompagne les propriétaires commerciaux à ${cityName} avec des rapports transparents et une réactivité 24/7.`,
-            },
-          ]
-        : [
-            {
-              q: `What does commercial property management in ${cityName} include?`,
-              a: `Gestion Velora manages commercial leases, tenant relations, preventive maintenance, and yield optimization for commercial property owners in ${cityName}.`,
-            },
-            {
-              q: `How do you maximize commercial property returns in ${cityName}?`,
-              a: `Optimization involves monthly NOI tracking, well-structured leases, controlled common charges, and rigorous preventive maintenance. Gestion Velora supports commercial owners in ${cityName} with transparent reporting and 24/7 responsiveness.`,
-            },
-          ],
-  };
-
-  const items = qaMap[svc.slug] ?? [];
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    inLanguage: locale === "fr" ? "fr-CA" : "en-CA",
-    mainEntity: items.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.a,
-      },
-    })),
-  };
-}
-
 function buildLocationRoutes(): RouteConfig[] {
   const out: RouteConfig[] = [];
   for (const svc of LOCATION_SERVICES) {
@@ -1993,15 +1809,7 @@ function buildLocationRoutes(): RouteConfig[] {
         includeInSitemap: isPriorityLocation,
         prerenderMainInner: buildLocationMainHtml("fr", svc, city),
         pageSchemas: isPriorityLocation
-          ? [
-              buildLocationServiceSchema("fr", svc, city, SITE_URL),
-              buildBreadcrumbSchema([
-                { name: frBc.home, url: `${SITE_URL}/` },
-                { name: frBc.services, url: `${SITE_URL}/services` },
-                { name: fillLoc(svc.h1Fr, city, "fr") },
-              ]),
-              buildLocationFaqSchema("fr", svc, city),
-            ]
+          ? [buildLocationPageSchema(resolveLocation(slug)!, "fr", SITE_URL, frBc.home)]
           : null,
       });
       out.push({
@@ -2017,15 +1825,7 @@ function buildLocationRoutes(): RouteConfig[] {
         includeInSitemap: isPriorityLocation,
         prerenderMainInner: buildLocationMainHtml("en", svc, city),
         pageSchemas: isPriorityLocation
-          ? [
-              buildLocationServiceSchema("en", svc, city, `${SITE_URL}/en`),
-              buildBreadcrumbSchema([
-                { name: enBc.home, url: `${SITE_URL}/` },
-                { name: enBc.services, url: `${SITE_URL}/en/services` },
-                { name: fillLoc(svc.h1En, city, "en") },
-              ]),
-              buildLocationFaqSchema("en", svc, city),
-            ]
+          ? [buildLocationPageSchema(resolveLocation(slug)!, "en", SITE_URL, enBc.home)]
           : null,
       });
     }

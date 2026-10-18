@@ -101,50 +101,48 @@ export const HeaderSection = (): JSX.Element => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              {servicesOpen && (
-                <div className="absolute top-full left-0 mt-1 py-2 min-w-[280px] rounded-xl bg-[#111111] border border-[#333333] animate-fade-in">
-                  {serviceLinkKeys.map((s) => (
-                    <InternalLink
-                      key={s.to}
-                      to={s.to}
-                      title={t(s.labelKey)}
-                      className="block px-4 py-3 hover:bg-[#1A1A1A] first:rounded-t-lg last:rounded-b-lg border-b border-[#222222] last:border-0"
-                      onClick={() => setServicesOpen(false)}
-                    >
-                      <span className="font-sans font-medium text-white block">{t(s.labelKey)}</span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
-                        {t(s.descKey)}
-                      </span>
-                    </InternalLink>
-                  ))}
-                  {/* The calculator's slug differs per locale, so it bypasses
-                      InternalLink's automatic /en prefixing. */}
-                  <Link
-                    to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
-                    title={t("nav.plexCalc")}
-                    className="block px-4 py-3 hover:bg-[#1A1A1A] last:rounded-b-lg border-t border-[#333333]"
+              <div className={`${servicesOpen ? "" : "hidden "}absolute top-full left-0 mt-1 py-2 min-w-[280px] rounded-xl bg-[#111111] border border-[#333333] animate-fade-in`}>
+                {serviceLinkKeys.map((s) => (
+                  <InternalLink
+                    key={s.to}
+                    to={s.to}
+                    title={t(s.labelKey)}
+                    className="block px-4 py-3 hover:bg-[#1A1A1A] first:rounded-t-lg last:rounded-b-lg border-b border-[#222222] last:border-0"
                     onClick={() => setServicesOpen(false)}
                   >
-                    <span className="font-sans font-medium text-white block">{t("nav.plexCalc")}</span>
+                    <span className="font-sans font-medium text-white block">{t(s.labelKey)}</span>
                     <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
-                      {t("nav.plexCalcDesc")}
+                      {t(s.descKey)}
                     </span>
-                  </Link>
-                  <Link
-                    to={locale === "en" ? RADAR_PATHS.en : RADAR_PATHS.fr}
-                    title={locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
-                    className="block px-4 py-3 hover:bg-[#1A1A1A] last:rounded-b-lg border-t border-[#333333]"
-                    onClick={() => setServicesOpen(false)}
-                  >
-                    <span className="font-sans font-medium text-white block">
-                      {locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
-                    </span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
-                      {locale === "en" ? "Plex Radar by Gestion Velora" : "Plex Radar par Gestion Velora"}
-                    </span>
-                  </Link>
-                </div>
-              )}
+                  </InternalLink>
+                ))}
+                {/* The calculator's slug differs per locale, so it bypasses
+                    InternalLink's automatic /en prefixing. */}
+                <Link
+                  to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
+                  title={t("nav.plexCalc")}
+                  className="block px-4 py-3 hover:bg-[#1A1A1A] last:rounded-b-lg border-t border-[#333333]"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <span className="font-sans font-medium text-white block">{t("nav.plexCalc")}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
+                    {t("nav.plexCalcDesc")}
+                  </span>
+                </Link>
+                <Link
+                  to={locale === "en" ? RADAR_PATHS.en : RADAR_PATHS.fr}
+                  title={locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
+                  className="block px-4 py-3 hover:bg-[#1A1A1A] last:rounded-b-lg border-t border-[#333333]"
+                  onClick={() => setServicesOpen(false)}
+                >
+                  <span className="font-sans font-medium text-white block">
+                    {locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-[#999999] mt-1 block">
+                    {locale === "en" ? "Plex Radar by Gestion Velora" : "Plex Radar par Gestion Velora"}
+                  </span>
+                </Link>
+              </div>
             </div>
             <InternalLink
               to="/blog"
@@ -224,66 +222,64 @@ export const HeaderSection = (): JSX.Element => {
         </div>
       </div>
 
-      {mobileOpen && (
-        <div className="md:hidden mt-2 ml-4 py-4 px-4 rounded-2xl bg-[#111111] border border-[#333333] w-[calc(100%-2rem)] max-w-sm flex flex-col gap-1 animate-fade-in">
-          <InternalLink to="/" title={t("nav.home")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
-            {t("nav.home")}
-          </InternalLink>
-          <div className="py-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#999999] block mb-2">
-              {t("nav.services")}
-            </span>
-            <div className="flex flex-col gap-1 pl-2">
-              {serviceLinkKeys.map((s) => (
-                <InternalLink
-                  key={s.to}
-                  to={s.to}
-                  title={t(s.labelKey)}
-                  className="font-sans text-[#E8E8E8] py-1.5 text-sm"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {t(s.labelKey)}
-                </InternalLink>
-              ))}
-              <Link
-                to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
-                title={t("nav.plexCalc")}
+      <div className={`md:hidden mt-2 ml-4 py-4 px-4 rounded-2xl bg-[#111111] border border-[#333333] w-[calc(100%-2rem)] max-w-sm ${mobileOpen ? "flex" : "hidden"} flex-col gap-1 animate-fade-in`}>
+        <InternalLink to="/" title={t("nav.home")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+          {t("nav.home")}
+        </InternalLink>
+        <div className="py-2">
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#999999] block mb-2">
+            {t("nav.services")}
+          </span>
+          <div className="flex flex-col gap-1 pl-2">
+            {serviceLinkKeys.map((s) => (
+              <InternalLink
+                key={s.to}
+                to={s.to}
+                title={t(s.labelKey)}
                 className="font-sans text-[#E8E8E8] py-1.5 text-sm"
                 onClick={() => setMobileOpen(false)}
               >
-                {t("nav.plexCalc")}
-              </Link>
-              <Link
-                to={locale === "en" ? RADAR_PATHS.en : RADAR_PATHS.fr}
-                title={locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
-                className="font-sans text-[#E8E8E8] py-1.5 text-sm"
-                onClick={() => setMobileOpen(false)}
-              >
-                {locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
-              </Link>
-            </div>
+                {t(s.labelKey)}
+              </InternalLink>
+            ))}
+            <Link
+              to={locale === "en" ? CALCULATOR_PATHS.en : CALCULATOR_PATHS.fr}
+              title={t("nav.plexCalc")}
+              className="font-sans text-[#E8E8E8] py-1.5 text-sm"
+              onClick={() => setMobileOpen(false)}
+            >
+              {t("nav.plexCalc")}
+            </Link>
+            <Link
+              to={locale === "en" ? RADAR_PATHS.en : RADAR_PATHS.fr}
+              title={locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
+              className="font-sans text-[#E8E8E8] py-1.5 text-sm"
+              onClick={() => setMobileOpen(false)}
+            >
+              {locale === "en" ? "Income properties for sale" : "Immeubles à revenus à vendre"}
+            </Link>
           </div>
-          <InternalLink to="/blog" title={t("nav.insights")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
-            {t("nav.insights")}
-          </InternalLink>
-          <InternalLink to="/about" title={t("nav.about")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
-            {t("nav.about")}
-          </InternalLink>
-          <a href={contactHref} onClick={goToContact} title={t("nav.contact")} className="font-sans text-[#E8E8E8] py-2">
-            {t("nav.contact")}
-          </a>
-          <a
-            href={PORTAL_URLS.service}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={t("nav.login")}
-            className="font-sans text-[#E8E8E8] py-2"
-            onClick={() => setMobileOpen(false)}
-          >
-            {t("nav.login")}
-          </a>
         </div>
-      )}
+        <InternalLink to="/blog" title={t("nav.insights")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+          {t("nav.insights")}
+        </InternalLink>
+        <InternalLink to="/about" title={t("nav.about")} className="font-sans text-[#E8E8E8] py-2" onClick={() => setMobileOpen(false)}>
+          {t("nav.about")}
+        </InternalLink>
+        <a href={contactHref} onClick={goToContact} title={t("nav.contact")} className="font-sans text-[#E8E8E8] py-2">
+          {t("nav.contact")}
+        </a>
+        <a
+          href={PORTAL_URLS.service}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={t("nav.login")}
+          className="font-sans text-[#E8E8E8] py-2"
+          onClick={() => setMobileOpen(false)}
+        >
+          {t("nav.login")}
+        </a>
+      </div>
     </header>
   );
 };
