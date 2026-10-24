@@ -1,5 +1,5 @@
 export const ARTICLE_AUTHOR_NAME = "Arnaud Bellemare";
-export const ARTICLE_AUTHOR_LINKEDIN = "https://ca.linkedin.com/in/gestion-velora-48684b399";
+export const ARTICLE_AUTHOR_LINKEDIN = "https://www.linkedin.com/in/arnaud-bellemare-125934372/";
 export const ARTICLE_AUTHOR_SAME_AS = [ARTICLE_AUTHOR_LINKEDIN] as const;
 
 /** A factual, first-party author profile used on the site and in Article schema. */

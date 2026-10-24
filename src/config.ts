@@ -14,8 +14,9 @@ export const ARTICLE_AUTHOR_URL = `${SITE_URL}/about`;
 
 /** Brand entity URLs used in JSON-LD `sameAs`. */
 export const ORGANIZATION_SAME_AS = [
-  "https://ca.linkedin.com/in/gestion-velora-48684b399",
+  "https://www.linkedin.com/company/gestion-velora/",
   "https://nickelandkrome.ca/partenaires/gestion-immobiliere/gestion-velora/",
+  "https://www.facebook.com/profile.php?id=61583689150546",
 ] as const;
 
 /** Default social cards for pages without dedicated assets. */
