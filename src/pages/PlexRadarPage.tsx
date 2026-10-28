@@ -21,12 +21,16 @@ import {
 import {
   BENCHMARK_WINDOW_DAYS,
   cmhcRentSignal,
+  dealClass,
+  percentileOf,
   relativeRank,
+  resolvePool,
   type RadarBenchmarks,
   type RelativeRank,
   type RelativeTier,
   type RentSignal,
 } from "../lib/plex/radar-benchmarks";
+import { BarChart, Gauge, Sankey, SpiderChart, Treemap, Waffle } from "../components/plex/RadarCharts";
 import "../components/plex/plex-radar.css";
 
 const money = new Intl.NumberFormat("fr-CA", { style: "currency", currency: "CAD", maximumFractionDigits: 0 });
@@ -86,6 +90,14 @@ const copy = {
     notice: "Le bouton − retire une estimation du scénario uniquement. Les données rapportées et le résultat publié restent intacts.",
     stale: "La parution semble dater de plus de 30 heures.", unavailable: "La parution du jour est temporairement indisponible.",
     methodology: "Méthode transparente", methodologyBody: "Chaque résultat conserve les faits rapportés, les estimations, la règle appliquée et la version du modèle. Une présélection ne remplace pas la validation des baux, dépenses, travaux et conditions de financement.",
+    live: "En direct", generated: "généré le",
+    capDist: "Distribution des taux de capitalisation", capDistSub: (n: number) => `${n} immeubles · taux publié ou scénario`, p90: "p90",
+    tierMix: "Répartition du classement", positiveCount: "Flux de trésorerie positif", newCount: "Nouveaux au radar",
+    topPick: "Meilleure opportunité", topPickSub: "Première au classement après vos filtres", openFile: "Ouvrir le dossier", noPick: "Aucun immeuble ne passe vos filtres.",
+    colProperty: "Immeuble", colPrice: "Prix demandé", colCap: "Taux cap.", colFlow: "Flux / mois", colRank: "Rang",
+    regionCap: "Taux cap. médian par région", regionCapSub: "immeubles filtrés · médiane et effectif par région", typeMix: "Composition du flux", typeMixSub: "part des immeubles par type",
+    incomeFlow: "Où va le revenu", incomeFlowSub: "revenu effectif annuel réparti selon les règles publiées", effectiveIncome: "Revenu effectif", deficit: "Déficit à combler", debtService: "Service de la dette", reserveLine: "Réserve de remplacement", annualFlow: "Flux de trésorerie",
+    gaugeCaption: "rang / 100", spiderDeal: "Cet immeuble (percentile)", spiderMedian: "Médiane du bassin", spiderGrm: "MRB", spiderAxes: { yield: "Rendement", cashFlow: "Flux/porte", price: "Prix/porte", grm: "MRB", dscr: "DSCR", coc: "Cash-on-cash" } as Record<string, string>, spiderNote: (n: number) => `DSCR et cash-on-cash : percentile parmi les ${n} immeubles comparables de la parution affichée. Les quatre autres axes : fenêtre de ${BENCHMARK_WINDOW_DAYS} jours.`,
     cta: "Vous avez trouvé un immeuble à analyser?", ctaBody: "Gestion Velora peut valider les dépenses, préparer un budget d’exploitation et accompagner la mise en gestion.", contact: "Parler à Gestion Velora",
   },
   en: {
@@ -131,6 +143,14 @@ const copy = {
     remove: "Remove from scenario", add: "Restore in scenario", notice: "The − button removes an estimate from the scenario only. Reported facts and the published result remain unchanged.",
     stale: "The release appears to be more than 30 hours old.", unavailable: "Today’s release is temporarily unavailable.",
     methodology: "Transparent methodology", methodologyBody: "Each result preserves reported facts, estimates, the applied rule and model version. Screening does not replace validation of leases, expenses, work and financing terms.",
+    live: "Live", generated: "generated",
+    capDist: "Cap rate distribution", capDistSub: (n: number) => `${n} listings · published or scenario rate`, p90: "p90",
+    tierMix: "Ranking breakdown", positiveCount: "Positive cash flow", newCount: "New to the radar",
+    topPick: "Best opportunity", topPickSub: "First in the ranking after your filters", openFile: "Open the file", noPick: "No listing passes your filters.",
+    colProperty: "Property", colPrice: "Asking price", colCap: "Cap rate", colFlow: "Cash flow / mo", colRank: "Rank",
+    regionCap: "Median cap rate by region", regionCapSub: "filtered listings · median and count per region", typeMix: "Feed composition", typeMixSub: "share of listings by type",
+    incomeFlow: "Where the income goes", incomeFlowSub: "annual effective income split by the published rules", effectiveIncome: "Effective income", deficit: "Deficit to cover", debtService: "Debt service", reserveLine: "Replacement reserve", annualFlow: "Cash flow",
+    gaugeCaption: "rank / 100", spiderDeal: "This listing (percentile)", spiderMedian: "Pool median", spiderGrm: "GRM", spiderAxes: { yield: "Yield", cashFlow: "Cash flow", price: "Price", grm: "GRM", dscr: "DSCR", coc: "Cash-on-cash" } as Record<string, string>, spiderNote: (n: number) => `DSCR and cash-on-cash: percentile among the ${n} comparable listings in the displayed release. The other four axes use the ${BENCHMARK_WINDOW_DAYS}-day window.`,
     cta: "Found a property worth analyzing?", ctaBody: "Gestion Velora can validate expenses, prepare an operating budget and support the transition into management.", contact: "Talk to Gestion Velora",
   },
 } as const;
@@ -223,8 +243,28 @@ function ExpenseLine({ line, removed, t, note, onToggle }: { line: RadarExpenseL
 
 const PRICE_CAPS = [500_000, 750_000, 1_000_000, 1_500_000, 2_500_000];
 const CAP_FLOORS = [0.03, 0.04, 0.05, 0.06];
+const HIST_BINS = 16;
+
+const GEIST_URL = "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap";
+
+/** Loads Geist only for this page, so the rest of the site keeps its font-free first paint. */
+function useGeist() {
+  useEffect(() => {
+    if (document.getElementById("radar-geist")) return;
+    const preconnect = document.createElement("link");
+    preconnect.rel = "preconnect";
+    preconnect.href = "https://fonts.gstatic.com";
+    preconnect.crossOrigin = "anonymous";
+    const sheet = document.createElement("link");
+    sheet.id = "radar-geist";
+    sheet.rel = "stylesheet";
+    sheet.href = GEIST_URL;
+    document.head.append(preconnect, sheet);
+  }, []);
+}
 
 export default function PlexRadarPage() {
+  useGeist();
   const { locale, localePath } = useLocale();
   const l = (locale === "en" ? "en" : "fr") as RadarLocale;
   const t = copy[l];
@@ -400,22 +440,170 @@ export default function PlexRadarPage() {
   const selectedRent = selected?.rent;
   const selectedRank = selected?.rank;
 
+  // Overview panels follow the filtered list so the cards answer the filters.
+  const capValues = filtered
+    .map((deal) => deal.live?.capRate)
+    .filter((value): value is number => typeof value === "number" && Number.isFinite(value))
+    .sort((a, b) => a - b);
+  const quantile = (p: number) => capValues.length ? capValues[Math.min(capValues.length - 1, Math.round(p * (capValues.length - 1)))] : null;
+  const capLow = capValues[0] ?? 0;
+  const capSpan = Math.max((capValues[capValues.length - 1] ?? 0) - capLow, 0.0001);
+  const capBins = Array.from({ length: HIST_BINS }, () => 0);
+  capValues.forEach((value) => { capBins[Math.min(HIST_BINS - 1, Math.floor(((value - capLow) / capSpan) * HIST_BINS))] += 1; });
+  const capBinMax = Math.max(1, ...capBins);
+  const capMarker = (value: number) => `${Math.max(0, Math.min(100, ((value - capLow) / capSpan) * 100))}%`;
+  const capMedian = quantile(0.5);
+  const capP90 = quantile(0.9);
+  const tierKeys: string[] = ranked ? ["top", "above", "inline", "below"] : ["priority", "analyze", "watch", "low"];
+  const tierNames: Record<string, string> = ranked
+    ? { top: t.tierTop, above: t.tierAbove, inline: t.tierInline, below: t.tierBelow }
+    : { priority: t.prioritize, analyze: t.analyze, watch: t.watch, low: t.lowPriority };
+  const tierCounts = filtered.reduce<Record<string, number>>((acc, deal) => {
+    const key = deal.rank ? deal.rank.tier : dealVerdict(deal.live?.score ?? 0, t).tone;
+    acc[key] = (acc[key] ?? 0) + 1;
+    return acc;
+  }, {});
+  const positiveCount = filtered.filter((deal) => (deal.live?.monthlyCashFlow ?? 0) > 0).length;
+  const newCount = filtered.filter((deal) => deal.lifecycle?.event_type === "first-seen").length;
+  const topPick = filtered[0];
+  const generatedLabel = feed ? new Intl.DateTimeFormat(l === "fr" ? "fr-CA" : "en-CA", { dateStyle: "medium", timeStyle: "short" }).format(new Date(feed.generated_at)) : "";
+
+  const regionBars = Array.from(filtered.reduce<Map<string, number[]>>((acc, deal) => {
+    if (deal.live && Number.isFinite(deal.live.capRate)) {
+      const key = deal.listing.region || "—";
+      acc.set(key, [...(acc.get(key) ?? []), deal.live.capRate]);
+    }
+    return acc;
+  }, new Map()))
+    .map(([label, values]) => {
+      const sorted = [...values].sort((a, b) => a - b);
+      return { label, value: sorted[Math.floor((sorted.length - 1) / 2)], count: sorted.length };
+    })
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 8);
+  const typeTiles = Array.from(filtered.reduce<Map<string, number>>((acc, deal) => acc.set(deal.listing.property_type, (acc.get(deal.listing.property_type) ?? 0) + 1), new Map()))
+    .map(([label, value]) => ({ key: label, label, value }));
+  const selectedPool = selected && benchmarks ? resolvePool(benchmarks, selected.listing.region || "Autre", dealClass(selected)) : null;
+  const selectedGrmPercentile = selectedPool && selected?.live ? Math.round((100 - percentileOf(selectedPool.pool.quantiles.grm, selected.live.grm)) * 10) / 10 : null;
+  // Same-release comparison for metrics the 60-day benchmark tables do not carry.
+  const releasePool = selected ? (() => {
+    const klass = dealClass(selected);
+    const sameClass = modeled.filter((deal) => deal.live && dealClass(deal) === klass);
+    const sameRegion = sameClass.filter((deal) => deal.listing.region === selected.listing.region);
+    return sameRegion.length >= 8 ? sameRegion : sameClass.length >= 8 ? sameClass : modeled.filter((deal) => deal.live);
+  })() : [];
+  const releasePercentile = (pick: (metrics: RadarMetrics) => number) => {
+    if (!selected?.live || releasePool.length === 0) return null;
+    const value = pick(selected.live);
+    const values = releasePool.map((deal) => pick(deal.live as RadarMetrics)).filter(Number.isFinite);
+    const below = values.filter((item) => item < value).length;
+    const equal = values.filter((item) => item === value).length;
+    return Math.round(((below + equal / 2) / values.length) * 100);
+  };
+  const selectedDscrPercentile = releasePercentile((metrics) => metrics.dscr);
+  const selectedCocPercentile = releasePercentile((metrics) => metrics.cashOnCash);
+  const selectedFlow = selected?.live ? (() => {
+    const live = selected.live;
+    const effectiveIncome = live.noi + live.operatingExpenses;
+    const annualCashFlow = live.monthlyCashFlow * 12;
+    return {
+      sources: [
+        { key: "income", label: t.effectiveIncome, value: effectiveIncome, tone: "green" },
+        { key: "deficit", label: t.deficit, value: Math.max(0, -annualCashFlow), tone: "red" },
+      ],
+      targets: [
+        { key: "opex", label: t.expenses, value: live.operatingExpenses, tone: "amber" },
+        { key: "debt", label: t.debtService, value: live.annualDebtService, tone: "purple" },
+        { key: "capex", label: t.reserveLine, value: live.capexReserve, tone: "blue" },
+        { key: "cash", label: t.annualFlow, value: Math.max(0, annualCashFlow), tone: "green" },
+      ],
+    };
+  })() : null;
+  const gaugeBands = [
+    { from: 0, to: 40, tone: "below", label: t.tierBelow },
+    { from: 40, to: 60, tone: "inline", label: t.tierInline },
+    { from: 60, to: 80, tone: "above", label: t.tierAbove },
+    { from: 80, to: 100.01, tone: "top", label: t.tierTop },
+  ];
+
   return (
     <main className="radar-page">
-      <header className="radar-hero">
-        <p>{t.kicker}</p><h1>{t.title}</h1><div className="radar-hero-bottom"><p>{t.intro}</p><dl><div><dt>{t.properties}</dt><dd>{feed?.deals.length ?? "—"}</dd></div><div><dt>{t.analyzed}</dt><dd>{modeled.filter((deal) => deal.live).length || "—"}</dd></div><div><dt>{t.benchmarkBase} · {t.benchmarkWindow}</dt><dd>{benchmarks?.listing_count ?? "—"}</dd></div></dl></div>
-      </header>
-      <aside className={`radar-release ${stale || error ? "is-warning" : ""}`}>
-        <div className="radar-release-status"><strong>{error ? t.unavailable : isHistorical ? t.historical : stale ? t.stale : t.daily}</strong>
-        <span>{loadingRelease ? t.loadingRelease : feed ? `${feed.release} · ${feed.failure_count ?? 0} ${(feed.failure_count ?? 0) === 1 ? t.failure : t.failures}` : t.loading}</span></div>
-        <div className="radar-history-picker" ref={historyRef}><span>{t.release}</span><div className="radar-history-select"><button type="button" aria-haspopup="listbox" aria-expanded={historyOpen} disabled={!feed || loadingRelease || loadingHistory} onClick={openHistory}>{loadingHistory ? t.loading : feed ? releaseLabel(feed.release) : "—"}</button>{historyOpen && <div className="radar-history-menu" role="listbox" aria-label={t.release}>{(releases.length ? releases : feed ? [feed.release] : []).map((release, index) => <button type="button" role="option" aria-selected={release === feed?.release} key={release} onClick={() => loadRelease(release)}><span>{releaseLabel(release)}</span>{index === 0 && <small>{t.latest}</small>}</button>)}</div>}</div></div>
-        <small>{feed?.expense_policy_version ?? RADAR_META[l].title}</small>
-      </aside>
+      <div className="radar-shell">
+        <header className="radar-topbar">
+          <div className="radar-topbar-copy">
+            <p className="radar-kicker">{t.kicker}</p>
+            <h1>{t.title}</h1>
+            <p className="radar-intro">{t.intro}</p>
+          </div>
+          <div className="radar-topbar-status">
+            <div className="radar-status-row">
+              <span className={`radar-pill ${error ? "is-error" : isHistorical || stale ? "is-warning" : "is-live"}`} role="status"><i aria-hidden="true" />{error ? t.unavailable : isHistorical ? t.historical : stale ? t.stale : t.live}</span>
+              <div className="radar-history-picker" ref={historyRef}><span>{t.release}</span><div className="radar-history-select"><button type="button" aria-haspopup="listbox" aria-expanded={historyOpen} disabled={!feed || loadingRelease || loadingHistory} onClick={openHistory}>{loadingHistory ? t.loading : loadingRelease ? t.loadingRelease : feed ? releaseLabel(feed.release) : "—"}</button>{historyOpen && <div className="radar-history-menu" role="listbox" aria-label={t.release}>{(releases.length ? releases : feed ? [feed.release] : []).map((release, index) => <button type="button" role="option" aria-selected={release === feed?.release} key={release} onClick={() => loadRelease(release)}><span>{releaseLabel(release)}</span>{index === 0 && <small>{t.latest}</small>}</button>)}</div>}</div></div>
+            </div>
+            <div className="radar-chips" aria-label={t.daily}>
+              <span className="radar-chip"><i className="is-blue" aria-hidden="true" />{t.properties} <b>{feed?.deals.length ?? "—"}</b></span>
+              <span className="radar-chip"><i className="is-green" aria-hidden="true" />{t.analyzed} <b>{modeled.filter((deal) => deal.live).length || "—"}</b></span>
+              <span className="radar-chip"><i className="is-purple" aria-hidden="true" />{t.benchmarkBase} <b>{benchmarks?.listing_count ?? "—"}</b> <small>· {t.benchmarkWindow}</small></span>
+              <span className={`radar-chip ${(feed?.failure_count ?? 0) > 0 ? "is-warning" : ""}`}><i className={(feed?.failure_count ?? 0) > 0 ? "is-amber" : "is-muted"} aria-hidden="true" />{(feed?.failure_count ?? 0) === 1 ? t.failure : t.failures} <b>{feed ? feed.failure_count ?? 0 : "—"}</b></span>
+            </div>
+            <small className="radar-generated">{feed ? `${feed.release} · ${t.generated} ${generatedLabel} · ${feed.expense_policy_version ?? RADAR_META[l].title}` : t.loading}</small>
+          </div>
+        </header>
 
-      <section className="radar-workspace">
-        <div className="radar-list-side">
+        <section className="radar-overview" aria-label={t.capDist}>
+          <article className="radar-card radar-card-hist">
+            <div className="radar-card-head"><div><h3>{t.capDist}</h3><p>{t.capDistSub(capValues.length)}</p></div>
+              <dl className="radar-card-stats">{capMedian !== null && <div><dt>{t.median}</dt><dd className="is-green">{pct.format(capMedian)}</dd></div>}{capP90 !== null && <div><dt>{t.p90}</dt><dd className="is-amber">{pct.format(capP90)}</dd></div>}</dl>
+            </div>
+            <div className="radar-hist" aria-hidden="true">
+              {capBins.map((count, index) => <i key={index} style={{ height: `${Math.max(count > 0 ? 6 : 2, (count / capBinMax) * 100)}%` }} />)}
+              {capMedian !== null && <span className="radar-hist-mark is-green" style={{ left: capMarker(capMedian) }}><b>p50</b></span>}
+              {capP90 !== null && <span className="radar-hist-mark is-amber" style={{ left: capMarker(capP90) }}><b>p90</b></span>}
+            </div>
+            <div className="radar-hist-axis" aria-hidden="true"><span>{capValues.length ? pct.format(capLow) : "—"}</span><span>{capValues.length ? pct.format(capLow + capSpan / 2) : ""}</span><span>{capValues.length ? pct.format(capLow + capSpan) : "—"}</span></div>
+          </article>
+
+          <article className="radar-card">
+            <div className="radar-card-head"><div><h3>{t.tierMix}</h3><p>{ranked ? t.sorted : t.sortedFallback}</p></div><strong className="radar-card-total">{filtered.length}<small>{t.results}</small></strong></div>
+            <Waffle title={t.tierMix} slices={tierKeys.map((key) => ({ key, label: tierNames[key], count: tierCounts[key] ?? 0, tone: key }))} />
+            <div className="radar-card-foot"><span><i className="is-green" aria-hidden="true" />{t.positiveCount} <b>{positiveCount}</b></span><span><i className="is-blue" aria-hidden="true" />{t.newCount} <b>{newCount}</b></span></div>
+          </article>
+
+          <article className="radar-card">
+            <div className="radar-card-head"><div><h3>{t.topPick}</h3><p>{t.topPickSub}</p></div></div>
+            {topPick?.live ? <div className="radar-pick">
+              <span className="radar-pick-check" aria-hidden="true">✓</span>
+              <div className="radar-pick-body">
+                <strong>{topPick.listing.address}</strong>
+                <small>{topPick.listing.property_type} · {topPick.listing.city} · {topPick.listing.units} {l === "fr" ? "portes" : "doors"}</small>
+                <dl>
+                  <div><dt>{t.colRank}</dt><dd>{topPick.rank ? `${topPick.rank.score}/100` : `${topPick.live.score}/12`}</dd></div>
+                  <div><dt>{t.cap}</dt><dd>{pct.format(topPick.live.capRate)}</dd></div>
+                  <div><dt>{t.cash}</dt><dd className={`is-${cashFlowState(topPick.live.monthlyCashFlow, t).tone}`}>{money.format(topPick.live.monthlyCashFlow)}</dd></div>
+                </dl>
+                <button type="button" onClick={() => openDeal(topPick.listing.listing_id)}>{t.openFile} →</button>
+              </div>
+            </div> : <p className="radar-pick-empty">{feed ? t.noPick : t.loading}</p>}
+          </article>
+
+          <article className="radar-card radar-card-regions">
+            <div className="radar-card-head"><div><h3>{t.regionCap}</h3><p>{t.regionCapSub}</p></div></div>
+            {regionBars.length > 0
+              ? <BarChart title={t.regionCap} bars={regionBars} average={capMedian} averageLabel={t.median} format={(value) => pct.format(value)} />
+              : <p className="radar-pick-empty">{feed ? t.noPick : t.loading}</p>}
+          </article>
+
+          <article className="radar-card">
+            <div className="radar-card-head"><div><h3>{t.typeMix}</h3><p>{t.typeMixSub}</p></div><strong className="radar-card-total">{typeTiles.length}<small>types</small></strong></div>
+            {typeTiles.length > 0
+              ? <Treemap title={t.typeMix} items={typeTiles} formatShare={(share) => pct0.format(share)} />
+              : <p className="radar-pick-empty">{feed ? t.noPick : t.loading}</p>}
+          </article>
+        </section>
+
+        <section className="radar-workspace" aria-label={t.results}>
           <div className="radar-filters">
-            <input aria-label={t.search} placeholder={t.search} value={query} onChange={(event) => setQuery(event.target.value)} />
+            <input className="radar-search" aria-label={t.search} placeholder={t.search} value={query} onChange={(event) => setQuery(event.target.value)} />
             <span className="radar-select"><select aria-label={t.all} value={region} onChange={(event) => setRegion(event.target.value)}>{regions.map((item) => <option key={item}>{item}</option>)}</select></span>
             <span className="radar-select"><select aria-label={t.anyPrice} value={maxPrice} onChange={(event) => setMaxPrice(Number(event.target.value))}><option value={0}>{t.anyPrice}</option>{PRICE_CAPS.map((cap) => <option key={cap} value={cap}>{t.under} {money.format(cap)}</option>)}</select></span>
             <span className="radar-select"><select aria-label={t.anyUnits} value={unitsFilter} onChange={(event) => setUnitsFilter(event.target.value)}><option value="">{t.anyUnits}</option>{["2", "3", "4"].map((units) => <option key={units} value={units}>{units} {t.doors}</option>)}<option value="5+">{t.fivePlus}</option></select></span>
@@ -426,31 +614,33 @@ export default function PlexRadarPage() {
               <span className="radar-positive-label">{t.positive}</span>
             </label>
           </div>
-          <div className="radar-count"><span>{filtered.length} {t.results}</span><span>{ranked ? t.sorted : t.sortedFallback}</span></div>
           {benchmarksFailed && <p className="radar-benchmark-warning" role="status">{t.relativeUnavailable}</p>}
-          <div className="radar-list">
-            {filtered.map((deal, index) => {
-              const verdict = dealVerdict(deal.live?.score ?? 0, t);
-              const cashFlow = cashFlowState(deal.live?.monthlyCashFlow ?? 0, t);
-              const isSelected = selected?.listing.listing_id === deal.listing.listing_id;
-              const rank = deal.rank;
-              return <article key={deal.listing.listing_id} className={isSelected ? "is-selected" : ""}>
-                <button className="radar-row-main" onClick={() => openDeal(deal.listing.listing_id)} aria-label={`${deal.listing.address} — ${rank ? tierLabel(rank.tier, t) : verdict.label}`}>
-                  <span className="radar-rank">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="radar-property"><strong>{deal.listing.address}</strong><small>{deal.listing.property_type} · {deal.listing.city} · {deal.listing.units} {l === "fr" ? "portes" : "doors"}{deal.listing.mixed_use ? ` · ${t.mixedUse}` : ""}</small>{deal.lifecycle?.event_type === "first-seen" && <em>{t.newDeal}</em>}</span>
-                  <span className="radar-price"><strong>{money.format(deal.listing.price)}</strong><small>{money.format(deal.listing.price / Math.max(1, deal.listing.units))} {t.perDoor}</small></span>
-                  <span className="radar-cap"><strong>{deal.live ? pct.format(deal.live.capRate) : "—"}</strong><small>CAP</small></span>
-                  <span className={`radar-flow is-${cashFlow.tone}`}><strong>{deal.live ? money.format(deal.live.monthlyCashFlow) : "—"}</strong><small>{cashFlow.label}</small></span>
-                  {rank
-                    ? <span className={`radar-verdict is-${rank.tier}`}><strong>{tierLabel(rank.tier, t)}</strong><small>{rank.score}/100</small></span>
-                    : <span className={`radar-verdict is-${verdict.tone}`}><strong>{verdict.label}</strong><small>{deal.live?.score ?? "—"}/12</small></span>}
-                </button>
-              </article>;
-            })}
+          <div className="radar-table">
+            <div className="radar-count"><span>{filtered.length} {t.results}</span><span>{ranked ? t.sorted : t.sortedFallback}</span></div>
+            <div className="radar-thead" aria-hidden="true"><span>#</span><span>{t.colProperty}</span><span>{t.colPrice}</span><span>{t.colCap}</span><span>{t.colFlow}</span><span>{t.colRank}</span></div>
+            <div className="radar-list">
+              {filtered.map((deal, index) => {
+                const verdict = dealVerdict(deal.live?.score ?? 0, t);
+                const cashFlow = cashFlowState(deal.live?.monthlyCashFlow ?? 0, t);
+                const isSelected = selected?.listing.listing_id === deal.listing.listing_id;
+                const rank = deal.rank;
+                const tone = rank ? rank.tier : verdict.tone;
+                const scoreWidth = rank ? rank.score : ((deal.live?.score ?? 0) / 12) * 100;
+                return <article key={deal.listing.listing_id} className={isSelected ? "is-selected" : ""}>
+                  <button className="radar-row-main" onClick={() => openDeal(deal.listing.listing_id)} aria-label={`${deal.listing.address} — ${rank ? tierLabel(rank.tier, t) : verdict.label}`}>
+                    <span className="radar-rank">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="radar-property"><strong>{deal.listing.address}</strong><small>{deal.listing.property_type} · {deal.listing.city} · {deal.listing.units} {l === "fr" ? "portes" : "doors"}{deal.listing.mixed_use ? ` · ${t.mixedUse}` : ""}{deal.lifecycle?.event_type === "first-seen" && <em>{t.newDeal}</em>}</small></span>
+                    <span className="radar-price"><strong>{money.format(deal.listing.price)}</strong><small>{money.format(deal.listing.price / Math.max(1, deal.listing.units))} {t.perDoor}</small></span>
+                    <span className="radar-cap"><strong>{deal.live ? pct.format(deal.live.capRate) : "—"}</strong></span>
+                    <span className={`radar-flow is-${cashFlow.tone}`}><strong>{deal.live ? money.format(deal.live.monthlyCashFlow) : "—"}</strong><small>{cashFlow.label}</small></span>
+                    <span className={`radar-verdict is-${tone}`}><span className="radar-verdict-pill"><i aria-hidden="true" />{rank ? tierLabel(rank.tier, t) : verdict.label}</span><span className="radar-verdict-score"><span className="radar-verdict-bar" aria-hidden="true"><i style={{ width: `${Math.max(2, Math.min(100, scoreWidth))}%` }} /></span><small>{rank ? `${rank.score}/100` : `${deal.live?.score ?? "—"}/12`}</small></span></span>
+                  </button>
+                </article>;
+              })}
+            </div>
           </div>
-        </div>
-
-      </section>
+        </section>
+      </div>
 
       {detailOpen && selected?.live && typeof document !== "undefined" && createPortal(<>
         <button className="radar-drawer-scrim" aria-label={t.close} onClick={() => setDetailOpen(false)} />
@@ -462,7 +652,7 @@ export default function PlexRadarPage() {
           <div className="radar-analysis-body">
             <div className="radar-analysis-head"><div><p>{selected.modified ? t.scenario : t.published}</p><h2 id="radar-dossier-title">{selected.listing.address}</h2><small>{selected.listing.city} · {selected.listing.units} portes · {selected.listing.year_built ?? "—"}</small></div>
               {selectedRank
-                ? <strong className={`is-${selectedRank.tier}`}>{selectedRank.score}<small>/100</small></strong>
+                ? <Gauge title={t.relativeHeading} value={selectedRank.score} bands={gaugeBands} caption={t.gaugeCaption} />
                 : <strong>{selected.live.score}<small>/12</small></strong>}
             </div>
 
@@ -470,6 +660,20 @@ export default function PlexRadarPage() {
               <div className="radar-section-label"><span>{t.relativeHeading}</span><MetricInfo id="radar-relative-help" label={t.relativeHeading} description={RADAR_METRIC_DEFS[l].relative.def} /></div>
               <p className={`radar-relative-tier is-${selectedRank.tier}`}>{tierLabel(selectedRank.tier, t)}</p>
               <small>{poolLabel(selectedRank, t)}</small>
+              <div className="radar-relative-grid">
+              <SpiderChart
+                title={t.relativeHeading}
+                baseline={50}
+                seriesLabel={t.spiderDeal}
+                baselineLabel={t.spiderMedian}
+                axes={[
+                  ...selectedRank.components.map((component) => ({ label: t.spiderAxes[component.key], value: component.percentile })),
+                  ...(selectedGrmPercentile !== null ? [{ label: t.spiderAxes.grm, value: selectedGrmPercentile }] : []),
+                  ...(selectedDscrPercentile !== null ? [{ label: t.spiderAxes.dscr, value: selectedDscrPercentile }] : []),
+                  ...(selectedCocPercentile !== null ? [{ label: t.spiderAxes.coc, value: selectedCocPercentile }] : []),
+                ]}
+                note={t.spiderNote(releasePool.length)}
+              />
               <ul>
                 {selectedRank.components.map((component) => {
                   const label = component.key === "yield" ? t.compYield : component.key === "cashFlow" ? t.compCashFlow : t.compPrice;
@@ -481,6 +685,7 @@ export default function PlexRadarPage() {
                   </li>;
                 })}
               </ul>
+              </div>
             </section>}
 
             <div className="radar-kpis">
@@ -523,6 +728,12 @@ export default function PlexRadarPage() {
                 {selected.live.factors.map((factor) => <li key={factor.label} className={`is-${factor.status}`}><i aria-hidden="true" /><span>{t.factorLabels[factor.label] ?? factor.label.replace(/_/g, " ")}</span><b>{factorValue(factor.label, factor.value)}</b></li>)}
               </ul>
             </details>}
+
+            {selectedFlow && <section className="radar-flowchart" aria-label={t.incomeFlow}>
+              <div className="radar-section-label"><span>{t.incomeFlow}</span></div>
+              <Sankey title={t.incomeFlow} sources={selectedFlow.sources} targets={selectedFlow.targets} format={(value) => money.format(value)} />
+              <small>{t.incomeFlowSub}</small>
+            </section>}
 
             {selected.expense_policy && <section className="radar-expenses"><div><div><p>{t.expenses}</p><strong>{money.format(selected.live.operatingExpenses)}</strong><small className={`radar-ratio is-${expenseRatioBand(selected.live.expenseRatio)}`}>{pct.format(selected.live.expenseRatio)} {t.expenseRatio} · {t.ratioBand[expenseRatioBand(selected.live.expenseRatio)]}</small></div>{selectedExcluded.length > 0 && <button onClick={() => setExcluded((current) => ({ ...current, [selected.listing.listing_id]: [] }))}>{t.restore}</button>}</div>
               <details><summary>{t.definitionTitle}</summary><p>{t.definition}</p></details>
