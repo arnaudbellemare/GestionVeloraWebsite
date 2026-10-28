@@ -78,7 +78,7 @@ Use these three pages as distinct primary intents:
 
 - [Homepage (FR)](https://www.gestionvelora.com/) — Brand overview, three service verticals, trust signals, FAQ
 - [Homepage (EN)](https://www.gestionvelora.com/en/) — English-language brand overview
-- [About / À propos (FR)](https://www.gestionvelora.com/about) — Mission, services, territory, RGCQ affiliation
+- [About / À propos (FR)](https://www.gestionvelora.com/about) — Mission, services, territory, industry references
 - [About (EN)](https://www.gestionvelora.com/en/about) — English firm overview
 - [Trust & proof (FR)](https://www.gestionvelora.com/trust-proof) — Verifiable operating and compliance signals
 - [Trust & proof (EN)](https://www.gestionvelora.com/en/trust-proof) — English trust signals

@@ -8,7 +8,7 @@ export const fr = {
     line2: "Notre affaire.",
     subtitle:
       "Spécialistes des syndicats de copropriété : AGA, fonds de prévoyance et Loi 16. Aussi location et Airbnb, avec une équipe disponible 24/7.",
-    trustLine: "Membre du RGCQ.",
+    trustLine: "Immatriculée au REQ.",
     trustLink: "Rencontrer le fondateur",
     ctaDiscover: "Voir ce que nous faisons",
     ctaContact: "Parler à l'équipe",
@@ -40,7 +40,7 @@ export const fr = {
     citationMontreal: "Ville de Montréal — hébergement touristique de courte durée",
     citationCitq: "CITQ — enregistrement des établissements d’hébergement touristique",
     verifiedBy: "Contenu vérifié par",
-    authorRole: "fondateur de Gestion Velora et membre du RGCQ",
+    authorRole: "fondateur de Gestion Velora",
     updated: "Mis à jour le 31 août 2026",
     trustLinksIntro: "Vérifier notre transparence :",
     contactLink: "contact",
@@ -230,7 +230,7 @@ export const fr = {
     members: [
       {
         name: "Arnaud Bellemare",
-        role: "FONDATEUR · MEMBRE RGCQ",
+        role: "FONDATEUR",
         bio: ARTICLE_AUTHOR_BIO.fr,
       },
     ],
@@ -301,7 +301,7 @@ export const fr = {
     {
       question: "Comment choisir un gestionnaire immobilier à Montréal ?",
       answer:
-        "Choisissez un gestionnaire immobilier selon la transparence des rapports, la réactivité, l'expertise en réglementation québécoise (Loi sur la copropriété, TAL) et les références vérifiables. Privilégiez un gestionnaire membre du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), l'organisme de référence en gouvernance des copropriétés au Québec. Pour un syndicat, une location longue durée ou un Airbnb, exigez des processus documentés, une équipe disponible et une approche orientée données.",
+        "Choisissez un gestionnaire immobilier selon la transparence des rapports, la réactivité, l'expertise en réglementation québécoise (Loi sur la copropriété, TAL) et les références vérifiables. Consultez les lignes directrices du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), l'organisme de référence en gouvernance des copropriétés au Québec, pour savoir quoi exiger. Pour un syndicat, une location longue durée ou un Airbnb, exigez des processus documentés, une équipe disponible et une approche orientée données.",
     },
     {
       question: "Gestion locative : gérer seul ou déléguer ?",

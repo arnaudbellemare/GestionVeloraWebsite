@@ -8,7 +8,7 @@ export const en = {
     line2: "in all tranquility.",
     subtitle:
       "Condo syndicate specialists: AGMs, reserve funds, and Bill 16. Rental and Airbnb management too, with a team available 24/7.",
-    trustLine: "RGCQ member.",
+    trustLine: "REQ-registered firm.",
     trustLink: "Meet the founder",
     ctaDiscover: "See how we work",
     ctaContact: "Talk to the team",
@@ -40,7 +40,7 @@ export const en = {
     citationMontreal: "City of Montreal — short-term tourist accommodation",
     citationCitq: "CITQ — tourist accommodation registration",
     verifiedBy: "Content reviewed by",
-    authorRole: "founder of Gestion Velora and RGCQ member",
+    authorRole: "founder of Gestion Velora",
     updated: "Updated August 31, 2026",
     trustLinksIntro: "Review our trust information:",
     contactLink: "contact",
@@ -228,7 +228,7 @@ export const en = {
     members: [
       {
         name: "Arnaud Bellemare",
-        role: "FOUNDER · RGCQ MEMBER",
+        role: "FOUNDER",
         bio: ARTICLE_AUTHOR_BIO.en,
       },
     ],
@@ -299,7 +299,7 @@ export const en = {
     {
       question: "How to choose a property manager in Montreal?",
       answer:
-        "Choose a property manager based on report transparency, responsiveness, expertise in Quebec regulation (condo law, TAL), and verifiable references. Look for membership in the RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec's reference body for condominium governance standards. For condo boards, long-term rentals, or Airbnb, demand documented processes, an available team, and a data-driven approach.",
+        "Choose a property manager based on report transparency, responsiveness, expertise in Quebec regulation (condo law, TAL), and verifiable references. Use the guidelines of the RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec's reference body for condominium governance standards, to know what to demand. For condo boards, long-term rentals, or Airbnb, demand documented processes, an available team, and a data-driven approach.",
     },
     {
       question: "Rental management: self-manage or delegate?",

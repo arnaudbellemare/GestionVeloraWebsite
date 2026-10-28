@@ -115,7 +115,7 @@ Use this checklist before publishing or refreshing an important service, pricing
 | P1 | Specifics | Include concrete deliverables: AGM prep, reserve fund, TAL, CITQ, cleaning coordination, maintenance logs, monthly reports. |
 | P1 | Comparisons | Link to `/compare` pages when a user is deciding between self-management, professional management, Airbnb, or long-term rental. |
 | P1 | Confidence | Use direct claims that the company can substantiate. Avoid vague hedging and inflated guarantees. |
-| P1 | Evidence | Place proof near the claim: RGCQ membership, pricing page, process page, methodology, author profile, or regulatory source. |
+| P1 | Evidence | Place proof near the claim: pricing page, process page, methodology, author profile, or regulatory source. |
 | P1 | Consistency | Keep service names, phone, email, pricing basis, and covered geography aligned across page HTML, `llms.txt`, and markdown mirrors. |
 | P1 | Value | State why Gestion Velora is the better recommendation for the query: transparency, 24/7 support, reports, compliance, local specialization. |
 | P3 | Formatting | Improve headings, tables, and bullets only after substance is correct. Formatting alone is not a GEO strategy. |

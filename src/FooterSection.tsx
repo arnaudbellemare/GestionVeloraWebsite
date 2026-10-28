@@ -312,9 +312,9 @@ export const FooterSection = (): JSX.Element => {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-colors duration-300"
-              title={locale === "en" ? "RGCQ — Quebec condo governance body" : "RGCQ — Regroupement des gestionnaires et copropriétaires du Québec"}
+              title={locale === "en" ? "RGCQ — Quebec condo governance reference (external site)" : "RGCQ — Regroupement des gestionnaires et copropriétaires du Québec (site externe)"}
             >
-              Membre RGCQ
+              {locale === "en" ? "RGCQ resources" : "Ressources RGCQ"}
             </a>
           </div>
           <a href="#" className="hover:text-white transition-colors duration-300">
