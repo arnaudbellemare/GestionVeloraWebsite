@@ -885,7 +885,9 @@ function studyToHtml(post: BlogPost, locale: "fr" | "en"): string {
   const sources = loc.study.sources
     .map(
       (src) =>
-        `<li><cite><a href="${escapeHtml(src.url)}" rel="noopener external">${escapeHtml(src.label)}</a></cite>${
+        `<li><cite>${
+          src.url ? `<a href="${escapeHtml(src.url)}" rel="noopener external">${escapeHtml(src.label)}</a>` : escapeHtml(src.label)
+        }</cite>${
           src.date ? ` — ${escapeHtml(src.date)}` : ""
         }</li>`
     )

@@ -21,7 +21,8 @@ export interface BlogSection {
 /** A primary source cited by a data study. */
 export interface BlogSource {
   label: string;
-  url: string;
+  /** Omitted for commercial sources we cite by name without linking. */
+  url?: string;
   /** Date the source was published or consulted, as displayed. */
   date?: string;
 }
