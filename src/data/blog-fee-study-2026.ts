@@ -14,24 +14,8 @@ import type { BlogPost, BlogSource } from "./blog";
 const STUDY_SLUG = "etude-frais-gestion-immobiliere-quebec-2026";
 const STUDY_URL = `https://www.gestionvelora.com/blog/${STUDY_SLUG}`;
 
-const URL_MULTIRENT = "https://www.multirent.ca/tarifs/";
-const URL_AJAX = "https://gestionajax.ca/";
-const URL_STRATEGIS = "https://condostrategis.ca/gestion-de-syndicat-de-copropriete/";
-const URL_SERVICECONDO = "https://servicecondo.com/prices.php";
-const URL_DELUXCO = "https://deluxco.ca/";
-const URL_GESTIONDECONDOS = "https://gestiondecondos.com/services/gestion-externe/";
-const URL_CONDOVIP = "https://www.gestioncondovip.com/en/";
-const URL_SOLUTIONCONDO =
-  "https://www.solutioncondo.com/services-gestion-copropriete/taux-horaires-et-debours/";
-const URL_LOCATION_AJAX = "https://locationajax.ca/en/price-property-management/";
-const URL_PENATES = "https://gestionimmobilierepl.com/grille-de-tarification";
-const URL_PINARD =
-  "https://www.marcelpinardgestionimmobiliere.com/gestion-immobiliere-a-sherbrooke";
-const URL_PARKPLACE = "https://parkpl.co/montreal";
-const URL_HEARTHOMES = "https://hearthomes.ca/airbnb-management-montreal/";
-const URL_ABMM = "https://airbnbmanagementmontreal.com/";
-const URL_STAYPRO = "https://staypro.ca/en/cities/montreal/";
-const URL_RESERVER = "https://reserver.ca/en/gestion-locative";
+// Firm pricing pages are cited by name only (no outbound link); their URLs live in
+// public/data/etude-frais-gestion-immobiliere-quebec-2026.{csv,json} (source_url).
 const URL_TAL_RN2026 = "https://www.tal.gouv.qc.ca/sites/default/files/RN_2026_F.pdf";
 const URL_TAL_PCT =
   "https://www.tal.gouv.qc.ca/fr/reconduction-du-bail-et-fixation-de-loyer/pourcentages-applicables-aux-criteres-de-fixation-de-loyer";
@@ -46,32 +30,25 @@ const URL_STATCAN_CPI = "https://www150.statcan.gc.ca/n1/daily-quotidien/260914/
 const URL_STATCAN_CPI_2025 = "https://www150.statcan.gc.ca/n1/daily-quotidien/260119/dq260119b-eng.htm";
 const URL_APCIQ_MTL = "https://com.apciq.ca/sam/pdf/bar/2026/202603-bar-mtl-en.pdf";
 const URL_APCIQ_QC = "https://com.apciq.ca/sam/pdf/bar/2026/202603-bar-quebec.pdf";
-const URL_LOCALYS =
-  "https://www.gestionlocalys.com/en/articles/gestion-locative-cle-en-main-quebec";
-const URL_MAHD =
-  "https://www.gestionmahd.com/combien-coute-un-gestionnaire-de-copropriete-au-quebec-en-2026/";
-const URL_TENANTPAY =
-  "https://www.tenantpay.com/blog/property-management-fees-in-canada-2026-costs";
-const URL_SOUMISSIONS_COPRO = "https://soumissionscopropriete.ca/gestionnaires-copropriete-quebec/";
 const URL_VELORA_TARIFS = "/tarifs";
 
 const SOURCES_FR: BlogSource[] = [
-  { label: "multiRent — Tarifs de gestion de copropriété", url: URL_MULTIRENT, date: "grille en vigueur depuis le 10 septembre 2026" },
-  { label: "Gestion Ajax — Prix de la gestion de copropriété", url: URL_AJAX, date: "2026" },
-  { label: "Condo Stratégis — Gestion de syndicat de copropriété", url: URL_STRATEGIS, date: "2026" },
-  { label: "ServiceCondo — Prices", url: URL_SERVICECONDO, date: "2026" },
-  { label: "Deluxco — Gestion de copropriété", url: URL_DELUXCO, date: "pied de page 2024" },
-  { label: "GestionDeCondos.com — Gestion externe", url: URL_GESTIONDECONDOS, date: "page non datée" },
-  { label: "GestionCondo VIP — Pricing", url: URL_CONDOVIP, date: "page du 8 décembre 2021, pied de page 2024" },
-  { label: "SolutionCondo — Taux horaires et débours 2026-2027", url: URL_SOLUTIONCONDO, date: "2026" },
-  { label: "Location Ajax — Price of property management", url: URL_LOCATION_AJAX, date: "2026" },
-  { label: "Gestion immobilière Pénates et Lares — Grille de tarification", url: URL_PENATES, date: "2026" },
-  { label: "Marcel Pinard Gestion immobilière — Sherbrooke", url: URL_PINARD, date: "2024-2026" },
-  { label: "Park Place Properties — Montréal", url: URL_PARKPLACE, date: "2026" },
-  { label: "HeartHomes — Airbnb management Montréal", url: URL_HEARTHOMES, date: "pied de page 2024" },
-  { label: "AirBNB Management Montreal — Forfaits", url: URL_ABMM, date: "pied de page 2024" },
-  { label: "StayPro — Montréal", url: URL_STAYPRO, date: "page non datée" },
-  { label: "Reserver.ca — Gestion locative", url: URL_RESERVER, date: "2026" },
+  { label: "multiRent — Tarifs de gestion de copropriété", date: "grille en vigueur depuis le 10 septembre 2026" },
+  { label: "Gestion Ajax — Prix de la gestion de copropriété", date: "2026" },
+  { label: "Condo Stratégis — Gestion de syndicat de copropriété", date: "2026" },
+  { label: "ServiceCondo — Prices", date: "2026" },
+  { label: "Deluxco — Gestion de copropriété", date: "pied de page 2024" },
+  { label: "GestionDeCondos.com — Gestion externe", date: "page non datée" },
+  { label: "GestionCondo VIP — Pricing", date: "page du 8 décembre 2021, pied de page 2024" },
+  { label: "SolutionCondo — Taux horaires et débours 2026-2027", date: "2026" },
+  { label: "Location Ajax — Price of property management", date: "2026" },
+  { label: "Gestion immobilière Pénates et Lares — Grille de tarification", date: "2026" },
+  { label: "Marcel Pinard Gestion immobilière — Sherbrooke", date: "2024-2026" },
+  { label: "Park Place Properties — Montréal", date: "2026" },
+  { label: "HeartHomes — Airbnb management Montréal", date: "pied de page 2024" },
+  { label: "AirBNB Management Montreal — Forfaits", date: "pied de page 2024" },
+  { label: "StayPro — Montréal", date: "page non datée" },
+  { label: "Reserver.ca — Gestion locative", date: "2026" },
   { label: "TAL — Formulaire de renseignements nécessaires à la fixation du loyer 2026 (RN 2026)", url: URL_TAL_RN2026, date: "PDF modifié le 1er décembre 2025" },
   { label: "TAL — Pourcentages applicables aux critères de fixation de loyer 2026", url: URL_TAL_PCT, date: "annoncés le 19 janvier 2026" },
   { label: "Gazette officielle du Québec — Décret 1455-2025 (nouvelle méthode de fixation)", url: URL_GAZETTE, date: "17 décembre 2025" },
@@ -83,10 +60,10 @@ const SOURCES_FR: BlogSource[] = [
   { label: "APCIQ — Baromètre résidentiel, RMR de Montréal, T3 2026", url: URL_APCIQ_MTL, date: "octobre 2026" },
   { label: "APCIQ — Baromètre résidentiel, RMR de Québec, T3 2026", url: URL_APCIQ_QC, date: "octobre 2026" },
   { label: "Gestion Velora — Tarifs", url: `https://www.gestionvelora.com${URL_VELORA_TARIFS}`, date: "2026" },
-  { label: "Sources secondaires (hors médianes) : Gestion MAHD", url: URL_MAHD, date: "15 août 2026" },
-  { label: "Sources secondaires : Soumissions Copropriété", url: URL_SOUMISSIONS_COPRO, date: "2026" },
-  { label: "Sources secondaires : Localys", url: URL_LOCALYS, date: "12 août 2026" },
-  { label: "Sources secondaires : TenantPay", url: URL_TENANTPAY, date: "7 février 2026" },
+  { label: "Sources secondaires (hors médianes) : Gestion MAHD", date: "15 août 2026" },
+  { label: "Sources secondaires : Soumissions Copropriété", date: "2026" },
+  { label: "Sources secondaires : Localys", date: "12 août 2026" },
+  { label: "Sources secondaires : TenantPay", date: "7 février 2026" },
 ];
 
 const SOURCES_EN: BlogSource[] = SOURCES_FR.map((s) => ({
@@ -185,26 +162,26 @@ export const feeStudyBlogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Sept firmes du Grand Montréal publient une grille par unité par mois. La moins chère pour un petit immeuble est ",
-              { text: "Gestion Ajax", to: URL_AJAX },
+              "Gestion Ajax",
               " à 29 $ pour 6 à 20 unités (31 $ de 21 à 100 unités, 37 $ au-delà de 100), avec le même minimum de 6 unités que Gestion Velora. ",
-              { text: "multiRent", to: URL_MULTIRENT },
+              "multiRent",
               " décompose son offre en trois paliers (financière 10 $, administrative 27 $, complète 37 $) avec un plancher de 210 $ par mois et des frais d'inscription uniques de 450 $. ",
-              { text: "Condo Stratégis", to: URL_STRATEGIS },
+              "Condo Stratégis",
               " baisse son tarif avec la durée d'engagement : 36 $, 33 $ ou 31 $ selon un contrat d'un, deux ou trois ans.",
             ],
             [
-              { text: "ServiceCondo", to: URL_SERVICECONDO },
+              "ServiceCondo",
               " affiche la dispersion la plus forte : 35 $ en assistance et 60 $ en clé en main pour 10 à 24 unités, puis 25 $ à 45 $ pour 25 à 49 unités et 20 $ à 35 $ pour 50 à 99 unités. ",
-              { text: "Deluxco", to: URL_DELUXCO },
+              "Deluxco",
               " part de 45 $ plus taxes à partir de 16 unités. ",
-              { text: "GestionDeCondos.com", to: URL_GESTIONDECONDOS },
+              "GestionDeCondos.com",
               " annonce 30 $ à 35 $ plus taxes pour 21 à 39 condos, assemblées en sus. ",
-              { text: "GestionCondo VIP", to: URL_CONDOVIP },
+              "GestionCondo VIP",
               " publie 30 $, 35 $ ou 40 $ selon le nombre de services pour 14 à 99 unités, mais sa page date de décembre 2021.",
             ],
             [
               "Toutes ces grilles dégressent avec la taille : le tarif unitaire d'un immeuble de 100 unités et plus tombe souvent sous 30 $. ",
-              { text: "SolutionCondo", to: URL_SOLUTIONCONDO },
+              "SolutionCondo",
               ", l'un des plus gros acteurs, ne publie pas de tarif mensuel mais des taux horaires 2026-2027 : 150 $ pour un gestionnaire, 175 $ pour un directeur, 250 $ pour un associé, 95 $ pour le personnel clérical, plus une attestation à jour ou un DRCOP à 375 $. Pour comparer un devis horaire à une grille par porte, il faut donc estimer le nombre d'heures annuelles, ce que peu de syndicats savent faire.",
             ],
           ],
@@ -259,11 +236,11 @@ export const feeStudyBlogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Les firmes de gestion locative publient beaucoup moins leurs prix que les gestionnaires de copropriété : trois grilles seulement, mais réparties sur trois régions, et toutes dans la même bande. ",
-              { text: "Location Ajax", to: URL_LOCATION_AJAX },
+              "Location Ajax",
               " facture 5 % à 10 % du loyer perçu en résidentiel et 3 % à 6 % en commercial, avant taxes, sans frais de démarrage, avec la règle « logement vacant, aucuns frais » ; la mise en location seule coûte un mois de loyer. ",
-              { text: "Pénates et Lares", to: URL_PENATES },
+              "Pénates et Lares",
               " à Gatineau publie trois paliers à 5 %, 7,5 % et 10 % du loyer perçu. ",
-              { text: "Marcel Pinard", to: URL_PINARD },
+              "Marcel Pinard",
               " à Sherbrooke affiche 5 % à 8 % en base et 8 % à 10 % en gestion complète pour six logements ou moins, puis 4 % à 6 % au-delà de six logements.",
             ],
             [
@@ -292,15 +269,15 @@ export const feeStudyBlogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Six firmes publient une commission. ",
-              { text: "Park Place Properties", to: URL_PARKPLACE },
+              "Park Place Properties",
               " annonce des frais « à partir de 10 % » à Montréal. ",
-              { text: "StayPro", to: URL_STAYPRO },
+              "StayPro",
               " affiche trois paliers à 10 %, 14 % et 19 % plus taxes, le dernier incluant un gestionnaire local. ",
-              { text: "AirBNB Management Montreal", to: URL_ABMM },
+              "AirBNB Management Montreal",
               " facture 12 % en formule de base et 18 % en formule experte avec ménage et réapprovisionnement. ",
-              { text: "HeartHomes", to: URL_HEARTHOMES },
+              "HeartHomes",
               " publie 15 % pour son service complet à Montréal comme à Québec. ",
-              { text: "Reserver.ca", to: URL_RESERVER },
+              "Reserver.ca",
               ", orienté chalets, va de 10 % à 20 % des revenus bruts, le palier à 20 % incluant une protection dommages jusqu'à 2 000 $.",
             ],
             [
@@ -472,26 +449,26 @@ export const feeStudyBlogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Seven Greater Montreal firms publish a per-unit monthly grid. The cheapest for a small building is ",
-              { text: "Gestion Ajax", to: URL_AJAX },
+              "Gestion Ajax",
               " at $29 for 6 to 20 units ($31 from 21 to 100 units, $37 above 100), with the same 6-unit minimum as Gestion Velora. ",
-              { text: "multiRent", to: URL_MULTIRENT },
+              "multiRent",
               " splits its offer into three tiers (financial $10, administrative $27, complete $37) with a $210 monthly floor and a one-time $450 enrolment fee. ",
-              { text: "Condo Stratégis", to: URL_STRATEGIS },
+              "Condo Stratégis",
               " lowers its rate with the contract term: $36, $33 or $31 for a one-, two- or three-year contract.",
             ],
             [
-              { text: "ServiceCondo", to: URL_SERVICECONDO },
+              "ServiceCondo",
               " shows the widest dispersion: $35 for assistance and $60 for turnkey at 10 to 24 units, then $25 to $45 at 25 to 49 units and $20 to $35 at 50 to 99 units. ",
-              { text: "Deluxco", to: URL_DELUXCO },
+              "Deluxco",
               " starts at $45 plus tax from 16 units. ",
-              { text: "GestionDeCondos.com", to: URL_GESTIONDECONDOS },
+              "GestionDeCondos.com",
               " lists $30 to $35 plus tax for 21 to 39 condos, meetings extra. ",
-              { text: "GestionCondo VIP", to: URL_CONDOVIP },
+              "GestionCondo VIP",
               " publishes $30, $35 or $40 depending on the number of services for 14 to 99 units, but its page dates from December 2021.",
             ],
             [
               "All these grids fall with size: the per-unit rate for a building of 100 units or more often drops below $30. ",
-              { text: "SolutionCondo", to: URL_SOLUTIONCONDO },
+              "SolutionCondo",
               ", one of the largest players, publishes no monthly rate but 2026-2027 hourly rates: $150 for a manager, $175 for a director, $250 for a partner, $95 for clerical staff, plus $375 for an up-to-date certificate or a DRCOP. Comparing an hourly quote with a per-door grid therefore requires estimating annual hours, which few boards know how to do.",
             ],
           ],
@@ -546,11 +523,11 @@ export const feeStudyBlogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Rental management firms publish their prices far less often than condo managers: only three grids, but spread across three regions, and all in the same band. ",
-              { text: "Location Ajax", to: URL_LOCATION_AJAX },
+              "Location Ajax",
               " charges 5% to 10% of rent collected for residential and 3% to 6% for commercial, before tax, with no set-up fee and a \"vacant unit, no fee\" rule; leasing alone costs one month's rent. ",
-              { text: "Pénates et Lares", to: URL_PENATES },
+              "Pénates et Lares",
               " in Gatineau publishes three tiers at 5%, 7.5% and 10% of rent collected. ",
-              { text: "Marcel Pinard", to: URL_PINARD },
+              "Marcel Pinard",
               " in Sherbrooke shows 5% to 8% for basic and 8% to 10% for full management on six units or fewer, then 4% to 6% above six units.",
             ],
             [
@@ -579,15 +556,15 @@ export const feeStudyBlogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Six firms publish a commission. ",
-              { text: "Park Place Properties", to: URL_PARKPLACE },
+              "Park Place Properties",
               " advertises fees \"from 10%\" in Montreal. ",
-              { text: "StayPro", to: URL_STAYPRO },
+              "StayPro",
               " shows three tiers at 10%, 14% and 19% plus tax, the last including a local manager. ",
-              { text: "AirBNB Management Montreal", to: URL_ABMM },
+              "AirBNB Management Montreal",
               " charges 12% on its basic plan and 18% on its expert plan with housekeeping and restocking. ",
-              { text: "HeartHomes", to: URL_HEARTHOMES },
+              "HeartHomes",
               " publishes 15% for full-service hosting in Montreal and Quebec City alike. ",
-              { text: "Reserver.ca", to: URL_RESERVER },
+              "Reserver.ca",
               ", cottage-focused, runs from 10% to 20% of gross revenue, the 20% tier including damage protection up to $2,000.",
             ],
             [

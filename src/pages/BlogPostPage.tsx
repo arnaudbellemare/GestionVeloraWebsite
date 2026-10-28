@@ -239,15 +239,19 @@ export function BlogPostPage() {
               </p>
               <ol className="list-decimal pl-5 space-y-2 font-sans text-sm text-black/80 dark:text-white/80">
                 {post.study.sources.map((src) => (
-                  <li key={src.url}>
-                    <a
-                      href={src.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-waabi-pink hover:underline underline-offset-2"
-                    >
-                      {src.label}
-                    </a>
+                  <li key={src.label}>
+                    {src.url ? (
+                      <a
+                        href={src.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-waabi-pink hover:underline underline-offset-2"
+                      >
+                        {src.label}
+                      </a>
+                    ) : (
+                      <cite className="not-italic">{src.label}</cite>
+                    )}
                     {src.date && <span className="text-black/55 dark:text-white/55"> — {src.date}</span>}
                   </li>
                 ))}

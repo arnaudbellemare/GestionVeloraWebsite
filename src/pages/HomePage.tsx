@@ -27,6 +27,11 @@ const FromInspirationSection = lazy(() =>
     default: module.FromInspirationSection,
   }))
 );
+const FeeCalculatorSection = lazy(() =>
+  import("../components/FeeCalculatorSection").then((module) => ({
+    default: module.FeeCalculatorSection,
+  }))
+);
 const OurStandardsSection = lazy(() =>
   import("../components/OurStandardsSection").then((module) => ({
     default: module.OurStandardsSection,
@@ -126,6 +131,9 @@ function DeferredHomeSections() {
       </ViewportSection>
       <ViewportSection minHeight={760}>
         <WhatWeDoSection />
+      </ViewportSection>
+      <ViewportSection minHeight={760}>
+        <FeeCalculatorSection />
       </ViewportSection>
       <ViewportSection minHeight={760}>
         <OurStandardsSection />

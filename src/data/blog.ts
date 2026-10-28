@@ -21,7 +21,8 @@ export interface BlogSection {
 /** A primary source cited by a data study. */
 export interface BlogSource {
   label: string;
-  url: string;
+  /** Omitted for commercial sources we cite by name without linking. */
+  url?: string;
   /** Date the source was published or consulted, as displayed. */
   date?: string;
 }
@@ -1819,7 +1820,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             "Au-delà du REQ, plusieurs autres vérifications s'imposent : assurez-vous que l'entreprise détient une assurance responsabilité civile professionnelle (erreurs et omissions) adéquate — au minimum 1 M$ par sinistre est la norme dans l'industrie. Vérifiez aussi l'existence d'une assurance détournement si le gestionnaire gère des fonds en fiducie pour votre compte.",
             "Consultez les avis sur Google, le registre du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec) pour les gestionnaires de copropriété, et demandez au moins deux références récentes auprès de clients comparables. Un gestionnaire sérieux fournit ces informations spontanément et encourage les vérifications indépendantes.",
-            "Gestion Velora est immatriculée au REQ, détient une assurance responsabilité civile professionnelle, est membre du RGCQ et opère en toute transparence. Notre NEQ, nos assurances et nos références sont disponibles sur demande. Nous croyons que la confiance se mérite par la vérification.",
+            "Gestion Velora est immatriculée au REQ, détient une assurance responsabilité civile professionnelle et opère en toute transparence. Notre NEQ, nos assurances et nos références sont disponibles sur demande. Nous croyons que la confiance se mérite par la vérification.",
           ],
         },
       ],
@@ -1857,7 +1858,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             "Beyond the REQ, several verifications matter: confirm the company holds adequate professional liability insurance (errors and omissions) — at least $1M per occurrence is the industry standard. Verify fidelity insurance exists if the manager holds funds in trust on your behalf.",
             "Check Google reviews, the RGCQ registry for condo managers, and request at least two recent references from comparable clients. A serious manager provides this information proactively and encourages independent verification.",
-            "Gestion Velora is registered with the REQ, holds professional liability insurance, is an RGCQ member, and operates with full transparency. Our NEQ, insurance details, and references are available on request. We believe trust is earned through verification, not through sales pitches.",
+            "Gestion Velora is registered with the REQ, holds professional liability insurance, and operates with full transparency. Our NEQ, insurance details, and references are available on request. We believe trust is earned through verification, not through sales pitches.",
           ],
         },
       ],

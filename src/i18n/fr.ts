@@ -8,7 +8,7 @@ export const fr = {
     line2: "Notre affaire.",
     subtitle:
       "Spécialistes des syndicats de copropriété : AGA, fonds de prévoyance et Loi 16. Aussi location et Airbnb, avec une équipe disponible 24/7.",
-    trustLine: "Membre du RGCQ.",
+    trustLine: "Immatriculée au REQ.",
     trustLink: "Rencontrer le fondateur",
     ctaDiscover: "Voir ce que nous faisons",
     ctaContact: "Parler à l'équipe",
@@ -17,6 +17,42 @@ export const fr = {
     imageTitle: "Gestion immobilière résidentielle à Montréal — Gestion Velora",
   },
   // Stats
+  feeCalculator: {
+    eyebrow: "Estimation instantanée",
+    title: "Combien coûte la gestion de votre copropriété ?",
+    lead: "Entrez le nombre d’unités de votre syndicat et obtenez votre tarif mensuel à l’écran. Nos prix sont publics : à partir de 33 $ par unité par mois, avant taxes, pour les immeubles de 6 unités et plus.",
+    rates: {
+      base: "À partir de",
+      upper: "Selon le mandat, jusqu’à",
+      integrations: "Avec intégrations applicatives",
+    },
+    perUnit: "/ unité / mois, avant taxes",
+    includedHeading: "Compris dans le tarif mensuel",
+    included: {
+      aga: "Assemblée générale annuelle et procès-verbaux",
+      reports: "Rapports financiers mensuels",
+      registers: "Registres et perception des charges",
+      reserve: "Fonds de prévoyance et suivi Loi 16",
+      tenders: "Appels d’offres et coordination des travaux",
+      emergency: "Ligne d’urgence 24/7",
+    },
+    footnote: "Le montant final dépend des spécificités du mandat.",
+    fullGridLink: "Voir la grille complète",
+    inputLabel: "Nombre d’unités",
+    inputHelp: "Le nombre de fractions résidentielles de votre copropriété.",
+    inputPlaceholder: "ex. 24",
+    integrationsToggle: "Intégrations applicatives et portail copropriétaires",
+    integrationsNote: "(jusqu’à 40 $ / unité / mois)",
+    resultLabel: "Votre tarif estimé pour {{units}} unités",
+    perMonth: "/ mois",
+    rangeLine: "De {{from}} à {{to}} par mois selon les spécificités du mandat ({{rateFrom}} à {{rateTo}} par unité).",
+    annualLine: "Soit {{from}} à {{to}} par année, avant taxes.",
+    tooSmall: "Nos mandats de copropriété commencent à {{min}} unités. Pour un plus petit immeuble, écrivez-nous : nous vous dirigerons vers la bonne solution.",
+    emptyState: "Entrez votre nombre d’unités pour voir votre tarif.",
+    ctaQuote: "Demander une proposition",
+    ctaCompare: "Comparer avec 16 firmes du Québec",
+    disclaimer: "Estimation indicative, avant taxes. Une soumission écrite vous est remise après une rencontre de 30 minutes avec votre conseil, sans engagement.",
+  },
   stats: {
     units: "Unités sous gestion",
     buildings: "Immeubles sous gestion",
@@ -40,7 +76,7 @@ export const fr = {
     citationMontreal: "Ville de Montréal — hébergement touristique de courte durée",
     citationCitq: "CITQ — enregistrement des établissements d’hébergement touristique",
     verifiedBy: "Contenu vérifié par",
-    authorRole: "fondateur de Gestion Velora et membre du RGCQ",
+    authorRole: "fondateur de Gestion Velora",
     updated: "Mis à jour le 31 août 2026",
     trustLinksIntro: "Vérifier notre transparence :",
     contactLink: "contact",
@@ -230,7 +266,7 @@ export const fr = {
     members: [
       {
         name: "Arnaud Bellemare",
-        role: "FONDATEUR · MEMBRE RGCQ",
+        role: "FONDATEUR",
         bio: ARTICLE_AUTHOR_BIO.fr,
       },
     ],
@@ -301,7 +337,7 @@ export const fr = {
     {
       question: "Comment choisir un gestionnaire immobilier à Montréal ?",
       answer:
-        "Choisissez un gestionnaire immobilier selon la transparence des rapports, la réactivité, l'expertise en réglementation québécoise (Loi sur la copropriété, TAL) et les références vérifiables. Privilégiez un gestionnaire membre du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), l'organisme de référence en gouvernance des copropriétés au Québec. Pour un syndicat, une location longue durée ou un Airbnb, exigez des processus documentés, une équipe disponible et une approche orientée données.",
+        "Choisissez un gestionnaire immobilier selon la transparence des rapports, la réactivité, l'expertise en réglementation québécoise (Loi sur la copropriété, TAL) et les références vérifiables. Consultez les lignes directrices du RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), l'organisme de référence en gouvernance des copropriétés au Québec, pour savoir quoi exiger. Pour un syndicat, une location longue durée ou un Airbnb, exigez des processus documentés, une équipe disponible et une approche orientée données.",
     },
     {
       question: "Gestion locative : gérer seul ou déléguer ?",

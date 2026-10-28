@@ -61,7 +61,7 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
     fr: {
       metaTitle: "À propos de Gestion Velora | Firme de gestion immobilière à Montréal",
       metaDescription:
-        "Arnaud Bellemare est fondateur de Gestion Velora et membre du RGCQ. Il écrit sur la gouvernance de copropriété, la gestion locative et la réglementation immobilière au Québec.",
+        "Arnaud Bellemare est fondateur de Gestion Velora. Il écrit sur la gouvernance de copropriété, la gestion locative et la réglementation immobilière au Québec.",
       title: "À propos de Gestion Velora",
       sections: [
         {
@@ -132,11 +132,11 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
           ],
         },
         {
-          heading: "Affiliations professionnelles",
+          heading: "Références sectorielles",
           blocks: [
             {
               kind: "p",
-              text: "Gestion Velora est membre du RGCQ — Regroupement des gestionnaires et copropriétaires du Québec, organisme de référence pour la gouvernance des copropriétés au Québec.",
+              text: "Gestion Velora s’appuie sur les lignes directrices du RGCQ — Regroupement des gestionnaires et copropriétaires du Québec, organisme de référence pour la gouvernance des copropriétés au Québec — ainsi que sur le Code civil du Québec et la Loi 16. Gestion Velora n’est pas affiliée au RGCQ.",
             },
           ],
         },
@@ -157,7 +157,7 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
     en: {
       metaTitle: "About Gestion Velora | Montreal Property Management Firm",
       metaDescription:
-        "Arnaud Bellemare founded Gestion Velora and is a member of RGCQ. He writes about condo governance, rental management, and Quebec property regulations.",
+        "Arnaud Bellemare founded Gestion Velora. He writes about condo governance, rental management, and Quebec property regulations.",
       title: "About Gestion Velora",
       sections: [
         {
@@ -224,11 +224,11 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
           ],
         },
         {
-          heading: "Professional affiliations",
+          heading: "Industry references",
           blocks: [
             {
               kind: "p",
-              text: "Gestion Velora is a member of RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec’s reference organization for condo governance and professional standards.",
+              text: "Gestion Velora follows the guidelines of the RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec’s reference organization for condo governance and professional standards, together with the Civil Code of Québec and Bill 16. Gestion Velora is not affiliated with the RGCQ.",
             },
           ],
         },

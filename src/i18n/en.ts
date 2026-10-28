@@ -8,7 +8,7 @@ export const en = {
     line2: "in all tranquility.",
     subtitle:
       "Condo syndicate specialists: AGMs, reserve funds, and Bill 16. Rental and Airbnb management too, with a team available 24/7.",
-    trustLine: "RGCQ member.",
+    trustLine: "REQ-registered firm.",
     trustLink: "Meet the founder",
     ctaDiscover: "See how we work",
     ctaContact: "Talk to the team",
@@ -17,6 +17,42 @@ export const en = {
     imageTitle: "Residential property management in Montreal — Gestion Velora",
   },
   // Stats - conversion language: 98% occupancy, 24/7, transparent
+  feeCalculator: {
+    eyebrow: "Instant estimate",
+    title: "How much does managing your condo cost?",
+    lead: "Enter your syndicate’s unit count and see your monthly rate on screen. Our prices are public: from $33 per unit per month, before taxes, for buildings of 6 units and more.",
+    rates: {
+      base: "Starting at",
+      upper: "Depending on the mandate, up to",
+      integrations: "With app integrations",
+    },
+    perUnit: "/ unit / month, before taxes",
+    includedHeading: "Included in the monthly rate",
+    included: {
+      aga: "Annual general meeting and minutes",
+      reports: "Monthly financial reports",
+      registers: "Registers and fee collection",
+      reserve: "Reserve fund and Bill 16 follow-up",
+      tenders: "Tenders and work coordination",
+      emergency: "24/7 emergency line",
+    },
+    footnote: "The final amount depends on the specifics of the mandate.",
+    fullGridLink: "See the full pricing grid",
+    inputLabel: "Number of units",
+    inputHelp: "The number of residential fractions in your condominium.",
+    inputPlaceholder: "e.g. 24",
+    integrationsToggle: "App integrations and owner portal",
+    integrationsNote: "(up to $40 / unit / month)",
+    resultLabel: "Your estimated rate for {{units}} units",
+    perMonth: "/ month",
+    rangeLine: "From {{from}} to {{to}} per month depending on the mandate ({{rateFrom}} to {{rateTo}} per unit).",
+    annualLine: "That is {{from}} to {{to}} per year, before taxes.",
+    tooSmall: "Our condo mandates start at {{min}} units. For a smaller building, write to us and we will point you to the right solution.",
+    emptyState: "Enter your unit count to see your rate.",
+    ctaQuote: "Request a proposal",
+    ctaCompare: "Compare with 16 Quebec firms",
+    disclaimer: "Indicative estimate, before taxes. A written quote follows a 30-minute meeting with your board, with no obligation.",
+  },
   stats: {
     units: "Units under management",
     buildings: "Buildings under management",
@@ -40,7 +76,7 @@ export const en = {
     citationMontreal: "City of Montreal — short-term tourist accommodation",
     citationCitq: "CITQ — tourist accommodation registration",
     verifiedBy: "Content reviewed by",
-    authorRole: "founder of Gestion Velora and RGCQ member",
+    authorRole: "founder of Gestion Velora",
     updated: "Updated August 31, 2026",
     trustLinksIntro: "Review our trust information:",
     contactLink: "contact",
@@ -228,7 +264,7 @@ export const en = {
     members: [
       {
         name: "Arnaud Bellemare",
-        role: "FOUNDER · RGCQ MEMBER",
+        role: "FOUNDER",
         bio: ARTICLE_AUTHOR_BIO.en,
       },
     ],
@@ -299,7 +335,7 @@ export const en = {
     {
       question: "How to choose a property manager in Montreal?",
       answer:
-        "Choose a property manager based on report transparency, responsiveness, expertise in Quebec regulation (condo law, TAL), and verifiable references. Look for membership in the RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec's reference body for condominium governance standards. For condo boards, long-term rentals, or Airbnb, demand documented processes, an available team, and a data-driven approach.",
+        "Choose a property manager based on report transparency, responsiveness, expertise in Quebec regulation (condo law, TAL), and verifiable references. Use the guidelines of the RGCQ (Regroupement des gestionnaires et copropriétaires du Québec), Quebec's reference body for condominium governance standards, to know what to demand. For condo boards, long-term rentals, or Airbnb, demand documented processes, an available team, and a data-driven approach.",
     },
     {
       question: "Rental management: self-manage or delegate?",
