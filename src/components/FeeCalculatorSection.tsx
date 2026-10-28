@@ -78,8 +78,8 @@ export function FeeCalculatorSection() {
             <div className="mt-8 grid grid-cols-3 divide-x divide-nd-border border-y border-nd-border">
               {rateCards.map((card, i) => (
                 <ScrollReveal key={card.key} delay={0.05 + i * 0.06}>
-                  <div className="py-5 px-3 sm:px-5 first:pl-0 last:pr-0 min-w-0">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary mb-2 leading-snug">
+                  <div className="flex h-full flex-col py-5 px-3 sm:px-5 first:pl-0 last:pr-0 min-w-0">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary mb-2 leading-snug min-h-[2.75em]">
                       {t(`feeCalculator.rates.${card.key}`)}
                     </p>
                     <p className="font-stat-numeral font-semibold text-2xl sm:text-3xl text-nd-display leading-none tracking-[-0.02em]">
