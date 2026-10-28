@@ -75,11 +75,17 @@ export function FeeCalculatorSection() {
               </p>
             </ScrollReveal>
 
-            <div className="mt-8 grid grid-cols-3 divide-x divide-nd-border border-y border-nd-border">
+            {/* Subgrid: the label, price and unit rows share one height across the three cards,
+                so a label that wraps never pushes its price out of line with the others. */}
+            <div className="mt-8 grid grid-cols-3 border-y border-nd-border">
               {rateCards.map((card, i) => (
-                <ScrollReveal key={card.key} delay={0.05 + i * 0.06}>
-                  <div className="flex h-full flex-col py-5 px-3 sm:px-5 first:pl-0 last:pr-0 min-w-0">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary mb-2 leading-snug min-h-[2.75em]">
+                <ScrollReveal key={card.key} delay={0.05 + i * 0.06} className="contents">
+                  <div
+                    className={`grid grid-rows-subgrid row-span-3 py-5 min-w-0 ${
+                      i === 0 ? "pr-3 sm:pr-5" : i === rateCards.length - 1 ? "pl-3 sm:pl-5 border-l border-nd-border" : "px-3 sm:px-5 border-l border-nd-border"
+                    }`}
+                  >
+                    <p className="self-end font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary mb-2 leading-snug">
                       {t(`feeCalculator.rates.${card.key}`)}
                     </p>
                     <p className="font-stat-numeral font-semibold text-2xl sm:text-3xl text-nd-display leading-none tracking-[-0.02em]">
