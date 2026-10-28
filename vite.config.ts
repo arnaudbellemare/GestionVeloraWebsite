@@ -1,3 +1,5 @@
+import { readdirSync, readFileSync, existsSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -44,8 +46,51 @@ function geoHtmlOptimizations(): Plugin {
   }
 }
 
+/**
+ * Dev-only stand-in for /api/plex-radar. The Vercel function needs a Blob
+ * store, so `vite dev` serves the archived releases in claudedocs instead and
+ * builds the benchmark tables from them with the same library the API uses.
+ */
+function plexRadarDevFeed(): Plugin {
+  const dir = resolve(__dirname, 'claudedocs/plex-radar-backup')
+  const releaseFiles = () => (existsSync(dir) ? readdirSync(dir) : [])
+    .filter((name) => /^\d{4}-\d{2}-\d{2}\.json$/.test(name))
+    .map((name) => name.replace(/\.json$/, ''))
+    .sort((a, b) => b.localeCompare(a))
+  return {
+    name: 'plex-radar-dev-feed',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const url = new URL(req.url ?? '/', 'http://localhost')
+        if (url.pathname !== '/api/plex-radar') return next()
+        const json = (status: number, payload: unknown) => {
+          res.statusCode = status
+          res.setHeader('Content-Type', 'application/json; charset=utf-8')
+          res.setHeader('Cache-Control', 'no-store')
+          res.end(JSON.stringify(payload))
+        }
+        const releases = releaseFiles()
+        if (releases.length === 0) return json(404, { error: 'no archived releases in claudedocs/plex-radar-backup' })
+        if (url.searchParams.has('history')) return json(200, { releases })
+        if (url.searchParams.has('benchmarks')) {
+          const lib = await server.ssrLoadModule('/src/lib/plex/radar-benchmarks.ts')
+          const feeds = releases.map((release) => JSON.parse(readFileSync(resolve(dir, `${release}.json`), 'utf8')))
+          return json(200, lib.buildBenchmarks(feeds))
+        }
+        const requested = url.searchParams.get('release')
+        const release = requested && releases.includes(requested) ? requested : releases[0]
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json; charset=utf-8')
+        res.setHeader('Cache-Control', 'no-store')
+        res.end(readFileSync(resolve(dir, `${release}.json`)))
+      })
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), geoHtmlOptimizations()],
+  plugins: [react(), geoHtmlOptimizations(), plexRadarDevFeed()],
   build: {
     /** Smaller main-thread work on first paint: split heavy vendors for parallel cache + parse. */
     rollupOptions: {
