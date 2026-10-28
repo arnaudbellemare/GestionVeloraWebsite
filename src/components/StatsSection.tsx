@@ -5,7 +5,7 @@ import { CountUp } from "./CountUp";
 import { useGoToContact } from "../hooks/useGoToContact";
 
 const statKeys = [
-  { value: "500", key: "units" },
+  { value: "200+", key: "units" },
   { value: "10+", key: "buildings" },
   { value: "98%", key: "occupancy" },
   { value: "24/7", key: "response" },
