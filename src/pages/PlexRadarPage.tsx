@@ -245,7 +245,7 @@ const PRICE_CAPS = [500_000, 750_000, 1_000_000, 1_500_000, 2_500_000];
 const CAP_FLOORS = [0.03, 0.04, 0.05, 0.06];
 const HIST_BINS = 16;
 
-const GEIST_URL = "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap";
+const GEIST_URL = "https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap";
 
 /** Loads Geist only for this page, so the rest of the site keeps its font-free first paint. */
 function useGeist() {
