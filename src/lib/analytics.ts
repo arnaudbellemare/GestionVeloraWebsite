@@ -55,6 +55,7 @@ export function initAnalytics() {
   analyticsBooted = true;
   ensureDataLayer();
   loadGoogleAnalytics();
+  trackContactLinkClicks();
   trackAIReferralVisit();
   initWebVitalsTracking();
 }
@@ -103,6 +104,20 @@ function loadGoogleAnalytics() {
   };
   window.gtag("js", new Date());
   window.gtag("config", GA4_MEASUREMENT_ID, { send_page_view: false });
+}
+
+function trackContactLinkClicks() {
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest("a[href]");
+    if (!(link instanceof HTMLAnchorElement)) return;
+    const href = link.getAttribute("href")?.toLowerCase();
+    if (href?.startsWith("tel:")) {
+      pushDataLayer({ event: "contact_phone_click" });
+    } else if (href?.startsWith("mailto:")) {
+      pushDataLayer({ event: "contact_email_click" });
+    }
+  });
 }
 
 function trackAIReferralVisit() {
