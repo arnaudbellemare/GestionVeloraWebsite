@@ -2,7 +2,7 @@ import { blogPosts } from "./blog";
 import type { ServiceSlug } from "./services";
 
 const ARTICLE_SLUGS: Record<ServiceSlug, string[]> = {
-  "syndicat-copropriete": ["fonds-prevoyance-copropriete-quebec", "assemblee-generale-copropriete-guide", "cout-gestionnaire-copropriete-montreal"],
+  "syndicat-copropriete": ["erreurs-syndicats-autogeres-loi-16", "fonds-prevoyance-copropriete-quebec", "cout-gestionnaire-copropriete-montreal"],
   "gestion-condo": ["fonds-prevoyance-copropriete-quebec", "gestion-condo-autogestion-ou-gestionnaire", "cout-gestionnaire-copropriete-montreal"],
   "gestion-copropriete": ["fonds-prevoyance-copropriete-quebec", "gestion-condo-autogestion-ou-gestionnaire", "cout-gestionnaire-copropriete-montreal"],
   airbnb: ["airbnb-montreal-permis-reglementation"],

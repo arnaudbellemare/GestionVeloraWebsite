@@ -2,6 +2,7 @@ import { blogCoverPath } from "../lib/blogImages";
 import { condoGovernanceBlogPosts } from "./blog-condo-governance";
 import { feeStudyBlogPosts } from "./blog-fee-study-2026";
 import { tenantRiskBlogPosts } from "./blog-tenant-risk";
+import { condoAdvertorial } from "./blog-condo-advertorial";
 
 /** A data table rendered after a section's paragraphs (fee studies, benchmarks). */
 export interface BlogTable {
@@ -78,6 +79,7 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  condoAdvertorial,
   ...feeStudyBlogPosts,
   ...condoGovernanceBlogPosts,
   ...tenantRiskBlogPosts,

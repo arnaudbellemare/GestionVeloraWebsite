@@ -269,6 +269,36 @@ export function ComparisonPage() {
         </div>
       </section>
 
+      {page.agencyRows && (
+        <section id="agency-comparison" className="px-6 lg:px-16 py-16 lg:py-20 border-y border-nd-border bg-nd-surface">
+          <div className="max-w-[90rem] mx-auto">
+            <h2 className="font-sans font-semibold text-3xl lg:text-4xl text-nd-display leading-tight mb-4">
+              {isEn ? "Gestion Velora and another management agency" : "Gestion Velora et une autre agence de gestion"}
+            </h2>
+            <p className="font-sans text-base text-black/70 dark:text-white/70 max-w-3xl mb-8">
+              {isEn ? "Use this checklist to compare written proposals. Other agencies' prices and services vary; none is rated here." : "Utilisez cette grille pour comparer les propositions écrites. Les prix et services des autres agences varient; aucune agence n'est classée ici."}
+            </p>
+            <div className="overflow-x-auto border border-black/10 dark:border-white/10 bg-white dark:bg-white/[0.02]">
+              <table className="w-full min-w-[680px] border-collapse text-left">
+                <thead><tr className="border-b border-black/10 dark:border-white/10">
+                  <th scope="col" className="p-4 font-semibold">{isEn ? "Question" : "Critère"}</th>
+                  <th scope="col" className="p-4 font-semibold">Gestion Velora</th>
+                  <th scope="col" className="p-4 font-semibold">{isEn ? "Another agency" : "Autre agence"}</th>
+                </tr></thead>
+                <tbody>{page.agencyRows.map((row) => (
+                  <tr key={row.itemEn} className="border-b border-black/10 dark:border-white/10 last:border-0">
+                    <th scope="row" className="p-4 align-top">{copy(row.itemEn, row.itemFr)}</th>
+                    <td className="p-4 align-top">{copy(row.veloraEn, row.veloraFr)}</td>
+                    <td className="p-4 align-top">{copy(row.alternativeEn, row.alternativeFr)}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+            <p className="mt-4 text-sm text-black/65 dark:text-white/65">{copy(page.agencyRows[0].noteEn, page.agencyRows[0].noteFr)}</p>
+          </div>
+        </section>
+      )}
+
       {page.alternatives ? (
         <section id="alternatives-list" className="px-6 lg:px-16 py-16 lg:py-20 border-y border-nd-border bg-nd-surface">
           <div className="max-w-[90rem] mx-auto">
