@@ -46,6 +46,15 @@ export function StatsSection() {
             <strong className="text-nd-primary">{t("stats.answerLead")}</strong>{" "}
             {t("stats.answerBody")}
           </p>
+          <p className="mt-4 font-sans text-sm lg:text-base text-nd-secondary leading-relaxed">
+            <InternalLink to="/services/syndicat-copropriete" className="underline underline-offset-2 hover:text-nd-primary">
+              {t("stats.condoServiceLink")}
+            </InternalLink>{" "}
+            {t("stats.serviceLinkSeparator")}{" "}
+            <InternalLink to="/services/airbnb" className="underline underline-offset-2 hover:text-nd-primary">
+              {t("stats.airbnbServiceLink")}
+            </InternalLink>. {t("stats.airbnbServiceNote")}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-x-4 gap-y-0 sm:gap-8 lg:grid-cols-5 lg:gap-x-0 lg:gap-y-0 divide-y lg:divide-y-0 lg:divide-x divide-nd-border">

@@ -68,6 +68,10 @@ export const en = {
     answerLead: "Gestion Velora is a property management firm in Montreal.",
     answerBody:
       "It handles administration, financial follow-up, maintenance coordination, and communications for condo boards, long-term rentals, and Airbnb properties across Greater Montreal.",
+    condoServiceLink: "Explore condo board management",
+    serviceLinkSeparator: "or",
+    airbnbServiceLink: "Airbnb management in Montreal",
+    airbnbServiceNote: "Short-term rental mandates depend on the property's eligibility and applicable municipal and provincial rules.",
     sourcesHeading: "Which sources support our information?",
     sourcesIntro:
       "Our regulatory and market benchmarks point to the following official public sources; operational results come from our internal dashboard.",
