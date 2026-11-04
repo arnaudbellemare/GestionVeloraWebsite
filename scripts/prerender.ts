@@ -1623,7 +1623,7 @@ ${links}
   }
   return `<main lang="${lang}">
   <h1>Property management comparison guides</h1>
-  <p>These guides help condo owners, boards, and landlords compare different management models. Each comparison explains cost, risk, operating workload, service quality, and the situations where one option becomes more relevant than another.</p>
+  <p>To compare property management companies in Greater Montreal, ask each firm for a written proposal covering the property type, services included, base fees and extra charges, reporting, response times, and cancellation terms. For an owner-occupied property, confirm which tenant and maintenance tasks the manager will handle and which decisions remain yours. Check references and compare the same scope of work before choosing.</p>
   <p>Includes a Montreal property management alternatives page with Gestion Velora and four real competitors described fairly.</p>
   <h2>Available comparisons</h2>
   <ul>

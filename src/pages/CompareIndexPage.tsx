@@ -32,7 +32,7 @@ export function CompareIndexPage() {
           </h1>
           <p className="font-sans text-lg text-black/70 dark:text-white/70 max-w-3xl mb-14">
             {isEn
-              ? "Clear side-by-side frameworks for condo boards, landlords, and investors deciding between management models in Montreal."
+              ? "To compare property management companies in Greater Montreal, ask each firm for a written proposal covering the property type, services included, base fees and extra charges, reporting, response times, and cancellation terms. For an owner-occupied property, confirm which tenant and maintenance tasks the manager will handle and which decisions remain yours. Check references and compare the same scope of work before choosing."
               : "Des cadres de comparaison clairs pour les syndicats, proprietaires et investisseurs qui evaluent leurs options de gestion a Montreal."}
           </p>
         </ScrollReveal>
