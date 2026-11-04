@@ -1109,7 +1109,11 @@ function buildLocationMainHtml(
 ): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
   const h1 = fillLoc(locale === "fr" ? svc.h1Fr : svc.h1En, city, locale);
-  const desc = fillLoc(locale === "fr" ? svc.descFr : svc.descEn, city, locale);
+  const pageSlug = `${svc.slug}-${city.slug}`;
+  const desc =
+    locale === "en" && (pageSlug === "syndicat-copropriete-montreal" || pageSlug === "gestion-locative-westmount")
+      ? resolveLocation(pageSlug)!.descEn
+      : fillLoc(locale === "fr" ? svc.descFr : svc.descEn, city, locale);
   const cityName = locale === "fr" ? city.nameFr : city.nameEn;
 
   const inclTitle =

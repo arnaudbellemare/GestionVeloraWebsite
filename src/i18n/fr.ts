@@ -553,7 +553,7 @@ export const fr = {
       metaDescription:
         "Gestion Velora accompagne les syndicats de copropriété à Montréal avec une administration claire, financière et opérationnelle, disponible 24/7.",
       description:
-        "Gestion Velora est une firme spécialisée dans l'administration complète des syndicats de copropriétaires à Montréal. Nous assurons la régie administrative, financière et technique de votre copropriété : budget annuel, charges communes, fonds de prévoyance, assemblée générale annuelle (AGA), registre de copropriété, entretien des parties communes et conformité Loi 141. Votre gestionnaire attitré assure la transparence pour le conseil d'administration et chaque copropriétaire. Notre équipe administre plus de 200 unités réparties dans plus de 10 immeubles du Grand Montréal.",
+        "Gestion Velora accompagne les syndicats de copropriété à Montréal dans l'organisation de leur assemblée générale annuelle. L'équipe peut assurer la convocation et la tenue de l'assemblée, rédiger les procès-verbaux et faire le suivi des décisions du conseil d'administration. Le mandat peut aussi comprendre la gestion administrative et financière de la copropriété, le fonds de prévoyance et l'entretien des parties communes. Notre équipe administre plus de 200 unités réparties dans plus de 10 immeubles du Grand Montréal.",
       offerings: [
         {
           title: "Administration de syndicat de copropriété",

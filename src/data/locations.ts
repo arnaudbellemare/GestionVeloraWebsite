@@ -316,7 +316,12 @@ export function resolveLocation(slug: string): ResolvedLocation | null {
           h1Fr: fill(svc.h1Fr, city),
           h1En: fill(svc.h1En, city),
           descFr: fill(svc.descFr, city),
-          descEn: fill(svc.descEn, city),
+          descEn:
+            pageSlug === "syndicat-copropriete-montreal"
+              ? "Gestion Velora provides condominium management support to condo boards in Montréal. Its services include administrative and financial management, annual general meetings, budgets, reserve fund administration and coordination of common-area maintenance. Boards can discuss their building’s needs and the scope of a proposed mandate with the team."
+              : pageSlug === "gestion-locative-westmount"
+                ? "Gestion Velora provides rental property management in Westmount and the Montréal area, including tenant screening, lease administration, rent collection, maintenance coordination and monthly financial reporting. Owners can request a quote and discuss which responsibilities to include in their management agreement."
+                : fill(svc.descEn, city),
           metaTitleFr: buildMetaTitle(fill(svc.titleTmplFr, city)),
           metaTitleEn: buildMetaTitle(fill(svc.titleTmplEn, city)),
           metaDescFr: fill(svc.metaDescFr ?? svc.descFr, city),

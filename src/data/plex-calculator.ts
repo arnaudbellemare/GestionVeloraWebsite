@@ -429,7 +429,7 @@ export const REFERENCE_PAGE: Record<PlexLocale, {
     keywords:
       "droits de mutation Montréal 2026, taxe de bienvenue barème, mise de fonds duplex triplex Québec, SCHL ratio prêt-valeur, MLI Select points, hausse loyer TAL 2026, prix médian plex Montréal",
     intro:
-      "Les règles et les chiffres qui déterminent l'achat d'un immeuble à revenus au Québec, avec la source de chacun. Ces valeurs sont indexées ou révisées chaque année : vérifiez-les auprès de la source avant de déposer une offre.",
+      "Acheter un plex à Montréal peut être rentable en 2026, mais la réponse dépend du prix payé, des loyers réels, du financement et des dépenses prévues. Avant d'acheter, calculez les revenus nets après taxes, assurances, entretien, vacance et frais de gestion, puis comparez-les au coût de votre hypothèque et aux travaux à prévoir. Un rendement positif sur papier ne garantit pas un flux de trésorerie positif. Vérifiez les chiffres et les règles auprès de leurs sources avant de déposer une offre.",
     figuresHeading: "Chiffres de référence",
     figuresNote:
       "Dernière vérification auprès des sources primaires : juillet 2026. Les barèmes de droits de mutation et les seuils sont indexés annuellement.",
