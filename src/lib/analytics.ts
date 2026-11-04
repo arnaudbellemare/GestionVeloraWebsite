@@ -98,7 +98,9 @@ function loadGoogleAnalytics() {
   script.dataset.analyticsLoader = "ga4";
   document.head.appendChild(script);
 
-  window.gtag = (...args: unknown[]) => ensureDataLayer().push(args);
+  window.gtag = function (..._args: unknown[]) {
+    ensureDataLayer().push(arguments);
+  };
   window.gtag("js", new Date());
   window.gtag("config", GA4_MEASUREMENT_ID, { send_page_view: false });
 }
