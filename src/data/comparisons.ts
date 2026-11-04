@@ -376,6 +376,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       },
     ],
     internalLinks: [
+      { labelEn: "Free Law 16 checklist", labelFr: "Liste de vérification Loi 16 gratuite", to: "/blog/checklist-loi-16-syndicat-copropriete" },
       { labelEn: "Five self-management mistakes", labelFr: "Cinq erreurs en autogestion", to: "/blog/erreurs-syndicats-autogeres-loi-16" },
       { labelEn: "Condo board management", labelFr: "Gestion de syndicat", to: "/services/syndicat-copropriete" },
       { labelEn: "Pricing", labelFr: "Tarifs", to: "/tarifs" },

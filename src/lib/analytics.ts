@@ -61,7 +61,7 @@ export function initAnalytics() {
 
 export function trackPageView(pagePath: string, pageTitle = document.title) {
   if (typeof window === "undefined") return;
-  ensureDataLayer().push({
+  pushDataLayer({
     event: "page_view",
     page_path: pagePath,
     page_title: pageTitle,
@@ -316,7 +316,7 @@ export function trackGenerateLead(data: {
   submit_method: "api" | "mailto";
 }) {
   pushDataLayer({
-    event: "generate_lead",
+    event: data.submit_method === "api" ? "generate_lead" : "contact_email_draft_opened",
     lead_type: "contact_form",
     topic: data.topic,
     inquiry: data.inquiry || "unspecified",

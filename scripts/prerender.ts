@@ -1225,10 +1225,10 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   // Data studies ship every section, table and source in the static HTML so a
   // crawler or citing journalist gets the numbers without running the app.
   const isStudy = Boolean(loc.study);
-  const isAdvertorial = slug === "erreurs-syndicats-autogeres-loi-16";
+  const isAdvertorial = ["erreurs-syndicats-autogeres-loi-16", "checklist-loi-16-syndicat-copropriete"].includes(slug);
   const sectionHtml = (isStudy || isAdvertorial ? loc.sections : loc.sections.slice(0, 4))
     .map((section) => {
-      const showPriorityLinks = ["fonds-prevoyance-copropriete-quebec", "cout-gestionnaire-copropriete-montreal", "augmentation-loyer-montreal-regles-calcul-tal"].includes(slug);
+      const showPriorityLinks = ["fonds-prevoyance-copropriete-quebec", "cout-gestionnaire-copropriete-montreal", "augmentation-loyer-montreal-regles-calcul-tal", "choisir-gestionnaire-condo-montreal"].includes(slug);
       const paras = isAdvertorial
         ? section.paragraphs.map((p) => `  <p>${richToAmpHtml(p, locale)}</p>`).join("\n")
         : isStudy
