@@ -1225,10 +1225,13 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   // Data studies ship every section, table and source in the static HTML so a
   // crawler or citing journalist gets the numbers without running the app.
   const isStudy = Boolean(loc.study);
-  const sectionHtml = (isStudy ? loc.sections : loc.sections.slice(0, 4))
+  const isAdvertorial = slug === "erreurs-syndicats-autogeres-loi-16";
+  const sectionHtml = (isStudy || isAdvertorial ? loc.sections : loc.sections.slice(0, 4))
     .map((section) => {
       const showPriorityLinks = ["fonds-prevoyance-copropriete-quebec", "cout-gestionnaire-copropriete-montreal", "augmentation-loyer-montreal-regles-calcul-tal"].includes(slug);
-      const paras = isStudy
+      const paras = isAdvertorial
+        ? section.paragraphs.map((p) => `  <p>${richToAmpHtml(p, locale)}</p>`).join("\n")
+        : isStudy
         ? section.paragraphs.map((p) => `  <p>${escapeHtml(richToText(p))}</p>`).join("\n")
         : `  <p>${section.paragraphs[0] ? (showPriorityLinks ? richToAmpHtml(section.paragraphs[0], locale) : escapeHtml(richToText(section.paragraphs[0]).slice(0, 600))) : ""}</p>`;
       const table = section.table ? `\n  ${tableToHtml(section.table)}` : "";
@@ -1518,6 +1521,12 @@ function buildComparisonMainHtml(locale: "fr" | "en", page: (typeof COMPARISON_P
   <p>${escapeHtml(note)}</p>`;
     })
     .join("\n");
+  const agencyHtml = page.agencyRows ? `  <h2>${locale === "fr" ? "Gestion Velora et une autre agence de gestion" : "Gestion Velora and another management agency"}</h2>
+  <p>${locale === "fr" ? "Les prix et services des autres agences varient; aucune agence n'est classée ici." : "Other agencies' prices and services vary; none is rated here."}</p>
+  <table><thead><tr><th>${locale === "fr" ? "Critère" : "Question"}</th><th>Gestion Velora</th><th>${locale === "fr" ? "Autre agence" : "Another agency"}</th></tr></thead><tbody>
+${page.agencyRows.map((row) => `    <tr><th>${escapeHtml(locale === "fr" ? row.itemFr : row.itemEn)}</th><td>${escapeHtml(locale === "fr" ? row.veloraFr : row.veloraEn)}</td><td>${escapeHtml(locale === "fr" ? row.alternativeFr : row.alternativeEn)}</td></tr>`).join("\n")}
+  </tbody></table>
+  <p>${escapeHtml(locale === "fr" ? page.agencyRows[0].noteFr : page.agencyRows[0].noteEn)}</p>` : "";
   const storyTitle = locale === "fr" ? page.switchingStory.titleFr : page.switchingStory.titleEn;
   const storyContext = locale === "fr" ? page.switchingStory.contextFr : page.switchingStory.contextEn;
   const storyActions = locale === "fr" ? page.switchingStory.actionsFr : page.switchingStory.actionsEn;
@@ -1587,6 +1596,7 @@ ${featureRowsHtml}
   </table>
   <h2>${locale === "fr" ? "Comparaison des prix" : "Pricing comparison"}</h2>
 ${pricingRowsHtml}
+${agencyHtml}
 ${alternativesHtml}
   <h2>${locale === "fr" ? "Histoire de bascule" : "Switching story"}</h2>
   <h3>${escapeHtml(storyTitle)}</h3>

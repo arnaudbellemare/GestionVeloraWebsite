@@ -139,27 +139,28 @@ export interface ComparisonPageData {
   faqs: ComparisonFaq[];
   internalLinks: ComparisonInternalLink[];
   alternatives?: ComparisonAlternative[];
+  agencyRows?: ComparisonPricingRow[];
 }
 
 export const COMPARISON_PAGES: ComparisonPageData[] = [
   {
     slug: "gestionnaire-vs-autogestion-condo",
     datePublished: "2026-07-03",
-    dateModified: "2026-10-14",
-    factsCheckedOn: "2026-10-14",
+    dateModified: "2026-11-04",
+    factsCheckedOn: "2026-11-04",
     methodEn:
       "Gestion Velora's fee basis and 6-unit minimum were read from its own pricing page on the date shown. The self-management side describes board obligations under the Civil Code of Québec and is not a test of any other firm.",
     methodFr:
       "La base tarifaire et le minimum de 6 unités de Gestion Velora proviennent de sa page Tarifs à la date indiquée. Le volet autogestion décrit les obligations du conseil selon le Code civil du Québec et ne constitue pas un test d'une autre firme.",
     verdict: {
       chooseVeloraEn:
-        "Choose a professional manager if no director can carry the treasurer and vendor-follow-up role, or if the building has more than about 12 units and its Loi 16 deliverables (maintenance logbook, reserve-fund study) are still outstanding.",
+        "Consider a professional manager if the board lacks time for finances, vendors or its Law 16 preparations. Compare the scope and cost with occasional specialist help.",
       chooseVeloraFr:
-        "Choisissez un gestionnaire si aucun administrateur ne peut porter la trésorerie et le suivi des fournisseurs, ou si l'immeuble compte plus d'une douzaine d'unités et que ses livrables Loi 16 (carnet d'entretien, étude du fonds de prévoyance) restent à produire.",
+        "Envisagez un gestionnaire si le conseil manque de temps pour les finances, les fournisseurs ou la préparation Loi 16. Comparez le mandat et son coût à une aide spécialisée ponctuelle.",
       chooseAlternativeEn:
-        "Stay self-managed if the building has fewer than 6 units, few incidents, and a director with accounting and vendor experience who intends to stay on the board. Gestion Velora does not take mandates under 6 units.",
+        "Self-management can suit a board with time, skills and a succession plan. Gestion Velora's condo mandates start at 6 units; smaller boards can consider other providers or occasional help.",
       chooseAlternativeFr:
-        "Restez en autogestion si l'immeuble compte moins de 6 unités, peu d'incidents, et un administrateur expérimenté en comptabilité et en fournisseurs qui compte rester au CA. Gestion Velora n'accepte pas de mandat sous 6 unités.",
+        "L'autogestion peut convenir à un conseil disponible, compétent et doté d'une relève. Les mandats de Gestion Velora commencent à 6 unités; les petits syndicats peuvent aussi envisager d'autres fournisseurs ou une aide ponctuelle.",
       notWorthSwitchingEn:
         "Switching is probably not worth it if your current setup already produces annual financial statements, keeps the register current, and follows a dated compliance calendar, and the only pain is occasional admin work.",
       notWorthSwitchingFr:
@@ -169,13 +170,14 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       { nameEn: "Gestion Velora pricing page", nameFr: "Page Tarifs de Gestion Velora", url: "/tarifs", basis: "firsthand", dateChecked: "2026-10-14" },
       { nameEn: "Gestion Velora condo board management service", nameFr: "Service de gestion de syndicat de Gestion Velora", url: "/services/syndicat-copropriete", basis: "firsthand", dateChecked: "2026-10-14" },
       { nameEn: "Civil Code of Québec, Book IV, divided co-ownership", nameFr: "Code civil du Québec, Livre IV, copropriété divise", url: "https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991", basis: "regulatory", dateChecked: "2026-10-14" },
+      { nameEn: "Québec government co-ownership guidance", nameFr: "Mesures du gouvernement du Québec sur la copropriété", url: "https://www.quebec.ca/habitation-territoire/achat-vente/condos-coproprietes/mesures-coproprietes", basis: "regulatory", dateChecked: "2026-11-04" },
     ],
     titleEn: "Condo manager vs self-management in Montreal",
     titleFr: "Gestionnaire de copropriete vs autogestion a Montreal",
     descriptionEn:
-      "Choose a condo manager if no director can carry treasury and vendor follow-up, or above 12 units with Loi 16 work pending; stay self-managed under 6 units.",
+      "Compare self-management, occasional help and a professional manager for your Quebec condo board, including costs, responsibilities and Law 16 preparation.",
     descriptionFr:
-      "Choisissez un gestionnaire si aucun administrateur ne peut porter trésorerie et fournisseurs, ou au-delà de 12 unités; restez en autogestion sous 6 unités.",
+      "Comparez autogestion, aide ponctuelle et gestionnaire pour votre syndicat : coûts, responsabilités du conseil et préparation à la Loi 16.",
     h1En: "Condo manager vs self-management in Montreal",
     h1Fr: "Gestionnaire de copropriete vs autogestion a Montreal",
     heroEn: "The professional-management alternative for condo boards that need compliance discipline without losing strategic control.",
@@ -225,12 +227,12 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
         pointsEn: [
           "Direct fees are lower in self-management, but volunteer workload rises sharply.",
           "Professional management stabilizes budget forecasting and vendor control.",
-          "One avoided major error can offset multiple months of management fees.",
+            "Ask each provider for the services and additional fees in writing.",
         ],
         pointsFr: [
           "Les frais directs sont plus bas en autogestion, mais la charge benevole augmente vite.",
           "La gestion professionnelle stabilise le budget et le pilotage fournisseurs.",
-          "Une erreur majeure evitee peut compenser plusieurs mois d'honoraires.",
+          "Demandez à chaque fournisseur les services et frais additionnels par écrit.",
         ],
       },
       {
@@ -298,8 +300,8 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       {
         itemEn: "Monthly operating cost",
         itemFr: "Cout operationnel mensuel",
-        veloraEn: "Quoted by building size and mandate complexity.",
-        veloraFr: "Devis selon taille d'immeuble et complexite du mandat.",
+        veloraEn: "Typically $33-$36 per unit per month, up to $40 with app and portal integrations, before taxes. The mandate determines the quote.",
+        veloraFr: "Généralement 33 $ à 36 $ par unité par mois, jusqu'à 40 $ avec intégrations et portails, avant taxes. Le devis dépend du mandat.",
         alternativeEn: "Low direct cost, high unpaid director time.",
         alternativeFr: "Faible cout direct, beaucoup de temps CA non remunere.",
         noteEn: "Compare against time, errors, and delayed maintenance, not only invoice amount.",
@@ -315,6 +317,11 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
         noteEn: "This is where the cheap option can become expensive.",
         noteFr: "C'est la que l'option peu couteuse peut devenir chere.",
       },
+    ],
+    agencyRows: [
+      { itemEn: "Base pricing", itemFr: "Tarif de base", veloraEn: "$33-$36 per unit/month generally; up to $40 with integrations, before taxes.", veloraFr: "Généralement 33 $ à 36 $ par unité/mois; jusqu'à 40 $ avec intégrations, avant taxes.", alternativeEn: "Request the agency's written quote and calculation basis.", alternativeFr: "Demandez le devis écrit et la base de calcul de l'agence.", noteEn: "For 20 units, $33-$36 equals $660-$720 per month before taxes.", noteFr: "Pour 20 unités, 33 $ à 36 $ représente 660 $ à 720 $ par mois avant taxes." },
+      { itemEn: "Scope and extras", itemFr: "Services et frais additionnels", veloraEn: "The proposal specifies the agreed mandate and any extras.", veloraFr: "La proposition précise le mandat convenu et les frais additionnels.", alternativeEn: "Check accounting, meetings, emergencies and major work separately.", alternativeFr: "Vérifiez séparément comptabilité, assemblées, urgences et travaux majeurs.", noteEn: "Packages vary by provider; this is a checklist, not a claim about every agency.", noteFr: "Les forfaits varient selon le fournisseur; ce tableau est une grille de vérification, pas une affirmation sur toutes les agences." },
+      { itemEn: "Board control", itemFr: "Contrôle du conseil", veloraEn: "The board retains its decisions and delegates agreed tasks.", veloraFr: "Le conseil conserve ses décisions et délègue les tâches convenues.", alternativeEn: "Ask who approves spending and how records are shared.", alternativeFr: "Demandez qui approuve les dépenses et comment les dossiers sont partagés.", noteEn: "Review access, termination terms and file handover in both proposals.", noteFr: "Vérifiez les accès, les conditions de résiliation et la remise des dossiers dans chaque proposition." },
     ],
     switchingStory: {
       titleEn: "A board moves from volunteer firefighting to monthly control",
@@ -369,6 +376,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       },
     ],
     internalLinks: [
+      { labelEn: "Five self-management mistakes", labelFr: "Cinq erreurs en autogestion", to: "/blog/erreurs-syndicats-autogeres-loi-16" },
       { labelEn: "Condo board management", labelFr: "Gestion de syndicat", to: "/services/syndicat-copropriete" },
       { labelEn: "Pricing", labelFr: "Tarifs", to: "/tarifs" },
       { labelEn: "Contact", labelFr: "Contact", to: "/contact" },
