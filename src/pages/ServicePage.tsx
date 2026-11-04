@@ -8,6 +8,7 @@ import { useLocale } from "../context/LocaleContext";
 import { useGoToContact } from "../hooks/useGoToContact";
 import { getLocalizedService, SERVICE_SLUGS, type ServiceSlug } from "../data/services";
 import { getAirbnbServiceRules } from "../data/shortTermRentalRules";
+import { getServiceArticles } from "../data/serviceArticles";
 
 function toAnchorId(title: string) {
   const slug = title
@@ -195,6 +196,21 @@ export function ServicePage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-[90rem] mx-auto px-6 lg:px-16 py-10" aria-labelledby="related-articles-heading">
+        <h2 id="related-articles-heading" className="font-sans font-semibold text-xl text-nd-display mb-4">
+          {isEn ? "Related articles" : "Articles connexes"}
+        </h2>
+        <ul className="flex flex-wrap gap-x-6 gap-y-3">
+          {getServiceArticles(service.slug).map((article) => (
+            <li key={article.slug}>
+              <InternalLink to={`/blog/${article.slug}`} className="font-sans text-sm font-medium text-waabi-pink hover:underline underline-offset-2">
+                {article[locale].title}
+              </InternalLink>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {service.slug === "airbnb" && (() => {

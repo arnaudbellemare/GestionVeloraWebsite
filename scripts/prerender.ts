@@ -24,6 +24,7 @@ import { join } from "path";
 // Import app data sources directly — same source of truth as the React app
 // ---------------------------------------------------------------------------
 import { blogPosts, type BlogPost, type BlogTable, type RichParagraph } from "../src/data/blog.js";
+import { getServiceArticles } from "../src/data/serviceArticles.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
@@ -1397,7 +1398,7 @@ ${serviceLinks}
 
 function buildBlogIndexMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
-  const topPosts = blogPosts.slice(0, 6);
+  const topPosts = blogPosts;
   if (locale === "fr") {
     const links = topPosts
       .map((post) => `    <li><a href="/blog/${post.slug}">${escapeHtml(post.fr.title)}</a></li>`)
@@ -1647,6 +1648,14 @@ function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
     locale === "fr"
       ? `<p>Pour comparer ce mandat avec les autres options, consultez aussi <a href="/services">tous les services</a>, <a href="/tarifs">les tarifs</a> et <a href="/blog">les articles de gestion immobilière</a>.</p>`
       : `<p>To compare this mandate with other options, see <a href="/en/services">all services</a>, <a href="/en/tarifs">pricing</a>, and <a href="/en/blog">property management articles</a>.</p>`;
+  const articles = getServiceArticles(slug);
+  const articleLinks = articles.map((article) => {
+    const prefix = locale === "en" ? "/en" : "";
+    return `    <li><a href="${prefix}/blog/${article.slug}">${escapeHtml(article[locale].title)}</a></li>`;
+  }).join("\n");
+  const articlesHtml = articleLinks
+    ? `  <h2>${locale === "en" ? "Related articles" : "Articles connexes"}</h2>\n  <ul>\n${articleLinks}\n  </ul>`
+    : "";
   const h1 = svc.subtitle || svc.title;
   let rulesHtml = "";
   if (slug === "airbnb") {
@@ -1668,6 +1677,7 @@ ${rules.sources.map((source) => `    <li><a href="${escapeHtml(source.url)}">${e
 ${rulesHtml}
 ${offeringHtml}
 ${serviceLinks}
+${articlesHtml}
 </main>`;
 }
 
