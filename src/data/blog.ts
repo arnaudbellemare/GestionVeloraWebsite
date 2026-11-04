@@ -3,6 +3,7 @@ import { condoGovernanceBlogPosts } from "./blog-condo-governance";
 import { feeStudyBlogPosts } from "./blog-fee-study-2026";
 import { tenantRiskBlogPosts } from "./blog-tenant-risk";
 import { condoAdvertorial } from "./blog-condo-advertorial";
+import { loi16Checklist } from "./blog-loi16-checklist";
 
 /** A data table rendered after a section's paragraphs (fee studies, benchmarks). */
 export interface BlogTable {
@@ -79,6 +80,7 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  loi16Checklist,
   condoAdvertorial,
   ...feeStudyBlogPosts,
   ...condoGovernanceBlogPosts,
@@ -1446,7 +1448,7 @@ export const blogPosts: BlogPost[] = [
     slug: "choisir-gestionnaire-condo-montreal",
     image: blogCoverPath("cover-choose-condo-manager.webp"),
     datePublished: "2026-04-15",
-    dateModified: "2026-04-20",
+    dateModified: "2026-11-04",
     fr: {
       category: "Conseils",
       date: "Avril 2026",
@@ -1501,9 +1503,9 @@ export const blogPosts: BlogPost[] = [
           heading: "What criteria matter most when choosing a condo manager?",
           paragraphs: [
             [
-              "Selecting a ",
-              { text: "condo manager", to: "/services/gestion-condo" },
-              " is a decision that commits your board for several years. The most important criteria: financial report transparency (frequency, format, accessibility), emergency responsiveness (guaranteed response times, 24/7 emergency network), and regulatory expertise (Law 16, Law 141, Quebec Civil Code, municipal regulations).",
+              "To compare condo management companies in Montreal, ask for a written scope, sample financial reports, references, emergency procedures, and contract termination terms. Gestion Velora's ",
+              { text: "condo board management service", to: "/services/syndicat-copropriete" },
+              " supports syndicates of six or more units; its published base is generally $33-$36 per unit per month, up to $40 with app and portal integrations, before taxes. Compare the final proposal and extra charges with other options.",
             ],
             "Ask to see sample monthly reports. A good manager produces clear reports that let the board track actual vs. budgeted expenses, reserve fund status, open maintenance requests, and key performance indicators. Opaque or overly complex reports are a sign of poor management or lack of transparency.",
             "Check professional affiliations: RGCQ (Regroupement des gestionnaires et copropriétaires du Québec) groups firms committed to condo management best practices. Some managers also hold OACIQ membership or property management certifications. Affiliations don't guarantee quality but indicate a commitment to industry standards.",

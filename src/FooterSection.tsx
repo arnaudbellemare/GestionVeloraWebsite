@@ -17,7 +17,6 @@ function qrTreeStandaloneIframeSrc(): string {
 export const FooterSection = (): JSX.Element => {
   const { t } = useTranslation();
   const { locale } = useLocale();
-  const [email, setEmail] = useState("");
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const footerNavigationId = useId();
   const qrTreeIframeRef = useRef<HTMLIFrameElement>(null);
@@ -197,41 +196,14 @@ export const FooterSection = (): JSX.Element => {
             </div>
           </div>
 
-          {/* Subscribe */}
+          {/* Free resource */}
           <div className="md:flex-1 xl:max-w-xs">
             <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#999999] mb-4">
-              {t("footer.newsletter")}
+              {locale === "en" ? "Free resource" : "Ressource gratuite"}
             </p>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              data-toolname="newsletter-subscribe"
-              data-tooldescription="Submit newsletter email"
-              className="flex items-center gap-2 border-b border-white/30 pb-2"
-            >
-              <label htmlFor="footer-newsletter-email" className="sr-only">
-                {t("footer.emailPlaceholder")}
-              </label>
-              <input
-                id="footer-newsletter-email"
-                type="email"
-                aria-label={t("footer.emailPlaceholder")}
-                placeholder={t("footer.emailPlaceholder")}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 min-w-0 bg-transparent text-white placeholder-white/50 font-sans text-sm focus:outline-none transition-colors duration-300"
-              />
-              <button
-                type="submit"
-                data-toolname="newsletter-submit"
-                data-tooldescription="Confirm newsletter subscription"
-                aria-label={t("footer.subscribe")}
-                className="text-white/70 hover:text-white transition-colors duration-300"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </button>
-            </form>
+            <InternalLink to="/blog/checklist-loi-16-syndicat-copropriete" className="font-sans text-sm text-white/80 hover:text-white underline underline-offset-4">
+              {locale === "en" ? "Law 16 condo checklist" : "Liste Loi 16 pour copropriétés"}
+            </InternalLink>
           </div>
         </div>
 

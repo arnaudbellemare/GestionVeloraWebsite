@@ -197,11 +197,21 @@ export function BlogPostPage() {
         </ScrollReveal>
 
         <div className="mt-12 font-sans text-lg text-black/80 dark:text-white/80 leading-relaxed space-y-10">
+          {post.slug === "checklist-loi-16-syndicat-copropriete" && (
+            <p className="text-sm text-black/65 dark:text-white/65">
+              {locale === "en" ? "Tick each step as you review it. Checkmarks reset when you reload the page." : "Cochez chaque étape pendant votre vérification. Les cases se réinitialisent au rechargement de la page."}
+            </p>
+          )}
           {post.sections.map((section, sectionIndex) => (
             <ScrollReveal key={section.heading} amount={0.05}>
               <section className="scroll-mt-24">
                 <h2 id={`post-section-${toHeadingId(section.heading)}`} className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-4 leading-snug tracking-[-0.02em]">
-                  {section.heading}
+                  {post.slug === "checklist-loi-16-syndicat-copropriete" && sectionIndex < 7 ? (
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" className="mt-1.5 h-5 w-5 shrink-0 accent-black" />
+                      <span>{section.heading}</span>
+                    </label>
+                  ) : section.heading}
                 </h2>
                 <div className="space-y-4">
                   {section.paragraphs.map((p, i) => (
@@ -275,7 +285,7 @@ export function BlogPostPage() {
           </ScrollReveal>
         )}
 
-        <LeadCaptureSection variant="blog" />
+        {post.slug !== "checklist-loi-16-syndicat-copropriete" && <LeadCaptureSection variant="blog" />}
 
         {/* ── Author bio — visible EEAT signal for Google quality raters ── */}
         <ScrollReveal delay={0.15}>
