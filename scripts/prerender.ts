@@ -1227,9 +1227,10 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   const isStudy = Boolean(loc.study);
   const sectionHtml = (isStudy ? loc.sections : loc.sections.slice(0, 4))
     .map((section) => {
+      const showPriorityLinks = ["fonds-prevoyance-copropriete-quebec", "cout-gestionnaire-copropriete-montreal", "augmentation-loyer-montreal-regles-calcul-tal"].includes(slug);
       const paras = isStudy
         ? section.paragraphs.map((p) => `  <p>${escapeHtml(richToText(p))}</p>`).join("\n")
-        : `  <p>${escapeHtml(section.paragraphs[0] ? richToText(section.paragraphs[0]).slice(0, 600) : "")}</p>`;
+        : `  <p>${section.paragraphs[0] ? (showPriorityLinks ? richToAmpHtml(section.paragraphs[0], locale) : escapeHtml(richToText(section.paragraphs[0]).slice(0, 600))) : ""}</p>`;
       const table = section.table ? `\n  ${tableToHtml(section.table)}` : "";
       return `  <h2>${escapeHtml(section.heading)}</h2>\n${paras}${table}`;
     })
@@ -1322,7 +1323,8 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   </div>`
     )
     .join("\n");
-  const svcUl = svcLis.map((line) => `    <li>${escapeHtml(line)}</li>`).join("\n");
+  const svcPaths = ["/services/syndicat-copropriete", "/services/location", "/services/airbnb"];
+  const svcUl = svcLis.map((line, i) => `    <li><a href="${localizePath(svcPaths[i], locale)}">${escapeHtml(line)}</a></li>`).join("\n");
   return `<main lang="${lang}">
   <h1>${escapeHtml(h1)}</h1>
   <p>${escapeHtml(lead)}</p>
@@ -1331,6 +1333,7 @@ function buildHomepageMainHtml(locale: "fr" | "en"): string {
   <ul>
 ${svcUl}
   </ul>
+  <p>${escapeHtml(t.stats.airbnbServiceNote)}</p>
   <section id="articles-recents">
   <h2>${escapeHtml(insightsTitle)}</h2>
   <ul>

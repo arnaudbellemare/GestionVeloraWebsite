@@ -68,6 +68,10 @@ export const fr = {
     answerLead: "Gestion Velora est une firme de gestion immobilière à Montréal.",
     answerBody:
       "Elle prend en charge l’administration, le suivi financier, la coordination de l’entretien et les communications pour les syndicats de copropriété, les locations longue durée et les propriétés Airbnb du Grand Montréal.",
+    condoServiceLink: "Découvrir la gestion de syndicat",
+    serviceLinkSeparator: "ou",
+    airbnbServiceLink: "la gestion Airbnb à Montréal",
+    airbnbServiceNote: "Les mandats de location courte durée dépendent de l'admissibilité du logement et des règles municipales et provinciales applicables.",
     sourcesHeading: "Quelles sources appuient nos informations ?",
     sourcesIntro:
       "Nos repères réglementaires et de marché renvoient aux sources publiques officielles suivantes; nos résultats opérationnels proviennent de notre tableau de bord interne.",

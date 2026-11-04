@@ -698,7 +698,7 @@ export const blogPosts: BlogPost[] = [
     slug: "fonds-prevoyance-copropriete-quebec",
     image: blogCoverPath("cover-reserve-fund.webp"),
     datePublished: "2025-07-18",
-    dateModified: "2026-09-14",
+    dateModified: "2026-11-04",
     fr: {
       category: "Finance",
       date: "Juillet 2025",
@@ -747,20 +747,24 @@ export const blogPosts: BlogPost[] = [
       excerpt:
         "Establishing and managing the reserve fund is crucial for condo sustainability.",
       brief:
-        "Quebec condo boards must maintain a reserve fund for major common-area replacements, sized by a professional study obtained every five years. An underfunded reserve is a hidden liability that weakens unit values. This article explains how the study sets contribution targets and how clear annual-meeting communication helps prevent surprise special assessments.",
+        "A condo reserve fund study estimates the cost and timing of major repairs and replacements to common elements and recommends annual contributions. In Quebec, the board must obtain a study at least every five years, based on the maintenance log's plan for at least 25 years of work. The reserve fund pays for those major costs, not routine operating expenses.",
       sections: [
         {
           heading: "What is the reserve fund for?",
           paragraphs: [
             "The reserve fund finances major common-area replacement and repair work (roofing, building envelope, mechanicals, elevators, electrical systems) on a multi-year plan defined by the reserve study. It is distinct from the operational budget, which covers routine upkeep: without an adequately funded reserve, costly replacements fall on unit owners as unplanned special assessments, often at the worst possible time.",
-            "Quebec's Condo Act imposes specific rules on reserve fund constitution and management: the syndicate must act with prudence, integrity, and diligence toward owners, which includes funding the reserve in proportion to identified risks. A structurally underfunded reserve, even if it shows a positive short-term balance, represents a hidden liability that weakens unit values in real estate transactions.",
+            "Quebec's Civil Code and co-ownership regulation set rules for the reserve fund and its study. The syndicate must plan contributions with regard to the building's needs. A positive balance alone does not establish that the reserve can pay for future work.",
             "In Montreal, condo buildings from different eras present very different risk profiles: a 1970s building with original roofing and plumbing has fundamentally different capitalization needs than new construction. An up-to-date reserve study, reviewed periodically, is the only tool that allows annual contributions to be calibrated to the building's actual component condition.",
           ],
         },
         {
           heading: "Why is the reserve study the reference document?",
           paragraphs: [
-            "The reserve study translates major building component condition into estimated replacement costs and probable timelines, the foundation for adjusting annual contributions and prioritizing upcoming work. Without a current document, owner consultation and the board's contribution decision rest on informal estimates that may prove seriously inaccurate.",
+            [
+              "A reserve fund study sets out the opening fund balance, estimated costs and timing of major common-element work, and recommended annual balances and contributions. It uses the maintenance log's plan for at least 25 years. Quebec's ",
+              { text: "official co-ownership guidance", to: "https://www.quebec.ca/habitation-territoire/achat-vente/condos-coproprietes/mesures-coproprietes" },
+              " explains the study and maintenance log requirements.",
+            ],
             [
               "Under the regulation effective in 2025, the board must obtain a study every five years. Without that cycle, the fund can be structurally underfunded despite short-term accounts that appear in order. For Montreal boards seeking support in ",
               { text: "professional condo management", to: "/services/syndicat-copropriete" },
@@ -874,7 +878,7 @@ export const blogPosts: BlogPost[] = [
     slug: "cout-gestionnaire-copropriete-montreal",
     image: blogCoverPath("cover-manager-cost.webp"),
     datePublished: "2026-03-18",
-    dateModified: "2026-04-20",
+    dateModified: "2026-11-04",
     fr: {
       category: "Tarifs",
       date: "Mars 2026",
@@ -923,7 +927,7 @@ export const blogPosts: BlogPost[] = [
       title: "How much does a condo property manager cost in Montreal?",
       metaTitle: "Condo Management Fees Montreal: 2026 Pricing",
       excerpt: "Gestion Velora's published 2026 condo management fees in Montreal are typically $33–$36 per unit per month, up to $40 with portals. See included services.",
-      brief: "In 2026, Gestion Velora publishes clear condo board pricing: typically $33-$36 per unit/month, up to $40 per unit/month with app and portal integrations. Final cost depends on building size, mandate complexity, reporting needs, and included services.",
+      brief: "For condo boards, Gestion Velora's published management fee is typically $33-$36 per unit per month, up to $40 with app and portal integrations. This is the manager's fee, not the full condo fee paid by an owner. Rental property management is a different mandate with a different fee structure.",
       sections: [
         {
           heading: "What are typical condo management fees in Montreal?",
@@ -938,9 +942,19 @@ export const blogPosts: BlogPost[] = [
           ],
         },
         {
+          heading: "Condo management fees, condo fees, and rental management: what is the difference?",
+          paragraphs: [
+            [
+              "A condo board pays a management company to administer shared operations. Owners' condo fees also fund other budget items, such as insurance, maintenance and reserve contributions, so the management fee is only one part of those charges. A rental manager instead works for a landlord on the rental mandate. Review our ",
+              { text: "long-term rental management service", to: "/services/location" },
+              " and ask for a written quote that specifies the fee, services and extras.",
+            ],
+          ],
+        },
+        {
           heading: "Professional management vs. self-management: an ROI question",
           paragraphs: [
-            "It is tempting to compare the cost of a manager against zero for self-management. But self-management has real costs: volunteer director time, accounting errors, inconsistent maintenance follow-up, and legal exposure if Law 141 obligations are not met. For a 20-unit building, a $33-$36/unit baseline is roughly $660-$720/month; a portal-enabled package up to $40/unit is roughly $800/month. One avoided special assessment from a well-managed reserve fund can offset several years of management fees.",
+            "Self-management requires directors' time and attention to accounting, maintenance and legal obligations. A professional manager can take on agreed tasks while the board retains its decision-making role. For 20 units, $33-$36 per unit is approximately $660-$720 per month; $40 per unit is $800 per month. Compare the written scope and any extra charges before deciding.",
             "Rigorous management also affects unit values. Buyers and mortgage lenders closely examine the condo board's financial health, reserve fund adequacy, and quality of administrative processes. A well-run building sells faster and at a better price.",
             [
               "For boards that want to retain some control, co-management arrangements let you delegate the most time-consuming tasks (accounting, fee collection, contractor follow-up) while keeping final decisions within your board. See our ",
@@ -1602,14 +1616,14 @@ export const blogPosts: BlogPost[] = [
     slug: "augmentation-loyer-montreal-regles-calcul-tal",
     image: blogCoverPath("cover-rent-increase.webp"),
     datePublished: "2026-04-27",
-    dateModified: "2026-08-24",
+    dateModified: "2026-11-04",
     fr: {
       category: "Réglementation",
       date: "Août 2026",
       title: "Augmentation de loyer 2026 au Québec : calcul TAL, avis et délais",
       metaTitle: "Augmentation de loyer 2026 : calcul TAL et formulaire",
       excerpt: "Augmentation de loyer 2026 au Québec : base TAL de 3,1 %, calcul réel, formulaire d'avis, délais de réponse et procédure après un refus.",
-      brief: "Pour un avis transmis à compter du 1er janvier 2026, le TAL publie une composante de base de 3,1 %, et non un plafond automatique. Le résultat dépend ensuite de l'immeuble. L'avis suit des délais précis; le locataire a un mois pour refuser et le propriétaire un mois après le refus pour saisir le TAL.",
+      brief: "Pour une augmentation de loyer en 2026, utilisez l'outil de calcul du TAL adapté à la date de l'avis et à la période du bail, puis son modèle d'avis de modification pour communiquer la hausse. La composante de base de 3,1 % applicable aux avis transmis à compter du 1er janvier 2026 n'est ni un plafond ni une hausse automatique : le résultat dépend des données de l'immeuble.",
       sections: [
         {
           heading: "Quel est le pourcentage d'augmentation de loyer du TAL en 2026 ?",
@@ -1630,10 +1644,16 @@ export const blogPosts: BlogPost[] = [
         {
           heading: "Avis d'augmentation de loyer 2026 : formulaire et délais",
           paragraphs: [
-            "Pour un bail de 12 mois ou plus, l'avis doit parvenir au locataire entre 3 et 6 mois avant la fin du bail. Pour un bail de moins de 12 mois ou à durée indéterminée, le délai est de 1 à 2 mois; pour le bail d'une chambre, il est de 10 à 20 jours. Il ne suffit donc pas d'envoyer l'avis « au moins trois mois » avant l'échéance : l'envoi trop hâtif peut aussi tomber hors de la période prévue.",
+            [
+              "Le TAL propose un ",
+              { text: "modèle d'avis d'augmentation et de modification du bail", to: "https://www.tal.gouv.qc.ca/fr/reconduction-du-bail-et-fixation-de-loyer/modification-d-une-condition-du-bail" },
+              " et un ",
+              { text: "outil de calcul de l'augmentation", to: "https://www.tal.gouv.qc.ca/fr/calcul-pour-l-augmentation-de-loyer" },
+              ". Ce sont deux outils différents : le premier communique la modification au locataire, le second aide à établir une proposition. Pour un bail de 12 mois ou plus, l'avis doit parvenir au locataire entre 3 et 6 mois avant la fin du bail. Pour un bail de moins de 12 mois ou à durée indéterminée, le délai est de 1 à 2 mois; pour une chambre, il est de 10 à 20 jours.",
+            ],
             [
               "L'",
-              { text: "avis officiel d'augmentation du TAL", to: "https://www.tal.gouv.qc.ca/sites/default/files/notices/TAL_806_E.pdf" },
+              { text: "avis officiel d'augmentation du TAL", to: "https://www.tal.gouv.qc.ca/fr/reconduction-du-bail-et-fixation-de-loyer/modification-d-une-condition-du-bail" },
               " prévoit les mentions essentielles : modification proposée, nouveau loyer ou hausse en dollars ou en pourcentage, date d'entrée en vigueur, délai d'un mois pour refuser, texte réglementaire obligatoire, date et signature. Utiliser ce modèle réduit le risque d'omettre une mention requise.",
             ],
             [
