@@ -12,25 +12,6 @@ const statKeys = [
   { value: "100%", key: "transparency" },
 ] as const;
 
-const publicSources = [
-  {
-    href: "https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/housing-data/data-tables/rental-market/rental-market-report-data-tables",
-    labelKey: "stats.citationCmhc",
-  },
-  {
-    href: "https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991",
-    labelKey: "stats.citationQuebec",
-  },
-  {
-    href: "https://montreal.ca/sujets/hebergement-touristique-court-terme",
-    labelKey: "stats.citationMontreal",
-  },
-  {
-    href: "https://www.citq.qc.ca/",
-    labelKey: "stats.citationCitq",
-  },
-] as const;
-
 export function StatsSection() {
   const { t } = useTranslation();
   const { contactHref, goToContact } = useGoToContact();
@@ -74,52 +55,6 @@ export function StatsSection() {
               </div>
             </ScrollReveal>
           ))}
-        </div>
-
-        <div className="mt-10 lg:mt-12 rounded-2xl border border-nd-border bg-nd-surface px-6 py-7 lg:px-8 lg:py-8">
-          <h3 className="font-sans font-semibold text-xl text-nd-display mb-3">
-            {t("stats.sourcesHeading")}
-          </h3>
-          <p className="font-sans text-sm text-nd-secondary leading-relaxed max-w-4xl mb-5">
-            {t("stats.sourcesIntro")}
-          </p>
-          <ul className="grid gap-2 sm:grid-cols-2 font-sans text-sm text-nd-primary">
-            {publicSources.map((source) => (
-              <li key={source.href}>
-                <cite className="not-italic">
-                  <a
-                    href={source.href}
-                    target="_blank"
-                    rel="noopener noreferrer external"
-                    className="underline underline-offset-2 decoration-nd-border-visible hover:text-nd-display"
-                  >
-                    {t(source.labelKey)}
-                  </a>
-                </cite>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-5 pt-5 border-t border-nd-border font-sans text-xs text-nd-secondary">
-            {t("stats.verifiedBy")} {" "}
-            <InternalLink to="/about" rel="author" className="font-semibold text-nd-primary underline underline-offset-2">
-              Arnaud Bellemare
-            </InternalLink>{" "}
-            — {t("stats.authorRole")}. {" "}
-            <time dateTime="2026-08-31">{t("stats.updated")}</time>.
-          </p>
-          <p className="mt-2 font-sans text-xs text-nd-secondary">
-            {t("stats.trustLinksIntro")} {" "}
-            <a href={contactHref} onClick={goToContact} className="underline underline-offset-2">
-              {t("stats.contactLink")}
-            </a>{", "}
-            <InternalLink to="/privacy" className="underline underline-offset-2">
-              {t("stats.privacyLink")}
-            </InternalLink>{" "}
-            · {" "}
-            <InternalLink to="/terms" className="underline underline-offset-2">
-              {t("stats.termsLink")}
-            </InternalLink>.
-          </p>
         </div>
 
         <ScrollReveal delay={0.12} amount={0.2}>

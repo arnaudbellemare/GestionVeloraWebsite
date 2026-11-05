@@ -7,6 +7,7 @@ import { GtagPageView } from "../components/GtagPageView";
 import { PageMeta } from "../components/PageMeta";
 import { HreflangLinks } from "../components/HreflangLinks";
 import { SchemaOrg } from "../components/SchemaOrg";
+import { CondoGuidePopup } from "../components/CondoGuidePopup";
 
 const FooterSection = lazy(() =>
   import("../FooterSection").then((module) => ({ default: module.FooterSection }))
@@ -112,6 +113,7 @@ export function Layout() {
         <main className="flex-1 w-full min-w-0">{currentOutlet}</main>
       </div>
       <DeferredFooterSection />
+      <CondoGuidePopup />
     </div>
   );
 }

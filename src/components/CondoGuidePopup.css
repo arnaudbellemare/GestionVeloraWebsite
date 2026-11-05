@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Geist Serif Guide";
+  src: url("/guides/fonts/GeistSerif-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.guide-popup-title {
+  font-family: "Geist Serif Guide", Georgia, serif;
+  font-weight: 400;
+}

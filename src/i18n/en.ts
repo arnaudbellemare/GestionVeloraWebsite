@@ -24,7 +24,7 @@ export const en = {
     rates: {
       base: "Starting at",
       upper: "Depending on the mandate, up to",
-      integrations: "With app integrations",
+      integrations: "With app integrations, up to",
     },
     perUnit: "/ unit / month, before taxes",
     includedHeading: "Included in the monthly rate",

@@ -75,27 +75,25 @@ export function FeeCalculatorSection() {
               </p>
             </ScrollReveal>
 
-            {/* Subgrid: the label, price and unit rows share one height across the three cards,
-                so a label that wraps never pushes its price out of line with the others. */}
-            <div className="mt-8 grid grid-cols-3 border-y border-nd-border">
-              {rateCards.map((card, i) => (
-                <ScrollReveal key={card.key} delay={0.05 + i * 0.06} className="contents">
-                  <div
-                    className={`grid grid-rows-subgrid row-span-3 py-5 min-w-0 ${
-                      i === 0 ? "pr-3 sm:pr-5" : i === rateCards.length - 1 ? "pl-3 sm:pl-5 border-l border-nd-border" : "px-3 sm:px-5 border-l border-nd-border"
-                    }`}
-                  >
-                    <p className="self-end font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary mb-2 leading-snug">
-                      {t(`feeCalculator.rates.${card.key}`)}
-                    </p>
-                    <p className="font-stat-numeral font-semibold text-2xl sm:text-3xl text-nd-display leading-none tracking-[-0.02em]">
-                      {money.format(card.rate)}
-                    </p>
-                    <p className="font-sans text-xs text-nd-secondary mt-1.5">{t("feeCalculator.perUnit")}</p>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
+            <ScrollReveal delay={0.05}>
+              <div className="mt-8 border-y border-nd-border">
+                <dl className="divide-y divide-nd-border">
+                  {rateCards.map((card) => (
+                    <div key={card.key} className="flex items-center justify-between gap-6 py-4">
+                      <dt className="font-sans text-sm leading-snug text-nd-secondary">
+                        {t(`feeCalculator.rates.${card.key}`)}
+                      </dt>
+                      <dd className="shrink-0 font-stat-numeral text-2xl font-semibold leading-none tracking-[-0.02em] text-nd-display sm:text-3xl">
+                        {money.format(card.rate)}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="pb-4 pt-3 font-sans text-xs leading-relaxed text-nd-secondary">
+                  {t("feeCalculator.perUnit")}
+                </p>
+              </div>
+            </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-nd-secondary mt-8 mb-3">
@@ -203,17 +201,17 @@ export function FeeCalculatorSection() {
                 )}
               </div>
 
-              <div className="mt-7 flex flex-col sm:flex-row gap-3">
+              <div className="mt-7 flex flex-wrap items-start gap-3">
                 <a
                   href={contactHref}
                   onClick={goToContact}
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-neutral-950 text-white font-sans font-semibold text-sm hover:bg-black dark:bg-white dark:text-black dark:hover:bg-white/90 transition-colors"
+                  className="inline-flex min-h-11 items-center justify-center rounded-full bg-neutral-950 px-4 py-2.5 text-center font-sans text-sm font-semibold leading-snug text-white transition-colors hover:bg-black dark:bg-white dark:text-black dark:hover:bg-white/90"
                 >
                   {t("feeCalculator.ctaQuote")}
                 </a>
                 <InternalLink
                   to={FEE_STUDY_PATH}
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full border border-black/15 dark:border-white/20 font-sans font-medium text-sm text-nd-primary hover:border-black/40 dark:hover:border-white/50 transition-colors"
+                  className="inline-flex min-h-11 items-center justify-center rounded-full border border-black/15 px-4 py-2.5 text-center font-sans text-sm font-medium leading-snug text-nd-primary transition-colors hover:border-black/40 dark:border-white/20 dark:hover:border-white/50"
                 >
                   {t("feeCalculator.ctaCompare")}
                 </InternalLink>

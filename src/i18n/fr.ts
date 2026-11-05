@@ -24,7 +24,7 @@ export const fr = {
     rates: {
       base: "À partir de",
       upper: "Selon le mandat, jusqu’à",
-      integrations: "Avec intégrations applicatives",
+      integrations: "Avec intégrations applicatives, jusqu’à",
     },
     perUnit: "/ unité / mois, avant taxes",
     includedHeading: "Compris dans le tarif mensuel",
