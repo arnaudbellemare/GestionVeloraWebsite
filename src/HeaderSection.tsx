@@ -48,8 +48,8 @@ export const HeaderSection = (): JSX.Element => {
     <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-2 sm:pt-4">
       <div className="absolute top-0 left-0 right-0 h-px bg-[#333333] opacity-90" aria-hidden />
 
-      <div className="max-w-[90rem] mx-auto flex items-center justify-between gap-4">
-        <div className="flex items-center gap-1 px-4 py-2.5 rounded-2xl bg-[#111111] border border-[#333333]">
+      <div className="max-w-[90rem] mx-auto flex items-center justify-between gap-2 xl:gap-4">
+        <div className="flex shrink-0 items-center gap-1 px-4 md:px-2 xl:px-4 py-2.5 rounded-2xl bg-[#111111] border border-[#333333]">
           <InternalLink
             to="/"
             aria-label="Gestion Velora"
@@ -67,15 +67,15 @@ export const HeaderSection = (): JSX.Element => {
               decoding="sync"
               fetchPriority="high"
             />
-            <span className="font-sans font-medium text-[#E8E8E8] text-[15px] hidden sm:inline tracking-tight">
+            <span className="font-sans font-medium text-[#E8E8E8] text-[15px] hidden sm:inline md:hidden min-[900px]:inline tracking-tight">
               Gestion Velora
             </span>
           </InternalLink>
-          <nav className="hidden md:flex items-center gap-0.5 ml-2 pl-2 border-l border-[#333333]">
+          <nav className="hidden md:flex items-center gap-0.5 ml-1 pl-1 xl:ml-2 xl:pl-2 border-l border-[#333333]">
             <InternalLink
               to="/"
               title={t("nav.home")}
-              className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
+              className="font-sans text-sm md:text-xs xl:text-sm text-[#999999] hover:text-white px-2.5 md:px-1.5 xl:px-2.5 py-1.5 rounded-lg whitespace-nowrap"
             >
               {t("nav.home")}
             </InternalLink>
@@ -89,7 +89,7 @@ export const HeaderSection = (): JSX.Element => {
             >
               <button
                 type="button"
-                className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg inline-flex items-center gap-1"
+                className="font-sans text-sm md:text-xs xl:text-sm text-[#999999] hover:text-white px-2.5 md:px-1.5 xl:px-2.5 py-1.5 rounded-lg whitespace-nowrap inline-flex items-center gap-1"
               >
                 {t("nav.services")}
                 <svg
@@ -147,14 +147,14 @@ export const HeaderSection = (): JSX.Element => {
             <InternalLink
               to="/blog"
               title={t("nav.insights")}
-              className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
+              className="font-sans text-sm md:text-xs xl:text-sm text-[#999999] hover:text-white px-2.5 md:px-1.5 xl:px-2.5 py-1.5 rounded-lg whitespace-nowrap"
             >
               {t("nav.insights")}
             </InternalLink>
             <InternalLink
               to="/about"
               title={t("nav.about")}
-              className="font-sans text-sm text-[#999999] hover:text-white px-2.5 py-1.5 rounded-lg"
+              className="font-sans text-sm md:text-xs xl:text-sm text-[#999999] hover:text-white px-2.5 md:px-1.5 xl:px-2.5 py-1.5 rounded-lg whitespace-nowrap"
             >
               {t("nav.about")}
             </InternalLink>
@@ -178,7 +178,7 @@ export const HeaderSection = (): JSX.Element => {
           </button>
         </div>
 
-        <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[#111111] border border-[#333333]">
+        <div className="flex shrink-0 items-center gap-2 px-3 md:px-2 xl:px-3 py-2 rounded-2xl bg-[#111111] border border-[#333333]">
           <div className="flex items-center gap-0.5 border-r border-[#333333] pr-2 mr-1">
             <button
               type="button"
@@ -206,7 +206,7 @@ export const HeaderSection = (): JSX.Element => {
             href={contactHref}
             onClick={goToContact}
             title={t("nav.contact")}
-            className="hidden sm:inline-flex items-center px-4 py-2 rounded-full border border-[#444444] text-[#E8E8E8] font-sans font-medium text-sm hover:bg-[#1A1A1A]"
+            className="hidden sm:inline-flex items-center px-4 md:px-2.5 xl:px-4 py-2 whitespace-nowrap rounded-full border border-[#444444] text-[#E8E8E8] font-sans font-medium text-sm hover:bg-[#1A1A1A]"
           >
             {t("nav.contact")}
           </a>
@@ -215,7 +215,7 @@ export const HeaderSection = (): JSX.Element => {
             target="_blank"
             rel="noopener noreferrer"
             title={t("nav.login")}
-            className="hidden sm:inline-flex items-center px-4 py-2 rounded-full bg-white text-black font-sans font-medium text-sm hover:bg-white/90"
+            className="hidden sm:inline-flex items-center px-4 md:px-2.5 xl:px-4 py-2 whitespace-nowrap rounded-full bg-white text-black font-sans font-medium text-sm hover:bg-white/90"
           >
             {t("nav.login")}
           </a>
