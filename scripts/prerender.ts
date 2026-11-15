@@ -26,6 +26,7 @@ import { join } from "path";
 import { blogPosts, type BlogPost, type BlogTable, type RichParagraph } from "../src/data/blog.js";
 import { getServiceArticles } from "../src/data/serviceArticles.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
+import { COMPARISON_GUIDE } from "../src/data/comparisonGuide.js";
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
 import { isPriorityLocationSlug } from "../src/data/locationPriority.js";
 import { isRetiredLocationSlug } from "../src/data/locationRoutePolicy.js";
@@ -1618,6 +1619,9 @@ ${linksHtml}
 
 function buildCompareIndexMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
+  const guide = COMPARISON_GUIDE[locale];
+  const studyPath = locale === "fr" ? "/blog/etude-frais-gestion-immobiliere-quebec-2026" : "/en/blog/etude-frais-gestion-immobiliere-quebec-2026";
+  const guideHtml = `  <section><h2>${escapeHtml(guide.title)}</h2><p>${escapeHtml(guide.intro)}</p><h3>${escapeHtml(guide.condoTitle)}</h3><p>${escapeHtml(guide.condo)}</p><h3>${escapeHtml(guide.rentalTitle)}</h3><p>${escapeHtml(guide.rental)}</p><p><a href="${studyPath}">${escapeHtml(guide.study)}</a></p></section>`;
   const links = COMPARISON_PAGES.map((page) => {
     const href = locale === "fr" ? `/compare/${page.slug}` : `/en/compare/${page.slug}`;
     const title = locale === "fr" ? page.h1Fr : page.h1En;
@@ -1629,6 +1633,7 @@ function buildCompareIndexMainHtml(locale: "fr" | "en"): string {
   <h1>Guides comparatifs en gestion immobilière</h1>
   <p>Ces guides aident les copropriétaires, conseils d'administration et propriétaires locatifs à choisir entre plusieurs modes de gestion. Chaque comparaison présente les coûts, les risques, la charge opérationnelle, la qualité de service et les situations où une solution devient plus pertinente qu'une autre.</p>
   <p>Inclut maintenant une page alternatives en gestion immobilière à Montréal avec Gestion Velora et quatre concurrents réels décrits honnêtement.</p>
+${guideHtml}
   <h2>Comparatifs disponibles</h2>
   <ul>
 ${links}
@@ -1639,6 +1644,7 @@ ${links}
   <h1>Property management comparison guides</h1>
   <p>To compare property management companies in Greater Montreal, ask each firm for a written proposal covering the property type, services included, base fees and extra charges, reporting, response times, and cancellation terms. For an owner-occupied property, confirm which tenant and maintenance tasks the manager will handle and which decisions remain yours. Check references and compare the same scope of work before choosing.</p>
   <p>Includes a Montreal property management alternatives page with Gestion Velora and four real competitors described fairly.</p>
+${guideHtml}
   <h2>Available comparisons</h2>
   <ul>
 ${links}

@@ -5,11 +5,13 @@ import { Breadcrumbs } from "../components/Breadcrumbs";
 import { InternalLink } from "../components/InternalLink";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { COMPARISON_PAGES } from "../data/comparisons";
+import { COMPARISON_GUIDE } from "../data/comparisonGuide";
 
 export function CompareIndexPage() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const isEn = locale === "en";
+  const guide = COMPARISON_GUIDE[locale];
 
   return (
     <motion.div
@@ -36,6 +38,16 @@ export function CompareIndexPage() {
               : "Des cadres de comparaison clairs pour les syndicats, proprietaires et investisseurs qui evaluent leurs options de gestion a Montreal."}
           </p>
         </ScrollReveal>
+
+        <section className="max-w-4xl mb-14" aria-labelledby="compare-managers">
+          <h2 id="compare-managers" className="font-sans font-semibold text-2xl mb-4">{guide.title}</h2>
+          <p className="text-black/70 dark:text-white/70 mb-5">{guide.intro}</p>
+          <h3 className="font-semibold text-lg mb-2">{guide.condoTitle}</h3>
+          <p className="text-black/70 dark:text-white/70 mb-5">{guide.condo}</p>
+          <h3 className="font-semibold text-lg mb-2">{guide.rentalTitle}</h3>
+          <p className="text-black/70 dark:text-white/70 mb-5">{guide.rental}</p>
+          <InternalLink to="/blog/etude-frais-gestion-immobiliere-quebec-2026" className="underline underline-offset-4">{guide.study}</InternalLink>
+        </section>
 
         <section id="comparison-list" className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8" aria-label={isEn ? "Comparison pages" : "Pages de comparaison"}>
           {COMPARISON_PAGES.map((page, i) => (
