@@ -15,7 +15,6 @@ const serviceLinkKeys = [
   { to: "/services/airbnb", labelKey: "nav.airbnb", descKey: "nav.airbnbDesc" },
   { to: "/services/location", labelKey: "nav.location", descKey: "nav.locationDesc" },
   { to: "/services/gestion-condo", labelKey: "nav.gestionCondo", descKey: "nav.gestionCondoDesc" },
-  { to: "/services/gestion-copropriete", labelKey: "nav.gestionCopropriete", descKey: "nav.gestionCoproprieteDesc" },
 ];
 
 export const HeaderSection = (): JSX.Element => {

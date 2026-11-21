@@ -127,24 +127,6 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.gestionvelora.com/services/gestion-copropriete</loc>
-    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/services/gestion-copropriete" />
-    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/services/gestion-copropriete" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/services/gestion-copropriete" />
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.gestionvelora.com/en/services/gestion-copropriete</loc>
-    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/services/gestion-copropriete" />
-    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/services/gestion-copropriete" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/services/gestion-copropriete" />
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://www.gestionvelora.com/compare</loc>
     <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/compare" />
     <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/compare" />
@@ -1007,24 +989,6 @@
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.gestionvelora.com/location/syndicat-copropriete-montreal</loc>
-    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/syndicat-copropriete-montreal" />
-    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/syndicat-copropriete-montreal" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/syndicat-copropriete-montreal" />
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.gestionvelora.com/en/location/syndicat-copropriete-montreal</loc>
-    <xhtml:link rel="alternate" hreflang="fr-CA" href="https://www.gestionvelora.com/location/syndicat-copropriete-montreal" />
-    <xhtml:link rel="alternate" hreflang="en-CA" href="https://www.gestionvelora.com/en/location/syndicat-copropriete-montreal" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.gestionvelora.com/location/syndicat-copropriete-montreal" />
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.gestionvelora.com/location/syndicat-copropriete-laval</loc>

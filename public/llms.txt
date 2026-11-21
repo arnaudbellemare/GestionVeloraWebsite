@@ -147,8 +147,6 @@ Complete landlord-side management of residential leases. Covers tenant screening
 
 ## Location pages (sample)
 
-- [Syndicat de copropriete a Montreal (FR)](https://www.gestionvelora.com/location/syndicat-copropriete-montreal)
-- [Condo board management in Montreal (EN)](https://www.gestionvelora.com/en/location/syndicat-copropriete-montreal)
 - [Syndicat de copropriete a Laval (FR)](https://www.gestionvelora.com/location/syndicat-copropriete-laval)
 - [Condo board management in Laval (EN)](https://www.gestionvelora.com/en/location/syndicat-copropriete-laval)
 - [Syndicat de copropriete a Longueuil (FR)](https://www.gestionvelora.com/location/syndicat-copropriete-longueuil)

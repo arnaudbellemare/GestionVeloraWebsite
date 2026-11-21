@@ -181,8 +181,6 @@ export const fr = {
     locationDesc: "Sélection des locataires, baux et suivi professionnel.",
     gestionCondo: "Gestion de condo",
     gestionCondoDesc: "Administration quotidienne, finances et entretien de votre condo.",
-    gestionCopropriete: "Gestionnaire de copropriété",
-    gestionCoproprieteDesc: "Expertise complète pour syndicats et copropriétaires exigeants.",
   },
 
   // OurStandards
@@ -901,95 +899,6 @@ export const fr = {
       ],
     },
 
-    "gestion-copropriete": {
-      title: "Gestionnaire de copropriété à Montréal",
-      subtitle: "Votre gestionnaire de copropriété dédié — administration, finances et conformité",
-      metaTitle: "Gestionnaire de copropriété — mandat complet CA | Gestion Velora",
-      metaDescription:
-        "Gestionnaire de copropriété à Montréal pour conseils d'administration : gouvernance, budget, Loi 141, entretien et rapports clairs.",
-      description:
-        "Gestion Velora est une firme spécialisée en gestion de copropriété à Montréal. Nos gestionnaires de copropriété prennent en charge l'ensemble des obligations du syndicat : administration, comptabilité, fonds de prévoyance, gestion des parties communes, assemblée générale et conformité à la Loi 141. Nous sommes le partenaire de confiance des conseils d'administration qui souhaitent déléguer la gestion quotidienne à des professionnels. Gestion Velora gère un portefeuille de plus de 200 unités et maintient un taux d'occupation de 98 %.",
-      offerings: [
-        {
-          title: "Rôle et missions du gestionnaire de copropriété",
-          items: [
-            "Administration complète du syndicat de copropriétaires",
-            "Interface avec le conseil d'administration (CA)",
-            "Gestion des fournisseurs et des contrats",
-            "Représentation du syndicat auprès des tiers",
-          ],
-          detailItems: [
-            "Le gestionnaire de copropriété agit en mandataire du CA : il exécute les décisions, gère les opérations et rend compte régulièrement.",
-            "Il coordonne tous les intervenants (fournisseurs, assureurs, avocats, inspecteurs) pour un suivi centralisé.",
-            "Il est le point de contact principal des copropriétaires pour toutes les demandes et communications.",
-            "Il représente le syndicat dans les démarches administratives et les situations exceptionnelles (sinistres, litiges, travaux majeurs).",
-          ],
-        },
-        {
-          title: "Gestion financière et conformité Loi 141",
-          items: [
-            "Budget annuel et charges communes",
-            "Fonds de prévoyance conforme à la Loi 141",
-            "Comptabilité et rapports financiers",
-            "Étude de réserve et planification à long terme",
-          ],
-          detailItems: [
-            "Élaboration du budget annuel avec postes détaillés, hypothèses documentées et présentation à l'AGA.",
-            "Gestion du fonds de prévoyance selon les exigences de la Loi 141 : cotisation, placement et utilisation.",
-            "Rapports financiers mensuels avec écarts budget/réel et recommandations correctives.",
-            "Suivi de l'étude de réserve pour planifier les travaux majeurs et éviter les cotisations spéciales imprévues.",
-          ],
-        },
-        {
-          title: "Gestion technique et entretien de l'immeuble",
-          items: [
-            "Maintenance préventive et corrective",
-            "Coordination des travaux majeurs",
-            "Sélection des entrepreneurs (appels d'offres)",
-            "Urgences et sinistres",
-          ],
-          detailItems: [
-            "Programme de maintenance préventive structuré pour prolonger la durée de vie des équipements.",
-            "Appels d'offres cadrés pour des soumissions comparables et une sélection transparente des entrepreneurs.",
-            "Suivi de chantier rigoureux avec points d'étape, réception des travaux et documentation.",
-            "Protocoles d'urgence 24/7 avec coordonnées des fournisseurs prioritaires et procédures de sinistre.",
-          ],
-        },
-        {
-          title: "Gouvernance et assemblée générale",
-          items: [
-            "Préparation et tenue de l'AGA",
-            "Procès-verbaux et registre de copropriété",
-            "Conseil au CA sur la gouvernance",
-            "Conformité déclaration de copropriété",
-          ],
-          detailItems: [
-            "Préparation complète de l'AGA : convocations légales, ordre du jour, documents et animation.",
-            "Rédaction des procès-verbaux structurés avec décisions, responsables et échéances.",
-            "Tenue et mise à jour du registre de copropriété (déclaration, PV, états financiers, contrats).",
-            "Conseil proactif au CA sur les meilleures pratiques de gouvernance et de conformité réglementaire.",
-          ],
-        },
-      ],
-      faq: [
-        {
-          q: "Quelles sont les obligations légales d'un gestionnaire de copropriété au Québec ?",
-          a: "Au Québec, le gestionnaire de copropriété agit sous mandat du syndicat. Il doit respecter la Loi sur la copropriété divise (Loi 141), maintenir le registre de copropriété, gérer le fonds de prévoyance selon les règles établies et convoquer l'assemblée générale annuelle dans les délais prescrits. Gestion Velora assure la conformité complète de votre syndicat.",
-        },
-        {
-          q: "Comment choisir un bon gestionnaire de copropriété ?",
-          a: "Vérifiez l'expérience dans la gestion de syndicats au Québec, la transparence financière (accès aux rapports en temps réel), la réactivité (ligne d'urgence, délais de traitement) et les références d'autres syndicats gérés. Demandez une présentation des outils utilisés (portail copropriétaires, système comptable).",
-        },
-        {
-          q: "Quelle est la différence entre autogestion et gestionnaire professionnel ?",
-          a: "L'autogestion confie toutes les responsabilités aux membres du CA bénévoles (administration, finances, entretien, conformité), ce qui peut représenter des dizaines d'heures par mois. Un gestionnaire professionnel prend en charge l'ensemble de ces tâches, libère le CA pour les décisions stratégiques et garantit la conformité réglementaire.",
-        },
-        {
-          q: "Le gestionnaire peut-il prendre des décisions sans l'accord du CA ?",
-          a: "Non. Le gestionnaire agit sous mandat : il exécute les décisions du CA et gère les opérations courantes dans les limites définies au contrat. Les décisions importantes (travaux majeurs, contrats significatifs) requièrent l'approbation du CA ou de l'assemblée des copropriétaires selon les règles de gouvernance.",
-        },
-      ],
-    },
   },
 
   // Lead capture

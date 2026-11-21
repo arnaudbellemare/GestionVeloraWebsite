@@ -28,6 +28,7 @@ import { getServiceArticles } from "../src/data/serviceArticles.js";
 import { getServiceGeoSummary } from "../src/data/serviceGeoSummary.js";
 import { getPricingContent, type PricingTier } from "../src/data/pricing.js";
 import type { ServiceSlug } from "../src/data/services.js";
+import { withCurrentPageBreadcrumbItem } from "../src/data/breadcrumbSchema.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
 import { COMPARISON_GUIDE } from "../src/data/comparisonGuide.js";
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
@@ -150,7 +151,6 @@ const SERVICE_IMAGES: Record<string, string> = {
   airbnb: `${SITE_URL}/images/airbnb-service.webp`,
   location: `${SITE_URL}/hero-gestion-velora-1200.webp`,
   "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont.webp`,
-  "gestion-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy.webp`,
 };
 
 /** Smaller first-viewport sources for mobile service pages. */
@@ -159,7 +159,6 @@ const SERVICE_MOBILE_IMAGES: Record<string, string> = {
   airbnb: `${SITE_URL}/images/airbnb-service.webp`,
   location: `${SITE_URL}/hero-gestion-velora-800.webp`,
   "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont-card.webp`,
-  "gestion-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy-card.webp`,
 };
 
 /** `/location/{service}-{city}` OG images — keyed by `LocationService.slug` (not `serviceSlug`). */
@@ -249,7 +248,6 @@ const NAV_LABELS = {
     services: "Services",
     servicesHub: "Tous les services de gestion immobilière",
     syndicat: "Gestion de syndicat de copropriété",
-    copropriete: "Gestion de copropriété",
     condo: "Gestion de condo",
     location: "Gestion locative longue durée",
     airbnb: "Gestion Airbnb et location court terme",
@@ -275,7 +273,6 @@ const NAV_LABELS = {
     services: "Services",
     servicesHub: "All property management services",
     syndicat: "Condo syndicate management",
-    copropriete: "Co-ownership management",
     condo: "Condo management",
     location: "Long-term rental management",
     airbnb: "Airbnb and short-term rental management",
@@ -312,7 +309,6 @@ function buildSiteNavHtml(locale: "fr" | "en"): string {
     group([
       [`${p}/services`, t.servicesHub],
       [`${p}/services/syndicat-copropriete`, t.syndicat],
-      [`${p}/services/gestion-copropriete`, t.copropriete],
       [`${p}/services/gestion-condo`, t.condo],
       [`${p}/services/location`, t.location],
       [`${p}/services/airbnb`, t.airbnb],
@@ -606,7 +602,7 @@ function buildHtml(
               return rest;
             }),
           };
-    const schemaTags = `  <script id="schema-org-page" type="application/ld+json">\n  ${JSON.stringify(pageSchema, null, 2)}\n  </script>\n`;
+    const schemaTags = `  <script id="schema-org-page" type="application/ld+json">\n  ${JSON.stringify(withCurrentPageBreadcrumbItem(pageSchema, opts.canonical), null, 2)}\n  </script>\n`;
     html = html.replace("</head>", `${schemaTags}</head>`);
   }
 
@@ -991,7 +987,7 @@ function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
   const servicesIntro = isEn
     ? "Managing a building in Montreal? Our services:"
     : "Vous gérez un immeuble à Montréal ? Nos services :";
-  const services = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"]
+  const services = ["syndicat-copropriete", "airbnb", "location", "gestion-condo"]
     .map((serviceSlug) => {
       const svc = getService(locale, serviceSlug);
       return `<a href="${localizePath(`/services/${serviceSlug}`, locale)}">${escapeHtml(svc.title)}</a>`;
@@ -1122,7 +1118,7 @@ function buildLocationMainHtml(
   const h1 = fillLoc(locale === "fr" ? svc.h1Fr : svc.h1En, city, locale);
   const pageSlug = `${svc.slug}-${city.slug}`;
   const desc =
-    locale === "en" && (pageSlug === "syndicat-copropriete-montreal" || pageSlug === "gestion-locative-westmount")
+    locale === "en" && pageSlug === "gestion-locative-westmount"
       ? resolveLocation(pageSlug)!.descEn
       : fillLoc(locale === "fr" ? svc.descFr : svc.descEn, city, locale);
   const cityName = locale === "fr" ? city.nameFr : city.nameEn;
@@ -1374,7 +1370,7 @@ ${faqBlocks}
 
 function buildServicesHubMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
-  const serviceSlugs = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"];
+  const serviceSlugs = ["syndicat-copropriete", "airbnb", "location", "gestion-condo"];
   const serviceLinks = serviceSlugs
     .map((slug) => {
       const svc = getService(locale, slug);
@@ -1749,6 +1745,7 @@ function buildLocationsIndexMainHtml(locale: "fr" | "en"): string {
   <h1>Gestion immobilière par ville dans le Grand Montréal</h1>
   <p>Gestion Velora dessert les copropriétés, propriétaires locatifs et hôtes Airbnb dans les principaux secteurs du Grand Montréal. Les pages locales regroupent les services prioritaires par ville afin de clarifier le type de mandat offert et les enjeux opérationnels propres au secteur.</p>
   <p>Chaque page locale relie une ville à un besoin concret : administration de syndicat, gestion locative, gestion Airbnb, conformité Loi 16 ou gestion commerciale. Les pages les plus importantes sont indexées dans le sitemap et reliées depuis ce hub pour éviter les pages isolées.</p>
+  <p>Pour Montréal, consultez notre page <a href="/services/syndicat-copropriete">gestion de syndicat de copropriété</a>.</p>
   <h2>Pages locales prioritaires</h2>
   <ul>
 ${links}
@@ -1759,6 +1756,7 @@ ${links}
   <h1>Property management by city in Greater Montreal</h1>
   <p>Gestion Velora serves condo boards, landlords, and Airbnb hosts across key Greater Montreal areas. Local pages connect each city with the most relevant service mandate and explain the operating context for that area.</p>
   <p>Each local page links a city to a concrete need: condo board administration, rental management, Airbnb operations, Bill 16 compliance, or commercial property management. Priority pages are included in the sitemap and linked from this hub to avoid isolated URLs.</p>
+  <p>For Montréal, see our <a href="/en/services/syndicat-copropriete">condo syndicate management</a> page.</p>
   <h2>Priority local pages</h2>
   <ul>
 ${links}
@@ -2276,7 +2274,7 @@ function buildRoutes(): RouteConfig[] {
   });
 
   // --- Service detail pages ---
-  for (const slug of ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"] as const) {
+  for (const slug of ["syndicat-copropriete", "airbnb", "location", "gestion-condo"] as const) {
     const frSvc = getService("fr", slug);
     const enSvc = getService("en", slug);
     const img = SERVICE_IMAGES[slug];

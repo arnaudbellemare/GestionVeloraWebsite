@@ -3,6 +3,7 @@ import { blogCoverUrl } from "../lib/blogImages";
 import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
 import { ARTICLE_AUTHOR_BIO } from "../data/author";
+import { withCurrentPageBreadcrumbItem } from "../data/breadcrumbSchema";
 import {
   ARTICLE_AUTHOR_NAME,
   ARTICLE_AUTHOR_SAME_AS,
@@ -46,9 +47,20 @@ const HOMEPAGE_CITATIONS = [
   },
 ] as const;
 
+/** Canonical URL of the current page: no trailing slash, except the two homepages. */
+function currentCanonicalUrl(): string {
+  const { pathname } = window.location;
+  if (pathname === "/" || pathname === "/en/" || pathname === "/en") {
+    return pathname === "/" ? `${SITE_URL}/` : `${SITE_URL}/en/`;
+  }
+  return `${SITE_URL}${pathname.replace(/\/+$/, "")}`;
+}
+
 // Inject one or multiple JSON-LD schemas into the document head.
 // When given an array, uses the @graph pattern for clean multi-schema output.
-function injectSchema(data: object | object[]) {
+// The last breadcrumb entry gets the current page URL (see breadcrumbSchema.ts).
+function injectSchema(input: object | object[]) {
+  const data = withCurrentPageBreadcrumbItem(input, currentCanonicalUrl());
   const id = "schema-org-page";
   let el = document.getElementById(id) as HTMLScriptElement | null;
   if (!el) {

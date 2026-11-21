@@ -896,7 +896,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Les honoraires d'un ",
-              { text: "gestionnaire de copropriété", to: "/services/gestion-copropriete" },
+              { text: "gestionnaire de copropriété", to: "/services/syndicat-copropriete" },
               " à Montréal sont généralement calculés au prorata du nombre d'unités. Chez Gestion Velora, la base publiée en 2026 se situe généralement entre 33 $ et 36 $ / unité / mois selon le mandat ; les formules avec intégrations applicatives et portails peuvent aller jusqu'à 40 $ / unité / mois. Le coût final dépend de la taille de l'immeuble, de la complexité opérationnelle, du niveau de reporting et des services inclus.",
             ],
             "Ces honoraires couvrent l'administration courante : comptabilité, perception des charges, coordination des travaux, correspondance, préparation des assemblées et suivi réglementaire. Certaines firmes facturent des extras pour la gestion des urgences hors heures, la préparation de l'étude de fonds de prévoyance ou le suivi judiciaire. Il est important de comparer les devis en détail pour éviter les mauvaises surprises.",
@@ -938,7 +938,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Fees for a ",
-              { text: "professional condo property manager", to: "/services/gestion-copropriete" },
+              { text: "professional condo property manager", to: "/services/syndicat-copropriete" },
               " in Montreal are generally calculated per unit. At Gestion Velora, the 2026 published baseline is typically $33-$36 per unit/month depending on the mandate; packages with app and portal integrations can go up to $40 per unit/month. Final cost depends on building size, operational complexity, reporting level, and included services.",
             ],
             "These fees usually cover routine administration: accounting, fee collection, contractor coordination, owner communications, AGM preparation, and regulatory compliance. Some firms charge extras for after-hours emergencies, reserve fund study coordination, or legal follow-up. Always compare proposals in detail to avoid surprises.",
@@ -1016,7 +1016,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Faites cet audit rapide. Si votre immeuble compte plus de 10 unités, a plus de 15 ans d'âge, fait face à des travaux majeurs dans les 5 prochaines années ou a connu des difficultés à percevoir les charges communes, la ",
-              { text: "gestion professionnelle de copropriété", to: "/services/gestion-copropriete" },
+              { text: "gestion professionnelle de copropriété", to: "/services/syndicat-copropriete" },
               " sera probablement plus rentable que l'autogestion une fois les risques pris en compte.",
             ],
             "Pour les syndicats qui souhaitent conserver un certain contrôle, la co-gestion est une solution intermédiaire : le gestionnaire prend en charge les tâches administratives (comptabilité, appels de fonds, gestion des fournisseurs) tandis que le CA conserve la prise de décision stratégique. Cette formule réduit la charge des administrateurs bénévoles sans les priver de leur rôle de gouvernance.",
@@ -1058,7 +1058,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Run this quick audit: if your building has more than 10 units, is over 15 years old, faces major work in the next 5 years, or has had trouble collecting condo fees, ",
-              { text: "professional condo management", to: "/services/gestion-copropriete" },
+              { text: "professional condo management", to: "/services/syndicat-copropriete" },
               " will likely be more cost-effective than self-management once risks are factored in.",
             ],
             "For boards that want to retain some control, co-management is a middle ground: the manager handles administrative tasks (accounting, fee collection, contractor management) while the board retains strategic decision-making. This reduces the burden on volunteer directors without removing their governance role.",
@@ -1302,7 +1302,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Le CA peut déléguer l'administration courante à un ",
-              { text: "gestionnaire professionnel de copropriété", to: "/services/gestion-copropriete" },
+              { text: "gestionnaire professionnel de copropriété", to: "/services/syndicat-copropriete" },
               " sans se dessaisir de sa gouvernance. La délégation couvre typiquement : la comptabilité et les appels de fonds, la gestion des contrats de services, la coordination des travaux, la correspondance avec les copropriétaires et le suivi réglementaire. Le CA conserve l'approbation du budget, les décisions stratégiques et la relation avec les copropriétaires.",
             ],
             "Cette délégation réduit la charge des administrateurs bénévoles, améliore la qualité des processus et réduit le risque d'erreurs. Pour les CA dont les membres changent fréquemment (rotation élevée), elle assure aussi la continuité de l'administration : le gestionnaire est la mémoire institutionnelle du syndicat.",
@@ -1344,7 +1344,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             [
               "The board can delegate routine administration to a ",
-              { text: "professional condo property manager", to: "/services/gestion-copropriete" },
+              { text: "professional condo property manager", to: "/services/syndicat-copropriete" },
               " without giving up governance. Delegation typically covers: accounting and fee collection, service contract management, contractor coordination, owner communications, and regulatory compliance. The board retains budget approval, strategic decisions, and the relationship with owners.",
             ],
             "This delegation reduces the burden on volunteer directors, improves process quality, and reduces the risk of errors. For boards with frequent member turnover, it also ensures administrative continuity: the manager becomes the institutional memory of the condo board.",
@@ -1482,7 +1482,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Gestion Velora accompagne les syndicats de copropriété et les ",
-              { text: "gestionnaires de copropriété", to: "/services/gestion-copropriete" },
+              { text: "gestionnaires de copropriété", to: "/services/syndicat-copropriete" },
               " montréalais avec une approche fondée sur la transparence, la rigueur et la disponibilité. Nos rapports mensuels sont accessibles en tout temps via le portail copropriétaires, notre ligne d'urgence est disponible 24/7, et chaque mandat est géré par un gestionnaire dédié qui connaît votre immeuble en profondeur.",
             ],
             "Notre expertise couvre l'ensemble des obligations réglementaires québécoises : conformité Loi 141, étude de fonds de prévoyance, carnet d'entretien, préparation des AGA, gestion des assurances et coordination des travaux majeurs. Nous travaillons avec un réseau de fournisseurs qualifiés et assurés, sélectionnés pour leur fiabilité et leurs tarifs compétitifs.",
@@ -1524,7 +1524,7 @@ export const blogPosts: BlogPost[] = [
           paragraphs: [
             [
               "Gestion Velora supports condo boards and ",
-              { text: "condo property managers", to: "/services/gestion-copropriete" },
+              { text: "condo property managers", to: "/services/syndicat-copropriete" },
               " in Montreal with an approach grounded in transparency, rigor, and availability. Monthly reports are accessible anytime via the owner portal, our emergency line is available 24/7, and every mandate is managed by a dedicated manager who knows your building in depth.",
             ],
             "Our expertise covers all Quebec regulatory obligations: Law 141 compliance, reserve fund studies, maintenance logs, AGM preparation, insurance management, and major work coordination. We work with a network of qualified, insured contractors selected for reliability and competitive rates.",

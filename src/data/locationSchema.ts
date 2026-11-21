@@ -34,7 +34,7 @@ export function buildLocationPageSchema(
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: homeLabel, item: `${base}/` },
-          { "@type": "ListItem", position: 2, name: serviceName },
+          { "@type": "ListItem", position: 2, name: serviceName, item: url },
         ],
       },
     ],
