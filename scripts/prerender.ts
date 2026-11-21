@@ -25,6 +25,9 @@ import { join } from "path";
 // ---------------------------------------------------------------------------
 import { blogPosts, type BlogPost, type BlogTable, type RichParagraph } from "../src/data/blog.js";
 import { getServiceArticles } from "../src/data/serviceArticles.js";
+import { getServiceGeoSummary } from "../src/data/serviceGeoSummary.js";
+import { getPricingContent, type PricingTier } from "../src/data/pricing.js";
+import type { ServiceSlug } from "../src/data/services.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
 import { COMPARISON_GUIDE } from "../src/data/comparisonGuide.js";
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
@@ -656,9 +659,15 @@ function getService(locale: "fr" | "en", slug: string) {
       metaDescription?: string;
       subtitle?: string;
       offerings?: { title: string; items: string[]; detailItems?: string[] }[];
+      faq?: { q: string; a: string }[];
     }
   >)[slug];
   return s;
+}
+
+function getServicePageLabels(locale: "fr" | "en") {
+  const t = locale === "fr" ? frRaw : enRaw;
+  return t.servicePage as { introLead: string; faqTitle: string };
 }
 
 function getServicesHubMeta(locale: "fr" | "en") {
@@ -1676,6 +1685,24 @@ function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
     ? `  <h2>${locale === "en" ? "Related articles" : "Articles connexes"}</h2>\n  <ul>\n${articleLinks}\n  </ul>`
     : "";
   const h1 = svc.subtitle || svc.title;
+  const labels = getServicePageLabels(locale);
+  const geo = getServiceGeoSummary(slug as ServiceSlug, locale);
+  const summaryHtml = `  <p>${escapeHtml(labels.introLead)}</p>
+  <aside>
+    <p>${locale === "en" ? "Pricing, proof, updated 2026" : "Tarif, preuve, mis à jour 2026"}</p>
+    <p><strong>${escapeHtml(geo.price)}</strong></p>
+    <p>${escapeHtml(geo.proof)}</p>
+    <p><a href="${localizePath("/tarifs", locale)}">${locale === "en" ? "See pricing" : "Voir les tarifs"}</a> · <a href="${localizePath(geo.compareTo, locale)}">${locale === "en" ? "Compare options" : "Comparer"}</a> · <a href="${localizePath("/trust-proof", locale)}">${locale === "en" ? "Trust proof" : "Preuves"}</a></p>
+  </aside>`;
+  const faq = svc.faq ?? [];
+  const faqHtml = faq.length
+    ? `  <section>
+    <h2>${escapeHtml(labels.faqTitle)}</h2>
+    <dl>
+${faq.map((item) => `      <dt>${escapeHtml(item.q)}</dt>\n      <dd>${escapeHtml(item.a)}</dd>`).join("\n")}
+    </dl>
+  </section>`
+    : "";
   let rulesHtml = "";
   if (slug === "airbnb") {
     const rules = getAirbnbServiceRules(locale);
@@ -1693,8 +1720,10 @@ ${rules.sources.map((source) => `    <li><a href="${escapeHtml(source.url)}">${e
   <h1>${escapeHtml(h1)}</h1>
   ${svc.subtitle && svc.subtitle !== svc.title ? `<p>${escapeHtml(svc.title)}</p>` : ""}
   <p>${escapeHtml(svc.description)}</p>
+${summaryHtml}
 ${rulesHtml}
 ${offeringHtml}
+${faqHtml}
 ${serviceLinks}
 ${articlesHtml}
 </main>`;
@@ -1817,37 +1846,44 @@ function buildTermsMainHtml(locale: "fr" | "en"): string {
 </main>`;
 }
 
+function pricingTiersToHtml(tiers: PricingTier[], highlightLabel: string): string {
+  return tiers
+    .map((tier) => {
+      const badge = tier.highlighted ? `\n    <p>${escapeHtml(highlightLabel)}</p>` : "";
+      const features = tier.features.map((f) => `      <li>${escapeHtml(f)}</li>`).join("\n");
+      return `  <article>${badge}
+    <h3>${escapeHtml(tier.name)}</h3>
+    <p><strong>${escapeHtml(tier.priceNote)}</strong></p>
+    <p>${escapeHtml(tier.description)}</p>
+    <ul>
+${features}
+    </ul>
+  </article>`;
+    })
+    .join("\n");
+}
+
+/** Same copy as src/pages/TarifsPage.tsx (both read src/data/pricing.ts). */
 function buildTarifsMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
-  if (locale === "fr") {
-    return `<main lang="${lang}">
-  <h1>Tarifs de gestion immobilière à Montréal</h1>
-  <p>Tarifs transparents pour la gestion de syndicat de copropriété, la gestion locative et Airbnb à Montréal. Syndicat : en général 33 $ à 36 $ / unité / mois, jusqu'à 40 $ avec intégrations applicatives. Location : honoraires sur la base d'un mois de loyer. Sans frais cachés.</p>
-  <h2>Ce qui influence le tarif syndicat</h2>
-  <ul>
-    <li>Nombre d'unités et ampleur des parties communes.</li>
-    <li>Portail copropriétaires, intégrations comptables ou outils d'analyse.</li>
-    <li>Profondeur du mandat (AGA, fonds de prévoyance, projets majeurs).</li>
-  </ul>
-  <h2>Location longue durée</h2>
-  <p>Honoraires structurés autour d'un mois de loyer, selon portefeuille et services inclus.</p>
-  <h2>Airbnb et courte durée</h2>
-  <p>Forfait ou pourcentage des revenus bruts selon la charge opérationnelle et le calendrier de réservations.</p>
-</main>`;
-  }
+  const p = getPricingContent(locale);
+  const faq = p.faq.items
+    .map((item) => `  <h3>${escapeHtml(item.q)}</h3>\n  <p>${escapeHtml(item.a)}</p>`)
+    .join("\n");
   return `<main lang="${lang}">
-  <h1>Property management fees in Montreal</h1>
-  <p>Transparent pricing for condo board, rental, and Airbnb management in Montreal. Condo boards: typically $33–$36/unit/month, up to $40 with app integrations. Rentals: fee structured as one month's rent. No hidden fees.</p>
-  <h2>What drives condo board pricing</h2>
-  <ul>
-    <li>Unit count and scope of common elements.</li>
-    <li>Owner portal, accounting integrations, or reporting depth.</li>
-    <li>Mandate breadth (AGMs, reserve studies, major projects).</li>
-  </ul>
-  <h2>Long-term rentals</h2>
-  <p>Fees anchored to one month's rent depending on portfolio size and included services.</p>
-  <h2>Airbnb and short-term</h2>
-  <p>Flat fee or gross-revenue share based on operational load and booking calendar.</p>
+  <h1>${escapeHtml(p.h1)}</h1>
+  <p>${escapeHtml(p.intro)}</p>
+  <h2>${escapeHtml(p.syndicat.heading)}</h2>
+  <p>${escapeHtml(p.syndicat.intro)}</p>
+${pricingTiersToHtml(p.syndicat.tiers, p.syndicat.highlightLabel)}
+  <h2>${escapeHtml(p.location.heading)}</h2>
+  <p>${escapeHtml(p.location.intro)}</p>
+${pricingTiersToHtml(p.location.tiers, p.location.highlightLabel)}
+  <h2>${escapeHtml(p.airbnb.heading)}</h2>
+  <p>${escapeHtml(p.airbnb.body)}</p>
+  <h2>${escapeHtml(p.faq.heading)}</h2>
+${faq}
+  <p><a href="${localizePath("/contact", locale)}">${escapeHtml(p.airbnb.cta)}</a></p>
 </main>`;
 }
 
