@@ -39,6 +39,13 @@ export function LocationsIndexPage() {
               ? "Explore service pages by city and mandate type across Greater Montreal."
               : "Explorez les pages de service par ville et type de mandat dans le Grand Montreal."}
           </p>
+          <p className="font-sans text-base text-black/70 dark:text-white/70 max-w-3xl -mt-10 mb-14">
+            {isEn ? "For Montréal, see our " : "Pour Montréal, consultez notre page "}
+            <InternalLink to="/services/syndicat-copropriete" className="text-waabi-pink hover:underline underline-offset-2">
+              {isEn ? "condo syndicate management" : "gestion de syndicat de copropriété"}
+            </InternalLink>
+            {isEn ? " page." : "."}
+          </p>
         </ScrollReveal>
 
         <section id="locations-grid" className="space-y-8" aria-label={isEn ? "Cities and services" : "Villes et services"}>

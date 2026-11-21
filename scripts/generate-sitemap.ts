@@ -31,7 +31,7 @@ const LAST_MODIFIED_BY_PATH = new Map<string, string>([
   ["/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
   ["/en/blog/augmentation-loyer-montreal-regles-calcul-tal", "2026-08-24"],
 ]);
-const SERVICE_SLUGS = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"];
+const SERVICE_SLUGS = ["syndicat-copropriete", "airbnb", "location", "gestion-condo"];
 const HOMEPAGE_IMAGE_PATHS = [
   "/logo-80.webp",
   "/hero-video-poster-mobile.webp?v=6",

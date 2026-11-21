@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next";
 
-export type ServiceSlug = "syndicat-copropriete" | "airbnb" | "location" | "gestion-condo" | "gestion-copropriete";
+export type ServiceSlug = "syndicat-copropriete" | "airbnb" | "location" | "gestion-condo";
 type ServiceOffering = { title: string; items: string[]; detailItems?: string[] };
 
 /** One distinct hero image per service (hub cards + service detail heroes). */
@@ -9,7 +9,6 @@ const SERVICE_IMAGES: Record<ServiceSlug, string> = {
   airbnb: "/images/airbnb-service.webp",
   location: "/hero-gestion-velora-1200.webp",
   "gestion-condo": "/images/portfolio/le-beaumont.webp",
-  "gestion-copropriete": "/images/portfolio/syndicat-enticy.webp",
 };
 
 export const SERVICE_MOBILE_IMAGES: Record<ServiceSlug, string> = {
@@ -17,7 +16,6 @@ export const SERVICE_MOBILE_IMAGES: Record<ServiceSlug, string> = {
   airbnb: "/images/airbnb-service.webp",
   location: "/hero-gestion-velora-800.webp",
   "gestion-condo": "/images/portfolio/le-beaumont-card.webp",
-  "gestion-copropriete": "/images/portfolio/syndicat-enticy-card.webp",
 };
 
 /** `/location/...` landing heroes: reuse service art where it matches intent; commercial stays distinct. */
@@ -34,7 +32,6 @@ export const SERVICE_SLUGS: ServiceSlug[] = [
   "airbnb",
   "location",
   "gestion-condo",
-  "gestion-copropriete",
 ];
 
 export function getLocalizedService(slug: ServiceSlug, t: TFunction) {

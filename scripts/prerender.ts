@@ -28,6 +28,7 @@ import { getServiceArticles } from "../src/data/serviceArticles.js";
 import { getServiceGeoSummary } from "../src/data/serviceGeoSummary.js";
 import { getPricingContent, type PricingTier } from "../src/data/pricing.js";
 import type { ServiceSlug } from "../src/data/services.js";
+import { withCurrentPageBreadcrumbItem } from "../src/data/breadcrumbSchema.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
 import { COMPARISON_GUIDE } from "../src/data/comparisonGuide.js";
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
@@ -150,7 +151,6 @@ const SERVICE_IMAGES: Record<string, string> = {
   airbnb: `${SITE_URL}/images/airbnb-service.webp`,
   location: `${SITE_URL}/hero-gestion-velora-1200.webp`,
   "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont.webp`,
-  "gestion-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy.webp`,
 };
 
 /** Smaller first-viewport sources for mobile service pages. */
@@ -159,7 +159,6 @@ const SERVICE_MOBILE_IMAGES: Record<string, string> = {
   airbnb: `${SITE_URL}/images/airbnb-service.webp`,
   location: `${SITE_URL}/hero-gestion-velora-800.webp`,
   "gestion-condo": `${SITE_URL}/images/portfolio/le-beaumont-card.webp`,
-  "gestion-copropriete": `${SITE_URL}/images/portfolio/syndicat-enticy-card.webp`,
 };
 
 /** `/location/{service}-{city}` OG images — keyed by `LocationService.slug` (not `serviceSlug`). */
@@ -249,7 +248,6 @@ const NAV_LABELS = {
     services: "Services",
     servicesHub: "Tous les services de gestion immobilière",
     syndicat: "Gestion de syndicat de copropriété",
-    copropriete: "Gestion de copropriété",
     condo: "Gestion de condo",
     location: "Gestion locative longue durée",
     airbnb: "Gestion Airbnb et location court terme",
@@ -275,7 +273,6 @@ const NAV_LABELS = {
     services: "Services",
     servicesHub: "All property management services",
     syndicat: "Condo syndicate management",
-    copropriete: "Co-ownership management",
     condo: "Condo management",
     location: "Long-term rental management",
     airbnb: "Airbnb and short-term rental management",
@@ -312,7 +309,6 @@ function buildSiteNavHtml(locale: "fr" | "en"): string {
     group([
       [`${p}/services`, t.servicesHub],
       [`${p}/services/syndicat-copropriete`, t.syndicat],
-      [`${p}/services/gestion-copropriete`, t.copropriete],
       [`${p}/services/gestion-condo`, t.condo],
       [`${p}/services/location`, t.location],
       [`${p}/services/airbnb`, t.airbnb],
@@ -394,7 +390,6 @@ function buildHtml(
     /** Route chunks required to render the first viewport. */
     modulePreloads?: string[];
     keywords?: string;
-    ampHtmlHref?: string;
     hreflangFr: string;
     hreflangEn: string;
     hreflangDefault: string;
@@ -526,11 +521,6 @@ function buildHtml(
     `<meta name="twitter:image:alt" content="${escapeHtml(opts.title)}"`
   );
 
-  html = html.replace(/\s*<link rel="amphtml" href="[^"]*"\s*\/?>/g, "");
-  if (opts.ampHtmlHref) {
-    html = html.replace("</head>", `  <link rel="amphtml" href="${opts.ampHtmlHref}" />\n</head>`);
-  }
-
   html = html.replace(/\s*<meta name="robots" content="[^"]*"\s*\/?>/g, "");
   const robotsContent = opts.robots ?? INDEX_ROBOTS;
   html = html.replace(
@@ -606,7 +596,7 @@ function buildHtml(
               return rest;
             }),
           };
-    const schemaTags = `  <script id="schema-org-page" type="application/ld+json">\n  ${JSON.stringify(pageSchema, null, 2)}\n  </script>\n`;
+    const schemaTags = `  <script id="schema-org-page" type="application/ld+json">\n  ${JSON.stringify(withCurrentPageBreadcrumbItem(pageSchema, opts.canonical), null, 2)}\n  </script>\n`;
     html = html.replace("</head>", `${schemaTags}</head>`);
   }
 
@@ -878,7 +868,7 @@ function richToAmpHtml(para: RichParagraph, locale: "fr" | "en"): string {
     .join("");
 }
 
-/** Plain HTML table shared by the AMP page and the noscript prerender. */
+/** Plain HTML table for the prerendered article body. */
 function tableToHtml(table: BlogTable): string {
   const head = table.columns.map((c) => `<th scope="col">${escapeHtml(c)}</th>`).join("");
   const body = table.rows
@@ -945,174 +935,6 @@ function buildDatasetSchema(post: BlogPost, locale: "fr" | "en", base: string) {
   };
 }
 
-function schemaToJsonLd(schema: object | object[] | null): string {
-  if (!schema) return "";
-  const schemas = Array.isArray(schema) ? schema : [schema];
-  const pageSchema =
-    schemas.length === 1
-      ? schemas[0]
-      : {
-          "@context": "https://schema.org",
-          "@graph": schemas.map((item) => {
-            const { "@context": _ctx, ...rest } = item as Record<string, unknown>;
-            return rest;
-          }),
-        };
-  return JSON.stringify(pageSchema, null, 2).replace(/</g, "\\u003c");
-}
-
-function buildAmpBlogHtml(locale: "fr" | "en", slug: string): string {
-  const post = blogPosts.find((p) => p.slug === slug);
-  if (!post) return "";
-  const loc = post[locale];
-  const isEn = locale === "en";
-  const lang = isEn ? "en-CA" : "fr-CA";
-  const base = isEn ? `${SITE_URL}/en` : SITE_URL;
-  const canonical = `${base}/blog/${slug}`;
-  const ampPath = isEn ? `/en/amp/blog/${slug}` : `/amp/blog/${slug}`;
-  const ampUrl = `${SITE_URL}${ampPath}`;
-  const title = buildTitle(loc.metaTitle ?? loc.title);
-  const schema = buildArticleSchema(locale, slug, base);
-  const datasetSchema = buildDatasetSchema(post, locale, base);
-  const bc = getBreadcrumbLabels(locale);
-  const schemaJson = schemaToJsonLd(
-    schema
-      ? [
-          schema,
-          buildBreadcrumbSchema([
-            { name: bc.home, url: SITE_URL + "/" },
-            { name: bc.insights, url: `${base}/blog` },
-            { name: loc.title },
-          ]),
-          ...(datasetSchema ? [datasetSchema] : []),
-        ]
-      : null
-  );
-  const servicesIntro = isEn
-    ? "Managing a building in Montreal? Our services:"
-    : "Vous gérez un immeuble à Montréal ? Nos services :";
-  const services = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"]
-    .map((serviceSlug) => {
-      const svc = getService(locale, serviceSlug);
-      return `<a href="${localizePath(`/services/${serviceSlug}`, locale)}">${escapeHtml(svc.title)}</a>`;
-    })
-    .join(" <span aria-hidden=\"true\">·</span> ");
-  const sections = loc.sections
-    .map((section, sectionIndex) => {
-      const paras =
-        section.paragraphs.map((p) => `      <p>${richToAmpHtml(p, locale)}</p>`).join("\n") +
-        (section.table ? `\n      ${tableToHtml(section.table)}` : "");
-      const contactBlock =
-        sectionIndex === 1
-          ? `\n      <aside class="callout">\n        <p>${escapeHtml(isEn ? enRaw.blog.contactQuestion : frRaw.blog.contactQuestion)}</p>\n        <a class="button" href="${isEn ? "/en/contact" : "/contact"}">${escapeHtml(
-              isEn ? enRaw.blog.contactUs : frRaw.blog.contactUs
-            )}</a>\n      </aside>`
-          : "";
-      return `    <section>\n      <h2>${escapeHtml(section.heading)}</h2>\n${paras}${contactBlock}\n    </section>`;
-    })
-    .join("\n");
-  const related = blogPosts
-    .filter((p) => p.slug !== slug)
-    .slice(0, 3)
-    .map((p) => {
-      const r = p[locale];
-      return `        <li><a href="${localizePath(`/blog/${p.slug}`, locale)}">${escapeHtml(r.title)}</a><span>${escapeHtml(r.date)}</span></li>`;
-    })
-    .join("\n");
-  const relatedTitle = isEn ? enRaw.blog.relatedPostsTitle : frRaw.blog.relatedPostsTitle;
-  const authorLabel = isEn ? "Written by" : "Écrit par";
-  const authorRole = isEn ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora";
-  const authorBio = ARTICLE_AUTHOR_BIO[locale];
-  const ctaText = isEn ? enRaw.blog.planifyCall : frRaw.blog.planifyCall;
-
-  return `<!doctype html>
-<html amp lang="${lang}">
-<head>
-  <meta charset="utf-8">
-  <title>${escapeHtml(title)}</title>
-  <link rel="canonical" href="${canonical}">
-  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <meta name="description" content="${escapeHtml(loc.excerpt)}">
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="${escapeHtml(title)}">
-  <meta property="og:description" content="${escapeHtml(loc.excerpt)}">
-  <meta property="og:url" content="${ampUrl}">
-  <meta property="og:image" content="${escapeHtml(post.image)}">
-  <meta property="og:locale" content="${isEn ? "en_CA" : "fr_CA"}">
-  <script async src="https://cdn.ampproject.org/v0.js"></script>
-  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-  <style amp-custom>
-    :root{color-scheme:light;--ink:#171412;--muted:#655f5a;--line:#e8e0d8;--paper:#fffaf5;--accent:#d33b6a}
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.68}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:760px;margin:0 auto;padding:32px 20px 64px}
-    .crumbs,.meta,.eyebrow{font-size:13px;color:var(--muted)}
-    .crumbs{margin-bottom:28px}
-    h1{font-size:42px;line-height:1.08;margin:14px 0 18px;letter-spacing:0}
-    h2{font-size:26px;line-height:1.22;margin:46px 0 14px;letter-spacing:0}
-    p{font-size:18px;margin:0 0 18px}
-    .excerpt{font-size:22px;color:var(--muted)}
-    .brief,.callout{border:1px solid var(--line);background:#fff;padding:20px;border-radius:8px;margin:24px 0}
-    .brief p,.callout p{margin-bottom:0}
-    .services{font-size:15px;margin:28px 0;color:var(--muted)}
-    .hero{margin:34px 0 44px;border-radius:8px;overflow:hidden;background:#eee}
-    .button{display:inline-block;margin-top:12px;background:var(--accent);color:white;padding:11px 16px;border-radius:999px;font-weight:700}
-    .author,.related,.final{border-top:1px solid var(--line);margin-top:46px;padding-top:28px}
-    .author strong{display:block}
-    .related ul{padding-left:18px}
-    .related li{margin:0 0 14px}
-    .related span{display:block;color:var(--muted);font-size:13px}
-    .data{margin:22px 0;overflow-x:auto}
-    .data figcaption,.note{font-size:13px;color:var(--muted);margin:0 0 8px}
-    .data table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
-    .data th,.data td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-    .data th{background:#fff}
-    .sources{border-top:1px solid var(--line);margin-top:46px;padding-top:28px}
-    .sources ol{padding-left:20px}
-    .sources li{margin:0 0 10px;font-size:15px}
-    @media(max-width:560px){.wrap{padding:24px 18px 52px}h1{font-size:34px}.excerpt{font-size:20px}p{font-size:17px}}
-  </style>
-  ${schemaJson ? `<script type="application/ld+json">\n${schemaJson}\n  </script>` : ""}
-</head>
-<body>
-  <article class="wrap">
-    <nav class="crumbs"><a href="${isEn ? "/en/" : "/"}">${escapeHtml(bc.home)}</a> / <a href="${localizePath("/blog", locale)}">${escapeHtml(bc.insights)}</a></nav>
-    <p class="meta">${escapeHtml(loc.category)} · ${escapeHtml(loc.date)}</p>
-    <h1>${escapeHtml(loc.title)}</h1>
-    <p class="excerpt">${escapeHtml(loc.excerpt)}</p>
-    <aside class="brief">
-      <p class="eyebrow">${escapeHtml(isEn ? enRaw.blog.briefLabel : frRaw.blog.briefLabel)}</p>
-      <p>${escapeHtml(loc.brief)}</p>
-    </aside>
-    <p class="services">${escapeHtml(servicesIntro)} ${services}</p>
-    <div class="hero">
-      <amp-img src="${escapeHtml(post.image)}" width="1200" height="800" layout="responsive" alt="${escapeHtml(loc.title)}"></amp-img>
-    </div>
-${sections}
-${studyToHtml(post, locale)}
-    <section class="author">
-      <p class="eyebrow">${escapeHtml(authorLabel)}</p>
-      <p><strong>${escapeHtml(AUTHOR_NAME)}</strong>${escapeHtml(authorRole)}</p>
-      <p>${escapeHtml(authorBio)}</p>
-      <p><a href="${isEn ? "/en/about" : "/about"}">${escapeHtml(isEn ? "View author profile" : "Voir le profil auteur")}</a></p>
-    </section>
-    <section class="related">
-      <h2>${escapeHtml(relatedTitle)}</h2>
-      <ul>
-${related}
-      </ul>
-    </section>
-    <section class="final">
-      <p>${escapeHtml(isEn ? enRaw.blog.contactQuestion : frRaw.blog.contactQuestion)}</p>
-      <a class="button" href="${isEn ? "/en/contact" : "/contact"}">${escapeHtml(ctaText)}</a>
-    </section>
-  </article>
-</body>
-</html>`;
-}
-
 function buildLocationMainHtml(
   locale: "fr" | "en",
   svc: typeof LOCATION_SERVICES[0],
@@ -1122,7 +944,7 @@ function buildLocationMainHtml(
   const h1 = fillLoc(locale === "fr" ? svc.h1Fr : svc.h1En, city, locale);
   const pageSlug = `${svc.slug}-${city.slug}`;
   const desc =
-    locale === "en" && (pageSlug === "syndicat-copropriete-montreal" || pageSlug === "gestion-locative-westmount")
+    locale === "en" && pageSlug === "gestion-locative-westmount"
       ? resolveLocation(pageSlug)!.descEn
       : fillLoc(locale === "fr" ? svc.descFr : svc.descEn, city, locale);
   const cityName = locale === "fr" ? city.nameFr : city.nameEn;
@@ -1250,9 +1072,8 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
     .join("\n");
   const studyHtml = studyToHtml(post, locale);
 
-  // Visible byline: the AMP variant already carries one, but the standard prerender
-  // shipped none, so an AI engine reading this page saw no named author behind
-  // legal/financial guidance (YMYL). Mirrors the AMP author block.
+  // Visible byline: without it, an AI engine reading this page saw no named
+  // author behind legal/financial guidance (YMYL).
   const isEn = locale === "en";
   const byLabel = isEn ? "Written by" : "Écrit par";
   const byRole = isEn ? "Founder, Gestion Velora" : "Fondateur, Gestion Velora";
@@ -1374,7 +1195,7 @@ ${faqBlocks}
 
 function buildServicesHubMainHtml(locale: "fr" | "en"): string {
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
-  const serviceSlugs = ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"];
+  const serviceSlugs = ["syndicat-copropriete", "airbnb", "location", "gestion-condo"];
   const serviceLinks = serviceSlugs
     .map((slug) => {
       const svc = getService(locale, slug);
@@ -1749,6 +1570,7 @@ function buildLocationsIndexMainHtml(locale: "fr" | "en"): string {
   <h1>Gestion immobilière par ville dans le Grand Montréal</h1>
   <p>Gestion Velora dessert les copropriétés, propriétaires locatifs et hôtes Airbnb dans les principaux secteurs du Grand Montréal. Les pages locales regroupent les services prioritaires par ville afin de clarifier le type de mandat offert et les enjeux opérationnels propres au secteur.</p>
   <p>Chaque page locale relie une ville à un besoin concret : administration de syndicat, gestion locative, gestion Airbnb, conformité Loi 16 ou gestion commerciale. Les pages les plus importantes sont indexées dans le sitemap et reliées depuis ce hub pour éviter les pages isolées.</p>
+  <p>Pour Montréal, consultez notre page <a href="/services/syndicat-copropriete">gestion de syndicat de copropriété</a>.</p>
   <h2>Pages locales prioritaires</h2>
   <ul>
 ${links}
@@ -1759,6 +1581,7 @@ ${links}
   <h1>Property management by city in Greater Montreal</h1>
   <p>Gestion Velora serves condo boards, landlords, and Airbnb hosts across key Greater Montreal areas. Local pages connect each city with the most relevant service mandate and explain the operating context for that area.</p>
   <p>Each local page links a city to a concrete need: condo board administration, rental management, Airbnb operations, Bill 16 compliance, or commercial property management. Priority pages are included in the sitemap and linked from this hub to avoid isolated URLs.</p>
+  <p>For Montréal, see our <a href="/en/services/syndicat-copropriete">condo syndicate management</a> page.</p>
   <h2>Priority local pages</h2>
   <ul>
 ${links}
@@ -2170,7 +1993,6 @@ interface RouteConfig {
   twitterImage?: string;
   lcpImage?: string;
   modulePreloads?: string[];
-  ampPath?: string;
   robots?: string;
   includeInSitemap?: boolean;
   /** Images that belong to this page and should be discoverable through the image sitemap extension. */
@@ -2276,7 +2098,7 @@ function buildRoutes(): RouteConfig[] {
   });
 
   // --- Service detail pages ---
-  for (const slug of ["syndicat-copropriete", "airbnb", "location", "gestion-condo", "gestion-copropriete"] as const) {
+  for (const slug of ["syndicat-copropriete", "airbnb", "location", "gestion-condo"] as const) {
     const frSvc = getService("fr", slug);
     const enSvc = getService("en", slug);
     const img = SERVICE_IMAGES[slug];
@@ -2538,7 +2360,6 @@ function buildRoutes(): RouteConfig[] {
       keywords: buildKeywords("fr", [post.fr.metaTitle ?? post.fr.title, post.fr.category, post.fr.sections[0]?.heading ?? ""]),
       ogImage: img,
       twitterImage: img,
-      ampPath: `/amp/blog/${slug}`,
       prerenderMainInner: buildBlogMainHtml("fr", slug),
       pageSchemas: frArticle
         ? [
@@ -2562,7 +2383,6 @@ function buildRoutes(): RouteConfig[] {
       keywords: buildKeywords("en", [post.en.metaTitle ?? post.en.title, post.en.category, post.en.sections[0]?.heading ?? ""]),
       ogImage: img,
       twitterImage: img,
-      ampPath: `/en/amp/blog/${slug}`,
       prerenderMainInner: buildBlogMainHtml("en", slug),
       pageSchemas: enArticle
         ? [
@@ -2855,7 +2675,6 @@ async function main() {
       twitterImage: route.twitterImage ?? DEFAULT_TWITTER_IMAGE,
       lcpImage: route.lcpImage,
       modulePreloads: route.modulePreloads,
-      ampHtmlHref: route.ampPath ? `${SITE_URL}${route.ampPath}` : undefined,
       robots: route.robots,
       hreflangFr: frCanonical,
       hreflangEn: enCanonical,
@@ -2892,12 +2711,6 @@ async function main() {
   });
   writeFileSync(join(DIST, "index.html"), rootHtml, "utf-8");
   console.log("  ✓ / (dist/index.html updated)");
-
-  for (const post of blogPosts) {
-    writeRoute(`/amp/blog/${post.slug}`, buildAmpBlogHtml("fr", post.slug));
-    writeRoute(`/en/amp/blog/${post.slug}`, buildAmpBlogHtml("en", post.slug));
-    count += 2;
-  }
 
   // Auto-generate sitemap from all routes so it never goes stale
   buildSitemap(routes);

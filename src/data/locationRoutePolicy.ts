@@ -25,6 +25,10 @@ export const RETIRED_LOCATION_REDIRECTS: Record<string, LocationRedirectTarget> 
   "gestion-airbnb-lachine": { fr: "/services/airbnb", en: "/en/services/airbnb" },
   "gestion-airbnb-saint-laurent": { fr: "/services/airbnb", en: "/en/services/airbnb" },
   "gestion-airbnb-saint-leonard": { fr: "/services/airbnb", en: "/en/services/airbnb" },
+  // Retired 2026-11-21. Its live title ("Gestion de copropriété à Montréal")
+  // matched the syndicate service page and competed with it for the same head
+  // term. The service page already covers Montréal, so this one 301s there.
+  "syndicat-copropriete-montreal": { fr: "/services/syndicat-copropriete", en: "/en/services/syndicat-copropriete" },
 };
 export const RETIRED_LOCATION_GONE: readonly string[] = [];
 

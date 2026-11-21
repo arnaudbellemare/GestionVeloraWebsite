@@ -37,7 +37,6 @@ export const FooterSection = (): JSX.Element => {
     { label: t("footer.home"), to: "/" },
     { label: t("footer.allServices"), to: "/services" },
     { label: t("nav.syndicat"), to: "/services/syndicat-copropriete" },
-    { label: t("nav.gestionCopropriete"), to: "/services/gestion-copropriete" },
     { label: t("nav.location"), to: "/services/location" },
     { label: t("nav.airbnb"), to: "/services/airbnb" },
     { label: locale === "en" ? "Comparisons" : "Comparatifs", to: "/compare" },

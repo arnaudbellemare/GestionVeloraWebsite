@@ -181,8 +181,6 @@ export const en = {
     locationDesc: "Tenant screening, leases and professional follow-up.",
     gestionCondo: "Condo management",
     gestionCondoDesc: "Day-to-day administration, finances and maintenance for your condo.",
-    gestionCopropriete: "Condo property manager",
-    gestionCoproprieteDesc: "Full expertise for condo boards and demanding unit owners.",
   },
 
   // OurStandards
@@ -899,95 +897,6 @@ export const en = {
       ],
     },
 
-    "gestion-copropriete": {
-      title: "Condo property manager Montreal",
-      subtitle: "Your dedicated condo property manager — administration, finances, and compliance",
-      metaTitle: "Condo Property Manager — full board mandate | Gestion Velora",
-      metaDescription:
-        "Condo property manager in Montreal for condo boards: governance, budgets, Loi 141 compliance, maintenance, and clear reporting.",
-      description:
-        "Gestion Velora is a specialized condo management firm in Montreal. Our condo property managers handle all condo board obligations: administration, accounting, reserve fund, common area management, annual general meeting, and Loi 141 compliance. We are the trusted partner for boards that want to delegate day-to-day management to professionals. Gestion Velora manages a portfolio of more than 200 units and sustains a 98% occupancy rate.",
-      offerings: [
-        {
-          title: "Role and responsibilities of a condo property manager",
-          items: [
-            "Full condo board administration",
-            "Board of directors interface",
-            "Vendor and contract management",
-            "Third-party representation of the condo corporation",
-          ],
-          detailItems: [
-            "The condo manager acts as the board's agent: executing decisions, managing operations, and reporting regularly.",
-            "Coordinates all stakeholders (vendors, insurers, lawyers, inspectors) for centralized oversight.",
-            "Primary point of contact for unit owners for all requests and communications.",
-            "Represents the condo corporation in administrative matters and exceptional situations (claims, disputes, major work).",
-          ],
-        },
-        {
-          title: "Financial management and Loi 141 compliance",
-          items: [
-            "Annual budget and common fees",
-            "Reserve fund compliant with Loi 141",
-            "Accounting and financial reports",
-            "Reserve study and long-term planning",
-          ],
-          detailItems: [
-            "Annual budget with detailed line items, documented assumptions, and AGM presentation.",
-            "Reserve fund management per Loi 141 requirements: contributions, investment, and use.",
-            "Monthly financial reports with budget-to-actual variances and corrective recommendations.",
-            "Reserve study follow-up to plan major work and avoid unexpected special assessments.",
-          ],
-        },
-        {
-          title: "Technical management and building maintenance",
-          items: [
-            "Preventive and corrective maintenance",
-            "Major work coordination",
-            "Contractor selection (tendering)",
-            "Emergencies and insurance claims",
-          ],
-          detailItems: [
-            "Structured preventive maintenance program to extend equipment lifespan.",
-            "Structured tendering for comparable quotes and transparent contractor selection.",
-            "Rigorous job-site supervision with milestones, work acceptance, and documentation.",
-            "24/7 emergency protocols with priority vendor contacts and claims procedures.",
-          ],
-        },
-        {
-          title: "Governance and annual general meeting",
-          items: [
-            "AGM preparation and facilitation",
-            "Minutes and condo register",
-            "Board governance advisory",
-            "Declaration of co-ownership compliance",
-          ],
-          detailItems: [
-            "Full AGM preparation: legal notices, agenda, documents, and facilitation.",
-            "Structured minutes with decisions, owners, and deadlines.",
-            "Maintenance and update of the condo register (declaration, minutes, financials, contracts).",
-            "Proactive advisory to the board on governance best practices and regulatory compliance.",
-          ],
-        },
-      ],
-      faq: [
-        {
-          q: "What are the legal obligations of a condo property manager in Quebec?",
-          a: "In Quebec, the condo property manager acts under a mandate from the condo board. They must comply with the Act respecting divided co-ownership (Loi 141), maintain the condo register, manage the reserve fund according to established rules, and convene the AGM within prescribed timelines. Gestion Velora ensures full compliance for your corporation.",
-        },
-        {
-          q: "How do you choose a good condo property manager?",
-          a: "Look for experience managing condo boards in Quebec, financial transparency (real-time report access), responsiveness (emergency line, processing timelines), and references from other managed boards. Ask for a demonstration of the tools used (owner portal, accounting system).",
-        },
-        {
-          q: "What is the difference between self-management and a professional manager?",
-          a: "Self-management places all responsibilities on volunteer board members (administration, finances, maintenance, compliance), which can mean dozens of hours per month. A professional manager takes on all these tasks, frees the board for strategic decisions, and guarantees regulatory compliance.",
-        },
-        {
-          q: "Can the manager make decisions without board approval?",
-          a: "No. The manager acts under a mandate: they execute board decisions and handle day-to-day operations within limits defined in the contract. Major decisions (significant work, large contracts) require board or owner assembly approval per the governance rules.",
-        },
-      ],
-    },
   },
 
   // Lead capture

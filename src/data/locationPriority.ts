@@ -1,4 +1,5 @@
 import { CITIES, LOCATION_SERVICES } from "./locations";
+import { isRetiredLocationSlug } from "./locationRoutePolicy";
 
 const CITY_WEIGHTS: Record<string, number> = {
   montreal: 10,
@@ -80,7 +81,8 @@ const SERVICE_CITY_WEIGHTS: Record<string, Record<string, number>> = {
 
 /**
  * Only syndicate pages are indexable, and only for the 20 cities in
- * CITY_WEIGHTS (every other city scores 4, so the top 20 syndicate slugs are
+ * CITY_WEIGHTS, minus any retired slug (Montréal since 2026-11-21: the syndicate
+ * service page covers it) (every other city scores 4, so the top 20 syndicate slugs are
  * exactly those). Decided 2026-10-14: Gestion Velora is a syndicate
  * specialist, and the location template is identical from city to city once
  * the name is swapped, so 150 indexable pages read as filler. Every other
@@ -129,7 +131,12 @@ const PRIORITY_LOCATION_SLUGS = Array.from(
       .sort((a, b) => b.score - a.score)
       .map((entry) => entry.slug)
   )
-).slice(0, PRIORITY_LOCATION_ROUTE_LIMIT);
+)
+  .slice(0, PRIORITY_LOCATION_ROUTE_LIMIT)
+  // Filter retired slugs after the cut, not before: removing one must not
+  // promote the next-ranked city into the indexable set (every city outside
+  // CITY_WEIGHTS ties at 4, so declaration order would pick it).
+  .filter((slug) => !isRetiredLocationSlug(slug));
 
 const PRIORITY_LOCATION_SLUG_SET = new Set(PRIORITY_LOCATION_SLUGS);
 
