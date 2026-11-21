@@ -219,6 +219,16 @@
       "source": "/en/services/gestion-copropriete",
       "destination": "/en/services/syndicat-copropriete",
       "permanent": true
+    },
+    {
+      "source": "/amp/blog/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/en/amp/blog/:path*",
+      "destination": "/en/blog/:path*",
+      "permanent": true
     }
   ],
   "rewrites": [

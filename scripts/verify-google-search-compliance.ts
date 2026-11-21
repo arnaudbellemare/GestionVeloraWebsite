@@ -58,7 +58,7 @@ function matchAll(html: string, pattern: RegExp) {
 }
 
 function isAmpRoute(routePath: string) {
-  return routePath.startsWith("/amp/blog/") || routePath.startsWith("/en/amp/blog/");
+  return routePath.startsWith("/amp/") || routePath.startsWith("/en/amp/");
 }
 
 function isVideoRoute(routePath: string) {
@@ -116,41 +116,10 @@ function validateStandardPage(path: string, routePath: string, html: string, sit
     add("warn", path, `Indexable canonical is not in sitemap.xml: ${canonical}`);
   }
 
-  const ampHref = matchOne(html, /<link\s+rel="amphtml"\s+href="([^"]*)"/i);
-  const isBlogPost = routePath.startsWith("/blog/") || routePath.startsWith("/en/blog/");
-  if (isBlogPost && !ampHref) {
-    add("error", path, "Blog article is missing rel=\"amphtml\".");
-  }
-  if (!isBlogPost && ampHref) {
-    add("error", path, "Only blog articles should declare an AMP alternate.");
-  }
-}
-
-function validateAmpPage(path: string, routePath: string, html: string) {
-  const canonical = matchOne(html, /<link\s+rel="canonical"\s+href="([^"]*)"/i);
-  const runtime = /<script\s+async\s+src="https:\/\/cdn\.ampproject\.org\/v0\.js"><\/script>/i.test(html);
-
-  if (!/<html\s+amp\s+lang="[^"]+"/i.test(html)) add("error", path, "AMP page must use <html amp lang=\"...\">.");
-  if (!runtime) add("error", path, "AMP page is missing the AMP runtime script.");
-  if (!/<style\s+amp-boilerplate>/i.test(html)) add("error", path, "AMP page is missing AMP boilerplate.");
-  if (!/<style\s+amp-custom>/i.test(html)) add("error", path, "AMP page is missing amp-custom CSS.");
-  if (!canonical) add("error", path, "AMP page must canonicalize to the non-AMP article.");
-  if (canonical?.includes("/amp/")) add("error", path, `AMP canonical must point to non-AMP URL: ${canonical}`);
-  if (/<img[\s>]/i.test(html)) add("error", path, "AMP page must use amp-img instead of img.");
-  if (/\son[a-z]+\s*=/i.test(html)) add("error", path, "AMP page must not use inline event handlers.");
-
-  const scripts = [...html.matchAll(/<script\b([^>]*)>/gi)].map((m) => m[1]);
-  for (const attrs of scripts) {
-    const okRuntime = /async\s+src="https:\/\/cdn\.ampproject\.org\/v0\.js"/i.test(attrs);
-    const okJsonLd = /type="application\/ld\+json"/i.test(attrs);
-    if (!okRuntime && !okJsonLd) add("error", path, `AMP page has a non-AMP script tag: <script${attrs}>`);
-  }
-
-  const expectedCanonical = routePath.startsWith("/en/amp/blog/")
-    ? `${SITE_URL}/en/blog/${routePath.split("/").pop()}`
-    : `${SITE_URL}/blog/${routePath.split("/").pop()}`;
-  if (canonical && canonical !== expectedCanonical) {
-    add("error", path, `AMP canonical mismatch. Expected ${expectedCanonical}, got ${canonical}`);
+  // AMP was retired on 2026-11-21: /amp/blog/* 301s to the article, so no page
+  // may advertise an AMP alternate any more.
+  if (/<link\s+rel="amphtml"/i.test(html)) {
+    add("error", path, "AMP is retired; remove rel=\"amphtml\".");
   }
 }
 
@@ -225,7 +194,7 @@ function main() {
     validateImages(path, html);
 
     if (isAmpRoute(routePath)) {
-      validateAmpPage(path, routePath, html);
+      add("error", path, "AMP is retired; prerender must not write AMP pages.");
     } else {
       validateStandardPage(path, routePath, html, sitemapLocs);
     }
