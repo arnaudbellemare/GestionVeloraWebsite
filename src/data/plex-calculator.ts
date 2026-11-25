@@ -225,10 +225,10 @@ export interface PlexPageLocale {
 
 export const CALCULATOR_PAGE: Record<PlexLocale, PlexPageLocale> = {
   fr: {
-    title: "Calculateur de rendement immobilier pour plex à Montréal",
-    metaTitle: "Calculateur rendement plex : cash flow et TGA",
+    title: "Calculateur de rentabilité plex à Montréal",
+    metaTitle: "Calculateur de rentabilité plex",
     metaDescription:
-      "Calculez cash flow, TGA, RBE, RNE, RCD, TRI et VAN d'un duplex, triplex ou multilogement à Montréal selon le financement québécois 2026.",
+      "Calculateur de rentabilité plex à Montréal : cash flow, TGA et mise de fonds d’un duplex, triplex ou multilogement, financement québécois 2026.",
     keywords:
       "calculateur rendement plex Montréal, cash flow immobilier, calcul TGA, RBE RNE RCD, TRI VAN immobilier, calcul rentabilité duplex, triplex Montréal investissement, immeuble à revenus Québec",
     intro:

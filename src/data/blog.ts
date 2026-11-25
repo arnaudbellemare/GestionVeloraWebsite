@@ -937,9 +937,9 @@ export const blogPosts: BlogPost[] = [
           heading: "What are typical condo management fees in Montreal?",
           paragraphs: [
             [
-              "Fees for a ",
-              { text: "professional condo property manager", to: "/services/syndicat-copropriete" },
-              " in Montreal are generally calculated per unit. At Gestion Velora, the 2026 published baseline is typically $33-$36 per unit/month depending on the mandate; packages with app and portal integrations can go up to $40 per unit/month. Final cost depends on building size, operational complexity, reporting level, and included services.",
+              "Fees for ",
+              { text: "condo management in Montreal", to: "/services/syndicat-copropriete" },
+              " are generally calculated per unit. At Gestion Velora, the 2026 published baseline is typically $33-$36 per unit/month depending on the mandate; packages with app and portal integrations can go up to $40 per unit/month. Final cost depends on building size, operational complexity, reporting level, and included services.",
             ],
             "These fees usually cover routine administration: accounting, fee collection, contractor coordination, owner communications, AGM preparation, and regulatory compliance. Some firms charge extras for after-hours emergencies, reserve fund study coordination, or legal follow-up. Always compare proposals in detail to avoid surprises.",
             "Additional services such as conflict resolution, insurance coordination, or major work planning may be included in a premium package or billed separately. Always ask for a contract that clearly details what is included in the base fee and what triggers additional billing.",

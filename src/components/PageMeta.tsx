@@ -268,7 +268,9 @@ export function PageMeta() {
       const trustId = trustPageIdFromPath(pathname);
       if (trustId) {
         const tp = getTrustPageLocale(trustId, isEn ? "en" : "fr");
-        title = buildTitle(tp.metaTitle);
+        // Trust-page titles are complete as stored (most already end with the
+        // brand), matching the prerendered <title>; buildTitle would add it twice.
+        title = tp.metaTitle;
         description = tp.metaDescription;
       }
     }

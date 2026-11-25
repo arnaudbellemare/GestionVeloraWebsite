@@ -59,9 +59,9 @@ export function trustPageIdFromPath(pathname: string): TrustPageId | null {
 export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPageLocale }> = {
   about: {
     fr: {
-      metaTitle: "À propos de Gestion Velora | Firme de gestion immobilière à Montréal",
+      metaTitle: "À propos de Gestion Velora | Qui nous sommes",
       metaDescription:
-        "Arnaud Bellemare est fondateur de Gestion Velora. Il écrit sur la gouvernance de copropriété, la gestion locative et la réglementation immobilière au Québec.",
+        "Arnaud Bellemare a fondé Gestion Velora au Grand Montréal. Mission, parcours et liens vers nos mandats de copropriété, location et Airbnb.",
       title: "À propos de Gestion Velora",
       sections: [
         {
@@ -84,18 +84,19 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
           ],
         },
         {
-          heading: "Nos services de gestion immobilière",
+          heading: "Où trouver nos mandats",
           blocks: [
             {
               kind: "p",
-              text: "Gestion Velora couvre trois grandes catégories de mandats immobiliers à Montréal et dans les environs :",
+              text: "Gestion Velora couvre trois grandes catégories de mandats immobiliers à Montréal et dans les environs. Le détail de chaque mandat est sur sa page de service :",
             },
             {
-              kind: "ul",
+              kind: "linkList",
               items: [
-                "Syndicat de copropriété : administration complète du syndicat — AGA, fonds de prévoyance, budget, charges communes, registre de copropriété, parties communes et conformité Loi 141.",
-                "Gestion locative longue durée : sélection des locataires, baux, perception des loyers, entretien, rapports financiers mensuels.",
-                "Gestion Airbnb et location courte durée : tarification, réservations, voyageurs, ménage et conformité réglementaire.",
+                { label: "Gestion immobilière complète à Montréal", href: "/services", suffix: " : vue d’ensemble des trois mandats." },
+                { label: "Gestion de syndicat de copropriété", href: "/services/syndicat-copropriete", suffix: " : administration complète du syndicat — AGA, fonds de prévoyance, budget, charges communes, registre de copropriété, parties communes et conformité Loi 141." },
+                { label: "Gestion locative longue durée", href: "/services/location", suffix: " : sélection des locataires, baux, perception des loyers, entretien, rapports financiers mensuels." },
+                { label: "Gestion Airbnb à Montréal", href: "/services/airbnb", suffix: " : tarification, réservations, voyageurs, ménage et conformité réglementaire." },
               ],
             },
           ],

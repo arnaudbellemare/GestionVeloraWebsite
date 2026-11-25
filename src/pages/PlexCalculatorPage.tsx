@@ -50,7 +50,7 @@ export default function PlexCalculatorPage() {
         h1 already names the page.
       */}
       <h2 id="outil" className="sr-only">
-        {l === "fr" ? "L'outil de calcul" : "The calculator"}
+        {l === "fr" ? "Calculateur de rentabilité plex : cash flow et TGA" : "The calculator"}
       </h2>
       <Suspense
         fallback={

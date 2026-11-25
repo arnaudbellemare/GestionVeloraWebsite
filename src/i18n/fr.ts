@@ -370,19 +370,27 @@ export const fr = {
   },
 
   servicesHub: {
-    title: "Services de gestion immobilière à Montréal",
+    title: "Gestion immobilière complète à Montréal",
     subtitle:
       "Gestion de syndicat de copropriété, Airbnb et location longue durée dans le Grand Montréal.",
     ctaLearn: "En savoir plus",
-    metaTitle: "Gestion syndicat copropriété, Airbnb et location | Gestion Velora",
+    metaTitle: "Gestion immobilière complète à Montréal | Gestion Velora",
     metaDescription:
-      "Services à Montréal : gestion de syndicat de copropriété, administration de condo, gestion Airbnb et location résidentielle.",
+      "Gestion immobilière complète à Montréal : copropriété, location et Airbnb. Un gestionnaire, des mandats clairs. Demandez une soumission.",
     schemaName: "Services Gestion Velora",
     toolBadge: "Outil gratuit",
-    toolTitle: "Calculateur de rendement pour plex et multilogement",
+    toolTitle: "Calculateur de rentabilité pour plex et multilogement",
     toolDesc:
       "Analysez un immeuble à revenus avec les règles du Québec : droits de mutation de Montréal, mise de fonds SCHL, cadre de fixation du TAL, valeur économique bancaire. Gratuit, sans inscription.",
     toolCta: "Ouvrir le calculateur",
+    compareTitle: "Prêt à comparer vos options ?",
+    compareBody:
+      "Demandez une soumission, planifiez une consultation ou lancez un appel rapide pour choisir le bon modèle de gestion.",
+    compareQuote: "Demander une soumission",
+    compareConsult: "Planifier une consultation",
+    compareSee: "Voir les comparatifs",
+    compareCities: "Voir les pages locales",
+    compareCall: "Appeler +1 514 777 1731",
   },
 
   contactPage: {
@@ -655,10 +663,10 @@ export const fr = {
     },
     airbnb: {
       title: "Gestion Airbnb et location courte durée",
-      subtitle: "Réservations, ménage, voyageurs et conformité locale — clé en main.",
-      metaTitle: "Gestion Airbnb Montréal — permis CITQ et accueil | Gestion Velora",
+      subtitle: "Gestion Airbnb à Montréal : réservations, ménage et conformité",
+      metaTitle: "Gestion Airbnb à Montréal | Gestion Velora",
       metaDescription:
-        "Gestion Airbnb à Montréal : annonces, voyageurs, ménage, maintenance, tarification et conformité municipale pour locations courte durée.",
+        "Gestionnaire de propriété Airbnb à Montréal : annonces, voyageurs, ménage, tarification et conformité CITQ. Location courte durée, clé en main.",
       description:
         "Gestion Velora s'occupe de vos propriétés en location courte durée à Montréal. Réservations, ménage, maintenance et communication avec les voyageurs, tout est pris en charge. Notre équipe opère plus de 200 unités au total dans le Grand Montréal, avec une disponibilité 24/7 pour les urgences.",
       offerings: [

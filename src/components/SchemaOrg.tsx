@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
 import { ARTICLE_AUTHOR_BIO } from "../data/author";
 import { withCurrentPageBreadcrumbItem } from "../data/breadcrumbSchema";
+import { buildServiceFaqSchema } from "../data/serviceFaqSchema";
 import {
   ARTICLE_AUTHOR_NAME,
   ARTICLE_AUTHOR_SAME_AS,
@@ -305,6 +306,12 @@ export function SchemaOrg() {
       SERVICE_SLUGS.includes(slug as ServiceSlug)
     ) {
       const service = getLocalizedService(slug as ServiceSlug, t);
+      const faqRaw = t(`services.${service.slug}.faq`, { returnObjects: true }) as unknown;
+      const faqSchema = buildServiceFaqSchema(
+        Array.isArray(faqRaw) ? (faqRaw as { q: string; a: string }[]) : [],
+        `${base}/services/${service.slug}`,
+        isEn ? "en" : "fr",
+      );
       injectSchema([
         {
           "@context": "https://schema.org",
@@ -320,6 +327,7 @@ export function SchemaOrg() {
           { name: bcServices, url: `${base}/services` },
           { name: service.title },
         ]),
+        ...(faqSchema ? [faqSchema] : []),
       ]);
       return () => removePageSchema();
     }

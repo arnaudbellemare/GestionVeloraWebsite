@@ -27,8 +27,9 @@ import { blogPosts, type BlogPost, type BlogTable, type RichParagraph } from "..
 import { getServiceArticles } from "../src/data/serviceArticles.js";
 import { getServiceGeoSummary } from "../src/data/serviceGeoSummary.js";
 import { getPricingContent, type PricingTier } from "../src/data/pricing.js";
-import type { ServiceSlug } from "../src/data/services.js";
+import { SERVICE_SLUGS, type ServiceSlug } from "../src/data/services.js";
 import { withCurrentPageBreadcrumbItem } from "../src/data/breadcrumbSchema.js";
+import { buildServiceFaqSchema } from "../src/data/serviceFaqSchema.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
 import { COMPARISON_GUIDE } from "../src/data/comparisonGuide.js";
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
@@ -1194,42 +1195,28 @@ ${faqBlocks}
 }
 
 function buildServicesHubMainHtml(locale: "fr" | "en"): string {
+  // Same copy and order as src/pages/ServicesIndexPage.tsx (servicesHub.* and
+  // each service's title/subtitle), so the raw HTML matches the visible hub.
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
-  const serviceSlugs = ["syndicat-copropriete", "airbnb", "location", "gestion-condo"];
-  const serviceLinks = serviceSlugs
-    .map((slug) => {
-      const svc = getService(locale, slug);
-      const href = locale === "fr" ? `/services/${slug}` : `/en/services/${slug}`;
-      return `    <li><a href="${href}">${escapeHtml(svc.title)}</a> — ${escapeHtml(svc.description)}</li>`;
-    })
-    .join("\n");
-  if (locale === "fr") {
-    return `<main lang="${lang}">
-  <h1>Services de gestion immobilière à Montréal</h1>
-  <p>Gestion Velora propose des services structurés pour les syndicats de copropriété, les propriétaires locatifs, les hôtes Airbnb et les immeubles qui nécessitent une gouvernance plus serrée. Chaque mandat combine coordination terrain, suivi administratif, reporting financier et communication transparente avec les parties prenantes.</p>
-  <p>Notre objectif est de réduire les urgences non planifiées, clarifier les responsabilités et donner aux propriétaires une vue mensuelle sur les décisions, les risques et les coûts. Les services peuvent être utilisés séparément ou combinés selon le portefeuille immobilier.</p>
-  <h2>Nos services specialises</h2>
-  <ul>
-${serviceLinks}
-  </ul>
-  <h2>Ce que chaque mandat inclut</h2>
-  <p>Les mandats Gestion Velora couvrent la priorisation des demandes, la coordination fournisseurs, les communications clés, la surveillance des échéances et la production de rapports clairs. Pour les copropriétés, l'accent porte sur la gouvernance et la conformité. Pour les locations, l'accent porte sur l'occupation, les revenus et l'expérience résident.</p>
-  <h2>Outil gratuit pour investisseurs</h2>
-  <p>Avant de confier la gestion, évaluez l'immeuble : le <a href="${CALCULATOR_PATHS.fr}">calculateur de rendement pour plex et multilogement</a> applique les règles du Québec : droits de mutation de Montréal, mise de fonds SCHL, plafond du TAL et valeur économique bancaire. Gratuit, sans inscription.</p>
-</main>`;
-  }
+  const hub = (locale === "fr" ? frRaw : enRaw).servicesHub;
+  const cards = SERVICE_SLUGS.map((slug) => {
+    const svc = getService(locale, slug);
+    const href = localizePath(`/services/${slug}`, locale);
+    return `  <h2>${escapeHtml(svc.title)}</h2>
+  <p>${escapeHtml(svc.subtitle ?? "")}</p>
+  <p><a href="${href}">${escapeHtml(hub.ctaLearn)}</a></p>`;
+  }).join("\n");
   return `<main lang="${lang}">
-  <h1>Property management services in Montreal</h1>
-  <p>Gestion Velora provides structured property management services for condo boards, residential landlords, Airbnb hosts, and buildings that need tighter operating governance. Each mandate combines field coordination, administrative follow-up, financial reporting, and clear stakeholder communication.</p>
-  <p>The goal is to reduce unplanned emergencies, clarify ownership of tasks, and give property owners a monthly view of decisions, risks, and costs. Services can be used separately or combined across a broader portfolio.</p>
-  <h2>Our service lines</h2>
-  <ul>
-${serviceLinks}
-  </ul>
-  <h2>What each mandate includes</h2>
-  <p>Gestion Velora mandates cover request triage, vendor coordination, key communications, deadline monitoring, and clear reporting. For condo boards, the emphasis is governance and compliance. For rentals, the emphasis is occupancy, revenue continuity, and resident experience.</p>
-  <h2>Free tool for investors</h2>
-  <p>Before handing over management, underwrite the building: the <a href="${CALCULATOR_PATHS.en}">plex and multifamily investment calculator</a> applies Quebec's rules: Montreal welcome tax, CMHC down payment caps, the TAL rent ceiling and the bank's economic value. Free, no sign-up.</p>
+  <h1>${escapeHtml(hub.title)}</h1>
+  <p>${escapeHtml(hub.subtitle)}</p>
+${cards}
+  <p>${escapeHtml(hub.toolBadge)}</p>
+  <h2>${escapeHtml(hub.toolTitle)}</h2>
+  <p>${escapeHtml(hub.toolDesc)}</p>
+  <p><a href="${CALCULATOR_PATHS[locale]}">${escapeHtml(hub.toolCta)}</a></p>
+  <h2>${escapeHtml(hub.compareTitle)}</h2>
+  <p>${escapeHtml(hub.compareBody)}</p>
+  <p><a href="${localizePath("/contact", locale)}">${escapeHtml(hub.compareQuote)}</a> · <a href="${localizePath("/contact", locale)}">${escapeHtml(hub.compareConsult)}</a> · <a href="${localizePath("/compare", locale)}">${escapeHtml(hub.compareSee)}</a> · <a href="${localizePath("/locations", locale)}">${escapeHtml(hub.compareCities)}</a> · <a href="tel:+15147771731">${escapeHtml(hub.compareCall)}</a></p>
 </main>`;
 }
 
@@ -1752,7 +1739,6 @@ function buildTrustDocumentMainHtml(locale: "fr" | "en", id: TrustPageId): strin
     .join("\n");
   return `<main lang="${lang}">
   <h1>${escapeHtml(page.title)}</h1>
-  <p>${escapeHtml(page.metaDescription)}</p>
 ${sectionHtml}
 </main>`;
 }
@@ -1843,7 +1829,7 @@ function buildPlexCalculatorMainHtml(loc: "fr" | "en"): string {
     `<p>${escapeHtml(p.summary)}</p>`,
     // Mirrors the client-side heading so the prerendered outline does not jump
     // h1 → h3 either.
-    `<h2 id="outil">${loc === "fr" ? "L'outil de calcul" : "The calculator"}</h2>`,
+    `<h2 id="outil">${loc === "fr" ? "Calculateur de rentabilité plex : cash flow et TGA" : "The calculator"}</h2>`,
     sections,
     `<section><h2 id="faq">${loc === "fr" ? "Questions fréquentes" : "Frequently asked questions"}</h2>${faq}</section>`,
     `<section><h2 id="sources">${loc === "fr" ? "Chiffres de référence" : "Reference figures"}</h2><ul>${figures}</ul></section>`,
@@ -2120,6 +2106,7 @@ function buildRoutes(): RouteConfig[] {
       modulePreloads: SERVICE_MODULE_PRELOADS,
       prerenderMainInner: buildServiceDetailMainHtml("fr", slug),
       pageSchemas: [
+        ...[buildServiceFaqSchema(getService("fr", slug).faq ?? [], `${SITE_URL}/services/${slug}`, "fr")].filter((x): x is object => x !== null),
         buildServiceSchema("fr", slug, SITE_URL),
         buildBreadcrumbSchema([
           { name: frBc.home, url: SITE_URL + "/" },
@@ -2141,6 +2128,7 @@ function buildRoutes(): RouteConfig[] {
       modulePreloads: SERVICE_MODULE_PRELOADS,
       prerenderMainInner: buildServiceDetailMainHtml("en", slug),
       pageSchemas: [
+        ...[buildServiceFaqSchema(getService("en", slug).faq ?? [], `${SITE_URL}/en/services/${slug}`, "en")].filter((x): x is object => x !== null),
         buildServiceSchema("en", slug, `${SITE_URL}/en`),
         buildBreadcrumbSchema([
           { name: enBc.home, url: SITE_URL + "/" },
