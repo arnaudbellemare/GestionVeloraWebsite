@@ -8,7 +8,6 @@ import { useLocale } from "../context/LocaleContext";
 /** Published condo-management rates, per unit per month, before taxes (see /tarifs). */
 const BASE_RATE = 33;
 const UPPER_RATE = 36;
-const INTEGRATIONS_RATE = 40;
 const MIN_UNITS = 6;
 const MAX_UNITS = 999;
 
@@ -17,19 +16,16 @@ const FEE_STUDY_PATH = "/blog/etude-frais-gestion-immobiliere-quebec-2026";
 const rateCards = [
   { rate: BASE_RATE, key: "base" },
   { rate: UPPER_RATE, key: "upper" },
-  { rate: INTEGRATIONS_RATE, key: "integrations" },
 ] as const;
 
-const includedKeys = ["aga", "reports", "registers", "reserve", "tenders", "emergency"] as const;
+const includedKeys = ["software", "aga", "reports", "registers", "reserve", "tenders", "emergency"] as const;
 
 export function FeeCalculatorSection() {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const { contactHref, goToContact } = useGoToContact();
   const inputId = useId();
-  const toggleId = useId();
   const [rawUnits, setRawUnits] = useState("");
-  const [withIntegrations, setWithIntegrations] = useState(false);
 
   const money = useMemo(
     () =>
@@ -45,10 +41,9 @@ export function FeeCalculatorSection() {
   const hasInput = rawUnits.trim() !== "" && Number.isFinite(units);
   const tooSmall = hasInput && units < MIN_UNITS;
   const valid = hasInput && units >= MIN_UNITS && units <= MAX_UNITS;
-  const upper = withIntegrations ? INTEGRATIONS_RATE : UPPER_RATE;
 
   const monthlyFrom = valid ? units * BASE_RATE : 0;
-  const monthlyTo = valid ? units * upper : 0;
+  const monthlyTo = valid ? units * UPPER_RATE : 0;
 
   return (
     <section
@@ -138,28 +133,6 @@ export function FeeCalculatorSection() {
                 className="w-full rounded-xl border border-black/15 dark:border-white/15 bg-white dark:bg-white/5 px-5 py-4 font-stat-numeral text-2xl sm:text-3xl text-nd-display placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-nd-primary/40"
               />
 
-              <label htmlFor={toggleId} className="mt-5 flex items-start gap-3 cursor-pointer select-none">
-                <input
-                  id={toggleId}
-                  type="checkbox"
-                  checked={withIntegrations}
-                  onChange={(e) => setWithIntegrations(e.target.checked)}
-                  className="peer sr-only"
-                />
-                <span
-                  aria-hidden
-                  className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-black/30 dark:border-white/40 bg-white dark:bg-white/5 text-white dark:text-black transition-colors peer-checked:border-neutral-950 peer-checked:bg-neutral-950 dark:peer-checked:border-white dark:peer-checked:bg-white peer-focus-visible:ring-2 peer-focus-visible:ring-nd-primary/40"
-                >
-                  <svg viewBox="0 0 16 16" className={`h-3 w-3 ${withIntegrations ? "opacity-100" : "opacity-0"}`} fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 8.5l3 3 7-7" />
-                  </svg>
-                </span>
-                <span className="font-sans text-sm text-nd-primary leading-snug">
-                  {t("feeCalculator.integrationsToggle")}{" "}
-                  <span className="text-nd-secondary">{t("feeCalculator.integrationsNote")}</span>
-                </span>
-              </label>
-
               <div
                 id={`${inputId}-result`}
                 aria-live="polite"
@@ -182,7 +155,7 @@ export function FeeCalculatorSection() {
                         from: money.format(monthlyFrom),
                         to: money.format(monthlyTo),
                         rateFrom: money.format(BASE_RATE),
-                        rateTo: money.format(upper),
+                        rateTo: money.format(UPPER_RATE),
                       })}
                     </p>
                     <p className="font-sans text-sm text-nd-secondary mt-1">

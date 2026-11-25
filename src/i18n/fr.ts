@@ -24,11 +24,11 @@ export const fr = {
     rates: {
       base: "À partir de",
       upper: "Selon le mandat, jusqu’à",
-      integrations: "Avec intégrations applicatives, jusqu’à",
     },
     perUnit: "/ unité / mois, avant taxes",
     includedHeading: "Compris dans le tarif mensuel",
     included: {
+      software: "Logiciel de gestion inclus",
       aga: "Assemblée générale annuelle et procès-verbaux",
       reports: "Rapports financiers mensuels",
       registers: "Registres et perception des charges",
@@ -41,8 +41,6 @@ export const fr = {
     inputLabel: "Nombre d’unités",
     inputHelp: "Le nombre de fractions résidentielles de votre copropriété.",
     inputPlaceholder: "ex. 24",
-    integrationsToggle: "Intégrations applicatives et portail copropriétaires",
-    integrationsNote: "(jusqu’à 40 $ / unité / mois)",
     resultLabel: "Votre tarif estimé pour {{units}} unités",
     perMonth: "/ mois",
     rangeLine: "De {{from}} à {{to}} par mois selon les spécificités du mandat ({{rateFrom}} à {{rateTo}} par unité).",
@@ -178,7 +176,7 @@ export const fr = {
     airbnb: "Airbnb",
     airbnbDesc: "Gestion des réservations et maximisation des revenus en toute sérénité.",
     location: "Location",
-    locationDesc: "Sélection des locataires, baux et suivi professionnel.",
+    locationDesc: "Résidentiel et commercial : locataires, baux et suivi professionnel.",
     gestionCondo: "Gestion de condo",
     gestionCondoDesc: "Administration quotidienne, finances et entretien de votre condo.",
   },
@@ -732,13 +730,13 @@ export const fr = {
       ],
     },
     location: {
-      title: "Gestion locative longue durée",
-      subtitle: "Sélection des locataires, loyers, entretien et rapports clairs pour votre immeuble.",
-      metaTitle: "Gestion locative longue durée — baux et TAL | Gestion Velora",
+      title: "Gestion locative résidentielle et commerciale",
+      subtitle: "Gestion locative à Montréal, résidentielle et commerciale",
+      metaTitle: "Gestion locative à Montréal | Gestion Velora",
       metaDescription:
-        "Gestion locative à Montréal pour propriétaires : sélection des locataires, baux, loyers, entretien, rapports et suivi TAL.",
+        "Gestion locative à Montréal, résidentielle et commerciale : locataires, baux, loyers, entretien et rapports mensuels. Demandez une soumission.",
       description:
-        "Gestion Velora gère vos immeubles locatifs à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable. Sur les plus de 200 unités que nous gérons dans le Grand Montréal, le taux d'occupation se maintient à 98 %.",
+        "Gestion Velora gère vos immeubles locatifs résidentiels et commerciaux à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable. Pour les immeubles commerciaux, nous prenons en charge les baux commerciaux, l'entretien, les relations avec les locataires et le contrôle des charges. Notre équipe gère plus de 200 unités dans le Grand Montréal, et le taux d'occupation de notre portefeuille locatif se maintient à 98 %.",
       offerings: [
         {
           title: "Sélection des locataires",
@@ -800,8 +798,33 @@ export const fr = {
             "Médiation structurée en cas de litige, avec traces écrites et options de résolution.",
           ],
         },
+        {
+          title: "Immeubles commerciaux",
+          items: [
+            "Gestion des baux commerciaux et renouvellements",
+            "Suivi des loyers commerciaux et charges communes",
+            "Entretien préventif des espaces commerciaux",
+            "Relations avec les locataires commerciaux",
+          ],
+          detailItems: [
+            "Gestion des baux commerciaux et renouvellements",
+            "Suivi des loyers commerciaux et charges communes",
+            "Entretien préventif des espaces commerciaux",
+            "Relations avec les locataires commerciaux",
+            "Gestion des appels d'offres pour les travaux majeurs",
+            "Optimisation du rendement et valorisation du patrimoine",
+          ],
+        },
       ],
       faq: [
+        {
+          q: "Qu'est-ce que la gestion locative à Montréal ?",
+          a: "C'est la prise en charge de vos immeubles en location, résidentiels ou commerciaux : sélection des locataires, baux, perception des loyers, entretien et rapports mensuels, sans que vous ayez à tout suivre au quotidien.",
+        },
+        {
+          q: "Gérez-vous aussi des immeubles commerciaux ?",
+          a: "Oui. Pour les immeubles commerciaux, nous gérons les baux commerciaux et leurs renouvellements, le suivi des loyers et des charges communes, l'entretien préventif des espaces, les relations avec les locataires et les appels d'offres pour les travaux majeurs.",
+        },
         {
           q: "Comment sont gérés les impayés et les relances ?",
           a: "Relances progressives, dossiers documentés et respect des règles du Tribunal administratif du logement (TAL) ; l'objectif est de protéger votre trésorerie tout en restant conforme.",
@@ -894,7 +917,7 @@ export const fr = {
         },
         {
           q: "Combien coûte la gestion d'un condo à Montréal ?",
-          a: "Les frais de gestion de condo varient selon la taille de l'immeuble et les services requis. Chez Gestion Velora, les syndicats se situent en général entre 33 $ et 36 $ / unité / mois selon le mandat, jusqu'à 40 $ / unité avec intégrations applicatives. Pour la location longue durée, les honoraires suivent une structure d'un mois de loyer. Contactez-nous pour une soumission personnalisée.",
+          a: "Les frais de gestion de condo varient selon la taille de l'immeuble et les services requis. Chez Gestion Velora, les syndicats se situent en général entre 33 $ et 36 $ / unité / mois selon le mandat, logiciel de gestion inclus. Pour la location longue durée, les honoraires suivent une structure d'un mois de loyer. Contactez-nous pour une soumission personnalisée.",
         },
         {
           q: "Mon condo est-il trop petit pour faire appel à un gestionnaire professionnel ?",

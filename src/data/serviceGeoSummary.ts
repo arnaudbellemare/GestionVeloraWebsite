@@ -29,8 +29,8 @@ export function getServiceGeoSummary(slug: ServiceSlug, locale: "fr" | "en"): Se
   if (slug === "location") {
     return {
       price: isEn
-        ? "Long-term rental management fee: structured as one month's gross rent under the mandate terms."
-        : "Honoraires de gestion locative longue durée : structure équivalente à un mois de loyer brut selon les modalités du mandat.",
+        ? "Residential rental management fee: structured as one month's gross rent under the mandate terms."
+        : "Honoraires de gestion locative résidentielle : structure équivalente à un mois de loyer brut selon les modalités du mandat.",
       proof: isEn
         ? "Covers tenant screening, Quebec lease support, rent collection, maintenance coordination, TAL-aware follow-up, and monthly owner reporting."
         : "Couvre sélection locataire, baux du Québec, perception, maintenance, suivi conforme TAL et rapports mensuels propriétaire.",
@@ -40,8 +40,8 @@ export function getServiceGeoSummary(slug: ServiceSlug, locale: "fr" | "en"): Se
 
   return {
     price: isEn
-      ? "Condo board management pricing: typically $33-$36 per unit/month; up to $40 per unit/month with app and portal integrations."
-      : "Tarifs de gestion de copropriété : généralement 33 $ à 36 $ / unité / mois ; jusqu'à 40 $ / unité / mois avec intégrations applicatives et portails.",
+      ? "Condo board management pricing: typically $33-$36 per unit/month, management software included."
+      : "Tarifs de gestion de copropriété : généralement 33 $ à 36 $ / unité / mois, logiciel de gestion inclus.",
     proof: isEn
       ? "Covers AGM preparation, budgets, reserve fund oversight, maintenance logs, vendor coordination, owner communication, and 2026 Quebec co-ownership compliance."
       : "Couvre AGA, budgets, fonds de prévoyance, carnet d'entretien, fournisseurs, communications copropriétaires et conformité copropriété Québec 2026.",

@@ -95,7 +95,7 @@ export const TRUST_PAGES: Record<TrustPageId, { fr: TrustPageLocale; en: TrustPa
               items: [
                 { label: "Gestion immobilière complète à Montréal", href: "/services", suffix: " : vue d’ensemble des trois mandats." },
                 { label: "Gestion de syndicat de copropriété", href: "/services/syndicat-copropriete", suffix: " : administration complète du syndicat — AGA, fonds de prévoyance, budget, charges communes, registre de copropriété, parties communes et conformité Loi 141." },
-                { label: "Gestion locative longue durée", href: "/services/location", suffix: " : sélection des locataires, baux, perception des loyers, entretien, rapports financiers mensuels." },
+                { label: "Gestion locative à Montréal", href: "/services/location", suffix: " : immeubles résidentiels et commerciaux — sélection des locataires, baux, perception des loyers, entretien, rapports financiers mensuels." },
                 { label: "Gestion Airbnb à Montréal", href: "/services/airbnb", suffix: " : tarification, réservations, voyageurs, ménage et conformité réglementaire." },
               ],
             },

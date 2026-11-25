@@ -34,7 +34,7 @@ const EN: PricingContent = {
   syndicat: {
     heading: "Condo board management",
     intro:
-      "Per unit per month, minimum 6-unit buildings. Typical range is $33–$36 per unit depending on mandate specifics; packages with app and portal integrations can go up to $40.",
+      "Per unit per month, minimum 6-unit buildings. Typical range is $33–$36 per unit depending on mandate specifics, management software included.",
     highlightLabel: "Most popular",
     tiers: [
       {
@@ -42,6 +42,7 @@ const EN: PricingContent = {
         priceNote: "Typically $33–$36 / unit / month",
         description: "Core condo board administration for small buildings (up to 12 units). Final pricing depends on mandate specifics.",
         features: [
+          "Management software included",
           "Annual general assembly",
           "Monthly financial reports",
           "Maintenance request tracking",
@@ -51,11 +52,11 @@ const EN: PricingContent = {
       },
       {
         name: "Standard",
-        priceNote: "Up to $40 / unit / month with app integrations",
+        priceNote: "Typically $33–$36 / unit / month",
         description: "Full administration with reserve fund management for mid-size buildings, including portals and operational tooling.",
         features: [
           "Everything in Essential",
-          "App & portal integrations (pricing up to $40/unit/month)",
+          "App & portal integrations",
           "Reserve fund management (Loi 141)",
           "Major work coordination",
           "Owner portal access",
@@ -145,7 +146,7 @@ const FR: PricingContent = {
   syndicat: {
     heading: "Gestion de syndicat de copropriété",
     intro:
-      "Par unité par mois, immeubles de 6 unités minimum. Fourchette habituelle : 33 $ à 36 $ / unité selon les spécificités du mandat ; avec intégrations applicatives (portails, outils), jusqu'à 40 $ / unité / mois.",
+      "Par unité par mois, immeubles de 6 unités minimum. Fourchette habituelle : 33 $ à 36 $ / unité selon les spécificités du mandat, logiciel de gestion inclus.",
     highlightLabel: "Le plus populaire",
     tiers: [
       {
@@ -153,6 +154,7 @@ const FR: PricingContent = {
         priceNote: "Généralement 33 $ à 36 $ / unité / mois",
         description: "Administration de base pour petits syndicats (jusqu'à 12 unités). Montant selon les spécificités du mandat.",
         features: [
+          "Logiciel de gestion inclus",
           "Assemblée générale annuelle",
           "Rapports financiers mensuels",
           "Suivi des demandes de maintenance",
@@ -162,11 +164,11 @@ const FR: PricingContent = {
       },
       {
         name: "Standard",
-        priceNote: "Jusqu'à 40 $ / unité / mois avec intégrations applicatives",
+        priceNote: "Généralement 33 $ à 36 $ / unité / mois",
         description: "Administration complète avec portails et outils applicatifs, et gestion du fonds de prévoyance pour immeubles de taille moyenne.",
         features: [
           "Tout ce qui est inclus dans Essentiel",
-          "Intégrations applicatives et portails (jusqu'à 40 $ / unité / mois)",
+          "Intégrations applicatives et portails",
           "Gestion du fonds de prévoyance (Loi 141)",
           "Coordination des travaux majeurs",
           "Accès au portail copropriétaires",

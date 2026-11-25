@@ -24,11 +24,11 @@ export const en = {
     rates: {
       base: "Starting at",
       upper: "Depending on the mandate, up to",
-      integrations: "With app integrations, up to",
     },
     perUnit: "/ unit / month, before taxes",
     includedHeading: "Included in the monthly rate",
     included: {
+      software: "Management software included",
       aga: "Annual general meeting and minutes",
       reports: "Monthly financial reports",
       registers: "Registers and fee collection",
@@ -41,8 +41,6 @@ export const en = {
     inputLabel: "Number of units",
     inputHelp: "The number of residential fractions in your condominium.",
     inputPlaceholder: "e.g. 24",
-    integrationsToggle: "App integrations and owner portal",
-    integrationsNote: "(up to $40 / unit / month)",
     resultLabel: "Your estimated rate for {{units}} units",
     perMonth: "/ month",
     rangeLine: "From {{from}} to {{to}} per month depending on the mandate ({{rateFrom}} to {{rateTo}} per unit).",
@@ -178,7 +176,7 @@ export const en = {
     airbnb: "Airbnb",
     airbnbDesc: "Reservations and revenue maximization with peace of mind.",
     location: "Rental management",
-    locationDesc: "Tenant screening, leases and professional follow-up.",
+    locationDesc: "Residential and commercial: tenants, leases and professional follow-up.",
     gestionCondo: "Condo management",
     gestionCondoDesc: "Day-to-day administration, finances and maintenance for your condo.",
   },
@@ -559,7 +557,7 @@ export const en = {
       subtitle: "Condo management in Montreal for condo boards",
       metaTitle: "Condo Management Montreal | Gestion Velora",
       metaDescription:
-        "Condo management in Montreal: AGM, budget, reserve fund, Loi 16 compliance and owner communications for condo boards. Request a quote.",
+        "Condo management in Montreal: AGM, budget, reserve fund and Loi 16. Typical published fee $33–$36 per unit/month. Request a quote.",
       description:
         "Gestion Velora is a Montreal condo corporation management firm specializing in full condo board administration. We handle the administrative, financial, and technical management of your condo corporation: annual budget, common fees, reserve fund, annual general meeting (AGM), condo register, common area maintenance, and Loi 141 compliance. Our dedicated condo manager ensures full transparency for the board and every unit owner. Our team administers over 200 units across more than 10 buildings in Greater Montreal.",
       offerings: [
@@ -730,13 +728,13 @@ export const en = {
       ],
     },
     location: {
-      title: "Long-term rental management",
-      subtitle: "Screening, rent collection, maintenance, and transparent building reporting.",
-      metaTitle: "Long-Term Rental Management — leases & TAL | Gestion Velora",
+      title: "Residential and commercial rental management",
+      subtitle: "Rental management in Montreal, residential and commercial",
+      metaTitle: "Rental Management Montreal | Gestion Velora",
       metaDescription:
-        "Rental management in Montreal for landlords: tenant screening, leases, rent collection, maintenance, reports, and TAL follow-up.",
+        "Rental management in Montreal, residential and commercial: tenants, leases, rent collection, maintenance and monthly reports. Request a quote.",
       description:
-        "Gestion Velora manages your rental properties in Montreal with rigour and professionalism. From tenant screening to rent and maintenance follow-up, we deliver calm, profitable management. Across the more than 200 units we manage in Greater Montreal, occupancy holds at 98%.",
+        "Gestion Velora manages your residential and commercial rental properties in Montreal with rigour and professionalism. From tenant screening to rent and maintenance follow-up, we deliver calm, profitable management. For commercial buildings, we handle commercial leases, maintenance, tenant relations, and operating-cost control. Our team manages more than 200 units in Greater Montreal, and occupancy in our rental portfolio holds at 98%.",
       offerings: [
         {
           title: "Tenant screening",
@@ -798,8 +796,33 @@ export const en = {
             "Structured mediation when conflicts arise, with written traceability.",
           ],
         },
+        {
+          title: "Commercial buildings",
+          items: [
+            "Commercial lease management and renewals",
+            "Commercial rent and common charge tracking",
+            "Preventive maintenance of commercial spaces",
+            "Commercial tenant relations",
+          ],
+          detailItems: [
+            "Commercial lease management and renewals",
+            "Commercial rent and common charge tracking",
+            "Preventive maintenance of commercial spaces",
+            "Commercial tenant relations",
+            "Tendering for major works",
+            "Yield optimization and asset value growth",
+          ],
+        },
       ],
       faq: [
+        {
+          q: "What is rental management in Montreal?",
+          a: "It means we take charge of your rental buildings, residential or commercial: tenant screening, leases, rent collection, maintenance, and monthly reports, so you don't have to follow every detail day to day.",
+        },
+        {
+          q: "Do you also manage commercial buildings?",
+          a: "Yes. For commercial buildings, we manage commercial leases and renewals, rent and common charge tracking, preventive maintenance of the spaces, tenant relations, and tendering for major works.",
+        },
         {
           q: "How are arrears and collections handled?",
           a: "Progressive follow-up, documented files, and compliance with Residential Tenancy Tribunal (TAL) timelines, protecting cash flow while staying within the rules.",
@@ -892,7 +915,7 @@ export const en = {
         },
         {
           q: "How much does condo management cost in Montreal?",
-          a: "Condo management fees vary by building size and required services. At Gestion Velora, condo board packages typically run $33–$36/unit/month depending on the mandate, up to $40/unit with app integrations. Long-term rental fees are structured as one month's rent. Contact us for a personalized quote.",
+          a: "Condo management fees vary by building size and required services. At Gestion Velora, condo board packages typically run $33–$36/unit/month depending on the mandate, management software included. Long-term rental fees are structured as one month's rent. Contact us for a personalized quote.",
         },
         {
           q: "Is my condo too small to hire a professional manager?",
