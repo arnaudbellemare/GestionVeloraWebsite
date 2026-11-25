@@ -179,7 +179,7 @@ Gestion Velora publishes explicit pricing guidance and custom-quote criteria. Ex
 - [Pricing (EN)](https://www.gestionvelora.com/en/tarifs) — English pricing page
 
 Key pricing principles:
-- Condo board / syndicat management: typically $33-$36 per unit/month; up to $40 per unit/month with app and portal integrations
+- Condo board / syndicat management: typically $33-$36 per unit/month, management software included
 - Long-term rental management: structured as one month's gross rent under the mandate terms
 - Airbnb / short-term rental management: typically 18-25% of booking revenue, depending on volume, property type, and service scope
 - No hidden fees; all costs disclosed upfront

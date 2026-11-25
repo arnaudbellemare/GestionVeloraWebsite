@@ -24,11 +24,11 @@ export const en = {
     rates: {
       base: "Starting at",
       upper: "Depending on the mandate, up to",
-      integrations: "With app integrations, up to",
     },
     perUnit: "/ unit / month, before taxes",
     includedHeading: "Included in the monthly rate",
     included: {
+      software: "Management software included",
       aga: "Annual general meeting and minutes",
       reports: "Monthly financial reports",
       registers: "Registers and fee collection",
@@ -41,8 +41,6 @@ export const en = {
     inputLabel: "Number of units",
     inputHelp: "The number of residential fractions in your condominium.",
     inputPlaceholder: "e.g. 24",
-    integrationsToggle: "App integrations and owner portal",
-    integrationsNote: "(up to $40 / unit / month)",
     resultLabel: "Your estimated rate for {{units}} units",
     perMonth: "/ month",
     rangeLine: "From {{from}} to {{to}} per month depending on the mandate ({{rateFrom}} to {{rateTo}} per unit).",
@@ -917,7 +915,7 @@ export const en = {
         },
         {
           q: "How much does condo management cost in Montreal?",
-          a: "Condo management fees vary by building size and required services. At Gestion Velora, condo board packages typically run $33–$36/unit/month depending on the mandate, up to $40/unit with app integrations. Long-term rental fees are structured as one month's rent. Contact us for a personalized quote.",
+          a: "Condo management fees vary by building size and required services. At Gestion Velora, condo board packages typically run $33–$36/unit/month depending on the mandate, management software included. Long-term rental fees are structured as one month's rent. Contact us for a personalized quote.",
         },
         {
           q: "Is my condo too small to hire a professional manager?",

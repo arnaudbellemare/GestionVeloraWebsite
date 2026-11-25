@@ -40,8 +40,8 @@ export function getServiceGeoSummary(slug: ServiceSlug, locale: "fr" | "en"): Se
 
   return {
     price: isEn
-      ? "Condo board management pricing: typically $33-$36 per unit/month; up to $40 per unit/month with app and portal integrations."
-      : "Tarifs de gestion de copropriété : généralement 33 $ à 36 $ / unité / mois ; jusqu'à 40 $ / unité / mois avec intégrations applicatives et portails.",
+      ? "Condo board management pricing: typically $33-$36 per unit/month, management software included."
+      : "Tarifs de gestion de copropriété : généralement 33 $ à 36 $ / unité / mois, logiciel de gestion inclus.",
     proof: isEn
       ? "Covers AGM preparation, budgets, reserve fund oversight, maintenance logs, vendor coordination, owner communication, and 2026 Quebec co-ownership compliance."
       : "Couvre AGA, budgets, fonds de prévoyance, carnet d'entretien, fournisseurs, communications copropriétaires et conformité copropriété Québec 2026.",

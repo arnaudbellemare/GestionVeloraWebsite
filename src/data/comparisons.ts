@@ -300,8 +300,8 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       {
         itemEn: "Monthly operating cost",
         itemFr: "Cout operationnel mensuel",
-        veloraEn: "Typically $33-$36 per unit per month, up to $40 with app and portal integrations, before taxes. The mandate determines the quote.",
-        veloraFr: "Généralement 33 $ à 36 $ par unité par mois, jusqu'à 40 $ avec intégrations et portails, avant taxes. Le devis dépend du mandat.",
+        veloraEn: "Typically $33-$36 per unit per month, management software included, before taxes. The mandate determines the quote.",
+        veloraFr: "Généralement 33 $ à 36 $ par unité par mois, logiciel de gestion inclus, avant taxes. Le devis dépend du mandat.",
         alternativeEn: "Low direct cost, high unpaid director time.",
         alternativeFr: "Faible cout direct, beaucoup de temps CA non remunere.",
         noteEn: "Compare against time, errors, and delayed maintenance, not only invoice amount.",
@@ -319,7 +319,7 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       },
     ],
     agencyRows: [
-      { itemEn: "Base pricing", itemFr: "Tarif de base", veloraEn: "$33-$36 per unit/month generally; up to $40 with integrations, before taxes.", veloraFr: "Généralement 33 $ à 36 $ par unité/mois; jusqu'à 40 $ avec intégrations, avant taxes.", alternativeEn: "Request the agency's written quote and calculation basis.", alternativeFr: "Demandez le devis écrit et la base de calcul de l'agence.", noteEn: "For 20 units, $33-$36 equals $660-$720 per month before taxes.", noteFr: "Pour 20 unités, 33 $ à 36 $ représente 660 $ à 720 $ par mois avant taxes." },
+      { itemEn: "Base pricing", itemFr: "Tarif de base", veloraEn: "$33-$36 per unit/month generally, management software included, before taxes.", veloraFr: "Généralement 33 $ à 36 $ par unité/mois, logiciel de gestion inclus, avant taxes.", alternativeEn: "Request the agency's written quote and calculation basis.", alternativeFr: "Demandez le devis écrit et la base de calcul de l'agence.", noteEn: "For 20 units, $33-$36 equals $660-$720 per month before taxes.", noteFr: "Pour 20 unités, 33 $ à 36 $ représente 660 $ à 720 $ par mois avant taxes." },
       { itemEn: "Scope and extras", itemFr: "Services et frais additionnels", veloraEn: "The proposal specifies the agreed mandate and any extras.", veloraFr: "La proposition précise le mandat convenu et les frais additionnels.", alternativeEn: "Check accounting, meetings, emergencies and major work separately.", alternativeFr: "Vérifiez séparément comptabilité, assemblées, urgences et travaux majeurs.", noteEn: "Packages vary by provider; this is a checklist, not a claim about every agency.", noteFr: "Les forfaits varient selon le fournisseur; ce tableau est une grille de vérification, pas une affirmation sur toutes les agences." },
       { itemEn: "Board control", itemFr: "Contrôle du conseil", veloraEn: "The board retains its decisions and delegates agreed tasks.", veloraFr: "Le conseil conserve ses décisions et délègue les tâches convenues.", alternativeEn: "Ask who approves spending and how records are shared.", alternativeFr: "Demandez qui approuve les dépenses et comment les dossiers sont partagés.", noteEn: "Review access, termination terms and file handover in both proposals.", noteFr: "Vérifiez les accès, les conditions de résiliation et la remise des dossiers dans chaque proposition." },
     ],
@@ -1020,8 +1020,8 @@ export const COMPARISON_PAGES: ComparisonPageData[] = [
       {
         itemEn: "Monthly management fee",
         itemFr: "Honoraires mensuels",
-        veloraEn: "Condo management published at 33 to 36 $ per unit per month, 6-unit minimum, up to 40 $ with app and portal integrations (pricing page).",
-        veloraFr: "Gestion de copropriété publiée à 33 à 36 $ par unité par mois, minimum 6 unités, jusqu'à 40 $ avec intégrations applicatives (page Tarifs).",
+        veloraEn: "Condo management published at 33 to 36 $ per unit per month, 6-unit minimum, management software included (pricing page).",
+        veloraFr: "Gestion de copropriété publiée à 33 à 36 $ par unité par mois, minimum 6 unités, logiciel de gestion inclus (page Tarifs).",
         alternativeEn: "Condo Stratégis publishes 36 $, 33 $ or 31 $ per unit per month for 1-, 2- or 3-year contracts. SolutionCondo publishes hourly rates and disbursements but no management fee. Gestion AlphaCondo and Laucandrique publish no pricing.",
         alternativeFr: "Condo Stratégis publie 36 $, 33 $ ou 31 $ par unité par mois selon un contrat de 1, 2 ou 3 ans. SolutionCondo publie des taux horaires et débours mais aucun honoraire de gestion. Gestion AlphaCondo et Laucandrique ne publient aucun prix.",
         noteEn: "Ask what is included before comparing price. For the wider market, the 2026 fee study (linked in the sources) lists seven Greater Montréal firms publishing 31 to 60 $ per unit per month for their most complete plan, median 37 $.",

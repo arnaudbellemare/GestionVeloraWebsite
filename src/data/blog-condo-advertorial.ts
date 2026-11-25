@@ -5,7 +5,7 @@ export const condoAdvertorial: BlogPost = {
   slug: "erreurs-syndicats-autogeres-loi-16",
   image: blogCoverPath("cover-regulation.webp"),
   datePublished: "2026-11-04",
-  dateModified: "2026-11-04",
+  dateModified: "2026-11-25",
   fr: {
     category: "Article promotionnel",
     date: "Novembre 2026",
@@ -40,7 +40,7 @@ export const condoAdvertorial: BlogPost = {
       },
       {
         heading: "Comment Gestion Velora peut accompagner votre conseil",
-        paragraphs: [["Gestion Velora accompagne les syndicats de six unités et plus dans l'administration, le suivi financier et la coordination de l'entretien selon le mandat convenu. Sa base publiée est généralement de 33 $ à 36 $ par unité par mois, jusqu'à 40 $ avec intégrations applicatives et portails, avant taxes; le devis précise les services et les frais additionnels. Arnaud Bellemare, fondateur, est membre du RGCQ. Consultez les ", {text: "tarifs", to: "/tarifs"}, " ou ", {text: "demandez une proposition", to: "/contact"}, "."]],
+        paragraphs: [["Gestion Velora accompagne les syndicats de six unités et plus dans l'administration, le suivi financier et la coordination de l'entretien selon le mandat convenu. Sa base publiée est généralement de 33 $ à 36 $ par unité par mois, logiciel de gestion inclus, avant taxes; le devis précise les services et les frais additionnels. Arnaud Bellemare, fondateur, est membre du RGCQ. Consultez les ", {text: "tarifs", to: "/tarifs"}, " ou ", {text: "demandez une proposition", to: "/contact"}, "."]],
       },
     ],
   },
@@ -58,7 +58,7 @@ export const condoAdvertorial: BlogPost = {
       {heading: "4. Leaving contracts and deadlines without an owner", paragraphs: ["Missed insurance renewals, delayed inspections and overlooked invoices can cause costs and delays. Keep contracts, warranties and minutes in the syndicate's register. Assign each task an owner and a date, and review the list at board meetings."]},
       {heading: "5. Depending on one volunteer", paragraphs: ["A capable director may manage a small building well, but a departure or absence can interrupt follow-up. Document access, contacts and decisions, and identify a backup. Compare volunteer time and occasional professional fees with a management proposal."]},
       {heading: "Self-management, occasional help or a manager?", paragraphs: [["Self-management can suit a board with sufficient time and expertise. Occasional accounting, technical or administrative help can fill a gap without delegating everything. A professional manager can handle agreed tasks while the board retains its responsibilities and decisions. Compare the options in our ", {text: "self-management versus manager guide", to: "/compare/gestionnaire-vs-autogestion-condo"}, "."]]},
-      {heading: "How Gestion Velora can support your board", paragraphs: [["Gestion Velora supports syndicates of six units or more with administration, financial follow-up and maintenance coordination under the agreed mandate. Published base pricing is typically $33-$36 per unit per month, up to $40 with app and portal integrations, before taxes; the quote specifies services and extras. Founder Arnaud Bellemare is an RGCQ member. See ", {text: "pricing", to: "/tarifs"}, " or ", {text: "request a proposal", to: "/contact"}, "."]]},
+      {heading: "How Gestion Velora can support your board", paragraphs: [["Gestion Velora supports syndicates of six units or more with administration, financial follow-up and maintenance coordination under the agreed mandate. Published base pricing is typically $33-$36 per unit per month, management software included, before taxes; the quote specifies services and extras. Founder Arnaud Bellemare is an RGCQ member. See ", {text: "pricing", to: "/tarifs"}, " or ", {text: "request a proposal", to: "/contact"}, "."]]},
     ],
   },
 };

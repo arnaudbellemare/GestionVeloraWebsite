@@ -24,11 +24,11 @@ export const fr = {
     rates: {
       base: "À partir de",
       upper: "Selon le mandat, jusqu’à",
-      integrations: "Avec intégrations applicatives, jusqu’à",
     },
     perUnit: "/ unité / mois, avant taxes",
     includedHeading: "Compris dans le tarif mensuel",
     included: {
+      software: "Logiciel de gestion inclus",
       aga: "Assemblée générale annuelle et procès-verbaux",
       reports: "Rapports financiers mensuels",
       registers: "Registres et perception des charges",
@@ -41,8 +41,6 @@ export const fr = {
     inputLabel: "Nombre d’unités",
     inputHelp: "Le nombre de fractions résidentielles de votre copropriété.",
     inputPlaceholder: "ex. 24",
-    integrationsToggle: "Intégrations applicatives et portail copropriétaires",
-    integrationsNote: "(jusqu’à 40 $ / unité / mois)",
     resultLabel: "Votre tarif estimé pour {{units}} unités",
     perMonth: "/ mois",
     rangeLine: "De {{from}} à {{to}} par mois selon les spécificités du mandat ({{rateFrom}} à {{rateTo}} par unité).",
@@ -919,7 +917,7 @@ export const fr = {
         },
         {
           q: "Combien coûte la gestion d'un condo à Montréal ?",
-          a: "Les frais de gestion de condo varient selon la taille de l'immeuble et les services requis. Chez Gestion Velora, les syndicats se situent en général entre 33 $ et 36 $ / unité / mois selon le mandat, jusqu'à 40 $ / unité avec intégrations applicatives. Pour la location longue durée, les honoraires suivent une structure d'un mois de loyer. Contactez-nous pour une soumission personnalisée.",
+          a: "Les frais de gestion de condo varient selon la taille de l'immeuble et les services requis. Chez Gestion Velora, les syndicats se situent en général entre 33 $ et 36 $ / unité / mois selon le mandat, logiciel de gestion inclus. Pour la location longue durée, les honoraires suivent une structure d'un mois de loyer. Contactez-nous pour une soumission personnalisée.",
         },
         {
           q: "Mon condo est-il trop petit pour faire appel à un gestionnaire professionnel ?",
