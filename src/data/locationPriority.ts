@@ -22,6 +22,11 @@ const CITY_WEIGHTS: Record<string, number> = {
   "ville-marie": 6,
   verdun: 5,
   lasalle: 5,
+  // Added 2026-11-24: the owner confirmed these are served. Each page carries
+  // its own census section (syndicateLocalProfiles.ts), not only the template.
+  "saint-jerome": 5,
+  "saint-hyacinthe": 5,
+  chateauguay: 5,
 };
 
 /**
@@ -80,9 +85,10 @@ const SERVICE_CITY_WEIGHTS: Record<string, Record<string, number>> = {
 };
 
 /**
- * Only syndicate pages are indexable, and only for the 20 cities in
- * CITY_WEIGHTS, minus any retired slug (Montréal since 2026-11-21: the syndicate
- * service page covers it) (every other city scores 4, so the top 20 syndicate slugs are
+ * Only syndicate pages are indexable, and only for the 23 cities in
+ * CITY_WEIGHTS (Saint-Jérôme, Saint-Hyacinthe and Châteauguay added 2026-11-24),
+ * minus any retired slug (Montréal since 2026-11-21: the syndicate service page
+ * covers it), so 22 pages (every other city scores 4, so the top 23 syndicate slugs are
  * exactly those). Decided 2026-10-14: Gestion Velora is a syndicate
  * specialist, and the location template is identical from city to city once
  * the name is swapped, so 150 indexable pages read as filler. Every other
@@ -92,7 +98,7 @@ const SERVICE_CITY_WEIGHTS: Record<string, Record<string, number>> = {
  */
 const INDEXABLE_LOCATION_SERVICES: ReadonlySet<string> = new Set(["syndicat-copropriete"]);
 
-export const PRIORITY_LOCATION_ROUTE_LIMIT = 20;
+export const PRIORITY_LOCATION_ROUTE_LIMIT = 23;
 
 function cityWeight(citySlug: string, serviceSlug?: string): number {
   if (serviceSlug) {
