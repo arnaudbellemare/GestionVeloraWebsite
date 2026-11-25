@@ -626,6 +626,10 @@ export const fr = {
       ],
       faq: [
         {
+          q: "Combien coûte la gestion d'un syndicat de copropriété à Montréal ?",
+          a: "Chez Gestion Velora, la gestion d'un syndicat de copropriété coûte généralement de 33 $ à 36 $ par unité par mois, avant taxes, logiciel de gestion inclus, pour les immeubles de 6 unités et plus. Le montant final dépend du mandat ; le détail est sur notre page Tarifs.",
+        },
+        {
           q: "Quel gestionnaire choisir pour un syndicat de copropriété à Montréal ?",
           a: "Choisissez un professionnel capable de couvrir l'administration, la tenue financière, la coordination technique, le registre, la préparation de l'AGA et les communications avec les copropriétaires. Gestion Velora combine rapports clairs, suivi proactif et disponibilité 24/7 pour les conseils d'administration.",
         },
@@ -715,6 +719,10 @@ export const fr = {
         },
       ],
       faq: [
+        {
+          q: "Combien coûte la gestion Airbnb à Montréal ?",
+          a: "Nos frais de gestion Airbnb sont généralement de 18 % à 25 % des revenus de réservation, selon le volume, le type de bien et le périmètre du mandat. Le détail est sur notre page Tarifs.",
+        },
         {
           q: "Faut-il un classement ou un permis municipal pour la location courte durée à Montréal ?",
           a: "La Ville encadre les hébergements touristiques : vérifiez la catégorie applicable sur le site officiel de Montréal ; nous suivons les exigences pour limiter les interruptions d'exploitation.",
