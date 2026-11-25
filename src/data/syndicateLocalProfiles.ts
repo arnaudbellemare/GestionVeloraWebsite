@@ -1,5 +1,5 @@
 /**
- * Public housing-stock figures for the 20 indexable syndicate location pages.
+ * Public housing-stock figures for the indexable syndicate location pages.
  *
  * Municipalities: Statistics Canada, 2021 Census, table 98-10-0233-01
  * (private households by period of construction, structural type of dwelling,
@@ -13,7 +13,10 @@
  *
  * Percentages are shares of occupied private dwellings, rounded to one
  * decimal. null means the census table reports no value for that cell.
- * Regenerate from the source rather than editing numbers by hand.
+ * Regenerate from the source rather than editing numbers by hand:
+ * scripts/fetch-syndicate-local-profiles.py (municipalities only). Saint-Jérôme,
+ * Saint-Hyacinthe and Châteauguay were added on 2026-11-24 with that script,
+ * after it reproduced the Saint-Lambert and Boucherville rows exactly.
  */
 
 export const LOCAL_DATA_CHECKED_ON = "2026-10-14";
@@ -32,6 +35,8 @@ export interface MunicipalProfile {
   aptUnder5: number;
   singleDetached: number;
   majorRepairs: number;
+  /** Date this row was read from the source, when later than LOCAL_DATA_CHECKED_ON. */
+  checkedOn?: string;
 }
 
 export interface BoroughProfile {
@@ -61,6 +66,9 @@ export const MUNICIPAL_PROFILES: Record<string, MunicipalProfile> = {
   "boisbriand": { csdCode: "2473005", households: 11425, owner: 64.5, pre1981: 35.6, built1981to2000: 43.5, post2001: 20.8, apt5plus: 0.6, apt5plusHouseholds: 65, apt5plusBuiltSince2001: null, aptUnder5: 38.9, singleDetached: 46.8, majorRepairs: 4.4 },
   "saint-lambert": { csdCode: "2458012", households: 10550, owner: 60.9, pre1981: 68.1, built1981to2000: 21.0, post2001: 10.9, apt5plus: 23.2, apt5plusHouseholds: 2445, apt5plusBuiltSince2001: 25.6, aptUnder5: 34.7, singleDetached: 28.6, majorRepairs: 7.0 },
   "sainte-julie": { csdCode: "2459010", households: 11610, owner: 79.8, pre1981: 35.9, built1981to2000: 43.2, post2001: 20.9, apt5plus: null, apt5plusHouseholds: null, apt5plusBuiltSince2001: null, aptUnder5: 24.4, singleDetached: 66.8, majorRepairs: 2.9 },
+  "saint-jerome": { csdCode: "2475017", households: 37370, owner: 51.0, pre1981: 37.3, built1981to2000: 27.7, post2001: 34.9, apt5plus: 3.6, apt5plusHouseholds: 1345, apt5plusBuiltSince2001: 30.9, aptUnder5: 41.5, singleDetached: 37.2, majorRepairs: 5.0, checkedOn: "2026-11-24" },
+  "saint-hyacinthe": { csdCode: "2454048", households: 26870, owner: 48.6, pre1981: 55.7, built1981to2000: 23.6, post2001: 20.6, apt5plus: 0.5, apt5plusHouseholds: 125, apt5plusBuiltSince2001: null, aptUnder5: 47.5, singleDetached: 34.3, majorRepairs: 4.7, checkedOn: "2026-11-24" },
+  "chateauguay": { csdCode: "2467050", households: 19920, owner: 71.9, pre1981: 55.0, built1981to2000: 21.4, post2001: 23.6, apt5plus: 0.4, apt5plusHouseholds: 70, apt5plusBuiltSince2001: null, aptUnder5: 26.0, singleDetached: 63.2, majorRepairs: 6.1, checkedOn: "2026-11-24" },
 };
 
 export const BOROUGH_PROFILES: Record<string, BoroughProfile> = {
@@ -124,6 +132,16 @@ function deFr(name: string): string {
   if (name.startsWith("La ")) return `de la ${name.slice(3)}`;
   if (/^[AEIOUYÀÂÉÈÊÎÔÛaeiouyh]/.test(name)) return `d'${name}`;
   return `de ${name}`;
+}
+
+/** "14 octobre 2026" / "October 14, 2026" from an ISO date (noon UTC avoids a day shift). */
+function longDate(iso: string, locale: Locale): string {
+  return new Date(`${iso}T12:00:00Z`).toLocaleDateString(locale === "fr" ? "fr-CA" : "en-CA", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
 }
 
 function round1(value: number): number {
@@ -342,7 +360,7 @@ export function getSyndicateLocalSection(
     points: built.points,
     sources,
     checkedLabel: fr
-      ? "Chiffres du recensement de 2021, sources consultées le 14 octobre 2026."
-      : "2021 Census figures, sources checked October 14, 2026.",
+      ? `Chiffres du recensement de 2021, sources consultées le ${longDate(muni?.checkedOn ?? LOCAL_DATA_CHECKED_ON, locale)}.`
+      : `2021 Census figures, sources checked ${longDate(muni?.checkedOn ?? LOCAL_DATA_CHECKED_ON, locale)}.`,
   };
 }
