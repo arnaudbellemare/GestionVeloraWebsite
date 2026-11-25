@@ -624,6 +624,10 @@ export const en = {
       ],
       faq: [
         {
+          q: "How much does condo management cost in Montreal?",
+          a: "At Gestion Velora, condo management typically costs $33 to $36 per unit per month, before taxes, management software included, for buildings of 6 units or more. The final amount depends on the mandate; details are on our pricing page.",
+        },
+        {
           q: "How do you choose a condo corporation manager in Montreal?",
           a: "Look for a Montreal condo corporation manager who can handle administration, financial management, technical coordination, register maintenance, AGM preparation, and owner communication. Gestion Velora combines clear reporting, proactive follow-up, and 24/7 support for condo boards.",
         },
@@ -713,6 +717,10 @@ export const en = {
         },
       ],
       faq: [
+        {
+          q: "How much does Airbnb management cost in Montreal?",
+          a: "Our Airbnb management fee is typically 18% to 25% of booking revenue, depending on volume, property type, and service scope. Details are on our pricing page.",
+        },
         {
           q: "Do I need a municipal permit or classification for short-term rentals in Montreal?",
           a: "The City regulates tourist lodging: confirm the applicable category on Montreal’s official site; we track requirements to reduce operational interruptions.",
