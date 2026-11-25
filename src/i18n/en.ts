@@ -368,7 +368,7 @@ export const en = {
   },
 
   servicesHub: {
-    title: "Our services",
+    title: "Property management services in Montreal",
     subtitle:
       "Condo corporation management, Airbnb operations, and long-term rental management in Greater Montreal.",
     ctaLearn: "Learn more",
@@ -381,6 +381,14 @@ export const en = {
     toolDesc:
       "Underwrite an income property with Quebec's rules: Montreal welcome tax, CMHC down payment caps, the TAL rent-fixing framework, and the bank's economic value. Free, no sign-up.",
     toolCta: "Open the calculator",
+    compareTitle: "Ready to compare options?",
+    compareBody:
+      "Request a quote, book a consultation, or start with a quick call to map the right management model for your property.",
+    compareQuote: "Request a Quote",
+    compareConsult: "Book a Consultation",
+    compareSee: "See comparisons",
+    compareCities: "Browse city pages",
+    compareCall: "Call +1 514 777 1731",
   },
 
   contactPage: {
@@ -548,10 +556,10 @@ export const en = {
   services: {
     "syndicat-copropriete": {
       title: "Condo board management",
-      subtitle: "Condo corporation management in Montreal: budget, AGM, reserve fund, and compliance.",
-      metaTitle: "Condo Corporation Management Montreal | Gestion Velora",
+      subtitle: "Condo management in Montreal for condo boards",
+      metaTitle: "Condo Management Montreal | Gestion Velora",
       metaDescription:
-        "Gestion Velora supports Montreal condo corporations with clear administrative, financial, and operational management, proactive reporting, and 24/7 support.",
+        "Condo management in Montreal: AGM, budget, reserve fund, Loi 16 compliance and owner communications for condo boards. Request a quote.",
       description:
         "Gestion Velora is a Montreal condo corporation management firm specializing in full condo board administration. We handle the administrative, financial, and technical management of your condo corporation: annual budget, common fees, reserve fund, annual general meeting (AGM), condo register, common area maintenance, and Loi 141 compliance. Our dedicated condo manager ensures full transparency for the board and every unit owner. Our team administers over 200 units across more than 10 buildings in Greater Montreal.",
       offerings: [
@@ -653,10 +661,10 @@ export const en = {
     },
     airbnb: {
       title: "Airbnb and short-term rental management",
-      subtitle: "Listings, turnovers, guests, permits, and compliance — end to end.",
-      metaTitle: "Airbnb Management Montreal — CITQ & turnovers | Gestion Velora",
+      subtitle: "Airbnb management in Montreal: listings, guests and compliance",
+      metaTitle: "Airbnb Management Montreal | Gestion Velora",
       metaDescription:
-        "Airbnb management in Montreal: listings, guests, cleaning, maintenance, pricing, and municipal compliance for short-term rentals.",
+        "Airbnb and vacation rental management in Montreal: listings, guests, turnovers, pricing and CITQ compliance. Short-term rental, end to end.",
       description:
         "Gestion Velora handles full management of your short-term rental properties in Montreal. Reservations, cleaning, maintenance, and guest communication, all managed for you. Our team operates more than 200 units in total across Greater Montreal, with 24/7 availability for emergencies.",
       offerings: [
