@@ -178,7 +178,7 @@ export const fr = {
     airbnb: "Airbnb",
     airbnbDesc: "Gestion des réservations et maximisation des revenus en toute sérénité.",
     location: "Location",
-    locationDesc: "Sélection des locataires, baux et suivi professionnel.",
+    locationDesc: "Résidentiel et commercial : locataires, baux et suivi professionnel.",
     gestionCondo: "Gestion de condo",
     gestionCondoDesc: "Administration quotidienne, finances et entretien de votre condo.",
   },
@@ -732,13 +732,13 @@ export const fr = {
       ],
     },
     location: {
-      title: "Gestion locative longue durée",
-      subtitle: "Sélection des locataires, loyers, entretien et rapports clairs pour votre immeuble.",
-      metaTitle: "Gestion locative longue durée — baux et TAL | Gestion Velora",
+      title: "Gestion locative résidentielle et commerciale",
+      subtitle: "Gestion locative à Montréal, résidentielle et commerciale",
+      metaTitle: "Gestion locative à Montréal | Gestion Velora",
       metaDescription:
-        "Gestion locative à Montréal pour propriétaires : sélection des locataires, baux, loyers, entretien, rapports et suivi TAL.",
+        "Gestion locative à Montréal, résidentielle et commerciale : locataires, baux, loyers, entretien et rapports mensuels. Demandez une soumission.",
       description:
-        "Gestion Velora gère vos immeubles locatifs à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable. Sur les plus de 200 unités que nous gérons dans le Grand Montréal, le taux d'occupation se maintient à 98 %.",
+        "Gestion Velora gère vos immeubles locatifs résidentiels et commerciaux à Montréal avec rigueur et professionnalisme. De la sélection des locataires au suivi des loyers et entretiens, nous assurons une gestion sereine et rentable. Pour les immeubles commerciaux, nous prenons en charge les baux commerciaux, l'entretien, les relations avec les locataires et le contrôle des charges. Notre équipe gère plus de 200 unités dans le Grand Montréal, et le taux d'occupation de notre portefeuille locatif se maintient à 98 %.",
       offerings: [
         {
           title: "Sélection des locataires",
@@ -800,8 +800,33 @@ export const fr = {
             "Médiation structurée en cas de litige, avec traces écrites et options de résolution.",
           ],
         },
+        {
+          title: "Immeubles commerciaux",
+          items: [
+            "Gestion des baux commerciaux et renouvellements",
+            "Suivi des loyers commerciaux et charges communes",
+            "Entretien préventif des espaces commerciaux",
+            "Relations avec les locataires commerciaux",
+          ],
+          detailItems: [
+            "Gestion des baux commerciaux et renouvellements",
+            "Suivi des loyers commerciaux et charges communes",
+            "Entretien préventif des espaces commerciaux",
+            "Relations avec les locataires commerciaux",
+            "Gestion des appels d'offres pour les travaux majeurs",
+            "Optimisation du rendement et valorisation du patrimoine",
+          ],
+        },
       ],
       faq: [
+        {
+          q: "Qu'est-ce que la gestion locative à Montréal ?",
+          a: "C'est la prise en charge de vos immeubles en location, résidentiels ou commerciaux : sélection des locataires, baux, perception des loyers, entretien et rapports mensuels, sans que vous ayez à tout suivre au quotidien.",
+        },
+        {
+          q: "Gérez-vous aussi des immeubles commerciaux ?",
+          a: "Oui. Pour les immeubles commerciaux, nous gérons les baux commerciaux et leurs renouvellements, le suivi des loyers et des charges communes, l'entretien préventif des espaces, les relations avec les locataires et les appels d'offres pour les travaux majeurs.",
+        },
         {
           q: "Comment sont gérés les impayés et les relances ?",
           a: "Relances progressives, dossiers documentés et respect des règles du Tribunal administratif du logement (TAL) ; l'objectif est de protéger votre trésorerie tout en restant conforme.",

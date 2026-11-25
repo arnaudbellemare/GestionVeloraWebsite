@@ -1473,7 +1473,6 @@ function buildServiceDetailMainHtml(locale: "fr" | "en", slug: string): string {
   const svc = getService(locale, slug);
   const lang = locale === "fr" ? "fr-CA" : "en-CA";
   const offeringHtml = (svc.offerings ?? [])
-    .slice(0, 4)
     .map((offering) => {
       const items = [...(offering.detailItems ?? []), ...(offering.items ?? [])].slice(0, 6);
       const lis = items.map((item) => `    <li>${escapeHtml(item)}</li>`).join("\n");

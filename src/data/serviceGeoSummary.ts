@@ -29,8 +29,8 @@ export function getServiceGeoSummary(slug: ServiceSlug, locale: "fr" | "en"): Se
   if (slug === "location") {
     return {
       price: isEn
-        ? "Long-term rental management fee: structured as one month's gross rent under the mandate terms."
-        : "Honoraires de gestion locative longue durée : structure équivalente à un mois de loyer brut selon les modalités du mandat.",
+        ? "Residential rental management fee: structured as one month's gross rent under the mandate terms."
+        : "Honoraires de gestion locative résidentielle : structure équivalente à un mois de loyer brut selon les modalités du mandat.",
       proof: isEn
         ? "Covers tenant screening, Quebec lease support, rent collection, maintenance coordination, TAL-aware follow-up, and monthly owner reporting."
         : "Couvre sélection locataire, baux du Québec, perception, maintenance, suivi conforme TAL et rapports mensuels propriétaire.",
