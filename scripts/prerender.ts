@@ -29,6 +29,7 @@ import { getServiceGeoSummary } from "../src/data/serviceGeoSummary.js";
 import { getPricingContent, type PricingTier } from "../src/data/pricing.js";
 import { SERVICE_SLUGS, type ServiceSlug } from "../src/data/services.js";
 import { withCurrentPageBreadcrumbItem } from "../src/data/breadcrumbSchema.js";
+import { htmlToMarkdown } from "./lib/htmlToMarkdown.js";
 import { buildServiceFaqSchema } from "../src/data/serviceFaqSchema.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
 import { COMPARISON_GUIDE } from "../src/data/comparisonGuide.js";
@@ -391,6 +392,8 @@ function buildHtml(
     /** Route chunks required to render the first viewport. */
     modulePreloads?: string[];
     keywords?: string;
+    /** Absolute URL of this page's Markdown copy, advertised as rel="alternate". */
+    markdownHref?: string;
     hreflangFr: string;
     hreflangEn: string;
     hreflangDefault: string;
@@ -450,6 +453,12 @@ function buildHtml(
     /(<meta name="description" content="[^"]*" \/>)/,
     `$1\n    <meta name="keywords" content="${escapeHtml(keywords)}" />`
   );
+
+  // 4b. Markdown copy for AI agents (generated next to the page, same content)
+  html = html.replace(/\s*<link rel="alternate" type="text\/markdown"[^>]*>/g, "");
+  if (opts.markdownHref) {
+    html = html.replace("</head>", `  <link rel="alternate" type="text/markdown" href="${opts.markdownHref}" />\n</head>`);
+  }
 
   // 4. <link rel="canonical">
   html = html.replace(
@@ -623,6 +632,38 @@ function buildHtml(
 // ---------------------------------------------------------------------------
 // Helper: write file, creating parent directories as needed
 // ---------------------------------------------------------------------------
+/** "/" -> "/index.md", "/en/" -> "/en/index.md", "/services/airbnb" -> "/services/airbnb.md". */
+function markdownPathFor(routePath: string): string {
+  return routePath.endsWith("/") ? `${routePath}index.md` : `${routePath}.md`;
+}
+
+/** Only indexable pages that are in the sitemap get a Markdown copy. */
+function hasMarkdownCopy(route: { includeInSitemap?: boolean; robots?: string; prerenderMainInner?: string }): boolean {
+  return route.includeInSitemap !== false && !/noindex/i.test(route.robots ?? "") && Boolean(route.prerenderMainInner);
+}
+
+function buildMarkdownCopy(route: { path: string; title: string; description: string; locale: "fr" | "en"; prerenderMainInner?: string }, canonical: string): string {
+  // Only a known date: the sitemap's DEFAULT_SITEMAP_LAST_MODIFIED is a fallback, not a fact.
+  const lastmod = SITEMAP_LAST_MODIFIED_BY_PATH.get(route.path);
+  const body = htmlToMarkdown(route.prerenderMainInner ?? "", SITE_URL);
+  return `---
+title: ${JSON.stringify(route.title)}
+description: ${JSON.stringify(route.description)}
+url: ${canonical}
+language: ${route.locale === "en" ? "en-CA" : "fr-CA"}${lastmod ? `\nlast_modified: ${lastmod}` : ""}
+---
+
+${body}
+`;
+}
+
+function writeMarkdownCopy(routePath: string, markdown: string) {
+  const outPath = join(DIST, markdownPathFor(routePath));
+  const dir = outPath.slice(0, outPath.lastIndexOf("/"));
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  writeFileSync(outPath, markdown, "utf-8");
+}
+
 function writeRoute(routePath: string, html: string) {
   // routePath is like "/services/airbnb" → dist/services/airbnb/index.html
   // routePath "/" → dist/index.html (already exists, handled separately)
@@ -2643,12 +2684,18 @@ async function main() {
   const routes = buildRoutes();
 
   let count = 0;
+  let markdownCount = 0;
   for (const route of routes) {
     const isEn = route.locale === "en";
     const lang = isEn ? "en-CA" : "fr-CA";
     const canonical = `${SITE_URL}${route.path === "/" ? "/" : route.path}`;
     const frCanonical = `${SITE_URL}${route.frPath}`;
     const enCanonical = `${SITE_URL}${route.enPath}`;
+    const markdownHref = hasMarkdownCopy(route) ? `${SITE_URL}${markdownPathFor(route.path)}` : undefined;
+    if (markdownHref) {
+      writeMarkdownCopy(route.path, buildMarkdownCopy(route, canonical));
+      markdownCount++;
+    }
 
     const html = buildHtml(template, {
       lang,
@@ -2670,6 +2717,7 @@ async function main() {
       locale: route.locale,
       noscriptBody: route.noscriptBody,
       prerenderMainInner: route.prerenderMainInner,
+      markdownHref,
     });
 
     writeRoute(route.path, html);
@@ -2695,6 +2743,7 @@ async function main() {
     pageSchemas: rootRoute.pageSchemas,
     locale: "fr",
     prerenderMainInner: rootRoute.prerenderMainInner,
+    markdownHref: hasMarkdownCopy(rootRoute) ? `${SITE_URL}${markdownPathFor("/")}` : undefined,
   });
   writeFileSync(join(DIST, "index.html"), rootHtml, "utf-8");
   console.log("  ✓ / (dist/index.html updated)");
@@ -2703,7 +2752,7 @@ async function main() {
   buildSitemap(routes);
   buildRss();
 
-  console.log(`\n✅ Prerendered ${count} routes.\n`);
+  console.log(`\n✅ Prerendered ${count} routes, ${markdownCount} Markdown copies.\n`);
 }
 
 main().catch((err) => {

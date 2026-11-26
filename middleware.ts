@@ -8,7 +8,7 @@ import {
 const allowed = new Set(allowlist as string[]);
 const CANONICAL_HOST = "www.gestionvelora.com";
 const APEX_HOST = "gestionvelora.com";
-const PUBLIC_FILE_RE = /\.(?:css|js|mjs|map|json|xml|txt|ico|png|jpe?g|webp|avif|gif|svg|mp4|webm|woff2?|otf|ttf|glb)$/i;
+const PUBLIC_FILE_RE = /\.(?:css|js|mjs|map|json|xml|txt|md|ico|png|jpe?g|webp|avif|gif|svg|mp4|webm|woff2?|otf|ttf|glb)$/i;
 
 /**
  * Self-declared crawlers we want an audit trail for. A User-Agent proves
@@ -124,6 +124,8 @@ export default function middleware(request: Request) {
   }
 
   if (PUBLIC_FILE_RE.test(path)) {
+    // Markdown copies are content for AI agents: keep their crawler trail.
+    if (path.endsWith(".md")) logCrawlerHit(request, path);
     return next();
   }
 

@@ -229,6 +229,41 @@
       "source": "/en/amp/blog/:path*",
       "destination": "/en/blog/:path*",
       "permanent": true
+    },
+    {
+      "source": "/md/home.md",
+      "destination": "/index.md",
+      "permanent": true
+    },
+    {
+      "source": "/md/services.md",
+      "destination": "/services.md",
+      "permanent": true
+    },
+    {
+      "source": "/md/service-syndicat-copropriete.md",
+      "destination": "/services/syndicat-copropriete.md",
+      "permanent": true
+    },
+    {
+      "source": "/md/service-airbnb.md",
+      "destination": "/services/airbnb.md",
+      "permanent": true
+    },
+    {
+      "source": "/md/service-location.md",
+      "destination": "/services/location.md",
+      "permanent": true
+    },
+    {
+      "source": "/md/blog.md",
+      "destination": "/blog.md",
+      "permanent": true
+    },
+    {
+      "source": "/md/privacy.md",
+      "destination": "/privacy.md",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -375,6 +410,10 @@
     {
       "source": "/en/trust-proof",
       "destination": "/en/trust-proof/index.html"
+    },
+    {
+      "source": "/llms-full.txt",
+      "destination": "/llms-full.md"
     }
   ]
 }
