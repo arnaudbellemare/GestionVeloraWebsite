@@ -631,6 +631,10 @@ export const fr = {
           a: "Chez Gestion Velora, la gestion d'un syndicat de copropriété coûte généralement de 33 $ à 36 $ par unité par mois, avant taxes, logiciel de gestion inclus, pour les immeubles de 6 unités et plus. Le montant final dépend du mandat ; le détail est sur notre page Tarifs.",
         },
         {
+          q: "Y a-t-il des frais de démarrage pour changer de gestionnaire ?",
+          a: "Non. L'intégration, le transfert de dossiers et la configuration du portail sont inclus dans le premier mois, sans frais supplémentaires. La plupart des mandats sont des ententes de 12 mois, renouvelables annuellement.",
+        },
+        {
           q: "Quel gestionnaire choisir pour un syndicat de copropriété à Montréal ?",
           a: "Choisissez un professionnel capable de couvrir l'administration, la tenue financière, la coordination technique, le registre, la préparation de l'AGA et les communications avec les copropriétaires. Gestion Velora combine rapports clairs, suivi proactif et disponibilité 24/7 pour les conseils d'administration.",
         },
