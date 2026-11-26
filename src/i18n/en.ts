@@ -633,6 +633,18 @@ export const en = {
           a: "No. Onboarding, file transfer, and portal setup are included in the first month at no additional cost. Most mandates are 12-month agreements, renewable annually.",
         },
         {
+          q: "How long does it take to switch condo managers?",
+          a: "A transition typically takes 60 days, the time needed to transfer the syndicate's files and set up the portal. Onboarding, file transfer, and portal setup are included at no additional cost.",
+        },
+        {
+          q: "Who prepares the syndicate's annual financial statements?",
+          a: "Our team prepares them, based on the bookkeeping and the monthly financial reports provided to the board.",
+        },
+        {
+          q: "What software runs the owner portal?",
+          a: "We use our own management software, included in the fee. The portal gives access to the syndicate's documents, budgets, and decisions at any time.",
+        },
+        {
           q: "How do you choose a condo corporation manager in Montreal?",
           a: "Look for a Montreal condo corporation manager who can handle administration, financial management, technical coordination, register maintenance, AGM preparation, and owner communication. Gestion Velora combines clear reporting, proactive follow-up, and 24/7 support for condo boards.",
         },

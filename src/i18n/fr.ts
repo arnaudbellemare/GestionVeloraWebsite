@@ -635,6 +635,18 @@ export const fr = {
           a: "Non. L'intégration, le transfert de dossiers et la configuration du portail sont inclus dans le premier mois, sans frais supplémentaires. La plupart des mandats sont des ententes de 12 mois, renouvelables annuellement.",
         },
         {
+          q: "Combien de temps prend un changement de gestionnaire de copropriété ?",
+          a: "Une transition prend généralement 60 jours, le temps de transférer les dossiers du syndicat et de configurer le portail. L'intégration, le transfert de dossiers et la configuration du portail sont inclus, sans frais supplémentaires.",
+        },
+        {
+          q: "Qui prépare les états financiers annuels du syndicat ?",
+          a: "Notre équipe les prépare, à partir de la tenue de livres et des rapports financiers mensuels remis au conseil d'administration.",
+        },
+        {
+          q: "Quel logiciel utilisez-vous pour le portail des copropriétaires ?",
+          a: "Nous utilisons notre propre logiciel de gestion, inclus dans le tarif. Le portail permet de consulter les documents, budgets et décisions du syndicat en tout temps.",
+        },
+        {
           q: "Quel gestionnaire choisir pour un syndicat de copropriété à Montréal ?",
           a: "Choisissez un professionnel capable de couvrir l'administration, la tenue financière, la coordination technique, le registre, la préparation de l'AGA et les communications avec les copropriétaires. Gestion Velora combine rapports clairs, suivi proactif et disponibilité 24/7 pour les conseils d'administration.",
         },
