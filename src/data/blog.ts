@@ -64,6 +64,8 @@ export interface BlogPostLocale {
   brief: string;
   sections: BlogSection[];
   study?: BlogStudy;
+  /** Visible FAQ under the article; also emitted as FAQPage JSON-LD. */
+  faq?: { q: string; a: string }[];
 }
 
 export interface BlogPost {
@@ -1620,7 +1622,7 @@ export const blogPosts: BlogPost[] = [
     slug: "augmentation-loyer-montreal-regles-calcul-tal",
     image: blogCoverPath("cover-rent-increase.webp"),
     datePublished: "2026-04-27",
-    dateModified: "2026-11-04",
+    dateModified: "2026-11-26",
     fr: {
       category: "Réglementation",
       date: "Août 2026",
@@ -1676,6 +1678,32 @@ export const blogPosts: BlogPost[] = [
           ],
         },
       ],
+      faq: [
+        {
+          q: "L'augmentation de 3,1 % est-elle un plafond ?",
+          a: "Non. Pour les avis transmis à compter du 1er janvier 2026, le TAL publie une composante de base de 3,1 %, mais ce n'est ni un plafond légal ni une hausse automatique. Le calcul propre au logement peut aussi tenir compte de la hausse des taxes et des assurances, et de 5 % des dépenses d'immobilisation admissibles.",
+        },
+        {
+          q: "Quand envoyer l'avis d'augmentation pour un bail de 12 mois ?",
+          a: "Pour un bail de 12 mois ou plus, l'avis doit parvenir au locataire entre 3 et 6 mois avant la fin du bail. Conservez une preuve de réception, par exemple un envoi recommandé.",
+        },
+        {
+          q: "Quel délai d'avis pour un bail au mois ou à durée indéterminée ?",
+          a: "Pour un bail de moins de 12 mois ou à durée indéterminée, le délai d'avis est de 1 à 2 mois. Pour une chambre, il est de 10 à 20 jours.",
+        },
+        {
+          q: "Combien de temps le locataire a-t-il pour refuser une augmentation ?",
+          a: "Un mois à compter de la réception de l'avis. En règle générale, l'absence de réponse dans ce délai vaut acceptation du renouvellement aux conditions proposées.",
+        },
+        {
+          q: "Que doit faire le propriétaire après un refus ?",
+          a: "Il a un mois à compter de la réception du refus pour déposer une demande de modification du bail au TAL. S'il laisse passer ce délai, le bail est renouvelé au même loyer et aux mêmes conditions.",
+        },
+        {
+          q: "La Régie du logement existe-t-elle encore ?",
+          a: "Non. Depuis le 31 août 2019, la Régie du logement porte le nom de Tribunal administratif du logement (TAL). Les règles d'augmentation de loyer décrites dans cet article relèvent du TAL.",
+        },
+      ],
     },
     en: {
       category: "Regulation",
@@ -1720,6 +1748,32 @@ export const blogPosts: BlogPost[] = [
             ],
             "Prepare the relevant tax, insurance and capital-expenditure records. The information form transmitted by the TAL and proof that it was notified to the tenant must be filed within 90 days after the Tribunal sends it. Careful file management does not replace legal advice in a disputed or unusual case.",
           ],
+        },
+      ],
+      faq: [
+        {
+          q: "Is the 3.1% increase a ceiling?",
+          a: "No. For notices served on or after January 1, 2026, the TAL publishes a 3.1% base component, but it is neither a legal ceiling nor an automatic increase. The property-specific calculation can also reflect higher taxes and insurance, and 5% of eligible capital expenditures.",
+        },
+        {
+          q: "When should the rent increase notice be sent for a 12-month lease?",
+          a: "For a lease of 12 months or more, the notice must reach the tenant between three and six months before the lease ends. Keep proof of receipt, such as registered mail.",
+        },
+        {
+          q: "What is the notice period for a month-to-month or indeterminate lease?",
+          a: "For a lease shorter than 12 months or an indeterminate lease, the notice window is one to two months. For a room, it is 10 to 20 days.",
+        },
+        {
+          q: "How long does a tenant have to refuse a rent increase?",
+          a: "One month after receiving the notice. As a general rule, no response within that period means the lease renews on the proposed terms.",
+        },
+        {
+          q: "What should the landlord do after a refusal?",
+          a: "The landlord has one month after receiving the refusal to apply to the TAL. Missing that deadline renews the lease at the existing rent and conditions.",
+        },
+        {
+          q: "Does the Régie du logement still exist?",
+          a: "No. Since August 31, 2019, the Régie du logement has been called the Tribunal administratif du logement (TAL). The rent increase rules in this article fall under the TAL.",
         },
       ],
     },
@@ -2009,6 +2063,7 @@ export type BlogPostView = {
   brief: string;
   sections: BlogSection[];
   study?: BlogStudy;
+  faq?: { q: string; a: string }[];
   dataset?: BlogDataset;
 };
 
@@ -2029,6 +2084,7 @@ export function getPostBySlug(slug: string, locale: "fr" | "en" = "fr"): BlogPos
     brief: loc.brief,
     sections: loc.sections,
     study: loc.study,
+    faq: loc.faq,
     dataset: post.dataset,
   };
 }

@@ -238,6 +238,24 @@ export function BlogPostPage() {
           ))}
         </div>
 
+        {post.faq && post.faq.length > 0 && (
+          <ScrollReveal delay={0.1}>
+            <section id="post-faq" className="mt-16 pt-10 border-t border-black/10 dark:border-white/10 scroll-mt-24">
+              <h2 className="font-sans font-medium text-xl lg:text-2xl text-nd-display mb-6 leading-snug tracking-[-0.02em]">
+                {t("blog.faqTitle")}
+              </h2>
+              <dl className="space-y-6">
+                {post.faq.map((item) => (
+                  <div key={item.q}>
+                    <dt className="font-sans font-semibold text-black dark:text-white text-base">{item.q}</dt>
+                    <dd className="mt-2 font-sans text-sm lg:text-base text-black/75 dark:text-white/75 leading-relaxed">{item.a}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          </ScrollReveal>
+        )}
+
         {post.study && (
           <ScrollReveal delay={0.12}>
             <section id="post-sources" className="mt-16 pt-10 border-t border-black/10 dark:border-white/10 scroll-mt-24">
