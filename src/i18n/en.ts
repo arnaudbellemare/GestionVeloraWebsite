@@ -629,6 +629,10 @@ export const en = {
           a: "At Gestion Velora, condo management typically costs $33 to $36 per unit per month, before taxes, management software included, for buildings of 6 units or more. The final amount depends on the mandate; details are on our pricing page.",
         },
         {
+          q: "Are there setup fees when switching condo managers?",
+          a: "No. Onboarding, file transfer, and portal setup are included in the first month at no additional cost. Most mandates are 12-month agreements, renewable annually.",
+        },
+        {
           q: "How do you choose a condo corporation manager in Montreal?",
           a: "Look for a Montreal condo corporation manager who can handle administration, financial management, technical coordination, register maintenance, AGM preparation, and owner communication. Gestion Velora combines clear reporting, proactive follow-up, and 24/7 support for condo boards.",
         },

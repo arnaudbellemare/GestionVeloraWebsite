@@ -256,8 +256,8 @@ export const LOCATION_SERVICES: LocationService[] = [
     nameEn: "Commercial property management",
     h1Fr: "Gestion immobilière commerciale à {city}",
     h1En: "Commercial property management in {city}",
-    titleTmplFr: "Gestion commerciale à {city}",
-    titleTmplEn: "Commercial management in {city}",
+    titleTmplFr: "Gestion immobilière commerciale à {city}",
+    titleTmplEn: "Commercial property management in {city}",
     descFr:
       "Gestion Velora accompagne les propriétaires d'immeubles commerciaux à {city} : gestion des baux commerciaux, entretien, relations locataires, contrôle des charges, et optimisation durable du rendement.",
     descEn:

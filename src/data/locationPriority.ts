@@ -100,6 +100,16 @@ const INDEXABLE_LOCATION_SERVICES: ReadonlySet<string> = new Set(["syndicat-copr
 
 export const PRIORITY_LOCATION_ROUTE_LIMIT = 23;
 
+/**
+ * Non-syndicate pages indexed one by one, on evidence, outside the ranking.
+ *
+ * gestion-immobiliere-commerciale-ville-marie (2026-11-26): it ranked at
+ * position 6.3 for "gestion immobilière ville-marie" while still noindex, and
+ * the owner confirmed Gestion Velora takes commercial mandates and serves
+ * Montréal. Downtown Ville-Marie is where commercial buildings concentrate.
+ */
+const INDIVIDUALLY_INDEXED_LOCATION_SLUGS: readonly string[] = ["gestion-immobiliere-commerciale-ville-marie"];
+
 function cityWeight(citySlug: string, serviceSlug?: string): number {
   if (serviceSlug) {
     const override = SERVICE_CITY_WEIGHTS[serviceSlug]?.[citySlug];
@@ -142,7 +152,8 @@ const PRIORITY_LOCATION_SLUGS = Array.from(
   // Filter retired slugs after the cut, not before: removing one must not
   // promote the next-ranked city into the indexable set (every city outside
   // CITY_WEIGHTS ties at 4, so declaration order would pick it).
-  .filter((slug) => !isRetiredLocationSlug(slug));
+  .filter((slug) => !isRetiredLocationSlug(slug))
+  .concat(INDIVIDUALLY_INDEXED_LOCATION_SLUGS);
 
 const PRIORITY_LOCATION_SLUG_SET = new Set(PRIORITY_LOCATION_SLUGS);
 
