@@ -37,6 +37,9 @@ Full administration of co-ownership associations under Quebec's Civil Code. Cove
 - Owner and board communications
 - Regulatory compliance (declarations, insurance, building records)
 - Emergency response and incident tracking
+- Annual financial statements prepared by Gestion Velora's own team
+- Owner portal on Gestion Velora's own management software, included in the fee
+- Switching from another manager typically takes 60 days; onboarding, file transfer and portal setup carry no extra fee
 
 **FR**: https://www.gestionvelora.com/services/syndicat-copropriete
 **EN**: https://www.gestionvelora.com/en/services/syndicat-copropriete
