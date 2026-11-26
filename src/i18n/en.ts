@@ -498,6 +498,7 @@ export const en = {
     planifyCall: "Get a free proposal",
     contactUs: "Talk to the team",
     sourcesTitle: "Sources and methodology",
+    faqTitle: "Frequently asked questions",
     datasetIntro: "Raw study data:",
     datasetLicence: "free to reuse with attribution to Gestion Velora and a link to this page.",
   },
