@@ -30,7 +30,7 @@ import { getPricingContent, type PricingTier } from "../src/data/pricing.js";
 import { SERVICE_SLUGS, type ServiceSlug } from "../src/data/services.js";
 import { withCurrentPageBreadcrumbItem } from "../src/data/breadcrumbSchema.js";
 import { htmlToMarkdown } from "./lib/htmlToMarkdown.js";
-import { buildServiceFaqSchema } from "../src/data/serviceFaqSchema.js";
+import { buildFaqPageSchema } from "../src/data/faqPageSchema.js";
 import { COMPARISON_PAGES, formatComparisonDate, type ComparisonPageData } from "../src/data/comparisons.js";
 import { COMPARISON_GUIDE } from "../src/data/comparisonGuide.js";
 import { buildComparisonSchemas } from "../src/data/comparisonSchema.js";
@@ -1099,11 +1099,18 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   // Data studies ship every section, table and source in the static HTML so a
   // crawler or citing journalist gets the numbers without running the app.
   const isStudy = Boolean(loc.study);
-  const isAdvertorial = ["erreurs-syndicats-autogeres-loi-16", "checklist-loi-16-syndicat-copropriete"].includes(slug);
-  const sectionHtml = (isStudy || isAdvertorial ? loc.sections : loc.sections.slice(0, 4))
+  // These ship every section and paragraph. The rest of the articles follow
+  // once the raw-HTML test reads on 2027-01-15 (branch feat/prerender-full-articles);
+  // the TAL article is not a test control, so it goes early (2026-11-26).
+  const isFullText = [
+    "erreurs-syndicats-autogeres-loi-16",
+    "checklist-loi-16-syndicat-copropriete",
+    "augmentation-loyer-montreal-regles-calcul-tal",
+  ].includes(slug);
+  const sectionHtml = (isStudy || isFullText ? loc.sections : loc.sections.slice(0, 4))
     .map((section) => {
       const showPriorityLinks = ["fonds-prevoyance-copropriete-quebec", "cout-gestionnaire-copropriete-montreal", "augmentation-loyer-montreal-regles-calcul-tal", "choisir-gestionnaire-condo-montreal"].includes(slug);
-      const paras = isAdvertorial
+      const paras = isFullText
         ? section.paragraphs.map((p) => `  <p>${richToAmpHtml(p, locale)}</p>`).join("\n")
         : isStudy
         ? section.paragraphs.map((p) => `  <p>${escapeHtml(richToText(p))}</p>`).join("\n")
@@ -1123,6 +1130,15 @@ function buildBlogMainHtml(locale: "fr" | "en", slug: string): string {
   const profileLabel = isEn ? "View author profile" : "Voir le profil auteur";
   const byline = `  <aside class="byline"><p>${escapeHtml(byLabel)} <a rel="author" href="${profileHref}"><strong>${escapeHtml(AUTHOR_NAME)}</strong></a> — ${escapeHtml(byRole)}. <a href="${profileHref}">${escapeHtml(profileLabel)}</a></p><p>${escapeHtml(ARTICLE_AUTHOR_BIO[locale])}</p></aside>`;
 
+  const faqHtml = loc.faq?.length
+    ? `  <section>
+  <h2>${escapeHtml((locale === "fr" ? frRaw : enRaw).blog.faqTitle)}</h2>
+  <dl>
+${loc.faq.map((item) => `    <dt>${escapeHtml(item.q)}</dt>\n    <dd>${escapeHtml(item.a)}</dd>`).join("\n")}
+  </dl>
+  </section>`
+    : "";
+
   return `<main lang="${lang}">
   <h1>${escapeHtml(loc.title)}</h1>
 ${byline}
@@ -1131,6 +1147,7 @@ ${byline}
   </figure>
   <p>${escapeHtml(loc.brief)}</p>
 ${sectionHtml}
+${faqHtml}
 ${studyHtml}
 </main>`;
 }
@@ -2146,7 +2163,7 @@ function buildRoutes(): RouteConfig[] {
       modulePreloads: SERVICE_MODULE_PRELOADS,
       prerenderMainInner: buildServiceDetailMainHtml("fr", slug),
       pageSchemas: [
-        ...[buildServiceFaqSchema(getService("fr", slug).faq ?? [], `${SITE_URL}/services/${slug}`, "fr")].filter((x): x is object => x !== null),
+        ...[buildFaqPageSchema(getService("fr", slug).faq ?? [], `${SITE_URL}/services/${slug}`, "fr")].filter((x): x is object => x !== null),
         buildServiceSchema("fr", slug, SITE_URL),
         buildBreadcrumbSchema([
           { name: frBc.home, url: SITE_URL + "/" },
@@ -2168,7 +2185,7 @@ function buildRoutes(): RouteConfig[] {
       modulePreloads: SERVICE_MODULE_PRELOADS,
       prerenderMainInner: buildServiceDetailMainHtml("en", slug),
       pageSchemas: [
-        ...[buildServiceFaqSchema(getService("en", slug).faq ?? [], `${SITE_URL}/en/services/${slug}`, "en")].filter((x): x is object => x !== null),
+        ...[buildFaqPageSchema(getService("en", slug).faq ?? [], `${SITE_URL}/en/services/${slug}`, "en")].filter((x): x is object => x !== null),
         buildServiceSchema("en", slug, `${SITE_URL}/en`),
         buildBreadcrumbSchema([
           { name: enBc.home, url: SITE_URL + "/" },
@@ -2398,6 +2415,7 @@ function buildRoutes(): RouteConfig[] {
               { name: post.fr.title },
             ]),
             ...(frDataset ? [frDataset] : []),
+            ...[buildFaqPageSchema(post.fr.faq ?? [], `${SITE_URL}/blog/${slug}`, "fr")].filter((x): x is object => x !== null),
           ]
         : null,
     });
@@ -2421,6 +2439,7 @@ function buildRoutes(): RouteConfig[] {
               { name: post.en.title },
             ]),
             ...(enDataset ? [enDataset] : []),
+            ...[buildFaqPageSchema(post.en.faq ?? [], `${SITE_URL}/en/blog/${slug}`, "en")].filter((x): x is object => x !== null),
           ]
         : null,
     });

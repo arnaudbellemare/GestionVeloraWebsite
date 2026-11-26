@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
 import { ARTICLE_AUTHOR_BIO } from "../data/author";
 import { withCurrentPageBreadcrumbItem } from "../data/breadcrumbSchema";
-import { buildServiceFaqSchema } from "../data/serviceFaqSchema";
+import { buildFaqPageSchema } from "../data/faqPageSchema";
 import {
   ARTICLE_AUTHOR_NAME,
   ARTICLE_AUTHOR_SAME_AS,
@@ -307,7 +307,7 @@ export function SchemaOrg() {
     ) {
       const service = getLocalizedService(slug as ServiceSlug, t);
       const faqRaw = t(`services.${service.slug}.faq`, { returnObjects: true }) as unknown;
-      const faqSchema = buildServiceFaqSchema(
+      const faqSchema = buildFaqPageSchema(
         Array.isArray(faqRaw) ? (faqRaw as { q: string; a: string }[]) : [],
         `${base}/services/${service.slug}`,
         isEn ? "en" : "fr",
@@ -403,6 +403,7 @@ export function SchemaOrg() {
                 { name: bcInsights, url: `${base}/blog` },
                 { name: post.title },
               ]),
+              ...[buildFaqPageSchema(post.faq ?? [], articleUrl, isEn ? "en" : "fr")].filter((x): x is object => x !== null),
             ]);
           }
         }

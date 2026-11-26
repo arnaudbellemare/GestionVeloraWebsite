@@ -500,6 +500,7 @@ export const fr = {
     planifyCall: "Obtenir une proposition gratuite",
     contactUs: "Parler à l’équipe",
     sourcesTitle: "Sources et méthodologie",
+    faqTitle: "Questions fréquentes",
     datasetIntro: "Données brutes de l’étude :",
     datasetLicence: "réutilisation libre avec mention « Gestion Velora » et lien vers cette page.",
   },

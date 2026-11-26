@@ -1,10 +1,11 @@
 /**
- * FAQPage JSON-LD for a service page, built from the same `services.<slug>.faq`
- * items ServicePage renders, so the schema text always matches the visible FAQ.
- * Shared by scripts/prerender.ts and SchemaOrg.tsx. Returns null when the page
- * has no FAQ. Takes the page URL as an argument (no src/config.ts import).
+ * FAQPage JSON-LD built from the same items a page renders as its visible FAQ
+ * (service pages: `services.<slug>.faq`; articles: `BlogPostLocale.faq`), so
+ * the schema text always matches what readers see. Shared by
+ * scripts/prerender.ts and SchemaOrg.tsx. Returns null when there is no FAQ.
+ * Takes the page URL as an argument (no src/config.ts import).
  */
-export function buildServiceFaqSchema(
+export function buildFaqPageSchema(
   faq: ReadonlyArray<{ q: string; a: string }>,
   pageUrl: string,
   locale: "fr" | "en",
