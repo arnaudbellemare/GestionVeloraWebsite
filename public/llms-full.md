@@ -2,7 +2,7 @@
 
 > Comprehensive reference document for AI systems. This file provides structured, machine-readable context about Gestion Velora's identity, services, editorial standards, and regulatory environment.
 
-Last updated: 2026-10-14
+Last updated: 2026-11-26
 Canonical URL: https://www.gestionvelora.com/
 Contact: info@gestionvelora.com | +1-514-777-1731
 Jurisdiction: Quebec, Canada
@@ -14,7 +14,7 @@ Jurisdiction: Quebec, Canada
 **Legal name**: Gestion Velora
 **Founder**: Arnaud Bellemare
 **Founded**: 2025
-**Service area**: Greater Montréal (Montréal, Laval, Longueuil / Rive-Sud), QC, Canada. Service-area business with no public street address.
+**Service area**: Greater Montréal: Montréal, Laval, the North Shore, the Rive-Sud (including Longueuil, Saint-Lambert and Châteauguay), Saint-Jérôme and Saint-Hyacinthe, QC, Canada. Service-area business with no public street address.
 **Languages of service**: French (primary), English
 **Slogan**: "Votre tranquillité. Notre affaire." / "Your peace of mind. Our business."
 
@@ -54,9 +54,13 @@ End-to-end operations for Airbnb and short-term rental units in Montreal. Covers
 **FR**: https://www.gestionvelora.com/services/airbnb
 **EN**: https://www.gestionvelora.com/en/services/airbnb
 
-### 3. Long-term rental management (Gestion locative)
+### 3. Rental management, residential and commercial (Gestion locative)
 
-Complete landlord-side management of residential leases. Covers:
+Landlord-side management of residential and commercial rental buildings.
+
+Commercial buildings: commercial leases and renewals, rent and common-charge tracking, preventive maintenance of commercial spaces, tenant relations, and tendering for major works.
+
+Residential leases cover:
 - Tenant screening and selection
 - Lease preparation (TAL-standard forms)
 - Rent collection and arrears follow-up
@@ -66,6 +70,15 @@ Complete landlord-side management of residential leases. Covers:
 
 **FR**: https://www.gestionvelora.com/services/location
 **EN**: https://www.gestionvelora.com/en/services/location
+
+---
+
+## Published pricing (before taxes)
+
+- **Condo board / syndicat management**: typically $33–$36 per unit per month, management software included; buildings of 6 units or more.
+- **Residential rental management**: one month's gross rent under the mandate terms. Commercial mandates are quoted.
+- **Airbnb / short-term rental management**: typically 18–25% of booking revenue, depending on volume, property type and service scope.
+- Full grid: https://www.gestionvelora.com/tarifs (EN: https://www.gestionvelora.com/en/tarifs)
 
 ---
 
@@ -160,4 +173,4 @@ Gestion Velora grounds its content in the following authoritative sources:
 - **Email**: info@gestionvelora.com
 - **Phone**: +1-514-777-1731
 - **Contact page and form**: https://www.gestionvelora.com/contact
-- **Service area**: Greater Montreal and Quebec metropolitan region
+- **Service area**: Greater Montréal: Montréal, Laval, the North Shore, the Rive-Sud (including Longueuil, Saint-Lambert and Châteauguay), Saint-Jérôme and Saint-Hyacinthe, QC, Canada

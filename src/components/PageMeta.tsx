@@ -73,6 +73,26 @@ function buildKeywords(locale: "fr" | "en", parts: string[] = []): string {
   ).join(", ");
 }
 
+/**
+ * Point rel="alternate" type="text/markdown" at the current page's Markdown copy
+ * (written by scripts/prerender.ts for every indexable page), or remove it on
+ * noindex pages, so client-side navigation never leaves a stale link.
+ */
+function setMarkdownAlternate(url: string, robots?: string) {
+  let el = document.querySelector('link[rel="alternate"][type="text/markdown"]') as HTMLLinkElement | null;
+  if (/noindex/i.test(robots ?? "")) {
+    el?.remove();
+    return;
+  }
+  if (!el) {
+    el = document.createElement("link");
+    el.rel = "alternate";
+    el.type = "text/markdown";
+    document.head.appendChild(el);
+  }
+  el.href = url.endsWith("/") ? `${url}index.md` : `${url}.md`;
+}
+
 function applyDocumentMeta(opts: {
   title: string;
   description: string;
@@ -88,6 +108,7 @@ function applyDocumentMeta(opts: {
   setMeta("description", description);
   setMeta("keywords", keywords ?? DEFAULT_KEYWORDS[isEn ? "en" : "fr"]);
   setMeta("robots", robots ?? INDEX_ROBOTS);
+  setMarkdownAlternate(url, robots);
   setMeta("twitter:card", "summary_large_image");
   setMeta("twitter:site", TWITTER_SITE);
   setMeta("og:title", title, true);
